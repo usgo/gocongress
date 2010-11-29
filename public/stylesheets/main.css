@@ -130,7 +130,7 @@ distribute and pad them.  I'm only human. -Jared 7/27/10 */
 
 /* Drawing extra attention to various things */
 #content .notice { 
-	background-image: url("../../img/icons/attention.png");
+	background-image: url("../images/icons/attention.png");
 	background-repeat: no-repeat;
 	background-position: 5px;
 	border: 1px dashed #FF9B05; 
@@ -140,7 +140,7 @@ distribute and pad them.  I'm only human. -Jared 7/27/10 */
 	}
 
 div.download-pdf {
-	background-image: url("../../img/icons/pdf.gif");
+	background-image: url("../images/icons/pdf.gif");
 	background-repeat: no-repeat;
 	background-position: 5px;
 	min-height: 40px;
