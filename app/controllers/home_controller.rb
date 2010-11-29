@@ -1,5 +1,8 @@
 class HomeController < ApplicationController
-  def index
-  end
+
+	def index
+		#self.crumbs << '/'
+		Array.new
+	end
 
 end

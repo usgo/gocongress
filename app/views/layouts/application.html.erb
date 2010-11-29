@@ -73,9 +73,12 @@
 	<div id="content">
 	
 		<!-- Breadcrumbs - Jared 8/22/10 -->
-			<div id="breadcrumbs">
-				breadcrumbs go here <!-- todo-was-dynamic -->
-			</div>
+		<div id="breadcrumbs">
+			<a href="/">Home</a>
+			<% crumbs.each() do |v| %>
+				&gt; <a href="<%= v %>"><%= v %></a>
+			<% end %>
+		</div>
 	
 		<!-- Friendly noscript warning - Jared 7/27/10 -->
 		<noscript>
