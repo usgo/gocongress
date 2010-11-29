@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  evtname: MyString
+  evtdeparttime: MyString
+  evtstarttime: MyString
+  evtprice: MyString
+
+two:
+  evtname: MyString
+  evtdeparttime: MyString
+  evtstarttime: MyString
+  evtprice: MyString

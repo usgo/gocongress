@@ -30,7 +30,7 @@
 		<div id="nav">
 			<ul>
 				<li id="nav-events">
-					<a href="<?=BASEURI?>frontend/events.php">Events &amp;<br />Activities</a>
+					<a href="/events">Events &amp;<br />Activities</a>
 				</li>
 				<li id="nav-tournaments">
 					<a href="<?=BASEURI?>frontend/tournament_info.php">Tournaments</a>
@@ -72,11 +72,11 @@
 	
 	<div id="content">
 	
-		<!-- Breadcrumbs - Jared 8/22/10 -->
+		<!-- Breadcrumbs are defined in the controller - Jared 8/22/10 -->
 		<div id="breadcrumbs">
 			<a href="/">Home</a>
-			<% crumbs.each() do |v| %>
-				&gt; <a href="<%= v %>"><%= v %></a>
+			<% crumbs.each do |e| %>
+				&gt; <a href="<%= e['url'] %>"><%= e["title"] %></a>
 			<% end %>
 		</div>
 	
