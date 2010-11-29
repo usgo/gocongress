@@ -12,6 +12,14 @@
   <% end %>
 
   <div class="field">
+    <%= f.label :evtdate %><br />
+    <%= f.date_select \
+    	:evtdate \
+    	, :start_year => CONGRESS_YEAR.to_i \
+    	, :end_year => CONGRESS_YEAR.to_i \
+    %>
+  </div>
+  <div class="field">
     <%= f.label :evtname %><br />
     <%= f.text_field :evtname %>
   </div>

@@ -2,6 +2,7 @@
 
 <table>
   <tr>
+  	<th>Evtdate</th>
     <th>Evtname</th>
     <th>Evtdeparttime</th>
     <th>Evtstarttime</th>
@@ -13,6 +14,7 @@
 
 <% @events.each do |event| %>
   <tr>
+    <td><%= event.evtdate %></td>
     <td><%= event.evtname %></td>
     <td><%= event.evtdeparttime %></td>
     <td><%= event.evtstarttime %></td>
