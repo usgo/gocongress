@@ -20,6 +20,10 @@ blockquote {
 	padding: 0px 10px; 
 }
 
+/* Remove the default border on anchored images */
+/* I hope this works as well as the img.border attribute -Jared 11/29/10 */
+a img { border: none; }
+
 /* Semantic table: The basic table meant for data, not for layout */
 table.semantic { border-spacing: 0; border-collapse: collapse; }
 table.semantic td, table.semantic th { border: 1px solid #666; padding: 0.25em; text-align: left; }
