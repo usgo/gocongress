@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html">
+	<title>US Go Congress 2011</title> <!-- todo-was-dynamic -->
+	<%= stylesheet_link_tag :all %>
+	<%= javascript_include_tag :defaults %>
+	<%= csrf_meta_tag %>
+	<LINK REL="SHORTCUT ICON" HREF="img/favicon.ico">
+</head>
+<body>
+
+	<!-- A few of the more verbose pages reference this named anchor -Jared 9/12/10 -->
+	<a name="top"></a>
+
+	<div id="header-container">
+		<div id="header">
+			<div id="usgc-title-container">
+				<h1><a href="/">2011 US Go Congress</a></h1> <!-- todo-was-dynamic -->
+			</div>
+			<div id="usgc-when-where-container">
+				Santa Barbara, CA &nbsp; Jul 30 - Aug 7, 2011 <!-- todo-was-dynamic -->
+			</div>
+			<div style="clear:both;"></div>
+		</div>
+	</div>
+	
+	<div id="nav-container">
+		<div id="nav">
+			<ul>
+				<li id="nav-events">
+					<a href="<?=BASEURI?>frontend/events.php">Events &amp;<br />Activities</a>
+				</li>
+				<li id="nav-tournaments">
+					<a href="<?=BASEURI?>frontend/tournament_info.php">Tournaments</a>
+				</li>
+				<li id="nav-pros">
+					<a href="<?=BASEURI?>frontend/pros.php">Professionals<br />&amp; VIPs</a>
+				</li>
+				<li id="nav-rooms">
+					<a href="<?=BASEURI?>frontend/accommodations.php">Room &amp;<br />Board</a>
+				</li>
+				<li id="nav-transportation">
+					<a href="<?=BASEURI?>frontend/transportation.php">Trans-<br />portation</a>
+				</li>
+				<li id="nav-volunteer">
+					<a href="<?=BASEURI?>frontend/volunteer.php">Volunteer</a>
+				</li>
+				<li id="nav-contact">
+					<a href="<?=BASEURI?>frontend/contact.php">Contact<br />Us</a>
+				</li>
+				<li id="nav-who">
+					<a href="<?=BASEURI?>frontend/list.php">Who's<br />Coming</a>
+				</li>
+				<li id="nav-registration">
+					<!-- todo-was-dynamic -->
+
+					<%= image_tag "icons/star.png", :class => 'preregister-star' %>
+						<a href="<?=$secureURL?>preregister.php">
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pre-<br />register
+						</a>
+				</li>
+				<li id="nav-login" class="last-child">
+					<!-- todo-was-dynamic -->
+					<a href="' . $secureURL . 'login.php" class="hmenu">Login</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+	
+	<div id="content">
+	
+		<!-- Breadcrumbs - Jared 8/22/10 -->
+			<div id="breadcrumbs">
+				breadcrumbs go here <!-- todo-was-dynamic -->
+			</div>
+	
+		<!-- Friendly noscript warning - Jared 7/27/10 -->
+		<noscript>
+			<div class="error">
+				Please enable Javascript.  Otherwise, we can't show you the nice photo gallery.  Thanks.
+			</div>
+		</noscript>
+
+<%= yield %>
+
+		<div style="clear:both;"></div>
+	</div>
+	
+	<div id="footer">
+	
+		<!-- Sponsor logos, small and circular, with anchors, in the lower
+		right corner - Jared 9/4/10 -->
+		<div id="sponsors">
+			<a href="http://www.usgo.org">
+				<img src="<?= BASEURI ?>img/sponsors/aga.jpg" border="0">
+			</a>
+			<a href="http://www.gokgs.com">
+				<img src="<?= BASEURI ?>img/sponsors/kgs.jpg" border="0">
+			</a>
+		</div>
+		
+		<div id="site-credit">	
+			Content &copy;<?=$GCYear?> US Go Congress<br />
+			Programming by <a target="_blank" href="mailto:jon@ctipc.com">Jon Hilt</a><br /> and 
+			<a target="_blank" href="http://www.jaredbeck.com">Jared Beck</a><br />
+			Hosted at <a target="_blank" href="http://www.ctipc.com">CT, Inc</a>
+		</div>
+	</div>
+	
+</body>
+</html>

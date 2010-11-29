@@ -1,0 +1,192 @@
+/* Basic stuff */
+* { margin: 0px; padding: 0px; }
+body { background-color: white; font-family: Times, serif; }
+h1 { font-family: Helvetica, sans-serif; font-size: 32px; }
+h2 { font-family: Helvetica, sans-serif; }
+h3 { font-family: Helvetica, sans-serif; }
+h4 { font-family: Helvetica, sans-serif; }
+th { font-family: Helvetica, sans-serif; }
+td { font-family: Times, serif; }
+p { font-family: Times, serif; font-size: 16px; }
+span { font-family: Times, serif; font-size: 16px; }
+span.smalltext { font-size: 12px; }
+div { font-family: Times, serif; font-size: 16px; }
+hr { margin: 1em 0em 1em 0em; }
+.fullwidth { width: 100%; }
+blockquote { 
+	font-family: Times, serif; 
+	font-size: 14px; 
+	font-style: oblique; 
+	padding: 0px 10px; 
+}
+
+/* Semantic table: The basic table meant for data, not for layout */
+table.semantic { border-spacing: 0; border-collapse: collapse; }
+table.semantic td, table.semantic th { border: 1px solid #666; padding: 0.25em; text-align: left; }
+table.semantic td { background-color: #FFDAA3; }
+table.semantic th { background-color: #FF9B05; }
+table.semantic tr.lesser-header th { background-color: #FFC369; font-weight: normal; }
+table.semantic tr:nth-child(even) td { background-color: #FFECD1; }
+
+/* Semantic table: Row emphasis */
+table.semantic tr.understated td { color: #666; }
+table.semantic tr.disabled td { background-color: #DDD; color: #666; }
+
+/* Specific tables */
+tr.date-header th { text-align: center; }
+
+/* Definition lists */
+dt { clear: left; float: left; padding-right: 1em; font-weight: bold; }
+dd { float: left; }
+
+/* Header */
+#header-container { background-color: #FF9B05; }
+#header { margin: 0 auto; padding: 8px 0px 5px 0px; width: 900px; }
+
+#usgc-title-container { float: left; }
+#usgc-title-container h1 { 
+	font-family: Helvetica, sans-serif; 
+	font-size: 32px; 
+	line-height: 33px; 
+}
+#usgc-title-container a { color: black; text-decoration: none; }
+
+#usgc-when-where-container { 
+	float: right; 
+	font-family: Helvetica, sans-serif; 
+	font-size: 22px; 
+	line-height: 23px;
+	margin-top: 10px;
+	text-align: right;
+}
+
+/* Nav */
+#nav-container { background-color: #0071BC; }
+#nav { margin: 0 auto; width: 902px; }
+#nav ul { height: 40px; }
+#nav li { 
+	height: 33px;
+	border-left: 1px solid #AAA;
+	display: block;
+	float: left;
+	font-family: Helvetica, sans-serif; 
+	font-size: 14px;
+	font-weight: bold; 
+	line-height: 16px;
+	text-align: center;
+	padding: 5px 0px 2px 0px;
+	list-style: none;
+}
+#nav li:hover { background-color: #29ABE2; }
+#nav li.last-child { border-right: 1px solid #AAA; }
+#nav li a { color: white; text-decoration: none; }
+
+/* Nav item widths are hardcoded because I couldn't figure out how to evenly
+distribute and pad them.  I'm only human. -Jared 7/27/10 */
+#nav li#nav-events { width: 95px; }
+#nav li#nav-pros { width: 115px; }
+#nav li#nav-tournaments { width: 110px; }
+#nav li#nav-rooms { width: 90px; }
+#nav li#nav-transportation { width: 85px; }
+#nav li#nav-volunteer { width: 91px; }
+#nav li#nav-contact { width: 75px; }
+#nav li#nav-who { width: 80px; }
+#nav li#nav-registration { position:relative; width: 80px; }
+#nav li#nav-login { width: 70px; }
+#nav li#nav-registration a { color: #FF2; }
+#nav li#nav-registration img.preregister-star { position: absolute; top: -10px; left: 3px; }
+
+/* Main content area */
+#content { 
+	border-left: 1px solid #AAA; 
+	border-right: 1px solid #AAA;
+	border-bottom: 1px solid #AAA;
+	margin: 0 auto;
+	padding: 10px;
+	width: 880px;
+}
+
+/* The homepage content area is the same, but it has no padding (mostly) */
+.homepage #content { 
+	padding: 0px 0px 20px 0px;
+	width: 900px;
+	}
+.homepage #content p {  padding: 0.5em; }
+.homepage #content h3 {  padding: 0.5em; }
+
+/* Basic styling for elements in the main content area */
+#content p, #content dl { padding: 0.5em 0em 0.5em 0em; }
+#content h1, #content h2, #content h3 { padding: 0.5em 0em 0.5em 0em; }
+#content ul { margin-left: 20px; padding: 0.5em 0em 0.5em 0em; }
+#content li { margin-left: 10px; }
+#content #breadcrumbs { padding-bottom: 0.5em; }
+
+/* Curving the text around the logo */
+#content .curvy-text-container { padding-top: 10px; position: relative; }
+#content .curvy-text-container #usgc-logo { position: absolute; left: -140px; top: 10px; }
+#content .curvy-text-container .curvy-spacer { clear: left; float: left; }
+#content .curvy-text-container p { padding: 0px 0px 10px 0px; text-align: justify; }
+#content .event-title { font-weight: bold; }
+
+/* Drawing extra attention to various things */
+#content .notice { 
+	background-image: url("../../img/icons/attention.png");
+	background-repeat: no-repeat;
+	background-position: 5px;
+	border: 1px dashed #FF9B05; 
+	margin: 0.5em 0em;
+	min-height: 30px;
+	padding-left: 52px;
+	}
+
+div.download-pdf {
+	background-image: url("../../img/icons/pdf.gif");
+	background-repeat: no-repeat;
+	background-position: 5px;
+	min-height: 40px;
+	padding-left: 45px;
+	}
+div.download-pdf a {
+	line-height: 40px;
+	}	
+
+/* Error box */
+.error { 
+	border: 3px solid red; 
+	color: red; 
+	font-family: Helvetica, sans-serif; 
+	font-size: 18px;
+	padding: 10px; 
+	text-align: center;
+}
+
+/* Image gallery */
+#gallery-container { float:right; padding-left: 20px; }
+#gallery { width: 480px; height: 360px; }
+.galleria-stage { bottom:0px; left:0px; right:0px; top:0px; }
+
+/* Styles for the legacy Who's Coming table.  Don't delete just yet. */
+table.who { width: 90%; margin: 0 auto; }
+table.who thead th { text-align: left; }
+
+/* Forms */
+div.inputform { margin: 1em; }
+div.inputform table tbody td { padding-bottom: 0.25em; }
+div.inputform table tbody th { text-align: left; padding-right: 1em; vertical-align: top; }
+
+/* Footer */
+#footer { 
+	margin: 0 auto;
+	padding-top: 5px;
+	width: 900px; 
+}
+#site-credit { 
+	color: #333;
+	float: left;
+	font-size: 10px;
+	text-align: left;
+}
+#site-credit a { color: #333; }
+#sponsors {
+	float: right;
+}
