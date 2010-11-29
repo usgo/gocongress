@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html">
-	<title>US Go Congress 2011</title> <!-- todo-was-dynamic -->
+	<title>US Go Congress <%= CONGRESS_YEAR %></title>
 	<%= stylesheet_link_tag :all %>
 	<%= javascript_include_tag :defaults %>
 	<%= csrf_meta_tag %>
@@ -16,10 +16,11 @@
 	<div id="header-container">
 		<div id="header">
 			<div id="usgc-title-container">
-				<h1><a href="/">2011 US Go Congress</a></h1> <!-- todo-was-dynamic -->
+				<h1><a href="/"><%= CONGRESS_YEAR %> US Go Congress</a></h1>
 			</div>
 			<div id="usgc-when-where-container">
-				Santa Barbara, CA &nbsp; Jul 30 - Aug 7, 2011 <!-- todo-was-dynamic -->
+				<%= CONGRESS_CITY %>, <%= CONGRESS_STATE %> &nbsp; 
+				<%= CONGRESS_DATE_RANGE %>, <%= CONGRESS_YEAR %>
 			</div>
 			<div style="clear:both;"></div>
 		</div>
@@ -56,13 +57,14 @@
 					<!-- todo-was-dynamic -->
 
 					<%= image_tag "icons/star.png", :class => 'preregister-star' %>
-						<a href="<?=$secureURL?>preregister.php">
+						<a href="#">
 							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pre-<br />register
 						</a>
 				</li>
 				<li id="nav-login" class="last-child">
-					<!-- todo-was-dynamic -->
-					<a href="' . $secureURL . 'login.php" class="hmenu">Login</a>
+					<a href="#" class="hmenu"> <!-- todo-was-dynamic -->
+						Login
+					</a> 
 				</li>
 			</ul>
 		</div>
