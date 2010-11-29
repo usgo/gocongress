@@ -4,7 +4,8 @@ class EventsController < ApplicationController
   def index
   	self.crumbs << {'url'=>events_path, 'title'=>'Events and Activities'}
   
-    @events = Event.all
+		@events = Event.all :order=>"evtdate asc"
+		@arEventsByDate = @events.group_by {|event| event.evtdate}
 
     respond_to do |format|
       format.html # index.html.erb
