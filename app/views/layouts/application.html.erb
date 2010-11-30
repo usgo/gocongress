@@ -4,9 +4,15 @@
 	<meta http-equiv="Content-Type" content="text/html">
 	<title>US Go Congress <%= CONGRESS_YEAR %></title>
 	<%= stylesheet_link_tag :all %>
-	<%= javascript_include_tag :defaults %>
+	
+	<!-- These js files must be included in this exact order -Jared 11/30/10 -->
+	<%= javascript_include_tag "jquery.min.js" %>
+	<%= javascript_include_tag "rails" %>
+	<%= javascript_include_tag "application" %>
+	<%= javascript_include_tag "galleria/galleria" %>
+	<%= javascript_include_tag "galleria/themes/dots/galleria.dots.js" %>
+	
 	<%= csrf_meta_tag %>
-	<LINK REL="SHORTCUT ICON" HREF="img/favicon.ico">
 </head>
 <body>
 
