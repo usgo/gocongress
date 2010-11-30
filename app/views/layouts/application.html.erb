@@ -14,7 +14,7 @@
 	
 	<%= csrf_meta_tag %>
 </head>
-<body>
+<body class="<%= @bodyClassList %>">
 
 	<!-- A few of the more verbose pages reference this named anchor -Jared 9/12/10 -->
 	<a name="top"></a>
@@ -79,12 +79,14 @@
 	<div id="content">
 	
 		<!-- Breadcrumbs are defined in the controller - Jared 8/22/10 -->
-		<div id="breadcrumbs">
-			<a href="/">Home</a>
-			<% crumbs.each do |e| %>
-				&gt; <a href="<%= e['url'] %>"><%= e["title"] %></a>
-			<% end %>
-		</div>
+		<% if crumbs.length > 0 %>
+			<div id="breadcrumbs">
+				<a href="/">Home</a>
+				<% crumbs.each do |e| %>
+					&gt; <a href="<%= e['url'] %>"><%= e["title"] %></a>
+				<% end %>
+			</div>
+		<% end %>
 	
 		<!-- Friendly noscript warning - Jared 7/27/10 -->
 		<noscript>

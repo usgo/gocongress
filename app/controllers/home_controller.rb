@@ -1,6 +1,7 @@
 class HomeController < ApplicationController
 
 	def index
+		@bodyClassList = "homepage"
 		@arSlideTitles = [ \
 			"UCSB Campus" \
 			, "This could be our tournament hall! (Corwin Pavilion)" \
