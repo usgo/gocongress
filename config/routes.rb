@@ -1,4 +1,6 @@
 Gocongress::Application.routes.draw do
+  resources :users
+
   resources :events, :jobs
 
   get "home/index"
