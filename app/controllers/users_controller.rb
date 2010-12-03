@@ -25,6 +25,7 @@ class UsersController < ApplicationController
   # GET /users/new.xml
   def new
     @user = User.new
+    @jobs = Job.all :select=>"jobs.id, jobname, 0 as has_job"
 
     respond_to do |format|
       format.html # new.html.erb

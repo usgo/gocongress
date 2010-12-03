@@ -15,6 +15,19 @@
     <%= f.label :email %><br />
     <%= f.text_field :email %>
   </div>
+  
+  <h3>Volunteer Positions</h3>
+
+	<div class="field">
+	<% @jobs.each do |j| -%>
+		<% cbxid = "job_id_" + j.id.to_s %>
+		<% ischecked = j.has_job > 0 %>
+		<%= check_box_tag "myjobidlist", j.id, ischecked, :id => cbxid -%>
+		<%= label_tag cbxid, j.jobname -%>
+		<br />
+	<% end -%>
+	</div>
+  
   <div class="actions">
     <%= f.submit %>
   </div>
