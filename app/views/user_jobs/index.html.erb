@@ -1,0 +1,25 @@
+<h2>Contact Us</h2>
+
+<table class="semantic">
+	<thead>
+		<tr>
+			<th>Position</th>
+			<th>Name</th>
+			<th>Email</th>
+			<th>Phone</th>
+		</tr>
+	</thead>
+	<tbody>
+	
+		<% @user_jobs.each do |uj| %>
+			<tr>
+				<td><%= uj.jobname %></td>
+				<td></td>
+				<td><%= uj.email %></td>
+				<td></td>
+			</tr>
+		<% end %>
+	</tbody>
+</table>
+
+<br />

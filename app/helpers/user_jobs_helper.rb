@@ -1,0 +1,2 @@
+module UserJobsHelper
+end
