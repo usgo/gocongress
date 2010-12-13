@@ -30,13 +30,13 @@ table.semantic td, table.semantic th { border: 1px solid #666; padding: 0.25em; 
 table.semantic td { background-color: #FFDAA3; }
 table.semantic th { background-color: #FF9B05; }
 table.semantic tr.lesser-header th { background-color: #FFC369; font-weight: normal; }
-table.semantic tr:nth-child(even) td { background-color: #FFECD1; }
 
 /* Semantic table: Row emphasis */
 table.semantic tr.understated td { color: #666; }
 table.semantic tr.disabled td { background-color: #DDD; color: #666; }
 
-/* Specific tables */
+/* Table options eg. zebra striping */
+table.zebra tr:nth-child(even) td { background-color: #FFECD1; }
 tr.date-header th { text-align: center; }
 
 /* Definition lists */

@@ -1,23 +1,39 @@
-<h1>Listing jobs</h1>
+<h2>Volunteer Opportunities</h2>
 
-<table>
-  <tr>
-    <th>Jobname</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
+<p>
+	If you are interested in taking one of these positions, please
+	contact Andrew Jackson or Lisa Scott for further information.
+	Positions which have already been filled are listed on the
+	<a href="/user_jobs">contact us page</a>.
+</p>
 
-<% @jobs.each do |job| %>
-  <tr>
-    <td><%= job.jobname %></td>
-    <td><%= link_to 'Show', job %></td>
-    <td><%= link_to 'Edit', edit_job_path(job) %></td>
-    <td><%= link_to 'Destroy', job, :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
-<% end %>
+<h3>Volunteer Positions</h3>
+
+<table class="semantic">
+	<thead>
+		<tr>
+			<th>Position</th>
+			<th>People Needed (Total)</th>
+			<th>Available</th>
+			<th>Description</th>
+			<th colspan="3"></th>
+		</tr>
+	</thead>
+	<tbody>
+		<% @jobs.each do |job| %>
+			<tr>
+				<td><%= job.jobname %></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td><%= link_to 'Show', job %></td>
+				<td><%= link_to 'Edit', edit_job_path(job) %></td>
+				<td><%= link_to 'Destroy', job, :confirm => 'Are you sure?', :method => :delete %></td>
+			</tr>
+		<% end %>
+	</tbody>
 </table>
 
 <br />
 
-<%= link_to 'New Job', new_job_path %>
+<%= link_to 'Create a new volunteer position', new_job_path %>
