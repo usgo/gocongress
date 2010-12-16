@@ -50,10 +50,12 @@ class UsersController < ApplicationController
   # POST /users.xml
   def create
     @user = User.new(params[:user])
+    @jobs = Job.all :select=>"jobs.id, jobname, 0 as has_job"
 
     respond_to do |format|
       if @user.save
-        format.html { redirect_to(@user, :notice => 'User was successfully created.') }
+      	flash[:notice] = "User successfully created"
+        format.html { redirect_to(:action=>'index') }
         format.xml  { render :xml => @user, :status => :created, :location => @user }
       else
         format.html { render :action => "new" }
@@ -67,10 +69,12 @@ class UsersController < ApplicationController
   def update
 		params[:user][:job_ids] ||= []
     @user = User.find(params[:id])
+    @jobs = Job.all :select=>"jobs.id, jobname, 0 as has_job"
 		
     respond_to do |format|
       if @user.update_attributes(params[:user])
-        format.html { redirect_to(@user, :notice => 'User was successfully updated.') }
+				flash[:notice] = "User successfully updated"
+        format.html { redirect_to(:action=>'index') }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }

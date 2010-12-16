@@ -5,5 +5,15 @@
   <%= @user.email %>
 </p>
 
+<p>
+  <b>Full Name:</b>
+  <%= @user.full_name %>
+</p>
+
+<p>
+  <b>Hashed Password:</b>
+  <%= @user.hashed_password %>
+</p>
+
 <%= link_to 'Edit', edit_user_path(@user) %> |
 <%= link_to 'Back', users_path %>
