@@ -179,7 +179,10 @@ div.inputform table tbody td { padding-bottom: 0.25em; }
 div.inputform table tbody th { text-align: left; padding-right: 1em; vertical-align: top; }
 
 /* Railsy forms -Jared 12/15/10 */
-div.field label { display:inline-block; text-align:left; width: 10em; }
+div.field { display: block; }
+div.field_with_errors { background-color:white; display: inline; padding: 0; }
+div.field_with_errors input { background-color:white; }
+div.field label, div.field_with_errors label { display:inline-block; text-align:left; width: 10em; }
 
 /* Footer */
 #footer { 
