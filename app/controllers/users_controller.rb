@@ -25,7 +25,7 @@ class UsersController < ApplicationController
   # GET /users/new.xml
   def new
     @user = User.new
-    @jobs = Job.all :select=>"jobs.id, jobname, 0 as has_job"
+    @jobs = get_job_array
 
     respond_to do |format|
       format.html # new.html.erb
@@ -50,7 +50,7 @@ class UsersController < ApplicationController
   # POST /users.xml
   def create
     @user = User.new(params[:user])
-    @jobs = Job.all :select=>"jobs.id, jobname, 0 as has_job"
+    @jobs = get_job_array
 
     respond_to do |format|
       if @user.save
@@ -69,7 +69,7 @@ class UsersController < ApplicationController
   def update
 		params[:user][:job_ids] ||= []
     @user = User.find(params[:id])
-    @jobs = Job.all :select=>"jobs.id, jobname, 0 as has_job"
+    @jobs = get_job_array
 		
     respond_to do |format|
       if @user.update_attributes(params[:user])
@@ -94,4 +94,11 @@ class UsersController < ApplicationController
       format.xml  { head :ok }
     end
   end
+
+private
+
+	def get_job_array
+		Job.all :select=>"jobs.id, jobname, 0 as has_job"
+	end
+
 end
