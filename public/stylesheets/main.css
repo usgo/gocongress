@@ -168,6 +168,7 @@ div.download-pdf a {
 #gallery-container { float:right; padding-left: 20px; }
 #gallery { width: 480px; height: 360px; }
 .galleria-stage { bottom:0px; left:0px; right:0px; top:0px; }
+.galleria-info { width: 480px; } /* should be same width as #gallery */
 
 /* Styles for the legacy Who's Coming table.  Don't delete just yet. */
 table.who { width: 90%; margin: 0 auto; }
