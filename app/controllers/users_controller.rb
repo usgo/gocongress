@@ -86,11 +86,20 @@ class UsersController < ApplicationController
   # DELETE /users/1
   # DELETE /users/1.xml
   def destroy
-    @user = User.find(params[:id])
-    @user.destroy
+	  if !current_user.is_admin?
+    	deletionOccurred = false
+    else
+			@user = User.find(params[:id])
+    	@user.destroy
+    	deletionOccurred = true
+    end
 
     respond_to do |format|
-			flash[:notice] = "User successfully deleted"
+    	if deletionOccurred
+				flash[:notice] = "User deleted"
+			else
+				flash[:alert] = "Access denied"
+			end
       format.html { redirect_to(users_url) }
       format.xml  { head :ok }
     end

@@ -134,10 +134,10 @@ distribute and pad them.  I'm only human. -Jared 7/27/10 */
 
 /* Drawing extra attention to various things */
 .rails-flash-alert {
-	background-color: red;
+	background-color: yellow;
 	}
 .rails-flash-notice {
-	background-color: yellow;
+	background-color: lightgreen;
 	}
 
 #content .notice { 

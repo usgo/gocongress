@@ -30,6 +30,11 @@
     <%= f.label :password_confirmation, 'Confirm Password' %>
     <%= f.password_field :password_confirmation, :size => 10 %>
   </div>
+  
+  <div class="field">
+    <%= f.label :is_admin %>
+    <%= f.check_box :is_admin %>
+  </div>
 
   <p><%= f.submit "Sign up" %></p>
 <% end %>
