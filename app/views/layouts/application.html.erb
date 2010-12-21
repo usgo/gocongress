@@ -61,7 +61,7 @@
 				</li>
 				<li id="nav-registration">
 					<%= image_tag "icons/star.png", :class => 'preregister-star' %>
-						<a href="/users/new">
+						<a href="/users/sign_up">
 							<br />Register
 						</a>
 				</li>
@@ -75,6 +75,10 @@
 	</div>
 	
 	<div id="content">
+		
+		<!-- "Flash messages" required by Devise -Jared 12/20/10 -->
+		<div class="rails-flash-notice"><%= notice %></div>
+		<div class="rails-flash-alert"><%= alert %></div>
 	
 		<!-- Breadcrumbs are defined in the controller - Jared 8/22/10 -->
 		<% if crumbs.length > 0 %>

@@ -90,6 +90,7 @@ class UsersController < ApplicationController
     @user.destroy
 
     respond_to do |format|
+			flash[:notice] = "User successfully deleted"
       format.html { redirect_to(users_url) }
       format.xml  { head :ok }
     end

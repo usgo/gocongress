@@ -1,0 +1,37 @@
+<h1>Register for the <%= CONGRESS_YEAR %> US Go Congress!</h1>
+
+<p>
+	<strong>Registering more than one person?</strong><br />
+	No problem, we plan to allow one user to register multiple people.  So, please
+	don't create users for each of your kids.
+</p>
+
+<br />
+
+<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
+  <%= devise_error_messages! %>
+
+  <div class="field">
+    <%= f.label :email %>
+    <%= f.text_field :email %>
+  </div>
+  
+  <div class="field">
+    <%= f.label :full_name %>
+    <%= f.text_field :full_name %>
+  </div>
+    
+  <div class="field">
+    <%= f.label :password, 'Password' %>
+    <%= f.password_field :password, :size => 10 %>
+  </div>
+
+  <div class="field">
+    <%= f.label :password_confirmation, 'Confirm Password' %>
+    <%= f.password_field :password_confirmation, :size => 10 %>
+  </div>
+
+  <p><%= f.submit "Sign up" %></p>
+<% end %>
+
+<%= render :partial => "devise/shared/links" %>

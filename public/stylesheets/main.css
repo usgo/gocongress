@@ -133,6 +133,13 @@ distribute and pad them.  I'm only human. -Jared 7/27/10 */
 #content .event-title { font-weight: bold; }
 
 /* Drawing extra attention to various things */
+.rails-flash-alert {
+	background-color: red;
+	}
+.rails-flash-notice {
+	background-color: yellow;
+	}
+
 #content .notice { 
 	background-image: url("../images/icons/attention.png");
 	background-repeat: no-repeat;
