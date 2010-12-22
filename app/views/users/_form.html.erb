@@ -22,6 +22,14 @@
     <%= f.label :full_name %>
     <%= f.text_field :full_name %>
   </div>
+  
+  <div class="field">
+    <%= f.label :is_admin %>
+    <%= f.check_box :is_admin %>
+  </div>
+
+	<h3>Password</h3>
+	<p>If you don't want to change your password, just leave it blank.</p>
 
   <div class="field">
     <%= f.label :password, 'Password' %>
@@ -31,11 +39,6 @@
   <div class="field">
     <%= f.label :password_confirmation, 'Confirm Password' %>
     <%= f.password_field :password_confirmation, :size => 10 %>
-  </div>
-  
-  <div class="field">
-    <%= f.label :is_admin %>
-    <%= f.check_box :is_admin %>
   </div>
   
   <h3>Volunteer Positions</h3>
