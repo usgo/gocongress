@@ -14,4 +14,10 @@ class User < ActiveRecord::Base
 	has_many :user_jobs
 	has_many :jobs, :through => :user_jobs
 
+protected
+
+	def password_required?
+		!persisted? || password.present? || password_confirmation.present?
+	end
+
 end
