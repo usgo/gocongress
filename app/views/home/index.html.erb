@@ -32,6 +32,11 @@
 	<div class="curvy-spacer" style="width: 105px;">&nbsp;</div>
 	<div class="curvy-spacer" style="width: 60px;">&nbsp;</div>
 	
+	<!-- Just playing around, I may not keep this welcome message -Jared 12/22/10 -->
+	<% if @welcomeMessage.length > 0 %>
+	<p><%= @welcomeMessage %></p>
+	<% end %>
+	
 	<p>The US Go Congress is the largest Go tournament in the United States. It
 	happens once a year and spans one week. Events include:</p>
 	<p>

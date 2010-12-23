@@ -12,7 +12,14 @@ class HomeController < ApplicationController
 			, "The historic Santa Barbara Mission" \
 			, "The beach at UCSB" \
 			, "Aerial view of the UCSB campus" \
-			]			
+			]
+			
+		# Just playing around, I may not keep this welcome message -Jared
+		if (current_user)
+			@welcomeMessage = "Welcome, " + current_user.full_name
+		else
+			@welcomeMessage = ""
+		end
 	end
 
 end

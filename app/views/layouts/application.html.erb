@@ -66,9 +66,15 @@
 						</a>
 				</li>
 				<li id="nav-login" class="last-child">
-					<a href="#" class="hmenu">
-						Login
-					</a> 
+					<% if current_user.nil?  %>
+						<a href="/users/sign_in" class="hmenu">
+							Sign<br />In
+						</a>
+					<% else %>
+						<a href="/users/sign_out" class="hmenu">
+							Sign<br />Out
+						</a>
+					<% end %>
 				</li>
 			</ul>
 		</div>
