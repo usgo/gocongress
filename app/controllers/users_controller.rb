@@ -105,6 +105,19 @@ class UsersController < ApplicationController
     end
   end
 
+  # GET /users/1/resetpasswd
+  def resetpasswd
+		
+		# creates a new token and send it with instructions about how to reset the password
+		User.find(params[:id]).send_reset_password_instructions
+		
+		respond_to do |format|
+			flash[:notice] = "Check your email for instructions to reset your password"
+			format.html { redirect_to(users_url) }
+			format.xml  { head :ok }
+		end
+	end
+
 private
 
 	def get_job_array
