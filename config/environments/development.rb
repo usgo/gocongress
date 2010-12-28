@@ -22,6 +22,9 @@ Gocongress::Application.configure do
 
   # Only use best-standards-support built into browsers
   config.action_dispatch.best_standards_support = :builtin
+  
+  # Override mailer host in application.rb -Jared 2010.12.27
+  config.action_mailer.default_url_options = { :host => "0.0.0.0", :port => "3000" }
 
 end
 
