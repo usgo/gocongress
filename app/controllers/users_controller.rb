@@ -86,7 +86,7 @@ class UsersController < ApplicationController
   # DELETE /users/1
   # DELETE /users/1.xml
   def destroy
-	  if !current_user.is_admin?
+	  if !current_user.try(:is_admin?)
     	deletionOccurred = false
     else
 			@user = User.find(params[:id])

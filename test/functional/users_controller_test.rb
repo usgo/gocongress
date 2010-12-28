@@ -17,11 +17,23 @@ class UsersControllerTest < ActionController::TestCase
   end
 
   test "should create user" do
-    assert_difference('User.count') do
+    @user.destroy
+
+    assert_difference('User.count', 1) do
+      post :create, :user => @user.attributes.merge(:password => 'password')
+    end
+
+    assert_redirected_to users_path
+  end
+
+  test "won't create a user without a password" do
+    @user.destroy
+
+    assert_difference('User.count', 0) do
       post :create, :user => @user.attributes
     end
 
-    assert_redirected_to user_path(assigns(:user))
+    assert_tag :div, :attributes => {:id => 'error_explanation'}, :child => "Password can't be blank"
   end
 
   test "should show user" do
@@ -36,10 +48,22 @@ class UsersControllerTest < ActionController::TestCase
 
   test "should update user" do
     put :update, :id => @user.to_param, :user => @user.attributes
-    assert_redirected_to user_path(assigns(:user))
+    assert_redirected_to users_path
   end
 
-  test "should destroy user" do
+  test "non-admin cannot destroy a user" do
+    sign_in(:user, users(:two))
+
+    assert_difference('User.count', 0) do
+      delete :destroy, :id => @user.to_param
+    end
+
+    assert_redirected_to users_path
+  end
+
+  test "admin can destroy a user" do
+    sign_in(:user, users(:admin))
+
     assert_difference('User.count', -1) do
       delete :destroy, :id => @user.to_param
     end
