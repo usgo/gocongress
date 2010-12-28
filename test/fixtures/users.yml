@@ -1,7 +1,16 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
 one:
-  email: MyString
+  email: user1@example.com
+  is_admin: false
+  full_name: User One
 
 two:
-  email: MyString
+  email: user2@example.com
+  is_admin: false
+  full_name: User Two
+
+admin:
+  email: admin@example.com
+  is_admin: true
+  full_name: Admin User
