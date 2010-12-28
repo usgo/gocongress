@@ -14,6 +14,20 @@ class User < ActiveRecord::Base
 	has_many :user_jobs
 	has_many :jobs, :through => :user_jobs
 
+	after_create :send_welcome_email
+
+private
+
+	# make sure you:
+	# export GMAIL_SMTP_USER=username@gmail.com
+	# export GMAIL_SMTP_PASSWORD=yourpassword
+	# for heroku, use: heroku config:add GMAIL_SMTP_USER=username@gmail.com
+	# see /vendor/plugins/gmail_smtp/lib/actionmailer_gmail.rb
+	# -Jared 2010.12.27
+	def send_welcome_email
+		UserMailer.welcome_email(self).deliver
+	end
+
 protected
 
 	def password_required?
