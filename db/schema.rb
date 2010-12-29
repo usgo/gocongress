@@ -10,7 +10,29 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101221013502) do
+ActiveRecord::Schema.define(:version => 20101229195001) do
+
+  create_table "attendees", :force => true do |t|
+    t.string   "given_name",                            :null => false
+    t.string   "family_name",                           :null => false
+    t.string   "gender",                   :limit => 1
+    t.boolean  "anonymous"
+    t.integer  "rank",                                  :null => false
+    t.integer  "aga_id"
+    t.string   "address_1",                             :null => false
+    t.string   "address_2"
+    t.string   "city"
+    t.string   "state"
+    t.string   "zip"
+    t.string   "country"
+    t.string   "phone"
+    t.string   "email"
+    t.date     "birth_date"
+    t.boolean  "understand_minor"
+    t.boolean  "minor_agreement_received"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "events", :force => true do |t|
     t.string   "evtname"
