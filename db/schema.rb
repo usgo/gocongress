@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101229195001) do
+ActiveRecord::Schema.define(:version => 20101230030834) do
 
   create_table "attendees", :force => true do |t|
     t.string   "given_name",                            :null => false
@@ -32,6 +32,7 @@ ActiveRecord::Schema.define(:version => 20101229195001) do
     t.boolean  "minor_agreement_received"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "user_id"
   end
 
   create_table "events", :force => true do |t|
@@ -73,6 +74,7 @@ ActiveRecord::Schema.define(:version => 20101229195001) do
     t.datetime "updated_at"
     t.string   "full_name"
     t.boolean  "is_admin",                                            :null => false
+    t.integer  "primary_attendee_id"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

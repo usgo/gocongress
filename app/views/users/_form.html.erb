@@ -11,25 +11,25 @@
     </div>
   <% end %>
 
-	<h3>Basic Information</h3>
+  <h3>Basic Information</h3>
 
   <div class="field">
     <%= f.label :email %>
     <%= f.text_field :email %>
   </div>
-  
+
   <div class="field">
     <%= f.label :full_name %>
     <%= f.text_field :full_name %>
   </div>
-  
+
   <div class="field">
     <%= f.label :is_admin %>
     <%= f.check_box :is_admin %>
   </div>
 
-	<h3>Password</h3>
-	<p>If you don't want to change your password, just leave it blank.</p>
+  <h3>Password</h3>
+  <p>If you don't want to change your password, just leave it blank.</p>
 
   <div class="field">
     <%= f.label :password, 'Password' %>
@@ -40,19 +40,19 @@
     <%= f.label :password_confirmation, 'Confirm Password' %>
     <%= f.password_field :password_confirmation, :size => 10 %>
   </div>
-  
+
   <h3>Volunteer Positions</h3>
 
-	<div class="field">
-	<% @jobs.each do |j| -%>
-		<% cbxid = "job_id_" + j.id.to_s %>
-		<% ischecked = j.has_job.to_i > 0 %>
-		<%= check_box_tag "user[job_ids][]", j.id, ischecked, :id => cbxid -%>
-		<%= label_tag cbxid, j.jobname -%>
-		<br />
-	<% end -%>
-	</div>
-  
+  <div class="field">
+  <% @jobs.each do |j| -%>
+    <% cbxid = "job_id_" + j.id.to_s %>
+    <% ischecked = j.has_job.to_i > 0 %>
+    <%= check_box_tag "user[job_ids][]", j.id, ischecked, :id => cbxid -%>
+    <%= label_tag cbxid, j.jobname -%>
+    <br />
+  <% end -%>
+  </div>
+
   <div class="actions">
     <%= f.submit %>
   </div>

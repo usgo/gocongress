@@ -13,8 +13,12 @@ class User < ActiveRecord::Base
 		
 	has_many :user_jobs
 	has_many :jobs, :through => :user_jobs
+  has_one  :primary_attendee
+  has_many :attendees
 
 	after_create :send_welcome_email
+
+  accepts_nested_attributes_for :primary_attendee
 
 private
 
