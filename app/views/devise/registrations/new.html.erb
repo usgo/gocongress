@@ -6,35 +6,131 @@
 	don't create users for each of your kids.
 </p>
 
-<br />
-
 <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
   <%= devise_error_messages! %>
 
-  <div class="field">
-    <%= f.label :email %>
-    <%= f.text_field :email %>
-  </div>
-  
-  <div class="field">
-    <%= f.label :full_name %>
-    <%= f.text_field :full_name %>
-  </div>
+  <fieldset>
+    <legend>Account</legend>
+    <div class="field">
+      <%= f.label :email %>
+      <%= f.text_field :email %>
+    </div>
     
-  <div class="field">
-    <%= f.label :password, 'Password' %>
-    <%= f.password_field :password, :size => 10 %>
-  </div>
+    <div class="field">
+      <%= f.label :full_name %>
+      <%= f.text_field :full_name %>
+    </div>
+      
+    <div class="field">
+      <%= f.label :password, 'Password' %>
+      <%= f.password_field :password, :size => 10 %>
+    </div>
 
-  <div class="field">
-    <%= f.label :password_confirmation, 'Confirm Password' %>
-    <%= f.password_field :password_confirmation, :size => 10 %>
-  </div>
+    <div class="field">
+      <%= f.label :password_confirmation, 'Confirm Password' %>
+      <%= f.password_field :password_confirmation, :size => 10 %>
+    </div>
+  </fieldset>
   
-  <div class="field">
-    <%= f.label :is_admin %>
-    <%= f.check_box :is_admin %>
-  </div>
+  <% resource.primary_attendee ||= Attendee.new %>
+  <%= f.fields_for :primary_attendee do |attendee_fields| %>
+  <fieldset>
+    <legend>Primary Attendee</legend>
+    <fieldset>
+      <legend>Personal Information</legend>
+      <div class="field">
+        <%= attendee_fields.label :given_name, 'Given (First) Name' %>
+        <%= attendee_fields.text_field :given_name %>
+      </div>
+
+      <div class="field">
+        <%= attendee_fields.label :family_name, 'Family (Last) Name' %>
+        <%= attendee_fields.text_field :family_name %>
+      </div>
+
+      <div class="field">
+        <%= attendee_fields.label :gender, 'Gender' %>
+        <%= attendee_fields.radio_button :gender, 'male' %>male
+        &nbsp;&nbsp;
+        <%= attendee_fields.radio_button :gender, 'female' %>female
+      </div>
+
+      <div class="field">
+        <%= attendee_fields.label :anonymous, "Anonymous" %>
+        <%= attendee_fields.check_box :anonymous %> (don't show on public list of attendees)
+      </div>
+
+      <div class="field">
+        <%= attendee_fields.label :birth_date, 'Birth date' %>
+        <%= attendee_fields.text_field :birth_date %>
+      </div>
+
+      <div class="field">
+        <%= attendee_fields.label :understand_minor, 'As a minor, I must submit the form etc.' %>
+        <%= attendee_fields.check_box :understand_minor %>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Player Information</legend>
+      <div class="field">
+        <%= attendee_fields.label :rank, 'Rank' %>
+        <%= attendee_fields.select :rank, Attendee::RANKS, :include_blank => 'Select Rank' %>
+      </div>
+
+      <div class="field">
+        <%= attendee_fields.label :aga_id, 'AGA ID' %>
+        <%= attendee_fields.text_field :aga_id %>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Mailing Address</legend>
+      <div class="field">
+        <%= attendee_fields.label :address_1, 'Address Line 1' %>
+        <%= attendee_fields.text_field :address_1 %>
+      </div>
+
+      <div class="field">
+        <%= attendee_fields.label :address_2, 'Address Line 2' %>
+        <%= attendee_fields.text_field :address_2 %>
+      </div>
+
+      <div class="field">
+        <%= attendee_fields.label :city, 'City' %>
+        <%= attendee_fields.text_field :city %>
+      </div>
+
+      <div class="field">
+        <%= attendee_fields.label :state, 'State/Province' %>
+        <%= attendee_fields.text_field :state %>
+      </div>
+
+      <div class="field">
+        <%= attendee_fields.label :zip, 'Zip/Postal Code' %>
+        <%= attendee_fields.text_field :zip %>
+      </div>
+
+      <div class="field">
+        <%= attendee_fields.label :country, 'Country' %>
+        <%= attendee_fields.text_field :country %>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Contact Information</legend>
+      <div class="field">
+        <%= attendee_fields.label :phone, 'Phone' %>
+        <%= attendee_fields.text_field :phone %>
+      </div>
+
+      <div class="field">
+        <%= attendee_fields.label :email, 'Email' %>
+        <%= attendee_fields.text_field :email %>
+      </div>
+    </fieldset>
+  </fieldset>
+  <% end %>
 
   <p><%= f.submit "Sign up" %></p>
 <% end %>

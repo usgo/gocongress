@@ -192,6 +192,28 @@ div.field_with_errors { background-color:white; display: inline; padding: 0; }
 div.field_with_errors input { background-color:white; }
 div.field label, div.field_with_errors label { display:inline-block; text-align:left; width: 10em; }
 
+fieldset {
+  padding: 0.2em;
+  margin-top: 1em;
+  margin-bottom: 2em;
+}
+
+fieldset fieldset {
+  margin-top: 0em;
+  margin-bottom: 1.5em;
+  border: none;
+  margin-left: 0.5em;
+}
+
+fieldset fieldset legend {
+  font-size: 1.2em;
+}
+
+legend {
+  font-size: 1.3em;
+  font-weight: bold;
+}
+
 /* Footer */
 #footer { 
 	margin: 0 auto;

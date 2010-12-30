@@ -6,15 +6,15 @@ class User < ActiveRecord::Base
 				 :recoverable, :rememberable, :trackable, :validatable
 	
 	# Specify a white list of model attributes that can be set via mass-assignment
-	attr_accessible :email, :password, :password_confirmation, :remember_me, :full_name, :is_admin, :job_ids
+	attr_accessible :email, :password, :password_confirmation, :remember_me, :full_name, :is_admin, :job_ids, :primary_attendee_attributes
 	
 	validates_presence_of :full_name
 	validates_inclusion_of :is_admin, :in => [true, false]
 		
 	has_many :user_jobs
 	has_many :jobs, :through => :user_jobs
-  has_one  :primary_attendee
-  has_many :attendees
+  has_one  :primary_attendee, :class_name => 'Attendee'
+  has_many :attendees, :dependent => :destroy
 
 	after_create :send_welcome_email
 
