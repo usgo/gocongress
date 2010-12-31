@@ -21,6 +21,7 @@ class User < ActiveRecord::Base
   has_one  :primary_attendee, :class_name => 'Attendee'
   has_many :attendees, :dependent => :destroy
 
+	validates_uniqueness_of :email
 	validates_inclusion_of :is_admin, :in => [true, false]
 
 	# There must always be at least one attendee -Jared
