@@ -13,11 +13,16 @@ class User < ActiveRecord::Base
 		
 	has_many :user_jobs
 	has_many :jobs, :through => :user_jobs
+
+	# A user may register multiple people, eg. their family
+	# The primary attendee corresponds with the user themselves
   has_one  :primary_attendee, :class_name => 'Attendee'
   has_many :attendees, :dependent => :destroy
 
 	after_create :send_welcome_email
 
+	# Nested Attributes allow us to create forms for attributes of a parent
+	# object and its associations in one go with fields_for()
   accepts_nested_attributes_for :primary_attendee
 
 private
