@@ -12,8 +12,6 @@ class User < ActiveRecord::Base
 	# On an unrelated note, I added a db-level default value of false for is_admin
 	# -Jared 2010-12-30
 	attr_protected :is_admin
-	
-	validates_inclusion_of :is_admin, :in => [true, false]
 		
 	has_many :user_jobs, :dependent => :destroy
 	has_many :jobs, :through => :user_jobs
@@ -23,7 +21,17 @@ class User < ActiveRecord::Base
   has_one  :primary_attendee, :class_name => 'Attendee'
   has_many :attendees, :dependent => :destroy
 
+	validates_inclusion_of :is_admin, :in => [true, false]
+
+	# There must always be at least one attendee -Jared
+	validates_presence_of :primary_attendee
+	validates_associated :primary_attendee
+
 	after_create :send_welcome_email
+	
+	# Both User and Attendee have an email column, and we don't want to ask the
+	# enduser to enter the same email twice when signing up -Jared 2010.12.31
+	before_validation :apply_user_email_to_primary_attendee, :on => :create
 
 	# Nested Attributes allow us to create forms for attributes of a parent
 	# object and its associations in one go with fields_for()
@@ -39,6 +47,14 @@ private
 	# -Jared 2010.12.27
 	def send_welcome_email
 		UserMailer.welcome_email(self).deliver
+	end
+
+	def apply_user_email_to_primary_attendee
+		# If primary_attendee isn't here, I don't want a NoMethodError
+		# Instead, I'd rather get a RecordNotValid
+		if primary_attendee.present?
+			primary_attendee.email = self.email
+		end
 	end
 
 protected

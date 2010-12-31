@@ -132,11 +132,9 @@
         <%= attendee_fields.label :phone, 'Phone' %>
         <%= attendee_fields.text_field :phone %>
       </div>
-
-      <div class="field">
-        <%= attendee_fields.label :email, 'Email' %>
-        <%= attendee_fields.text_field :email %>
-      </div>
+      
+      <!-- Note that we don't collect attendee email address.  See
+      apply_user_email_to_primary_attendee() -Jared 12/31/10 -->
     </fieldset>
 
   <% end %>

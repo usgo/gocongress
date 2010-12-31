@@ -3,6 +3,8 @@ class Attendee < ActiveRecord::Base
 
   # TODO: Add Validation for gender
   # TODO: Add Validation for rank
+  
+ 	validates_presence_of :email
 
   RANKS = []
   109.downto(101).each {|r| RANKS << ["#{r-100} pro", r] }
