@@ -15,7 +15,7 @@ class User < ActiveRecord::Base
 	
 	validates_inclusion_of :is_admin, :in => [true, false]
 		
-	has_many :user_jobs
+	has_many :user_jobs, :dependent => :destroy
 	has_many :jobs, :through => :user_jobs
 
 	# A user may register multiple people, eg. their family
