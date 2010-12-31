@@ -4,6 +4,13 @@
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
   </head>
   <body>
-    <h1>hello world</h1>
+    <h1>Welcome, <%= @user.primary_attendee.given_name %></h1>
+    <p>Thanks for signing up for a user account on the US Go Congress website.</p>
+    <p>
+    	If you are a minor (under age 18), you must have your parent or guardian
+    	fill out the Liability Release Form.  Click on the link below, get it
+    	filled out, and email it to the Congress Registrar.  Thanks.
+    </p>
+    <p><a href="<%= @lrFormUrl %>">Liability Release Form</a></p>
   </body>
 </html>
