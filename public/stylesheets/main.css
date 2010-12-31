@@ -1,4 +1,4 @@
-/* Basic stuff */
+/* Basic element styling (no classes yet) */
 * { margin: 0px; padding: 0px; }
 body { background-color: white; font-family: Times, serif; }
 h1 { font-family: Helvetica, sans-serif; font-size: 32px; }
@@ -9,16 +9,29 @@ th { font-family: Helvetica, sans-serif; }
 td { font-family: Times, serif; }
 p { font-family: Times, serif; font-size: 16px; }
 span { font-family: Times, serif; font-size: 16px; }
-span.smalltext { font-size: 12px; }
 div { font-family: Times, serif; font-size: 16px; }
 hr { margin: 1em 0em 1em 0em; }
-.fullwidth { width: 100%; }
 blockquote { 
 	font-family: Times, serif; 
 	font-size: 14px; 
 	font-style: oblique; 
 	padding: 0px 10px; 
 }
+fieldset {
+  border: none;
+  padding: 0.2em;
+  margin: 1em 0em;
+}
+legend { 
+	font-family: Helvetica, sans-serif; 
+	font-size: 18px; 
+	font-weight: bold;
+	padding: 0.5em 0em;
+}
+
+/* Truly basic classes that could apply anywhere -Jared 12/30/10 */
+.fullwidth { width: 100%; }
+span.smalltext { font-size: 12px; }
 
 /* Remove the default border on anchored images */
 /* I hope this works as well as the img.border attribute -Jared 11/29/10 */
@@ -185,34 +198,15 @@ table.who thead th { text-align: left; }
 div.inputform { margin: 1em; }
 div.inputform table tbody td { padding-bottom: 0.25em; }
 div.inputform table tbody th { text-align: left; padding-right: 1em; vertical-align: top; }
+.vertical-form-instructions { clear: right; float:right; margin: 1em; width: 300px; }
 
 /* Railsy forms -Jared 12/15/10 */
+/* Note the fixed width labels */
 div.field { display: block; }
 div.field_with_errors { background-color:white; display: inline; padding: 0; }
 div.field_with_errors input { background-color:white; }
-div.field label, div.field_with_errors label { display:inline-block; text-align:left; width: 10em; }
-
-fieldset {
-  padding: 0.2em;
-  margin-top: 1em;
-  margin-bottom: 2em;
-}
-
-fieldset fieldset {
-  margin-top: 0em;
-  margin-bottom: 1.5em;
-  border: none;
-  margin-left: 0.5em;
-}
-
-fieldset fieldset legend {
-  font-size: 1.2em;
-}
-
-legend {
-  font-size: 1.3em;
-  font-weight: bold;
-}
+div.field label, div.field_with_errors label { display:inline-block; text-align:left; width: 150px }
+fieldset .aligned-with-input { margin-left: 155px; }
 
 /* Footer */
 #footer { 

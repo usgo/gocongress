@@ -1,16 +1,22 @@
 <h1>Register for the <%= CONGRESS_YEAR %> US Go Congress!</h1>
 
-<p>
+<p class="vertical-form-instructions">
 	<strong>Registering more than one person?</strong><br />
-	No problem, we plan to allow one user to register multiple people.  So, please
-	don't create users for each of your kids.
+	No problem, one user can register multiple people.  
+	No need to create user accounts for each of your kids!
+</p>
+
+<p class="vertical-form-instructions">
+	<strong>How much does it cost?</strong><br />
+	Well, that depends on many things, like your <a href="#">room and board</a> choices, for example.  
+	To register, however, you only need to pay an initial deposit (<em>lisa, how much?</em>).
 </p>
 
 <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
   <%= devise_error_messages! %>
 
   <fieldset>
-    <legend>Account</legend>
+    <legend>User Account</legend>
     <div class="field">
       <%= f.label :email %>
       <%= f.text_field :email %>
@@ -29,8 +35,7 @@
   
   <% resource.primary_attendee ||= Attendee.new %>
   <%= f.fields_for :primary_attendee do |attendee_fields| %>
-  <fieldset>
-    <legend>Primary Attendee</legend>
+
     <fieldset>
       <legend>Personal Information</legend>
       <div class="field">
@@ -45,14 +50,15 @@
 
       <div class="field">
         <%= attendee_fields.label :gender, 'Gender' %>
-        <%= attendee_fields.radio_button :gender, 'male' %>male
+        <%= attendee_fields.radio_button :gender, 'male' %>&nbsp;Male
         &nbsp;&nbsp;
-        <%= attendee_fields.radio_button :gender, 'female' %>female
+        <%= attendee_fields.radio_button :gender, 'female' %>&nbsp;Female
       </div>
 
       <div class="field">
         <%= attendee_fields.label :anonymous, "Anonymous" %>
-        <%= attendee_fields.check_box :anonymous %> (don't show on public list of attendees)
+        <%= attendee_fields.check_box :anonymous %> 
+        <span class="smalltext">Don't show my name on the "Who's Coming" list</span>
       </div>
 
       <div class="field">
@@ -71,11 +77,19 @@
       <div class="field">
         <%= attendee_fields.label :rank, 'Rank' %>
         <%= attendee_fields.select :rank, Attendee::RANKS, :include_blank => 'Select Rank' %>
+        <br />
+        <span class="smalltext aligned-with-input">
+        	<a href="#">What is my rank?</a>
+        </span>
       </div>
 
       <div class="field">
         <%= attendee_fields.label :aga_id, 'AGA ID' %>
         <%= attendee_fields.text_field :aga_id %>
+        <br />
+        <span class="smalltext aligned-with-input">
+        	<a href="#">What is an AGA ID?</a>
+        </span>
       </div>
     </fieldset>
 
@@ -124,10 +138,16 @@
         <%= attendee_fields.text_field :email %>
       </div>
     </fieldset>
-  </fieldset>
+
   <% end %>
 
-  <p><%= f.submit "Sign up" %></p>
+	<fieldset>
+		<div class="field">
+			<%= label '', '' %>
+			<%= f.submit "Sign me up!" %>
+		</div>
+	</fieldset>
+	
 <% end %>
 
-<%= render :partial => "devise/shared/links" %>
+<%-# render :partial => "devise/shared/links" %>
