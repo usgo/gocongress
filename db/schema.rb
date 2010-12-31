@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101231033000) do
+ActiveRecord::Schema.define(:version => 20101231034243) do
 
   create_table "attendees", :force => true do |t|
     t.string   "given_name",                            :null => false
@@ -72,7 +72,6 @@ ActiveRecord::Schema.define(:version => 20101231033000) do
     t.string   "last_sign_in_ip"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "full_name"
     t.boolean  "is_admin",                            :default => false, :null => false
     t.integer  "primary_attendee_id"
   end

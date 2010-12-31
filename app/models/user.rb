@@ -6,14 +6,13 @@ class User < ActiveRecord::Base
 				 :recoverable, :rememberable, :trackable, :validatable
 	
 	# Specify a white list of model attributes that CAN be set via mass-assignment
-	attr_accessible :email, :password, :password_confirmation, :remember_me, :full_name, :job_ids, :primary_attendee_attributes
+	attr_accessible :email, :password, :password_confirmation, :remember_me, :job_ids, :primary_attendee_attributes
 
 	# Specify a black list of model attributes that CAN'T be set via mass-assignment
 	# On an unrelated note, I added a db-level default value of false for is_admin
 	# -Jared 2010-12-30
 	attr_protected :is_admin
 	
-	validates_presence_of :full_name
 	validates_inclusion_of :is_admin, :in => [true, false]
 		
 	has_many :user_jobs
