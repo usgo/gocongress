@@ -1,5 +1,7 @@
 Gocongress::Application.routes.draw do
 
+  get "attendee/index"
+
   match "/users/:id/resetpasswd" => "users#resetpasswd"
   match '/popup/:action' => 'popup', :as => 'popup'
 

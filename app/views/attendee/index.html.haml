@@ -1,0 +1,18 @@
+%h1 Who&#39;s Coming?
+%p
+  If you want to play baduk for a week with all these cool people,
+  then you should #{link_to 'register', '/users/sign_up'}!
+%table.semantic.fullwidth
+  %thead
+    %tr
+      %th Given Name
+      %th Family Name
+      %th Rank
+      %th Registration Date
+  %tbody
+    - @attendees.each do |a|
+      %tr
+        %td= a.given_name
+        %td= a.family_name
+        %td= a.get_rank_name
+        %td= a.created_at.to_date.to_formatted_s(:rfc822)

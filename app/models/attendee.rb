@@ -28,4 +28,12 @@ class Attendee < ActiveRecord::Base
   # Alf, what does this mean? -Jared
   validates :understand_minor, :minor_agreement => true
 
+	public
+		def get_rank_name
+			rank_name = ""
+			RANKS.each { |r| if (r[1] == self.rank) then rank_name = r[0] end	}
+			if rank_name.empty? then raise "assertion failed: invalid rank" end
+			return rank_name
+		end
+
 end
