@@ -18,6 +18,14 @@ class Attendee < ActiveRecord::Base
   validates_inclusion_of :rank, :in => NUMERIC_RANK_LIST
   validates_presence_of :email
   validates_presence_of :birth_date
+
+  # Minors must agree to fill out the liability release form when they sign up
+  # understand_minor is a database column, so we must specify accept => true
+  # because the attribute is typecasted from "1" to true before validation.
+  # -Jared 2011.1.2
+  validates_acceptance_of :understand_minor, :on => :create, :accept => true
+
+  # Alf, what does this mean? -Jared
   validates :understand_minor, :minor_agreement => true
 
 end
