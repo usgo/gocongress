@@ -70,7 +70,9 @@
         = attendee_fields.text_field :aga_id
         %br/
         %span.smalltext.aligned-with-input
-          = link_to 'What is an AGA ID?', popup_path('aga_id'), :target => '_blank'
+          If you do not have an
+          = link_to 'AGA ID', popup_path('aga_id'), :target => '_blank'
+          you may leave this blank
     %fieldset
       %legend Contact Information
       .field
