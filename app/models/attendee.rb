@@ -19,21 +19,14 @@ class Attendee < ActiveRecord::Base
   validates_presence_of :email
   validates_presence_of :birth_date
 
-  # Minors must agree to fill out the liability release form when they sign up
-  # understand_minor is a database column, so we must specify accept => true
-  # because the attribute is typecasted from "1" to true before validation.
-  # -Jared 2011.1.2
-  validates_acceptance_of :understand_minor, :on => :create, :accept => true
-
-  # Alf, what does this mean? -Jared
+  # Use MinorAgreementValidator (found in lib/) to require that understand_minor
+  # be checked if the attendee will not be 18 before the first day of the Congress.
   validates :understand_minor, :minor_agreement => true
 
-	public
-		def get_rank_name
-			rank_name = ""
-			RANKS.each { |r| if (r[1] == self.rank) then rank_name = r[0] end	}
-			if rank_name.empty? then raise "assertion failed: invalid rank" end
-			return rank_name
-		end
-
+  def get_rank_name
+    rank_name = ""
+    RANKS.each { |r| if (r[1] == self.rank) then rank_name = r[0] end }
+    if rank_name.empty? then raise "assertion failed: invalid rank" end
+    return rank_name
+  end
 end
