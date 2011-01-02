@@ -31,7 +31,7 @@ legend {
 
 /* Truly basic classes that could apply anywhere -Jared 12/30/10 */
 .fullwidth { width: 100%; }
-span.smalltext { font-size: 12px; }
+.smalltext { font-size: 12px; }
 
 /* Remove the default border on anchored images */
 /* I hope this works as well as the img.border attribute -Jared 11/29/10 */

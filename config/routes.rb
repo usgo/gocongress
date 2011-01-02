@@ -1,10 +1,11 @@
 Gocongress::Application.routes.draw do
 
-	match "/users/:id/resetpasswd" => "users#resetpasswd"
+  match "/users/:id/resetpasswd" => "users#resetpasswd"
+  match '/popup/:action' => 'popup', :as => 'popup'
 
   devise_for :users
 
-	# resource routes (maps HTTP verbs to controller actions automatically):
+  # resource routes (maps HTTP verbs to controller actions automatically):
   resources :events, :jobs, :users, :user_jobs
 
   get "home/index"

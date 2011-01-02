@@ -50,26 +50,28 @@
         = attendee_fields.date_select :birth_date, :add_month_numbers => true, :start_year => 120.years.ago.year, :end_year => Time.now.year, :order => [:month, :day, :year], :include_blank => true
       .field
         = attendee_fields.label :understand_minor, 'Minor Agreement'
-        %div{:style => "float: right;"}
-          = attendee_fields.check_box :understand_minor
+        = attendee_fields.check_box :understand_minor
+        %div.smalltext.aligned-with-input
           I understand that if this attendee will not be at least 18 years of age as of July 29, 2011, I must print out and submit the
-          %a{:href => "#"} Minor Agreement Form
-          %em (Lisa, where should this link to?)
+          %a{:href => "/docs/USGC2011-Liability-Release-Form.doc"} Minor Agreement Form
           in order for this registration to be valid.
     %fieldset
       %legend Player Information
+      .smalltext
+        You can look up your rank and/or AGA id
+        = link_to 'here', 'http://usgo.org/ratings/RatingsQuery.php', :target => '_blank'
       .field
         = attendee_fields.label :rank, 'Rank'
         = attendee_fields.select :rank, Attendee::RANKS, :include_blank => 'Select Rank'
         %br/
         %span.smalltext.aligned-with-input
-          %a{:href => "#"} What is my rank?
+          = link_to 'What is my rank?', popup_path('rank'), :target => '_blank'
       .field
         = attendee_fields.label :aga_id, 'AGA ID'
         = attendee_fields.text_field :aga_id
         %br/
         %span.smalltext.aligned-with-input
-          %a{:href => "#"} What is an AGA ID?
+          = link_to 'What is an AGA ID?', popup_path('aga_id'), :target => '_blank'
     %fieldset
       %legend Mailing Address
       .field

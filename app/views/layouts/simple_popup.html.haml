@@ -1,0 +1,17 @@
+!!!
+%html
+  %head
+    %meta{:content => "text/html", "http-equiv" => "Content-Type"}/
+    %title
+      US Go Congress #{CONGRESS_YEAR}
+    = stylesheet_link_tag :all
+    / These js files must be included in this exact order -Jared 11/30/10
+    = javascript_include_tag "jquery.min.js"
+    = javascript_include_tag "rails"
+    = javascript_include_tag "application"
+    = javascript_include_tag "galleria/galleria"
+    = javascript_include_tag "galleria/themes/dots/galleria.dots.js"
+    = csrf_meta_tag
+  %body{:class => @bodyClassList}
+    #content
+      = yield
