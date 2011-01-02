@@ -9,7 +9,7 @@
 <p class="vertical-form-instructions">
 	<strong>How much does it cost?</strong><br />
 	Well, that depends on many things, like your <a href="#">room and board</a> choices, for example.  
-	To register, however, you only need to pay an initial deposit (<em>lisa, how much?</em>).
+	To register, however, you only need to pay an initial deposit of $75.
 </p>
 
 <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
@@ -63,12 +63,14 @@
 
       <div class="field">
         <%= attendee_fields.label :birth_date, 'Birth date' %>
-        <%= attendee_fields.text_field :birth_date %>
+        <%= attendee_fields.date_select :birth_date, :add_month_numbers => true, :start_year => 120.years.ago.year, :end_year => Time.now.year, :order => [:month, :day, :year], :include_blank => true %>
       </div>
 
       <div class="field">
-        <%= attendee_fields.label :understand_minor, 'As a minor, I must submit the form etc.' %>
-        <%= attendee_fields.check_box :understand_minor %>
+        <%= attendee_fields.label :understand_minor, 'Minor Agreement' %>
+        <div style="float: right;">
+          <%= attendee_fields.check_box :understand_minor %> I understand that if this attendee will not be at least 18 years of age as of July 29, 2011, I must print out and submit the <a href=#>Minor Agreement Form</a> <em>(Lisa, where should this link to?)</em> in order for this registration to be valid.
+        </div>
       </div>
     </fieldset>
 
