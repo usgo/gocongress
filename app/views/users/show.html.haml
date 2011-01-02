@@ -2,6 +2,9 @@
 %p
   %b Email:
   = @user.email
+%p
+  %b Primary Attendee Rank:
+  = @user.primary_attendee.rank
 = link_to 'Edit', edit_user_path(@user)
 |
 \#{link_to 'Back', users_path}
