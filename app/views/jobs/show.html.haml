@@ -1,0 +1,7 @@
+%p#notice= notice
+%p
+  %b Jobname:
+  = @job.jobname
+= link_to 'Edit', edit_job_path(@job)
+|
+\#{link_to 'Back', jobs_path}

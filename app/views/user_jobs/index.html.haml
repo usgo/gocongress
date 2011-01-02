@@ -1,0 +1,20 @@
+%h2 Contact Us
+%table.semantic.fullwidth
+  %thead
+    %tr
+      %th Position
+      %th Name
+      %th Email
+      %th Phone
+  %tbody
+    - @user_jobs.each do |uj|
+      %tr
+        %td= uj.jobname
+        %td
+        %td= uj.email
+        %td
+%dl
+  %dt TC
+  %dd Tournament Coordinator
+  %dt TD
+  %dd Tournament Director

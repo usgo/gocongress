@@ -1,0 +1,23 @@
+%h1 Who's Coming?
+%p
+  If you want to play baduk for a week with all these cool people,
+  then you should #{link_to 'register', '/users/sign_up'}!
+%table.semantic.fullwidth
+  %thead
+    %tr
+      %th Given Name
+      %th Family Name
+      %th Email
+      %th Date
+      %th{:colspan => "3"}
+  %tbody
+    - @users.each do |user|
+      %tr
+        %td= user.primary_attendee.given_name
+        %td= user.primary_attendee.family_name
+        %td= user.email
+        %td= user.created_at
+        %td= link_to 'Show', user
+        %td= link_to 'Edit', edit_user_path(user)
+        %td
+          = link_to 'Destroy', user, :confirm => 'Are you sure?', :method => :delete

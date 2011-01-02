@@ -1,0 +1,53 @@
+/ Slideshow.  Only displayed if JS is on - Jared 7/27/10
+#gallery-container{:style => "display: none;"}
+  #gallery
+    - 1.upto(9) do |i|
+      /
+        The img title ends up in a div.galleria-info-title
+        The img alt ends up in a div.galleria-info-description
+        Leave the alt empty -Jared 12/20/10
+      = image_tag "slideshow/0" + i.to_s + ".jpg", :title=>@arSlideTitles[i-1], :alt=>""
+.curvy-text-container
+  = image_tag "logo/gc2011-logo-300.png", :id => 'usgc-logo'
+  .curvy-spacer{:style => "width: 85px;"} &nbsp;
+  .curvy-spacer{:style => "width: 115px;"} &nbsp;
+  .curvy-spacer{:style => "width: 135px;"} &nbsp;
+  .curvy-spacer{:style => "width: 150px;"} &nbsp;
+  .curvy-spacer{:style => "width: 160px;"} &nbsp;
+  .curvy-spacer{:style => "width: 165px;"} &nbsp;
+  .curvy-spacer{:style => "width: 165px;"} &nbsp;
+  .curvy-spacer{:style => "width: 165px;"} &nbsp;
+  .curvy-spacer{:style => "width: 165px;"} &nbsp;
+  .curvy-spacer{:style => "width: 165px;"} &nbsp;
+  .curvy-spacer{:style => "width: 160px;"} &nbsp;
+  .curvy-spacer{:style => "width: 150px;"} &nbsp;
+  .curvy-spacer{:style => "width: 135px;"} &nbsp;
+  .curvy-spacer{:style => "width: 120px;"} &nbsp;
+  .curvy-spacer{:style => "width: 105px;"} &nbsp;
+  .curvy-spacer{:style => "width: 60px;"} &nbsp;
+  / Just playing around, I may not keep this welcome message -Jared 12/22/10
+  - if @welcomeMessage.length > 0
+    %p= @welcomeMessage
+  %p
+    The US Go Congress is the largest Go tournament in the United States. It
+    happens once a year and spans one week. Events include:
+  %p
+    %span.event-title
+      %a{:href => "frontend/tournament_info.php#uso"} US Open
+    \- the largest annual Go tournament in the US
+  %p
+    %span.event-title
+      %a{:href => "frontend/tournament_info.php#naim"} North American Ing Masters
+    \- 32 of the strongest amateur and professional players in North America
+  %p
+    %span.event-title
+      %a{:href => "frontend/tournament_info.php#redmond"} The Redmond Cup
+    \- selects for World Youth Go Championship
+  %p
+    %a{:href => "frontend/pros.php"} Pro lectures, simuls
+  %p Vendor area
+  %div{:style => "clear:left;"}
+%p
+  %a{:href => "frontend/faq.php"} Frequently Asked Questions
+  %br/
+  %a{:href => "http://www.usgo.org/congresses/2010"} 2010 Congress

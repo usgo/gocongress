@@ -1,0 +1,28 @@
+%h2 Volunteer Opportunities
+%p
+  If you are interested in taking one of these positions, please
+  contact Andrew Jackson or Lisa Scott for further information.
+  Positions which have already been filled are listed on the
+  = succeed "." do
+    %a{:href => "/user_jobs"} contact us page
+%h3 Volunteer Positions
+%table.semantic
+  %thead
+    %tr
+      %th Position
+      %th People Needed (Total)
+      %th Available
+      %th Description
+      %th{:colspan => "3"}
+  %tbody
+    - @jobs.each do |job|
+      %tr
+        %td= job.jobname
+        %td
+        %td
+        %td
+        %td= link_to 'Show', job
+        %td= link_to 'Edit', edit_job_path(job)
+        %td= link_to 'Destroy', job, :confirm => 'Are you sure?', :method => :delete
+%br/
+= link_to 'Create a new volunteer position', new_job_path

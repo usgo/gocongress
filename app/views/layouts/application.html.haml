@@ -1,0 +1,118 @@
+!!!
+%html
+  %head
+    %meta{:content => "text/html", "http-equiv" => "Content-Type"}/
+    %title
+      US Go Congress #{CONGRESS_YEAR}
+    = stylesheet_link_tag :all
+    / These js files must be included in this exact order -Jared 11/30/10
+    = javascript_include_tag "jquery.min.js"
+    = javascript_include_tag "rails"
+    = javascript_include_tag "application"
+    = javascript_include_tag "galleria/galleria"
+    = javascript_include_tag "galleria/themes/dots/galleria.dots.js"
+    = csrf_meta_tag
+  %body{:class => @bodyClassList}
+    / A few of the more verbose pages reference this named anchor -Jared 9/12/10
+    %a{:name => "top"}
+    #header-container
+      #header
+        #usgc-title-container
+          %h1
+            %a{:href => "/"}
+              = CONGRESS_YEAR
+              US Go Congress
+        #usgc-when-where-container
+          \#{CONGRESS_CITY}, #{CONGRESS_STATE} &nbsp;
+          \#{CONGRESS_DATE_RANGE}, #{CONGRESS_YEAR}
+        %div{:style => "clear:both;"}
+    #nav-container
+      #nav
+        %ul
+          %li#nav-events
+            %a{:href => "/events"}
+              Events &amp;
+              %br>/
+              Activities
+          %li#nav-tournaments
+            %a{:href => "#"} Tournaments
+          %li#nav-pros
+            %a{:href => "#"}
+              Professionals
+              %br>/
+              \&amp; VIPs
+          %li#nav-rooms
+            %a{:href => "#"}
+              Room &amp;
+              %br>/
+              Board
+          %li#nav-transportation
+            %a{:href => "#"}
+              Trans-
+              %br>/
+              portation
+          %li#nav-volunteer
+            %a{:href => "/jobs"} Volunteer
+          %li#nav-contact
+            %a{:href => "/user_jobs"}
+              Contact
+              %br>/
+              Us
+          %li#nav-who
+            %a{:href => "/users"}
+              Who's
+              %br>/
+              Coming
+          %li#nav-registration
+            = image_tag "icons/star.png", :class => 'preregister-star'
+            %a{:href => "/users/sign_up"}
+              %br>/
+              Register
+          %li#nav-login.last-child
+            - if current_user.nil?
+              %a.hmenu{:href => "/users/sign_in"}
+                Sign
+                %br>/
+                In
+            - else
+              %a.hmenu{:href => "/users/sign_out"}
+                Sign
+                %br>/
+                Out
+    #content
+      / "Flash messages" required by Devise -Jared 12/20/10
+      .rails-flash-notice= notice
+      .rails-flash-alert= alert
+      / Breadcrumbs are defined in the controller - Jared 8/22/10
+      - if crumbs.length > 0
+        #breadcrumbs
+          %a{:href => "/"} Home
+          - crumbs.each do |e|
+            \&gt;
+            %a{:href => e['url']}= e["title"]
+      / Friendly noscript warning - Jared 7/27/10
+      %noscript
+        .error
+          Please enable Javascript.  Otherwise, we can't show you the nice photo gallery.  Thanks.
+      = yield
+      %div{:style => "clear:both;"}
+    #footer
+      /
+        Sponsor logos, small and circular, with anchors, in the lower
+        right corner - Jared 9/4/10
+      #sponsors
+        %a{:href => "http://www.usgo.org"}
+          = image_tag "sponsors/aga.jpg"
+        %a{:href => "http://www.gokgs.com"}
+          = image_tag "sponsors/kgs.jpg"
+      #site-credit
+        Content &copy;<?=$GCYear?> US Go Congress
+        %br/
+        Programming by
+        %a{:href => "mailto:jon@ctipc.com", :target => "_blank"} Jon Hilt
+        %br/
+        and
+        %a{:href => "http://www.jaredbeck.com", :target => "_blank"} Jared Beck
+        %br/
+        Hosted at
+        %a{:href => "http://www.ctipc.com", :target => "_blank"} CT, Inc

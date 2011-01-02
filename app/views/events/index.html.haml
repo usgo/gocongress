@@ -1,0 +1,35 @@
+%h2 Events and Activities
+%p
+  In addition to many
+  = succeed "," do
+    %a{:href => "tournament_info.php"} tournaments
+  game reviews and lessons by
+  = succeed "," do
+    %a{:href => "pros.php"} professionals
+  the vendor area, and other Go-related activities, we also have
+  these activities:
+%p.notice
+  All events, prices, and times subject to change.
+%table.semantic.fullwidth.zebra
+  %tbody
+    - @arEventsByDate.each do |d,arEvt|
+      %tr.date-header
+        %th{:colspan => "7"}
+          = d
+      %tr.lesser-header
+        %th Event
+        %th Transport Departure Time
+        %th Event Start/Arrival Time
+        %th Price
+        %th{:colspan => "3"}
+      - arEvt.each do |e|
+        %tr
+          %td= e.evtname
+          %td= e.evtdeparttime
+          %td= e.evtstarttime
+          %td= e.evtprice
+          %td= link_to 'Show', e
+          %td= link_to 'Edit', edit_event_path(e)
+          %td= link_to 'Destroy', e, :confirm => 'Are you sure?', :method => :delete
+%br/
+= link_to 'New Event', new_event_path

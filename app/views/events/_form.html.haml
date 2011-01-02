@@ -1,0 +1,34 @@
+= form_for(@event) do |f|
+  - if @event.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(@event.errors.count, "error")
+        prohibited this event from being saved:
+      %ul
+        - @event.errors.full_messages.each do |msg|
+          %li= msg
+  .field
+    = f.label :evtdate
+    %br/
+    = f.date_select \                       |
+      :evtdate \                            |
+      , :start_year => CONGRESS_YEAR.to_i \ |
+      , :end_year => CONGRESS_YEAR.to_i \   |
+  .field
+    = f.label :evtname
+    %br/
+    = f.text_field :evtname
+  .field
+    = f.label :evtdeparttime
+    %br/
+    = f.text_field :evtdeparttime
+  .field
+    = f.label :evtstarttime
+    %br/
+    = f.text_field :evtstarttime
+  .field
+    = f.label :evtprice
+    %br/
+    = f.text_field :evtprice
+  .actions
+    = f.submit

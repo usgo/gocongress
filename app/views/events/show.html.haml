@@ -1,0 +1,19 @@
+%p#notice= notice
+%p
+  %b Evtdate:
+  = @event.evtdate
+%p
+  %b Evtname:
+  = @event.evtname
+%p
+  %b Evtdeparttime:
+  = @event.evtdeparttime
+%p
+  %b Evtstarttime:
+  = @event.evtstarttime
+%p
+  %b Evtprice:
+  = @event.evtprice
+= link_to 'Edit', edit_event_path(@event)
+|
+\#{link_to 'Back', events_path}

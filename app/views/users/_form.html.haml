@@ -1,0 +1,34 @@
+= form_for(@user) do |f|
+  - if @user.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(@user.errors.count, "error")
+        prohibited this user from being saved:
+      %ul
+        - @user.errors.full_messages.each do |msg|
+          %li= msg
+  %h3 Basic Information
+  .field
+    = f.label :email
+    = f.text_field :email
+  .field
+    = f.label :is_admin
+    = f.check_box :is_admin
+  %h3 Password
+  %p If you don't want to change your password, just leave it blank.
+  .field
+    = f.label :password, 'Password'
+    = f.password_field :password, :size => 10
+  .field
+    = f.label :password_confirmation, 'Confirm Password'
+    = f.password_field :password_confirmation, :size => 10
+  %h3 Volunteer Positions
+  .field
+    - @jobs.each do |j|
+      - cbxid = "job_id_" + j.id.to_s
+      - ischecked = j.has_job.to_i > 0
+      = check_box_tag "user[job_ids][]", j.id, ischecked, :id => cbxid
+      = label_tag cbxid, j.jobname
+      %br/
+  .actions
+    = f.submit
