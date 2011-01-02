@@ -20,7 +20,7 @@ blockquote {
 fieldset {
   border: none;
   padding: 0.2em;
-  margin: 1em 0em;
+  margin: 0em;
 }
 legend { 
 	font-family: Helvetica, sans-serif; 

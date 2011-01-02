@@ -44,7 +44,7 @@
       .field
         = attendee_fields.label :anonymous, "Anonymous"
         = attendee_fields.check_box :anonymous
-        %span.smalltext Don't show my name on the "Who's Coming" list
+        %span.smalltext Do not show my name on the "Who&#39;s Coming" list
       .field
         = attendee_fields.label :birth_date, 'Birth date'
         = attendee_fields.date_select :birth_date, :add_month_numbers => true, :start_year => 120.years.ago.year, :end_year => Time.now.year, :order => [:month, :day, :year], :include_blank => true
@@ -52,20 +52,19 @@
         = attendee_fields.label :understand_minor, 'Minor Agreement'
         = attendee_fields.check_box :understand_minor
         %div.smalltext.aligned-with-input
-          I understand that if this attendee will not be at least 18 years of age as of July 29, 2011, I must print out and submit the
+          I understand that if this attendee will not be at least 18 years of age as of July 29, 2011, I must submit the
           %a{:href => "/docs/USGC2011-Liability-Release-Form.doc"} Minor Agreement Form
-          in order for this registration to be valid.
+          to the 
+          = link_to 'registrar', user_jobs_path, :target => '_blank'
     %fieldset
       %legend Player Information
-      .smalltext
-        You can look up your rank and/or AGA id
-        = link_to 'here', 'http://usgo.org/ratings/RatingsQuery.php', :target => '_blank'
       .field
         = attendee_fields.label :rank, 'Rank'
         = attendee_fields.select :rank, Attendee::RANKS, :include_blank => 'Select Rank'
         %br/
         %span.smalltext.aligned-with-input
-          = link_to 'What is my rank?', popup_path('rank'), :target => '_blank'
+          = link_to 'What is rank?', popup_path('rank'), :target => '_blank'
+          = link_to 'What is my AGA rank?', 'http://usgo.org/ratings/RatingsQuery.php', :target => '_blank'
       .field
         = attendee_fields.label :aga_id, 'AGA ID'
         = attendee_fields.text_field :aga_id
@@ -73,7 +72,13 @@
         %span.smalltext.aligned-with-input
           = link_to 'What is an AGA ID?', popup_path('aga_id'), :target => '_blank'
     %fieldset
-      %legend Mailing Address
+      %legend Contact Information
+      .field
+        = attendee_fields.label :phone, 'Phone'
+        = attendee_fields.text_field :phone
+      /
+        Note that we do not collect attendee email address.  See
+        apply_user_email_to_primary_attendee() -Jared 12/31/10
       .field
         = attendee_fields.label :address_1, 'Address Line 1'
         = attendee_fields.text_field :address_1
@@ -92,14 +97,6 @@
       .field
         = attendee_fields.label :country, 'Country'
         = attendee_fields.text_field :country
-    %fieldset
-      %legend Contact Information
-      .field
-        = attendee_fields.label :phone, 'Phone'
-        = attendee_fields.text_field :phone
-      /
-        Note that we don't collect attendee email address.  See
-        apply_user_email_to_primary_attendee() -Jared 12/31/10
   %fieldset
     .field
       = label '', ''
