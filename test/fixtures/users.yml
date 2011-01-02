@@ -3,14 +3,11 @@
 one:
   email: user1@example.com
   is_admin: false
-  full_name: User One
 
 two:
   email: user2@example.com
   is_admin: false
-  full_name: User Two
 
 admin:
   email: admin@example.com
   is_admin: true
-  full_name: Admin User
