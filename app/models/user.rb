@@ -22,11 +22,10 @@ class User < ActiveRecord::Base
   has_many :attendees, :dependent => :destroy
 
   validates_uniqueness_of :email
-	validates_inclusion_of :is_admin, :in => [true, false]
+  validates_inclusion_of :is_admin, :in => [true, false]
 
   # There must always be at least one attendee -Jared
   validates_presence_of :primary_attendee
-  validates_associated :primary_attendee
 
   after_create :send_welcome_email
 
