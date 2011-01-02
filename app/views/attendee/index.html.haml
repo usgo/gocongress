@@ -11,8 +11,8 @@
       %th Registration Date
   %tbody
     - @attendees.each do |a|
-      %tr
-        %td= a.given_name
-        %td= a.family_name
+      %tr{:class => if a.anonymous then "understated" end }
+        %td= if a.anonymous then "Anonymous" else a.given_name end
+        %td= if a.anonymous then "Anonymous" else a.family_name end
         %td= a.get_rank_name
         %td= a.created_at.to_date.to_formatted_s(:rfc822)
