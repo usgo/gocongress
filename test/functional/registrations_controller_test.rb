@@ -17,7 +17,7 @@ class RegistrationsControllerTest < ActionController::TestCase
       "given_name"=>"Jared", "birth_date(1i)"=>"1891", "state"=>""}, "password_confirmation"=>"asdf", "password"=>"asdf", "email"=>"test120489@j.singlebrook.com"}
       puts assigns(:user).errors.full_messages
     end
-    assert assigns(:user).primary_attendee.present?
+    assert assigns(:user).primary_attendee.user_id.present?
     assert_response :redirect
   end
 
