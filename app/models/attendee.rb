@@ -18,10 +18,20 @@ class Attendee < ActiveRecord::Base
   validates_inclusion_of :rank, :in => NUMERIC_RANK_LIST, :message => "is not a valid rank"
   validates_presence_of :email
   validates_presence_of :birth_date
+  
+  # Attendees must belong to a user (except when they are first being created,      
+  # because in a nested form there might not be a user_id yet.  I think that is what
+  # is going on, anyway) I'm surprised this is necessary at all, and I'm unsettled  
+  # by the lack of a foreign key constraint. -Jared 2011.1.2                        
+  validates_presence_of :user_id, :on => :update
 
   # Use MinorAgreementValidator (found in lib/) to require that understand_minor
   # be checked if the attendee will not be 18 before the first day of the Congress.
   validates :understand_minor, :minor_agreement => true
+
+	def get_full_name
+		given_name + " " + family_name
+	end
 
   def get_rank_name
     rank_name = ""

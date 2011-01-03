@@ -33,6 +33,9 @@ class User < ActiveRecord::Base
   # enduser to enter the same email twice when signing up -Jared 2010.12.31
   before_validation :apply_user_email_to_primary_attendee, :on => :create
 
+  # For some reason, primary attendee was not getting a user_id! -Jared 2011.1.2
+  after_create :apply_user_id_to_primary_attendee
+
   # Nested Attributes allow us to create forms for attributes of a parent
   # object and its associations in one go with fields_for()
   accepts_nested_attributes_for :primary_attendee
@@ -54,6 +57,12 @@ private
     # Instead, I'd rather get a RecordNotValid
     if primary_attendee.present?
       primary_attendee.email = self.email
+    end
+  end
+
+  def apply_user_id_to_primary_attendee
+    if primary_attendee.present?
+      primary_attendee.user_id = self.id
     end
   end
 
