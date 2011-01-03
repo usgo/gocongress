@@ -13,5 +13,12 @@ class ActiveSupport::TestCase
 end
 
 class ActionController::TestCase
-  include Devise::TestHelpers
+ include Devise::TestHelpers
+
+ def setup
+   # Tell Devise what model we're using for Auth.  Make sure only to add this
+   # to tests that inherit from ActionController::TestCase
+   request.env["devise.mapping"] = Devise.mappings[:user]
+ end
+
 end
