@@ -64,10 +64,16 @@
               %br>/
               Coming
           %li#nav-registration
-            = image_tag "icons/star.png", :class => 'preregister-star'
-            %a{:href => "/users/sign_up"}
-              %br>/
-              Register
+            - if current_user.nil?
+              = image_tag "icons/star.png", :class => 'preregister-star'
+              %a{:href => "/users/sign_up"}
+                %br>/
+                Register
+            - else
+              %a{:href => "/users/" + current_user.id.to_s }
+                My
+                %br>/
+                Account
           %li#nav-login.last-child
             - if current_user.nil?
               %a.hmenu{:href => "/users/sign_in"}
@@ -93,7 +99,7 @@
       / Friendly noscript warning - Jared 7/27/10
       %noscript
         .error
-          Please enable Javascript.  Otherwise, we can't show you the nice photo gallery.  Thanks.
+          Please enable Javascript.  Otherwise, we can not show you the nice photo gallery.  Thanks.
       = yield
       %div{:style => "clear:both;"}
     #footer

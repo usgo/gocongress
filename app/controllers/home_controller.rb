@@ -22,4 +22,7 @@ class HomeController < ApplicationController
 		end
 	end
 
+	def access_denied
+	end
+
 end

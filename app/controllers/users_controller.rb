@@ -2,6 +2,12 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.xml
   def index
+    if !can_access_all_users then
+      @deny_message = "You do not have access to see all users"
+      render :template => 'home/access_denied'
+      return
+    end
+    
     @users = User.where("primary_attendee_id is not null")
 
     respond_to do |format|
@@ -117,6 +123,28 @@ class UsersController < ApplicationController
 			format.xml  { head :ok }
 		end
 	end
+
+  def can_access_user (target_user_id)
+    allow = false
+    if current_user.nil?
+      allow = false
+    elsif current_user.id == target_user_id
+      allow = true
+    elsif current_user.is_admin
+      allow = true
+    end
+    return allow
+  end
+  
+  def can_access_all_users
+    allow = false
+    if current_user.nil?
+      allow = false
+    elsif current_user.is_admin?
+      allow = true
+    end
+    return allow
+  end
 
 private
 
