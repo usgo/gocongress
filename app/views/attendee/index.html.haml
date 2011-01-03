@@ -4,10 +4,10 @@
 %table.semantic.fullwidth
   %thead
     %tr
-      %th Given Name
-      %th Family Name
-      %th Rank
-      %th Registration Date
+      %th= link_to "Given Name", :sort => "given_name"
+      %th= link_to "Family Name", :sort => "family_name"
+      %th= link_to "Rank", :sort => "rank"
+      %th= link_to "Registration Date", :sort => "created_at"
   %tbody
     - @attendees.each do |a|
       %tr{:class => if a.anonymous then "understated" end }
