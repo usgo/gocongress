@@ -37,6 +37,11 @@ legend {
 /* I hope this works as well as the img.border attribute -Jared 11/29/10 */
 a img { border: none; }
 
+/* Lightweight table: Tighter, less colors, borders, etc. -Jared 1/2/11 */
+table.lightweight { border-spacing: 0; border-collapse: collapse; }
+table.lightweight td, table.lightweight th { border: 0px solid #666; padding: 0em; text-align: left; }
+table.lightweight th { padding-right: 0.5em; }
+
 /* Semantic table: The basic table meant for data, not for layout */
 table.semantic { border-spacing: 0; border-collapse: collapse; }
 table.semantic td, table.semantic th { border: 1px solid #666; padding: 0.25em; text-align: left; }
@@ -224,3 +229,15 @@ fieldset .aligned-with-input { margin-left: 155px; }
 #sponsors {
 	float: right;
 }
+
+/* misc */
+.attendee-card {
+	float: left;
+	padding: 0em 0.5em;
+}
+.attendee-card-contents {
+	background-color: #DDD;
+	border: 1px solid #AAA;
+	padding: 0.5em;
+}
+#content .attendee-card-contents h2 { padding-top: 0em; }

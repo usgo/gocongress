@@ -1,11 +1,29 @@
-%p#notice= notice
 %h1 My Account
-%p
-  %b Email:
-  = @user.email
-%p
-  %b Primary Attendee Rank:
-  = @user.primary_attendee.rank
-= link_to 'Edit', edit_user_path(@user)
-|
-\#{link_to 'Back', users_path}
+
+%table.lightweight
+  %tbody
+    %tr
+      %th Email
+      %td= @user.email
+
+%p= link_to 'Edit my account', edit_user_path(@user)
+
+%br/
+
+- for a in @user.attendees
+  .attendee-card
+    .attendee-card-contents
+      %h2= a.get_full_name
+      %table.lightweight
+        %tbody
+          %tr
+            %th Email
+            %td= a.email
+          %tr
+            %th Rank
+            %td= a.get_rank_name
+      %p= link_to 'Edit this attendee', edit_attendee_path(a)
+
+.attendee-card
+  .attendee-card-contents
+    %p= link_to 'Register another attendee', new_attendee_path

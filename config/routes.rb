@@ -1,6 +1,5 @@
 Gocongress::Application.routes.draw do
 
-  get "attendees/index"
   get "home/access_denied"
 
   match "/users/:id/resetpasswd" => "users#resetpasswd"
@@ -9,7 +8,7 @@ Gocongress::Application.routes.draw do
   devise_for :users
 
   # resource routes (maps HTTP verbs to controller actions automatically):
-  resources :events, :jobs, :users, :user_jobs
+  resources :events, :jobs, :users, :user_jobs, :attendees
 
   get "home/index"
 
