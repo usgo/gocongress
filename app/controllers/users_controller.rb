@@ -1,5 +1,8 @@
 class UsersController < ApplicationController
-  before_filter :allow_only_admin, :only => :index
+
+  # Access Control
+  before_filter :allow_only_admin, :only => [:index,:destroy]
+  before_filter :allow_only_self_or_admin, :only => [:show,:edit]
 
   # GET /users
   # GET /users.xml
@@ -119,18 +122,6 @@ class UsersController < ApplicationController
 			format.xml  { head :ok }
 		end
 	end
-
-  def can_access_user (target_user_id)
-    allow = false
-    if current_user.nil?
-      allow = false
-    elsif current_user.id == target_user_id
-      allow = true
-    elsif current_user.is_admin
-      allow = true
-    end
-    return allow
-  end
 
 private
 
