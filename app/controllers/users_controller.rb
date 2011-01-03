@@ -1,13 +1,9 @@
 class UsersController < ApplicationController
+  before_filter :allow_only_admin, :only => :index
+
   # GET /users
   # GET /users.xml
   def index
-    if !can_access_all_users then
-      @deny_message = "You do not have access to see all users"
-      render :template => 'home/access_denied'
-      return
-    end
-    
     @users = User.where("primary_attendee_id is not null")
 
     respond_to do |format|
@@ -131,16 +127,6 @@ class UsersController < ApplicationController
     elsif current_user.id == target_user_id
       allow = true
     elsif current_user.is_admin
-      allow = true
-    end
-    return allow
-  end
-  
-  def can_access_all_users
-    allow = false
-    if current_user.nil?
-      allow = false
-    elsif current_user.is_admin?
       allow = true
     end
     return allow
