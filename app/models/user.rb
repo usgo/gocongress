@@ -18,6 +18,7 @@ class User < ActiveRecord::Base
 
   # A user may register multiple people, eg. their family
   # The primary attendee corresponds with the user themselves
+  # TO DO: add is_admin condition to primary_attendee association
   has_one  :primary_attendee, :class_name => 'Attendee'
   has_many :attendees, :dependent => :destroy
 
