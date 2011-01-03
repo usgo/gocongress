@@ -1,4 +1,4 @@
-class AttendeeController < ApplicationController
+class AttendeesController < ApplicationController
 
   def index
     # by default, sort by rank (0 is non-player)
