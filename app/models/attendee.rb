@@ -14,10 +14,8 @@ class Attendee < ActiveRecord::Base
 
   # TODO: Add Validation for gender
   
-  validates_presence_of :rank
+  validates_presence_of :address_1, :birth_date, :city,  :country, :email, :rank
   validates_inclusion_of :rank, :in => NUMERIC_RANK_LIST, :message => "is not a valid rank"
-  validates_presence_of :email
-  validates_presence_of :birth_date
   
   # Attendees must belong to a user (except when they are first being created,      
   # because in a nested form there might not be a user_id yet.  I think that is what
