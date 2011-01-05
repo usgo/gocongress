@@ -4,11 +4,48 @@
     %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
   %body
     %h1
-      Welcome, #{@user.primary_attendee.given_name}
-    %p Thanks for signing up for a user account on the US Go Congress website.
+      Welcome to the #{CONGRESS_YEAR} US Go Congress
+    %p 
+      Thank you for creating your account on the US Go Congress website, we look
+      forward to seeing you this summer!  You may log back into your account at
+      any time to change your registration information, update your account, make
+      a payment, or add an attendee to your account.
     %p
-      If you are a minor (under age 18), you must have your parent or guardian
-      fill out the Liability Release Form.  Click on the link below, get it
-      filled out, and email it to the Congress Registrar.  Thanks.
+      If you have any questions, comments, or suggestions, feel free to contact
+      us at any time:
+    %table
+      %tr
+        %td Congress Director
+        %td Lisa Scott
+        %td lisa.scott@gocongress.org
+      %tr
+        %td Congress Director
+        %td Andrew Jackson
+        %td andrew.jackson@gocongress.org
+      %tr
+        %td Registrar
+        %td Samantha Davis
+        %td registrar@gocongress.org
+      %tr
+        %td Deputy Registrar
+        %td Megan Wheeldon
+        %td deputyregistrar@gocongress.org
+      %tr
+        %td Tournaments
+        %td Karoline Burrall
+        %td tournaments@gocongress.org
+      %tr
+        %td Youth
+        %td Paul Barchilon
+        %td youth@usgo.org
     %p
-      %a{:href => @lrFormUrl} Liability Release Form
+      All minors (attendees under age 18) must have the following form completed
+      in full by a parent or guardian in order to attend.  In order to access
+      the form, simply click on the link below.  The form must be returned to
+      the Congress Deputy Registrar at deputyregistrar@gocongress.org.
+    %p
+      %a{:href => @lrFormUrl} Youth Attendance Agreement
+    %p
+      Thank you for registering, we look forward to hearing from you in the future!
+    %p
+      #{CONGRESS_YEAR} US Go Congress
