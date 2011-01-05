@@ -15,7 +15,7 @@ class HomeController < ApplicationController
 			]
 			
 		# Just playing around, I may not keep this welcome message -Jared
-		if (current_user)
+		if (current_user.primary_attendee)
 			@welcomeMessage = "Welcome, " + current_user.primary_attendee.given_name
 		else
 			@welcomeMessage = ""
