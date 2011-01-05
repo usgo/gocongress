@@ -30,61 +30,43 @@
       #nav
         %ul
           %li#nav-events
-            %a{:href => "/events"}
-              Events &amp;
-              %br>/
-              Activities
+            %a{:href => events_path}
+              Events &amp; <br> Activities
           %li#nav-tournaments
             %a{:href => "#"} Tournaments
           %li#nav-pros
             %a{:href => "#"}
-              Professionals
-              %br>/
-              \&amp; VIPs
+              Professionals <br> &amp; VIPs
           %li#nav-rooms
             %a{:href => "#"}
-              Room &amp;
-              %br>/
-              Board
+              Room &amp; <br> Board
           %li#nav-transportation
             %a{:href => "#"}
-              Trans-
-              %br>/
-              portation
+              Trans-<br>portation
           %li#nav-volunteer
-            %a{:href => "/jobs"} Volunteer
+            %a{:href => jobs_path} Volunteer
           %li#nav-contact
-            %a{:href => "/user_jobs"}
-              Contact
-              %br>/
-              Us
+            %a{:href => user_jobs_path}
+              Contact <br> Us
           %li#nav-who
             %a{:href => attendees_path}
-              Who&#39;s
-              %br>/
-              Coming
+              Who&#39;s <br> Coming
           %li#nav-registration
             - if current_user.nil?
               = image_tag "icons/star.png", :class => 'preregister-star'
-              %a{:href => "/users/sign_up"}
-                %br>/
+              %a{:href => new_user_registration_path}
+                %br
                 Register
             - else
-              %a{:href => "/users/" + current_user.id.to_s }
-                My
-                %br>/
-                Account
+              %a{:href => user_path(current_user.id) }
+                My <br> Account
           %li#nav-login.last-child
             - if current_user.nil?
-              %a.hmenu{:href => "/users/sign_in"}
-                Sign
-                %br>/
-                In
+              %a.hmenu{:href => new_user_session_path}
+                Sign <br> In
             - else
-              %a.hmenu{:href => "/users/sign_out"}
-                Sign
-                %br>/
-                Out
+              %a.hmenu{:href => destroy_user_session_path}
+                Sign <br> Out
     #content
       / "Flash messages" required by Devise -Jared 12/20/10
       .rails-flash-notice= notice
