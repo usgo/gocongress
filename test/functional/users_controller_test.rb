@@ -58,7 +58,7 @@ class UsersControllerTest < ActionController::TestCase
       delete :destroy, :id => @user.to_param
     end
 
-    assert_redirected_to users_path
+    assert_response 403
   end
 
   test "admin can destroy a user" do
