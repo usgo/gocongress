@@ -1,6 +1,9 @@
 Gocongress::Application.routes.draw do
 
   get "home/access_denied"
+  get "home/index"
+
+  match 'contact' => 'user_jobs#index'
 
   match "/users/:id/resetpasswd" => "users#resetpasswd"
   match '/popup/:action' => 'popup', :as => 'popup'
@@ -9,8 +12,6 @@ Gocongress::Application.routes.draw do
 
   # resource routes (maps HTTP verbs to controller actions automatically):
   resources :events, :jobs, :users, :user_jobs, :attendees
-
-  get "home/index"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
