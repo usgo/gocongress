@@ -1,8 +1,8 @@
 class UsersController < ApplicationController
 
   # Access Control
-  before_filter :allow_only_admin, :only => [:index,:destroy]
-  before_filter :allow_only_self_or_admin, :only => [:show,:edit]
+  before_filter :allow_only_admin, :except => [:show]
+  before_filter :allow_only_self_or_admin, :only => [:show]
 
   # GET /users
   # GET /users.xml
