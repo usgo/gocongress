@@ -2,7 +2,7 @@ require 'test_helper'
 
 class UsersControllerTest < ActionController::TestCase
   setup do
-    @user = users(:one)
+    @user = Factory.create(:user)
   end
 
   test "should get index" do
@@ -20,7 +20,15 @@ class UsersControllerTest < ActionController::TestCase
     @user.destroy
 
     assert_difference('User.count', 1) do
-      post :create, :user => @user.attributes.merge(:password => 'password')
+      
+      # give me a hash that'll get nested below -Jared
+      a = { :primary_attendee_attributes => Factory.attributes_for(:attendee) }
+      
+      # nest that hash in the user hash to mimic what params would look like -Jared
+      u = Factory.attributes_for(:user).merge( a )
+      
+      # do that post -Jared
+      post :create, :user => u
     end
 
     assert_redirected_to users_path

@@ -14,7 +14,7 @@ class Attendee < ActiveRecord::Base
 
   # TODO: Add Validation for gender
   
-  validates_presence_of :address_1, :birth_date, :city,  :country, :email, :rank
+  validates_presence_of :address_1, :birth_date, :city,  :country, :email, :family_name, :given_name, :rank
   validates_inclusion_of :rank, :in => NUMERIC_RANK_LIST, :message => "is not a valid rank"
   
   # Attendees must belong to a user (except when they are first being created,      
