@@ -14,3 +14,8 @@ gem 'haml'
 group :development, :test do
   gem 'rspec-rails', '~> 2.0'
 end
+
+# redgreen does console coloring for tests
+group :test do
+	gem 'redgreen'
+end
