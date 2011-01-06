@@ -17,5 +17,7 @@ end
 
 # redgreen does console coloring for tests
 group :test do
+	gem 'factory_girl', '~>1.3.2'
+	gem 'factory_girl_rails'
 	gem 'redgreen'
 end
