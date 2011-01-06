@@ -3,7 +3,7 @@
 # Thus, at heroku, this file will not be present
 # For heroku, use heroku config:add GMAIL_SMTP_USER=username@gmail.com
 # -Jared 2010.12.31
-if File.file?("vendor/plugins/gmail_smtp/lib/usgc_gmail_account_info.rb") then
+if File.file?("#{Rails.root}/vendor/plugins/gmail_smtp/lib/usgc_gmail_account_info.rb") then
 	require 'usgc_gmail_account_info'
 end
 
