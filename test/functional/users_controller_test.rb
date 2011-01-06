@@ -3,64 +3,67 @@ require 'test_helper'
 class UsersControllerTest < ActionController::TestCase
   setup do
     @user = Factory.create(:user)
+    @admin_user = Factory.create(:admin_user)
   end
 
-  test "should get index" do
+  test "admins should get index" do
+    sign_in @admin_user
     get :index
     assert_response :success
-    assert_not_nil assigns(:users)
+  end
+  
+  test "non-admins should NOT get index" do
+    get :index
+    assert_response 403
   end
 
-  test "should get new" do
-    get :new
+  test "admins should show user" do
+    sign_in @admin_user
+    get :show, :id => @user.to_param
     assert_response :success
   end
-
-  test "should create user" do
-    @user.destroy
-
-    assert_difference('User.count', 1) do
-      
-      # give me a hash that'll get nested below -Jared
-      a = { :primary_attendee_attributes => Factory.attributes_for(:attendee) }
-      
-      # nest that hash in the user hash to mimic what params would look like -Jared
-      u = Factory.attributes_for(:user).merge( a )
-      
-      # do that post -Jared
-      post :create, :user => u
-    end
-
-    assert_redirected_to users_path
+  
+  test "visitors should NOT show user" do
+    get :show, :id => @user.to_param
+    assert_response 403
   end
 
-  test "won't create a user without a password" do
-    @user.destroy
-
-    assert_difference('User.count', 0) do
-      post :create, :user => @user.attributes
-    end
-
-    assert_tag :div, :attributes => {:id => 'error_explanation'}, :child => "Password can't be blank"
-  end
-
-  test "should show user" do
+  test "users can show their own user" do
+    sign_in @user
     get :show, :id => @user.to_param
     assert_response :success
   end
 
-  test "should get edit" do
+  test "users should NOT show a different user" do
+    sign_in @user
+    get :show, :id => Factory.create(:user).to_param
+    assert_response 403
+  end
+
+  test "admins can get edit" do
+    sign_in @admin_user
     get :edit, :id => @user.to_param
     assert_response :success
   end
+  
+  test "non-admins can not get edit" do
+    get :edit, :id => @user.to_param
+    assert_response 403
+  end
 
-  test "should update user" do
+  test "admin should update user" do
+    sign_in @admin_user
     put :update, :id => @user.to_param, :user => @user.attributes
     assert_redirected_to users_path
   end
+  
+  test "non-admin should NOT update user" do
+    put :update, :id => @user.to_param, :user => @user.attributes
+    assert_response 403
+  end
 
   test "non-admin cannot destroy a user" do
-    sign_in(:user, users(:two))
+    sign_in @user
 
     assert_difference('User.count', 0) do
       delete :destroy, :id => @user.to_param
@@ -70,7 +73,7 @@ class UsersControllerTest < ActionController::TestCase
   end
 
   test "admin can destroy a user" do
-    sign_in(:user, users(:admin))
+    sign_in @admin_user
 
     assert_difference('User.count', -1) do
       delete :destroy, :id => @user.to_param

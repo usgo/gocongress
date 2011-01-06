@@ -16,3 +16,9 @@ Factory.define :user do |f|
     u.build_primary_attendee Factory.attributes_for(:attendee)
   end
 end
+
+# the admin factory is actually based off of the user factory!
+# how cool is that! -Jared
+Factory.define :admin_user, :parent => :user do |f|
+  f.is_admin true
+end
