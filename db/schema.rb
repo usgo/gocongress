@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110107214137) do
+ActiveRecord::Schema.define(:version => 20110107215000) do
 
   create_table "attendees", :force => true do |t|
     t.string   "given_name",                                               :null => false
@@ -74,7 +74,6 @@ ActiveRecord::Schema.define(:version => 20110107214137) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "is_admin",                            :default => false, :null => false
-    t.integer  "primary_attendee_id"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
