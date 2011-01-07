@@ -10,16 +10,16 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101231034243) do
+ActiveRecord::Schema.define(:version => 20110107214137) do
 
   create_table "attendees", :force => true do |t|
-    t.string   "given_name",                            :null => false
-    t.string   "family_name",                           :null => false
+    t.string   "given_name",                                               :null => false
+    t.string   "family_name",                                              :null => false
     t.string   "gender",                   :limit => 1
     t.boolean  "anonymous"
-    t.integer  "rank",                                  :null => false
+    t.integer  "rank",                                                     :null => false
     t.integer  "aga_id"
-    t.string   "address_1",                             :null => false
+    t.string   "address_1",                                                :null => false
     t.string   "address_2"
     t.string   "city"
     t.string   "state"
@@ -33,6 +33,7 @@ ActiveRecord::Schema.define(:version => 20101231034243) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "user_id"
+    t.boolean  "is_primary",                            :default => false, :null => false
   end
 
   create_table "events", :force => true do |t|

@@ -13,6 +13,7 @@ class Attendee < ActiveRecord::Base
   Attendee::RANKS.each { |r| NUMERIC_RANK_LIST << r[1] }
 
   validates_inclusion_of :gender, :in => "m,f"
+  validates_inclusion_of :is_primary, :in => [true, false]
   validates_uniqueness_of :aga_id, :allow_nil => true
   validates_presence_of :address_1, :birth_date, :city,  :country, :email, :family_name, :given_name, :rank
   validates_inclusion_of :rank, :in => NUMERIC_RANK_LIST, :message => "is not a valid rank"
@@ -26,6 +27,8 @@ class Attendee < ActiveRecord::Base
   # Use MinorAgreementValidator (found in lib/) to require that understand_minor
   # be checked if the attendee will not be 18 before the first day of the Congress.
   validates :understand_minor, :minor_agreement => true
+  
+  # to do: validate that each user has exactly one primary attendee
 
 	def get_full_name
 		given_name + " " + family_name

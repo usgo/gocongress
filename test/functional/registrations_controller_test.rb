@@ -14,12 +14,13 @@ class RegistrationsControllerTest < ActionController::TestCase
     # params would look like on a valid create request -Jared
     a = { :primary_attendee_attributes => Factory.attributes_for(:attendee) }
     u = Factory.attributes_for(:user).merge( a )
-      
+    
     assert_difference ["User.count", "Attendee.count"], +1 do
       post :create, :user => u
       puts assigns(:user).errors.full_messages
     end
     assert assigns(:user).primary_attendee.user_id.present?
+    assert assigns(:user).primary_attendee.is_primary?
     assert_response :redirect
   end
 
