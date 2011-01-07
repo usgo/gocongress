@@ -12,8 +12,8 @@ class Attendee < ActiveRecord::Base
   NUMERIC_RANK_LIST = []
   Attendee::RANKS.each { |r| NUMERIC_RANK_LIST << r[1] }
 
-  # TODO: Add Validation for gender
-  
+  validates_inclusion_of :gender, :in => "m,f"
+  validates_uniqueness_of :aga_id, :allow_nil => true
   validates_presence_of :address_1, :birth_date, :city,  :country, :email, :family_name, :given_name, :rank
   validates_inclusion_of :rank, :in => NUMERIC_RANK_LIST, :message => "is not a valid rank"
   
