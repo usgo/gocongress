@@ -1,6 +1,15 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
   helper_method :crumbs
+
+  # Redirect Devise to a specific page on successful sign in  -Jared
+  def after_sign_in_path_for(resource_or_scope)
+    if resource_or_scope.is_a?(User)
+      user_path(current_user.id)
+    else
+      super
+    end
+  end
   
 protected
   def crumbs
