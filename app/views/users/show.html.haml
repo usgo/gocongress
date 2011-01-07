@@ -10,10 +10,11 @@
 
 %br/
 
-- for a in @user.attendees
+- for a in @attendees
   .attendee-card
     .attendee-card-contents
       %h2= a.get_full_name
+      %p= if a.is_primary then "Primary Attendee" end
       %table.lightweight
         %tbody
           %tr
