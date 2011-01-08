@@ -2,7 +2,7 @@ require 'test_helper'
 
 class AttendeesControllerTest < ActionController::TestCase
   setup do
-  	@attendee = Factory.create(:attendee)
+    @attendee = Factory.create(:attendee)
     @user = Factory.create(:user)
     @admin_user = Factory.create(:admin_user)
   end
@@ -27,4 +27,32 @@ class AttendeesControllerTest < ActionController::TestCase
     end
     assert_redirected_to attendees_path
   end
+
+  test "visitor can not get edit" do
+    get :edit, :id => @attendee.to_param
+    assert_response 403
+  end
+
+  test "user can not edit another user's attendee" do
+    sign_in @user
+    get :edit, :id => @attendee.to_param
+    assert_response 403
+  end
+
+  test "user can edit their own attendees" do
+    sign_in @user
+    get :edit, :id => @user.attendees.first.to_param
+    assert_response :success
+  end
+
+  test "admin can edit any attendee" do
+    sign_in @admin_user
+    get :edit, :id => @attendee.to_param
+    assert_response :success
+    get :edit, :id => @user.attendees.last.to_param
+    assert_response :success
+    get :edit, :id => @admin_user.attendees.first.to_param
+    assert_response :success
+  end
+
 end

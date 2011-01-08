@@ -1,7 +1,8 @@
 class AttendeesController < ApplicationController
 
   # Access Control
-  before_filter :allow_only_admin, :except => [:create, :index, :new]
+  before_filter :allow_only_admin, :except => [:create, :index, :new, :edit, :update]
+  before_filter :allow_only_self_or_admin, :only => [:edit, :update]
   
   def index
     # by default, sort by rank (0 is non-player)
@@ -48,6 +49,15 @@ class AttendeesController < ApplicationController
     # redirect to attendee#index, i think.  When non-admins can delete
     # attendees, then we have to rethink the redirect. -Jared 2011.01.07
     redirect_to attendees_path
+  end
+
+protected
+
+  def allow_only_self_or_admin
+    target_attendee = Attendee.find_by_id(params[:id].to_i)
+    unless target_attendee.present? && current_user && (current_user.id.to_i == target_attendee.user_id || current_user.is_admin?)
+      render_access_denied
+    end
   end
 
 end
