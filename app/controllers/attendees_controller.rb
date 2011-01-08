@@ -1,5 +1,8 @@
 class AttendeesController < ApplicationController
 
+  # Access Control
+  before_filter :allow_only_admin, :except => [:create, :index, :new]
+  
   def index
     # by default, sort by rank (0 is non-player)
     order_by_clause = "rank = 0, rank desc"
@@ -12,6 +15,34 @@ class AttendeesController < ApplicationController
 
     # get all attendees
     @attendees = Attendee.order(order_by_clause)
+  end
+
+  # GET /attendees/new
+  def new
+    @attendee = Attendee.new
+  end
+  
+  # POST /attendees
+  def create
+    @attendee = Attendee.new(params[:attendee])
+    @attendee.user_id = current_user.id
+    if @attendee.save
+      flash[:notice] = "Attendee successfully created"
+      redirect_to(user_path(current_user.id))
+    else
+      render :action => "new"
+    end
+  end
+
+  # DELETE /attendees/1
+  def destroy
+    Attendee.find(params[:id]).destroy
+    flash[:notice] = "Attendee deleted"
+    
+    # currently only admins can delete attendees, so it makes sense to
+    # redirect to attendee#index, i think.  When non-admins can delete
+    # attendees, then we have to rethink the redirect. -Jared 2011.01.07
+    redirect_to attendees_path
   end
 
 end

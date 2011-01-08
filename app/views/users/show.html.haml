@@ -10,21 +10,34 @@
 
 %br/
 
-- for a in @attendees
-  .attendee-card
-    .attendee-card-contents
-      %h2= a.get_full_name
-      %p= if a.is_primary then "Primary Attendee" end
-      %table.lightweight
-        %tbody
-          %tr
-            %th Email
-            %td= a.email
-          %tr
-            %th Rank
-            %td= a.get_rank_name
-      %p= link_to 'Edit this attendee', edit_attendee_path(a)
+%h2 My Attendees
 
-.attendee-card
-  .attendee-card-contents
-    %p= link_to 'Register another attendee', new_attendee_path
+%p 
+  You may add multiple
+  %strong attendees
+  on one
+  %strong user account.
+  Bring the whole family!
+  
+%table.semantic.fullwidth
+  %thead
+    %tr
+      %th Name
+      %th Rank
+      %th Email
+      %th Minor?
+      %th Minor Agreement Received
+      %th 
+      %th 
+  %tbody
+    - for a in @attendees
+      %tr
+        %td= a.get_full_name
+        %td= a.get_rank_name
+        %td= a.email
+        %td= a.is_minor ? "Yes" : "No"
+        %td= if a.is_minor then a.minor_agreement_received ? "Yes" : "No" else "N/A" end
+        %td= if a.is_primary then "Primary Attendee" end
+        %td= link_to 'Edit', edit_attendee_path(a)
+
+%p= link_to 'Register another attendee', new_attendee_path

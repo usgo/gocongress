@@ -1,6 +1,10 @@
 class Attendee < ActiveRecord::Base
   belongs_to :user
 
+  AGE_DEADLINE = "July 29, 2011"
+    
+  # to do: use attr_protected
+
   # define constant array of rank hashes {integer rank, rank name}
   RANKS = []
   RANKS << [ "Non-player", 0]
@@ -22,7 +26,7 @@ class Attendee < ActiveRecord::Base
   # Attendees must belong to a user (except when they are first being created,      
   # because in a nested form there might not be a user_id yet.  I think that is what
   # is going on, anyway) I'm surprised this is necessary at all, and I'm unsettled  
-  # by the lack of a foreign key constraint. -Jared 2011.1.2                        
+  # by the lack of a foreign key constraint. -Jared 2011.1.2
   validates_presence_of :user_id, :on => :update
 
   # Use MinorAgreementValidator (found in lib/) to require that understand_minor
@@ -30,6 +34,11 @@ class Attendee < ActiveRecord::Base
   validates :understand_minor, :minor_agreement => true
   
   # to do: validate that each user has exactly one primary attendee
+
+  def is_minor
+    deadline = Date.strptime(AGE_DEADLINE, "%B %d, %Y")
+    return (self.birth_date + 18.years > deadline)
+  end
 
   def get_full_name
     given_name + " " + family_name
