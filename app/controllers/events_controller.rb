@@ -1,4 +1,8 @@
 class EventsController < ApplicationController
+
+  # Access Control
+  before_filter :allow_only_admin, :except => [:index, :show]
+
   # GET /events
   # GET /events.xml
   def index

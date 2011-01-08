@@ -3,47 +3,39 @@ require 'test_helper'
 class EventsControllerTest < ActionController::TestCase
   setup do
     @event = events(:one)
+    @user = Factory.create(:user)
+    @admin_user = Factory.create(:admin_user)
   end
 
-  test "should get index" do
+  test "anybody can get index" do
     get :index
     assert_response :success
     assert_not_nil assigns(:events)
   end
 
-  test "should get new" do
+  test "non-admin should NOT get new" do
+    sign_in @user
     get :new
-    assert_response :success
+    assert_response 403
   end
 
-  test "should create event" do
+  test "non-admin can NOT create event" do
+    sign_in @user
+    post :create, :event => @event.attributes
+    assert_response 403
+  end
+  
+  test "admin can create event" do
+    sign_in @admin_user
     assert_difference('Event.count') do
       post :create, :event => @event.attributes
     end
-
     assert_redirected_to event_path(assigns(:event))
   end
 
-  test "should show event" do
+  test "anyone can show event" do
     get :show, :id => @event.to_param
     assert_response :success
   end
 
-  test "should get edit" do
-    get :edit, :id => @event.to_param
-    assert_response :success
-  end
-
-  test "should update event" do
-    put :update, :id => @event.to_param, :event => @event.attributes
-    assert_redirected_to event_path(assigns(:event))
-  end
-
-  test "should destroy event" do
-    assert_difference('Event.count', -1) do
-      delete :destroy, :id => @event.to_param
-    end
-
-    assert_redirected_to events_path
-  end
 end
