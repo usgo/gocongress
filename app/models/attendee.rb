@@ -12,7 +12,8 @@ class Attendee < ActiveRecord::Base
   NUMERIC_RANK_LIST = []
   Attendee::RANKS.each { |r| NUMERIC_RANK_LIST << r[1] }
 
-  validates_inclusion_of :gender, :in => "m,f"
+  validates_presence_of :gender
+  validates_inclusion_of :gender, :in => ["m","f"], :message => "is not valid"
   validates_inclusion_of :is_primary, :in => [true, false]
   validates_uniqueness_of :aga_id, :allow_nil => true
   validates_presence_of :address_1, :birth_date, :city,  :country, :email, :family_name, :given_name, :rank
@@ -30,9 +31,9 @@ class Attendee < ActiveRecord::Base
   
   # to do: validate that each user has exactly one primary attendee
 
-	def get_full_name
-		given_name + " " + family_name
-	end
+  def get_full_name
+    given_name + " " + family_name
+  end
 
   def get_rank_name
     rank_name = ""
