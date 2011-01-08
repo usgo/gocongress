@@ -47,7 +47,7 @@
         %span.smalltext Do not show my name on the "Who&#39;s Coming" list
       .field
         = attendee_fields.label :birth_date, 'Birth date'
-        = attendee_fields.date_select :birth_date, :add_month_numbers => true, :start_year => 120.years.ago.year, :end_year => Time.now.year, :order => [:month, :day, :year], :include_blank => true
+        = attendee_fields.date_select :birth_date, :add_month_numbers => true, :start_year => Time.now.year, :end_year => 120.years.ago.year, :order => [:month, :day, :year], :include_blank => true
       .field
         = attendee_fields.label :understand_minor, 'Minor Agreement'
         = attendee_fields.check_box :understand_minor
