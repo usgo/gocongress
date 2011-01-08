@@ -20,6 +20,11 @@ class AttendeesController < ApplicationController
   # GET /attendees/new
   def new
     @attendee = Attendee.new
+
+    # copy over certain fields from the primary_attendee -Jared
+    ['phone','address_1','address_2','city','state','zip','country','phone','email'].each { |f|
+      @attendee[f] = current_user.primary_attendee[f]
+    }
   end
   
   # POST /attendees
