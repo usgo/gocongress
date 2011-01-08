@@ -2,9 +2,16 @@
 
 %table.lightweight
   %tbody
+    - if @user.is_admin
+      %tr
+        %th Type
+        %td Administrator
     %tr
       %th Email
       %td= @user.email
+    %tr
+      %th Created
+      %td= @user.created_at.to_formatted_s(:long)
 
 %p= link_to 'Edit my account', edit_user_path(@user)
 
