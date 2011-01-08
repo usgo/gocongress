@@ -21,14 +21,13 @@
         %th Transport Departure Time
         %th Event Start/Arrival Time
         %th Price
-        %th{:colspan => "3"}
+        %th{:colspan => "2"}
       - arEvt.each do |e|
         %tr
           %td= e.evtname
           %td= e.evtdeparttime
           %td= e.evtstarttime
           %td= e.evtprice
-          %td= link_to 'Show', e
           %td= link_to 'Edit', edit_event_path(e)
           %td= link_to 'Destroy', e, :confirm => 'Are you sure?', :method => :delete
 %br/
