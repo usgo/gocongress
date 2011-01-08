@@ -40,6 +40,22 @@ class AttendeesController < ApplicationController
     end
   end
 
+  # GET /attendees/1/edit
+  def edit
+    @attendee = Attendee.find_by_id(params[:id].to_i)
+  end
+
+  # PUT /attendees/1
+  def update
+    @a = Attendee.find(params[:id])
+    if @a.update_attributes(params[:attendee])
+      flash[:notice] = "Attendee successfully updated"
+      redirect_to(user_path(current_user.id))
+    else
+      render :action => "edit"
+    end
+  end
+
   # DELETE /attendees/1
   def destroy
     Attendee.find(params[:id]).destroy
