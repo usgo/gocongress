@@ -8,23 +8,23 @@
         - @event.errors.full_messages.each do |msg|
           %li= msg
   .field
-    = f.label :evtdate
+    = f.label :evtdate, "Event Date"
     %br/
     = f.date_select :evtdate, :start_year => CONGRESS_YEAR.to_i, :end_year => CONGRESS_YEAR.to_i
   .field
-    = f.label :evtname
+    = f.label :evtname, "Event Name"
     %br/
     = f.text_field :evtname
   .field
-    = f.label :evtdeparttime
+    = f.label :evtdeparttime, "Depart Time"
     %br/
     = f.text_field :evtdeparttime
   .field
-    = f.label :evtstarttime
+    = f.label :evtstarttime, "Start Time"
     %br/
     = f.text_field :evtstarttime
   .field
-    = f.label :evtprice
+    = f.label :evtprice, "Price"
     %br/
     = f.text_field :evtprice
   .actions
