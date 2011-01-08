@@ -4,6 +4,7 @@ class AttendeesControllerTest < ActionController::TestCase
   setup do
     @attendee = Factory.create(:attendee)
     @user = Factory.create(:user)
+    @user_two = Factory.create(:user)
     @admin_user = Factory.create(:admin_user)
   end
 
@@ -53,6 +54,28 @@ class AttendeesControllerTest < ActionController::TestCase
     assert_response :success
     get :edit, :id => @admin_user.attendees.first.to_param
     assert_response :success
+  end
+
+  test "user can not update another user's attendee" do
+    sign_in @user
+    target_attendee = @user_two.attendees.first
+    target_attendee.state = 'NY'
+    put :update, :id => target_attendee.id, :attendee => target_attendee.attributes
+    assert_response 403
+  end
+
+  test "admin can update any user's attendee" do
+    sign_in @admin_user
+
+    target_attendee = @user.attendees.last
+    target_attendee.state = 'MI'
+    put :update, :id => target_attendee.id, :attendee => target_attendee.attributes
+    assert_redirected_to user_path(target_attendee.user_id)
+
+    target_attendee = @user_two.attendees.first
+    target_attendee.state = 'AK'
+    put :update, :id => target_attendee.id, :attendee => target_attendee.attributes
+    assert_redirected_to user_path(target_attendee.user_id)
   end
 
 end

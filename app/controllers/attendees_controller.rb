@@ -47,10 +47,10 @@ class AttendeesController < ApplicationController
 
   # PUT /attendees/1
   def update
-    @a = Attendee.find(params[:id])
-    if @a.update_attributes(params[:attendee])
+    attendee = Attendee.find(params[:id])
+    if attendee.update_attributes(params[:attendee])
       flash[:notice] = "Attendee successfully updated"
-      redirect_to(user_path(current_user.id))
+      redirect_to(user_path(attendee.user_id))
     else
       render :action => "edit"
     end
