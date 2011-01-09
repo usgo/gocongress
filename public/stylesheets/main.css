@@ -36,6 +36,7 @@ legend {
 /* Two column layout */
 .left-column { display: inline-block; width: 40%; vertical-align: top; }
 .right-column { display: inline-block; width: 40%; vertical-align: top; }
+h2.first-in-column { margin-top: 12px; margin-bottom: 4px; }
 
 /* Remove the default border on anchored images */
 /* I hope this works as well as the img.border attribute -Jared 11/29/10 */
