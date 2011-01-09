@@ -73,13 +73,20 @@ class AttendeesController < ApplicationController
 
   # DELETE /attendees/1
   def destroy
-    Attendee.find(params[:id]).destroy
+    target_attendee = Attendee.find(params[:id])
+    belonged_to_current_user = (current_user.id == target_attendee.user_id)
+
+    # primary attendees can never be deleted
+    # will this be a problem when we implement user deletion?
+    if target_attendee.is_primary then raise "primary attendees can never be deleted" end
+
+    target_attendee.destroy
     flash[:notice] = "Attendee deleted"
-    
-    # currently only admins can delete attendees, so it makes sense to
-    # redirect to attendee#index, i think.  When non-admins can delete
-    # attendees, then we have to rethink the redirect. -Jared 2011.01.07
-    redirect_to attendees_path
+    if belonged_to_current_user
+      redirect_to user_path(current_user)
+    else
+      redirect_to attendees_path
+    end
   end
 
 protected
