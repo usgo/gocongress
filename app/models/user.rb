@@ -38,6 +38,24 @@ class User < ActiveRecord::Base
   # object and its associations in one go with fields_for()
   accepts_nested_attributes_for :primary_attendee
 
+  def get_invoice_items
+    invoice_items = []
+    self.attendees.each { |a|
+      item = {}
+      item['item_description'] = 'Initial deposit'
+      item['attendee_full_name'] = a.given_name + ' ' + a.family_name
+      item['item_price'] = 75
+      invoice_items.push item
+    }
+    return invoice_items
+  end
+
+  def get_invoice_total
+    sum = 0
+    self.get_invoice_items.each { |item| sum += item['item_price'] }
+    return sum
+  end
+
 private
 
   # make sure you:

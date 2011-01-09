@@ -32,6 +32,8 @@ legend {
 /* Truly basic classes that could apply anywhere -Jared 12/30/10 */
 .fullwidth { width: 100%; }
 .smalltext { font-size: 12px; }
+th { text-align: left; }
+table .numeric { text-align: right; }
 
 /* Two column layout */
 .left-column { display: inline-block; width: 40%; vertical-align: top; }
@@ -44,17 +46,18 @@ a img { border: none; }
 
 /* Lightweight table: Tighter, less colors, borders, etc. -Jared 1/2/11 */
 table.lightweight { border-spacing: 0; border-collapse: collapse; }
-table.lightweight td, table.lightweight th { border: 0px solid #666; text-align: left; }
+table.lightweight td, table.lightweight th { border: 0px solid #666; }
 table.lightweight td { padding: 0em 0.5em; }
 table.lightweight th { padding: 0em 0.5em 0em 0em; }
 
 /* Semantic table: The basic table meant for data, not for layout */
 table.semantic { border-spacing: 0; border-collapse: collapse; margin: 0.5em 0em; }
 table.semantic thead th { vertical-align: bottom; }
-table.semantic td, table.semantic th { border: 1px solid #666; padding: 0.25em; text-align: left; }
+table.semantic td, table.semantic th { border: 1px solid #666; padding: 0.25em; }
 table.semantic td { background-color: #FFDAA3; }
 table.semantic th { background-color: #FF9B05; }
 table.semantic tr.lesser-header th { background-color: #FFC369; font-weight: normal; }
+table.semantic tr.total th { background-color: #FFDAA3; text-align: right; }
 
 /* Semantic table: Row emphasis */
 table.semantic tr.understated td { color: #666; }

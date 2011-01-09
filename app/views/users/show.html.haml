@@ -20,14 +20,14 @@
     %tbody
       %tr
         %th Total cost
-        %td= number_to_currency @total_cost
-        %td.smalltext= link_to "Cost Summary", "#"
+        %td.numeric= number_to_currency @total_cost
+        %td.smalltext= link_to "Cost Summary", user_path(@user) + "/invoice"
       %tr
         %th Amount paid
-        %td= number_to_currency @amount_paid
+        %td.numeric= number_to_currency @amount_paid
       %tr
         %th Balance
-        %td= number_to_currency @balance
+        %td.numeric= number_to_currency @balance
 
 %br/
 

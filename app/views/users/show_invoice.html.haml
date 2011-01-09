@@ -1,0 +1,18 @@
+%h1 Cost Summary
+
+%table.semantic.fullwidth
+  %thead
+    %tr
+      %th Attendee
+      %th Description
+      %th.numeric Price
+  %tbody
+    - for i in @invoice_items
+      %tr
+        %td= i['attendee_full_name']
+        %td= i['item_description']
+        %td.numeric= number_to_currency i['item_price']
+    %tr.total
+      %td
+      %th Total
+      %td.numeric= number_to_currency @total_cost

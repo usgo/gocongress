@@ -1,8 +1,8 @@
 class UsersController < ApplicationController
 
   # Access Control
-  before_filter :allow_only_admin, :except => [:show]
-  before_filter :allow_only_self_or_admin, :only => [:show]
+  before_filter :allow_only_admin, :except => [:show, :show_invoice]
+  before_filter :allow_only_self_or_admin, :only => [:show, :show_invoice]
 
   # GET /users
   # GET /users.xml
@@ -20,14 +20,21 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
     @attendees = @user.attendees.order "is_primary desc"
-    @total_cost = 0
+    @total_cost = @user.get_invoice_total
     @amount_paid = 0
-    @balance = 0
+    @balance = @total_cost - @amount_paid
 
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @user }
     end
+  end
+  
+  # GET /users/1/invoice
+  def show_invoice
+    @user = User.find(params[:id])
+    @invoice_items = @user.get_invoice_items
+    @total_cost = @user.get_invoice_total
   end
 
   # GET /users/new
