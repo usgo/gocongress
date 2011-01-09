@@ -78,7 +78,10 @@ class AttendeesController < ApplicationController
 
     # primary attendees can never be deleted
     # will this be a problem when we implement user deletion?
-    if target_attendee.is_primary then raise "primary attendees can never be deleted" end
+    if target_attendee.is_primary then
+      render_access_denied
+      return
+    end
 
     target_attendee.destroy
     flash[:notice] = "Attendee deleted"

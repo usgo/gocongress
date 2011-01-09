@@ -78,4 +78,12 @@ class AttendeesControllerTest < ActionController::TestCase
     assert_redirected_to user_path(target_attendee.user_id)
   end
 
+  test "nobody can ever delete a primary attendee" do
+    sign_in @admin_user
+    assert_difference('Attendee.count', 0) do
+      delete :destroy, :id => @admin_user.primary_attendee.to_param
+    end
+    assert_response 403
+  end
+
 end
