@@ -5,7 +5,16 @@ class ApplicationController < ActionController::Base
   # Redirect Devise to a specific page on successful sign in  -Jared
   def after_sign_in_path_for(resource_or_scope)
     if resource_or_scope.is_a?(User)
-      user_path(current_user.id)
+
+      # Has this user filled out the "Go Info Form" yet? -Jared
+      is_go_info_form_complete = resource_or_scope.primary_attendee.congresses_attended.blank?
+
+      # If not, then go to that form, else go to the "My Account" page -Jared
+      if is_go_info_form_complete
+        edit_attendee_path(@user.primary_attendee.id) + "/baduk"
+      else
+        user_path(current_user.id)
+      end
     else
       super
     end

@@ -61,15 +61,10 @@ class UsersController < ApplicationController
     @user = User.new(params[:user])
     @jobs = get_job_array
 
-    respond_to do |format|
-      if @user.save
-      	flash[:notice] = "User successfully created"
-        format.html { redirect_to(:action=>'index') }
-        format.xml  { render :xml => @user, :status => :created, :location => @user }
-      else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @user.errors, :status => :unprocessable_entity }
-      end
+    if @user.save
+      redirect_to(edit_attendee_path(@user.primary_attendee.id) + "/baduk")
+    else
+      render :action => "new"
     end
   end
 
