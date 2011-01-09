@@ -1,0 +1,42 @@
+%h1 Edit Attendee Go Info
+
+= form_for(@attendee) do |f|
+  - if @attendee.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(@attendee.errors.count, "error")
+        prohibited this attendee from being saved:
+      %ul
+        - @attendee.errors.full_messages.each do |msg|
+          %li= msg
+
+  %fieldset.wordy-questions
+    .field
+      = f.label :congresses_attended, 'How many previous US Go Congresses have you attended?'
+      = f.number_field :congresses_attended, :size => 3, :min => 0, :max => 99, :step => 1
+      %span.smalltext This information will be retained solely for statistical purposes
+    .field
+      = f.label :is_player, "Will you be playing go at the #{CONGRESS_YEAR} US Go Congress?"
+      = f.radio_button :is_player, true
+      %span Yes &nbsp;
+      = f.radio_button :is_player, false
+      %span No
+    .field
+      = f.label :will_play_in_us_open, "Will you be participating in the US Open?"
+      = f.radio_button :will_play_in_us_open, true
+      %span Yes &nbsp;
+      = f.radio_button :will_play_in_us_open, false
+      %span No
+    .field
+      = f.label :is_current_aga_member, "Is your AGA membership current?"
+      = f.radio_button :is_current_aga_member, true
+      %span Yes, as of today, my membership is current
+      %br
+      %label
+      = f.radio_button :is_current_aga_member, false
+      %span No, my membership has expired or I am not a member
+
+  %fieldset.wordy-questions
+    .field
+      = label '', ''
+      = f.submit "Submit"

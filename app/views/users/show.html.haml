@@ -24,7 +24,9 @@
   %strong attendees
   on one
   %strong user account.
-  Bring the whole family!
+  Bring the whole family! Please note that attendees who wish to play
+  or participate in Go-related activities must have a
+  = link_to "current AGA membership.", "https://www.usgo.org/cgi-bin/application.cgi"
   
 %table.semantic.fullwidth
   %thead
@@ -33,7 +35,9 @@
       %th Rank
       %th Email
       %th Minor?
-      %th Minor Agreement Received
+      %th Minor<br>Agreement<br>Received
+      %th 
+      %th 
       %th 
       %th 
   %tbody
@@ -44,7 +48,9 @@
         %td= a.email
         %td= a.is_minor ? "Yes" : "No"
         %td= if a.is_minor then a.minor_agreement_received ? "Yes" : "No" else "N/A" end
-        %td= if a.is_primary then "Primary Attendee" end
-        %td= link_to 'Edit', edit_attendee_path(a)
+        %td= if a.is_primary then "Primary<br>Attendee".html_safe end
+        %td= link_to 'Basic Info', edit_attendee_path(a) + '/basics'
+        %td= link_to 'Go Info', edit_attendee_path(a) + '/baduk'
+        %td= link_to 'Room and Board', edit_attendee_path(a) + '/roomboard'
 
 %p= link_to 'Register another attendee', new_attendee_path

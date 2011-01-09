@@ -40,9 +40,23 @@ class AttendeesController < ApplicationController
     end
   end
 
-  # GET /attendees/1/edit
+  # GET /attendees/1/edit/basics
   def edit
     @attendee = Attendee.find_by_id(params[:id].to_i)
+    
+    # there are too many attendee attributes to fit them all on one form page
+    # so, I've added a param called page.  Alf, would you have done this differently?
+    # Thanks, -Jared 2011.01.08
+    @page = params[:page].to_s
+    if @page.empty? || @page == "basics"
+      render "edit"
+    elsif @page == "baduk"
+      render "edit_baduk_info"
+    elsif @page == "roomboard"
+      render "room_and_board"
+    else
+      raise "invalid page"
+    end
   end
 
   # PUT /attendees/1

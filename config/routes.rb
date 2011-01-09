@@ -10,6 +10,9 @@ Gocongress::Application.routes.draw do
 
   devise_for :users
 
+  # override resource route for attendee#edit to supoort multiple pages
+  match '/attendees/:id/edit/:page' => "attendees#edit"
+
   # resource routes (maps HTTP verbs to controller actions automatically):
   resources :events, :jobs, :users, :user_jobs, :attendees
 

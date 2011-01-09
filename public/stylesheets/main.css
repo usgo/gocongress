@@ -44,7 +44,8 @@ table.lightweight td { padding: 0em 0.5em; }
 table.lightweight th { padding: 0em 0.5em 0em 0em; }
 
 /* Semantic table: The basic table meant for data, not for layout */
-table.semantic { border-spacing: 0; border-collapse: collapse; }
+table.semantic { border-spacing: 0; border-collapse: collapse; margin: 0.5em 0em; }
+table.semantic thead th { vertical-align: bottom; }
 table.semantic td, table.semantic th { border: 1px solid #666; padding: 0.25em; text-align: left; }
 table.semantic td { background-color: #FFDAA3; }
 table.semantic th { background-color: #FF9B05; }
@@ -213,6 +214,10 @@ div.field_with_errors { background-color:white; display: inline; padding: 0; }
 div.field_with_errors input { background-color:white; }
 div.field label, div.field_with_errors label { display:inline-block; text-align:left; width: 150px }
 fieldset .aligned-with-input { margin-left: 155px; }
+
+/* Some forms need wider labels -Jared 1/8/11 */
+fieldset.wordy-questions label { width: 400px; }
+fieldset.wordy-questions .aligned-with-input { margin-left: 405px; }
 
 /* Footer */
 #footer { 
