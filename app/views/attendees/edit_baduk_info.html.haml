@@ -12,29 +12,29 @@
 
   %fieldset.wordy-questions
     .field
-      = f.label :congresses_attended, 'How many previous US Go Congresses have you attended?'
+      = f.label :congresses_attended, 'How many previous US Go Congresses has this person attended?'
       = f.number_field :congresses_attended, :size => 3, :min => 0, :max => 99, :step => 1
       %span.smalltext This information will be retained solely for statistical purposes
     .field
-      = f.label :is_player, "Will you be playing go at the #{CONGRESS_YEAR} US Go Congress?"
+      = f.label :is_player, "Will this person be playing go at the<br>#{CONGRESS_YEAR} US Go Congress?".html_safe
       = f.radio_button :is_player, true
       %span Yes &nbsp;
       = f.radio_button :is_player, false
       %span No
     .field
-      = f.label :will_play_in_us_open, "Will you be participating in the US Open?"
+      = f.label :will_play_in_us_open, "Will this person be participating in the<br>US Open Tournament?".html_safe
       = f.radio_button :will_play_in_us_open, true
       %span Yes &nbsp;
       = f.radio_button :will_play_in_us_open, false
       %span No
     .field
-      = f.label :is_current_aga_member, "Is your AGA membership current?"
+      = f.label :is_current_aga_member, "Is this person's AGA membership current?"
       = f.radio_button :is_current_aga_member, true
-      %span Yes, as of today, my membership is current
+      %span Yes, as of today, this person&rsquo;s membership is current
       %br
       %label
       = f.radio_button :is_current_aga_member, false
-      %span No, my membership has expired or I am not a member
+      %span No, this person&rsquo;s membership has expired or they are not a member
 
   %fieldset.wordy-questions
     .field

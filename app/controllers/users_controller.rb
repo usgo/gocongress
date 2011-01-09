@@ -20,6 +20,9 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
     @attendees = @user.attendees.order "is_primary desc"
+    @total_cost = 0
+    @amount_paid = 0
+    @balance = 0
 
     respond_to do |format|
       format.html # show.html.erb

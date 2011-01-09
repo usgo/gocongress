@@ -33,6 +33,10 @@ legend {
 .fullwidth { width: 100%; }
 .smalltext { font-size: 12px; }
 
+/* Two column layout */
+.left-column { display: inline-block; width: 40%; vertical-align: top; }
+.right-column { display: inline-block; width: 40%; vertical-align: top; }
+
 /* Remove the default border on anchored images */
 /* I hope this works as well as the img.border attribute -Jared 11/29/10 */
 a img { border: none; }
@@ -216,8 +220,8 @@ div.field label, div.field_with_errors label { display:inline-block; text-align:
 fieldset .aligned-with-input { margin-left: 155px; }
 
 /* Some forms need wider labels -Jared 1/8/11 */
-fieldset.wordy-questions label { width: 400px; }
-fieldset.wordy-questions .aligned-with-input { margin-left: 405px; }
+fieldset.wordy-questions label { width: 350px; }
+fieldset.wordy-questions .aligned-with-input { margin-left: 355px; }
 
 /* Footer */
 #footer { 

@@ -33,8 +33,9 @@ class AttendeesController < ApplicationController
     @attendee = Attendee.new(params[:attendee])
     @attendee.user_id = current_user.id
     if @attendee.save
-      flash[:notice] = "Attendee successfully created"
-      redirect_to(user_path(current_user.id))
+      # After successful save, redirect to the "Edit Go Info" form
+      # We are afraid if we do not, then no one will fill it out -Jared
+      redirect_to(edit_attendee_path(@attendee.id) + "/baduk")
     else
       render :action => "new"
     end

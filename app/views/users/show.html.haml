@@ -1,19 +1,33 @@
-%h1 My Account
-
-%table.lightweight
-  %tbody
-    - if @user.is_admin
+.left-column  
+  %h1 My Account
+  %table.lightweight
+    %tbody
+      - if @user.is_admin
+        %tr
+          %th Type
+          %td Administrator
       %tr
-        %th Type
-        %td Administrator
-    %tr
-      %th Email
-      %td= @user.email
-    %tr
-      %th Created
-      %td= @user.created_at.to_formatted_s(:long)
+        %th Email
+        %td= @user.email
+      %tr
+        %th Created
+        %td= @user.created_at.to_formatted_s(:long)
+  %p= link_to 'Edit my account', edit_user_path(@user)
 
-%p= link_to 'Edit my account', edit_user_path(@user)
+.right-column
+  %h1 Balance
+  %table.lightweight
+    %tbody
+      %tr
+        %th Total cost
+        %td= number_to_currency @total_cost
+        %td.smalltext= link_to "Cost Summary", "#"
+      %tr
+        %th Amount paid
+        %td= number_to_currency @amount_paid
+      %tr
+        %th Balance
+        %td= number_to_currency @balance
 
 %br/
 
