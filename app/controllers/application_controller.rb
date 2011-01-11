@@ -7,13 +7,13 @@ class ApplicationController < ActionController::Base
     if resource_or_scope.is_a?(User)
 
       # Has this user filled out the "Go Info Form" yet? -Jared
-      is_go_info_form_complete = resource_or_scope.primary_attendee.congresses_attended.blank?
+      is_go_info_form_complete = resource_or_scope.primary_attendee.congresses_attended.present?
 
       # If not, then go to that form, else go to the "My Account" page -Jared
       if is_go_info_form_complete
-        edit_attendee_path(@user.primary_attendee.id) + "/baduk"
-      else
         user_path(current_user.id)
+      else
+        edit_attendee_path(resource_or_scope.primary_attendee.id) + "/baduk"
       end
     else
       super
