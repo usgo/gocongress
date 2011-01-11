@@ -33,7 +33,9 @@ class Attendee < ActiveRecord::Base
   # be checked if the attendee will not be 18 before the first day of the Congress.
   validates :understand_minor, :minor_agreement => true
   
-  # to do: validate that each user has exactly one primary attendee
+  # Validate that each user has exactly one primary attendee -Jared
+  validates_uniqueness_of :is_primary, :scope => :user_id, :if => :is_primary?
+  before_destroy { |attendee| !attendee.is_primary }
 
   # only apply these validations on the baduk form page ("player info")
   with_options :on => :update, :if => :form_page_is_baduk? do |baduk_page_options|
