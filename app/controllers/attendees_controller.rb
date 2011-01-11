@@ -64,9 +64,7 @@ class AttendeesController < ApplicationController
     
     # run the appropriate validations for this @page 
     if @attendee.valid_in_form_page?(@page.to_sym)
-      unless @attendee.save!
-        raise 'Assertion failed.  Expected save to return true'
-      end
+      @attendee.save(:validate => false)
       flash[:notice] = "Attendee successfully updated"
       redirect_to(user_path(@attendee.user_id))
     else
