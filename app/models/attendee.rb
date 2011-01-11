@@ -35,6 +35,26 @@ class Attendee < ActiveRecord::Base
   
   # to do: validate that each user has exactly one primary attendee
 
+  # only apply these validations on the baduk form page ("player info")
+  validates_numericality_of :congresses_attended, :on => :update, :if => :form_page_is_baduk?
+  validates_inclusion_of :is_player, :in => [true, false], :on => :update, :if => :form_page_is_baduk?
+  validates_inclusion_of :will_play_in_us_open, :in => [true, false], :on => :update, :if => :form_page_is_baduk?
+  validates_inclusion_of :is_current_aga_member, :in => [true, false], :on => :update, :if => :form_page_is_baduk?
+
+  def form_page_is_baduk?
+    @form_page == :baduk
+  end
+
+  def form_page_is_basics?
+    @form_page == :basics
+  end
+
+  # is the model valid for a given form page? -Jared
+  def valid_in_form_page?(form_page)
+    @form_page = form_page
+    valid?
+  end
+
   def is_minor
     deadline = Date.strptime(AGE_DEADLINE, "%B %d, %Y")
     return (self.birth_date + 18.years > deadline)

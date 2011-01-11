@@ -50,26 +50,27 @@ class AttendeesController < ApplicationController
     # there are too many attendee attributes to fit them all on one form page
     # so, I've added a param called page.  Alf, would you have done this differently?
     # Thanks, -Jared 2011.01.08
-    @page = params[:page].to_s
-    if @page.empty? || @page == "basics"
-      render "edit"
-    elsif @page == "baduk"
-      render "edit_baduk_info"
-    elsif @page == "roomboard"
-      render "room_and_board"
-    else
-      raise "invalid page"
-    end
+    @page = get_valid_page_from_params
+    render get_view_name_from_page(@page)
   end
 
   # PUT /attendees/1
   def update
+    @page = get_valid_page_from_params
     @attendee = Attendee.find(params[:id])
-    if @attendee.update_attributes(params[:attendee])
+    
+    # update attributes but do not save yet
+    @attendee.attributes = params[:attendee]
+    
+    # run the appropriate validations for this @page 
+    if @attendee.valid_in_form_page?(@page.to_sym)
+      unless @attendee.save!
+        raise 'Assertion failed.  Expected save to return true'
+      end
       flash[:notice] = "Attendee successfully updated"
       redirect_to(user_path(@attendee.user_id))
     else
-      render :action => "edit"
+      render get_view_name_from_page(@page)
     end
   end
 
@@ -95,6 +96,25 @@ class AttendeesController < ApplicationController
   end
 
 protected
+
+  def get_valid_page_from_params
+    params[:page].to_s.blank? ? page = 'basics' : page = params[:page].to_s
+    unless %w[basics baduk roomboard].include?(page) then raise 'invalid page' end
+    return page
+  end
+  
+  def get_view_name_from_page( page )
+    if page == "basics"
+      view_name = "edit"
+    elsif page == "baduk"
+      view_name = "edit_baduk_info"
+    elsif page == "roomboard"
+      view_name = "room_and_board"
+    else
+      raise "invalid page"
+    end
+    return view_name
+  end
 
   def allow_only_self_or_admin
     target_attendee = Attendee.find_by_id(params[:id].to_i)

@@ -3,7 +3,11 @@
   = @attendee.given_name 
   = @attendee.family_name
 
-= form_for(@attendee) do |f|
+= form_for( @attendee ) do |f|
+
+  -# The update action will inspect the page parameter to determine which validations to run
+  = hidden_field_tag :page, @page
+
   - if @attendee.errors.any?
     #error_explanation
       %h2
