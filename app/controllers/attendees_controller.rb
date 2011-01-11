@@ -42,6 +42,8 @@ class AttendeesController < ApplicationController
   end
 
   # GET /attendees/1/edit/basics
+  # GET /attendees/1/edit/baduk
+  # GET /attendees/1/edit/roomboard
   def edit
     @attendee = Attendee.find_by_id(params[:id].to_i)
     
