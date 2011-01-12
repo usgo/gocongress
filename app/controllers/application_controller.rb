@@ -42,10 +42,11 @@ private
 
   def render_access_denied
     # A friendlier "access denied" message -Jared 2010.1.2
-    @deny_message = "You do not have permission to "
-    @deny_message += (action_name == "index") ? "list all" : action_name
-    @deny_message += " " + controller_name
-    @deny_message += " (or perhaps just this particular " + controller_name.singularize + ")."
+    @deny_message = user_signed_in? ? 'You are signed in, but' : 'You are not signed in, so of course'
+    @deny_message += ' you do not have permission to '
+    @deny_message += (action_name == "index") ? 'list all' : action_name
+    @deny_message += ' ' + controller_name
+    @deny_message += ' (or perhaps just this particular ' + controller_name.singularize + ').'
     
     # Alf says: render or redirect and the filter chain stops there
     render 'home/access_denied', :status => :forbidden
