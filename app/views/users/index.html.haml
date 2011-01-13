@@ -1,23 +1,27 @@
-%h1 Who's Coming?
-%p
-  If you want to play baduk for a week with all these cool people,
-  then you should #{link_to 'register', '/users/sign_up'}!
-%table.semantic.fullwidth
+%h1 User List
+
+%p 
+  Remember, <strong>admins</strong> can do <strong>anything</strong>.
+  Do not promote too many admins.
+
+%table.semantic.fullwidth.zebra
   %thead
     %tr
-      %th Given Name
-      %th Family Name
+      %th Type
       %th Email
+      %th Primary Attendee
+      %th # Attendees
       %th Date
       %th{:colspan => "3"}
   %tbody
     - @users.each do |user|
-      %tr
-        %td= user.primary_attendee.given_name
-        %td= user.primary_attendee.family_name
+      %tr{ :class => user.is_admin ? "emphasized" : "no-emphasis" }
+        %td= user.is_admin ? "Admin" : "User"
         %td= user.email
+        %td= user.primary_attendee.get_full_name
+        %td= user.attendees.count
         %td= user.created_at
         %td= link_to 'Show', user
         %td= link_to 'Edit', edit_user_path(user)
         %td
-          = link_to 'Destroy', user, :confirm => 'Are you sure?', :method => :delete
+          = link_to 'Delete', user, :confirm => 'Are you sure?', :method => :delete

@@ -26,8 +26,8 @@
           \#{CONGRESS_CITY}, #{CONGRESS_STATE} &nbsp;
           \#{CONGRESS_DATE_RANGE}, #{CONGRESS_YEAR}
         %div{:style => "clear:both;"}
-    #nav-container
-      #nav
+    .nav-container
+      .nav
         %ul
           %li#nav-events
             %a{:href => events_path}
@@ -67,6 +67,17 @@
             - else
               %a.hmenu{:href => destroy_user_session_path}
                 Sign <br> Out
+    
+    - if current_user.is_admin?
+      .nav-container-admin
+        .nav
+          %ul
+            %li#nav-admin-title Admin Menu:
+            %li#nav-admin-all-users
+              %a{:href => users_path}
+                All Users
+            %li#nav-admin-placeholder.last-child
+    
     #content
       / "Flash messages" required by Devise -Jared 12/20/10
       .rails-flash-notice= notice
