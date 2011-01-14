@@ -59,14 +59,15 @@ table.semantic th { background-color: #FF9B05; }
 table.semantic tr.lesser-header th { background-color: #FFC369; font-weight: normal; }
 table.semantic tr.total th { background-color: #FFDAA3; text-align: right; }
 
-/* Semantic table: Row emphasis */
-table.semantic tr.emphasized td { background-color: yellow; color: black; }
-table.semantic tr.understated td { color: #666; }
-table.semantic tr.disabled td { background-color: #DDD; color: #666; }
-
 /* Table options eg. zebra striping */
 table.zebra tr:nth-child(even) td { background-color: #FFECD1; }
 tr.date-header th { text-align: center; }
+
+/* Semantic table: Row emphasis */
+/* Emphasis is more important than zebra striping, so we must define it after zebra -Jared 1/13/11 */
+table.semantic tr.emphasized td { background-color: yellow; }
+table.semantic tr.understated td { color: #666; }
+table.semantic tr.disabled td { background-color: #DDD; color: #666; }
 
 /* Definition lists */
 dt { clear: left; float: left; padding-right: 1em; font-weight: bold; }
