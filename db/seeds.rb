@@ -61,3 +61,31 @@ Event.create([
 ,  { :evtdate => '2011-08-06', :evtname => 'Waterfront', :evtdeparttime => '3:00 PM', :evtstarttime => '3:30 PM', :evtprice => '' } \
 ,  { :evtdate => '2011-08-06', :evtname => 'Wildcat Lounge', :evtdeparttime => '10:00 PM', :evtstarttime => '10:30 PM', :evtprice => '' } \
 ])
+
+Job.delete_all
+Job.create([
+  { :jobname => 'Office Manager/TD Coordinator' } \
+, { :jobname => 'Deputy Office Manager' } \
+, { :jobname => 'Registrar' } \
+, { :jobname => 'Deputy Registrar' } \
+, { :jobname => 'Registration Volunteers' } \
+, { :jobname => 'Treasurer' } \
+, { :jobname => 'Equipment Manager' } \
+, { :jobname => 'Equipment Volunteers' } \
+, { :jobname => 'Deputy Youth Coordinator' } \
+, { :jobname => 'Handbook Preparer' } \
+, { :jobname => 'Professional Coordinator' } \
+, { :jobname => 'Written Translators (Korean, Japanese, and Chinese)' } \
+, { :jobname => 'Verbal Translators (Korean, Japanese, and Chinese)' } \
+, { :jobname => 'Tournament Directors: US Open' } \
+, { :jobname => 'Tournament Directors: North American Masters Championship' } \
+, { :jobname => 'Tournament Directors: North American Masters Open' } \
+, { :jobname => 'Tournament Director: Self-Paired Tournament' } \
+, { :jobname => 'Tournament Director: Pair Go Tournament' } \
+, { :jobname => 'Assistant Tournament Director: Pair Go Tournament' } \
+, { :jobname => 'Tournament Director: Lightning Tournament' } \
+, { :jobname => 'Tournament Director: 9 x 9 Tournament' } \
+, { :jobname => 'Tournament Director: 13 x 13 Tournament' } \
+, { :jobname => 'Tournament Director: Club Team Tournament' } \
+, { :jobname => 'Tournament Director: Crazy Go' } \
+])

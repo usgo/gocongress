@@ -1,4 +1,8 @@
 class JobsController < ApplicationController
+
+  # Access Control
+  before_filter :allow_only_admin, :except => [:show, :index]
+
   # GET /jobs
   # GET /jobs.xml
   def index
