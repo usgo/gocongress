@@ -231,6 +231,7 @@ div.field { display: block; }
 div.field_with_errors { background-color:white; display: inline; padding: 0; }
 div.field_with_errors input { background-color:white; }
 div.field label, div.field_with_errors label { display:inline-block; text-align:left; width: 150px }
+div.field label.wide, div.field_with_errors label.wide { width: auto; }
 fieldset .aligned-with-input { margin-left: 155px; }
 
 /* Some forms need wider labels -Jared 1/8/11 */
