@@ -81,17 +81,21 @@ class UsersController < ApplicationController
 		params[:user][:job_ids] ||= []
     @user = User.find(params[:id])
     @jobs = get_job_array
-		
-    respond_to do |format|
-      if @user.update_attributes(params[:user])
-				flash[:notice] = "User successfully updated"
-        format.html { redirect_to(:action=>'index') }
-        format.xml  { head :ok }
-      else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @user.errors, :status => :unprocessable_entity }
-      end
+
+    # Only admins can promote or demote other admins -Jared 2011.1.13
+    if current_user_is_admin? && params[:user][:is_admin].present?
+      @user.is_admin = params[:user][:is_admin]
+      @user.save
     end
+
+    # Update mass-assignable attributes -Jared 2011.1.13
+    if @user.update_attributes(params[:user])
+      flash[:notice] = "User successfully updated"
+      redirect_to(:action=>'index')
+    else
+      render :action => "edit"
+    end
+
   end
 
   # DELETE /users/1

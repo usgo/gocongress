@@ -25,6 +25,10 @@ protected
     @arCrumbs ||= Array.new
   end
 
+  def current_user_is_admin?
+    current_user && current_user.is_admin?
+  end
+
   def allow_only_admin
     unless current_user && current_user.is_admin?
       render_access_denied
