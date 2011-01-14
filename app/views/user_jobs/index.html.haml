@@ -9,9 +9,9 @@
   %tbody
     - @user_jobs.each do |uj|
       %tr
-        %td= uj.jobname
-        %td
-        %td= uj.email
+        %td= uj.job.jobname
+        %td= uj.user.primary_attendee.get_full_name
+        %td= uj.user.email
         %td
 %dl
   %dt TC

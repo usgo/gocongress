@@ -1,13 +1,11 @@
 class UserJobsController < ApplicationController
 
+  # Access Control
+  before_filter :allow_only_admin, :except => [:index]
+
   # GET /user_jobs
   def index
-    @user_jobs = UserJob.joins(:job, :user).select("jobname, email") 
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @users }
-    end
+    @user_jobs = UserJob.all
   end
 
 end

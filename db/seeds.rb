@@ -70,6 +70,7 @@ Job.create([
 , { :jobname => 'Deputy Registrar' } \
 , { :jobname => 'Registration Volunteers' } \
 , { :jobname => 'Treasurer' } \
+, { :jobname => 'Website' } \
 , { :jobname => 'Equipment Manager' } \
 , { :jobname => 'Equipment Volunteers' } \
 , { :jobname => 'Deputy Youth Coordinator' } \
