@@ -23,6 +23,7 @@ class UsersController < ApplicationController
     @total_cost = @user.get_invoice_total
     @amount_paid = 0
     @balance = @total_cost - @amount_paid
+    @showing_current_user = signed_in?(nil) && (current_user.id == @user.id)
 
     respond_to do |format|
       format.html # show.html.erb
