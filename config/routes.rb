@@ -4,8 +4,6 @@ Gocongress::Application.routes.draw do
   get "home/index"
 
   match 'contact' => 'user_jobs#index'
-
-  match "/users/:id/resetpasswd" => "users#resetpasswd"
   match '/popup/:action' => 'popup', :as => 'popup'
 
   devise_for :users
