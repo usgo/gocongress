@@ -77,8 +77,9 @@
       = f.label :zip, 'Zip/Postal Code'
       = f.text_field :zip
     .field
-      = f.label :country, 'Country'
-      = f.text_field :country
+      = f.label :country, 'Country Code'
+      = f.text_field :country, :maxlength => 2, :size => 2
+      %span.smalltext eg. US, JP, CA
 
   %fieldset
     .field

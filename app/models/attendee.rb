@@ -16,6 +16,7 @@ class Attendee < ActiveRecord::Base
   NUMERIC_RANK_LIST = []
   Attendee::RANKS.each { |r| NUMERIC_RANK_LIST << r[1] }
 
+  validates_format_of :country, :with => /^[A-Z]{2}$/, :message => "must be exactly two capital letters"
   validates_presence_of :gender
   validates_inclusion_of :gender, :in => ["m","f"], :message => "is not valid"
   validates_inclusion_of :is_primary, :in => [true, false]

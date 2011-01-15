@@ -14,4 +14,11 @@ class AttendeeTest < ActiveSupport::TestCase
       @user.primary_attendee.destroy
     end
   end
+
+  test "country must be two capital lettters" do
+    assert_match( /^[A-Z]{2}$/, @user.primary_attendee.country )
+    update_success = @user.primary_attendee.update_attributes( { :country => 'United States' } )
+    assert !update_success
+  end
+
 end
