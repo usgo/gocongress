@@ -27,6 +27,7 @@ class AttendeesControllerTest < ActionController::TestCase
       delete :destroy, :id => @attendee.to_param
     end
     assert_redirected_to attendees_path
+    assert_equal 'Attendee deleted', flash[:notice]
   end
 
   test "visitor can not get edit" do
@@ -71,11 +72,13 @@ class AttendeesControllerTest < ActionController::TestCase
     target_attendee.state = 'MI'
     put :update, :id => target_attendee.id, :attendee => target_attendee.attributes
     assert_redirected_to user_path(target_attendee.user_id)
+    assert_equal 'Attendee successfully updated', flash[:notice]
 
     target_attendee = @user_two.attendees.first
     target_attendee.state = 'AK'
     put :update, :id => target_attendee.id, :attendee => target_attendee.attributes
     assert_redirected_to user_path(target_attendee.user_id)
+    assert_equal 'Attendee successfully updated', flash[:notice]
   end
 
   test "nobody can ever delete a primary attendee" do

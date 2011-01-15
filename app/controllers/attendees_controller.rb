@@ -65,8 +65,7 @@ class AttendeesController < ApplicationController
     # run the appropriate validations for this @page 
     if @attendee.valid_in_form_page?(@page.to_sym)
       @attendee.save(:validate => false)
-      flash[:notice] = "Attendee successfully updated"
-      redirect_to(user_path(@attendee.user_id))
+      redirect_to user_path(@attendee.user_id), :notice => "Attendee successfully updated"
     else
       render get_view_name_from_page(@page)
     end
