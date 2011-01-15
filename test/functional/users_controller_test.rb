@@ -80,5 +80,6 @@ class UsersControllerTest < ActionController::TestCase
     end
 
     assert_redirected_to users_path
+    assert_equal 'User deleted', flash[:notice]
   end
 end

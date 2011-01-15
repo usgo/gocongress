@@ -91,8 +91,7 @@ class UsersController < ApplicationController
 
     # Update mass-assignable attributes -Jared 2011.1.13
     if @user.update_attributes(params[:user])
-      flash[:notice] = "User successfully updated"
-      redirect_to(:action=>'index')
+      redirect_to users_path, :notice => "User successfully updated"
     else
       render :action => "edit"
     end
@@ -102,23 +101,9 @@ class UsersController < ApplicationController
   # DELETE /users/1
   # DELETE /users/1.xml
   def destroy
-	  if !current_user.try(:is_admin?)
-    	deletionOccurred = false
-    else
-			@user = User.find(params[:id])
-    	@user.destroy
-    	deletionOccurred = true
-    end
-
-    respond_to do |format|
-    	if deletionOccurred
-				flash[:notice] = "User deleted"
-			else
-				flash[:alert] = "Access denied"
-			end
-      format.html { redirect_to(users_url) }
-      format.xml  { head :ok }
-    end
+    @user = User.find(params[:id])
+    @user.destroy
+    redirect_to users_url, :notice => "User deleted"
   end
 
   # GET /users/1/resetpasswd
