@@ -1,5 +1,9 @@
 %h1 Cost Summary
 
+%p
+  Your initial deposit is due
+  =@user.get_initial_deposit_due_date.to_formatted_s(:long)
+
 %table.semantic.fullwidth
   %thead
     %tr

@@ -25,9 +25,14 @@
       %tr
         %th Amount paid
         %td.numeric= number_to_currency @amount_paid
+        %td.smalltext Updated every few days, please be patient
       %tr
         %th Balance
         %td.numeric= number_to_currency @balance
+        %td.smalltext= link_to "Make a Payment", '#', :confirm => "Coming soon"
+  %p
+    Your initial deposit is due
+    =@user.get_initial_deposit_due_date.to_formatted_s(:long)
 
 %br/
 

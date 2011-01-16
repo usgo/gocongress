@@ -56,6 +56,10 @@ class User < ActiveRecord::Base
     return sum
   end
 
+  def get_initial_deposit_due_date
+    self.created_at.to_date + 1.month
+  end
+
 private
 
   # make sure you:
