@@ -21,7 +21,7 @@
       %tr
         %th Total cost
         %td.numeric= number_to_currency @total_cost
-        %td.smalltext= link_to "Cost Summary", user_path(@user) + "/invoice"
+        %td.smalltext= link_to "Cost Summary", invoice_user_path(@user)
       %tr
         %th Amount paid
         %td.numeric= number_to_currency @amount_paid
@@ -29,7 +29,7 @@
       %tr
         %th Balance
         %td.numeric= number_to_currency @balance
-        %td.smalltext= link_to "Make a Payment", '#', :confirm => "Coming soon"
+        %td.smalltext= link_to "Make a Payment", pay_user_path(@user)
   %p
     Your initial deposit is due
     =@user.get_initial_deposit_due_date.to_formatted_s(:long)

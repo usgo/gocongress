@@ -12,9 +12,16 @@ Gocongress::Application.routes.draw do
   match '/attendees/:id/edit/:page' => "attendees#edit"
 
   # resource routes (maps HTTP verbs to controller actions automatically):
-  resources :events, :jobs, :users, :user_jobs, :attendees
+  resources :events, :jobs, :user_jobs, :attendees
 
-  match '/users/:id/invoice' => 'users#show_invoice'
+  resources :users do
+    member do
+      get 'invoice'
+      get 'pay'
+    end
+  end
+
+  #match '/users/:id/invoice' => 'users#show_invoice'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

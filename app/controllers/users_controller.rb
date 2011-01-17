@@ -1,8 +1,8 @@
 class UsersController < ApplicationController
 
   # Access Control
-  before_filter :allow_only_admin, :except => [:show, :show_invoice]
-  before_filter :allow_only_self_or_admin, :only => [:show, :show_invoice]
+  before_filter :allow_only_admin, :except => [:show, :invoice, :pay]
+  before_filter :allow_only_self_or_admin, :only => [:show, :invoice, :pay]
 
   # GET /users
   # GET /users.xml
@@ -31,8 +31,16 @@ class UsersController < ApplicationController
     end
   end
   
+  # GET /users/1/pay
+  def pay
+    @user = User.find(params[:id])
+    @total_cost = @user.get_invoice_total
+    @amount_paid = 0
+    @balance = @total_cost - @amount_paid
+  end
+  
   # GET /users/1/invoice
-  def show_invoice
+  def invoice
     @user = User.find(params[:id])
     @invoice_items = @user.get_invoice_items
     @total_cost = @user.get_invoice_total
