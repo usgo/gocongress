@@ -1,17 +1,42 @@
 %h1 Make a Payment
 
-%table.lightweight
-  %tbody
-    %tr
-      %th Total cost
-      %td.numeric= number_to_currency @total_cost
-      %td.smalltext= link_to "Cost Summary", invoice_user_path(@user)
-    %tr
-      %th Amount paid
-      %td.numeric= number_to_currency @amount_paid
-      %td.smalltext Updated every few days, please be patient
-    %tr
-      %th Balance
-      %td.numeric= number_to_currency @balance
-
-
+%form{ :action => "https://secure.merchantonegateway.com/cart/cart.php", :method => "POST" }
+  
+  %table.lightweight
+    %tbody
+      %tr
+        %th Total cost
+        %td.numeric= number_to_currency @total_cost
+        %td.smalltext= link_to "Cost Summary", invoice_user_path(@user)
+      %tr
+        %th Amount paid
+        %td.numeric= number_to_currency @amount_paid
+        %td.smalltext Updated every few days, please be patient
+      %tr
+        %th Balance
+        %td.numeric= number_to_currency @balance
+      %tr
+        %td{ :colspan => "3", :style => "padding-left: 0px;" }
+          %br
+          %h2 Payment Information
+      %tr
+        %th Account Email Address
+        %td= @user.email
+        %td.smalltext Please use this email address on the following forms
+      %tr
+        %th Enter payment amount
+        %td.align-right
+          $
+          %input.align-right{ :type => "text", :size => "6", :name => "amount" }
+          %input{ :type => "hidden", :name => "action", :value => "process_variable" }
+          %input{ :type => "hidden", :name => "order_description", :value => "USGC Payment for #{@user.email}" }
+          %input{ :type => "hidden", :name => "language", :value => "en" }
+          %input{ :type => "hidden", :name => "url_finish", :value => "http://www.gocongress.org" }
+          %input{ :type => "hidden", :name => "customer_receipt", :value => "true" }
+          %input{ :type => "hidden", :name => "username", :value => "lscott123" }
+        %td.smalltext Your payment will be processed by secure.merchantonegateway.com
+      %tr
+        %th
+        %td.align-right
+          %br
+          %input{ :type => "submit", :name => "submit", :value => "Submit" }

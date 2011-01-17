@@ -34,6 +34,7 @@ legend {
 .smalltext { font-size: 12px; }
 th { text-align: left; }
 table .numeric { text-align: right; }
+.align-right { text-align: right; }
 
 /* Two column layout */
 .left-column { display: inline-block; width: 45%; vertical-align: top; }
