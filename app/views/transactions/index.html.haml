@@ -15,8 +15,7 @@
     - @transactions.each do |transaction|
       %tr
         %td= transaction.gwdate
-        %td
-          = link_to transaction.user.primary_attendee.get_full_name, user_path(transaction.user)
+        %td= link_to transaction.user.primary_attendee.get_full_name, user_path(transaction.user)
         %td= transaction.user.email
         %td= transaction.get_trantype_name
         %td.numeric= number_to_currency transaction.amount, :unit => ""
