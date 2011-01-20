@@ -12,7 +12,8 @@ class User < ActiveRecord::Base
   # On an unrelated note, I added a db-level default value of false for is_admin
   # -Jared 2010-12-30
   attr_protected :is_admin
-    
+  
+  has_many :transactions, :dependent => :destroy
   has_many :user_jobs, :dependent => :destroy
   has_many :jobs, :through => :user_jobs
 

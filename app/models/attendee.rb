@@ -5,7 +5,7 @@ class Attendee < ActiveRecord::Base
     
   # to do: use attr_protected
 
-  # define constant array of rank hashes {integer rank, rank name}
+  # define constant array of ranks
   RANKS = []
   RANKS << [ "Non-player", 0]
   109.downto(101).each {|r| RANKS << ["#{r-100} pro", r] }

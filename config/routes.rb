@@ -1,5 +1,7 @@
 Gocongress::Application.routes.draw do
 
+  resources :transactions
+
   get "home/access_denied"
   get "home/index"
 

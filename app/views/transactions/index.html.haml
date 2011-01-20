@@ -1,0 +1,29 @@
+%h1 All Transactions
+
+%table.semantic.zebra.fullwidth
+  %thead
+    %tr
+      %th User Email Address
+      %th Transaction Type
+      %th Amount
+      %th Gateway Transaction ID
+      %th Gateway Date
+      %th 
+      %th 
+      %th 
+
+  %tbody
+    - @transactions.each do |transaction|
+      %tr
+        %td= transaction.user.email
+        %td= transaction.get_trantype_name
+        %td.numeric= number_to_currency transaction.amount, :unit => ""
+        %td.numeric= transaction.gwtranid
+        %td= transaction.gwdate
+        %td= link_to 'Show', transaction
+        %td= link_to 'Edit', edit_transaction_path(transaction)
+        %td= link_to 'Destroy', transaction, :confirm => 'Are you sure?', :method => :delete
+
+%br
+
+= link_to 'New Transaction', new_transaction_path

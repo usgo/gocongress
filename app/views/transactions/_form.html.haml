@@ -1,0 +1,39 @@
+= form_for(@transaction) do |f|
+  - if @transaction.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(@transaction.errors.count, "error")
+        prohibited this transaction from being saved:
+      %ul
+        - @transaction.errors.full_messages.each do |msg|
+          %li= msg
+
+  %fieldset.wider-labels
+    .field
+      = f.label :user_id, "User email address"
+      = f.select :user_id, User.all.collect {|u| [ u.email, u.id ] }, { :include_blank => true }
+      %br
+      %span.smalltext.aligned-with-input 
+        Each user account has a unique email address.
+        Make sure you choose the right one.
+    .field
+      = f.label :trantype, "Type"
+      = f.select :trantype, Transaction::TRANTYPES
+      %br
+      %span.smalltext.aligned-with-input 
+        Currently, only
+        %strong sale
+        transactions are supported.  In the future, we may have
+        other types, such as discounts for VIPs and volunteers.
+    .field
+      = f.label :gwdate, "Gateway Date"
+      = f.date_select :gwdate
+    .field
+      = f.label :gwdate, "Gateway Transaction ID"
+      = f.text_field :gwtranid
+    .field
+      = f.label :amount
+      = f.text_field :amount, :size => 10
+    .field
+      = label '', ''
+      = f.submit "Submit"

@@ -101,7 +101,7 @@ dd { float: left; }
 .nav ul { height: 40px; }
 .nav li { 
 	height: 33px;
-	border-left: 1px solid #AAA;
+	border-left: 1px solid #EEE;
 	display: block;
 	float: left;
 	font-family: Helvetica, sans-serif; 
@@ -113,7 +113,7 @@ dd { float: left; }
 	list-style: none;
 }
 .nav li:hover { background-color: #29ABE2; }
-.nav li.last-child { border-right: 1px solid #AAA; }
+.nav li.last-child { border-right: 1px solid #EEE; }
 .nav li a { color: white; text-decoration: none; }
 
 /* Nav item widths are hardcoded because I couldn't figure out how to evenly
@@ -135,8 +135,9 @@ distribute and pad them.  I'm only human. -Jared 7/27/10 */
 .nav-container-admin { background-color: #64AEDE; }
 .nav-container-admin ul { height: 25px; }
 .nav li#nav-admin-title { width: 120px; }
-.nav li#nav-admin-all-users { width: 80px; }
-.nav li#nav-admin-placeholder { width: 698px; }
+.nav li#nav-admin-users { width: 80px; }
+.nav li#nav-admin-transactions { width: 150px; }
+.nav li#nav-admin-placeholder { width: 547px; }
 .nav-container-admin .nav li { height: 18px; }
 
 /* Main content area */
@@ -236,6 +237,8 @@ div.field label.wide, div.field_with_errors label.wide { width: auto; }
 fieldset .aligned-with-input { margin-left: 155px; }
 
 /* Some forms need wider labels -Jared 1/8/11 */
+fieldset.wider-labels label { width: 200px; }
+fieldset.wider-labels .aligned-with-input { margin-left: 205px; }
 fieldset.wordy-questions label { width: 350px; }
 fieldset.wordy-questions .aligned-with-input { margin-left: 355px; }
 

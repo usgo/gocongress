@@ -73,9 +73,12 @@
         .nav
           %ul
             %li#nav-admin-title Admin Menu:
-            %li#nav-admin-all-users
+            %li#nav-admin-users
               %a{:href => users_path}
-                All Users
+                Users
+            %li#nav-admin-transactions
+              %a{:href => transactions_path}
+                Transactions
             %li#nav-admin-placeholder.last-child
     
     #content
