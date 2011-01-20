@@ -35,4 +35,12 @@ class UserTest < ActiveSupport::TestCase
     assert_equal u.get_invoice_total - u.amount_paid, u.balance
   end
 
+  test "sum of invoice equals invoice total" do
+    u = Factory(:user)
+    1.upto(1+rand(3)) { |a| u.attendees << Factory(:attendee, :user_id => u.id) }
+    expected_sum = 0
+    u.get_invoice_items.each { |ii| expected_sum += ii['item_price'] }
+    assert_equal expected_sum, u.get_invoice_total
+  end
+
 end
