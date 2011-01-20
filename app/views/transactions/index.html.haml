@@ -3,23 +3,24 @@
 %table.semantic.zebra.fullwidth
   %thead
     %tr
-      %th User Email Address
+      %th Gateway Date
+      %th User (Primary Attendee)
+      %th Email Address
       %th Transaction Type
       %th Amount
       %th Gateway Transaction ID
-      %th Gateway Date
-      %th 
-      %th 
-      %th 
+      %th{ :colspan => 3 }
 
   %tbody
     - @transactions.each do |transaction|
       %tr
+        %td= transaction.gwdate
+        %td
+          = link_to transaction.user.primary_attendee.get_full_name, user_path(transaction.user)
         %td= transaction.user.email
         %td= transaction.get_trantype_name
         %td.numeric= number_to_currency transaction.amount, :unit => ""
         %td.numeric= transaction.gwtranid
-        %td= transaction.gwdate
         %td= link_to 'Show', transaction
         %td= link_to 'Edit', edit_transaction_path(transaction)
         %td= link_to 'Destroy', transaction, :confirm => 'Are you sure?', :method => :delete

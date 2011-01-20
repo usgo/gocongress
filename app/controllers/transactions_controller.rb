@@ -6,12 +6,7 @@ class TransactionsController < ApplicationController
   # GET /transactions
   # GET /transactions.xml
   def index
-    @transactions = Transaction.all
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @transactions }
-    end
+    @transactions = Transaction.order('gwdate desc')
   end
 
   # GET /transactions/1
