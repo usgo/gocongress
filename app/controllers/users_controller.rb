@@ -24,11 +24,9 @@ class UsersController < ApplicationController
     @amount_paid = 0
     @balance = @total_cost - @amount_paid
     @showing_current_user = signed_in?(nil) && (current_user.id == @user.id)
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @user }
-    end
+    @page_title = @showing_current_user ?
+      'My Account' :
+      @user.primary_attendee.full_name_possessive + ' Account'
   end
   
   # GET /users/1/pay

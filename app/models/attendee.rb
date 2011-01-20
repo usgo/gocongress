@@ -69,6 +69,10 @@ class Attendee < ActiveRecord::Base
     given_name + " " + family_name
   end
 
+  def full_name_possessive
+    given_name + " " + family_name + ('s' == family_name[-1,1] ? "'" : "'s")
+  end
+
   def get_rank_name
     rank_name = ""
     RANKS.each { |r| if (r[1] == self.rank) then rank_name = r[0] end }
