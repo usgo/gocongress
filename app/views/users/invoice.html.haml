@@ -19,4 +19,4 @@
     %tr.total
       %td
       %th Total
-      %td.numeric= number_to_currency @total_cost
+      %td.numeric= number_to_currency @user.get_invoice_total

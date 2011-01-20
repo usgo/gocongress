@@ -35,7 +35,6 @@ class UsersController < ApplicationController
   def invoice
     @user = User.find(params[:id])
     @invoice_items = @user.get_invoice_items
-    @total_cost = @user.get_invoice_total
   end
 
   # GET /users/new
