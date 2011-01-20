@@ -7,6 +7,7 @@
         The img alt ends up in a div.galleria-info-description
         Leave the alt empty -Jared 12/20/10
       = image_tag "slideshow/0" + i.to_s + ".jpg", :title=>@arSlideTitles[i-1], :alt=>""
+
 .curvy-text-container
   = image_tag "logo/gc2011-logo-300.png", :id => 'usgc-logo'
   .curvy-spacer{:style => "width: 80px;"} &nbsp;
@@ -34,22 +35,17 @@
     The US Go Congress is the largest Go tournament in the United States. It
     happens once a year and spans one week. Events include:
   %p
-    %span.event-title
-      %a{:href => "frontend/tournament_info.php#uso"} US Open
+    %span.event-title US Open
     \- the largest annual Go tournament in the US
   %p
-    %span.event-title
-      %a{:href => "frontend/tournament_info.php#naim"} North American Ing Masters
+    %span.event-title North American Ing Masters
     \- 32 of the strongest amateur and professional players in North America
   %p
-    %span.event-title
-      %a{:href => "frontend/tournament_info.php#redmond"} The Redmond Cup
+    %span.event-title The Redmond Cup
     \- the preeminent youth tournament of the year
-  %p
-    %a{:href => "frontend/pros.php"} Pro lectures, simuls
+  %p Pro lectures, simuls
   %p Vendor area
   %div{:style => "clear:left;"}
+
 %p
-  %a{:href => "frontend/faq.php"} Frequently Asked Questions
-  %br/
   %a{:href => "http://www.usgo.org/congresses/2010"} 2010 Congress
