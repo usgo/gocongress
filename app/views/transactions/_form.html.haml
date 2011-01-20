@@ -17,7 +17,7 @@
         Each user account has a unique email address.
         Make sure you choose the right one.
     .field
-      = f.label :trantype, "Type"
+      = f.label :trantype
       = f.select :trantype, Transaction::TRANTYPES
       %br
       %span.smalltext.aligned-with-input 
@@ -26,10 +26,10 @@
         transactions are supported.  In the future, we may have
         other types, such as discounts for VIPs and volunteers.
     .field
-      = f.label :gwdate, "Gateway Date"
+      = f.label :gwdate
       = f.date_select :gwdate
     .field
-      = f.label :gwdate, "Gateway Transaction ID"
+      = f.label :gwtranid
       = f.text_field :gwtranid
     .field
       = f.label :amount

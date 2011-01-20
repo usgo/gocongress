@@ -1,0 +1,7 @@
+en:
+  activerecord:
+    attributes:
+      transaction:
+        gwtranid: "Gateway Transaction ID"
+        gwdate: "Gateway Date"
+        trantype: "Type"
