@@ -39,6 +39,17 @@ class User < ActiveRecord::Base
   # object and its associations in one go with fields_for()
   accepts_nested_attributes_for :primary_attendee
 
+  def amount_paid
+    sales = transactions.where(:trantype => 'S')
+    sum = 0
+    sales.each { |s| sum += s.amount }
+    return sum
+  end
+
+  def balance
+    get_invoice_total - amount_paid
+  end
+
   def get_invoice_items
     invoice_items = []
     self.attendees.each { |a|

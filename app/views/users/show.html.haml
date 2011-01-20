@@ -20,15 +20,15 @@
     %tbody
       %tr
         %th Total cost
-        %td.numeric= number_to_currency @total_cost
+        %td.numeric= number_to_currency @user.get_invoice_total
         %td.smalltext= link_to "Cost Summary", invoice_user_path(@user)
       %tr
         %th Amount paid
-        %td.numeric= number_to_currency @amount_paid
+        %td.numeric= number_to_currency @user.amount_paid
         %td.smalltext Updated every few days, please be patient
       %tr
         %th Balance
-        %td.numeric= number_to_currency @balance
+        %td.numeric= number_to_currency @user.balance
         %td.smalltext= link_to "Make a Payment", pay_user_path(@user)
   %p
     Your initial deposit is due

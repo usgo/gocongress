@@ -20,9 +20,6 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
     @attendees = @user.attendees.order "is_primary desc"
-    @total_cost = @user.get_invoice_total
-    @amount_paid = 0
-    @balance = @total_cost - @amount_paid
     @showing_current_user = signed_in?(nil) && (current_user.id == @user.id)
     @page_title = @showing_current_user ?
       'My Account' :
@@ -32,9 +29,6 @@ class UsersController < ApplicationController
   # GET /users/1/pay
   def pay
     @user = User.find(params[:id])
-    @total_cost = @user.get_invoice_total
-    @amount_paid = 0
-    @balance = @total_cost - @amount_paid
   end
   
   # GET /users/1/invoice
