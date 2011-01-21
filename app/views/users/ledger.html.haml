@@ -1,6 +1,6 @@
 %h1= @page_title
 
-%p Updated every few days, so please be patient.
+%p Updated every few days, please be patient.
 
 - if @user.transactions.size == 0
   %p No transactions found.
@@ -21,3 +21,6 @@
         %td
         %th Total
         %td.numeric= number_to_currency @user.amount_paid, :unit => ''
+
+- if current_user.is_admin?
+  %p= link_to "Return to #{@user.primary_attendee.full_name_possessive} Account", user_path(@user)

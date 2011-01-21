@@ -20,3 +20,6 @@
       %td
       %th Total
       %td.numeric= number_to_currency @user.get_invoice_total
+
+- if current_user.is_admin?
+  %p= link_to "Return to #{@user.primary_attendee.full_name_possessive} Account", user_path(@user)
