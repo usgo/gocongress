@@ -15,8 +15,9 @@
       %th{:colspan => "3"}
   %tbody
     - @users.each do |user|
-      %tr{ :class => user.is_admin ? "emphasized" : "no-emphasis" }
-        %td= user.is_admin ? "Admin" : "User"
+      %tr
+        %td{ :class => user.is_admin ? "emphasized" : "no-emphasis" }
+          = user.is_admin ? "Admin" : "User"
         %td= user.email
         %td= user.primary_attendee.get_full_name
         %td= user.attendees.count
