@@ -1,8 +1,8 @@
 class UsersController < ApplicationController
 
   # Access Control
-  before_filter :allow_only_admin, :except => [:show, :invoice, :pay]
-  before_filter :allow_only_self_or_admin, :only => [:show, :invoice, :pay]
+  before_filter :allow_only_admin, :except => [:show, :invoice, :pay, :ledger]
+  before_filter :allow_only_self_or_admin, :only => [:show, :invoice, :pay, :ledger]
 
   # GET /users
   # GET /users.xml
@@ -35,6 +35,15 @@ class UsersController < ApplicationController
   def invoice
     @user = User.find(params[:id])
     @invoice_items = @user.get_invoice_items
+  end
+  
+  # GET /users/1/ledger
+  def ledger
+    @user = User.find(params[:id])
+    @showing_current_user = signed_in?(nil) && (current_user.id == @user.id)
+		@page_title = @showing_current_user ?
+      'My Payment History' :
+      @user.primary_attendee.full_name_possessive + ' Payment History'
   end
 
   # GET /users/new

@@ -1,0 +1,23 @@
+%h1= @page_title
+
+%p Updated every few days, so please be patient.
+
+- if @user.transactions.size == 0
+  %p No transactions found.
+- else
+  %table.semantic.fullwidth
+    %thead
+      %tr
+        %th Date
+        %th.numeric Transaction ID
+        %th.numeric Amount
+    %tbody
+      - for t in @user.transactions.order('gwdate asc')
+        %tr
+          %td= t.gwdate.to_formatted_s(:long)
+          %td.numeric= t.gwtranid
+          %td.numeric= number_to_currency t.amount, :unit => ''
+      %tr.total
+        %td
+        %th Total
+        %td.numeric= number_to_currency @user.amount_paid, :unit => ''

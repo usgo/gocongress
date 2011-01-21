@@ -25,7 +25,7 @@
       %tr
         %th Amount paid
         %td.numeric= number_to_currency @user.amount_paid
-        %td.smalltext Updated every few days, please be patient
+        %td.smalltext= link_to "Payment History", ledger_user_path(@user)
       %tr
         %th Balance
         %td.numeric= number_to_currency @user.balance

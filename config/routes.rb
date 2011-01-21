@@ -19,6 +19,7 @@ Gocongress::Application.routes.draw do
   resources :users do
     member do
       get 'invoice'
+      get 'ledger'
       get 'pay'
     end
   end
