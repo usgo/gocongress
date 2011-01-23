@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
-  helper_method :crumbs
+  helper_method :crumbs, :current_user_is_admin?
 
   # Redirect Devise to a specific page on successful sign in  -Jared
   def after_sign_in_path_for(resource_or_scope)
@@ -26,7 +26,7 @@ protected
   end
 
   def current_user_is_admin?
-    current_user && current_user.is_admin?
+    current_user.present? && current_user.is_admin?
   end
 
   def allow_only_admin

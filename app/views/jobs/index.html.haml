@@ -13,7 +13,8 @@
       %th People Needed (Total)
       %th Available
       %th Description
-      %th{:colspan => "3"}
+      - if current_user_is_admin?
+        %th{:colspan => "3"}
   %tbody
     - @jobs.each do |job|
       %tr
@@ -21,8 +22,12 @@
         %td
         %td
         %td
-        %td= link_to 'Show', job
-        %td= link_to 'Edit', edit_job_path(job)
-        %td= link_to 'Destroy', job, :confirm => 'Are you sure?', :method => :delete
+        - if current_user_is_admin?
+          %td= link_to 'Show', job
+          %td= link_to 'Edit', edit_job_path(job)
+          %td= link_to 'Destroy', job, :confirm => 'Are you sure?', :method => :delete
+
 %br/
-= link_to 'Create a new volunteer position', new_job_path
+
+- if current_user_is_admin?
+  = link_to 'Create a new volunteer position', new_job_path

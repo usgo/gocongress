@@ -14,21 +14,24 @@
   %tbody
     - @arEventsByDate.each do |d,arEvt|
       %tr.date-header
-        %th{:colspan => "7"}
-          = d
+        %th{ :colspan => current_user_is_admin? ? 6 : 4 }= d
       %tr.lesser-header
         %th Event
         %th Transport Departure Time
         %th Event Start/Arrival Time
         %th Price
-        %th{:colspan => "2"}
+        - if current_user_is_admin?
+          %th{:colspan => "2"}
       - arEvt.each do |e|
         %tr
           %td= e.evtname
           %td= e.evtdeparttime
           %td= e.evtstarttime
           %td= e.evtprice
-          %td= link_to 'Edit', edit_event_path(e)
-          %td= link_to 'Destroy', e, :confirm => 'Are you sure?', :method => :delete
+          - if current_user_is_admin?
+            %td= link_to 'Edit', edit_event_path(e)
+            %td= link_to 'Destroy', e, :confirm => 'Are you sure?', :method => :delete
 %br/
-= link_to 'New Event', new_event_path
+
+- if current_user_is_admin?
+  = link_to 'New Event', new_event_path
