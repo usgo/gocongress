@@ -1,8 +1,8 @@
 class UsersController < ApplicationController
 
   # Access Control
-  before_filter :allow_only_admin, :except => [:show, :invoice, :pay, :ledger]
-  before_filter :allow_only_self_or_admin, :only => [:show, :invoice, :pay, :ledger]
+  before_filter :allow_only_admin, :except => [:edit, :show, :invoice, :pay, :ledger, :update]
+  before_filter :allow_only_self_or_admin, :only => [:edit, :show, :invoice, :pay, :ledger, :update]
 
   # GET /users
   # GET /users.xml
@@ -99,7 +99,11 @@ class UsersController < ApplicationController
 
     # Update mass-assignable attributes -Jared 2011.1.13
     if @user.update_attributes(params[:user])
-      redirect_to users_path, :notice => "User successfully updated"
+      if current_user.is_admin?
+        redirect_to users_path, :notice => "User successfully updated"
+      else
+        redirect_to user_path(@user), :notice => "User successfully updated"
+      end
     else
       render :action => "edit"
     end
