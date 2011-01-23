@@ -28,6 +28,7 @@ legend {
 	font-weight: bold;
 	padding: 0.5em 0em;
 }
+input[type="submit"], input[type="button"] { cursor: pointer; }
 
 /* Truly basic classes that could apply anywhere -Jared 12/30/10 */
 .fullwidth { width: 100%; }
@@ -180,6 +181,10 @@ distribute and pad them.  I'm only human. -Jared 7/27/10 */
 .rails-flash-notice {
 	background-color: lightgreen;
 	}
+.button-emphasis {
+  color: #0071BC;
+  font-size: 20px;
+  }
 
 #content .notice { 
 	background-image: url("../images/icons/attention.png");
