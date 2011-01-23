@@ -17,3 +17,25 @@
         %td= a.get_rank_name
         %td= a.country
         %td= a.created_at.to_date.to_formatted_s(:rfc822)
+
+%h2 Pre-registrants
+
+%p 
+  These people showed their support for the 2011 Go Congress by signing up
+  <strong>before</strong> actual registration was ready!
+%table.semantic.fullwidth.zebra
+  %thead
+    %tr
+      %th Given Name
+      %th Family Name
+      %th Rank
+      %th Country
+      %th Date
+  %tbody
+    - @preregistrants.each do |p|
+      %tr{:class => if p.anonymous then "understated" end }
+        %td= if p.anonymous then "Anonymous" else p.firstname end
+        %td= if p.anonymous then "Anonymous" else p.lastname end
+        %td= p.get_rank_name
+        %td= p.country
+        %td= p.preregdate.to_date.to_formatted_s(:rfc822)
