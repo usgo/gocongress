@@ -212,6 +212,10 @@ div.download-pdf a {
 	text-align: center;
 }
 
+/* Railsy validation errors */
+#error_explanation h2 { font-size: 16px; }
+#error_explanation ul li { font-size: 16px; }
+
 /* Image gallery */
 #gallery-container { float:right; padding-left: 20px; }
 #gallery { width: 480px; height: 360px; }
