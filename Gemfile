@@ -7,6 +7,7 @@ gem "jquery-rails"
 gem "devise"
 
 gem 'haml'
+gem 'haml-rails', :group => :development 
 
 # Bundle gems for the local environment. Make sure to
 # put test-only gems in this group so their generators

@@ -1,0 +1,30 @@
+%h1 Room and Board Plans
+
+%p Here are the Room and Board Plans.  Minors (children and teens) have limited choices.
+
+%table.semantic.zebra.fullwidth
+  %tr
+    %th Name
+    %th Description
+    %th Price
+    %th Age min
+    %th Age max
+    - if current_user.present? && current_user.is_admin
+      %th{ :colspan => 3 }
+
+  - @plans.each do |plan|
+    %tr
+      %td= plan.name
+      %td= plan.description
+      %td= plan.price
+      %td= plan.age_min
+      %td= plan.age_max
+      - if current_user.present? && current_user.is_admin
+        %td= link_to 'Show', plan
+        %td= link_to 'Edit', edit_plan_path(plan)
+        %td= link_to 'Destroy', plan, :confirm => 'Are you sure?', :method => :delete
+
+%br
+
+- if current_user.present? && current_user.is_admin
+  = link_to 'Create a new Room and Board Plan', new_plan_path

@@ -1,0 +1,21 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @plan.name
+%p
+  %b Description:
+  = @plan.description
+%p
+  %b Price:
+  = @plan.price
+%p
+  %b Age min:
+  = @plan.age_min
+%p
+  %b Age max:
+  = @plan.age_max
+
+= link_to 'Edit', edit_plan_path(@plan)
+\|
+= link_to 'Back', plans_path
