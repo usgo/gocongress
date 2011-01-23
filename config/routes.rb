@@ -2,6 +2,7 @@ Gocongress::Application.routes.draw do
 
   get "home/access_denied"
   get "home/index"
+  get "home/transportation"
 
   match 'contact' => 'user_jobs#index'
   match '/popup/:action' => 'popup', :as => 'popup'
