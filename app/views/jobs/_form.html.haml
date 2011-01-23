@@ -7,9 +7,14 @@
       %ul
         - @job.errors.full_messages.each do |msg|
           %li= msg
-  .field
-    = f.label :jobname
-    %br/
-    = f.text_field :jobname
+
+  %fieldset
+    .field
+      = f.label :jobname
+      = f.text_field :jobname
+    .field
+      = f.label :email
+      = f.text_field :email
+
   .actions
     = f.submit

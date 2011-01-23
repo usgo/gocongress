@@ -7,11 +7,23 @@
       %th Email
       %th Phone
   %tbody
+    %tr
+      %td Co-Director
+      %td Lisa Scott
+      %td	lisa.scott@gocongress.org
+      %td 805-769-USGO (805-769-8746)
+    %tr
+      %td Co-Director
+      %td Andrew Jackson
+      %td	andrew.jackson@gocongress.org
+      %td 805-769-USGO (805-769-8746)
     - @user_jobs.each do |uj|
       %tr
         %td= uj.job.jobname
         %td= uj.user.primary_attendee.get_full_name
-        %td= uj.user.email
+        %td
+          -# Note how we display job.email instead of the private user.email
+          = uj.job.email
         %td
 %dl
   %dt TC

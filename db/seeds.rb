@@ -65,33 +65,36 @@ Event.create([
 ,  { :evtdate => '2011-08-06', :evtname => 'Wildcat Lounge', :evtdeparttime => '10:00 PM', :evtstarttime => '10:30 PM', :evtprice => '' } \
 ])
 
+UserJob.delete_all
 Job.delete_all
 Job.create([
   { :jobname => 'Office Manager/TD Coordinator' } \
 , { :jobname => 'Deputy Office Manager' } \
-, { :jobname => 'Registrar' } \
-, { :jobname => 'Deputy Registrar' } \
+, { :jobname => 'Registrar', :email => 'registrar@gocongress.org' } \
+, { :jobname => 'Deputy Registrar', :email => 'deputy-registrar@gocongress.org' } \
 , { :jobname => 'Registration Volunteers' } \
-, { :jobname => 'Treasurer' } \
+, { :jobname => 'Treasurer', :email => 'treasurer@gocongress.org' } \
 , { :jobname => 'Website' } \
-, { :jobname => 'Equipment Manager' } \
+, { :jobname => 'Equipment Manager', :email => 'deputy-registrar@gocongress.org' } \
 , { :jobname => 'Equipment Volunteers' } \
-, { :jobname => 'Deputy Youth Coordinator' } \
+, { :jobname => 'Youth Coordinator', :email => 'youth@usgo.org' } \
+, { :jobname => 'Deputy Youth Coordinator', :email => 'youth@usgo.org' } \
 , { :jobname => 'Handbook Preparer' } \
 , { :jobname => 'Professional Coordinator' } \
 , { :jobname => 'Written Translators (Korean, Japanese, and Chinese)' } \
 , { :jobname => 'Verbal Translators (Korean, Japanese, and Chinese)' } \
-, { :jobname => 'Tournament Directors: US Open' } \
-, { :jobname => 'Tournament Directors: North American Masters Championship' } \
-, { :jobname => 'Tournament Directors: North American Masters Open' } \
-, { :jobname => 'Tournament Director: Self-Paired Tournament' } \
-, { :jobname => 'Tournament Director: Pair Go Tournament' } \
-, { :jobname => 'Assistant Tournament Director: Pair Go Tournament' } \
-, { :jobname => 'Tournament Director: Lightning Tournament' } \
-, { :jobname => 'Tournament Director: 9 x 9 Tournament' } \
-, { :jobname => 'Tournament Director: 13 x 13 Tournament' } \
-, { :jobname => 'Tournament Director: Club Team Tournament' } \
-, { :jobname => 'Tournament Director: Crazy Go' } \
+, { :jobname => 'Tournament Directors: US Open', :email => 'tournaments@gocongress.org' } \
+, { :jobname => 'Tournament Directors: North American Masters Championship', :email => 'tournaments@gocongress.org' } \
+, { :jobname => 'Tournament Directors: North American Masters Open', :email => 'tournaments@gocongress.org' } \
+, { :jobname => 'Tournament Director: Self-Paired Tournament', :email => 'tournaments@gocongress.org' } \
+, { :jobname => 'Tournament Director: Pair Go Tournament', :email => 'tournaments@gocongress.org' } \
+, { :jobname => 'Assistant Tournament Director: Pair Go Tournament', :email => 'tournaments@gocongress.org' } \
+, { :jobname => 'Tournament Director: Lightning Tournament', :email => 'tournaments@gocongress.org' } \
+, { :jobname => 'Tournament Director: 9 x 9 Tournament', :email => 'tournaments@gocongress.org' } \
+, { :jobname => 'Tournament Director: 13 x 13 Tournament', :email => 'tournaments@gocongress.org' } \
+, { :jobname => 'Tournament Director: Club Team Tournament', :email => 'tournaments@gocongress.org' } \
+, { :jobname => 'Tournament Director: Crazy Go', :email => 'tournaments@gocongress.org' } \
+, { :jobname => "Tournament Director: Women's Tournament", :email => 'tournaments@gocongress.org' } \
 ])
 
 # Import pre-registrant list from CSV file with a specific column order -Jared
