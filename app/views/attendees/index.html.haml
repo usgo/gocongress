@@ -1,6 +1,9 @@
 %h1 Who&#39;s Coming?
-%p
-  Are you coming?  Please #{link_to 'register', '/users/sign_up'}!
+
+- unless anyone_signed_in?
+  %p
+    Are you coming?  Please #{link_to 'register', '/users/sign_up'}!
+
 %table.semantic.fullwidth.zebra
   %thead
     %tr
