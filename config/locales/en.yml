@@ -1,6 +1,12 @@
 en:
   activerecord:
     attributes:
+      attendee:
+        address_1: "Address Line 1"
+        address_2: "Address Line 2"
+        country: "Country Code"
+        state: "State/Province"
+        zip: "Zip/Postal Code"
       transaction:
         gwtranid: "Gateway Transaction ID"
         gwdate: "Gateway Date"
