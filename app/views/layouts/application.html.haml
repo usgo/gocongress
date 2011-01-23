@@ -87,13 +87,7 @@
       / "Flash messages" required by Devise -Jared 12/20/10
       .rails-flash-notice= notice
       .rails-flash-alert= alert
-      / Breadcrumbs are defined in the controller - Jared 8/22/10
-      - if crumbs.length > 0
-        #breadcrumbs
-          %a{:href => "/"} Home
-          - crumbs.each do |e|
-            \&gt;
-            %a{:href => e['url']}= e["title"]
+
       / Friendly noscript warning - Jared 7/27/10
       %noscript
         .error

@@ -6,8 +6,6 @@ class EventsController < ApplicationController
   # GET /events
   # GET /events.xml
   def index
-  	self.crumbs << {'url'=>events_path, 'title'=>'Events and Activities'}
-  
 		@events = Event.all :order=>"evtdate asc"
 		@arEventsByDate = @events.group_by {|event| event.evtdate}
   end
