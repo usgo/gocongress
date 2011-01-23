@@ -17,6 +17,7 @@ class Attendee < ActiveRecord::Base
   Attendee::RANKS.each { |r| NUMERIC_RANK_LIST << r[1] }
 
   validates_format_of :country, :with => /^[A-Z]{2}$/, :message => "must be exactly two capital letters"
+  validates_format_of :zip, :allow_blank => true, :with => /^\d{5}(-\d{4})?$/, :if => :country_is_america?, :message => "is not valid for the selected country"
   validates_presence_of :gender
   validates_inclusion_of :gender, :in => ["m","f"], :message => "is not valid"
   validates_inclusion_of :is_primary, :in => [true, false]
@@ -44,6 +45,10 @@ class Attendee < ActiveRecord::Base
     baduk_page_options.validates_inclusion_of :is_player, :in => [true, false]
     baduk_page_options.validates_inclusion_of :will_play_in_us_open, :in => [true, false]
     baduk_page_options.validates_inclusion_of :is_current_aga_member, :in => [true, false]
+  end
+
+  def country_is_america?
+    self.country == 'US'
   end
 
   def form_page_is_baduk?
