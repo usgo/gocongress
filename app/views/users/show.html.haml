@@ -29,10 +29,11 @@
       %tr
         %th Balance
         %td.numeric= number_to_currency @user.balance
-        %td.smalltext= link_to "Make a Payment", pay_user_path(@user)
   %p
     Your initial deposit is due
     =@user.get_initial_deposit_due_date.to_formatted_s(:long)
+
+  = button_to "Make a Payment", pay_user_path(@user), :method => "get"
 
 %br/
 
