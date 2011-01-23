@@ -1,0 +1,26 @@
+%h1 Pre-registrants
+
+%p This list is only for admins.  It does not respect anonymity, and it shows email addresses.
+%p
+  %strong Hint for mac users:
+  If you want to copy a table from a website, hold down the command key and drag across the table.
+  This is especially useful for pasting into a spreadsheet.
+
+%table.semantic.fullwidth.zebra
+  %thead
+    %tr
+      %th Given Name
+      %th Family Name
+      %th Email Address
+      %th Rank
+      %th Country
+      %th Date
+  %tbody
+    - @preregistrants.each do |p|
+      %tr
+        %td= p.firstname
+        %td= p.anonymous
+        %td= p.email
+        %td= p.get_rank_name
+        %td= p.country
+        %td= p.preregdate.to_date.to_formatted_s(:rfc822)
