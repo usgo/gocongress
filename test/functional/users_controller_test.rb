@@ -3,6 +3,7 @@ require 'test_helper'
 class UsersControllerTest < ActionController::TestCase
   setup do
     @user = Factory.create(:user)
+    @user_two = Factory.create(:user)
     @admin_user = Factory.create(:admin_user)
   end
 
@@ -46,9 +47,21 @@ class UsersControllerTest < ActionController::TestCase
     assert_response :success
   end
   
-  test "non-admins can not get edit" do
+  test "visitors can not get edit" do
     get :edit, :id => @user.to_param
     assert_response 403
+  end
+  
+  test "users can not edit other users" do
+    sign_in @user
+    get :edit, :id => @user_two.to_param
+    assert_response 403
+  end
+  
+  test "users can edit themselves" do
+    sign_in @user
+    get :edit, :id => @user.to_param
+    assert_response :success
   end
 
   test "admin should update user" do
@@ -57,9 +70,29 @@ class UsersControllerTest < ActionController::TestCase
     assert_redirected_to users_path
   end
   
-  test "non-admin should NOT update user" do
+  test "visitor should NOT update user" do
     put :update, :id => @user.to_param, :user => @user.attributes
     assert_response 403
+  end
+  
+  test "users can update themselves" do
+    sign_in @user
+    email_before = @user.email
+    u = @user.attributes
+    u['email'] = 'freeb@narf.com'
+    put :update, :id => @user.to_param, :user => u
+    @user = User.find(@user.id)
+    assert_not_equal email_before, @user.email
+    assert_redirected_to user_path(@user)
+  end
+  
+  test "users can NOT promote themselves" do
+    sign_in @user
+    u = @user.attributes
+    u['is_admin'] = true
+    put :update, :id => @user.to_param, :user => u
+    @user = User.find(@user.id)
+    assert_equal false, @user.is_admin
   end
 
   test "non-admin cannot destroy a user" do
