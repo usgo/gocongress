@@ -41,7 +41,7 @@ class Attendee < ActiveRecord::Base
 
   # only apply these validations on the baduk form page ("player info")
   with_options :on => :update, :if => :form_page_is_baduk? do |baduk_page_options|
-    baduk_page_options.validates_numericality_of :congresses_attended
+    baduk_page_options.validates_numericality_of :congresses_attended, :greater_than_or_equal_to => 0
     baduk_page_options.validates_inclusion_of :is_player, :in => [true, false]
     baduk_page_options.validates_inclusion_of :will_play_in_us_open, :in => [true, false]
     baduk_page_options.validates_inclusion_of :is_current_aga_member, :in => [true, false]
