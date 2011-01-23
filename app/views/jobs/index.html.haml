@@ -19,9 +19,9 @@
     - @jobs.each do |job|
       %tr
         %td= job.jobname
-        %td
-        %td
-        %td
+        %td= job.total_needed
+        %td= job.vacancies
+        %td= job.description
         - if current_user_is_admin?
           %td= link_to 'Show', job
           %td= link_to 'Edit', edit_job_path(job)
