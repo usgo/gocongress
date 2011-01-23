@@ -14,6 +14,13 @@ class AttendeesController < ApplicationController
       order_by_clause = params[:sort]
     end
 
+    # some sort orders could reveal clues about anonymous people,
+    # so we must first order by anonymity to protect against that -Jared
+    unsafe_for_anon = %w[given_name family_name]
+    if (unsafe_for_anon.include?(order_by_clause)) then
+      order_by_clause = 'anonymous, ' + order_by_clause
+    end
+
     # get all attendees
     @attendees = Attendee.order(order_by_clause)
   end
