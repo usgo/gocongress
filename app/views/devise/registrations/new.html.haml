@@ -12,6 +12,7 @@
   %a{:href => "#"} room and board
   choices, for example.
   To register, however, you only need to pay an initial deposit of $75.
+
 = form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f|
   = devise_error_messages!
   %fieldset
@@ -25,6 +26,7 @@
     .field
       = f.label :password_confirmation, 'Confirm Password'
       = f.password_field :password_confirmation, :size => 10
+
   - resource.primary_attendee ||= Attendee.new
   = f.fields_for :primary_attendee do |attendee_fields|
     %fieldset
@@ -73,34 +75,12 @@
           If you do not have an
           = link_to 'AGA ID', popup_path('aga_id'), :target => '_blank'
           you may leave this blank
-    %fieldset
-      %legend Contact Information
-      .field
-        = attendee_fields.label :phone, 'Phone'
-        = attendee_fields.text_field :phone
-      /
-        Note that we do not collect attendee email address.  See
-        apply_user_email_to_primary_attendee() -Jared 12/31/10
-      .field
-        = attendee_fields.label :address_1, 'Address Line 1'
-        = attendee_fields.text_field :address_1
-      .field
-        = attendee_fields.label :address_2, 'Address Line 2'
-        = attendee_fields.text_field :address_2
-      .field
-        = attendee_fields.label :city, 'City'
-        = attendee_fields.text_field :city
-      .field
-        = attendee_fields.label :state, 'State/Province'
-        = attendee_fields.text_field :state
-      .field
-        = attendee_fields.label :zip, 'Zip/Postal Code'
-        = attendee_fields.text_field :zip
-      .field
-        = attendee_fields.label :country, 'Country'
-        = attendee_fields.text_field :country
+
+    = render :partial => "attendees/contact_info", :locals => { :f => attendee_fields, :show_email_field => false }
+
   %fieldset
     .field
       = label '', ''
       = f.submit "Sign me up!"
+
 - ## render :partial => "devise/shared/links"
