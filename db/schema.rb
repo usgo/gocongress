@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110123020459) do
+ActiveRecord::Schema.define(:version => 20110123082356) do
 
   create_table "attendees", :force => true do |t|
     t.string   "given_name",                                               :null => false
@@ -62,6 +62,19 @@ ActiveRecord::Schema.define(:version => 20110123020459) do
     t.decimal  "price",                      :precision => 10, :scale => 2, :null => false
     t.integer  "age_min",                                                   :null => false
     t.integer  "age_max"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "preregistrants", :force => true do |t|
+    t.string   "firstname",  :null => false
+    t.string   "lastname",   :null => false
+    t.date     "preregdate", :null => false
+    t.string   "ranktype",   :null => false
+    t.integer  "rank",       :null => false
+    t.string   "country",    :null => false
+    t.string   "email",      :null => false
+    t.boolean  "anonymous",  :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

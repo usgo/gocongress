@@ -6,6 +6,8 @@
 #   cities = City.create([{ :name => 'Chicago' }, { :name => 'Copenhagen' }])
 #   Mayor.create(:name => 'Daley', :city => cities.first)
 
+require 'CSV'
+
 Event.delete_all
 Event.create([
   { :evtdate => '2011-07-30', :evtname => "Hollywood Hop On Hop Off Tour", :evtdeparttime => 'Airport Pick Up Times', :evtstarttime => "Various times throughout the day", :evtprice => '' } \
@@ -90,3 +92,11 @@ Job.create([
 , { :jobname => 'Tournament Director: Club Team Tournament' } \
 , { :jobname => 'Tournament Director: Crazy Go' } \
 ])
+
+# Import pre-registrant list from CSV file with a specific column order -Jared
+Preregistrant.delete_all
+csv_io_reader = CSV.open 'db/csvseeds/preregistrants.csv', 'r'
+csv_io_reader.each { |p|
+  Preregistrant.create( :firstname => p[0], :lastname => p[1], :preregdate => p[2], \
+    :ranktype => p[3], :rank => p[4], :country => p[5], :email => p[6], :anonymous => p[7] )
+  }
