@@ -9,6 +9,7 @@
 %table.semantic.fullwidth.zebra
   %thead
     %tr
+      %th
       %th Given Name
       %th Family Name
       %th Email Address
@@ -16,8 +17,9 @@
       %th Country
       %th Date
   %tbody
-    - @preregistrants.each do |p|
+    - @preregistrants.each_with_index do |p,i|
       %tr
+        %td= i + 1
         %td= p.firstname
         %td= p.lastname
         %td= p.email
