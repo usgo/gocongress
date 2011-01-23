@@ -6,7 +6,8 @@
 #   cities = City.create([{ :name => 'Chicago' }, { :name => 'Copenhagen' }])
 #   Mayor.create(:name => 'Daley', :city => cities.first)
 
-require 'CSV'
+# On the following line, csv must be lowercase or else heroku will complain -Jared
+require 'csv'
 
 Event.delete_all
 Event.create([
