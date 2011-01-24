@@ -88,11 +88,11 @@ class UsersControllerTest < ActionController::TestCase
   
   test "users can NOT promote themselves" do
     sign_in @user
-    u = @user.attributes
-    u['is_admin'] = true
-    put :update, :id => @user.to_param, :user => u
-    @user = User.find(@user.id)
-    assert_equal false, @user.is_admin
+    u = @user.attributes.merge({ 'is_admin' => true })
+    assert_no_difference('@user.is_admin ? 1 : 0') do
+      put :update, :id => @user.to_param, :user => u
+    end
+    assert_equal false, User.find(@user.id).is_admin
   end
 
   test "non-admin cannot destroy a user" do
