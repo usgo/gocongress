@@ -113,3 +113,7 @@
         %br/
         Hosted at
         %a{:href => "http://www.heroku.com", :target => "_blank"} Heroku
+        - if RAILS_ENV.present?
+          %br/
+          Environment is
+          = RAILS_ENV
