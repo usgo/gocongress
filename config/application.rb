@@ -13,7 +13,7 @@ module Gocongress
     # I think these things called helpers (eg. edit_password_url) 
     # need :host to be defined, and I think this is the place to do it. 
     # -Jared 2010-12-22
-    config.action_mailer.default_url_options = { :host => "www.gocongress.com" }
+    config.action_mailer.default_url_options = { :host => "www.gocongress.org" }
     
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.

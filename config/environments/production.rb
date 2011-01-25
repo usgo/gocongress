@@ -49,6 +49,6 @@ Gocongress::Application.configure do
   
   # For now, this is the correct production host, but that'll change 
   # in a month or two -Jared 2010.12.27
-  config.action_mailer.default_url_options = { :host => "gocongress.org" }
+  config.action_mailer.default_url_options = { :host => "www.gocongress.org" }
   
 end
