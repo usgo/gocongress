@@ -1,0 +1,40 @@
+%h1 Professionals and VIPs
+
+%p
+  Many professionals, including all US and Canadian professionas, are invited to
+  attend the 2011 US Go Congress.
+
+%p.notice
+  Expect information about attending professionals to appear on the website by 
+  Spring 2011 including available professional activities and a schedule of 
+  professional events.
+
+- if @attendees.size == 0
+  %p So far, there are no pros registered :(
+- else
+  %table.semantic.fullwidth.zebra
+    %thead
+      %tr
+        %th Given Name
+        %th Family Name
+        %th Rank
+        %th Country
+        %th Registration Date
+    %tbody
+      - @attendees.each do |a|
+        %tr
+          %td= a.given_name
+          %td= a.family_name
+          %td= a.get_rank_name
+          %td= a.country
+          %td= a.created_at.to_date.to_formatted_s(:rfc822)
+
+%h3 Pay it forward
+
+%p
+  Wish that you had more review time with professionas and strong players?  Our
+  "pay it forward" system will allow strong players to earn one-on-one and
+  small-group time with professionals, while also giving other players more
+  review time with strong amateurs. 
+
+%p.notice Look for more details this Winter.

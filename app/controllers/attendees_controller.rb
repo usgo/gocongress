@@ -1,7 +1,7 @@
 class AttendeesController < ApplicationController
 
   # Access Control
-  before_filter :allow_only_admin, :except => [:create, :index, :new, :edit, :update]
+  before_filter :allow_only_admin, :except => [:create, :index, :new, :edit, :update, :vip]
   before_filter :allow_only_self_or_admin, :only => [:edit, :update]
   
   def index
@@ -102,6 +102,11 @@ class AttendeesController < ApplicationController
     else
       redirect_to attendees_path
     end
+  end
+
+  # GET /attendees/vip
+  def vip
+    @attendees = Attendee.where('rank >= 101')
   end
 
 protected
