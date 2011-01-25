@@ -13,6 +13,28 @@ class AttendeesControllerTest < ActionController::TestCase
     assert_response :success
   end
 
+  test "visitor can not get new form" do
+    get :new
+    assert_response 403
+  end
+
+  test "visitor can not create attendee" do
+    assert_no_difference('Attendee.count', 0) do
+      post :create, :attendee => Factory.attributes_for(:attendee)
+    end
+    assert_response 403
+  end
+
+  test "user can not create attendee under a different user" do
+    sign_in @user
+    a = Factory.attributes_for(:attendee)
+    a['user_id'] = @user_two.id
+    assert_no_difference('Attendee.count', 0) do
+      post :create, :attendee => a
+    end
+    assert_response 403
+  end
+
   test "non-admin can NOT destroy an attendee" do
     sign_in @user
     assert_difference('Attendee.count', 0) do

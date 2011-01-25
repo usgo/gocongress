@@ -1,7 +1,7 @@
 class AttendeesController < ApplicationController
 
   # Access Control
-  before_filter :allow_only_admin, :except => [:create, :index, :new, :edit, :update, :vip]
+  before_filter :allow_only_admin, :except => [:edit, :index, :update, :vip]
   before_filter :allow_only_self_or_admin, :only => [:edit, :update]
   
   def index
