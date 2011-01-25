@@ -1,11 +1,9 @@
 %h2 Events and Activities
 %p
   In addition to many
-  = succeed "," do
-    %a{:href => "tournament_info.php"} tournaments
+  = link_to 'tournaments,', tournaments_path
   game reviews and lessons by
-  = succeed "," do
-    %a{:href => "pros.php"} professionals
+  = link_to 'professionals,', vip_path
   the vendor area, and other Go-related activities, we also have
   these activities:
 %p.notice
