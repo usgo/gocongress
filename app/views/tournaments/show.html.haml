@@ -1,0 +1,21 @@
+%h2= @tournament.name
+%table.lightweight
+  %tr
+    %th Date:
+    %td= @tournament.tournament_date.to_formatted_s(:long)
+  %tr
+    %th Time:
+    %td= @tournament.time
+  %tr
+    %th Director(s):
+    %td= @tournament.directors
+  %tr
+    %th Eligible:
+    %td= @tournament.elligible
+%br
+%h3 Description
+= Markdown.new( @tournament.description ).to_html.html_safe
+%br
+= link_to 'Edit', edit_tournament_path(@tournament)
+\|
+= link_to 'Back', tournaments_path

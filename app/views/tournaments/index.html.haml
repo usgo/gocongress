@@ -1,0 +1,40 @@
+%h2 Tournaments
+
+%p
+  In addition to these Go-related activities, we will also have 
+  = link_to 'a "day off" trip and other activities', events_path
+  for non-players.
+
+%a{ :name => "tournament_schedule" }
+
+%h3 Tournament Schedule
+%p 
+  See also: 
+  %a{ href="#tournament_index" } Tournament Index
+
+%p.notice All tournaments, times, and eligible participants subject to change
+
+%table.semantic.fullwidth
+  - @tournaments_by_date.each do |d,trn_this_date|
+    %tr.date-header
+      %th{ :colspan => current_user_is_admin? ? 7 : 5 }= d
+    %tr.lesser-header
+      %th Time
+      %th Name
+      %th Director(s)
+      %th{ :colspan => current_user_is_admin? ? 3 : 1 }
+
+    - trn_this_date.each do |tournament|
+      %tr
+        %td= tournament.time
+        %td= tournament.name
+        %td= tournament.directors
+        %td= link_to 'Description', tournament
+        - if current_user_is_admin?
+          %td= link_to 'Edit', edit_tournament_path(tournament)
+          %td= link_to 'Destroy', tournament, :confirm => 'Are you sure?', :method => :delete
+
+%br
+
+- if current_user_is_admin?
+  = link_to 'New Tournament', new_tournament_path

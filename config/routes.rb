@@ -1,5 +1,7 @@
 Gocongress::Application.routes.draw do
 
+  resources :tournaments
+
   get "preregistrant/index"
 
   get "home/access_denied"

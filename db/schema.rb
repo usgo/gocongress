@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110123102656) do
+ActiveRecord::Schema.define(:version => 20110125060946) do
 
   create_table "attendees", :force => true do |t|
     t.string   "given_name",                                               :null => false
@@ -79,6 +79,17 @@ ActiveRecord::Schema.define(:version => 20110123102656) do
     t.string   "country",    :null => false
     t.string   "email",      :null => false
     t.boolean  "anonymous",  :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "tournaments", :force => true do |t|
+    t.string   "name",            :limit => 50, :null => false
+    t.string   "time",            :limit => 20, :null => false
+    t.string   "elligible",                     :null => false
+    t.date     "tournament_date",               :null => false
+    t.text     "description",                   :null => false
+    t.string   "directors",                     :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
