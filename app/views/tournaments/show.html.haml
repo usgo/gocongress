@@ -14,7 +14,9 @@
 
 %h3 Rounds
 - if @tournament.rounds.size == 0
-  %p This tournament has no rounds yet
+  %p 
+    This tournament has no rounds.  Unless this tournament is self-paired, 
+    you should probably add at least one round.
 -else
   %table.lightweight
     %tbody

@@ -23,18 +23,38 @@
         %th Time
         %th Name
         %th Director(s)
-        - if current_user_is_admin?
-          %th{ :colspan => 2 }
-  
       - rounds_this_date.each do |r|
         %tr
           %td= r.round_start.strftime '%l:%M %p'
           %td= link_to r.tournament.name, r.tournament
           %td= r.tournament.directors
-          - if current_user_is_admin?
-            %td= link_to 'Edit', edit_tournament_path(r.tournament)
-            %td= link_to 'Delete', r.tournament, :confirm => 'Delete the entire tournament?', :method => :delete
   %br
+
+%h3 Tournament List
+
+- if @tournaments.size == 0
+  %p There are no tournaments yet.
+
+- else
+  %table.semantic.fullwidth
+    %thead
+      %tr
+        %th Name
+        %th Rounds
+        %th Director(s)
+        %th Eligibility
+        - if current_user_is_admin?
+          %th{ :colspan => 2 }
+  
+      - @tournaments.each do |t|
+        %tr
+          %td= link_to t.name, t
+          %td= t.rounds.count
+          %td= t.directors
+          %td= t.elligible
+          - if current_user_is_admin?
+            %td= link_to 'Edit', edit_tournament_path(t)
+            %td= link_to 'Delete', t, :confirm => 'Delete the entire tournament?  This will delete everything associated with this tournament too, including game records.', :method => :delete
 
 - if current_user_is_admin?
   %p= link_to 'Create a New Tournament', new_tournament_path

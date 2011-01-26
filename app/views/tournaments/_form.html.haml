@@ -23,7 +23,7 @@
   .rounds-container
     = f.fields_for :rounds do |builder|
       = render 'round_fields', :f => builder
-  %p= link_to_add_fields "Add Another Round", f, :rounds
+  %p= link_to_add_fields "Add a Round", f, :rounds
 
   %br
   .actions
