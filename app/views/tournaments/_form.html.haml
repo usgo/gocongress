@@ -24,5 +24,13 @@
   .field
     = f.label :directors
     = f.text_field :directors
+
+  %h3 Rounds
+  .rounds-container
+    = f.fields_for :rounds do |builder|
+      = render 'round_fields', :f => builder
+  %p= link_to_add_fields "Add Another Round", f, :rounds
+
+  %br
   .actions
     = f.submit 'Save'

@@ -11,3 +11,21 @@ $(document).ready(function(){
 		, transition_speed: 1000
 	});
 });
+
+function add_round (link, association, content) {
+  var new_id = new Date().getTime();
+  var regexp = new RegExp("new_" + association, "g")
+  $('.rounds-container').append( content.replace(regexp, new_id) );
+}
+
+function remove_round (elm) {
+  /* Mark the hidden _destroy field for this round -Jared 1/25/11 */
+  var hiddenField = $(elm).siblings('.tournament-round-destroy');
+  if (hiddenField.length != 1) { throw 'Unable to find exactly one hidden field'; }
+  hiddenField.val(1);
+  
+  /* Hide the set of inputs for this round -Jared 1/25/11 */
+  var round = $(elm).parent('.tournament-round');
+  if (round.length != 1) { throw 'Unable to find exactly one round'; }
+  round.hide();
+}

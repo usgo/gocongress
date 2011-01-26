@@ -17,6 +17,7 @@ class TournamentsController < ApplicationController
   # GET /tournaments/new
   def new
     @tournament = Tournament.new
+    @tournament.rounds.build # Start with one round
   end
 
   # GET /tournaments/1/edit
