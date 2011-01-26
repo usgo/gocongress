@@ -5,8 +5,8 @@ class TournamentsController < ApplicationController
 
   # GET /tournaments
   def index
-    @tournaments = Tournament.order 'tournament_date asc'
-    @tournaments_by_date = @tournaments.group_by {|t| t.tournament_date}
+    @rounds = Round.order 'round_start'
+    @rounds_by_date = @rounds.group_by {|r| r.round_start.to_date}
   end
 
   # GET /tournaments/1

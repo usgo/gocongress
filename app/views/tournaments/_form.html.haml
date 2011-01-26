@@ -10,20 +10,14 @@
     = f.label :name
     = f.text_field :name
   .field
-    = f.label :time
-    = f.text_field :time
-  .field
     = f.label :elligible
     = f.text_field :elligible
   .field
-    = f.label :tournament_date
-    = f.date_select :tournament_date
+    = f.label :directors
+    = f.text_field :directors
   .field
     = f.label :description, 'Description<br /><span class="smalltext">You can format the text (bold, etc.) with Markdown syntax.  Look it up.</span>'.html_safe
     = f.text_area :description
-  .field
-    = f.label :directors
-    = f.text_field :directors
 
   %h3 Rounds
   .rounds-container

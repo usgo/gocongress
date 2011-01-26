@@ -12,24 +12,25 @@
 %p.notice All tournaments, times, and eligible participants subject to change
 
 %table.semantic.fullwidth
-  - @tournaments_by_date.each do |d,trn_this_date|
+  - @rounds_by_date.each do |d,rounds_this_date|
     %tr.date-header
-      %th{ :colspan => current_user_is_admin? ? 7 : 5 }= d
+      %th{ :colspan => current_user_is_admin? ? 5 : 3 }
+        = d.to_formatted_s(:long)
     %tr.lesser-header
       %th Time
       %th Name
       %th Director(s)
-      %th{ :colspan => current_user_is_admin? ? 3 : 1 }
+      - if current_user_is_admin?
+        %th{ :colspan => 2 }
 
-    - trn_this_date.each do |tournament|
+    - rounds_this_date.each do |r|
       %tr
-        %td= tournament.time
-        %td= tournament.name
-        %td= tournament.directors
-        %td= link_to 'Description', tournament
+        %td= r.round_start.strftime '%l:%M %p'
+        %td= link_to r.tournament.name, r.tournament
+        %td= r.tournament.directors
         - if current_user_is_admin?
-          %td= link_to 'Edit', edit_tournament_path(tournament)
-          %td= link_to 'Destroy', tournament, :confirm => 'Are you sure?', :method => :delete
+          %td= link_to 'Edit', edit_tournament_path(r.tournament)
+          %td= link_to 'Delete', r.tournament, :confirm => 'Delete the entire tournament?', :method => :delete
 
 %br
 
