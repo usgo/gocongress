@@ -5,7 +5,7 @@ class PlansController < ApplicationController
 
   # GET /plans
   def index
-    @plans = Plan.all
+    @plans = Plan.order 'name'
   end
 
   # GET /plans/1
