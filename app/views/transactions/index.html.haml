@@ -3,12 +3,12 @@
 %table.semantic.zebra.fullwidth
   %thead
     %tr
-      %th Gateway Date
+      %th= trl_attr 'transaction', 'gwdate'
       %th User (Primary Attendee)
       %th Email Address
-      %th Transaction Type
+      %th= trl_attr 'transaction', 'trantype'
       %th Amount
-      %th Gateway Transaction ID
+      %th= trl_attr 'transaction', 'gwtranid'
       %th{ :colspan => 3 }
 
   %tbody

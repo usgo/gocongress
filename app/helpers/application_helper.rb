@@ -5,7 +5,7 @@ module ApplicationHelper
     signed_in?(nil)
   end
 
-	def trl_attr_for_model ( modelname, attributename )
+	def trl_attr ( modelname, attributename )
 		# see config/locales/en.yaml
 		translate "activerecord.attributes." + modelname + "." + attributename
 	end

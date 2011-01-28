@@ -6,17 +6,17 @@
     %td= @transaction.user.email
     %td.smalltext= link_to "Show this user", user_path(@transaction.user)
   %tr
-    %th= trl_attr 'trantype'
+    %th= trl_attr 'transaction', 'trantype'
     %td= @transaction.get_trantype_name
   %tr
     %th Amount
     %td= number_to_currency @transaction.amount, :unit => ''
   %tr
-    %th= trl_attr 'gwtranid'
+    %th= trl_attr 'transaction', 'gwtranid'
     %td= @transaction.gwtranid
     %td.smalltext Unique ID from payment gateway
   %tr
-    %th= trl_attr 'gwdate'
+    %th= trl_attr 'transaction', 'gwdate'
     %td= @transaction.gwdate.to_formatted_s(:long)
     %td.smalltext When the payment gateway received the transaction
   %tr

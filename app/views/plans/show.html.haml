@@ -1,17 +1,20 @@
-%p
-  %b Name:
-  = @plan.name
-%p
-  %b Description:
-  = Markdown.new( @plan.description ).to_html.html_safe
-%p
-  %b Price:
-  = @plan.price
-%p
-  %b Age min:
-  = @plan.age_min
-%p
-  %b Age max:
-  = @plan.age_max
+%table.lightweight
+  %tr
+    %th= trl_attr 'plan', 'name'
+    %td= @plan.name
+  %tr
+    %th= trl_attr 'plan', 'price'
+    %td= number_to_currency @plan.price
+  %tr
+    %th= trl_attr 'plan', 'age_min'
+    %td= @plan.age_min
+  %tr
+    %th= trl_attr 'plan', 'age_max'
+    %td= @plan.age_max
+  %tr
+    %th= trl_attr 'plan', 'description'
+    %td= Markdown.new( @plan.description ).to_html.html_safe
+
+%br
 
 = link_to 'Edit', edit_plan_path(@plan)

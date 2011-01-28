@@ -7,6 +7,12 @@ en:
         country: "Country Code"
         state: "State/Province"
         zip: "Zip/Postal Code"
+      plan:
+        age_min: "Minimum Age"
+        age_max: "Maximum Age"
+        description: "Description"
+        name: "Plan"
+        price: "Price"
       transaction:
         gwtranid: "Gateway Transaction ID"
         gwdate: "Gateway Date"

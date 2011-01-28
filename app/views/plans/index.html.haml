@@ -4,11 +4,11 @@
 
 %table.semantic.zebra.fullwidth
   %tr
-    %th Name
-    %th Description
-    %th Price
-    %th Age min
-    %th Age max
+    %th= trl_attr 'plan', 'name'
+    %th= trl_attr 'plan', 'description'
+    %th= trl_attr 'plan', 'price'
+    %th= trl_attr 'plan', 'age_min'
+    %th= trl_attr 'plan', 'age_max'
     - if current_user_is_admin?
       %th{ :colspan => 3 }
 
