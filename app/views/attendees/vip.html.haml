@@ -9,9 +9,7 @@
   Spring 2011 including available professional activities and a schedule of 
   professional events.
 
-- if @attendees.size == 0
-  %p So far, there are no pros registered :(
-- else
+- if @attendees.size > 0
   %table.semantic.fullwidth.zebra
     %thead
       %tr
