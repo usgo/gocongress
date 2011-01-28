@@ -16,8 +16,14 @@
     = f.label :directors
     = f.text_field :directors
   .field
-    = f.label :description, 'Description<br /><span class="smalltext">You can format the text (bold, etc.) with Markdown syntax.  Look it up.</span>'.html_safe
-    = f.text_area :description
+    %label{ :for => 'tournament_description'}
+      Description
+      %br
+      %span.smalltext
+        You can format the text (bold, etc.) with 
+        %a{ :href => 'http://en.wikipedia.org/wiki/Markdown', :target => '_blank' } Markdown 
+        syntax.
+    = f.text_area :description, :class => 'wide'
 
   %h3 Rounds
   .rounds-container

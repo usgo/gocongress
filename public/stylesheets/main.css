@@ -251,6 +251,7 @@ div.field label, div.field_with_errors label {
   }
 div.field label.wide, div.field_with_errors label.wide { width: auto; }
 fieldset .aligned-with-input { margin-left: 155px; }
+div.field textarea.wide { width: 650px; }
 
 /* Some forms need wider labels -Jared 1/8/11 */
 fieldset.wider-labels label { width: 200px; }
