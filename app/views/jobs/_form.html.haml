@@ -21,9 +21,17 @@
     .field
       = f.label :vacancies
       = f.text_field :vacancies
-    .field
-      = f.label :description
-      = f.text_field :description
 
-  .actions
+    .field
+      %label{ :for => 'job_description'}
+        Description
+        %br
+        %span.smalltext
+          You can format the text (bold, etc.) with 
+          %a{ :href => 'http://en.wikipedia.org/wiki/Markdown', :target => '_blank' } Markdown 
+          syntax.
+      = f.text_area :description, :class => 'wide'
+
+  .field
+    %label
     = f.submit
