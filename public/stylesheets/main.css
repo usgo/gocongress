@@ -37,6 +37,7 @@ th { text-align: left; }
 th.row { vertical-align: top; }
 table .numeric { text-align: right; }
 .align-right { text-align: right; }
+img.thin-border { border: 1px solid black; }
 
 /* Two column layout */
 .left-column { display: inline-block; width: 45%; vertical-align: top; }

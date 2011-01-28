@@ -1,6 +1,16 @@
 %h2 Room and Board Plans
 
-%p Here are the Room and Board Plans.  Minors (children and teens) have limited choices.
+%div
+  - 1.upto(6) do |x|
+    %a{ :href => "images/plans/big/0#{x}.tiff" }
+      = image_tag "plans/thumb/0#{x}.jpg", :class => "thin-border"
+
+%p
+  Room and Board plans are designed to fit a variety of attendees. 
+  Search below to find the options that fit your age, room style
+  preference, and meal plan choice.  Please email the 
+  = link_to "registrar", contact_path
+  with any questions.
 
 %table.semantic.zebra.fullwidth
   %tr
