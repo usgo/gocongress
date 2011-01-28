@@ -3,7 +3,7 @@
   = @plan.name
 %p
   %b Description:
-  = @plan.description
+  = Markdown.new( @plan.description ).to_html.html_safe
 %p
   %b Price:
   = @plan.price

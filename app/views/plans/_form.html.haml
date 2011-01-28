@@ -10,8 +10,14 @@
     = f.label :name
     = f.text_field :name
   .field
-    = f.label :description
-    = f.text_field :description
+    %label{ :for => 'plan_description'}
+      Description
+      %br
+      %span.smalltext
+        You can format the text (bold, etc.) with 
+        %a{ :href => 'http://en.wikipedia.org/wiki/Markdown', :target => '_blank' } Markdown 
+        syntax.
+    = f.text_area :description, :class => 'wide'
   .field
     = f.label :price
     = f.text_field :price

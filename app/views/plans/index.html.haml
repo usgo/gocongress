@@ -15,7 +15,7 @@
   - @plans.each do |plan|
     %tr
       %td= plan.name
-      %td= plan.description
+      %td= Markdown.new( plan.description ).to_html.html_safe
       %td= plan.price
       %td= plan.age_min
       %td= plan.age_max
