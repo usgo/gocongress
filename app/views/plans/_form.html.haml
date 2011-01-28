@@ -15,11 +15,16 @@
   .field
     = f.label :price
     = f.text_field :price
-  .field
-    = f.label :age_min
-    = f.text_field :age_min
-  .field
-    = f.label :age_max
-    = f.text_field :age_max
+
+  %fieldset
+    %legend Attendee Age Requirements
+    %p Certain plans are intended for youth, for teens, or for adults.
+    .field
+      = f.label :age_min
+      = f.text_field :age_min
+    .field
+      = f.label :age_max
+      = f.text_field :age_max
+
   .actions
     = f.submit 'Save'

@@ -26,7 +26,7 @@ legend {
 	font-family: Helvetica, sans-serif; 
 	font-size: 18px; 
 	font-weight: bold;
-	padding: 0.5em 0em;
+	padding: 1em 0em 0.25em 0em;
 }
 input[type="submit"], input[type="button"] { cursor: pointer; }
 
@@ -240,7 +240,7 @@ div.inputform table tbody th { text-align: left; padding-right: 1em; vertical-al
 
 /* Railsy forms -Jared 12/15/10 */
 /* Note the fixed width labels */
-div.field { display: block; }
+div.field { display: block; padding: 5px 0px; margin: none; }
 div.field_with_errors { background-color:white; display: inline; padding: 0; }
 div.field_with_errors input { background-color:white; }
 div.field label, div.field_with_errors label { 
