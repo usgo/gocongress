@@ -1,5 +1,10 @@
 %h2 Who&#39;s Coming?
 
+%p
+  There are #{ @attendees.size } people registered.
+  Before that, #{ @preregistrants.size } people
+  %a{ :href => '#preregistrants' } pre-registered.
+
 - unless anyone_signed_in?
   %p
     Are you coming?  Please #{link_to 'register', '/users/sign_up'}!
@@ -22,6 +27,8 @@
         %td= a.get_rank_name
         %td= a.country
         %td= a.created_at.to_date.to_formatted_s(:rfc822)
+
+%a{ :name => 'preregistrants' }
 
 %h3 Pre-registrants
 
