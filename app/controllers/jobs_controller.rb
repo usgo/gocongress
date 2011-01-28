@@ -6,7 +6,7 @@ class JobsController < ApplicationController
   # GET /jobs
   # GET /jobs.xml
   def index
-    @jobs = Job.all
+    @jobs = Job.order :jobname
   end
 
   # GET /jobs/1
