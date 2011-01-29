@@ -26,3 +26,6 @@ group :test do
 	gem 'factory_girl_rails'
 	gem 'redgreen'
 end
+
+# To keep your heroku slug size down, try this
+# heroku config:add BUNDLE_WITHOUT="development:test"
