@@ -30,8 +30,7 @@ class JobsControllerTest < ActionController::TestCase
     assert_difference('Job.count') do
       post :create, :job => @job.attributes
     end
-
-    assert_redirected_to job_path(assigns(:job))
+    assert_redirected_to jobs_path
   end
 
   test "visitor can show job" do
@@ -54,7 +53,7 @@ class JobsControllerTest < ActionController::TestCase
   test "admin should update job" do
     sign_in(@admin_user)
     put :update, :id => @job.to_param, :job => @job.attributes
-    assert_redirected_to job_path(assigns(:job))
+    assert_redirected_to jobs_path
   end
 
   test "admin can destroy job" do
