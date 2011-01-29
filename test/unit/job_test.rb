@@ -1,8 +1,7 @@
 require 'test_helper'
 
 class JobTest < ActiveSupport::TestCase
-  # Replace this with your real tests.
-  test "the truth" do
-    assert true
+  test "factory is valid" do
+    assert Factory.build(:job).valid?
   end
 end

@@ -5,6 +5,7 @@ class UsersControllerTest < ActionController::TestCase
     @user = Factory.create(:user)
     @user_two = Factory.create(:user)
     @admin_user = Factory.create(:admin_user)
+    @job = Factory.create(:job)
   end
 
   test "admins should get index" do
@@ -114,5 +115,30 @@ class UsersControllerTest < ActionController::TestCase
 
     assert_redirected_to users_path
     assert_equal 'User deleted', flash[:notice]
+  end
+
+  test "admin can assign jobs to any user" do
+    sign_in @admin_user
+    u = @user.attributes.merge({ 'job_ids' => [@job.id] })
+    put :update, :id => @user.to_param, :user => u
+    @user = User.find(@user.id)
+    assert_equal @job.id, @user.jobs.first.id
+  end
+
+  test "user can NOT assign jobs, even to themself" do
+    sign_in @user
+
+    # starting with zero jobs ..
+    assert_equal 0, @user.jobs.size
+
+    # mass assignment should NOT change job count
+    u = @user.attributes.merge({ 'job_ids' => [@job.id] })
+    assert_no_difference('@user.jobs.size') do
+      put :update, :id => @user.to_param, :user => u
+    end
+
+    # reload user and double check that they have zero jobs
+    @user = User.find(@user.id)
+    assert_equal 0, @user.jobs.size
   end
 end
