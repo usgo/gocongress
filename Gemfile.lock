@@ -78,6 +78,7 @@ GEM
       rake (>= 0.8.7)
       thor (~> 0.14.4)
     rake (0.8.7)
+    rcov (0.9.9)
     redgreen (1.2.2)
     rspec (2.3.0)
       rspec-core (~> 2.3.0)
@@ -112,6 +113,7 @@ DEPENDENCIES
   haml-rails
   jquery-rails
   rails (= 3.0.3)
+  rcov
   redgreen
   rspec-rails (~> 2.0)
   sqlite3-ruby

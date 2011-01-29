@@ -17,6 +17,7 @@ gem 'bluecloth'
 # and rake tasks are available in development mode:
 group :development, :test do
   gem 'rspec-rails', '~> 2.0'
+  gem 'rcov'
 end
 
 # redgreen does console coloring for tests
