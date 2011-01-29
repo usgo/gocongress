@@ -43,11 +43,11 @@ class Attendee < ActiveRecord::Base
   before_destroy { |attendee| !attendee.is_primary }
 
   # only apply these validations on the baduk form page ("player info")
-  with_options :on => :update, :if => :form_page_is_baduk? do |baduk_page_options|
-    baduk_page_options.validates_numericality_of :congresses_attended, :greater_than_or_equal_to => 0
-    baduk_page_options.validates_inclusion_of :is_player, :in => [true, false]
-    baduk_page_options.validates_inclusion_of :will_play_in_us_open, :in => [true, false]
-    baduk_page_options.validates_inclusion_of :is_current_aga_member, :in => [true, false]
+  with_options :on => :update, :if => :form_page_is_baduk? do |b|
+    b.validates_numericality_of :congresses_attended, :greater_than_or_equal_to => 0
+    b.validates_inclusion_of :is_player, :in => [true, false]
+    b.validates_inclusion_of :will_play_in_us_open, :in => [true, false]
+    b.validates_inclusion_of :is_current_aga_member, :in => [true, false]
   end
 
   def country_is_america?
@@ -56,10 +56,6 @@ class Attendee < ActiveRecord::Base
 
   def form_page_is_baduk?
     @form_page == :baduk
-  end
-
-  def form_page_is_basics?
-    @form_page == :basics
   end
 
   # is the model valid for a given form page? -Jared
