@@ -1,5 +1,8 @@
 class Preregistrant < ActiveRecord::Base
 
+  validates_inclusion_of :anonymous, :in => [true, false]
+  validates_inclusion_of :ranktype, :in => %w[k d p]
+
   def get_rank_name
     ranktypes = { 'k' => 'kyu', 'd' => 'dan', 'p' => 'pro' }
     if ranktype == 'np' || rank == 0
