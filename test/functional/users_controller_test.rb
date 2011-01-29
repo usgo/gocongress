@@ -125,7 +125,7 @@ class UsersControllerTest < ActionController::TestCase
     assert_equal @job.id, @user.jobs.first.id
   end
 
-  test "user can NOT assign jobs, even to themself" do
+  test "user can NOT assign jobs even to themself" do
     sign_in @user
 
     # starting with zero jobs ..

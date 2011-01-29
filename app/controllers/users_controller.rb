@@ -97,6 +97,12 @@ class UsersController < ApplicationController
       @user.save
     end
 
+    # Only admins can assign jobs -Jared 2011.1.29
+    if current_user_is_admin? && params[:user][:job_ids].present?
+      @user.job_ids = params[:user][:job_ids]
+      @user.save
+    end
+
     # Update mass-assignable attributes -Jared 2011.1.13
     if @user.update_attributes(params[:user])
       if current_user.is_admin?
