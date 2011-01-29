@@ -37,6 +37,9 @@ class Attendee < ActiveRecord::Base
   
   # Validate that each user has exactly one primary attendee -Jared
   validates_uniqueness_of :is_primary, :scope => :user_id, :if => :is_primary?
+
+  # Prevent destruction of primary attendee. If a before_* callback returns
+  # false, all the later callbacks and the associated action are cancelled.
   before_destroy { |attendee| !attendee.is_primary }
 
   # only apply these validations on the baduk form page ("player info")
