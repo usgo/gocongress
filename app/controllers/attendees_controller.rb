@@ -64,12 +64,10 @@ class AttendeesController < ApplicationController
       return
     end
 
-    # non-admins can not create attendees under a different user
-    unless current_user_is_admin? then
-      if params[:attendee][:user_id].present? and params[:attendee][:user_id] != current_user.id then
-        render_access_denied
-        return
-      end
+    # no-one can create an attendee under a different user
+    if params[:attendee][:user_id].present? and params[:attendee][:user_id] != current_user.id then
+      render_access_denied
+      return
     end
 
     @attendee = Attendee.new(params[:attendee])
