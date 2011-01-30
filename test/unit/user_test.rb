@@ -43,4 +43,23 @@ class UserTest < ActiveSupport::TestCase
     assert_equal expected_sum, u.get_invoice_total
   end
 
+  test "destroying a user also destroys dependent attendees" do
+    u = Factory(:user)
+    num_extra_attendees = 1 + rand(3)
+    1.upto(num_extra_attendees) { |a|
+      u.attendees << Factory(:attendee, :user_id => u.id)
+    }
+
+    # when we destroy the user, we expect all dependent attendees
+    # to be destroyed, including the primary_attendee
+    expected_difference = -1 * (num_extra_attendees + 1)
+    destroyed_user_id = u.id
+    assert_difference 'Attendee.count', expected_difference do
+      u.destroy
+    end
+
+    # double check
+    assert_equal 0, Attendee.where(:user_id => destroyed_user_id).count
+  end
+
 end
