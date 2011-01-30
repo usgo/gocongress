@@ -79,7 +79,6 @@ class UsersController < ApplicationController
   # PUT /users/1
   # PUT /users/1.xml
   def update
-		params[:user][:job_ids] ||= []
     @user = User.find(params[:id])
 
     # Only admins can promote or demote other admins -Jared 2011.1.13
@@ -94,8 +93,12 @@ class UsersController < ApplicationController
       @user.save
     end
 
+    # Now that we have handled the protected attributes, remove them
+    # from the params hash to avoid a warning. -Jared 2011.1.30
+    mass_assignable_attrs = params[:user].except(:is_admin, :job_ids)
+
     # Update mass-assignable attributes -Jared 2011.1.13
-    if @user.update_attributes(params[:user])
+    if @user.update_attributes(mass_assignable_attrs)
       if current_user.is_admin?
         redirect_to users_path, :notice => "User successfully updated"
       else
