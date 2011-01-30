@@ -1,7 +1,7 @@
 class AttendeesController < ApplicationController
 
   # Access Control
-  before_filter :allow_only_admin, :except => [:destroy, :edit, :index, :update, :vip]
+  before_filter :allow_only_admin, :except => [:create, :destroy, :edit, :index, :new, :update, :vip]
   before_filter :allow_only_self_or_admin, :only => [:destroy, :edit, :update]
   
   def index
@@ -41,9 +41,15 @@ class AttendeesController < ApplicationController
 
   # GET /attendees/new
   def new
-    @attendee = Attendee.new
+
+    # visitors can not get the new attendee form
+    unless current_user.present? then
+      render_access_denied
+      return
+    end
 
     # copy over certain fields from the primary_attendee -Jared
+    @attendee = Attendee.new
     ['phone','address_1','address_2','city','state','zip','country','phone','email'].each { |f|
       @attendee[f] = current_user.primary_attendee[f]
     }
@@ -51,6 +57,21 @@ class AttendeesController < ApplicationController
   
   # POST /attendees
   def create
+
+    # visitors can not create attendees
+    unless current_user.present? then
+      render_access_denied
+      return
+    end
+
+    # non-admins can not create attendees under a different user
+    unless current_user_is_admin? then
+      if params[:attendee][:user_id].present? and params[:attendee][:user_id] != current_user.id then
+        render_access_denied
+        return
+      end
+    end
+
     @attendee = Attendee.new(params[:attendee])
     @attendee.user_id = current_user.id
     if @attendee.save
