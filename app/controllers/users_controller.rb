@@ -50,12 +50,6 @@ class UsersController < ApplicationController
   # GET /users/new.xml
   def new
     @user = User.new
-    @jobs = get_job_array
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @user }
-    end
   end
 
   # GET /users/1/edit
@@ -75,8 +69,6 @@ class UsersController < ApplicationController
   # POST /users.xml
   def create
     @user = User.new(params[:user])
-    @jobs = get_job_array
-
     if @user.save
       redirect_to(edit_attendee_path(@user.primary_attendee.id) + "/baduk")
     else
@@ -89,7 +81,6 @@ class UsersController < ApplicationController
   def update
 		params[:user][:job_ids] ||= []
     @user = User.find(params[:id])
-    @jobs = get_job_array
 
     # Only admins can promote or demote other admins -Jared 2011.1.13
     if current_user_is_admin? && params[:user][:is_admin].present?
@@ -123,11 +114,5 @@ class UsersController < ApplicationController
     @user.destroy
     redirect_to users_url, :notice => "User deleted"
   end
-
-private
-
-	def get_job_array
-		Job.all :select=>"jobs.id, jobname, 0 as has_job"
-	end
 
 end
