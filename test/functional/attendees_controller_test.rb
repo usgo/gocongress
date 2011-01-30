@@ -35,21 +35,54 @@ class AttendeesControllerTest < ActionController::TestCase
     assert_response 403
   end
 
-  test "non-admin can NOT destroy an attendee" do
+  test "non-admin can destroy own non-primary attendee" do
     sign_in @user
-    assert_difference('Attendee.count', 0) do
-      delete :destroy, :id => @attendee.to_param
+    a = Factory(:attendee, :user_id => @user.id)
+    @user.save
+    assert_equal 1, @user.attendees.where(:is_primary => false).count
+    assert_difference('Attendee.count', -1) do
+      delete :destroy, :id => a.id
+    end
+    assert_equal 0, @user.attendees.where(:is_primary => false).count
+    assert_redirected_to user_path(@user)
+  end
+
+  test "non-admin can NOT destroy any primary attendee" do
+    sign_in @user
+    assert_no_difference('Attendee.count') do
+      delete :destroy, :id => @user.primary_attendee.to_param
     end
     assert_response 403
   end
 
-  test "admin can destroy an attendee" do
+  test "non-admin can NOT destroy attendee from other user" do
+    sign_in @user
+    a = Factory(:attendee)
+    @user_two.attendees << a
+    @user_two.save
+    assert_equal 1, @user_two.attendees.where(:is_primary => false).count
+    assert_no_difference('Attendee.count') do
+      delete :destroy, :id => a.id
+    end
+    assert_response 403
+  end
+
+  test "admin can destroy attendee" do
     sign_in @admin_user
     assert_difference('Attendee.count', -1) do
       delete :destroy, :id => @attendee.to_param
     end
-    assert_redirected_to attendees_path
+    assert_redirected_to users_path
     assert_equal 'Attendee deleted', flash[:notice]
+  end
+
+  test "admin can destroy primary attendee" do
+    sign_in @admin_user
+    assert_equal 1, @user.attendees.where(:is_primary => true).count
+    assert_difference('Attendee.count', -1) do
+      delete :destroy, :id => @user.primary_attendee.to_param
+    end
+    assert_redirected_to users_path
   end
 
   test "visitor can not get edit" do
@@ -101,14 +134,6 @@ class AttendeesControllerTest < ActionController::TestCase
     put :update, :id => target_attendee.id, :attendee => target_attendee.attributes
     assert_redirected_to user_path(target_attendee.user_id)
     assert_equal 'Attendee successfully updated', flash[:notice]
-  end
-
-  test "nobody can ever delete a primary attendee" do
-    sign_in @admin_user
-    assert_difference('Attendee.count', 0) do
-      delete :destroy, :id => @admin_user.primary_attendee.to_param
-    end
-    assert_response 403
   end
 
   %w[basics baduk roomboard].each do |page|

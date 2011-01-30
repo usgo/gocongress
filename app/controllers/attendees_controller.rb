@@ -1,8 +1,8 @@
 class AttendeesController < ApplicationController
 
   # Access Control
-  before_filter :allow_only_admin, :except => [:edit, :index, :update, :vip]
-  before_filter :allow_only_self_or_admin, :only => [:edit, :update]
+  before_filter :allow_only_admin, :except => [:destroy, :edit, :index, :update, :vip]
+  before_filter :allow_only_self_or_admin, :only => [:destroy, :edit, :update]
   
   def index
     # by default, sort by rank (0 is non-player)
@@ -97,9 +97,8 @@ class AttendeesController < ApplicationController
     target_attendee = Attendee.find(params[:id])
     belonged_to_current_user = (current_user.id == target_attendee.user_id)
 
-    # primary attendees can never be deleted
-    # will this be a problem when we implement user deletion?
-    if target_attendee.is_primary then
+    # only admins can destroy primary attendees
+    if target_attendee.is_primary and !current_user_is_admin? then
       render_access_denied
       return
     end
@@ -109,7 +108,7 @@ class AttendeesController < ApplicationController
     if belonged_to_current_user
       redirect_to user_path(current_user)
     else
-      redirect_to attendees_path
+      redirect_to users_path
     end
   end
 

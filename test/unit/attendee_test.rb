@@ -9,13 +9,6 @@ class AttendeeTest < ActiveSupport::TestCase
     assert Factory.build(:attendee).valid?
   end
 
-  test "can not destroy primary attendee" do
-    assert @user.primary_attendee.is_primary
-    assert_difference('Attendee.count', 0) do
-      @user.primary_attendee.destroy
-    end
-  end
-
   test "country must be two capital lettters" do
     assert_match( /^[A-Z]{2}$/, @user.primary_attendee.country )
     update_success = @user.primary_attendee.update_attributes( { :country => 'United States' } )
