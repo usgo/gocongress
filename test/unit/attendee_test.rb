@@ -10,6 +10,7 @@ class AttendeeTest < ActiveSupport::TestCase
   end
 
   test "can not destroy primary attendee" do
+    assert @user.primary_attendee.is_primary
     assert_difference('Attendee.count', 0) do
       @user.primary_attendee.destroy
     end

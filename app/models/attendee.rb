@@ -2,8 +2,9 @@ class Attendee < ActiveRecord::Base
   belongs_to :user
 
   AGE_DEADLINE = "July 29, 2011"
-    
-  # to do: use attr_protected
+
+  # Mass assignment config
+  attr_protected :created_at, :is_primary, :minor_agreement_received, :updated_at, :user_id
 
   # define constant array of ranks
   RANKS = []

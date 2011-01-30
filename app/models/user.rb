@@ -31,6 +31,9 @@ class User < ActiveRecord::Base
 
   after_create :send_welcome_email
 
+  # Set association attrs which cannot be set via mass assignment
+  before_create :set_protected_attrs
+
   # Both User and Attendee have an email column, and we don't want to ask the
   # enduser to enter the same email twice when signing up -Jared 2010.12.31
   before_validation :apply_user_email_to_primary_attendee, :on => :create
@@ -82,6 +85,14 @@ private
   # -Jared 2010.12.27
   def send_welcome_email
     UserMailer.welcome_email(self).deliver
+  end
+
+  def set_protected_attrs
+    # The primary_attendee attribute is_primary must be attr_protected. However,
+    # the devise registration controller will (of course) not know to set
+    # is_primary. So, we must set it manually.  Note that mass assignment of
+    # is_primary will still be attempted, causing a warning. -Jared 2011.1.30
+    primary_attendee.is_primary = true
   end
 
   def apply_user_email_to_primary_attendee
