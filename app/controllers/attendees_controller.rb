@@ -28,6 +28,15 @@ class AttendeesController < ApplicationController
     # Obviously, at some point they will all hopefully sign up for real user accounts
     # and then this list will be defunct. -Jared 1/23/11
     @preregistrants = Preregistrant.order('preregdate asc')
+
+    # get some fun statistics
+    @dan_count = Attendee.where("rank IN (?)", (1)..(9)).count
+    @kyu_count = Attendee.where("rank IN (?)", (-30)..(-1)).count
+    @np_count = Attendee.where(:rank => 0).count
+    @youngest_attendee = Attendee.order('birth_date desc').first
+    @oldest_attendee = Attendee.order('birth_date desc').last
+    @male_count = Attendee.where(:gender => 'm').count
+    @female_count = Attendee.where(:gender => 'f').count
   end
 
   # GET /attendees/new
