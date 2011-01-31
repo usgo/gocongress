@@ -44,9 +44,7 @@
   %strong attendees
   on one
   %strong user account.
-  Bring the whole family! Please note that attendees who wish to play
-  or participate in Go-related activities must have a
-  = link_to "current AGA membership.", "https://www.usgo.org/cgi-bin/application.cgi"
+  Bring the whole family! 
   
 %table.semantic.fullwidth
   %thead
@@ -75,7 +73,19 @@
             =link_to 'Delete', a, :confirm => "Are you sure you want to delete this attendee?", :method => :delete
 
 -# Currently, it is only possible to create an attendee for yourself.
--# An admin can't create an attendee for someone else.
+-# An admin can not create an attendee for someone else.
 -# So, we hide the link for now. -Jared 2011.1.14
 - if @showing_current_user
   %p= link_to 'Register another attendee', new_attendee_path
+
+%br
+
+%h3 Do I need an AGA membership?
+%p
+  Attendees who wish to play
+  or participate in Go-related activities must have a
+  = link_to "current AGA membership", "https://www.usgo.org/cgi-bin/application.cgi"
+  or a membership in a national organization with which the AGA has a 
+  reciprocal agreement.  Please email the 
+  = link_to 'registrar', contact_path
+  if you have any questions.
