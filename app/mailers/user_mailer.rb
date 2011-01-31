@@ -6,7 +6,8 @@ class UserMailer < ActionMailer::Base
     @port = default_url_options[:port]
     @lrFormUrl = "http://" + @host + ":" + @port.to_s + "/docs/USGC2011-Liability-Release-Form.doc"
     mail(:to => user.email,
-         :subject => "Welcome to the " + CONGRESS_YEAR.to_s + " US Go Congress")
+      :reply_to => 'registrar@gocongress.org',
+      :subject => "Welcome to the " + CONGRESS_YEAR.to_s + " US Go Congress")
   end
   
 end
