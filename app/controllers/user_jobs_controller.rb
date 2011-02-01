@@ -5,7 +5,7 @@ class UserJobsController < ApplicationController
 
   # GET /user_jobs
   def index
-    @user_jobs = UserJob.all
+    @user_jobs = UserJob.joins(:job).order(:jobname)
   end
 
 end
