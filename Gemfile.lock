@@ -48,6 +48,9 @@ GEM
       activesupport (~> 3.0)
       haml (~> 3.0)
       railties (~> 3.0)
+    hoptoad_notifier (2.4.4)
+      activesupport
+      builder
     i18n (0.5.0)
     jquery-rails (0.2.6)
       rails (~> 3.0)
@@ -111,6 +114,7 @@ DEPENDENCIES
   factory_girl_rails
   haml
   haml-rails
+  hoptoad_notifier
   jquery-rails
   rails (= 3.0.3)
   rcov

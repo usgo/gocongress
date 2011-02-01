@@ -9,6 +9,8 @@ gem "devise"
 gem 'haml'
 gem 'haml-rails', :group => :development 
 
+gem 'hoptoad_notifier'
+
 # bluecloth is a markdown library
 gem 'bluecloth'
 
