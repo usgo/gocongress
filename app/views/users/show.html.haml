@@ -33,7 +33,7 @@
     Your initial deposit is due
     =@user.get_initial_deposit_due_date.to_formatted_s(:long)
 
-  -# = button_to "Make a Payment", pay_user_path(@user), :method => "get", :class => 'button-emphasis'
+  = button_to "Make a Payment", pay_user_path(@user), :method => "get", :class => 'button-emphasis'
 
 %br/
 
