@@ -25,4 +25,8 @@ class HomeController < ApplicationController
 	def access_denied
 	end
 
+  def kaboom
+    raise "Intentional error to test error handling"
+  end
+
 end

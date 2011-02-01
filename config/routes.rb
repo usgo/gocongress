@@ -7,6 +7,7 @@ Gocongress::Application.routes.draw do
   get "home/access_denied"
   get "home/index"
   get "home/transportation"
+  get "home/kaboom"
 
   match 'preregistrants' => 'preregistrant#index', :as => 'preregistrants'
   match 'contact' => 'user_jobs#index'
