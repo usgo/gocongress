@@ -15,6 +15,9 @@
     = javascript_include_tag "jquery.min.js"
     = javascript_include_tag "rails"
     = javascript_include_tag "application"
+
+    -# To do: We only need the galleria stuff on the homepage Hiding this on other
+    -# pages could improve page load by 80ms or more -Jared 2011.2.3
     = javascript_include_tag "galleria/galleria"
     = javascript_include_tag "galleria/themes/dots/galleria.dots.js"
     = csrf_meta_tag
