@@ -4,8 +4,13 @@
     %meta{:content => "text/html", "http-equiv" => "Content-Type"}/
     %title
       US Go Congress #{CONGRESS_YEAR}
-    = stylesheet_link_tag :all
-    / These js files must be included in this exact order -Jared 11/30/10
+
+    -# In production (perform_caching) link to all.css
+    -# Else link for each css file in the stylesheets dir
+    -# -Jared 2011.2.3
+    = stylesheet_link_tag :all, :cache => true
+
+    -# These js files must be included in this exact order -Jared 11/30/10
     = javascript_include_tag "jquery.min.js"
     = javascript_include_tag "rails"
     = javascript_include_tag "application"
