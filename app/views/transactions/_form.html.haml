@@ -11,7 +11,7 @@
   %fieldset.wider-labels
     .field
       = f.label :user_id, "User email address"
-      = f.select :user_id, User.all.collect {|u| [ u.email, u.id ] }, { :include_blank => true }
+      = f.select :user_id, @user_array, { :include_blank => true }
       %br
       %span.smalltext.aligned-with-input 
         Each user account has a unique email address.

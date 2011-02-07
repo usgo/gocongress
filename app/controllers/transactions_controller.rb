@@ -24,6 +24,7 @@ class TransactionsController < ApplicationController
   # GET /transactions/new.xml
   def new
     @transaction = Transaction.new
+    @user_array = User.order('lower(email)').collect {|u| [ u.email, u.id ] }
 
     respond_to do |format|
       format.html # new.html.erb
