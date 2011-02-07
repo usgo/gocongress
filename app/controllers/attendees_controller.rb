@@ -33,8 +33,8 @@ class AttendeesController < ApplicationController
     @dan_count = Attendee.where("rank IN (?)", (1)..(9)).count
     @kyu_count = Attendee.where("rank IN (?)", (-30)..(-1)).count
     @np_count = Attendee.where(:rank => 0).count
-    @youngest_attendee = Attendee.order('birth_date desc').first
-    @oldest_attendee = Attendee.order('birth_date desc').last
+    @youngest_attendee = Attendee.reasonable_birth_date.order('birth_date desc').first
+    @oldest_attendee = Attendee.reasonable_birth_date.order('birth_date desc').last
     @male_count = Attendee.where(:gender => 'm').count
     @female_count = Attendee.where(:gender => 'f').count
   end

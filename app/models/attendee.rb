@@ -17,6 +17,12 @@ class Attendee < ActiveRecord::Base
   NUMERIC_RANK_LIST = []
   Attendee::RANKS.each { |r| NUMERIC_RANK_LIST << r[1] }
 
+  # Some "blank" birth_date values have made it into production. The following
+  # scope is a useful way to filter out those records when querying birth_date
+  # (eg. finding youngest attendee) -Jared 2011-02-07
+  scope :reasonable_birth_date, where("birth_date > ? AND birth_date < ?", '1880-01-01', Time.now())
+
+  # Begin validations
   validates_format_of :country, :with => /^[A-Z]{2}$/, :message => "must be exactly two capital letters"
   validates_format_of :zip, :allow_blank => true, :with => /^\d{5}(-\d{4})?$/, :if => :country_is_america?, :message => "is not valid for the selected country"
   validates_presence_of :gender
