@@ -238,7 +238,7 @@ table.who thead th { text-align: left; }
 div.inputform { margin: 1em; }
 div.inputform table tbody td { padding-bottom: 0.25em; }
 div.inputform table tbody th { text-align: left; padding-right: 1em; vertical-align: top; }
-.vertical-form-instructions { clear: right; float:right; margin: 1em; width: 300px; }
+.vertical-form-instructions { clear: right; float:right; margin: 0.5em; width: 300px; }
 
 /* Railsy forms -Jared 12/15/10 */
 /* Note the fixed width labels */
