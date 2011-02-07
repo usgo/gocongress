@@ -28,7 +28,7 @@
       %span.smalltext Do not show on the "Who&#39;s Coming" list
     .field
       = f.label :birth_date, 'Birth date'
-      = f.date_select :birth_date, :add_month_numbers => true, :start_year => Time.now.year, :end_year => 120.years.ago.year, :order => [:month, :day, :year], :include_blank => true
+      = f.date_select :birth_date, :add_month_numbers => true, :start_year => Time.now.year, :end_year => 120.years.ago.year, :order => [:month, :day, :year], :include_blank => false
     .field
       = f.label :understand_minor, 'Minor Agreement'
       = f.check_box :understand_minor
