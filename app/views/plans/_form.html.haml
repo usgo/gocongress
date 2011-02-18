@@ -17,7 +17,7 @@
         You can format the text (bold, etc.) with 
         %a{ :href => 'http://en.wikipedia.org/wiki/Markdown', :target => '_blank' } Markdown 
         syntax.
-    = f.text_area :description, :class => 'wide'
+    = f.text_area :description, { :class => 'wide', :rows => 5 }
   .field
     = f.label :price
     = f.text_field :price
