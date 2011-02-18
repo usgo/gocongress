@@ -5,11 +5,16 @@
   Before that, #{ @preregistrants.size } people
   %a{ :href => '#preregistrants' } pre-registered.
   There are #{@kyu_count} kyu-level players, #{@dan_count} dan-level players, 
-  and #{@np_count} non-players.  The youngest attendee is 
-  = distance_of_time_in_words @youngest_attendee.birth_date.to_date, Time.now.to_date
-  old and the oldest is
-  = distance_of_time_in_words @oldest_attendee.birth_date.to_date, Time.now.to_date
-  old.  There are #{@male_count} men and #{@female_count} women.
+  and #{@np_count} non-players.
+
+  - if (@youngest_attendee.present? and @oldest_attendee.present?)
+    The youngest attendee is
+    = distance_of_time_in_words @youngest_attendee.birth_date.to_date, Time.now.to_date
+    old and the oldest is
+    = distance_of_time_in_words @oldest_attendee.birth_date.to_date, Time.now.to_date
+    old.
+
+  There are #{@male_count} men and #{@female_count} women.
 
 - unless anyone_signed_in?
   %p
