@@ -4,6 +4,6 @@ Factory.define :plan do |f|
   f.age_min 1 + rand(100)
   f.age_max 1 + rand(100)
   f.description %w['asdf' 'fdsa'].sample
-  f.has_meals [true, false].sample
-  f.has_rooms [true, false].sample
+  f.has_meals true
+  f.has_rooms true
 end
