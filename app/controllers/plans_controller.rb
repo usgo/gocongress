@@ -5,7 +5,7 @@ class PlansController < ApplicationController
 
   # GET /plans
   def index
-    plans_ordered = Plan.all :order=>"has_rooms desc"
+    plans_ordered = Plan.all :order=>"has_rooms desc, age_min asc"
     @plans_grouped = plans_ordered.group_by {|plan| plan.has_rooms}
   end
 

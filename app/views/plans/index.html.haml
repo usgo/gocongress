@@ -19,21 +19,19 @@
         %th{ :colspan => current_user_is_admin? ? 8 : 5 }
           = grouping ? "Plans that include a room" : "Meals only"
       %tr.lesser-header
+        %th Attendee Age
         %th= trl_attr 'plan', 'name'
         %th= trl_attr 'plan', 'description'
         %th= trl_attr 'plan', 'price'
-        %th= trl_attr 'plan', 'age_min'
-        %th= trl_attr 'plan', 'age_max'
         - if current_user_is_admin?
           %th{ :colspan => 3 }
 
       - plans_in_group.each do |plan|
         %tr
+          %td= plan.age_range_in_words
           %td= plan.name
           %td= Markdown.new( plan.description ).to_html.html_safe
           %td= plan.price
-          %td= plan.age_min
-          %td= plan.age_max
           - if current_user_is_admin?
             %td= link_to 'Show', plan
             %td= link_to 'Edit', edit_plan_path(plan)
