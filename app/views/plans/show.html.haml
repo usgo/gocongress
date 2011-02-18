@@ -5,6 +5,12 @@
     %th= trl_attr 'plan', 'name'
     %td= @plan.name
   %tr
+    %th= trl_attr 'plan', 'has_rooms'
+    %td= @plan.has_rooms ? 'Yes' : 'No'
+  %tr
+    %th= trl_attr 'plan', 'has_meals'
+    %td= @plan.has_meals ? 'Yes' : 'No'
+  %tr
     %th= trl_attr 'plan', 'price'
     %td= number_to_currency @plan.price
   %tr
