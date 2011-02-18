@@ -6,21 +6,29 @@
         - @plan.errors.full_messages.each do |msg|
           %li= msg
 
-  .field
-    = f.label :name
-    = f.text_field :name
-  .field
-    %label{ :for => 'plan_description'}
-      Description
-      %br
-      %span.smalltext
-        You can format the text (bold, etc.) with 
-        %a{ :href => 'http://en.wikipedia.org/wiki/Markdown', :target => '_blank' } Markdown 
-        syntax.
-    = f.text_area :description, { :class => 'wide', :rows => 5 }
-  .field
-    = f.label :price
-    = f.text_field :price
+  %fieldset
+    .field
+      = f.label :name
+      = f.text_field :name
+    .field
+      %label This plan has
+      = f.check_box :has_rooms
+      = f.label :has_rooms, "Room(s)", :class => "inline-label"
+      &nbsp;
+      = f.check_box :has_meals
+      = f.label :has_meals, "Meal(s)", :class => "inline-label"
+    .field
+      %label{ :for => 'plan_description'}
+        Description
+        %br
+        %span.smalltext
+          You can format the text (bold, etc.) with
+          %a{ :href => 'http://en.wikipedia.org/wiki/Markdown', :target => '_blank' } Markdown
+          syntax.
+      = f.text_area :description, { :class => 'wide', :rows => 5 }
+    .field
+      = f.label :price
+      = f.text_field :price
 
   %fieldset
     %legend Attendee Age Requirements
