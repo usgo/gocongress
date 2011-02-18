@@ -2,12 +2,14 @@
 
 one:
   evtname: MyString
+  evtdate: 2011-07-31
   evtdeparttime: MyString
   evtstarttime: MyString
   evtprice: MyString
 
 two:
   evtname: MyString
+  evtdate: 2011-07-31
   evtdeparttime: MyString
   evtstarttime: MyString
   evtprice: MyString
