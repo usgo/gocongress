@@ -2,7 +2,8 @@ class Plan < ActiveRecord::Base
 
 validates_presence_of :name, :description, :price, :age_min
 validates_length_of :name, :maximum => 50
-validates_numericality_of :price, :age_min
+validates_numericality_of :price, :greater_than_or_equal_to => 0
+validates_numericality_of :age_min, :greater_than_or_equal_to => 0
 validates_numericality_of :age_max, :allow_nil => true
 
 # A plan with neither rooms nor meals is invalid.  This is implemented
