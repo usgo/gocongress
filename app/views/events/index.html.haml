@@ -11,7 +11,7 @@
 %table.semantic.fullwidth.zebra
   %tbody
     - @arEventsByDate.each do |d,arEvt|
-      %tr.date-header
+      %tr.greater-header
         %th{ :colspan => current_user_is_admin? ? 6 : 4 }= d
       %tr.lesser-header
         %th Event

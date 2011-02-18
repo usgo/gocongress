@@ -15,7 +15,7 @@
 %table.semantic.zebra.fullwidth
   %tbody
     - @plans_grouped.each do |grouping, plans_in_group|
-      %tr.date-header
+      %tr.greater-header
         %th{ :colspan => current_user_is_admin? ? 8 : 5 }
           = grouping ? "Plans that include a room" : "Meals only"
       %tr.lesser-header

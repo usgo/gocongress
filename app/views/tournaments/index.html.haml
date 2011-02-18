@@ -17,7 +17,7 @@
   %p Click on the tournament name for details.
   %table.semantic.fullwidth
     - @rounds_by_date.each do |d,rounds_this_date|
-      %tr.date-header
+      %tr.greater-header
         %th{ :colspan => current_user_is_admin? ? 5 : 3 }
           = d.to_formatted_s(:long)
       %tr.lesser-header
