@@ -6,4 +6,3 @@ tmp/**/*
 vendor/plugins/gmail_smtp/lib/usgc_gmail_account_info.rb
 coverage.data
 coverage
-public/stylesheets/all.css
