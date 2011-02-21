@@ -1,6 +1,6 @@
 %h1 Make a Payment
 
-%form{ :action => "https://secure.merchantonegateway.com/cart/cart.php", :method => "POST" }
+%form{ :action => @formAction, :method => "POST", :onSubmit => "return confirmAmount();" }
   
   %table.lightweight
     %tbody
@@ -27,7 +27,7 @@
         %th Enter payment amount
         %td.align-right
           $
-          %input.align-right{ :type => "text", :size => "6", :name => "amount" }
+          %input.align-right{ :type => "text", :size => "6", :name => "amount", :id => "amount" }
           %input{ :type => "hidden", :name => "action", :value => "process_variable" }
           %input{ :type => "hidden", :name => "order_description", :value => "USGC Payment for #{@user.email}" }
           %input{ :type => "hidden", :name => "language", :value => "en" }
@@ -40,3 +40,34 @@
         %td.align-right
           %br
           %input{ :type => "submit", :name => "submit", :value => "Submit" }
+
+-# The following line is a HAML Filter
+:javascript
+
+  // Check the payment amount, and warn people who overpay
+  function confirmAmount() {
+
+    // Get amount field via jquery
+    var a = $('#amount');
+    if (a.length !== 1) { return true; }
+
+    // Validate numeric
+    if (isNaN(a.val())) {
+      alert("Please enter a numeric payment amount");
+      return false;
+      }
+
+    // Get user balance via interpolation
+    var b = parseFloat('#{@user.balance}');
+
+    // Warn people who overpay
+    if (!isNaN(b) && a.val() > b) {
+      var msg = "It looks like the amount that you entered is greater";
+      msg += " than your account balance.  Are you sure you want to";
+      msg += " make a donation?";
+      return confirm(msg);
+      }
+
+    // Otherwise, everything looks OK.  Submit the form.
+    return true;
+  }

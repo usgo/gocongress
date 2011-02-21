@@ -29,6 +29,7 @@ class UsersController < ApplicationController
   # GET /users/1/pay
   def pay
     @user = User.find(params[:id])
+    @formAction = "https://secure.merchantonegateway.com/cart/cart.php"
   end
   
   # GET /users/1/invoice
