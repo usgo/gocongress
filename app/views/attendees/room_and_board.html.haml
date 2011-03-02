@@ -1,7 +1,44 @@
 %h1
-  = @attendee.full_name_possessive
+  = @attendee.possessive_pronoun_or_name
   Room and Board Options
+
 %p
-  We are still working on room and board pricing and options.
-  When we are ready, you will be able to choose
-  those options here.
+  = @attendee.objective_pronoun_or_name_and_copula
+  currently
+  = @attendee.age_in_years.floor
+  years old and may choose from
+  = @plans_ordered.count
+  room and board plans.
+  Select as many plans as you want by clicking on the check box (
+  %input{ :type => 'checkbox', :disabled => 'disabled' }
+  ) and then "Save Changes".
+
+= form_for(@attendee) do |f|
+  
+  %table.semantic.zebra.fullwidth
+    %tbody
+      - @plans_grouped.each do |grouping, plans_in_group|
+        %tr.greater-header
+          %th{ :colspan => 5 }
+            = grouping ? "Plans that include a room" : "Meals only"
+        %tr.lesser-header
+          %th
+          %th= trl_attr 'plan', 'name'
+          %th Attendee Age
+          %th= trl_attr 'plan', 'description'
+          %th= trl_attr 'plan', 'price'
+  
+        - plans_in_group.each do |plan|
+          %tr
+            %td.align-center
+              - cbx_id = 'attendee_plan_id_' + plan.id.to_s
+              - has_plan = @attendee_plan_ids.index(plan.id).present?
+              = check_box_tag "attendee[plan_ids][]", plan.id, has_plan, :id => cbx_id
+            %td= plan.name
+            %td= plan.age_range_in_words
+            %td= Markdown.new( plan.description ).to_html.html_safe
+            %td= plan.price
+
+  .actions
+    %br
+    = f.submit "Save Changes"

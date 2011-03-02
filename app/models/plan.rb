@@ -1,5 +1,10 @@
 class Plan < ActiveRecord::Base
 
+has_many :attendee_plans, :dependent => :destroy
+has_many :users, :through => :attendee_plans
+
+scope :appropriate_for_age, lambda {|age| where("(age_min is null or age_min < ?) and (age_max is null or age_max > ?)", age, age)}
+
 validates_presence_of :name, :description, :price, :age_min
 validates_length_of :name, :maximum => 50
 validates_numericality_of :price, :greater_than_or_equal_to => 0

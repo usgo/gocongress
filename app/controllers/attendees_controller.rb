@@ -91,6 +91,16 @@ class AttendeesController < ApplicationController
     # so, I've added a param called page.  Alf, would you have done this differently?
     # Thanks, -Jared 2011.01.08
     @page = get_valid_page_from_params
+    
+    # Page-specific queries
+    if (@page == 'roomboard')
+      age = @attendee.age_in_years.to_i
+      @plans_ordered = Plan.appropriate_for_age(age).order("has_rooms desc, price desc")
+      @plans_grouped = @plans_ordered.group_by {|plan| plan.has_rooms}
+      @attendee_plan_ids = @attendee.plans.map {|p| p.id}
+    end
+    
+    # Render the specific page
     render get_view_name_from_page(@page)
   end
 
@@ -102,6 +112,11 @@ class AttendeesController < ApplicationController
     # update attributes but do not save yet
     @attendee.attributes = params[:attendee]
     
+    # special case: clearing associated plans
+    if (@page == 'roomboard' && params[:attendee].blank?)
+      @attendee.attendee_plans.destroy_all
+    end
+
     # run the appropriate validations for this @page 
     if @attendee.valid_in_form_page?(@page.to_sym)
       @attendee.save(:validate => false)

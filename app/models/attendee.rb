@@ -1,6 +1,8 @@
 class Attendee < ActiveRecord::Base
   belongs_to :user
-
+  has_many :attendee_plans, :dependent => :destroy
+  has_many :plans, :through => :attendee_plans
+  
   AGE_DEADLINE = "July 29, 2011"
 
   # Mass assignment config
@@ -53,6 +55,14 @@ class Attendee < ActiveRecord::Base
     b.validates_inclusion_of :is_current_aga_member, :in => [true, false]
   end
 
+  def age_in_seconds
+    (Time.now - self.birth_date.to_time).to_i
+  end
+  
+  def age_in_years
+    self.age_in_seconds / 60.0 / 60.0 / 24.0 / 365.0
+  end
+
   def country_is_america?
     self.country == 'US'
   end
@@ -78,6 +88,14 @@ class Attendee < ActiveRecord::Base
 
   def full_name_possessive
     given_name + " " + family_name + ('s' == family_name[-1,1] ? "'" : "'s")
+  end
+
+  def possessive_pronoun_or_name
+    is_primary? ? "My" : full_name_possessive
+  end
+  
+  def objective_pronoun_or_name_and_copula
+    is_primary? ? "You are" : get_full_name + " is"
   end
 
   def get_rank_name
