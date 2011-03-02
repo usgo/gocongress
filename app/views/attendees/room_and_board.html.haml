@@ -13,6 +13,10 @@
   %input{ :type => 'checkbox', :disabled => 'disabled' }
   ) and then "Save Changes".
 
+%p
+  Do you have specific Room or Dining Concerns or Requests?  Please email the 
+  = link_to 'registrar.', contact_path
+
 = form_for(@attendee) do |f|
   
   %table.semantic.zebra.fullwidth
