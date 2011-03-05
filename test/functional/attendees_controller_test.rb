@@ -6,6 +6,7 @@ class AttendeesControllerTest < ActionController::TestCase
     @user = Factory.create(:user)
     @user_two = Factory.create(:user)
     @admin_user = Factory.create(:admin_user)
+    @plan = Factory.create(:plan)
   end
 
   test "visitor can get index" do
@@ -150,6 +151,7 @@ class AttendeesControllerTest < ActionController::TestCase
       sign_in @user
       get :edit, :id => @user.attendees.sample.to_param, :page => page
       view_name = @controller.send( :get_view_name_from_page, page )
+      assert_response :success
       assert_template view_name
     end
 
@@ -159,5 +161,22 @@ class AttendeesControllerTest < ActionController::TestCase
       assert_response 403
     end
   end
+
+	test "user can select a plan for their own attendee" do
+    sign_in @user
+    assert_equal(true, Plan.count > 0)	# there are plans
+    random_attendee = @user.attendees.sample # get random attendee
+    assert_equal(0, random_attendee.plans.count) # attendee has zero plans
+
+    # prepare attribute hash for submission
+    h = random_attendee.attributes.to_hash
+    h.merge!(:plan_ids => Plan.all.sample.to_param)
+
+    # put to update
+    assert_difference('random_attendee.plans.count', +1) do
+      put :update, :id => random_attendee.to_param, :attendee => h
+    end
+    assert_redirected_to user_path(@user.to_param)
+	end
 
 end
