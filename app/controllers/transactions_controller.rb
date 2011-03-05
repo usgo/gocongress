@@ -24,7 +24,7 @@ class TransactionsController < ApplicationController
   # GET /transactions/new.xml
   def new
     @transaction = Transaction.new
-    @user_array = User.order('lower(email)').collect {|u| [ u.email, u.id ] }
+    @user_array = get_array_of_user_emails_and_ids
 
     respond_to do |format|
       format.html # new.html.erb
@@ -35,6 +35,7 @@ class TransactionsController < ApplicationController
   # GET /transactions/1/edit
   def edit
     @transaction = Transaction.find(params[:id])
+    @user_array = get_array_of_user_emails_and_ids
   end
 
   # POST /transactions
@@ -80,4 +81,11 @@ class TransactionsController < ApplicationController
       format.xml  { head :ok }
     end
   end
+
+protected
+
+	def get_array_of_user_emails_and_ids
+		User.order('lower(email)').collect {|u| [ u.email, u.id ] }
+	end
+
 end
