@@ -56,11 +56,22 @@ class User < ActiveRecord::Base
   def get_invoice_items
     invoice_items = []
     self.attendees.each { |a|
+
+      # initial deposit for each attendee
       item = {}
       item['item_description'] = 'Initial deposit'
-      item['attendee_full_name'] = a.given_name + ' ' + a.family_name
+      item['attendee_full_name'] = a.get_full_name
       item['item_price'] = 75
       invoice_items.push item
+
+      # room and board invoice items
+      a.plans.each { |p|
+        item = {}
+        item['item_description'] = 'Plan: ' + p.name
+        item['attendee_full_name'] = a.get_full_name
+        item['item_price'] = p.price
+        invoice_items.push item
+      }
     }
     return invoice_items
   end
