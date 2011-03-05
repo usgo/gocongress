@@ -11,8 +11,21 @@ class User < ActiveRecord::Base
   # Specify a black list of model attributes that CAN'T be set via mass-assignment
   # On an unrelated note, I added a db-level default value of false for is_admin
   # -Jared 2010-12-30
-  attr_protected :is_admin, :job_ids
-  
+  attr_protected :is_admin, :job_ids, :created_at, :updated_at
+
+  # The following attributes come from Devise, AFAIK.
+  # I'd like them to be attr_protected, but I'm not sure I can do that.
+  # encrypted_password
+  # password_salt
+  # reset_password_token
+  # remember_token
+  # remember_created_at
+  # sign_in_count
+  # current_sign_in_at
+  # last_sign_in_at
+  # current_sign_in_ip
+  # last_sign_in_ip
+
   has_many :transactions, :dependent => :destroy
   has_many :user_jobs, :dependent => :destroy
   has_many :jobs, :through => :user_jobs

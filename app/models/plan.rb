@@ -1,4 +1,6 @@
 class Plan < ActiveRecord::Base
+attr_accessible :name, :price, :age_min, :age_max, :description, :has_meals, :has_rooms
+attr_protected :created_at, :updated_at
 
 has_many :attendee_plans, :dependent => :destroy
 has_many :users, :through => :attendee_plans

@@ -1,5 +1,5 @@
 class Round < ActiveRecord::Base
-
-belongs_to :tournament
-
+  attr_accessible :round_start
+  attr_protected :created_at, :updated_at, :tournament_id
+  belongs_to :tournament
 end

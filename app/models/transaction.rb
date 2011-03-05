@@ -1,4 +1,6 @@
 class Transaction < ActiveRecord::Base
+  attr_accessible :user_id, :trantype, :amount, :gwtranid, :gwdate
+  attr_protected :created_at, :updated_at
 
 	belongs_to :user
 	
