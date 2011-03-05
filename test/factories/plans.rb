@@ -7,3 +7,8 @@ Factory.define :plan do |f|
   f.has_meals true
   f.has_rooms true
 end
+
+Factory.define :all_ages_plan, :parent => :plan do |f|
+  f.age_min 0
+  f.age_max nil
+end

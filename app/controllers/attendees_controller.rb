@@ -111,11 +111,6 @@ class AttendeesController < ApplicationController
     
     # update attributes but do not save yet
     @attendee.attributes = params[:attendee]
-    
-    # special case: clearing associated plans
-    if (@page == 'roomboard' && params[:attendee].blank?)
-      @attendee.attendee_plans.destroy_all
-    end
 
     # run the appropriate validations for this @page 
     if @attendee.valid_in_form_page?(@page.to_sym)

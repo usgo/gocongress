@@ -20,6 +20,7 @@
 
 - if @plans_ordered.count > 0
   = form_for(@attendee) do |f|
+    = hidden_field_tag "attendee[plan_ids][]", nil
     %table.semantic.zebra.fullwidth
       %tbody
         - @plans_grouped.each do |grouping, plans_in_group|

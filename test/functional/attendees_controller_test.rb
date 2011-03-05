@@ -6,7 +6,7 @@ class AttendeesControllerTest < ActionController::TestCase
     @user = Factory.create(:user)
     @user_two = Factory.create(:user)
     @admin_user = Factory.create(:admin_user)
-    @plan = Factory.create(:plan)
+    @plan = Factory.create(:all_ages_plan)
   end
 
   test "visitor can get index" do
@@ -192,5 +192,32 @@ class AttendeesControllerTest < ActionController::TestCase
     end
     assert_response 403
   end
+
+	test "user can clear own attendee plans" do
+    sign_in @user
+    a = @user.attendees.sample
+    a.plans << @plan
+    assert_equal(1, a.plans.count)
+
+    # prepare attribute hash for submission
+    h = a.attributes.to_hash
+    h[:plan_ids] = ''
+
+    # put to update
+    assert_difference('a.plans.count', -1) do
+      put :update, :id => a.to_param, :attendee => h
+    end
+    assert_equal(0, a.plans.count)
+    assert_redirected_to user_path(@user.to_param)
+	end
+
+	test "edit form contains hidden plan_ids input even if attendee has zero plans" do
+    sign_in @user
+    a = @user.attendees.sample
+    assert(Plan.appropriate_for_age(a.age_in_years).count > 0)
+    assert_equal(0, a.plans.count)
+    get :edit, :page => "roomboard", :id => a.to_param
+    assert_tag({ :tag => "input", :attributes => { :name => "attendee[plan_ids][]", :type => "hidden" }})
+	end
 
 end
