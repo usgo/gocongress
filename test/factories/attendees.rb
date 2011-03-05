@@ -7,5 +7,6 @@ Factory.define :attendee do |f|
   f.given_name 'Amerigo'
   f.family_name 'Vespucci'
   f.email "thisgetsoverwrittenanyways@j.singlebrook.com"
+  f.tshirt_size 'm'
   f.rank 3
 end
