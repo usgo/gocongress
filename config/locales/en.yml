@@ -6,6 +6,7 @@ en:
         address_2: "Address Line 2"
         country: "Country Code"
         state: "State/Province"
+        tshirt_size: "T-Shirt Size"
         zip: "Zip/Postal Code"
       plan:
         age_min: "Minimum Age"

@@ -18,6 +18,18 @@ class Attendee < ActiveRecord::Base
   # define constant array of integer ranks
   NUMERIC_RANK_LIST = []
   Attendee::RANKS.each { |r| NUMERIC_RANK_LIST << r[1] }
+  
+  # tshirt sizes
+  TSHIRT_CHOICES = []
+  TSHIRT_CHOICES << ["None", "no"]
+  TSHIRT_CHOICES << ["Small", "s"]
+  TSHIRT_CHOICES << ["Medium", "m"]
+  TSHIRT_CHOICES << ["Large", "l"]
+  TSHIRT_CHOICES << ["X-Large", "xl"]
+
+  # define constant array of tshirt sizes
+  TSHIRT_SIZE_LIST = []
+  Attendee::TSHIRT_CHOICES.each { |t| TSHIRT_SIZE_LIST << t[1] }
 
   # Some "blank" birth_date values have made it into production. The following
   # scope is a useful way to filter out those records when querying birth_date
@@ -33,6 +45,7 @@ class Attendee < ActiveRecord::Base
   validates_uniqueness_of :aga_id, :allow_nil => true
   validates_presence_of :address_1, :birth_date, :city,  :country, :email, :family_name, :given_name, :rank
   validates_inclusion_of :rank, :in => NUMERIC_RANK_LIST, :message => "is not a valid rank"
+  validates_inclusion_of :tshirt_size, :in => TSHIRT_SIZE_LIST, :message => "is not valid"
   
   # Attendees must belong to a user (except when they are first being created,      
   # because in a nested form there might not be a user_id yet.  I think that is what
