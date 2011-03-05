@@ -178,4 +178,19 @@ class AttendeesControllerTest < ActionController::TestCase
     assert_redirected_to user_path(@user.to_param)
 	end
 
+  test "user can NOT select plan for attendee belonging to someone else" do
+    sign_in @user
+    a = @user_two.attendees.sample
+
+    # prepare attribute hash for submission
+    h = a.attributes.to_hash
+    h.merge!(:plan_ids => Plan.all.sample.to_param)
+
+    # put to update
+    assert_no_difference('a.plans.count') do
+      put :update, :id => a.to_param, :attendee => h
+    end
+    assert_response 403
+  end
+
 end
