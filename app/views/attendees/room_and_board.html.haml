@@ -9,40 +9,40 @@
   years old and may choose from
   = @plans_ordered.count
   room and board plans.
-  Select as many plans as you want by clicking on the check box (
-  %input{ :type => 'checkbox', :disabled => 'disabled' }
-  ) and then "Save Changes".
+  - if @plans_ordered.count > 0
+    Select as many plans as you want by clicking on the check box (
+    %input{ :type => 'checkbox', :disabled => 'disabled' }
+    ) and then "Save Changes".
 
 %p
   Do you have specific Room or Dining Concerns or Requests?  Please email the 
   = link_to 'registrar.', contact_path
 
-= form_for(@attendee) do |f|
-  
-  %table.semantic.zebra.fullwidth
-    %tbody
-      - @plans_grouped.each do |grouping, plans_in_group|
-        %tr.greater-header
-          %th{ :colspan => 5 }
-            = grouping ? "Plans that include a room" : "Meals only"
-        %tr.lesser-header
-          %th
-          %th= trl_attr 'plan', 'name'
-          %th Attendee Age
-          %th= trl_attr 'plan', 'description'
-          %th= trl_attr 'plan', 'price'
-  
-        - plans_in_group.each do |plan|
-          %tr
-            %td.align-center
-              - cbx_id = 'attendee_plan_id_' + plan.id.to_s
-              - has_plan = @attendee_plan_ids.index(plan.id).present?
-              = check_box_tag "attendee[plan_ids][]", plan.id, has_plan, :id => cbx_id
-            %td= plan.name
-            %td= plan.age_range_in_words
-            %td= Markdown.new( plan.description ).to_html.html_safe
-            %td= plan.price
-
-  .actions
-    %br
-    = f.submit "Save Changes"
+- if @plans_ordered.count > 0
+  = form_for(@attendee) do |f|
+    %table.semantic.zebra.fullwidth
+      %tbody
+        - @plans_grouped.each do |grouping, plans_in_group|
+          %tr.greater-header
+            %th{ :colspan => 5 }
+              = grouping ? "Plans that include a room" : "Meals only"
+          %tr.lesser-header
+            %th
+            %th= trl_attr 'plan', 'name'
+            %th Attendee Age
+            %th= trl_attr 'plan', 'description'
+            %th= trl_attr 'plan', 'price'
+    
+          - plans_in_group.each do |plan|
+            %tr
+              %td.align-center
+                - cbx_id = 'attendee_plan_id_' + plan.id.to_s
+                - has_plan = @attendee_plan_ids.index(plan.id).present?
+                = check_box_tag "attendee[plan_ids][]", plan.id, has_plan, :id => cbx_id
+              %td= plan.name
+              %td= plan.age_range_in_words
+              %td= Markdown.new( plan.description ).to_html.html_safe
+              %td= plan.price  
+    .actions
+      %br
+      = f.submit "Save Changes"
