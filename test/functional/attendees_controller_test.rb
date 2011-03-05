@@ -193,6 +193,18 @@ class AttendeesControllerTest < ActionController::TestCase
     assert_response 403
   end
 
+  test "admin can select plan for attendee belonging to someone else" do
+    sign_in @admin_user
+    a = @user.attendees.sample
+    assert_equal(0, a.plans.count)
+    h = a.attributes.to_hash
+    h[:plan_ids] = @plan.to_param
+    assert_difference('a.plans.count', +1) do
+      put :update, :id => a.to_param, :attendee => h
+    end
+    assert_redirected_to user_path(@user.to_param)
+  end
+
 	test "user can clear own attendee plans" do
     sign_in @user
     a = @user.attendees.sample
