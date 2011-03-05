@@ -164,9 +164,8 @@ class AttendeesControllerTest < ActionController::TestCase
 
 	test "user can select a plan for their own attendee" do
     sign_in @user
-    assert_equal(true, Plan.count > 0)	# there are plans
-    random_attendee = @user.attendees.sample # get random attendee
-    assert_equal(0, random_attendee.plans.count) # attendee has zero plans
+    random_attendee = @user.attendees.sample
+    assert_equal(0, random_attendee.plans.count)
 
     # prepare attribute hash for submission
     h = random_attendee.attributes.to_hash
