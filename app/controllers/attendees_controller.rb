@@ -110,7 +110,14 @@ class AttendeesController < ApplicationController
     # run the appropriate validations for this @page 
     if @attendee.valid_in_form_page?(@page.to_sym)
       @attendee.save(:validate => false)
-      redirect_to user_path(@attendee.user_id), :notice => "Attendee successfully updated"
+
+      # after saving the baduk page, if the attendee has not selected a plan yet,
+      # then go to the roomboard page, else return to "my account"
+      if @page == 'baduk' && @attendee.plans.count == 0
+        redirect_to(edit_attendee_path(@attendee.id) + "/roomboard")
+      else
+        redirect_to user_path(@attendee.user_id), :notice => "Attendee successfully updated"
+      end
     else
       if (@page == 'roomboard') then prepare_to_render_roomboard end
       render get_view_name_from_page(@page)
