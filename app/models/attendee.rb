@@ -25,11 +25,15 @@ class Attendee < ActiveRecord::Base
   
   # tshirt sizes
   TSHIRT_CHOICES = []
-  TSHIRT_CHOICES << ["None", "no"]
-  TSHIRT_CHOICES << ["Small", "s"]
-  TSHIRT_CHOICES << ["Medium", "m"]
-  TSHIRT_CHOICES << ["Large", "l"]
-  TSHIRT_CHOICES << ["X-Large", "xl"]
+  TSHIRT_CHOICES << ["None",            "NO"]
+  TSHIRT_CHOICES << ["Youth Medium",    "YM"]
+  TSHIRT_CHOICES << ["Youth Large",     "YL"]
+  TSHIRT_CHOICES << ["Adult Small",     "AS"]
+  TSHIRT_CHOICES << ["Adult Medium",    "AM"]
+  TSHIRT_CHOICES << ["Adult Large",     "AL"]
+  TSHIRT_CHOICES << ["Adult X-Large",   "1X"]
+  TSHIRT_CHOICES << ["Adult XX-Large",  "2X"]
+  TSHIRT_CHOICES << ["Adult XXX-Large", "3X"]
 
   # define constant array of tshirt sizes
   TSHIRT_SIZE_LIST = []
