@@ -24,6 +24,12 @@ class UsersController < ApplicationController
     @page_title = @showing_current_user ?
       'My Account' :
       @user.primary_attendee.full_name_possessive + ' Account'
+
+    # are there any minors?
+    @has_minor_attendee = false
+    @user.attendees.each { |a|
+      if a.is_minor then @has_minor_attendee = true end
+    }
   end
   
   # GET /users/1/pay
