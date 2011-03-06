@@ -9,7 +9,7 @@ class Attendee < ActiveRecord::Base
   attr_accessible :given_name, :family_name, :gender, :anonymous, :rank, :aga_id, \
     :address_1, :address_2, :city, :state, :zip, :country, :phone, :email, :birth_date, \
     :understand_minor, :congresses_attended, :is_player, :will_play_in_us_open, \
-    :is_current_aga_member, :tshirt_size
+    :is_current_aga_member, :tshirt_size, :special_request, :roomate_request
   attr_protected :created_at, :is_primary, :minor_agreement_received, :updated_at, :user_id
 
   # define constant array of ranks
@@ -54,6 +54,8 @@ class Attendee < ActiveRecord::Base
   validates_presence_of :address_1, :birth_date, :city,  :country, :email, :family_name, :given_name, :rank
   validates_inclusion_of :rank, :in => NUMERIC_RANK_LIST, :message => "is not a valid rank"
   validates_inclusion_of :tshirt_size, :in => TSHIRT_SIZE_LIST, :message => "is not valid"
+  validates_length_of :special_request, :maximum => 250
+  validates_length_of :roomate_request, :maximum => 250
   
   # Attendees must belong to a user (except when they are first being created,      
   # because in a nested form there might not be a user_id yet.  I think that is what

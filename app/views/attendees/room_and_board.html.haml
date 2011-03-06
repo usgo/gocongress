@@ -3,24 +3,42 @@
   Room and Board Options
 
 %p
-  = @attendee.objective_pronoun_or_name_and_copula
-  currently
-  = @attendee.age_in_years.floor
-  years old and may choose from
+  There are
   = @plans_ordered.count
-  room and board plans.
+  room and board plans
+  for people who are
+  = @attendee.age_in_years.floor
+  years old.
   - if @plans_ordered.count > 0
     Select as many plans as you want by clicking on the check box (
     %input{ :type => 'checkbox', :disabled => 'disabled' }
     ) and then "Save Changes".
 
 %p
-  Do you have specific Room or Dining Concerns or Requests?  Please email the 
+  %strong Need help? 
+  Please email the 
   = link_to 'registrar.', contact_path
 
-- if @plans_ordered.count > 0
-  = form_for(@attendee) do |f|
-    = hidden_field_tag "attendee[plan_ids][]", nil
+= form_for(@attendee) do |f|
+
+  - if @attendee.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(@attendee.errors.count, "error")
+        prohibited this attendee from being saved:
+      %ul
+        - @attendee.errors.full_messages.each do |msg|
+          %li= msg
+
+  -# The update action will inspect the page parameter to determine 
+  -# which validations to run
+  = hidden_field_tag :page, @page
+
+  -# This hidden field is a necessary workaround 
+  -# for the case when no checkboxes are selected.
+  = hidden_field_tag "attendee[plan_ids][]", nil
+
+  - if @plans_ordered.count > 0
     %table.semantic.zebra.fullwidth
       %tbody
         - @plans_grouped.each do |grouping, plans_in_group|
@@ -44,6 +62,16 @@
               %td= plan.age_range_in_words
               %td= Markdown.new( plan.description ).to_html.html_safe
               %td= plan.price  
-    .actions
-      %br
-      = f.submit "Save Changes"
+
+  %p Do you have specific Room or Dining Concerns or Requests?
+  %fieldset
+    .field
+      = f.label :roomate_request
+      = f.text_area :roomate_request, :rows => 2, :class => 'wide'
+    .field
+      = f.label :special_request
+      = f.text_area :special_request, :rows => 2, :class => 'wide'
+
+  .actions
+    %br
+    = f.submit "Save Changes"

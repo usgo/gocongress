@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110306202842) do
+ActiveRecord::Schema.define(:version => 20110306203400) do
 
   create_table "attendee_plans", :force => true do |t|
     t.integer  "attendee_id", :null => false
@@ -46,6 +46,8 @@ ActiveRecord::Schema.define(:version => 20110306202842) do
     t.boolean  "will_play_in_us_open"
     t.boolean  "is_current_aga_member"
     t.string   "tshirt_size",              :limit => 2
+    t.text     "special_request"
+    t.text     "roomate_request"
   end
 
   create_table "events", :force => true do |t|

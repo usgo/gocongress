@@ -5,7 +5,8 @@
 
 = form_for( @attendee ) do |f|
 
-  -# The update action will inspect the page parameter to determine which validations to run
+  -# The update action will inspect the page parameter to determine 
+  -# which validations to run
   = hidden_field_tag :page, @page
 
   - if @attendee.errors.any?
