@@ -1,16 +1,26 @@
 %h2 Register for the #{CONGRESS_YEAR} US Go Congress!
+
+%p.vertical-form-instructions
+  %strong I already registered!
+  %br/
+  In that case, please
+  = link_to "sign in", new_user_session_path
+  to see your account.
+
 %p.vertical-form-instructions
   %strong Registering more than one person?
   %br/
   No problem, one user can register multiple people.
   No need to create user accounts for each of your kids!
+
 %p.vertical-form-instructions
   %strong How much does it cost?
   %br/
   Well, that depends on many things, like your
-  %a{:href => "#"} room and board
+  = link_to "room and board", plans_path
   choices, for example.
-  To register, however, you only need to pay an initial deposit of $75.
+  To register, however, you only need to pay an initial 
+  deposit of $75 per attendee.
 
 = form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f|
   = devise_error_messages!
