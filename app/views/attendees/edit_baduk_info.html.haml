@@ -5,6 +5,10 @@
 
 = form_for( @attendee ) do |f|
 
+  -# This hidden field is a necessary workaround 
+  -# for the case when no checkboxes are selected.
+  = hidden_field_tag "attendee[discount_ids][]", nil
+
   -# The update action will inspect the page parameter to determine 
   -# which validations to run
   = hidden_field_tag :page, @page
@@ -18,7 +22,21 @@
         - @attendee.errors.full_messages.each do |msg|
           %li= msg
 
+  - if @discounts.count > 0
+    %fieldset
+      %legend Discounts
+      %p 
+        = @attendee.is_primary? ? "Do you" : "Does this attendee"
+        qualify for any of these discounts?
+      - @discounts.each do |d|
+        .field
+          %label= d.name
+          - cbx_id = 'attendee_discount_id_' + d.id.to_s
+          - cbx_checked = @attendee_discount_ids.index(d.id).present?
+          = check_box_tag "attendee[discount_ids][]", d.id, cbx_checked, :id => cbx_id
+
   %fieldset.wordy-questions
+    %legend Player Information
     .field
       = f.label :congresses_attended, 'How many previous US Go Congresses ' + |
         (@attendee.is_primary ? "have" : "has") + ' ' + |

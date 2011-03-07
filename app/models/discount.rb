@@ -1,4 +1,7 @@
 class Discount < ActiveRecord::Base
+  has_many :attendee_discounts, :dependent => :destroy
+  has_many :attendees, :through => :attendee_discounts
+
   validates_presence_of :name, :amount
   validates_numericality_of :amount, :greater_than => 0
   validates_numericality_of :age_min, :only_integer => true, :allow_nil => true

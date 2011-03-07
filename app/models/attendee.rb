@@ -1,8 +1,12 @@
 class Attendee < ActiveRecord::Base
   belongs_to :user
+
   has_many :attendee_plans, :dependent => :destroy
   has_many :plans, :through => :attendee_plans
-  
+
+  has_many :attendee_discounts, :dependent => :destroy
+  has_many :discounts, :through => :attendee_discounts
+
   AGE_DEADLINE = "July 29, 2011"
 
   # Mass assignment config

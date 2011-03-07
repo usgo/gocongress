@@ -93,7 +93,7 @@ class AttendeesController < ApplicationController
     @page = get_valid_page_from_params
     
     # Page-specific queries
-    if (@page == 'roomboard') then prepare_to_render_roomboard end
+    init_multipage(@page)
     
     # Render the specific page
     render get_view_name_from_page(@page)
@@ -119,7 +119,7 @@ class AttendeesController < ApplicationController
         redirect_to user_path(@attendee.user_id), :notice => "Attendee successfully updated"
       end
     else
-      if (@page == 'roomboard') then prepare_to_render_roomboard end
+      init_multipage(@page)
       render get_view_name_from_page(@page)
     end
   end
@@ -151,11 +151,16 @@ class AttendeesController < ApplicationController
 
 protected
 
-  def prepare_to_render_roomboard
-    age = @attendee.age_in_years.to_i
-    @plans_ordered = Plan.appropriate_for_age(age).order("has_rooms desc, price desc")
-    @plans_grouped = @plans_ordered.group_by {|plan| plan.has_rooms}
-    @attendee_plan_ids = @attendee.plans.map {|p| p.id}
+  def init_multipage( page )
+    if page == "baduk"
+      @discounts = Discount.where("is_automatic = ?", false)
+      @attendee_discount_ids = @attendee.discounts.map { |d| d.id }
+    elsif page == "roomboard"
+      age = @attendee.age_in_years.to_i
+      @plans_ordered = Plan.appropriate_for_age(age).order("has_rooms desc, price desc")
+      @plans_grouped = @plans_ordered.group_by {|plan| plan.has_rooms}
+      @attendee_plan_ids = @attendee.plans.map {|p| p.id}
+    end
   end
 
   def get_valid_page_from_params
