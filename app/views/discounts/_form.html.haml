@@ -1,0 +1,38 @@
+= form_for @discount do |f|
+  -if @discount.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@discount.errors.count, "error")} prohibited this discount from being saved:"
+      %ul
+        - @discount.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :name
+    = f.text_field :name
+  .field
+    = f.label :amount
+    = f.text_field :amount, :size => 5
+    %span $
+
+  %fieldset
+    %legend Automatic?
+    %p
+      Automatic discounts are applied immediately to all applicable
+      attendees, according to the criteria below.  Non-automatic
+      discounts must be "claimed" by attendees.
+    .field
+      = f.label :is_automatic
+      = f.check_box :is_automatic
+    
+  %fieldset
+    %legend Criteria: Attendee Age
+    .field
+      = f.label :age_min
+      = f.text_field :age_min
+    .field
+      = f.label :age_max
+      = f.text_field :age_max
+      %span.smalltext (optional)
+
+  .actions
+    = f.submit 'Save'

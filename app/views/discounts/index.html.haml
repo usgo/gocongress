@@ -1,0 +1,25 @@
+%h1 Discounts
+
+%table.semantic.zebra.fullwidth
+  %tr
+    %th= trl_attr 'discount', 'name'
+    %th Amount
+    %th= trl_attr 'discount', 'is_automatic'
+    %th= trl_attr 'discount', 'age_min'
+    %th= trl_attr 'discount', 'age_max'
+    %th{ :colspan => 3 }
+
+  - @discounts.each do |discount|
+    %tr
+      %td= discount.name
+      %td= discount.amount
+      %td= discount.is_automatic ? "Yes" : "No"
+      %td= discount.age_min
+      %td= discount.age_max
+      %td= link_to 'Show', discount
+      %td= link_to 'Edit', edit_discount_path(discount)
+      %td= link_to 'Destroy', discount, :confirm => 'Are you sure?', :method => :delete
+
+%br
+
+= link_to 'Create New Discount', new_discount_path

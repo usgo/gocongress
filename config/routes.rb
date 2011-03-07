@@ -1,5 +1,7 @@
 Gocongress::Application.routes.draw do
 
+  resources :discounts
+
   resources :tournaments
 
   get "preregistrant/index"

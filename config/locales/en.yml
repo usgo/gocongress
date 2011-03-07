@@ -20,3 +20,8 @@ en:
         gwtranid: "Gateway Transaction ID"
         gwdate: "Gateway Date"
         trantype: "Type"
+      discount:
+        age_min: "Minimum Age"
+        age_max: "Maximum Age"
+        is_automatic: "Automatic?"
+        name: "Discount Name"

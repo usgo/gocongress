@@ -1,0 +1,24 @@
+%h1 Discount Details
+
+%table.lightweight
+  %tr
+    %th= trl_attr 'discount', 'name'
+    %td= @discount.name
+  %tr
+    %th Amount
+    %td= @discount.amount
+  %tr
+    %th= trl_attr 'discount', 'is_automatic'
+    %td= @discount.is_automatic
+  %tr
+    %th= trl_attr 'discount', 'age_min'
+    %td= @discount.age_min
+  %tr
+    %th= trl_attr 'discount', 'age_max'
+    %td= @discount.age_max
+
+%br
+
+= link_to 'Edit', edit_discount_path(@discount)
+\|
+= link_to 'Back', discounts_path
