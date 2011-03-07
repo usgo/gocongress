@@ -5,14 +5,14 @@ class UserTest < ActiveSupport::TestCase
     assert Factory.build(:user).valid?
   end
 
-  test "a user with N attendee owes N * 75 dollars" do
+  test "a user with N attendee owes N * 375 dollars" do
     u = Factory(:user)
     num_extra_attendees = 1 + rand(3)
     1.upto(num_extra_attendees) { |a|
       u.attendees << Factory(:attendee, :user_id => u.id)
       }
     assert_equal num_extra_attendees + 1, u.attendees.size
-    assert_equal (num_extra_attendees + 1) * 75, u.get_invoice_total
+    assert_equal (num_extra_attendees + 1) * 375, u.get_invoice_total
   end
 
   test "amount paid is sum of transactions" do
