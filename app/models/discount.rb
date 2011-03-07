@@ -21,7 +21,11 @@ class Discount < ActiveRecord::Base
   end
 
   def get_invoice_item_name
-    'Discount: ' + name + ' (' + get_age_range_in_words + ')'
+    invoice_item_name = 'Discount: ' + name
+    if age_min.present? || age_max.present? then
+      invoice_item_name += ' (' + get_age_range_in_words + ')'
+    end
+    return invoice_item_name
   end
 
 end

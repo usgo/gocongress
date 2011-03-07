@@ -66,16 +66,20 @@ class User < ActiveRecord::Base
     get_invoice_total - amount_paid
   end
 
+  def inv_item_hash( item_description, attendee_full_name, item_price )
+    item = {}
+    item['item_description'] = item_description
+    item['attendee_full_name'] = attendee_full_name
+    item['item_price'] = item_price
+    return item
+  end
+
   def get_invoice_items
     invoice_items = []
     self.attendees.each { |a|
 
       # registration fee for each attendee
-      item = {}
-      item['item_description'] = 'Registration'
-      item['attendee_full_name'] = a.get_full_name
-      item['item_price'] = 375
-      invoice_items.push item
+      invoice_items.push inv_item_hash( 'Registration', a.get_full_name, 375 )
 
       # Does this attendee qualify for any automatic discounts?
       atnd_age = a.age_in_years
@@ -87,21 +91,18 @@ class User < ActiveRecord::Base
         satisfy_age_min = d.age_min.blank? || atnd_age > d.age_min
         satisfy_age_max = d.age_max.blank? || atnd_age < d.age_max
         if (satisfy_age_min && satisfy_age_max) then
-          item = {}
-          item['item_description'] = d.get_invoice_item_name
-          item['attendee_full_name'] = a.get_full_name
-          item['item_price'] = -1 * d.amount
-          invoice_items.push item
+          invoice_items.push inv_item_hash(d.get_invoice_item_name, a.get_full_name, -1 * d.amount)
         end
+      }
+
+      # Did this attendee claim any non-automatic discounts?
+      a.discounts.where("is_automatic = ?", false).each { |d|
+        invoice_items.push inv_item_hash(d.get_invoice_item_name, a.get_full_name, -1 * d.amount)
       }
 
       # room and board invoice items
       a.plans.each { |p|
-        item = {}
-        item['item_description'] = 'Plan: ' + p.name
-        item['attendee_full_name'] = a.get_full_name
-        item['item_price'] = p.price
-        invoice_items.push item
+        invoice_items.push inv_item_hash('Plan: ' + p.name, a.get_full_name, p.price)
       }
     }
     return invoice_items
