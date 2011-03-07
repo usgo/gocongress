@@ -3,6 +3,7 @@ class Discount < ActiveRecord::Base
   has_many :attendees, :through => :attendee_discounts
 
   validates_presence_of :name, :amount
+  validates_length_of :name, :maximum => 50
   validates_numericality_of :amount, :greater_than => 0
   validates_numericality_of :age_min, :only_integer => true, :allow_nil => true
   validates_numericality_of :age_max, :only_integer => true, :allow_nil => true
