@@ -70,12 +70,30 @@ class User < ActiveRecord::Base
     invoice_items = []
     self.attendees.each { |a|
 
-      # initial deposit for each attendee
+      # registration fee for each attendee
       item = {}
-      item['item_description'] = 'Initial deposit'
+      item['item_description'] = 'Registration'
       item['attendee_full_name'] = a.get_full_name
-      item['item_price'] = 75
+      item['item_price'] = 375
       invoice_items.push item
+
+      # Does this attendee qualify for any automatic discounts?
+      atnd_age = a.age_in_years
+      Discount.where("is_automatic = ?", true).each { |d|
+
+        # Currently, we only apply age-related automatic discounts.
+        # In the future, there will also be "early bird" discounts,
+        # but we haven't figured out the details yet.
+        satisfy_age_min = d.age_min.blank? || atnd_age > d.age_min
+        satisfy_age_max = d.age_max.blank? || atnd_age < d.age_max
+        if (satisfy_age_min && satisfy_age_max) then
+          item = {}
+          item['item_description'] = d.get_invoice_item_name
+          item['attendee_full_name'] = a.get_full_name
+          item['item_price'] = -1 * d.amount
+          invoice_items.push item
+        end
+      }
 
       # room and board invoice items
       a.plans.each { |p|

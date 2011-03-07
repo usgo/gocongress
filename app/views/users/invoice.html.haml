@@ -1,8 +1,14 @@
 %h1 Cost Summary
 
 %p
-  Your initial deposit is due
+  Your
+  %strong initial deposit
+  of $75 per attendee is due
   =@user.get_initial_deposit_due_date.to_formatted_s(:long)
+
+%p
+  If you have any questions please email the
+  = link_to 'registrar.', contact_path
 
 %table.semantic.fullwidth
   %thead
