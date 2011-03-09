@@ -79,7 +79,8 @@ class User < ActiveRecord::Base
     self.attendees.each { |a|
 
       # registration fee for each attendee
-      invoice_items.push inv_item_hash( 'Registration', a.get_full_name, 375 )
+      reg_desc = "Registration " + (a.is_player? ? "(Player)" : "(Non-Player)")
+      invoice_items.push inv_item_hash( reg_desc, a.get_full_name, a.get_registration_price )
 
       # Does this attendee qualify for any automatic discounts?
       atnd_age = a.age_in_years

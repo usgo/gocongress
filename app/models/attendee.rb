@@ -131,4 +131,9 @@ class Attendee < ActiveRecord::Base
     if rank_name.empty? then raise "assertion failed: invalid rank" end
     return rank_name
   end
+
+  def get_registration_price
+    self.is_player? ? 375 : 75
+  end
+
 end

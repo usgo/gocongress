@@ -8,6 +8,7 @@ class UserTest < ActiveSupport::TestCase
   test "user (playing) with N go-playing attendees owes N * 375 dollars" do
     u = Factory(:user)
     u.primary_attendee.is_player = true
+    u.save
     num_extra_attendees = 1 + rand(3)
     1.upto(num_extra_attendees) { |a|
       u.attendees << Factory(:attendee, :user_id => u.id, :is_player => true)
@@ -19,6 +20,7 @@ class UserTest < ActiveSupport::TestCase
   test "user (non-playing) with N non-playing attendees owes N * 75 dollars" do
     u = Factory(:user)
     u.primary_attendee.is_player = false
+    u.save
     num_extra_attendees = 1 + rand(3)
     1.upto(num_extra_attendees) { |a|
       u.attendees << Factory(:attendee, :user_id => u.id, :is_player => false)
@@ -30,6 +32,7 @@ class UserTest < ActiveSupport::TestCase
   test "user (non-playing) with N players and M non-players owes N * 375 + M * 75 dollars" do
     u = Factory(:user)
     u.primary_attendee.is_player = false
+    u.save
     num_players = 1 + rand(3)
     num_non_players = 1 + rand(3)
     1.upto(num_players) { |a|
