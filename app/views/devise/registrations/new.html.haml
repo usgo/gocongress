@@ -67,6 +67,9 @@
           %a{:href => "/docs/USGC2011-Liability-Release-Form.doc"} Minor Agreement Form
           to the 
           = link_to 'deputy registrar', contact_path, :target => '_blank'
+      .field
+        = attendee_fields.label :tshirt_size
+        = attendee_fields.select :tshirt_size, Attendee::TSHIRT_CHOICES, :include_blank => ''
     %fieldset
       %legend Player Information
       .field
