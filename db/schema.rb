@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110307014010) do
+ActiveRecord::Schema.define(:version => 20110312003334) do
 
   create_table "attendee_discounts", :force => true do |t|
     t.integer  "attendee_id", :null => false
@@ -55,6 +55,7 @@ ActiveRecord::Schema.define(:version => 20110307014010) do
     t.string   "tshirt_size",              :limit => 2
     t.text     "special_request"
     t.text     "roomate_request"
+    t.date     "deposit_received_at"
   end
 
   create_table "discounts", :force => true do |t|

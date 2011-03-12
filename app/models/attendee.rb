@@ -14,7 +14,8 @@ class Attendee < ActiveRecord::Base
     :address_1, :address_2, :city, :state, :zip, :country, :phone, :email, :birth_date, \
     :understand_minor, :congresses_attended, :is_player, :will_play_in_us_open, \
     :is_current_aga_member, :tshirt_size, :special_request, :roomate_request
-  attr_protected :created_at, :is_primary, :minor_agreement_received, :updated_at, :user_id
+  attr_protected :created_at, :is_primary, :minor_agreement_received, :updated_at, \
+    :user_id, :deposit_received_at
 
   # define constant array of ranks
   RANKS = []
@@ -81,6 +82,9 @@ class Attendee < ActiveRecord::Base
     b.validates_inclusion_of :will_play_in_us_open, :in => [true, false]
     b.validates_inclusion_of :is_current_aga_member, :in => [true, false]
   end
+  
+  # validations for admin page
+  validates_date :deposit_received_at, :if => :form_page_is_admin?, :allow_blank => true
 
   def age_in_seconds
     (Time.now - self.birth_date.to_time).to_i
@@ -96,6 +100,10 @@ class Attendee < ActiveRecord::Base
 
   def form_page_is_baduk?
     @form_page == :baduk
+  end
+
+  def form_page_is_admin?
+    @form_page == :admin
   end
 
   # is the model valid for a given form page? -Jared

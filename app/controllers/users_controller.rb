@@ -30,6 +30,17 @@ class UsersController < ApplicationController
     @user.attendees.each { |a|
       if a.is_minor then @has_minor_attendee = true end
     }
+    
+    # initial_deposit_instructions
+    if @user.get_num_attendee_deposits_paid == @user.attendees.count
+      if @user.attendees.count == 1
+        @initial_deposit_instructions = "We have received your initial deposit.  Thank you."
+      else
+        @initial_deposit_instructions = "We have received the initial deposit for all of your attendees.  Thank you."
+      end
+    else
+      @initial_deposit_instructions = "Your initial deposit is due " + @user.get_initial_deposit_due_date.to_formatted_s(:long)
+    end
   end
   
   # GET /users/1/pay

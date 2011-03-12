@@ -5,6 +5,7 @@ gem 'sqlite3-ruby', :require => 'sqlite3'
 
 gem "jquery-rails"
 gem "devise"
+gem 'validates_timeliness'
 
 gem 'haml'
 gem 'haml-rails', :group => :development 

@@ -5,6 +5,7 @@ en:
         address_1: "Address Line 1"
         address_2: "Address Line 2"
         country: "Country Code"
+        deposit_received_at: "Deposit Received On"
         state: "State/Province"
         tshirt_size: "T-Shirt Size"
         zip: "Zip/Postal Code"

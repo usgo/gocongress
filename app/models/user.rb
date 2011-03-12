@@ -119,6 +119,12 @@ class User < ActiveRecord::Base
     self.created_at.to_date + 1.month
   end
 
+  def get_num_attendee_deposits_paid
+    num_atnd_paid = 0
+    self.attendees.each { |a| num_atnd_paid += 1 if a.deposit_received_at.present? }
+    return num_atnd_paid
+  end
+
 private
 
   # make sure you:

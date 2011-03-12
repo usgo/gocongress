@@ -1,0 +1,36 @@
+%h1 
+  Administration for
+  = @attendee.given_name 
+  = @attendee.family_name
+
+= form_for( @attendee ) do |f|
+
+  -# The update action will inspect the page parameter to determine 
+  -# which validations to run
+  = hidden_field_tag :page, @page
+
+  - if @attendee.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(@attendee.errors.count, "error")
+        prohibited this attendee from being saved:
+      %ul
+        - @attendee.errors.full_messages.each do |msg|
+          %li= msg
+
+  %fieldset
+    %legend Initial deposit
+    %p 
+      When was the initial deposit received for this attendee?
+      This will determines eligibility for "early-bird" discounts.
+    .field
+      = f.label :deposit_received_at
+      = f.date_select :deposit_received_at, |
+        :start_year => Time.now.year - 1, |
+        :end_year => Time.now.year + 1, |
+        :include_blank => true
+
+  %fieldset
+    .field
+      = label '', ''
+      = f.submit "Submit"

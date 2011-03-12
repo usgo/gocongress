@@ -104,6 +104,22 @@ class AttendeesController < ApplicationController
     @page = get_valid_page_from_params
     @attendee = Attendee.find(params[:id])
     
+    # certain fields may only be set by admins
+    if (@page == 'admin' && current_user.is_admin?)
+      if (params[:attendee][:"deposit_received_at(1i)"].present? &&
+          params[:attendee][:"deposit_received_at(2i)"].present? &&
+          params[:attendee][:"deposit_received_at(3i)"].present?) \
+      then
+        @deposit_received_at = Date.civil(params[:attendee][:"deposit_received_at(1i)"].to_i,params[:attendee][:"deposit_received_at(2i)"].to_i,params[:attendee][:"deposit_received_at(3i)"].to_i)
+        @attendee.deposit_received_at = @deposit_received_at
+        params[:attendee].delete :"deposit_received_at(1i)"
+        params[:attendee].delete :"deposit_received_at(2i)"
+        params[:attendee].delete :"deposit_received_at(3i)"
+      else
+        @attendee.deposit_received_at = nil
+      end
+    end
+    
     # update attributes but do not save yet
     @attendee.attributes = params[:attendee]
 
@@ -165,12 +181,14 @@ protected
 
   def get_valid_page_from_params
     params[:page].to_s.blank? ? page = 'basics' : page = params[:page].to_s
-    unless %w[basics baduk roomboard].include?(page) then raise 'invalid page' end
+    unless %w[admin basics baduk roomboard].include?(page) then raise 'invalid page' end
     return page
   end
   
   def get_view_name_from_page( page )
-    if page == "basics"
+    if page == "admin"
+      view_name = "admin"
+    elsif page == "basics"
       view_name = "edit"
     elsif page == "baduk"
       view_name = "edit_baduk_info"
