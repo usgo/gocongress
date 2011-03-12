@@ -1,0 +1,31 @@
+= form_for @content do |f|
+  -if @content.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@content.errors.count, "error")} prohibited this content from being saved:"
+      %ul
+        - @content.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :subject
+    = f.text_field :subject    
+  .field
+    %label{ :for => 'body'}
+      Body
+      %br
+      %span.smalltext
+        You can format the text (bold, etc.) with
+        %a{ :href => 'http://en.wikipedia.org/wiki/Markdown', :target => '_blank' } Markdown
+        syntax.
+    = f.text_area :body, { :class => 'wide', :rows => 5 }
+    
+  .field
+    = f.label :expires_at
+    = f.datetime_select :expires_at, :include_blank => true
+  .field
+    = f.label :show_on_homepage
+    = f.check_box :show_on_homepage
+
+  .field
+    %label
+    = f.submit 'Save'

@@ -4,11 +4,11 @@
 .galleria-thumbnails-list{text-align:center;}
 .galleria-thumbnails .galleria-image{display:inline-block;zoom:1; *display: inline;width:12px;height:12px;background:url(dot.png) no-repeat 0px 0;margin-right:5px;cursor:pointer;}
 .galleria-thumbnails .active .img{}
-.galleria-counter{font:normal 11px/18px arial,sans-serif;z-index:2;color:#444;margin-top:6px;margin-right:12px;float:left;}
+.galleria-counter{z-index:2;color:#444;margin-top:6px;margin-right:12px;float:left;}
 .galleria-counter span{color:#888;}
 .galleria-thumbnails .galleria-image:hover{opacity:1!important;}
 .galleria-loader{background:#000 url(loader.gif) no-repeat 50% 50%;width:100%;height:100%;position:absolute;top:0;left:0;opacity:.3;z-index:3;display:none;}
-.galleria-info{color:#666;z-index:3;text-align:center;font:italic 14px/1.4 georgia,serif;padding-top:10px;}
+.galleria-info{color:#666;z-index:3;text-align:center;padding-top:10px;}
 .galleria-counter{display:none;}
 .galleria-info-close,
 .galleria-info-link{display:none;}

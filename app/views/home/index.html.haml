@@ -27,10 +27,6 @@
   .curvy-spacer{:style => "width: 105px;"} &nbsp;
   .curvy-spacer{:style => "width: 60px;"} &nbsp;
 
-  / Just playing around, I may not keep this welcome message -Jared 12/22/10
-  - if @welcomeMessage.length > 0
-    %p= @welcomeMessage
-
   %p
     The US Go Congress is the largest Go tournament in the United States. It
     happens once a year and spans one week. Events include:
@@ -43,9 +39,12 @@
   %p
     %span.event-title The Redmond Cup
     \- the preeminent youth tournament of the year
-  %p Pro lectures, simuls
-  %p Vendor area
+  %p Pro lectures, Simuls, Vendor area
   %div{:style => "clear:left;"}
 
-%p
-  %a{:href => "http://www.usgo.org/congresses/2010"} 2010 Congress
+- @contents.each do |c|
+  %h3
+    = c.created_at.to_date.to_formatted_s(:long)
+    \-
+    = c.subject
+  = Markdown.new(c.body).to_html.html_safe

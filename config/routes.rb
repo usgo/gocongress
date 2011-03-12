@@ -1,5 +1,7 @@
 Gocongress::Application.routes.draw do
 
+  resources :contents
+
   resources :discounts
 
   resources :tournaments

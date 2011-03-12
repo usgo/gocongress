@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110312003334) do
+ActiveRecord::Schema.define(:version => 20110312030414) do
 
   create_table "attendee_discounts", :force => true do |t|
     t.integer  "attendee_id", :null => false
@@ -56,6 +56,15 @@ ActiveRecord::Schema.define(:version => 20110312003334) do
     t.text     "special_request"
     t.text     "roomate_request"
     t.date     "deposit_received_at"
+  end
+
+  create_table "contents", :force => true do |t|
+    t.text     "body",             :null => false
+    t.string   "subject",          :null => false
+    t.datetime "expires_at"
+    t.boolean  "show_on_homepage", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "discounts", :force => true do |t|

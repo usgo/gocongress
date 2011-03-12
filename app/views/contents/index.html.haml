@@ -1,0 +1,30 @@
+%h2 Announcements
+
+- if @contents.count == 0
+  %p There are no announcements yet.
+- else
+  %table.semantic.zebra.fullwidth
+    %tr
+      %th Date
+      %th Body
+      %th Subject
+      %th Expires at
+      %th Show on homepage
+      %th
+      %th
+      %th
+  
+    - @contents.each do |content|
+      %tr
+        %td= content.created_at
+        %td= Markdown.new(content.body).to_html.html_safe
+        %td= content.subject
+        %td= content.expires_at
+        %td= content.show_on_homepage ? "Yes" : "No"
+        %td= link_to 'Show', content
+        %td= link_to 'Edit', edit_content_path(content)
+        %td= link_to 'Destroy', content, :confirm => 'Are you sure?', :method => :delete
+
+%br
+
+= link_to 'Create New Announcement', new_content_path

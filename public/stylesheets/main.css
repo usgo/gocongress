@@ -144,7 +144,8 @@ distribute and pad them.  I'm only human. -Jared 7/27/10 */
 .nav li#nav-admin-transactions { width: 150px; }
 .nav li#nav-admin-preregistrants { width: 150px; }
 .nav li#nav-admin-discounts { width: 100px; }
-.nav li#nav-admin-placeholder { width: 295px; }
+.nav li#nav-admin-content { width: 150px; }
+.nav li#nav-admin-placeholder { width: 144px; }
 .nav-container-admin .nav li { height: 18px; }
 
 /* Main content area */
@@ -162,8 +163,11 @@ distribute and pad them.  I'm only human. -Jared 7/27/10 */
 	padding: 0px 0px 20px 0px;
 	width: 900px;
 	}
-.homepage #content p {  padding: 0.5em; }
-.homepage #content h3 {  padding: 0.5em; }
+.homepage #content p,
+.homepage #content h2,
+.homepage #content h3 {  
+  padding: 0.5em 15px; 
+  }
 
 /* Basic styling for elements in the main content area */
 #content p, #content dl { padding: 0.5em 0em 0.5em 0em; }
@@ -230,7 +234,8 @@ div.download-pdf a {
 #gallery-container { float:right; padding-left: 20px; }
 #gallery { width: 480px; height: 360px; }
 .galleria-stage { bottom:0px; left:0px; right:0px; top:0px; }
-.galleria-info { width: 480px; } /* should be same width as #gallery */
+.galleria-info { height: 40px; width: 480px; overflow: hidden; } /* should be same width as #gallery */
+.galleria-info-title { font-size: 14px; }
 
 /* Styles for the legacy Who's Coming table.  Don't delete just yet. */
 table.who { width: 90%; margin: 0 auto; }
