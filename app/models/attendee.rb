@@ -61,6 +61,7 @@ class Attendee < ActiveRecord::Base
   validates_inclusion_of :tshirt_size, :in => TSHIRT_SIZE_LIST, :message => "is not valid"
   validates_length_of :special_request, :maximum => 250
   validates_length_of :roomate_request, :maximum => 250
+  validates_date :birth_date, :after => Date.civil(1900,1,1), :allow_blank => false
   
   # Attendees must belong to a user (except when they are first being created,      
   # because in a nested form there might not be a user_id yet.  I think that is what
