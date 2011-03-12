@@ -1,0 +1,32 @@
+%fieldset
+  %legend Personal Information
+  .field
+    = f.label :given_name, 'Given (First) Name'
+    = f.text_field :given_name
+  .field
+    = f.label :family_name, 'Family (Last) Name'
+    = f.text_field :family_name
+  .field
+    = f.label :gender, 'Gender'
+    = f.radio_button :gender, 'm'
+    \&nbsp;Male
+    \&nbsp;&nbsp;
+    \#{f.radio_button :gender, 'f'}&nbsp;Female
+  .field
+    = f.label :anonymous, "Anonymous"
+    = f.check_box :anonymous
+    %span.smalltext Do not show my name on the "Who&#39;s Coming" list
+  .field
+    = f.label :birth_date, 'Birth date'
+    = f.date_select :birth_date, :start_year => Time.now.year, :end_year => 1900, :include_blank => true
+  .field
+    = f.label :understand_minor, 'Minor Agreement'
+    = f.check_box :understand_minor
+    %div.smalltext.aligned-with-input
+      I understand that if this attendee will not be at least 18 years of age as of July 29, 2011, I must submit the
+      %a{:href => "/docs/USGC2011-Liability-Release-Form.doc"} Minor Agreement Form
+      to the 
+      = link_to 'deputy registrar', contact_path, :target => '_blank'
+  .field
+    = f.label :tshirt_size
+    = f.select :tshirt_size, Attendee::TSHIRT_CHOICES, :include_blank => ''

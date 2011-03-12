@@ -38,39 +38,7 @@
 
   - resource.primary_attendee ||= Attendee.new
   = f.fields_for :primary_attendee do |attendee_fields|
-    %fieldset
-      %legend Personal Information
-      .field
-        = attendee_fields.label :given_name, 'Given (First) Name'
-        = attendee_fields.text_field :given_name
-      .field
-        = attendee_fields.label :family_name, 'Family (Last) Name'
-        = attendee_fields.text_field :family_name
-      .field
-        = attendee_fields.label :gender, 'Gender'
-        = attendee_fields.radio_button :gender, 'm'
-        \&nbsp;Male
-        \&nbsp;&nbsp;
-        \#{attendee_fields.radio_button :gender, 'f'}&nbsp;Female
-      .field
-        = attendee_fields.label :anonymous, "Anonymous"
-        = attendee_fields.check_box :anonymous
-        %span.smalltext Do not show my name on the "Who&#39;s Coming" list
-      .field
-        = attendee_fields.label :birth_date, 'Birth date'
-        = attendee_fields.date_select :birth_date, :start_year => Time.now.year, :end_year => 1900, :include_blank => true
-      .field
-        = attendee_fields.label :understand_minor, 'Minor Agreement'
-        = attendee_fields.check_box :understand_minor
-        %div.smalltext.aligned-with-input
-          I understand that if this attendee will not be at least 18 years of age as of July 29, 2011, I must submit the
-          %a{:href => "/docs/USGC2011-Liability-Release-Form.doc"} Minor Agreement Form
-          to the 
-          = link_to 'deputy registrar', contact_path, :target => '_blank'
-      .field
-        = attendee_fields.label :tshirt_size
-        = attendee_fields.select :tshirt_size, Attendee::TSHIRT_CHOICES, :include_blank => ''
-
+    = render :partial => "attendees/personal_info", :locals => { :f => attendee_fields }
     = render :partial => "attendees/player_info", :locals => { :f => attendee_fields }
     = render :partial => "attendees/contact_info", :locals => { :f => attendee_fields, :show_email_field => false }
 
