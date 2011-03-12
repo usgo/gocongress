@@ -1,0 +1,17 @@
+%fieldset
+  %legend Player Information
+  .field
+    = f.label :rank, 'Rank'
+    = f.select :rank, Attendee::RANKS, :include_blank => 'Select Rank'
+    %br/
+    %span.smalltext.aligned-with-input
+      = link_to 'What is rank?', popup_path('rank'), :target => '_blank'
+      = link_to 'What is my AGA rank?', 'http://usgo.org/ratings/RatingsQuery.php', :target => '_blank'
+  .field
+    = f.label :aga_id, 'AGA ID'
+    = f.text_field :aga_id
+    %br/
+    %span.smalltext.aligned-with-input
+      If you do not have an
+      = link_to 'AGA ID', popup_path('aga_id'), :target => '_blank'
+      you may leave this blank

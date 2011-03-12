@@ -40,23 +40,8 @@
     .field
       = f.label :tshirt_size
       = f.select :tshirt_size, Attendee::TSHIRT_CHOICES, :include_blank => ''
-  %fieldset
-    %legend Player Information
-    .field
-      = f.label :rank, 'Rank'
-      = f.select :rank, Attendee::RANKS, :include_blank => 'Select Rank'
-      %br/
-      %span.smalltext.aligned-with-input
-        = link_to 'Find AGA rank', 'http://usgo.org/ratings/RatingsQuery.php', :target => '_blank'
-    .field
-      = f.label :aga_id, 'AGA ID'
-      = f.text_field :aga_id
-      %br/
-      %span.smalltext.aligned-with-input
-        If you do not have an
-        = link_to 'AGA ID', popup_path('aga_id'), :target => '_blank'
-        you may leave this blank
 
+  = render :partial => "player_info", :locals => { :f => f }
   = render :partial => "contact_info", :locals => { :f => f, :show_email_field => true }
 
   %fieldset
