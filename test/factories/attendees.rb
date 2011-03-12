@@ -1,6 +1,6 @@
 Factory.define :attendee do |f|
   f.address_1 "askldfj"
-  f.birth_date "1776-07-04"
+  f.birth_date "1981-09-10"
   f.city "aaaaaa"
   f.country 'JP'
   f.gender 'm'
