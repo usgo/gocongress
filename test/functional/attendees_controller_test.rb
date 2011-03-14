@@ -258,6 +258,13 @@ class AttendeesControllerTest < ActionController::TestCase
     # assert that deposit_received_at has been updated
     a = Attendee.find(a.id)
     assert_equal new_date, a.deposit_received_at
+
+    # PUTing a date with any missing fields should clear the date entirely
+    atn_atr_hash = {}
+    atn_atr_hash["deposit_received_at(3i)"] = ""
+    put :update, { :id => a.id, :attendee => atn_atr_hash, :page => 'admin' }
+    a = Attendee.find(a.id)
+    assert_equal nil, a.deposit_received_at
   end
 
 end
