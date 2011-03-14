@@ -9,9 +9,10 @@
   .field
     = f.label :gender, 'Gender'
     = f.radio_button :gender, 'm'
-    \&nbsp;Male
+    Male
     \&nbsp;&nbsp;
-    \#{f.radio_button :gender, 'f'}&nbsp;Female
+    = f.radio_button :gender, 'f'
+    Female
   .field
     = f.label :anonymous, "Anonymous"
     = f.check_box :anonymous
