@@ -232,4 +232,32 @@ class AttendeesControllerTest < ActionController::TestCase
     assert_tag({ :tag => "input", :attributes => { :name => "attendee[plan_ids][]", :type => "hidden" }})
 	end
 
+  test "admin can update deposit_received_at" do
+    sign_in @admin_user
+
+    # pick a random attendee
+    a = @user.attendees.sample
+
+    # make sure that deposit_received_at is nil,
+    # so we can tell later that we have changed it.
+    a.deposit_received_at = nil
+    a.save
+    a = Attendee.find(a.id)
+    assert_equal nil, a.deposit_received_at
+
+    # prepare the params for update
+    atn_atr_hash = {}
+    new_date = Time.now.to_date
+    atn_atr_hash["deposit_received_at(1i)"] = new_date.year
+    atn_atr_hash["deposit_received_at(2i)"] = new_date.month
+    atn_atr_hash["deposit_received_at(3i)"] = new_date.day
+
+    # perform update
+    put :update, { :id => a.id, :attendee => atn_atr_hash, :page => 'admin' }
+
+    # assert that deposit_received_at has been updated
+    a = Attendee.find(a.id)
+    assert_equal new_date, a.deposit_received_at
+  end
+
 end
