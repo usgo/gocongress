@@ -44,14 +44,10 @@ class TransactionsController < ApplicationController
     @transaction = Transaction.new(params[:transaction])
     @user_array = get_array_of_user_emails_and_ids
 
-    respond_to do |format|
-      if @transaction.save
-        format.html { redirect_to(@transaction, :notice => 'Transaction was successfully created.') }
-        format.xml  { render :xml => @transaction, :status => :created, :location => @transaction }
-      else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @transaction.errors, :status => :unprocessable_entity }
-      end
+    if @transaction.save
+      redirect_to(@transaction, :notice => 'Transaction was successfully created.')
+    else
+      render :action => "new"
     end
   end
 
