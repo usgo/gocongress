@@ -41,6 +41,11 @@ protected
 
 private
 
+  def convert_date(hash, date_symbol_or_string)
+    attribute = date_symbol_or_string.to_s
+    return Date.new(hash[attribute + '(1i)'].to_i, hash[attribute + '(2i)'].to_i, hash[attribute + '(3i)'].to_i)
+  end
+
   def render_access_denied
     # A friendlier "access denied" message -Jared 2010.1.2
     @deny_message = user_signed_in? ? 'You are signed in, but' : 'You are not signed in, so of course'

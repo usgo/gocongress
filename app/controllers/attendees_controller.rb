@@ -110,8 +110,7 @@ class AttendeesController < ApplicationController
           params[:attendee][:"deposit_received_at(2i)"].present? &&
           params[:attendee][:"deposit_received_at(3i)"].present?) \
       then
-        @deposit_received_at = Date.civil(params[:attendee][:"deposit_received_at(1i)"].to_i,params[:attendee][:"deposit_received_at(2i)"].to_i,params[:attendee][:"deposit_received_at(3i)"].to_i)
-        @attendee.deposit_received_at = @deposit_received_at
+        @attendee.deposit_received_at = convert_date(params[:attendee], :deposit_received_at)
         params[:attendee].delete :"deposit_received_at(1i)"
         params[:attendee].delete :"deposit_received_at(2i)"
         params[:attendee].delete :"deposit_received_at(3i)"
