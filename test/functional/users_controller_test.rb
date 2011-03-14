@@ -87,10 +87,11 @@ class UsersControllerTest < ActionController::TestCase
     assert_redirected_to user_path(@user)
   end
   
-  test "users can NOT promote themselves" do
+  test "users cannot promote themselves" do
     sign_in @user
+    assert_equal false, @user.is_admin
     u = @user.attributes.merge({ 'is_admin' => true })
-    assert_no_difference('@user.is_admin ? 1 : 0') do
+    assert_no_difference('User.find(@user.id).is_admin ? 1 : 0') do
       put :update, :id => @user.to_param, :user => u
     end
     assert_equal false, User.find(@user.id).is_admin
