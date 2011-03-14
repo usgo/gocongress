@@ -28,8 +28,10 @@ Gocongress::Application.routes.draw do
     end
   end
 
-  #match '/users/:id/invoice' => 'users#show_invoice'
-
+  # reports
+  match 'reports' => 'reports#index'
+  get "reports/emails"
+  
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

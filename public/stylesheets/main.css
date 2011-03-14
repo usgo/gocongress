@@ -145,7 +145,8 @@ distribute and pad them.  I'm only human. -Jared 7/27/10 */
 .nav li#nav-admin-preregistrants { width: 150px; }
 .nav li#nav-admin-discounts { width: 100px; }
 .nav li#nav-admin-content { width: 150px; }
-.nav li#nav-admin-placeholder { width: 144px; }
+.nav li#nav-admin-reports { width: 100px; }
+.nav li#nav-admin-placeholder { width: 43px; }
 .nav-container-admin .nav li { height: 18px; }
 
 /* Main content area */
