@@ -27,7 +27,7 @@ class TransactionsControllerTest < ActionController::TestCase
     assert_redirected_to transaction_path(assigns(:transaction))
   end
 
-  test "neither visitor nor non-admin user can create transaction" do
+  test "neither visitor nor non-admin can create transaction" do
     post_to_create_should_be_denied
     sign_in @user
     post_to_create_should_be_denied
@@ -39,5 +39,27 @@ class TransactionsControllerTest < ActionController::TestCase
     end
     assert_response 403
   end
-  
+
+  test "admin can update transaction" do
+    sign_in @admin_user
+    delta_amount = (rand() * 100).round(2)
+    put_to_update(delta_amount, delta_amount)
+    assert_redirected_to transaction_path(assigns(:transaction))
+  end
+
+  test "neither visitor nor non-admin can update transaction" do
+    put_to_update(rand(100), 0)
+    assert_response 403
+    sign_in @user
+    put_to_update(rand(100), 0)
+    assert_response 403
+  end
+
+  def put_to_update(delta_amount, expected_difference)
+    trn_atr_hash = @transaction.attributes.merge( 'amount' => @transaction.amount + delta_amount )
+    assert_difference('Transaction.find(@transaction.to_param).amount', expected_difference) do
+      put :update, :id => @transaction.to_param, :transaction => trn_atr_hash
+    end
+  end
+
 end
