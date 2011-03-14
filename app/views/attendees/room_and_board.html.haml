@@ -3,14 +3,18 @@
   Room and Board Options
 
 %p
-  There are
+  There 
+  = (@plans_ordered.count == 1) ? "is" : "are"
   = @plans_ordered.count
-  room and board plans
+  room and board 
+  = (@plans_ordered.count == 1) ? "plan" : "plans"
   for people who are
   = @attendee.age_in_years.floor
   years old.
   - if @plans_ordered.count > 0
-    Select as many plans as you want by clicking on the check box (
+    Select 
+    = (@plans_ordered.count == 1) ? "the plan" : "as many plans as you want"
+    by clicking on the check box (
     %input{ :type => 'checkbox', :disabled => 'disabled' }
     ) and then "Save Changes".
 
