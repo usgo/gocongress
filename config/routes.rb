@@ -1,13 +1,6 @@
 Gocongress::Application.routes.draw do
 
-  resources :contents
-
-  resources :discounts
-
-  resources :tournaments
-
   get "preregistrant/index"
-
   get "home/access_denied"
   get "home/index"
   get "home/transportation"
@@ -24,7 +17,8 @@ Gocongress::Application.routes.draw do
   match '/attendees/:id/edit/:page' => "attendees#edit"
 
   # resource routes (maps HTTP verbs to controller actions automatically):
-  resources :attendees, :events, :jobs, :plans, :transactions
+  resources :attendees, :contents, :discounts, :events, :jobs
+  resources :plans, :tournaments, :transactions
 
   resources :users do
     member do
