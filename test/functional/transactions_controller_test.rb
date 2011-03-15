@@ -33,13 +33,6 @@ class TransactionsControllerTest < ActionController::TestCase
     post_to_create_should_be_denied
   end
 
-  def post_to_create_should_be_denied
-    assert_no_difference('Transaction.count') do
-      post :create, :transaction => @transaction.attributes
-    end
-    assert_response 403
-  end
-
   test "admin can update transaction" do
     sign_in @admin_user
     delta_amount = (rand() * 100).round(2)
@@ -55,13 +48,6 @@ class TransactionsControllerTest < ActionController::TestCase
     assert_response 403
   end
 
-  def put_to_update(delta_amount, expected_difference)
-    trn_atr_hash = @transaction.attributes.merge( 'amount' => @transaction.amount + delta_amount )
-    assert_difference('Transaction.find(@transaction.to_param).amount', expected_difference) do
-      put :update, :id => @transaction.to_param, :transaction => trn_atr_hash
-    end
-  end
-
   test "admin can destroy transaction" do
     sign_in @admin_user
     assert_difference('Transaction.count', -1) do
@@ -74,6 +60,22 @@ class TransactionsControllerTest < ActionController::TestCase
     delete_transaction_should_be_denied
     sign_in @user
     delete_transaction_should_be_denied
+  end
+
+private
+
+  def post_to_create_should_be_denied
+    assert_no_difference('Transaction.count') do
+      post :create, :transaction => @transaction.attributes
+    end
+    assert_response 403
+  end
+
+  def put_to_update(delta_amount, expected_difference)
+    trn_atr_hash = @transaction.attributes.merge( 'amount' => @transaction.amount + delta_amount )
+    assert_difference('Transaction.find(@transaction.to_param).amount', expected_difference) do
+      put :update, :id => @transaction.to_param, :transaction => trn_atr_hash
+    end
   end
 
   def delete_transaction_should_be_denied
