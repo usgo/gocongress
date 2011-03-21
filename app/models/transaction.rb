@@ -4,17 +4,26 @@ class Transaction < ActiveRecord::Base
 
 	belongs_to :user
 	
-	validates_presence_of :user_id, :trantype, :amount, :gwtranid, :gwdate
-	validates_length_of :trantype, :is => 1
-	validates_numericality_of :amount, :gwtranid
-	validates_numericality_of :amount, :greater_than => 0, :if => :amount_must_be_positive?
-	validates_uniqueness_of :gwtranid
-	
-	# define constant array of trantypes
-	TRANTYPES = [['Sale', 'S']]
+	# Transaction Types:
+	# Sale - User makes a payment
+	# Discount - Admin reduces total cost for a User (eg. a VIP)
+	TRANTYPES = [['Discount','D'], ['Sale','S']]
 
-  def amount_must_be_positive?
-    self.trantype == 'S'
+	validates_presence_of :user_id, :trantype, :amount, :gwdate
+
+	validates_length_of :trantype, :is => 1
+  validates_inclusion_of :trantype, :in => TRANTYPES.flatten
+
+	validates_numericality_of :amount
+	validates_numericality_of :amount, :greater_than => 0
+	
+	# gateway transaction id is required, except for discounts
+	validates_presence_of :gwtranid, :if => :is_gateway_trantype?
+	validates_numericality_of :gwtranid, :if => :is_gateway_trantype?
+	validates_uniqueness_of :gwtranid, :if => :is_gateway_trantype?
+
+  def is_gateway_trantype?
+    self.trantype != 'D'
   end
 
   def get_trantype_name
