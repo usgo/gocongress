@@ -17,12 +17,18 @@
     %td.smalltext Unique ID from payment gateway
   %tr
     %th= trl_attr 'transaction', 'gwdate'
-    %td= @transaction.gwdate.to_formatted_s(:long)
+    %td
+      - if @transaction.gwdate.present?
+        = @transaction.gwdate.to_formatted_s(:long)
     %td.smalltext When the payment gateway received the transaction
   %tr
     %th Creation Date
     %td= @transaction.created_at.to_formatted_s(:long)
     %td.smalltext When the transaction was entered on this website
+  %tr
+    %th Modification Date
+    %td= @transaction.updated_at.to_formatted_s(:long)
+    %td.smalltext When the transaction was last edited on this website
 
 %p  
   = link_to 'Edit', edit_transaction_path(@transaction) 
