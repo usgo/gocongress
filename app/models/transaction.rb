@@ -27,8 +27,11 @@ class Transaction < ActiveRecord::Base
   # gwdate and gwtranid are only allowed for gateway tranactions
   # ie. not for discounts
   # unfortunately, validating the absence of something is ugly in rails
-  validates_inclusion_of :gwdate, :allow_nil => false, :allow_blank => false, :in => [nil, ''], :unless => :is_gateway_trantype?, :message => "must be blank"
-  validates_inclusion_of :gwtranid, :allow_nil => false, :allow_blank => false, :in => [nil, ''], :unless => :is_gateway_trantype?, :message => "must be blank"
+  GATEWAY_ATTR_MSG = "must be blank for non-gateway transactions"
+  with_options :unless => :is_gateway_trantype?, :allow_nil => false, :allow_blank => false, :in => [nil, ''], :message => GATEWAY_ATTR_MSG do |o|
+    o.validates_inclusion_of :gwdate
+    o.validates_inclusion_of :gwtranid
+  end
 
   def is_gateway_trantype?
     self.trantype != 'D'
