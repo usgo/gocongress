@@ -4,7 +4,7 @@ class TransactionsControllerTest < ActionController::TestCase
   setup do
     @user = Factory.create :user
     @admin_user = Factory.create :admin_user
-    @transaction = Factory.create :transaction
+    @transaction = Factory.create :tr_sale
   end
 
   test "admin user can get edit form" do
@@ -17,7 +17,7 @@ class TransactionsControllerTest < ActionController::TestCase
     sign_in @admin_user
 
     # build a valid transaction, but do not save it
-    @new_transaction = Factory.build :transaction
+    @new_transaction = Factory.build :tr_sale
     assert_equal true, @new_transaction.valid?
 
     # post to create
@@ -72,6 +72,7 @@ private
   end
 
   def put_to_update(delta_amount, expected_difference)
+    expected_difference = BigDecimal.new expected_difference.to_s
     trn_atr_hash = @transaction.attributes.merge( 'amount' => @transaction.amount + delta_amount )
     assert_difference('Transaction.find(@transaction.to_param).amount', expected_difference) do
       put :update, :id => @transaction.to_param, :transaction => trn_atr_hash

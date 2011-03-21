@@ -106,6 +106,11 @@ class User < ActiveRecord::Base
         invoice_items.push inv_item_hash('Plan: ' + p.name, a.get_full_name, p.price)
       }
     }
+
+    # ad hoc discounts (transactions)
+    self.transactions.where(:trantype => 'D').each { |t|
+      invoice_items.push inv_item_hash('Special Discount', 'N/A', -1 * t.amount)
+    }
     return invoice_items
   end
 
