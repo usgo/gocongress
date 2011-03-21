@@ -25,14 +25,17 @@
         %strong sale
         for user payments.
     .field
+      = f.label :amount
+      = f.text_field :amount, :size => 10
+
+  %fieldset.wider-labels
+    %legend For Gateway Transactions (eg. Sale)
+    .field
       = f.label :gwdate
-      = f.date_select :gwdate, :include_blank => true
+      = f.date_select :gwdate, :include_blank => true, :start_year => Time.now.year - 1, :end_year => Time.now.year
     .field
       = f.label :gwtranid
       = f.text_field :gwtranid
-    .field
-      = f.label :amount
-      = f.text_field :amount, :size => 10
     .field
       = label '', ''
       = f.submit "Submit"
