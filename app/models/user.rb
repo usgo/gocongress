@@ -107,7 +107,8 @@ class User < ActiveRecord::Base
       }
     }
 
-    # ad hoc discounts (transactions)
+    # ad hoc discount transactions
+    # eg. VIP discounts
     self.transactions.where(:trantype => 'D').each { |t|
       invoice_items.push inv_item_hash('Special Discount', 'N/A', -1 * t.amount)
     }
