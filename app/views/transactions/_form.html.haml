@@ -18,13 +18,12 @@
         Make sure you choose the right one.
     .field
       = f.label :trantype
-      = f.select :trantype, Transaction::TRANTYPES
+      = f.select :trantype, Transaction::TRANTYPES, :selected => 'S'
       %br
       %span.smalltext.aligned-with-input 
-        Currently, only
+        Select
         %strong sale
-        transactions are supported.  In the future, we may have
-        other types, such as discounts for VIPs and volunteers.
+        for user payments.
     .field
       = f.label :gwdate
       = f.date_select :gwdate
