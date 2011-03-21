@@ -29,6 +29,18 @@ class TransactionTest < ActiveSupport::TestCase
   test "discounts factory is valid" do
     assert Factory.build(:tr_discount).valid?
   end
+  
+  test "discount with gwtranid is not valid" do
+    tr_discount = Factory.build(:tr_discount)
+    tr_discount.gwtranid = 12897
+    assert_equal false, tr_discount.valid?
+  end
+  
+  test "discount with gwdate is not valid" do
+    tr_discount = Factory.build(:tr_discount)
+    tr_discount.gwdate = Time.now.to_date
+    assert_equal false, tr_discount.valid?
+  end
 
   test "discount amount cannot be negative" do
     tr_discount = Factory.build(:tr_discount)

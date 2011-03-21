@@ -1,6 +1,5 @@
 Factory.define :transaction do |f|
   f.association :user, :factory => :user
-  f.gwdate { Factory.next(:gwdate) }
   f.sequence(:amount) { |n| n * 3 }
 end
 
@@ -10,6 +9,7 @@ end
 
 Factory.define :tr_sale, :parent => :transaction do |f|
   f.trantype 'S' # sale
+  f.gwdate { Factory.next(:gwdate) }
   f.sequence(:gwtranid) { |n| n }
 end
 
