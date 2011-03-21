@@ -24,6 +24,7 @@ class TransactionsController < ApplicationController
   # GET /transactions/new.xml
   def new
     @transaction = Transaction.new
+    @transaction.trantype = 'S' # most trns are sales
     @user_array = get_array_of_user_emails_and_ids
 
     respond_to do |format|
