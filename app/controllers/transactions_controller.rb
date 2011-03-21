@@ -6,7 +6,7 @@ class TransactionsController < ApplicationController
   # GET /transactions
   # GET /transactions.xml
   def index
-    @transactions = Transaction.order('gwdate desc')
+    @transactions = Transaction.order('created_at desc')
   end
 
   # GET /transactions/1
