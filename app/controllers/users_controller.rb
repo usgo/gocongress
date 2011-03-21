@@ -39,7 +39,13 @@ class UsersController < ApplicationController
         @initial_deposit_instructions = "We have received the initial deposit for all of your attendees.  Thank you."
       end
     else
-      @initial_deposit_instructions = "Your initial deposit is due " + @user.get_initial_deposit_due_date.to_formatted_s(:long)
+      if @user.get_initial_deposit_due_date < Time.now.to_date
+        @initial_deposit_instructions = "Your initial deposit is overdue." +
+        " We have not received the initial deposit for all attendees." +
+        " Please make an initial payment of $75 for each attendee. Thank you."
+      else
+        @initial_deposit_instructions = "Your initial deposit is due " + @user.get_initial_deposit_due_date.to_formatted_s(:long)
+      end
     end
   end
   
