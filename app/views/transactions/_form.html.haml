@@ -26,7 +26,7 @@
         for user payments.
     .field
       = f.label :gwdate
-      = f.date_select :gwdate
+      = f.date_select :gwdate, :include_blank => true
     .field
       = f.label :gwtranid
       = f.text_field :gwtranid
