@@ -8,18 +8,19 @@
   %table.semantic.fullwidth
     %thead
       %tr
+        %th= trl_attr 'transaction', 'trantype'
         %th Date
         %th.numeric Transaction ID
         %th.numeric Amount
     %tbody
       - for t in @user.transactions.order('gwdate asc')
         %tr
-          %td= t.gwdate.to_formatted_s(:long)
+          %td= t.get_trantype_name
+          %td= t.created_at.to_date.to_formatted_s(:long)
           %td.numeric= t.gwtranid
           %td.numeric= number_to_currency t.amount, :unit => ''
       %tr.total
-        %td
-        %th Total
+        %th{ :colspan => 3 } Total
         %td.numeric= number_to_currency @user.amount_paid, :unit => ''
 
 - if current_user.is_admin?
