@@ -15,6 +15,11 @@ class TransactionTest < ActiveSupport::TestCase
     assert_equal false, s.valid?
   end
 
+  test "sale without gwdate is not valid" do
+    s = Factory.build(:tr_sale, :gwdate => nil)
+    assert_equal false, s.valid?
+  end
+
   test "sales amount cannot be negative" do
     tr_sale = Factory.create(:tr_sale)
     assert_equal 'S', tr_sale.trantype
