@@ -204,6 +204,7 @@ distribute and pad them.  I'm only human. -Jared 7/27/10 */
 	margin: 0.5em 0em;
 	min-height: 30px;
 	padding-left: 52px;
+	padding-right: 10px;
 	}
 
 div.download-pdf {

@@ -46,9 +46,13 @@
 
 - if (!@is_deposit_paid && @is_past_deposit_due_date)
   %p.notice
-    Your initial deposit is overdue.
-    We have not received the initial deposit for all attendees.
-    Please make an initial payment of $75 per attendee. Thank you.
+    %strong Your initial deposit is overdue.
+    %br
+    We have not received the initial deposit for all attendees. Please make
+    an initial payment of $75 per attendee. Thank you. 
+    %br
+    If you have any questions, please contact the
+    = link_to "registrar.", contact_path
 
 %h2 My Attendees
 
