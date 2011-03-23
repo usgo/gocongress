@@ -31,6 +31,7 @@ Gocongress::Application.routes.draw do
   # reports
   match 'reports' => 'reports#index'
   get "reports/emails"
+  get "reports/overdue_deposits"
   
   # The priority is based upon order of creation:
   # first created -> highest priority.

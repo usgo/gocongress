@@ -13,4 +13,15 @@ class ReportsController < ApplicationController
       }
   end
 
+  def overdue_deposits
+    @overdue_users = []
+    User.all.each { |u|
+      is_deposit_paid = u.get_num_attendee_deposits_paid == u.attendees.count
+      is_past_deposit_due_date = u.get_initial_deposit_due_date < Time.now.to_date
+      if (is_past_deposit_due_date && !is_deposit_paid) then
+        @overdue_users << u
+      end
+    }
+  end
+
 end

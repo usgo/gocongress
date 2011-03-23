@@ -26,3 +26,5 @@ en:
         age_max: "Maximum Age"
         is_automatic: "Automatic?"
         name: "Discount Name"
+      user:
+        created_at: "Created"

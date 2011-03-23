@@ -1,0 +1,28 @@
+%h2 Overdue Initial Deposits
+
+%p
+  A user is overdue when the registrar has not received (and recorded) the
+  initial deposits for all attendees.
+
+%p
+  Users with overdue initial deposits: 
+  = @overdue_users.length
+
+%table.semantic.fullwidth.zebra
+  %thead
+    %tr
+      %th User
+      %th Primary Attendee
+      %th= trl_attr "user", "created_at"
+      %th Deposit Due
+      %th Attendees
+      %th Attendees with Deposit
+  %tbody
+    - @overdue_users.each do |u|
+      %tr
+        %td= link_to u.email, user_path(u.to_param)
+        %td= u.primary_attendee.get_full_name
+        %td= u.created_at.to_date.to_formatted_s
+        %td= u.get_initial_deposit_due_date.to_formatted_s
+        %td= u.attendees.count
+        %td= u.attendees.where('deposit_received_at is not null').length
