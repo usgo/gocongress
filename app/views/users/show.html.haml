@@ -29,11 +29,26 @@
       %tr
         %th Balance
         %td.numeric= number_to_currency @user.balance
-  %p= @initial_deposit_instructions
+  
+  %p= button_to "Make a Payment", pay_user_path(@user), :method => "get", :class => 'button-emphasis'
 
-  = button_to "Make a Payment", pay_user_path(@user), :method => "get", :class => 'button-emphasis'
+  %p
+    - if @is_deposit_paid
+      - if @user.attendees.count == 1
+        We have received your initial deposit.  Thank you.
+      - else
+        We have received the initial deposit for all of your attendees.  Thank you.
+    - elsif !@is_past_deposit_due_date
+      Your initial deposit is due 
+      = @user.get_initial_deposit_due_date.to_formatted_s(:long)
 
 %br/
+
+- if (!@is_deposit_paid && @is_past_deposit_due_date)
+  %p.notice
+    Your initial deposit is overdue.
+    We have not received the initial deposit for all attendees.
+    Please make an initial payment of $75 per attendee. Thank you.
 
 %h2 My Attendees
 
