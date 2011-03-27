@@ -9,7 +9,7 @@ gem 'validates_timeliness'
 
 gem 'haml'
 gem 'haml-rails', :group => :development 
-
+gem 'fastercsv'
 gem 'hoptoad_notifier'
 
 # bluecloth is a markdown library
