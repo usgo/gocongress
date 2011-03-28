@@ -54,7 +54,7 @@ class UsersController < ApplicationController
 		@page_title = @showing_current_user ?
       'My Payment History' :
       @user.primary_attendee.full_name_possessive + ' Payment History'
-    @transactions = @user.transactions.where(:trantype => 'S').order('created_at desc')
+    @transactions = @user.transactions.where(:trantype => ['S','R']).order('created_at desc')
   end
 
   # GET /users/new

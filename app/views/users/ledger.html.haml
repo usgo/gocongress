@@ -9,14 +9,14 @@
     %thead
       %tr
         %th Date
-        %th.numeric Transaction ID
+        %th Type
         %th.numeric Amount
     %tbody
       - for t in @transactions
         %tr
           %td= t.created_at.to_date.to_formatted_s(:long)
-          %td.numeric= t.gwtranid
-          %td.numeric= number_to_currency t.amount, :unit => ''
+          %td= t.get_trantype_name_public
+          %td.numeric= number_to_currency t.get_ledger_amount, :unit => ''
       %tr.total
         %th{ :colspan => 2 } Total
         %td.numeric= number_to_currency @user.amount_paid, :unit => ''

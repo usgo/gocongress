@@ -5,9 +5,10 @@ class Transaction < ActiveRecord::Base
 	belongs_to :user
 	
 	# Transaction Types:
-	# Sale - User makes a payment
 	# Comp - Admin reduces total cost for a User (eg. a VIP)
-	TRANTYPES = [['Comp','C'], ['Sale','S']]
+	# Refund - Admin has sent a refund check to a User who overpaid
+	# Sale - User makes a payment
+	TRANTYPES = [['Comp','C'], ['Refund','R'], ['Sale','S']]
 
 	validates_presence_of :user_id, :trantype, :amount
 
@@ -24,8 +25,7 @@ class Transaction < ActiveRecord::Base
 	validates_numericality_of :gwtranid, :if => :is_gateway_trantype?
 	validates_uniqueness_of :gwtranid, :if => :is_gateway_trantype?
 
-  # gwdate and gwtranid are only allowed for gateway tranactions
-  # ie. not for discounts
+  # gwdate and gwtranid are only allowed for gateway tranactions, eg. sales
   # unfortunately, validating the absence of something is ugly in rails
   GATEWAY_ATTR_MSG = "must be blank for non-gateway transactions"
   with_options :unless => :is_gateway_trantype?, :allow_nil => false, :allow_blank => false, :in => [nil, ''], :message => GATEWAY_ATTR_MSG do |o|
@@ -34,7 +34,7 @@ class Transaction < ActiveRecord::Base
   end
 
   def is_gateway_trantype?
-    self.trantype != 'C'
+    self.trantype == 'S'
   end
 
   def get_trantype_name
@@ -43,4 +43,15 @@ class Transaction < ActiveRecord::Base
     if trantype_name.empty? then raise "assertion failed: invalid trantype" end
     return trantype_name
   end
+
+  def get_trantype_name_public
+    # when speaking to users, we refer to sales as "payments"
+    trantype == 'S' ? 'Payment' : get_trantype_name
+  end
+
+  def get_ledger_amount
+    # on the ledger (payment history) we disply refunds as negative numbers
+    trantype == 'R' ? -1 * amount : amount
+  end
+
 end

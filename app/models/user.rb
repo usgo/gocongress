@@ -56,9 +56,11 @@ class User < ActiveRecord::Base
   accepts_nested_attributes_for :primary_attendee
 
   def amount_paid
-    sales = transactions.where(:trantype => 'S')
     sum = 0
+    sales = transactions.where(:trantype => 'S')
     sales.each { |s| sum += s.amount }
+    refunds = transactions.where(:trantype => 'R')
+    refunds.each { |r| sum -= r.amount }
     return sum
   end
 
@@ -111,6 +113,12 @@ class User < ActiveRecord::Base
     self.transactions.where(:trantype => 'C').each { |t|
       invoice_items.push inv_item_hash('Comp', 'N/A', -1 * t.amount)
     }
+
+    # Refund transactions for users who overpaid
+    self.transactions.where(:trantype => 'R').each { |t|
+      invoice_items.push inv_item_hash('Refund', 'N/A', t.amount)
+    }
+
     return invoice_items
   end
 
