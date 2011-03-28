@@ -19,7 +19,7 @@ en:
         price: "Price"
       transaction:
         check_number: "Check Number"
-        gwtranid: "Gateway Transaction ID"
+        gwtranid: "Gateway Trns. ID"
         gwdate: "Gateway Date"
         trantype: "Type"
       discount:

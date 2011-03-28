@@ -1,8 +1,12 @@
 class Transaction < ActiveRecord::Base
   attr_accessible :user_id, :trantype, :amount, :gwtranid, :gwdate
-  attr_protected :created_at, :updated_at
+  attr_protected :created_at, :updated_at, :updated_by_user_id
 
-	belongs_to :user
+  # The account this transaction applies to
+  belongs_to :user
+
+  # The admin who last updated this transaction
+  belongs_to :updated_by_user, :class_name => "User"
 	
 	# Transaction Types:
 	# Comp - Admin reduces total cost for a User (eg. a VIP)
@@ -10,7 +14,7 @@ class Transaction < ActiveRecord::Base
 	# Sale - User makes a payment
 	TRANTYPES = [['Comp','C'], ['Refund','R'], ['Sale','S']]
 
-	validates_presence_of :user_id, :trantype, :amount
+	validates_presence_of :user_id, :trantype, :amount, :updated_by_user
 
 	validates_length_of :trantype, :is => 1
   validates_inclusion_of :trantype, :in => TRANTYPES.flatten

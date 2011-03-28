@@ -43,6 +43,7 @@ class TransactionsController < ApplicationController
   # POST /transactions.xml
   def create
     @transaction = Transaction.new(params[:transaction])
+    @transaction.updated_by_user = current_user
     @user_array = get_array_of_user_emails_and_ids
 
     if @transaction.save
@@ -56,6 +57,7 @@ class TransactionsController < ApplicationController
   # PUT /transactions/1.xml
   def update
     @transaction = Transaction.find(params[:id])
+    @transaction.updated_by_user = current_user
     @user_array = get_array_of_user_emails_and_ids
 
     respond_to do |format|

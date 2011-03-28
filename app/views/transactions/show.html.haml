@@ -33,6 +33,10 @@
     %th Modification Date
     %td= @transaction.updated_at.to_formatted_s(:long)
     %td.smalltext When the transaction was last edited on this website
+  %tr
+    %th Modified By Whom
+    %td= @transaction.updated_by_user.primary_attendee.get_full_name
+    %td.smalltext The admin who last modified this transaction
 
 %p  
   = link_to 'Edit', edit_transaction_path(@transaction) 

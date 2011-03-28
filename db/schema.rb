@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110328055826) do
+ActiveRecord::Schema.define(:version => 20110328063110) do
 
   create_table "attendee_discounts", :force => true do |t|
     t.integer  "attendee_id", :null => false
@@ -139,14 +139,15 @@ ActiveRecord::Schema.define(:version => 20110328055826) do
   end
 
   create_table "transactions", :force => true do |t|
-    t.integer  "user_id",                   :null => false
-    t.string   "trantype",     :limit => 1, :null => false
-    t.decimal  "amount",                    :null => false
+    t.integer  "user_id",                         :null => false
+    t.string   "trantype",           :limit => 1, :null => false
+    t.decimal  "amount",                          :null => false
     t.integer  "gwtranid"
     t.date     "gwdate"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "check_number"
+    t.integer  "updated_by_user_id"
   end
 
   create_table "user_jobs", :force => true do |t|
