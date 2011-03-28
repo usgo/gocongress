@@ -32,6 +32,10 @@ class Transaction < ActiveRecord::Base
     o.validates_inclusion_of :gwdate
     o.validates_inclusion_of :gwtranid
   end
+  
+  # Refunds must have a unique check number
+	validates_numericality_of :check_number, :greater_than => 0, :if => :requires_check_number?
+	validates_uniqueness_of :check_number, :if => :requires_check_number?
 
   def is_gateway_trantype?
     self.trantype == 'S'
@@ -52,6 +56,10 @@ class Transaction < ActiveRecord::Base
   def get_ledger_amount
     # on the ledger (payment history) we disply refunds as negative numbers
     trantype == 'R' ? -1 * amount : amount
+  end
+
+  def requires_check_number?
+    self.trantype == 'R'
   end
 
 end

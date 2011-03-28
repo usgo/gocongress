@@ -18,6 +18,7 @@ en:
         name: "Plan"
         price: "Price"
       transaction:
+        check_number: "Check Number"
         gwtranid: "Gateway Transaction ID"
         gwdate: "Gateway Date"
         trantype: "Type"

@@ -22,6 +22,10 @@
         = @transaction.gwdate.to_formatted_s(:long)
     %td.smalltext When the payment gateway received the transaction
   %tr
+    %th= trl_attr 'transaction', 'check_number'
+    %td= @transaction.check_number
+    %td.smalltext For transactions involving the USGC checking account
+  %tr
     %th Creation Date
     %td= @transaction.created_at.to_formatted_s(:long)
     %td.smalltext When the transaction was entered on this website
