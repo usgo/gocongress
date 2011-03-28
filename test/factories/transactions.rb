@@ -7,6 +7,10 @@ Factory.define :tr_comp, :parent => :transaction do |f|
   f.trantype 'C' # comp
 end
 
+Factory.define :tr_refund, :parent => :transaction do |f|
+  f.trantype 'R'
+end
+
 Factory.define :tr_sale, :parent => :transaction do |f|
   f.trantype 'S' # sale
   f.gwdate { Factory.next(:gwdate) }
