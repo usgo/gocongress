@@ -41,6 +41,10 @@ class Transaction < ActiveRecord::Base
 	validates_numericality_of :check_number, :greater_than => 0, :if => :requires_check_number?
 	validates_uniqueness_of :check_number, :if => :requires_check_number?
 
+  # Only refunds may have a check number
+  CHECK_NUMBER_ABSENCE_MSG = "must be blank.  (Only applicable for Refunds)"
+  validates_inclusion_of :check_number, :unless => :requires_check_number?, :allow_nil => false, :allow_blank => false, :in => [nil, ''], :message => CHECK_NUMBER_ABSENCE_MSG
+
   def is_gateway_trantype?
     self.trantype == 'S'
   end
