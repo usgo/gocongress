@@ -3,8 +3,8 @@ Factory.define :transaction do |f|
   f.sequence(:amount) { |n| n * 3 }
 end
 
-Factory.define :tr_discount, :parent => :transaction do |f|
-  f.trantype 'D' # discount
+Factory.define :tr_comp, :parent => :transaction do |f|
+  f.trantype 'C' # comp
 end
 
 Factory.define :tr_sale, :parent => :transaction do |f|

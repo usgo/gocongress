@@ -30,31 +30,31 @@ class TransactionTest < ActiveSupport::TestCase
     assert tr_sale.valid?
   end
 
-  # Begin tests for Discounts
-  test "discounts factory is valid" do
-    assert Factory.build(:tr_discount).valid?
+  # Begin tests for comps
+  test "comps factory is valid" do
+    assert Factory.build(:tr_comp).valid?
   end
   
-  test "discount with gwtranid is not valid" do
-    tr_discount = Factory.build(:tr_discount)
-    tr_discount.gwtranid = 12897
-    assert_equal false, tr_discount.valid?
+  test "comp with gwtranid is not valid" do
+    tr_comp = Factory.build(:tr_comp)
+    tr_comp.gwtranid = 12897
+    assert_equal false, tr_comp.valid?
   end
   
-  test "discount with gwdate is not valid" do
-    tr_discount = Factory.build(:tr_discount)
-    tr_discount.gwdate = Time.now.to_date
-    assert_equal false, tr_discount.valid?
+  test "comp with gwdate is not valid" do
+    tr_comp = Factory.build(:tr_comp)
+    tr_comp.gwdate = Time.now.to_date
+    assert_equal false, tr_comp.valid?
   end
 
-  test "discount amount cannot be negative" do
-    tr_discount = Factory.build(:tr_discount)
-    assert_equal 'D', tr_discount.trantype
-    assert tr_discount.valid?
-    tr_discount.amount = -42
-    assert_equal false, tr_discount.valid?
-    tr_discount.amount = +42
-    assert tr_discount.valid?
+  test "comp amount cannot be negative" do
+    tr_comp = Factory.build(:tr_comp)
+    assert_equal 'C', tr_comp.trantype
+    assert tr_comp.valid?
+    tr_comp.amount = -42
+    assert_equal false, tr_comp.valid?
+    tr_comp.amount = +42
+    assert tr_comp.valid?
   end
 
 end

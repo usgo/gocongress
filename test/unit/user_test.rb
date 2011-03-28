@@ -46,13 +46,13 @@ class UserTest < ActiveSupport::TestCase
     assert_equal expected_cost, u.get_invoice_total
   end
 
-  test "discount transaction" do
+  test "comp transaction" do
     u = Factory(:user)
     u.primary_attendee.is_player = true
     u.save
     assert_equal 375, u.get_invoice_total
-    u.transactions << Factory(:tr_discount, :user_id => u.id, :amount => 33)
-    u.transactions << Factory(:tr_discount, :user_id => u.id, :amount => 40)
+    u.transactions << Factory(:tr_comp, :user_id => u.id, :amount => 33)
+    u.transactions << Factory(:tr_comp, :user_id => u.id, :amount => 40)
     assert_equal 302, u.get_invoice_total
   end
 
@@ -73,7 +73,7 @@ class UserTest < ActiveSupport::TestCase
     u = Factory(:user)
     1.upto(1+rand(3)) { |a| u.attendees << Factory(:attendee, :user_id => u.id) }
     1.upto(1+rand(10)) { |n| u.transactions << Factory(:tr_sale, :user_id => u.id) }
-    1.upto(1+rand(5)) { |n| u.transactions << Factory(:tr_discount, :user_id => u.id) }
+    1.upto(1+rand(5)) { |n| u.transactions << Factory(:tr_comp, :user_id => u.id) }
     assert_equal u.get_invoice_total - u.amount_paid, u.balance
   end
 

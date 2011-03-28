@@ -6,8 +6,8 @@ class Transaction < ActiveRecord::Base
 	
 	# Transaction Types:
 	# Sale - User makes a payment
-	# Discount - Admin reduces total cost for a User (eg. a VIP)
-	TRANTYPES = [['Discount','D'], ['Sale','S']]
+	# Comp - Admin reduces total cost for a User (eg. a VIP)
+	TRANTYPES = [['Comp','C'], ['Sale','S']]
 
 	validates_presence_of :user_id, :trantype, :amount
 
@@ -34,7 +34,7 @@ class Transaction < ActiveRecord::Base
   end
 
   def is_gateway_trantype?
-    self.trantype != 'D'
+    self.trantype != 'C'
   end
 
   def get_trantype_name
