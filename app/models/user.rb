@@ -114,10 +114,9 @@ class User < ActiveRecord::Base
       invoice_items.push inv_item_hash('Comp', 'N/A', -1 * t.amount)
     }
 
-    # Refund transactions for users who overpaid
-    self.transactions.where(:trantype => 'R').each { |t|
-      invoice_items.push inv_item_hash('Refund', 'N/A', t.amount)
-    }
+    # Note: Refund transactions are NOT invoice items.  They should not
+    # appear on the cost summary.  Instead, they should appear on the
+    # ledger (payment history)
 
     return invoice_items
   end
