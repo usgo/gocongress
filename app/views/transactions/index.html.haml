@@ -1,5 +1,10 @@
 %h1 All Transactions
 
+= link_to 'New Transaction', new_transaction_path
+
+.pagination-controls
+  = paginate @transactions
+
 %table.semantic.zebra.fullwidth
   %thead
     %tr
@@ -29,7 +34,3 @@
         %td= link_to 'Show', transaction
         %td= link_to 'Edit', edit_transaction_path(transaction)
         %td= link_to 'Delete', transaction, :confirm => 'Are you sure?', :method => :delete
-
-%br
-
-= link_to 'New Transaction', new_transaction_path

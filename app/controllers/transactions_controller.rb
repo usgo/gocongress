@@ -3,10 +3,13 @@ class TransactionsController < ApplicationController
   # Access Control
   before_filter :allow_only_admin
 
+  # Pagination
+  PER_PAGE = 20
+
   # GET /transactions
   # GET /transactions.xml
   def index
-    @transactions = Transaction.order('created_at desc')
+    @transactions = Transaction.order('created_at desc').page(params[:page]).per(PER_PAGE)
   end
 
   # GET /transactions/1
