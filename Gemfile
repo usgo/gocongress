@@ -2,18 +2,15 @@ source 'http://rubygems.org'
 
 gem 'rails'
 gem 'sqlite3-ruby', :require => 'sqlite3'
-
 gem "jquery-rails"
-gem "devise"
+gem "devise" # authentication
 gem 'validates_timeliness'
-
 gem 'haml'
 gem 'haml-rails', :group => :development 
 gem 'fastercsv'
-gem 'hoptoad_notifier'
-
-# bluecloth is a markdown library
-gem 'bluecloth'
+gem 'hoptoad_notifier' # uncaught exception notification
+gem 'bluecloth' # markdown
+gem 'kaminari' # pagination
 
 # Bundle gems for the local environment. Make sure to
 # put test-only gems in this group so their generators
