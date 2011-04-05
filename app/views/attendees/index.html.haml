@@ -1,10 +1,8 @@
 %h2 Who is Coming?
 
 %p
-  There are #{ @attendees.size } people registered.
-  Before that, #{ @preregistrants.size } people
-  %a{ :href => '#preregistrants' } pre-registered.
-  There are #{@kyu_count} kyu-level players, #{@dan_count} dan-level players, 
+  There are #{ @attendees.size } people registered,
+  including #{@kyu_count} kyu-level players, #{@dan_count} dan-level players, 
   and #{@np_count} non-players.
 
   - if (@youngest_attendee.present? and @oldest_attendee.present?)
@@ -38,29 +36,3 @@
         %td= a.get_rank_name
         %td= a.country
         %td= a.created_at.to_date.to_formatted_s(:rfc822)
-
-%a{ :name => 'preregistrants' }
-
-%h3 Pre-registrants
-
-%p 
-  These people showed their support for the 2011 Go Congress by signing up
-  <strong>before</strong> actual registration was ready!
-%table.semantic.fullwidth.zebra
-  %thead
-    %tr
-      %th
-      %th Given Name
-      %th Family Name
-      %th Rank
-      %th Country
-      %th Date
-  %tbody
-    - @preregistrants.each_with_index do |p,i|
-      %tr{:class => if p.anonymous then "understated" end }
-        %td= i + 1
-        %td= if p.anonymous then "Anonymous" else p.firstname end
-        %td= if p.anonymous then "Anonymous" else p.lastname end
-        %td= p.get_rank_name
-        %td= p.country
-        %td= p.preregdate.to_date.to_formatted_s(:rfc822)
