@@ -88,7 +88,8 @@ class Attendee < ActiveRecord::Base
   validates_date :deposit_received_at, :if => :form_page_is_admin?, :allow_blank => true
 
   def age_in_seconds
-    (Time.now - self.birth_date.to_time).to_i
+    # age on the start day of the event, not now
+    (CONGRESS_START_DATE - self.birth_date.to_time).to_i
   end
   
   def age_in_years

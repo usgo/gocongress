@@ -84,15 +84,18 @@ class User < ActiveRecord::Base
       reg_desc = "Registration " + (a.is_player? ? "(Player)" : "(Non-Player)")
       invoice_items.push inv_item_hash( reg_desc, a.get_full_name, a.get_registration_price )
 
+      # How old will the attendee be on the first day of the event?
+      # Also, truncate to an integer age to simplify logic below
+      atnd_age = a.age_in_years.truncate
+
       # Does this attendee qualify for any automatic discounts?
-      atnd_age = a.age_in_years
       Discount.where("is_automatic = ?", true).each { |d|
 
         # Currently, we only apply age-related automatic discounts.
         # In the future, there will also be "early bird" discounts,
         # but we haven't figured out the details yet.
-        satisfy_age_min = d.age_min.blank? || atnd_age > d.age_min
-        satisfy_age_max = d.age_max.blank? || atnd_age < d.age_max
+        satisfy_age_min = d.age_min.blank? || atnd_age >= d.age_min
+        satisfy_age_max = d.age_max.blank? || atnd_age <= d.age_max
         if (satisfy_age_min && satisfy_age_max) then
           invoice_items.push inv_item_hash(d.get_invoice_item_name, a.get_full_name, -1 * d.amount)
         end
