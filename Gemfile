@@ -2,7 +2,7 @@ source 'http://rubygems.org'
 
 gem 'rails'
 gem 'sqlite3-ruby', :require => 'sqlite3'
-gem "jquery-rails"
+gem "jquery-rails" # jquery and jquery-ui
 gem "devise" # authentication
 gem 'validates_timeliness'
 gem 'haml'
