@@ -15,7 +15,7 @@ class HomeController < ApplicationController
 			]
 
     # Get announcements for the homepage
-    contents_where_clause = "show_on_homepage = ? and (expires_at is null or expires_at < ?)"
+    contents_where_clause = "show_on_homepage = ? and (expires_at is null or expires_at > ?)"
     @contents = Content.where(contents_where_clause, true, Time.now).order("created_at desc")
 	end
 
