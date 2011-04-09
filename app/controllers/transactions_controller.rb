@@ -52,6 +52,7 @@ class TransactionsController < ApplicationController
     @transaction.user_id = User.find_by_email(params[:user_email]).to_param
 
     @email_list = get_list_of_user_emails
+    @email_picker_value = params[:user_email]
 
     if @transaction.save
       redirect_to(@transaction, :notice => 'Transaction was successfully created.')
@@ -68,6 +69,7 @@ class TransactionsController < ApplicationController
     @transaction.user_id = User.find_by_email(params[:user_email]).to_param
 
     @email_list = get_list_of_user_emails
+    @email_picker_value = params[:user_email]
 
     respond_to do |format|
       if @transaction.update_attributes(params[:transaction])
