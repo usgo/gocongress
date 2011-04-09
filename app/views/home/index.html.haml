@@ -42,8 +42,11 @@
   %p Pro lectures, Simuls, Vendor area
   %div{:style => "clear:left;"}
 
+- if @contents.size > 0
+  %h3 Announcements
+
 - @contents.each do |c|
-  %h3
+  %h4
     = c.created_at.to_date.to_formatted_s(:long)
     \-
     = c.subject
