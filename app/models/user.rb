@@ -38,6 +38,7 @@ class User < ActiveRecord::Base
 
   validates_uniqueness_of :email, :case_sensitive => false
   validates_inclusion_of :is_admin, :in => [true, false]
+  validates_format_of :email, :with => /^[^',]*$/, :message => "may not contain commas or single-quotes"
 
   # There must always be at least one attendee -Jared
   validates_presence_of :primary_attendee
