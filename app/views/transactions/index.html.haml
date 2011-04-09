@@ -1,6 +1,6 @@
 %h1 All Transactions
 
-= link_to 'New Transaction', new_transaction_path
+.flow-padding= button_to 'New Transaction', new_transaction_path, :method => "get"
 
 .pagination-controls
   = paginate @transactions

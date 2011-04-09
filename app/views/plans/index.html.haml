@@ -5,6 +5,10 @@
     %a{ :href => "images/plans/big/0#{x}.tiff" }
       = image_tag "plans/thumb/0#{x}.jpg", :class => "thin-border"
 
+- if current_user_is_admin?
+  .flow-padding
+    = button_to 'Create a new Room and Board Plan', new_plan_path, :method => "get"
+
 %p
   Room and Board plans are designed to fit a variety of attendees. 
   Search below to find the options that fit your age, room style
@@ -38,6 +42,3 @@
             %td= link_to 'Destroy', plan, :confirm => 'Are you sure?', :method => :delete
 
 %br
-
-- if current_user_is_admin?
-  = link_to 'Create a new Room and Board Plan', new_plan_path

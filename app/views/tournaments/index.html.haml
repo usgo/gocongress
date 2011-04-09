@@ -1,5 +1,8 @@
 %h2 Tournaments
 
+- if current_user_is_admin?
+  .flow-padding= button_to 'Create a New Tournament', new_tournament_path, :method => "get"
+
 %p
   In addition to these Go-related activities, we will also have 
   = link_to 'a "day off" trip and other activities', events_path
@@ -57,6 +60,3 @@
           - if current_user_is_admin?
             %td= link_to 'Edit', edit_tournament_path(t)
             %td= link_to 'Delete', t, :confirm => 'Delete the entire tournament?  This will delete everything associated with this tournament too, including game records.', :method => :delete
-
-- if current_user_is_admin?
-  %p= link_to 'Create a New Tournament', new_tournament_path

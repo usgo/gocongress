@@ -40,6 +40,9 @@ table .numeric { text-align: right; }
 .align-right { text-align: right; }
 img.thin-border { border: 1px solid black; }
 
+/* Use this class to pad flow elements (eg. div, form) -Jared 4/9/11 */
+.flow-padding { padding: 8px 0px; }
+
 /* Two column layout */
 .left-column { display: inline-block; width: 45%; vertical-align: top; }
 .right-column { display: inline-block; width: 45%; vertical-align: top; }

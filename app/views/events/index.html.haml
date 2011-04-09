@@ -1,4 +1,8 @@
 %h2 Events and Activities
+
+- if current_user_is_admin?
+  .flow-padding= button_to "New Event", new_event_path, :method => "get"
+
 %p
   In addition to many
   = link_to 'tournaments,', tournaments_path
@@ -31,6 +35,3 @@
             %td= link_to 'Edit', edit_event_path(e)
             %td= link_to 'Destroy', e, :confirm => 'Are you sure?', :method => :delete
 %br/
-
-- if current_user_is_admin?
-  = link_to 'New Event', new_event_path

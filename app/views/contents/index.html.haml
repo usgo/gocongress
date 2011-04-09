@@ -1,5 +1,7 @@
 %h2 Announcements
 
+.flow-padding= button_to 'Create New Announcement', new_content_path, :method => "get"
+
 - if @contents.count == 0
   %p There are no announcements yet.
 - else
@@ -26,5 +28,3 @@
         %td= link_to 'Destroy', content, :confirm => 'Are you sure?', :method => :delete
 
 %br
-
-= link_to 'Create New Announcement', new_content_path

@@ -1,4 +1,8 @@
 %h2 Volunteer Opportunities
+
+- if current_user_is_admin?
+  .flow-padding= button_to 'Create a new volunteer position', new_job_path, :method => "get"
+
 %p
   If you are interested in taking one of these positions, please
   contact Andrew Jackson or Lisa Scott for further information.
@@ -25,8 +29,3 @@
         - if current_user_is_admin?
           %td= link_to 'Edit', edit_job_path(job)
           %td= link_to 'Destroy', job, :confirm => 'Are you sure?', :method => :delete
-
-%br/
-
-- if current_user_is_admin?
-  = link_to 'Create a new volunteer position', new_job_path
