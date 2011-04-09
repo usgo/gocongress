@@ -11,7 +11,7 @@
   %fieldset.wider-labels
     .field
       = f.label :user_id, "User email address"
-      = f.select :user_id, @user_array, { :include_blank => true }
+      %input#user_email_picker{:type => "text", :name => "user_email", :size => 40, :value => @email_picker_value}
       %br
       %span.smalltext.aligned-with-input 
         Each user account has a unique email address.
@@ -48,3 +48,8 @@
     .field
       = label '', ''
       = f.submit "Submit"
+
+:javascript
+  $("#user_email_picker").autocomplete({
+      source: '#{@email_list}'.split(',')
+    });

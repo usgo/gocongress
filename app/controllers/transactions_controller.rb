@@ -28,7 +28,8 @@ class TransactionsController < ApplicationController
   def new
     @transaction = Transaction.new
     @transaction.trantype = 'S' # most trns are sales
-    @user_array = get_array_of_user_emails_and_ids
+    @email_list = get_list_of_user_emails
+    @email_picker_value = ''
 
     respond_to do |format|
       format.html # new.html.erb
@@ -39,7 +40,8 @@ class TransactionsController < ApplicationController
   # GET /transactions/1/edit
   def edit
     @transaction = Transaction.find(params[:id])
-    @user_array = get_array_of_user_emails_and_ids
+    @email_list = get_list_of_user_emails
+    @email_picker_value = @transaction.user.email
   end
 
   # POST /transactions
@@ -47,7 +49,9 @@ class TransactionsController < ApplicationController
   def create
     @transaction = Transaction.new(params[:transaction])
     @transaction.updated_by_user = current_user
-    @user_array = get_array_of_user_emails_and_ids
+    @transaction.user_id = User.find_by_email(params[:user_email]).to_param
+
+    @email_list = get_list_of_user_emails
 
     if @transaction.save
       redirect_to(@transaction, :notice => 'Transaction was successfully created.')
@@ -61,7 +65,9 @@ class TransactionsController < ApplicationController
   def update
     @transaction = Transaction.find(params[:id])
     @transaction.updated_by_user = current_user
-    @user_array = get_array_of_user_emails_and_ids
+    @transaction.user_id = User.find_by_email(params[:user_email]).to_param
+
+    @email_list = get_list_of_user_emails
 
     respond_to do |format|
       if @transaction.update_attributes(params[:transaction])
@@ -88,8 +94,9 @@ class TransactionsController < ApplicationController
 
 protected
 
-	def get_array_of_user_emails_and_ids
-		User.order('lower(email)').collect {|u| [ u.email, u.id ] }
-	end
+  def get_list_of_user_emails
+    email_array = User.order('lower(email)').collect {|u| [u.email] }
+    email_array.join(',')
+  end
 
 end
