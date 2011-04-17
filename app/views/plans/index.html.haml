@@ -19,7 +19,7 @@
         %th Attendee Age
         %th= trl_attr 'plan', 'name'
         %th= trl_attr 'plan', 'description'
-        %th= trl_attr 'plan', 'price'
+        %th.numeric= trl_attr 'plan', 'price'
         %th{ :colspan => 3 }
 
       - plans_in_group.each do |plan|
@@ -27,7 +27,7 @@
           %td= plan.age_range_in_words
           %td= plan.name
           %td= Markdown.new( plan.description ).to_html.html_safe
-          %td= plan.price
+          %td.numeric= number_to_currency plan.price
           %td= link_to 'Details', plan
           %td= link_to 'Edit', edit_plan_path(plan)
           %td= link_to 'Delete', plan, :confirm => 'Are you sure?', :method => :delete

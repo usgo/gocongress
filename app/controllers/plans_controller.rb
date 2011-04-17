@@ -11,8 +11,14 @@ class PlansController < ApplicationController
 
   # GET /plans/room_and_board
   def room_and_board
-    plans_ordered = Plan.all :order=>"has_rooms desc, age_min asc"
+    plans_ordered = Plan.joins(:plan_category).where('plan_categories.show_on_roomboard_page' => true).order("has_rooms desc, age_min asc")
     @plans_grouped = plans_ordered.group_by {|plan| plan.has_rooms}
+  end
+
+  # GET /plans/prices_and_extras
+  def prices_and_extras
+    plans_ordered = Plan.joins(:plan_category).where('plan_categories.show_on_prices_page' => true).order("plan_category_id, name")
+    @plans_grouped = plans_ordered.group_by {|plan| plan.plan_category_id}
   end
 
   # GET /plans/1

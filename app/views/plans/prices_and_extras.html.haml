@@ -1,3 +1,29 @@
 %h2 Prices and Extras
 
-%p Coming soon
+%p
+  See also:
+  = link_to "Room and Board", room_and_board_path
+
+%table.semantic.zebra.fullwidth
+  %tbody
+    - @plans_grouped.each do |grouping, plans_in_group|
+      %tr.greater-header
+        %th{ :colspan => 5 }
+          - if plans_in_group.first.plan_category_id.present?
+            = plans_in_group.first.plan_category.name
+          - else
+            No Category
+      %tr.lesser-header
+        %th Attendee Age
+        %th= trl_attr 'plan', 'name'
+        %th= trl_attr 'plan', 'description'
+        %th.numeric= trl_attr 'plan', 'price'
+
+      - plans_in_group.each do |plan|
+        %tr
+          %td= plan.age_range_in_words
+          %td= plan.name
+          %td= Markdown.new( plan.description ).to_html.html_safe
+          %td.numeric= number_to_currency plan.price
+
+%br
