@@ -11,6 +11,9 @@
       = f.label :name
       = f.text_field :name
     .field
+      = f.label :plan_category_id
+      = f.select :plan_category_id, @plan_categories
+    .field
       %label This plan has
       = f.check_box :has_rooms
       = f.label :has_rooms, "Room(s)", :class => "inline-label"

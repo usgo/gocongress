@@ -1,0 +1,34 @@
+%h2 Room and Board Plans
+
+%div
+  - 1.upto(6) do |x|
+    %a{ :href => "images/plans/big/0#{x}.tiff" }
+      = image_tag "plans/thumb/0#{x}.jpg", :class => "thin-border"
+
+%p
+  Room and Board plans are designed to fit a variety of attendees. 
+  Search below to find the options that fit your age, room style
+  preference, and meal plan choice.  Please email the 
+  = link_to "registrar", contact_path
+  with any questions.
+
+%table.semantic.zebra.fullwidth
+  %tbody
+    - @plans_grouped.each do |grouping, plans_in_group|
+      %tr.greater-header
+        %th{ :colspan => 5 }
+          = grouping ? "Plans that include a room" : "Meals only"
+      %tr.lesser-header
+        %th Attendee Age
+        %th= trl_attr 'plan', 'name'
+        %th= trl_attr 'plan', 'description'
+        %th.numeric= trl_attr 'plan', 'price'
+
+      - plans_in_group.each do |plan|
+        %tr
+          %td= plan.age_range_in_words
+          %td= plan.name
+          %td= Markdown.new( plan.description ).to_html.html_safe
+          %td.numeric= number_to_currency plan.price
+
+%br

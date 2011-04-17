@@ -1,34 +1,26 @@
-%h2 Room and Board Plans
+%h2 All Plans
 
-%div
-  - 1.upto(6) do |x|
-    %a{ :href => "images/plans/big/0#{x}.tiff" }
-      = image_tag "plans/thumb/0#{x}.jpg", :class => "thin-border"
-
-- if current_user_is_admin?
-  .flow-padding
-    = button_to 'Create a new Room and Board Plan', new_plan_path, :method => "get"
+= button_to 'Create a new Plan', new_plan_path, :method => "get"
 
 %p
-  Room and Board plans are designed to fit a variety of attendees. 
-  Search below to find the options that fit your age, room style
-  preference, and meal plan choice.  Please email the 
-  = link_to "registrar", contact_path
-  with any questions.
+  Here are all the Plans, organized by
+  = link_to "Plan Category", plan_categories_path
 
 %table.semantic.zebra.fullwidth
   %tbody
     - @plans_grouped.each do |grouping, plans_in_group|
       %tr.greater-header
-        %th{ :colspan => current_user_is_admin? ? 8 : 5 }
-          = grouping ? "Plans that include a room" : "Meals only"
+        %th{ :colspan => 8 }
+          - if plans_in_group.first.plan_category_id.present?
+            = plans_in_group.first.plan_category.name
+          - else
+            No Category
       %tr.lesser-header
         %th Attendee Age
         %th= trl_attr 'plan', 'name'
         %th= trl_attr 'plan', 'description'
         %th= trl_attr 'plan', 'price'
-        - if current_user_is_admin?
-          %th{ :colspan => 3 }
+        %th{ :colspan => 3 }
 
       - plans_in_group.each do |plan|
         %tr
@@ -36,9 +28,8 @@
           %td= plan.name
           %td= Markdown.new( plan.description ).to_html.html_safe
           %td= plan.price
-          - if current_user_is_admin?
-            %td= link_to 'Details', plan
-            %td= link_to 'Edit', edit_plan_path(plan)
-            %td= link_to 'Delete', plan, :confirm => 'Are you sure?', :method => :delete
+          %td= link_to 'Details', plan
+          %td= link_to 'Edit', edit_plan_path(plan)
+          %td= link_to 'Delete', plan, :confirm => 'Are you sure?', :method => :delete
 
 %br

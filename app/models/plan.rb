@@ -2,6 +2,7 @@ class Plan < ActiveRecord::Base
 attr_accessible :name, :price, :age_min, :age_max, :description, :has_meals, :has_rooms
 attr_protected :created_at, :updated_at
 
+belongs_to :plan_category
 has_many :attendee_plans, :dependent => :destroy
 has_many :users, :through => :attendee_plans
 
@@ -16,8 +17,8 @@ validates_numericality_of :age_max, :allow_nil => true
 # A plan with neither rooms nor meals is invalid.  This is implemented
 # by PlanFlagValidator (found in lib/).  Notice the naming convention
 # between plan_flag and PlanFlagValidator. -Jared 2011.02.18
-validates :has_rooms, :plan_flag => true
-validates :has_meals, :plan_flag => true
+#validates :has_rooms, :plan_flag => true
+#validates :has_meals, :plan_flag => true
 
 def age_range_in_words
   if age_min == 0 && age_max.blank?

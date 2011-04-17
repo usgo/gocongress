@@ -9,7 +9,9 @@ Gocongress::Application.routes.draw do
   match 'preregistrants' => 'preregistrant#index', :as => 'preregistrants'
   match 'contact' => 'user_jobs#index'
   match '/popup/:action' => 'popup', :as => 'popup'
+  match 'prices_and_extras' => 'plans#prices_and_extras'
   match 'pricing' => 'home#pricing'
+  match 'room_and_board' => 'plans#room_and_board'
   match 'vip' => 'attendees#vip'
 
   devise_for :users
