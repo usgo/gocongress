@@ -37,7 +37,7 @@
           %td= Markdown.new( plan.description ).to_html.html_safe
           %td= plan.price
           - if current_user_is_admin?
-            %td= link_to 'Show', plan
+            %td= link_to 'Details', plan
             %td= link_to 'Edit', edit_plan_path(plan)
             %td= link_to 'Delete', plan, :confirm => 'Are you sure?', :method => :delete
 

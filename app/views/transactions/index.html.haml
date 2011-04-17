@@ -31,6 +31,6 @@
         %td
           - if transaction.updated_by_user.present?
             = transaction.updated_by_user.primary_attendee.given_name
-        %td= link_to 'Show', transaction
+        %td= link_to 'Details', transaction
         %td= link_to 'Edit', edit_transaction_path(transaction)
         %td= link_to 'Delete', transaction, :confirm => 'Are you sure?', :method => :delete

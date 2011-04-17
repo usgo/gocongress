@@ -18,7 +18,7 @@
       %td= discount.is_automatic ? "Yes" : "No"
       %td= discount.age_min
       %td= discount.age_max
-      %td= link_to 'Show', discount
+      %td= link_to 'Details', discount
       %td= link_to 'Edit', edit_discount_path(discount)
       %td= link_to 'Delete', discount, :confirm => 'Are you sure?', :method => :delete
 
