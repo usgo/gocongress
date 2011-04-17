@@ -1,0 +1,16 @@
+%h2= @plan_category.name
+
+%table.lightweight
+  %tbody
+    %tr
+      %th Show on prices page:
+      %td= @plan_category.show_on_prices_page ? "Yes" : "No"
+    %tr
+      %th Show on room and board page:
+      %td= @plan_category.show_on_roomboard_page ? "Yes" : "No"
+
+%br
+
+= link_to 'Edit', edit_plan_category_path(@plan_category)
+\|
+= link_to 'Back', plan_categories_path

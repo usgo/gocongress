@@ -1,0 +1,23 @@
+%h2 Plan Categories
+
+= button_to 'Create a new Plan Category', new_plan_category_path, :method => "get"
+
+%table.semantic.fullwidth.zebra
+  %tr
+    %th Name
+    %th Show on prices page
+    %th Show on roomboard page
+    %th
+    %th
+    %th
+
+  - @plan_categories.each do |plan_category|
+    %tr
+      %td= plan_category.name
+      %td= plan_category.show_on_prices_page ? "Yes" : "No"
+      %td= plan_category.show_on_roomboard_page ? "Yes" : "No"
+      %td= link_to 'Details', plan_category
+      %td= link_to 'Edit', edit_plan_category_path(plan_category)
+      %td= link_to 'Delete', plan_category, :confirm => 'Are you sure?', :method => :delete
+
+%br

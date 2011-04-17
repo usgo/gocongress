@@ -1,5 +1,8 @@
 class HomeController < ApplicationController
 
+  # Access Control
+  before_filter :allow_only_admin, :only => [:pricing]
+
 	def index
 		@bodyClassList = "homepage"		
 		@arSlideTitles = [ \
@@ -24,6 +27,9 @@ class HomeController < ApplicationController
 
   def kaboom
     raise "Intentional error to test error handling"
+  end
+
+  def pricing
   end
 
 end

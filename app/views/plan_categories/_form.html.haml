@@ -1,0 +1,19 @@
+= form_for @plan_category do |f|
+  -if @plan_category.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@plan_category.errors.count, "error")} prohibited this plan_category from being saved:"
+      %ul
+        - @plan_category.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :name
+    = f.text_field :name
+  .field
+    = f.label :show_on_prices_page
+    = f.check_box :show_on_prices_page
+  .field
+    = f.label :show_on_roomboard_page
+    = f.check_box :show_on_roomboard_page
+  .actions
+    = f.submit 'Save'

@@ -9,6 +9,7 @@ Gocongress::Application.routes.draw do
   match 'preregistrants' => 'preregistrant#index', :as => 'preregistrants'
   match 'contact' => 'user_jobs#index'
   match '/popup/:action' => 'popup', :as => 'popup'
+  match 'pricing' => 'home#pricing'
   match 'vip' => 'attendees#vip'
 
   devise_for :users
@@ -18,7 +19,7 @@ Gocongress::Application.routes.draw do
 
   # resource routes (maps HTTP verbs to controller actions automatically):
   resources :attendees, :contents, :discounts, :events, :jobs
-  resources :plans, :tournaments, :transactions
+  resources :plans, :plan_categories, :tournaments, :transactions
 
   resources :users do
     member do
