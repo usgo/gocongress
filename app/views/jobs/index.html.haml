@@ -28,4 +28,4 @@
         %td= Markdown.new( job.description ).to_html.html_safe
         - if current_user_is_admin?
           %td= link_to 'Edit', edit_job_path(job)
-          %td= link_to 'Destroy', job, :confirm => 'Are you sure?', :method => :delete
+          %td= link_to 'Delete', job, :confirm => 'Are you sure?', :method => :delete
