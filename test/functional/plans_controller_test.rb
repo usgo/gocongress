@@ -7,7 +7,23 @@ class PlansControllerTest < ActionController::TestCase
     @admin_user = Factory.create(:admin_user)
   end
 
-  test "anybody can get index" do
+  test "visitors can get roomboard page" do
+    get :room_and_board
+    assert_response :success
+  end
+
+  test "visitors can get prices and extras page" do
+    get :prices_and_extras
+    assert_response :success
+  end
+
+  test "visitors cannot get index" do
+    get :index
+    assert_response 403
+  end
+
+  test "admins can get index" do
+    sign_in @admin_user
     get :index
     assert_response :success
   end
