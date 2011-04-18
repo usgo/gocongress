@@ -7,6 +7,8 @@ has_many :attendee_plans, :dependent => :destroy
 has_many :users, :through => :attendee_plans
 
 scope :appropriate_for_age, lambda {|age| where("(age_min is null or age_min <= ?) and (age_max is null or age_max >= ?)", age, age)}
+scope :room_and_board_page, joins(:plan_category).where('plan_categories.show_on_roomboard_page' => true)
+scope :prices_page, joins(:plan_category).where('plan_categories.show_on_prices_page' => true)
 
 validates_presence_of :name, :description, :price, :age_min
 validates_length_of :name, :maximum => 50
