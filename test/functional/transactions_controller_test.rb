@@ -21,8 +21,10 @@ class TransactionsControllerTest < ActionController::TestCase
     assert_equal true, @new_transaction.valid?
 
     # post to create
+    # note that we also need to pass user_email.
+    # this is a new required param, since I added the autocomplete
     assert_difference('Transaction.count', +1) do
-      post :create, :transaction => @new_transaction.attributes
+      post :create, :transaction => @new_transaction.attributes, :user_email => @new_transaction.user.email
     end
     assert_redirected_to transaction_path(assigns(:transaction))
   end
