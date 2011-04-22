@@ -107,19 +107,31 @@ class AttendeesController < ApplicationController
   def update
     @page = get_valid_page_from_params
     @attendee = Attendee.find(params[:id])
-    
+
     # certain fields may only be set by admins
-    if (@page == 'admin' && current_user.is_admin?)
-      if (params[:attendee][:"deposit_received_at(1i)"].present? &&
-          params[:attendee][:"deposit_received_at(2i)"].present? &&
-          params[:attendee][:"deposit_received_at(3i)"].present?) \
-      then
-        @attendee.deposit_received_at = convert_date(params[:attendee], :deposit_received_at)
-        params[:attendee].delete :"deposit_received_at(1i)"
-        params[:attendee].delete :"deposit_received_at(2i)"
-        params[:attendee].delete :"deposit_received_at(3i)"
+    if (@page == 'admin')
+      if (!current_user.is_admin?)
+        render_access_denied and return
       else
-        @attendee.deposit_received_at = nil
+
+        # comment
+        if (!params[:attendee][:comment].nil?)
+          @attendee.comment = params[:attendee][:comment]
+          params[:attendee].delete :comment
+        end
+
+        # deposit_received_at
+        if (params[:attendee][:"deposit_received_at(1i)"].present? &&
+            params[:attendee][:"deposit_received_at(2i)"].present? &&
+            params[:attendee][:"deposit_received_at(3i)"].present?) \
+        then
+          @attendee.deposit_received_at = convert_date(params[:attendee], :deposit_received_at)
+          params[:attendee].delete :"deposit_received_at(1i)"
+          params[:attendee].delete :"deposit_received_at(2i)"
+          params[:attendee].delete :"deposit_received_at(3i)"
+        else
+          @attendee.deposit_received_at = nil
+        end
       end
     end
 
