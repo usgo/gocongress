@@ -31,6 +31,10 @@
         :include_blank => true
 
   %fieldset
+    %legend Comments
     .field
-      = label '', ''
+      = f.text_area :comment, {:class => :fullwidth, :rows => 3 }
+
+  %fieldset
+    .field
       = f.submit "Submit"
