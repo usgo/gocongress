@@ -273,8 +273,10 @@ class AttendeesControllerTest < ActionController::TestCase
     sign_in @user
     a = @user.attendees.sample
     assert_equal 0, a.discounts.count
+    atn_attrs = {:discount_ids => []}
+    atn_attrs[:discount_ids] << @discount_nonautomatic.to_param
     assert_difference('a.discounts.count', +1) do
-      put :update, :id => a.to_param, :discount_ids => @discount_nonautomatc.to_param
+      put :update, {:page => 'baduk', :id => a.to_param, :attendee => atn_attrs}
     end
   end
 
@@ -282,8 +284,10 @@ class AttendeesControllerTest < ActionController::TestCase
     sign_in @user
     a = @user.attendees.sample
     assert_equal 0, a.discounts.count
+    atn_attrs = {:discount_ids => []}
+    atn_attrs[:discount_ids] << @discount_automatic.to_param
     assert_no_difference('a.discounts.count') do
-      put :update, :id => a.to_param, :discount_ids => @discount_automatc.to_param
+      put :update, {:page => 'baduk', :id => a.to_param, :attendee => atn_attrs}
     end
   end
 
