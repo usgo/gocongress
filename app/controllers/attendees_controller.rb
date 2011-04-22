@@ -118,17 +118,20 @@ class AttendeesController < ApplicationController
         @attendee.deposit_received_at = nil
       end
     end
-    
-    # only non-automatic discounts may be set
-    # (discount_ids is not attr_accessible)
+
+    # handle claimed discounts
     if (@page == 'baduk')
       params[:attendee][:discount_ids] ||= Array.new
-      params[:attendee][:discount_ids].each { |d|
-        discount = Discount.find(d)
-        if (discount.is_automatic? == false) then
-          @attendee.discounts << discount
-        end
-      }
+
+      # ignore non-integer discount ids (from unchecked boxes in the view)
+      valid_discount_ids = params[:attendee][:discount_ids].delete_if {|d| d.to_i == 0}
+
+      # assign discounts, provided they are non-automatic
+      # (only non-automatic discounts may be set by users)
+      discounts = Discount.where('is_automatic = ? and id in (?)', false, valid_discount_ids)
+      @attendee.discounts << discounts
+
+      # delete param to avoid attr_accessible warning
       params[:attendee].delete :discount_ids
     end
 
