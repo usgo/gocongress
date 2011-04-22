@@ -7,6 +7,8 @@ class AttendeesControllerTest < ActionController::TestCase
     @user_two = Factory.create(:user)
     @admin_user = Factory.create(:admin_user)
     @plan = Factory.create(:all_ages_plan)
+    @discount_automatic = Factory.create(:automatic_discount)
+    @discount_nonautomatic = Factory.create(:nonautomatic_discount)
   end
 
   test "visitor can get index" do
@@ -265,6 +267,24 @@ class AttendeesControllerTest < ActionController::TestCase
     put :update, { :id => a.id, :attendee => atn_atr_hash, :page => 'admin' }
     a = Attendee.find(a.id)
     assert_equal nil, a.deposit_received_at
+  end
+
+  test "non-admin can claim non-automatic discounts" do
+    sign_in @user
+    a = @user.attendees.sample
+    assert_equal 0, a.discounts.count
+    assert_difference('a.discounts.count', +1) do
+      put :update, :id => a.to_param, :discount_ids => @discount_nonautomatc.to_param
+    end
+  end
+
+  test "non-admin cannot claim automatic discounts" do
+    sign_in @user
+    a = @user.attendees.sample
+    assert_equal 0, a.discounts.count
+    assert_no_difference('a.discounts.count') do
+      put :update, :id => a.to_param, :discount_ids => @discount_automatc.to_param
+    end
   end
 
 end
