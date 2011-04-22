@@ -119,6 +119,19 @@ class AttendeesController < ApplicationController
       end
     end
     
+    # only non-automatic discounts may be set
+    # (discount_ids is not attr_accessible)
+    if (@page == 'baduk')
+      params[:attendee][:discount_ids] ||= Array.new
+      params[:attendee][:discount_ids].each { |d|
+        discount = Discount.find(d)
+        if (discount.is_automatic? == false) then
+          @attendee.discounts << discount
+        end
+      }
+      params[:attendee].delete :discount_ids
+    end
+
     # update attributes but do not save yet
     @attendee.attributes = params[:attendee]
 
