@@ -90,10 +90,15 @@ class AttendeesController < ApplicationController
     # there are too many attendee attributes to fit them all on
     # one form page. so, I've added a param called page
     @page = get_valid_page_from_params
-    
+
+    # only admins can see the admin page of the edit form
+    if (@page == 'admin' && !current_user.is_admin?)
+      render_access_denied and return
+    end
+
     # Page-specific queries
     init_multipage(@page)
-    
+
     # Render the specific page
     render get_view_name_from_page(@page)
   end
