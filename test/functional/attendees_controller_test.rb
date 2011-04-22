@@ -275,6 +275,11 @@ class AttendeesControllerTest < ActionController::TestCase
     assert_equal 0, a.discounts.count
     atn_attrs = {:discount_ids => []}
     atn_attrs[:discount_ids] << @discount_nonautomatic.to_param
+
+    # the checkbox list in the view will throw in some empty strings too,
+    # so we will test that, and make sure it does not crash
+    atn_attrs[:discount_ids] << ""
+
     assert_difference('a.discounts.count', +1) do
       put :update, {:page => 'baduk', :id => a.to_param, :attendee => atn_attrs}
     end
