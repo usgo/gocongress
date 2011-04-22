@@ -129,6 +129,7 @@ class AttendeesController < ApplicationController
       # assign discounts, provided they are non-automatic
       # (only non-automatic discounts may be set by users)
       discounts = Discount.where('is_automatic = ? and id in (?)', false, valid_discount_ids)
+      @attendee.discounts.clear
       @attendee.discounts << discounts
 
       # delete param to avoid attr_accessible warning
