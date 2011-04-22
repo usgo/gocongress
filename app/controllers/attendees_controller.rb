@@ -87,9 +87,8 @@ class AttendeesController < ApplicationController
   def edit
     @attendee = Attendee.find_by_id(params[:id].to_i)
     
-    # there are too many attendee attributes to fit them all on one form page
-    # so, I've added a param called page.  Alf, would you have done this differently?
-    # Thanks, -Jared 2011.01.08
+    # there are too many attendee attributes to fit them all on
+    # one form page. so, I've added a param called page
     @page = get_valid_page_from_params
     
     # Page-specific queries
