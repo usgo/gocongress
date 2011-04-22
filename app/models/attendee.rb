@@ -14,7 +14,7 @@ class Attendee < ActiveRecord::Base
     :address_1, :address_2, :city, :state, :zip, :country, :phone, :email, :birth_date, \
     :understand_minor, :congresses_attended, :is_player, :will_play_in_us_open, \
     :is_current_aga_member, :tshirt_size, :special_request, :roomate_request, \
-    :comment, :plan_ids
+    :plan_ids
 
   # define constant array of ranks
   RANKS = []
