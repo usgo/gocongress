@@ -299,4 +299,10 @@ class AttendeesControllerTest < ActionController::TestCase
     end
   end
 
+  test "non-admin cannot get admin page of edit form" do
+    sign_in @user
+    get :edit, {:page => 'admin', :id => @user.attendees.sample.to_param}
+    assert_response 403
+  end
+
 end
