@@ -1,6 +1,5 @@
 class Transaction < ActiveRecord::Base
-  attr_accessible :user_id, :trantype, :amount, :gwtranid, :gwdate
-  attr_protected :created_at, :updated_at, :updated_by_user_id
+  attr_accessible :user_id, :trantype, :amount, :gwtranid, :gwdate, :check_number, :comment
 
   # The account this transaction applies to
   belongs_to :user
