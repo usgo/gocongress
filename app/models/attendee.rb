@@ -13,7 +13,8 @@ class Attendee < ActiveRecord::Base
   attr_accessible :given_name, :family_name, :gender, :anonymous, :rank, :aga_id, \
     :address_1, :address_2, :city, :state, :zip, :country, :phone, :email, :birth_date, \
     :understand_minor, :congresses_attended, :is_player, :will_play_in_us_open, \
-    :is_current_aga_member, :tshirt_size, :special_request, :roomate_request, :comment
+    :is_current_aga_member, :tshirt_size, :special_request, :roomate_request, \
+    :comment, :plan_ids
 
   # define constant array of ranks
   RANKS = []
