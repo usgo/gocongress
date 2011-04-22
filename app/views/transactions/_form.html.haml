@@ -28,6 +28,12 @@
       = f.label :amount
       = f.text_field :amount, :size => 10
       %span.smalltext $
+    .field
+      = f.label :comment
+      = f.text_field :comment, :size => 40
+      %br
+      %span.smalltext.aligned-with-input
+        Optional.  Useful for Comps and Refunds.
 
   %fieldset.wider-labels
     %legend Gateway Transactions (Credit Card "Sale")
@@ -42,7 +48,7 @@
     %legend USGC Checking Account Transactions
     .field
       = f.label :check_number
-      = f.text_field :check_number
+      = f.text_field :check_number, :size => 10
 
   %fieldset.wider-labels
     .field

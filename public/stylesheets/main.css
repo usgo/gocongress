@@ -70,6 +70,7 @@ table.semantic tr.total th { background-color: #FFDAA3; text-align: right; }
 
 /* Table options eg. zebra striping */
 table.zebra tr:nth-child(even) td { background-color: #FFECD1; }
+table.dont-wrap-th th { white-space:nowrap; }
 
 /* Semantic table: Row emphasis */
 /* Emphasis is more important than zebra striping, so we must define it after zebra -Jared 1/13/11 */

@@ -1,6 +1,6 @@
 %h1 Transaction Details
 
-%table.lightweight
+%table.lightweight.dont-wrap-th
   %tr
     %th User
     %td= @transaction.user.email
@@ -11,6 +11,13 @@
   %tr
     %th Amount
     %td= number_to_currency @transaction.amount, :unit => ''
+  %tr
+    %th Comment
+    %td{:colspan=>2}
+      - if @transaction.comment.present?
+        = @transaction.comment
+      - else
+        No comment
   %tr
     %th= trl_attr 'transaction', 'gwtranid'
     %td= @transaction.gwtranid
