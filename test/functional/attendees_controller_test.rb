@@ -9,6 +9,7 @@ class AttendeesControllerTest < ActionController::TestCase
     @plan = Factory.create(:all_ages_plan)
     @discount_automatic = Factory.create(:automatic_discount)
     @discount_nonautomatic = Factory.create(:nonautomatic_discount)
+    @discount_nonautomatic2 = Factory.create(:nonautomatic_discount)
   end
 
   test "visitor can get index" do
@@ -275,12 +276,14 @@ class AttendeesControllerTest < ActionController::TestCase
     assert_equal 0, a.discounts.count
     atn_attrs = {:discount_ids => []}
     atn_attrs[:discount_ids] << @discount_nonautomatic.to_param
+    atn_attrs[:discount_ids] << @discount_nonautomatic2.to_param
+    atn_attrs[:discount_ids] << @discount_automatic.to_param
 
     # the checkbox list in the view will throw in some empty strings too,
     # so we will test that, and make sure it does not crash
     atn_attrs[:discount_ids] << ""
 
-    assert_difference('a.discounts.count', +1) do
+    assert_difference('a.discounts.count', +2) do
       put :update, {:page => 'baduk', :id => a.to_param, :attendee => atn_attrs}
     end
   end
