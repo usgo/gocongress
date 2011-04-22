@@ -42,7 +42,6 @@
         (@attendee.is_primary ? "have" : "has") + ' ' + |
         (@attendee.is_primary ? "you" : "this person") + ' attended?' |
       = f.number_field :congresses_attended, :size => 3, :min => 0, :max => 99, :step => 1
-      %span.smalltext This information will be retained solely for statistical purposes
     .field
       = f.label :is_player, "Will " + |
         (@attendee.is_primary ? "you" : "this person") + |
