@@ -9,6 +9,12 @@ en:
         state: "State/Province"
         tshirt_size: "T-Shirt Size"
         zip: "Zip/Postal Code"
+      event:
+        evtdate: "Date"
+        evtname: "Event"
+        evtdeparttime: "Departure Time"
+        evtstarttime: "Start Time"
+        evtprice: "Price"
       plan:
         age_min: "Minimum Age"
         age_max: "Maximum Age"

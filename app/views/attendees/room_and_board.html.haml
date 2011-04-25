@@ -54,7 +54,7 @@
             %th= trl_attr 'plan', 'name'
             %th Attendee Age
             %th= trl_attr 'plan', 'description'
-            %th= trl_attr 'plan', 'price'
+            %th.numeric= trl_attr 'plan', 'price'
     
           - plans_in_group.each do |plan|
             %tr
@@ -65,7 +65,7 @@
               %td= plan.name
               %td= plan.age_range_in_words
               %td= Markdown.new( plan.description ).to_html.html_safe
-              %td= plan.price  
+              %td.numeric= format_price(plan.price)
 
   %p Do you have specific Room or Dining Concerns or Requests?
   %fieldset

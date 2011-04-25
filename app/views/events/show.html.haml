@@ -1,19 +1,17 @@
-%p#notice= notice
-%p
-  %b Evtdate:
-  = @event.evtdate
-%p
-  %b Evtname:
-  = @event.evtname
-%p
-  %b Evtdeparttime:
-  = @event.evtdeparttime
-%p
-  %b Evtstarttime:
-  = @event.evtstarttime
-%p
-  %b Evtprice:
-  = @event.evtprice
+%h2= @event.evtname
+
+%table.lightweight
+  %tbody
+    - %w[evtdate evtdeparttime evtstarttime].each do |a|
+      %tr
+        %th= trl_attr 'event', a
+        %td= @event[a]
+    %tr
+      %th= trl_attr 'event', 'evtprice'
+      %td= format_price(@event.evtprice)
+
+%br
+
 = link_to 'Edit', edit_event_path(@event)
 |
 \#{link_to 'Back', events_path}

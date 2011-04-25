@@ -5,6 +5,10 @@ module ApplicationHelper
     signed_in?(nil)
   end
 
+  def format_price(price)
+    floatable?(price) ? number_to_currency(price, :precision=>min_precision(price)) : price
+  end
+
 	def trl_attr ( modelname, attributename )
 		# see config/locales/en.yaml
 		translate "activerecord.attributes." + modelname + "." + attributename
@@ -24,6 +28,17 @@ module ApplicationHelper
 
   def link_to_remove_fields( anchor_text, f)
     f.hidden_field(:_destroy, :class => 'tournament-round-destroy') + link_to_function( anchor_text, "remove_round(this)" )
+  end
+
+  # min_precision() returns the minimum precision necessary to express a given Float
+  def min_precision(f)
+    raise "invalid argument: expected floatable" unless floatable?(f)
+    d = f.to_f.to_s.split('.')[1]
+    d.to_f == 0 ? 0 : d.length
+  end
+
+  def floatable?(object)
+    true if Float(object) rescue false
   end
 
 end

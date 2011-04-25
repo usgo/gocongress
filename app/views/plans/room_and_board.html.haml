@@ -29,6 +29,6 @@
           %td= plan.age_range_in_words
           %td= plan.name
           %td= Markdown.new( plan.description ).to_html.html_safe
-          %td.numeric= number_to_currency plan.price
+          %td.numeric= format_price plan.price
 
 %br

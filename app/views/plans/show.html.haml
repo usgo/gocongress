@@ -12,7 +12,7 @@
     %td= @plan.has_meals ? 'Yes' : 'No'
   %tr
     %th= trl_attr 'plan', 'price'
-    %td= number_to_currency @plan.price
+    %td= format_price @plan.price
   %tr
     %th= trl_attr 'plan', 'age_min'
     %td= @plan.age_min

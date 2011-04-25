@@ -22,7 +22,7 @@
         %th Event
         %th Transport Departure Time
         %th Event Start/Arrival Time
-        %th Price
+        %th.numeric Price
         - if current_user_is_admin?
           %th{:colspan => "2"}
       - arEvt.each do |e|
@@ -30,7 +30,7 @@
           %td= e.evtname
           %td= e.evtdeparttime
           %td= e.evtstarttime
-          %td= e.evtprice
+          %td.numeric= format_price(e.evtprice)
           - if current_user_is_admin?
             %td= link_to 'Edit', edit_event_path(e)
             %td= link_to 'Delete', e, :confirm => 'Are you sure?', :method => :delete
