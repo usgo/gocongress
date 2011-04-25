@@ -45,10 +45,11 @@
   - if @plans_ordered.count > 0
     %table.semantic.zebra.fullwidth
       %tbody
-        - @plans_grouped.each do |grouping, plans_in_group|
+        - @plans_grouped.each do |category, plans_in_group|
           %tr.greater-header
             %th{ :colspan => 5 }
-              = grouping ? "Plans that include a room" : "Meals only"
+              = category.name
+              -#? "Plans that include a room" : "Meals only"
           %tr.lesser-header
             %th
             %th= trl_attr 'plan', 'name'
@@ -67,7 +68,7 @@
               %td= Markdown.new( plan.description ).to_html.html_safe
               %td.numeric= format_price(plan.price)
 
-  %p Do you have specific Room or Dining Concerns or Requests?
+  %p Do you have any specific room or dining concerns or requests?
   %fieldset
     .field
       = f.label :roomate_request

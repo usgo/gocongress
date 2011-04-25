@@ -205,8 +205,8 @@ protected
       @attendee_discount_ids = @attendee.discounts.map { |d| d.id }
     elsif page == "roomboard"
       age = @attendee.age_in_years.to_i
-      @plans_ordered = Plan.room_and_board_page.appropriate_for_age(age).order("has_rooms desc, price desc")
-      @plans_grouped = @plans_ordered.group_by {|plan| plan.has_rooms}
+      @plans_ordered = Plan.reg_form.appropriate_for_age(age).order("has_rooms desc, price desc")
+      @plans_grouped = @plans_ordered.group_by {|plan| plan.plan_category}
       @attendee_plan_ids = @attendee.plans.map {|p| p.id}
     end
   end
