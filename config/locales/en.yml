@@ -23,6 +23,11 @@ en:
         has_meals: "Has Meals"
         name: "Plan"
         price: "Price"
+      plan_category:
+        name: "Category"
+        show_on_prices_page: "Show on Prices Page"
+        show_on_roomboard_page: "Show on Room and Board Page"
+        show_on_reg_form: "Show on Registration Form"
       transaction:
         check_number: "Check Number"
         gwtranid: "Gateway Trns. ID"

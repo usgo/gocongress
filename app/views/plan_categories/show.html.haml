@@ -3,11 +3,14 @@
 %table.lightweight
   %tbody
     %tr
-      %th Show on prices page:
+      %th Show on Prices Page:
       %td= @plan_category.show_on_prices_page ? "Yes" : "No"
     %tr
-      %th Show on room and board page:
+      %th Show on Room and Board Page:
       %td= @plan_category.show_on_roomboard_page ? "Yes" : "No"
+    %tr
+      %th Show on Registration Form:
+      %td= @plan_category.show_on_reg_form ? "Yes" : "No"
 
 %br
 

@@ -6,14 +6,19 @@
         - @plan_category.errors.full_messages.each do |msg|
           %li= msg
 
-  .field
-    = f.label :name
-    = f.text_field :name
-  .field
-    = f.label :show_on_prices_page
-    = f.check_box :show_on_prices_page
-  .field
-    = f.label :show_on_roomboard_page
-    = f.check_box :show_on_roomboard_page
+  %fieldset.wider-labels
+    .field
+      = f.label trl_attr 'plan_category', 'name'
+      = f.text_field :name
+    .field
+      = f.label trl_attr 'plan_category', 'show_on_prices_page'
+      = f.check_box :show_on_prices_page
+    .field
+      = f.label trl_attr 'plan_category', 'show_on_roomboard_page'
+      = f.check_box :show_on_roomboard_page
+    .field
+      = f.label trl_attr 'plan_category', 'show_on_reg_form'
+      = f.check_box :show_on_reg_form
+
   .actions
     = f.submit 'Save'
