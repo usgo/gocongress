@@ -1,10 +1,9 @@
 %h2 All Plans
-
-= button_to 'Create a new Plan', new_plan_path, :method => "get"
-
+.flow-padding= button_to 'Create a new Plan', new_plan_path, :method => "get"
 %p
-  Here are all the Plans, organized by
+  Remember, the
   = link_to "Plan Category", plan_categories_path
+  determines which pages the Plan appears on.
 
 %table.semantic.zebra.fullwidth
   %tbody
