@@ -6,7 +6,7 @@ class PlanCategoriesController < ApplicationController
   # GET /plan_categories
   # GET /plan_categories.xml
   def index
-    @plan_categories = PlanCategory.all
+    @plan_categories = PlanCategory.order :name
 
     respond_to do |format|
       format.html # index.html.erb
