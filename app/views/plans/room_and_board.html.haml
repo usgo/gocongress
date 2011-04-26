@@ -14,10 +14,9 @@
 
 %table.semantic.zebra.fullwidth
   %tbody
-    - @plans_grouped.each do |grouping, plans_in_group|
+    - @plans_grouped.each do |category, plans_in_group|
       %tr.greater-header
-        %th{ :colspan => 5 }
-          = grouping ? "Plans that include a room" : "Meals only"
+        %th{ :colspan => 5 }= category.name
       %tr.lesser-header
         %th Attendee Age
         %th= trl_attr 'plan', 'name'

@@ -11,8 +11,8 @@ class PlansController < ApplicationController
 
   # GET /plans/room_and_board
   def room_and_board
-    plans_ordered = Plan.room_and_board_page.order("has_rooms desc, age_min asc")
-    @plans_grouped = plans_ordered.group_by {|plan| plan.has_rooms}
+    plans_ordered = Plan.room_and_board_page.order("plan_category_id, name asc")
+    @plans_grouped = plans_ordered.group_by {|plan| plan.plan_category}
   end
 
   # GET /plans/prices_and_extras

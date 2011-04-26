@@ -5,11 +5,8 @@
     %th= trl_attr 'plan', 'name'
     %td= @plan.name
   %tr
-    %th= trl_attr 'plan', 'has_rooms'
-    %td= @plan.has_rooms ? 'Yes' : 'No'
-  %tr
-    %th= trl_attr 'plan', 'has_meals'
-    %td= @plan.has_meals ? 'Yes' : 'No'
+    %th= trl_attr 'plan_category', 'name'
+    %td= @plan.plan_category.name
   %tr
     %th= trl_attr 'plan', 'price'
     %td= format_price @plan.price

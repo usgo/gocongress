@@ -19,8 +19,6 @@ en:
         age_min: "Minimum Age"
         age_max: "Maximum Age"
         description: "Description"
-        has_rooms: "Has Rooms"
-        has_meals: "Has Meals"
         name: "Plan"
         price: "Price"
       plan_category:

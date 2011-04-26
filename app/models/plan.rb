@@ -1,6 +1,5 @@
 class Plan < ActiveRecord::Base
-attr_accessible :name, :price, :age_min, :age_max, :description, :has_meals, :has_rooms
-attr_protected :created_at, :updated_at
+attr_accessible :name, :price, :age_min, :age_max, :description, :plan_category_id
 
 belongs_to :plan_category
 has_many :attendee_plans, :dependent => :destroy
@@ -11,17 +10,11 @@ scope :room_and_board_page, joins(:plan_category).where('plan_categories.show_on
 scope :prices_page, joins(:plan_category).where('plan_categories.show_on_prices_page' => true)
 scope :reg_form, joins(:plan_category).where('plan_categories.show_on_reg_form' => true)
 
-validates_presence_of :name, :description, :price, :age_min
+validates_presence_of :name, :description, :price, :age_min, :plan_category_id
 validates_length_of :name, :maximum => 50
 validates_numericality_of :price, :greater_than_or_equal_to => 0
 validates_numericality_of :age_min, :greater_than_or_equal_to => 0
 validates_numericality_of :age_max, :allow_nil => true
-
-# A plan with neither rooms nor meals is invalid.  This is implemented
-# by PlanFlagValidator (found in lib/).  Notice the naming convention
-# between plan_flag and PlanFlagValidator. -Jared 2011.02.18
-validates :has_rooms, :plan_flag => true
-validates :has_meals, :plan_flag => true
 
 def age_range_in_words
   if age_min == 0 && age_max.blank?
