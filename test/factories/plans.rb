@@ -4,6 +4,7 @@ Factory.define :plan do |f|
   f.age_min 1 + rand(100)
   f.age_max 1 + rand(100)
   f.description %w['asdf' 'fdsa'].sample
+  f.association :plan_category
 end
 
 Factory.define :all_ages_plan, :parent => :plan do |f|
