@@ -1,4 +1,4 @@
-%h1 
+%h2
   Administration for
   = @attendee.get_full_name
 
@@ -43,5 +43,6 @@
       = f.text_area :comment, {:class => "inline", :rows => 3 }
 
   %fieldset
-    .field
+    .aligned-with-input
       = f.submit "Submit"
+      = link_to "cancel", user_path(@attendee.user)
