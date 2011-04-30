@@ -16,7 +16,7 @@
   .field
     = f.label :anonymous, "Anonymous"
     = f.check_box :anonymous
-    %span.smalltext Do not show my name on the "Who&#39;s Coming" list
+    %span.smalltext Do not show name on the "Who&#39;s Coming" list
   .field
     = f.label :birth_date, 'Birth date'
     = f.date_select :birth_date, :start_year => Time.now.year, :end_year => 1900, :include_blank => true
@@ -24,10 +24,13 @@
     = f.label :understand_minor, 'Minor Agreement'
     = f.check_box :understand_minor
     %div.smalltext.aligned-with-input
-      I understand that if this attendee will not be at least 18 years of age as of July 29, 2011, I must submit the
+      I understand that if this attendee will not be at least 18 years
+      old on July 29, 2011, I must
+      %br
+      submit the
       %a{:href => "/docs/USGC2011-Liability-Release-Form.doc"} Minor Agreement Form
       to the 
-      = link_to 'deputy registrar', contact_path, :target => '_blank'
+      = link_to 'deputy registrar.', contact_path, :target => '_blank'
   .field
     = f.label :tshirt_size
     = f.select :tshirt_size, Attendee::TSHIRT_CHOICES, :include_blank => ''

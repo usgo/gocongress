@@ -56,12 +56,11 @@
 
 %h2 My Attendees
 
-%p 
-  You may add multiple
-  %strong attendees
-  on one
-  %strong user account.
-  Bring the whole family! 
+-# Currently, it is only possible to create an attendee for yourself.
+-# An admin can not create an attendee for someone else.
+-# So, we hide the link for now. -Jared 2011.1.14
+- if @showing_current_user
+  %p= link_to 'Register another attendee', new_attendee_path
   
 %table.semantic.fullwidth
   %thead
@@ -89,12 +88,6 @@
             =link_to 'Delete', a, :confirm => "Are you sure you want to delete this attendee?", :method => :delete
         - if current_user.is_admin?
           %td= link_to 'Admin', edit_attendee_path(a) + '/admin'
-
--# Currently, it is only possible to create an attendee for yourself.
--# An admin can not create an attendee for someone else.
--# So, we hide the link for now. -Jared 2011.1.14
-- if @showing_current_user
-  %p= link_to 'Register another attendee', new_attendee_path
 
 %br
 
