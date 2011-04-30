@@ -68,6 +68,7 @@
       %th Name
       %th Rank
       %th Age *
+      %th Confirmed **
       %th{:colspan => 3} Please complete all three forms
       %th
       - if current_user.is_admin?
@@ -78,6 +79,7 @@
         %td= a.get_full_name
         %td= a.get_rank_name
         %td= a.age_in_years.floor
+        %td= a.confirmed.present? ? "Yes" : "No"
         %td= link_to 'Basic Info', edit_attendee_path(a) + '/basics'
         %td= link_to 'Go Info', edit_attendee_path(a) + '/baduk'
         %td= link_to 'Room and Board', edit_attendee_path(a) + '/roomboard'
@@ -89,7 +91,10 @@
         - if current_user.is_admin?
           %td= link_to 'Admin', edit_attendee_path(a) + '/admin'
 
-%p * Age on #{CONGRESS_START_DATE.to_date.to_formatted_s(:long)}
+%p
+  * Age on #{CONGRESS_START_DATE.to_date.to_formatted_s(:long)}
+  %br
+  ** Initial deposit received, all forms filled out, association membership verified, etc.
 
 -if @has_minor_attendee
   %h3 Regarding Minors
