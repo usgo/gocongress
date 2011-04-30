@@ -1,5 +1,5 @@
 .left-column  
-  %h1= @page_title
+  %h2= @page_title
   %table.lightweight
     %tbody
       - if @user.is_admin
@@ -15,7 +15,7 @@
   %p= link_to 'Edit my account', edit_user_path(@user)
 
 .right-column
-  %h2.first-in-column Balance
+  %h2 Balance
   %table.lightweight
     %tbody
       %tr

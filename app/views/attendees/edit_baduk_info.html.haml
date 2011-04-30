@@ -1,7 +1,6 @@
-%h1 
-  Player Info. for 
-  = @attendee.given_name 
-  = @attendee.family_name
+%h2
+  Player Info. for
+  = @attendee.get_full_name
 
 = form_for( @attendee ) do |f|
 
