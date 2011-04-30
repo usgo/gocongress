@@ -1,15 +1,20 @@
-%h1 User List
+%h2 All Users
 
-%p 
-  Remember, <strong>admins</strong> can do <strong>anything</strong>.
-  Do not promote too many admins.
+%p
+  Each
+  %strong user
+  has a unique email address.  Each user can have multiple
+  = link_to "attendees.", :attendees
+  Some users are
+  %strong admins,
+  and they can do anything. Do not promote too many admins.
 
 %table.semantic.fullwidth.zebra
   %thead
     %tr
       %th Type
       %th Email
-      %th Primary Attendee
+      %th Attendees
       %th # Attendees
       %th Created
       %th{:colspan => "3"}
@@ -19,10 +24,16 @@
         %td{ :class => user.is_admin ? "emphasized" : "no-emphasis" }
           = user.is_admin ? "Admin" : "User"
         %td= user.email
-        %td= user.primary_attendee.get_full_name
+        %td
+          - user.attendees.each do |atn|
+            = atn.get_full_name
+            = "*" if atn.is_primary
+            %br
         %td= user.attendees.count
-        %td= user.created_at.to_formatted_s(:long)
+        %td= user.created_at.to_date.to_formatted_s(:rfc822)
         %td= link_to 'Account', user
         %td= link_to 'Edit', edit_user_path(user)
         %td
           = link_to 'Delete', user, :confirm => 'Are you sure?', :method => :delete
+
+%p * primary attendee
