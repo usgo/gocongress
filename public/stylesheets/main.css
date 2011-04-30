@@ -32,6 +32,7 @@ input[type="submit"], input[type="button"] { cursor: pointer; }
 
 /* Truly basic classes that could apply anywhere -Jared 12/30/10 */
 .fullwidth { width: 100%; }
+.inline { display: inline; }
 .smalltext { font-size: 12px; }
 th { text-align: left; }
 th.row { vertical-align: top; }

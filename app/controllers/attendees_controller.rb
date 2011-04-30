@@ -109,10 +109,17 @@ class AttendeesController < ApplicationController
     @attendee = Attendee.find(params[:id])
 
     # certain fields may only be set by admins
+    # most of those fields are shown on the 'admin' page
     if (@page == 'admin')
       if (!current_user.is_admin?)
         render_access_denied and return
       else
+
+        # minor_agreement_received
+        if (!params[:attendee][:minor_agreement_received].nil?)
+          @attendee.minor_agreement_received = params[:attendee][:minor_agreement_received]
+          params[:attendee].delete :minor_agreement_received
+        end
 
         # comment
         if (!params[:attendee][:comment].nil?)

@@ -54,6 +54,7 @@ class Attendee < ActiveRecord::Base
   validates_presence_of :gender
   validates_inclusion_of :gender, :in => ["m","f"], :message => "is not valid"
   validates_inclusion_of :is_primary, :in => [true, false]
+  validates_inclusion_of :minor_agreement_received, :in => [true, false]
   validates_uniqueness_of :aga_id, :allow_nil => true
   validates_presence_of :address_1, :birth_date, :city,  :country, :email, :family_name, :given_name, :rank
   validates_inclusion_of :rank, :in => NUMERIC_RANK_LIST, :message => "is not a valid rank"

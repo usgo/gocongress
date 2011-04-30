@@ -6,6 +6,7 @@ en:
         address_2: "Address Line 2"
         country: "Country Code"
         deposit_received_at: "Deposit Received On"
+        minor_agreement_received: "Minor Agreement Received"
         state: "State/Province"
         tshirt_size: "T-Shirt Size"
         zip: "Zip/Postal Code"
