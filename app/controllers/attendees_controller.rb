@@ -115,19 +115,15 @@ class AttendeesController < ApplicationController
         render_access_denied and return
       else
 
-        # minor_agreement_received
-        if (!params[:attendee][:minor_agreement_received].nil?)
-          @attendee.minor_agreement_received = params[:attendee][:minor_agreement_received]
-          params[:attendee].delete :minor_agreement_received
+        # for each simple "admin-only" field
+        [:comment, :confirmed, :minor_agreement_received].each do |p|
+          if (!params[:attendee][p].nil?)
+            @attendee[p] = params[:attendee][p]
+            params[:attendee].delete p
+          end
         end
 
-        # comment
-        if (!params[:attendee][:comment].nil?)
-          @attendee.comment = params[:attendee][:comment]
-          params[:attendee].delete :comment
-        end
-
-        # deposit_received_at
+        # deposit_received_at is not as simple
         if (params[:attendee][:"deposit_received_at(1i)"].present? &&
             params[:attendee][:"deposit_received_at(2i)"].present? &&
             params[:attendee][:"deposit_received_at(3i)"].present?) \
