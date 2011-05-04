@@ -7,6 +7,12 @@ class TransactionsControllerTest < ActionController::TestCase
     @transaction = Factory.create :tr_sale
   end
 
+  test "admin can get list of transactions" do
+    sign_in @admin_user
+    get :index
+    assert_response :success
+  end
+
   test "admin user can get edit form" do
     sign_in @admin_user
     get :edit, :id => @transaction.to_param
