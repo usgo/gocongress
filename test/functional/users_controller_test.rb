@@ -53,16 +53,16 @@ class UsersControllerTest < ActionController::TestCase
     assert_response 403
   end
   
-  test "users can not edit other users" do
+  test "users cannot edit other users" do
     sign_in @user
     get :edit, :id => @user_two.to_param
     assert_response 403
   end
   
-  test "users can edit themselves" do
+  test "users cannot edit themselves" do
     sign_in @user
     get :edit, :id => @user.to_param
-    assert_response :success
+    assert_response 403
   end
 
   test "admin should update user" do
@@ -76,15 +76,15 @@ class UsersControllerTest < ActionController::TestCase
     assert_response 403
   end
   
-  test "users can update themselves" do
+  test "users cannot update themselves" do
     sign_in @user
     email_before = @user.email
     u = @user.attributes
     u['email'] = 'freeb@narf.com'
     put :update, :id => @user.to_param, :user => u
+    assert_response 403
     @user = User.find(@user.id)
-    assert_not_equal email_before, @user.email
-    assert_redirected_to user_path(@user)
+    assert_equal email_before, @user.email
   end
   
   test "users cannot promote themselves" do
@@ -99,11 +99,9 @@ class UsersControllerTest < ActionController::TestCase
 
   test "non-admin cannot destroy a user" do
     sign_in @user
-
     assert_difference('User.count', 0) do
       delete :destroy, :id => @user.to_param
     end
-
     assert_response 403
   end
 

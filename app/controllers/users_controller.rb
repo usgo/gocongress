@@ -1,8 +1,8 @@
 class UsersController < ApplicationController
 
   # Access Control
-  before_filter :allow_only_admin, :except => [:edit, :show, :invoice, :pay, :ledger, :update]
-  before_filter :allow_only_self_or_admin, :only => [:edit, :show, :invoice, :pay, :ledger, :update]
+  before_filter :allow_only_admin, :except => [:show, :invoice, :pay, :ledger]
+  before_filter :allow_only_self_or_admin, :only => [:show, :invoice, :pay, :ledger]
 
   # GET /users
   # GET /users.xml
@@ -51,7 +51,7 @@ class UsersController < ApplicationController
   def ledger
     @user = User.find(params[:id])
     @showing_current_user = signed_in?(nil) && (current_user.id == @user.id)
-		@page_title = @showing_current_user ?
+    @page_title = @showing_current_user ?
       'My Payment History' :
       @user.primary_attendee.full_name_possessive + ' Payment History'
     @transactions = @user.transactions.where(:trantype => ['S','R']).order('created_at desc')
@@ -66,14 +66,7 @@ class UsersController < ApplicationController
   # GET /users/1/edit
   def edit
     @user = User.find(params[:id])
-    
-    # Get all jobs, but also select a column "has_job" that indicates
-    # whether the user we're editing has that particular job
-    # Is this a railsy way to do things, or is it too much SQL?
-    # -Jared 12/3/2010
-  	@jobs = Job.all :order=>"jobname asc" \
-  		, :joins=>"left join user_jobs on user_jobs.job_id = jobs.id and user_jobs.user_id = " + @user.id.to_s \
-  		, :select=>"jobs.id, jobname, coalesce(user_jobs.user_id, 0) as has_job"
+    @jobs = get_jobs_for_cbx_list
   end
 
   # POST /users
@@ -110,12 +103,15 @@ class UsersController < ApplicationController
 
     # Update mass-assignable attributes -Jared 2011.1.13
     if @user.update_attributes(mass_assignable_attrs)
+    #if @user.update_with_password(mass_assignable_attrs)
+    #  sign_in(current_user, :bypass => true)
       if current_user.is_admin?
         redirect_to users_path, :notice => "User successfully updated"
       else
         redirect_to user_path(@user), :notice => "User successfully updated"
       end
     else
+      @jobs = get_jobs_for_cbx_list
       render :action => "edit"
     end
 
@@ -127,6 +123,18 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @user.destroy
     redirect_to users_url, :notice => "User deleted"
+  end
+
+private
+
+  def get_jobs_for_cbx_list
+    # Get all jobs, but also select a column "has_job" that indicates
+    # whether the user we're editing has that particular job
+    # Is this a railsy way to do things, or is it too much SQL?
+    # -Jared 12/3/2010
+    Job.all :order=>"jobname asc" \
+      , :joins=>"left join user_jobs on user_jobs.job_id = jobs.id and user_jobs.user_id = " + @user.id.to_s \
+      , :select=>"jobs.id, jobname, coalesce(user_jobs.user_id, 0) as has_job"
   end
 
 end

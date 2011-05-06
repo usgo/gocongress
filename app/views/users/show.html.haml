@@ -12,7 +12,11 @@
       %tr
         %th Created
         %td= @user.created_at.to_formatted_s(:long)
-  %p= link_to 'Edit my account', edit_user_path(@user)
+  %p
+    = link_to 'Edit My Account', edit_user_registration_path
+    %br
+    - if current_user.is_admin?
+      = link_to 'User Administration', edit_user_path(@user)
 
 .right-column
   %h2 Balance
