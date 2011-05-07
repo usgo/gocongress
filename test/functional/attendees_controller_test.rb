@@ -39,6 +39,15 @@ class AttendeesControllerTest < ActionController::TestCase
     assert_response 403
   end
 
+  test "admin can create attendee under a different user" do
+    sign_in @admin_user
+    a = Factory.attributes_for(:attendee)
+    a['user_id'] = @user.id
+    assert_difference('@user.attendees.count', +1) do
+      post :create, :attendee => a
+    end
+  end
+
   test "user can create attendee under own account" do
     sign_in @user
     a = Factory.attributes_for(:attendee)
