@@ -59,13 +59,7 @@
     = link_to "registrar.", contact_path
 
 %h2 My Attendees
-
--# Currently, it is only possible to create an attendee for yourself.
--# An admin can not create an attendee for someone else.
--# So, we hide the link for now. -Jared 2011.1.14
-- if @showing_current_user
-  %p= link_to 'Register another attendee', new_attendee_path
-  
+%p= link_to 'Register another attendee', add_attendee_to_user_path  
 %table.semantic.fullwidth
   %thead
     %tr

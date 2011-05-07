@@ -1,4 +1,6 @@
 = form_for(@attendee) do |f|
+  = f.hidden_field :user_id
+
   - if @attendee.errors.any?
     #error_explanation
       %h2

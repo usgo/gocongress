@@ -40,18 +40,32 @@ class AttendeesController < ApplicationController
   end
 
   # GET /attendees/new
+  # GET /users/:id/attendees/new
   def new
 
-    # visitors can not get the new attendee form
+    # visitors cannot get the new attendee form
     unless current_user.present? then
       render_access_denied
       return
     end
 
-    # copy over certain fields from the primary_attendee -Jared
+    # Which user are we adding this new attendee to?
+    target_user_id = params[:id].present? ? params[:id].to_i : current_user.id
+
+    # Only admins can add attendees to other users
+    if !current_user.is_admin? && target_user_id != current_user.id then
+      render_access_denied
+      return
+    end
+
+    # Instantiate a blank attendee for the target user
     @attendee = Attendee.new
+    @attendee.user_id = target_user_id
+
+    # Copy certain fields from the target user's primary_attendee
+    target_user = User.find(target_user_id)
     ['phone','address_1','address_2','city','state','zip','country','phone','email'].each { |f|
-      @attendee[f] = current_user.primary_attendee[f]
+      @attendee[f] = target_user.primary_attendee[f]
     }
   end
   
@@ -64,14 +78,21 @@ class AttendeesController < ApplicationController
       return
     end
 
-    # no-one can create an attendee under a different user
-    if params[:attendee][:user_id].present? and params[:attendee][:user_id] != current_user.id then
+    # For which user are we creating this attendee?
+    params[:attendee][:user_id] ||= current_user.id
+    
+    # Delete user_id from params hash to avoid attr_accessible mass-assignment warning
+    target_user_id = params[:attendee][:user_id]
+    params[:attendee].delete :user_id
+
+    # Only admins can create an attendee under a different user
+    if target_user_id != current_user.id && !current_user.is_admin? then
       render_access_denied
       return
     end
 
     @attendee = Attendee.new(params[:attendee])
-    @attendee.user_id = current_user.id
+    @attendee.user_id = target_user_id
     if @attendee.save
       # After successful save, redirect to the "Edit Go Info" form
       # We are afraid if we do not, then no one will fill it out -Jared
@@ -186,13 +207,10 @@ class AttendeesController < ApplicationController
       return
     end
 
+    target_attendee_user_id = target_attendee.user_id
     target_attendee.destroy
     flash[:notice] = "Attendee deleted"
-    if belonged_to_current_user
-      redirect_to user_path(current_user)
-    else
-      redirect_to users_path
-    end
+    redirect_to user_path(target_attendee_user_id)
   end
 
   # GET /attendees/vip

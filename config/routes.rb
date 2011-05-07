@@ -6,6 +6,7 @@ Gocongress::Application.routes.draw do
   get "home/transportation"
   get "home/kaboom"
 
+  # todo: use get instead of match?
   match 'preregistrants' => 'preregistrant#index', :as => 'preregistrants'
   match 'contact' => 'user_jobs#index'
   match '/popup/:action' => 'popup', :as => 'popup'
@@ -25,6 +26,7 @@ Gocongress::Application.routes.draw do
 
   resources :users do
     member do
+      get 'attendees/new' => 'attendees#new', :as => 'add_attendee_to'
       get 'invoice'
       get 'ledger'
       get 'pay'
