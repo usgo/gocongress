@@ -4,14 +4,13 @@ Gocongress::Application.routes.draw do
   get "home/index"
   get "home/transportation"
   get "home/kaboom"
+  get 'contact' => 'user_jobs#index'
+  get 'prices_and_extras' => 'plans#prices_and_extras'
+  get 'pricing' => 'home#pricing'
+  get 'room_and_board' => 'plans#room_and_board'
+  get 'vip' => 'attendees#vip'
 
-  # todo: use get instead of match?
-  match 'contact' => 'user_jobs#index'
   match '/popup/:action' => 'popup', :as => 'popup'
-  match 'prices_and_extras' => 'plans#prices_and_extras'
-  match 'pricing' => 'home#pricing'
-  match 'room_and_board' => 'plans#room_and_board'
-  match 'vip' => 'attendees#vip'
 
   devise_for :users
 
