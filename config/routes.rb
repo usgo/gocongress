@@ -1,13 +1,11 @@
 Gocongress::Application.routes.draw do
 
-  get "preregistrant/index"
   get "home/access_denied"
   get "home/index"
   get "home/transportation"
   get "home/kaboom"
 
   # todo: use get instead of match?
-  match 'preregistrants' => 'preregistrant#index', :as => 'preregistrants'
   match 'contact' => 'user_jobs#index'
   match '/popup/:action' => 'popup', :as => 'popup'
   match 'prices_and_extras' => 'plans#prices_and_extras'
@@ -23,6 +21,9 @@ Gocongress::Application.routes.draw do
   # resource routes (maps HTTP verbs to controller actions automatically):
   resources :attendees, :contents, :discounts, :events, :jobs
   resources :plans, :plan_categories, :tournaments, :transactions
+
+  # some resources do not need all seven default actions
+  resources :preregistrants, :only => [:index]
 
   resources :users do
     member do

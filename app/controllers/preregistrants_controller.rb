@@ -1,4 +1,4 @@
-class PreregistrantController < ApplicationController
+class PreregistrantsController < ApplicationController
 
   # Access Control
   before_filter :allow_only_admin
