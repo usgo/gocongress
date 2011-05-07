@@ -26,10 +26,13 @@ Gocongress::Application.routes.draw do
 
   resources :users do
     member do
-      get 'attendees/new' => 'attendees#new', :as => 'add_attendee_to'
       get 'invoice'
       get 'ledger'
       get 'pay'
+
+      # todo: attendees should probably be a nested resource of users
+      # see http://guides.rubyonrails.org/routing.html#nested-resources
+      get 'attendees/new' => 'attendees#new', :as => 'add_attendee_to'
     end
   end
 
