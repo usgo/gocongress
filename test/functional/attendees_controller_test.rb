@@ -85,7 +85,7 @@ class AttendeesControllerTest < ActionController::TestCase
     assert_difference('Attendee.count', -1) do
       delete :destroy, :id => @attendee.to_param
     end
-    assert_redirected_to users_path
+    assert_redirected_to user_path(@attendee.user)
     assert_equal 'Attendee deleted', flash[:notice]
   end
 
@@ -95,7 +95,7 @@ class AttendeesControllerTest < ActionController::TestCase
     assert_difference('Attendee.count', -1) do
       delete :destroy, :id => @user.primary_attendee.to_param
     end
-    assert_redirected_to users_path
+    assert_redirected_to user_path(@user)
   end
 
   test "visitor can not get edit" do
