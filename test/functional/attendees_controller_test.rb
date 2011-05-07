@@ -17,19 +17,19 @@ class AttendeesControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  test "visitor can not get new form" do
+  test "visitor cannot get new form" do
     get :new
     assert_response 403
   end
 
-  test "visitor can not create attendee" do
+  test "visitor cannot create attendee" do
     assert_no_difference('Attendee.count', 0) do
       post :create, :attendee => Factory.attributes_for(:attendee)
     end
     assert_response 403
   end
 
-  test "user can not create attendee under a different user" do
+  test "user cannot create attendee under a different user" do
     sign_in @user
     a = Factory.attributes_for(:attendee)
     a['user_id'] = @user_two.id
@@ -60,7 +60,7 @@ class AttendeesControllerTest < ActionController::TestCase
     assert_redirected_to user_path(@user)
   end
 
-  test "non-admin can NOT destroy any primary attendee" do
+  test "non-admin cannot destroy any primary attendee" do
     sign_in @user
     assert_no_difference('Attendee.count') do
       delete :destroy, :id => @user.primary_attendee.to_param
@@ -68,7 +68,7 @@ class AttendeesControllerTest < ActionController::TestCase
     assert_response 403
   end
 
-  test "non-admin can NOT destroy attendee from other user" do
+  test "non-admin cannot destroy attendee from other user" do
     sign_in @user
     a = Factory(:attendee)
     @user_two.attendees << a
@@ -98,12 +98,12 @@ class AttendeesControllerTest < ActionController::TestCase
     assert_redirected_to user_path(@user)
   end
 
-  test "visitor can not get edit" do
+  test "visitor cannot get edit" do
     get :edit, :id => @attendee.to_param
     assert_response 403
   end
 
-  test "user can not edit another user's attendee" do
+  test "user cannot edit another user's attendee" do
     sign_in @user
     get :edit, :id => @attendee.to_param
     assert_response 403
@@ -125,7 +125,7 @@ class AttendeesControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  test "user can not update another user's attendee" do
+  test "user cannot update another user's attendee" do
     sign_in @user
     target_attendee = @user_two.attendees.first
     target_attendee.state = 'NY'
@@ -181,7 +181,7 @@ class AttendeesControllerTest < ActionController::TestCase
     assert_redirected_to user_path(@user.to_param)
 	end
 
-  test "user can NOT select plan for attendee belonging to someone else" do
+  test "user cannot select plan for attendee belonging to someone else" do
     sign_in @user
     a = @user_two.attendees.sample
 

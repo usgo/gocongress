@@ -48,7 +48,7 @@ class UsersControllerTest < ActionController::TestCase
     assert_response :success
   end
   
-  test "visitors can not get edit" do
+  test "visitors cannot get edit" do
     get :edit, :id => @user.to_param
     assert_response 403
   end
@@ -128,7 +128,7 @@ class UsersControllerTest < ActionController::TestCase
     assert_equal @job.id, @user.jobs.first.id
   end
 
-  test "user can NOT assign jobs even to themself" do
+  test "user cannot assign jobs even to themself" do
     sign_in @user
 
     # starting with zero jobs ..

@@ -19,7 +19,7 @@ class EventsControllerTest < ActionController::TestCase
     assert_response 403
   end
 
-  test "non-admin can NOT create event" do
+  test "non-admin cannot create event" do
     sign_in @user
     post :create, :event => @event.attributes
     assert_response 403

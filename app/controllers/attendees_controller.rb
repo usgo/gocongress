@@ -72,7 +72,7 @@ class AttendeesController < ApplicationController
   # POST /attendees
   def create
 
-    # visitors can not create attendees
+    # visitors cannot create attendees
     unless current_user.present? then
       render_access_denied
       return

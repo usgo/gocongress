@@ -34,7 +34,7 @@ class PlansControllerTest < ActionController::TestCase
     assert_response 403
   end
 
-  test "non-admin can NOT create plan" do
+  test "non-admin cannot create plan" do
     sign_in @user
     post :create, :plan => @plan.attributes
     assert_response 403
@@ -48,7 +48,7 @@ class PlansControllerTest < ActionController::TestCase
     assert_redirected_to plans_path
   end
 
-  test "non-admin can NOT show plan" do
+  test "non-admin cannot show plan" do
   	sign_in @user
     get :show, :id => @plan.to_param
     assert_response 403
