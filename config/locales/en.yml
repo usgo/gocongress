@@ -28,6 +28,7 @@ en:
         show_on_roomboard_page: "Show on Room and Board Page"
         show_on_reg_form: "Show on Registration Form"
       transaction:
+        amount: "Amount"
         check_number: "Check Number"
         gwtranid: "Gateway Trns. ID"
         gwdate: "Gateway Date"

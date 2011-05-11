@@ -1,0 +1,4 @@
+Created, Type, Amount, User, GW Tran. ID, Check No., Last Edit, Updated, GW Date, Comment
+= FasterCSV.generate do |csv|
+  - @transactions.each do |t|
+    - csv << transaction_to_array(t)

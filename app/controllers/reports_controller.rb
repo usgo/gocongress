@@ -24,7 +24,24 @@ class ReportsController < ApplicationController
     }
     respond_to do |format|
       format.html do render 'overdue_deposits.html.haml' end
-      format.csv do render_csv("overdue_users_#{Time.now.strftime("%Y-%m-%d")}") end
+      format.csv do render_csv("usgc_overdue_users_#{Time.now.strftime("%Y-%m-%d")}") end
+    end
+  end
+
+  def transactions
+    @transactions = Transaction.all
+    @sales = Transaction.where("trantype = ?", "S")
+    @comps = Transaction.where("trantype = ?", "C")
+    @refunds = Transaction.where("trantype = ?", "R")
+    
+    @sales_sum = @sales.sum(:amount)
+    @comps_sum = @comps.sum(:amount)
+    @refunds_sum = @refunds.sum(:amount)
+    @total_sum = @sales_sum - @comps_sum - @refunds_sum
+
+    respond_to do |format|
+      format.html do render 'transactions.html.haml' end
+      format.csv do render_csv("usgc_transactions_#{Time.now.strftime("%Y-%m-%d")}") end
     end
   end
 
