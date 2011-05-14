@@ -1,0 +1,21 @@
+%h2 Change Email Address
+
+= form_for(@user) do |f|
+  = hidden_field_tag 'page', 'edit_email'
+
+  - if @user.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(@user.errors.count, "error")
+        prohibited this user from being saved:
+      %ul
+        - @user.errors.full_messages.each do |msg|
+          %li= msg
+
+  %fieldset.wider-labels
+    .field
+      = f.label :email, "New Email Address"
+      = f.text_field :email
+  %br
+  .actions
+    = f.submit

@@ -26,6 +26,7 @@ Gocongress::Application.routes.draw do
 
   resources :users do
     member do
+      get 'edit_email', :as => 'edit_email_for'
       get 'edit_password', :as => 'edit_password_for'
       get 'invoice'
       get 'ledger'

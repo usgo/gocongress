@@ -1,8 +1,13 @@
 class UsersController < ApplicationController
 
   # Access Control
-  before_filter :allow_only_admin, :except => [:edit_password, :show, :invoice, :pay, :ledger]
-  before_filter :allow_only_self_or_admin, :only => [:edit_password, :show, :invoice, :pay, :ledger]
+  before_filter :allow_only_admin, :except => [:edit_email, :edit_password, :show, :invoice, :pay, :ledger, :update]
+  before_filter :allow_only_self_or_admin, :only => [:edit_email, :edit_password, :show, :invoice, :pay, :ledger, :update]
+
+  # GET /users/1/edit_email
+  def edit_email
+    @user = User.find(params[:id])
+  end
 
   # GET /users/1/edit_password
   def edit_password

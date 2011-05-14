@@ -13,6 +13,8 @@
         %th Created
         %td= @user.created_at.to_formatted_s(:long)
   %p
+    = link_to 'Change Email', edit_email_for_user_path(@user)
+    %br
     = link_to 'Change Password', edit_password_for_user_path(@user)
     %br
     - if current_user.is_admin?
