@@ -68,7 +68,7 @@ class UsersControllerTest < ActionController::TestCase
   test "admin should update user" do
     sign_in @admin_user
     put :update, :id => @user.to_param, :user => @user.attributes
-    assert_redirected_to users_path
+    assert_redirected_to user_path(@user)
   end
   
   test "visitor should NOT update user" do
@@ -76,15 +76,21 @@ class UsersControllerTest < ActionController::TestCase
     assert_response 403
   end
   
-  test "users cannot update themselves" do
+  test "users can update own email address" do
     sign_in @user
     email_before = @user.email
-    u = @user.attributes
-    u['email'] = 'freeb@narf.com'
+
+    # define a new email that is different from the old one
+    new_email_addy = 'freeb@narf.com'
+    assert_not_equal new_email_addy, @user.email
+
+    # put to update
+    u = @user.attributes.merge({ 'email' => new_email_addy })
     put :update, :id => @user.to_param, :user => u
-    assert_response 403
+    
+    # assert that email changed
     @user = User.find(@user.id)
-    assert_equal email_before, @user.email
+    assert_not_equal email_before, @user.email
   end
   
   test "users cannot promote themselves" do
