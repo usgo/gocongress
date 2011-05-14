@@ -13,7 +13,7 @@
         %th Created
         %td= @user.created_at.to_formatted_s(:long)
   %p
-    = link_to 'Edit My Account', edit_user_registration_path
+    = link_to 'Change Password', edit_password_for_user_path(@user)
     %br
     - if current_user.is_admin?
       = link_to 'User Administration', edit_user_path(@user)

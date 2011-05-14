@@ -144,4 +144,16 @@ class UsersControllerTest < ActionController::TestCase
     @user = User.find(@user.id)
     assert_equal 0, @user.jobs.size
   end
+
+  test "admin can change a user password" do
+    sign_in @admin_user
+    enc_pw_before = @user.encrypted_password
+    u = { 'password' => 'greeblesnarf' }
+    put :update, :id => @user.to_param, :user => u
+    
+    # re-load the user to see if the encrypted_password changed
+    @user = User.find @user.id
+    assert_not_equal @user.encrypted_password, enc_pw_before
+  end
+
 end

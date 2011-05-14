@@ -1,8 +1,13 @@
 class UsersController < ApplicationController
 
   # Access Control
-  before_filter :allow_only_admin, :except => [:show, :invoice, :pay, :ledger]
-  before_filter :allow_only_self_or_admin, :only => [:show, :invoice, :pay, :ledger]
+  before_filter :allow_only_admin, :except => [:edit_password, :show, :invoice, :pay, :ledger]
+  before_filter :allow_only_self_or_admin, :only => [:edit_password, :show, :invoice, :pay, :ledger]
+
+  # GET /users/1/edit_password
+  def edit_password
+    @user = User.find(params[:id])
+  end
 
   # GET /users
   # GET /users.xml
@@ -84,6 +89,9 @@ class UsersController < ApplicationController
   # PUT /users/1.xml
   def update
     @user = User.find(params[:id])
+    
+    # Which view did we come from?
+    params[:page] ||= 'edit'
 
     # Only admins can promote or demote other admins -Jared 2011.1.13
     if current_user_is_admin? && params[:user][:is_admin].present?
@@ -101,18 +109,19 @@ class UsersController < ApplicationController
     # from the params hash to avoid a warning. -Jared 2011.1.30
     mass_assignable_attrs = params[:user].except(:is_admin, :job_ids)
 
-    # Update mass-assignable attributes -Jared 2011.1.13
-    if @user.update_attributes(mass_assignable_attrs)
-    #if @user.update_with_password(mass_assignable_attrs)
-    #  sign_in(current_user, :bypass => true)
-      if current_user.is_admin?
-        redirect_to users_path, :notice => "User successfully updated"
-      else
-        redirect_to user_path(@user), :notice => "User successfully updated"
-      end
+    # Update mass-assignable attributes. update_with_password() performs 
+    # some extra validation before calling update_attributes
+    if @user.update_with_password(mass_assignable_attrs)
+
+      # When changing our own password, refresh session credentials
+      # or else we will get logged out!
+      # Credit: Bill Eisenhauer
+      sign_in(@user, :bypass => true) if (current_user.id == @user.id)
+
+      redirect_to user_path(@user), :notice => "User successfully updated"
     else
       @jobs = get_jobs_for_cbx_list
-      render :action => "edit"
+      render :action => params[:page]
     end
 
   end

@@ -145,6 +145,17 @@ class User < ActiveRecord::Base
     return num_atnd_paid
   end
 
+  # Override the built-in devise method update_with_password()
+  # so that we don't need current_password
+  # Credit: Carlos Antonio da Silva
+  def update_with_password(params={})
+    if params[:password].blank?
+      params.delete(:password)
+      params.delete(:password_confirmation) if params[:password_confirmation].blank?
+    end
+    update_attributes(params)
+  end
+
 private
 
   # make sure you:
