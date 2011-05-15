@@ -1,18 +1,8 @@
 /* Basic element styling (no classes yet) */
 * { margin: 0px; padding: 0px; }
-body { background-color: white; font-family: Times, serif; }
-h1 { font-family: Helvetica, sans-serif; font-size: 32px; }
-h2 { font-family: Helvetica, sans-serif; }
-h3 { font-family: Helvetica, sans-serif; }
-h4 { font-family: Helvetica, sans-serif; }
-th { font-family: Helvetica, sans-serif; }
-td { font-family: Times, serif; }
-p { font-family: Times, serif; font-size: 16px; }
-span { font-family: Times, serif; font-size: 16px; }
-div { font-family: Times, serif; font-size: 16px; }
+body { background-color: white; }
 hr { margin: 1em 0em 1em 0em; }
-blockquote { 
-	font-family: Times, serif; 
+blockquote {
 	font-size: 14px; 
 	font-style: oblique; 
 	padding: 0px 10px; 
@@ -22,13 +12,20 @@ fieldset {
   padding: 0.2em;
   margin: 0em;
 }
-legend { 
-	font-family: Helvetica, sans-serif; 
+legend {
 	font-size: 18px; 
 	font-weight: bold;
 	padding: 1em 0em 0.25em 0em;
 }
 input[type="submit"], input[type="button"] { cursor: pointer; }
+
+/* Font Families */
+h1, h2, h3, h4, h5, h6, legend, th { font-family: Helvetica, sans-serif; }
+body, td, p, span, div, li, hr, blockquote { font-family: Times, serif; }
+
+/* Basic font sizing */
+h1 { font-size: 32px; }
+p, span, div { font-size: 16px; }
 
 /* Truly basic classes that could apply anywhere -Jared 12/30/10 */
 .fullwidth { width: 100%; }
@@ -88,16 +85,15 @@ dd { float: left; }
 #header { margin: 0 auto; padding: 8px 0px 5px 0px; width: 900px; }
 
 #usgc-title-container { float: left; }
-#usgc-title-container h1 { 
-	font-family: Helvetica, sans-serif; 
+#usgc-title-container h1 {
 	font-size: 32px; 
 	line-height: 33px; 
 }
 #usgc-title-container a { color: black; text-decoration: none; }
 
-#usgc-when-where-container { 
-	float: right; 
-	font-family: Helvetica, sans-serif; 
+#usgc-when-where-container {
+  float: right;
+  font-family: Helvetica, sans-serif;
 	font-size: 22px; 
 	line-height: 23px;
 	margin-top: 10px;
@@ -113,7 +109,7 @@ dd { float: left; }
 	border-left: 1px solid #EEE;
 	display: block;
 	float: left;
-	font-family: Helvetica, sans-serif; 
+	font-family: Helvetica, sans-serif;
 	font-size: 14px;
 	font-weight: bold; 
 	line-height: 16px;
