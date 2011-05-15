@@ -16,6 +16,8 @@ en:
         evtdeparttime: "Departure Time"
         evtstarttime: "Start Time"
         evtprice: "Price"
+      job:
+        jobname: "Position"
       plan:
         age_min: "Minimum Age"
         age_max: "Maximum Age"
@@ -40,6 +42,10 @@ en:
         name: "Discount Name"
       user:
         created_at: "Created"
+    models:
+      job:
+        one: "Position"
+        other: "Positions"
   views:
     pagination:
       next: "Next"
