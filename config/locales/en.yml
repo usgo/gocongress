@@ -43,6 +43,9 @@ en:
       user:
         created_at: "Created"
     models:
+      content:
+        one: "Announcement"
+        other: "Announcements"
       job:
         one: "Position"
         other: "Positions"
