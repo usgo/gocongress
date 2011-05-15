@@ -87,17 +87,21 @@ dd { float: left; }
 #usgc-title-container { float: left; }
 #usgc-title-container h1 {
 	font-size: 32px; 
-	line-height: 33px; 
+	line-height: 33px;
+	color: white;
+	text-shadow: 0px 0px 5px black;
 }
-#usgc-title-container a { color: black; text-decoration: none; }
+#usgc-title-container a { color: white; text-decoration: none; }
 
 #usgc-when-where-container {
+  color: white;
   float: right;
   font-family: Helvetica, sans-serif;
 	font-size: 22px; 
 	line-height: 23px;
 	margin-top: 10px;
 	text-align: right;
+	text-shadow: 0px 0px 5px black;
 }
 
 /* Nav */
