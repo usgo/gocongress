@@ -1,10 +1,5 @@
 = form_for @plan do |f|
-  -if @plan.errors.any?
-    #error_explanation
-      %h2= "#{pluralize(@plan.errors.count, "error")} prohibited this plan from being saved:"
-      %ul
-        - @plan.errors.full_messages.each do |msg|
-          %li= msg
+  = render :partial => "shared/error_messages", :locals => { :resource => @plan }
 
   %fieldset
     .field

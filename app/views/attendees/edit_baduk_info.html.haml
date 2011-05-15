@@ -12,14 +12,7 @@
   -# which validations to run
   = hidden_field_tag :page, @page
 
-  - if @attendee.errors.any?
-    #error_explanation
-      %h2
-        = pluralize(@attendee.errors.count, "error")
-        prohibited this attendee from being saved:
-      %ul
-        - @attendee.errors.full_messages.each do |msg|
-          %li= msg
+  = render :partial => "shared/error_messages", :locals => { :resource => @attendee }
 
   - if @discounts.count > 0
     %fieldset

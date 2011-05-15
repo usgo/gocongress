@@ -1,17 +1,12 @@
 = form_for(@job) do |f|
-  - if @job.errors.any?
-    #error_explanation
-      %h2
-        = pluralize(@job.errors.count, "error")
-        prohibited this job from being saved:
-      %ul
-        - @job.errors.full_messages.each do |msg|
-          %li= msg
+  = render :partial => "shared/error_messages", :locals => { :resource => @job }
 
   %fieldset
     .field
       = f.label :jobname
       = f.text_field :jobname
+      %span.smalltext
+        Job title
     .field
       = f.label :email
       = f.text_field :email
@@ -34,7 +29,7 @@
           You can format the text (bold, etc.) with 
           %a{ :href => 'http://en.wikipedia.org/wiki/Markdown', :target => '_blank' } Markdown 
           syntax.
-      = f.text_area :description, :class => 'wide'
+      = f.text_area :description, :class => 'wide', :rows => 4
 
   .field
     %label

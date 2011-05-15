@@ -1,15 +1,7 @@
 = form_for(@attendee) do |f|
   = f.hidden_field :user_id
 
-  - if @attendee.errors.any?
-    #error_explanation
-      %h2
-        = pluralize(@attendee.errors.count, "error")
-        prohibited this attendee from being saved:
-      %ul
-        - @attendee.errors.full_messages.each do |msg|
-          %li= msg
-
+  = render :partial => "shared/error_messages", :locals => { :resource => @attendee }
   = render :partial => "personal_info", :locals => { :f => f }
   = render :partial => "player_info", :locals => { :f => f }
   = render :partial => "contact_info", :locals => { :f => f, :show_email_field => true }
