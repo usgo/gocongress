@@ -80,13 +80,13 @@ class AttendeesController < ApplicationController
 
     # For which user are we creating this attendee?
     params[:attendee][:user_id] ||= current_user.id
-    
+    target_user_id = params[:attendee][:user_id].to_i
+
     # Delete user_id from params hash to avoid attr_accessible mass-assignment warning
-    target_user_id = params[:attendee][:user_id]
     params[:attendee].delete :user_id
 
     # Only admins can create an attendee under a different user
-    if target_user_id != current_user.id && !current_user.is_admin? then
+    if (target_user_id != current_user.id) && !current_user.is_admin? then
       render_access_denied
       return
     end
