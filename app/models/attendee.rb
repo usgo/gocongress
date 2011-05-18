@@ -96,6 +96,13 @@ class Attendee < ActiveRecord::Base
     self.age_in_seconds / 60.0 / 60.0 / 24.0 / 365.0
   end
 
+  def attribute_names_for_csv
+    attrs = self.attribute_names
+    attrs.delete('id')
+    attrs.delete('user_id')
+    return attrs
+  end
+
   def country_is_america?
     self.country == 'US'
   end

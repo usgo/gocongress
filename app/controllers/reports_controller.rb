@@ -3,6 +3,20 @@ class ReportsController < ApplicationController
   # Access Control
   before_filter :allow_only_admin
 
+  def attendees
+    @attendees = Attendee.all
+    @attendee_count = Attendee.all.count
+    @user_count = User.all.count
+    
+    # build csv header line
+    if @attendee_count == 0 then
+      @csv_header_line = ''
+    else
+      @csv_header_line = Attendee.first.attribute_names_for_csv.join(',')
+      @csv_header_line += ',user_email'
+    end
+  end
+
   def index
   end
 

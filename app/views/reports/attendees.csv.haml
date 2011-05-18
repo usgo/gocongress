@@ -1,0 +1,4 @@
+= @csv_header_line
+= FasterCSV.generate do |csv|
+  - @attendees.each do |a|
+    - csv << attendee_to_array(a)

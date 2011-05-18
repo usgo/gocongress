@@ -1,0 +1,13 @@
+%h2 Attendees Report
+
+- umnh = User.model_name.human
+- amnh = Attendee.model_name.human
+- csv_path = reports_attendees_path + '.csv'
+
+%p
+  There are
+  = link_to pluralize(@user_count, umnh.downcase), users_path
+  and
+  = pluralize(@attendees.count, amnh.downcase) + '.'
+
+%p= button_to "Export #{amnh.pluralize} To CSV", csv_path, :method => "get"
