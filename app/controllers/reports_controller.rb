@@ -7,14 +7,16 @@ class ReportsController < ApplicationController
     @attendees = Attendee.all
     @attendee_count = Attendee.all.count
     @user_count = User.all.count
-    
+
     # build csv header line
-    if @attendee_count == 0 then
-      @csv_header_line = ''
-    else
-      @csv_header_line = Attendee.first.attribute_names_for_csv.join(',')
-      @csv_header_line += ',user_email'
+    cols = []    
+    if @attendee_count > 0 then
+      cols << Attendee.first.attribute_names_for_csv
+      cols << 'user_email'
+      claimable_discounts = Discount.where('is_automatic = ?', false).order(:name)
+      claimable_discounts.each { |d| cols << "Discount: " + safe_for_csv(d.name) }
     end
+    @csv_header_line = cols.join(',')
   end
 
   def index
@@ -77,6 +79,10 @@ private
     end
   
     render :layout => false
+  end
+
+  def safe_for_csv(str)
+    str.tr(',"', '')
   end
 
 end
