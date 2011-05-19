@@ -34,7 +34,13 @@ module ReportsHelper
       if a[attr].blank?
         ar << nil
       else
-        ar << a[attr]
+        if attr == 'rank'
+          ar << a.get_rank_name
+        elsif attr == 'tshirt_size'
+          ar << a.get_tshirt_size_name
+        else
+          ar << a[attr]
+        end
       end
     end
 

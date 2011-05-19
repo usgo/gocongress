@@ -153,4 +153,10 @@ class Attendee < ActiveRecord::Base
     self.is_player? ? 375 : 75
   end
 
+  def get_tshirt_size_name
+    tshirt_size_name = nil
+    TSHIRT_CHOICES.each { |t| if (t[1] == self.tshirt_size) then tshirt_size_name = t[0] end }
+    if tshirt_size_name.nil? then raise "assertion failed: invalid tshirt_size" end
+    return tshirt_size_name
+  end
 end
