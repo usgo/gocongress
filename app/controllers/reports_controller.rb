@@ -15,6 +15,7 @@ class ReportsController < ApplicationController
       cols << 'user_email'
       claimable_discounts = Discount.where('is_automatic = ?', false).order(:name)
       claimable_discounts.each { |d| cols << "Discount: " + safe_for_csv(d.name) }
+      Plan.order(:name).each { |p| cols << "Plan: " + safe_for_csv(p.name) }
     end
     @csv_header_line = cols.join(',')
   end

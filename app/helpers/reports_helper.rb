@@ -54,6 +54,12 @@ module ReportsHelper
       ar << claimed_discount_ids.index(d.id).present? ? 'yes' : 'no'
     end
 
+    # plans
+    plan_ids = a.plans.map { |p| p.id }
+    Plan.order(:name).each do |p|
+      ar << plan_ids.index(p.id).present? ? 'yes' : 'no'
+    end
+
     return ar
   end
 
