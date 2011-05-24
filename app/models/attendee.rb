@@ -98,8 +98,15 @@ class Attendee < ActiveRecord::Base
 
   def attribute_names_for_csv
     attrs = self.attribute_names
+
+    # do not export ids
     attrs.delete('id')
     attrs.delete('user_id')
+
+    # move human name to the front for readability in csv export
+    attrs.unshift(attrs.delete('given_name'))
+    attrs.unshift(attrs.delete('family_name'))
+
     return attrs
   end
 

@@ -11,8 +11,8 @@ class ReportsController < ApplicationController
     # build csv header line
     cols = []    
     if @attendee_count > 0 then
-      cols << Attendee.first.attribute_names_for_csv
       cols << 'user_email'
+      cols << Attendee.first.attribute_names_for_csv
       claimable_discounts = Discount.where('is_automatic = ?', false).order(:name)
       claimable_discounts.each { |d| cols << "Discount: " + safe_for_csv(d.name) }
       Plan.order(:name).each { |p| cols << "Plan: " + safe_for_csv(p.name) }

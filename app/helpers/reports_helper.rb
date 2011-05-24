@@ -29,6 +29,15 @@ module ReportsHelper
   def attendee_to_array(a)
     ar = []
 
+    # basic user attributes
+    %w[email].each do |attr|
+      if a.user.blank? || a.user[attr].blank?
+        ar << nil
+      else
+        ar << a.user[attr]
+      end
+    end
+
     # basic attendee attributes
     a.attribute_names_for_csv.each do |attr|
       if a[attr].blank?
@@ -41,15 +50,6 @@ module ReportsHelper
         else
           ar << a[attr]
         end
-      end
-    end
-
-    # basic user attributes
-    %w[email].each do |attr|
-      if a.user.blank? || a.user[attr].blank?
-        ar << nil
-      else
-        ar << a.user[attr]
       end
     end
 
