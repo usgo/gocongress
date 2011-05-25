@@ -53,17 +53,17 @@ module ReportsHelper
       end
     end
 
+    # lisa says: plans should come right after attendee attrs
+    plan_ids = a.plans.map { |p| p.id }
+    Plan.order(:name).each do |p|
+      ar << plan_ids.index(p.id).present? ? 'yes' : 'no'
+    end
+
     # claimed discounts
     claimed_discount_ids = a.discounts.where('is_automatic = ?', false).map { |d| d.id }
     claimable_discounts = Discount.where('is_automatic = ?', false).order(:name)
     claimable_discounts.each do |d|
       ar << claimed_discount_ids.index(d.id).present? ? 'yes' : 'no'
-    end
-
-    # plans
-    plan_ids = a.plans.map { |p| p.id }
-    Plan.order(:name).each do |p|
-      ar << plan_ids.index(p.id).present? ? 'yes' : 'no'
     end
 
     return ar

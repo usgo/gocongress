@@ -97,17 +97,27 @@ class Attendee < ActiveRecord::Base
   end
 
   def attribute_names_for_csv
-    attrs = self.attribute_names
-
+    
     # do not export ids
-    attrs.delete('id')
-    attrs.delete('user_id')
+    no_export_attrs = %w[id user_id]
+    
+    # Lisa says:
+    # put the name and email in the first few columns
+    # move city and zip next to address lines 1 and 2  
+    # phone should also go by address
+    first_attrs = %w[family_name given_name city zip address_1 address_2 phone]
+    
+    # we should move roommate request next to the plans
+    last_attrs = %w[special_request roomate_request]
 
-    # move human name to the front for readability in csv export
-    attrs.unshift(attrs.delete('given_name'))
-    attrs.unshift(attrs.delete('family_name'))
+    attrs = self.attribute_names.delete_if { |x| 
+      first_attrs.index(x) ||
+      last_attrs.index(x) ||
+      no_export_attrs.index(x)
+    }
 
-    return attrs
+    # note: the order must match attendee_to_array() in reports_helper.rb
+    return first_attrs.concat(attrs.concat(last_attrs))
   end
 
   def country_is_america?
