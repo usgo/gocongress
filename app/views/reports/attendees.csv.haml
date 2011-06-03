@@ -1,4 +1,6 @@
 = @csv_header_line
-= FasterCSV.generate do |csv|
-  - @attendees.each do |a|
-    - csv << attendee_to_array(a)
+- @attendees.each do |a|
+
+  -# notice how we mark each line as html_safe to prevent 
+  -# double escaping, or escaping of field-quotes
+  = FasterCSV.generate_line( attendee_to_array(a) ).html_safe

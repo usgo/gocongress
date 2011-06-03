@@ -19,6 +19,11 @@ class ReportsController < ApplicationController
       claimable_discounts.each { |d| cols << "Discount: " + safe_for_csv(d.name) }
     end
     @csv_header_line = cols.join(',')
+    
+    respond_to do |format|
+      format.html do render 'attendees.html.haml' end
+      format.csv do render_csv("usgc_attendees_#{Time.now.strftime("%Y-%m-%d")}") end
+    end
   end
 
   def index

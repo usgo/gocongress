@@ -22,7 +22,7 @@ module ReportsHelper
     a << (t.updated_by_user.present? ? t.updated_by_user.primary_attendee.given_name : nil)
     a << t.updated_at.to_date
     a << (t.gwdate.present? ? t.gwdate.to_date : nil)
-    a << (t.comment.present? ? t.comment : nil)
+    a << (t.comment.present? ? html_escape(t.comment) : nil)
     return a
   end
 
@@ -48,7 +48,9 @@ module ReportsHelper
         elsif attr == 'tshirt_size'
           ar << a.get_tshirt_size_name
         else
-          ar << a[attr]
+          # entity encode things like angle brackets, or else 
+          # excel may fail to open the csv correctly
+          ar << html_escape(a[attr])
         end
       end
     end
