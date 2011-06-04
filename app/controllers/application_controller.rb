@@ -23,13 +23,8 @@ class ApplicationController < ActionController::Base
 protected
 
   def page_title
-    my_page_title = ""
-    if action_name == "index"
-      my_page_title = controller_name.capitalize + ' List'
-    else
-      my_page_title = action_name.capitalize + ' ' + controller_name.singularize.capitalize
-    end
-    return my_page_title
+    human_action_name = (action_name == "index") ? 'List' : action_name.titleize
+    return controller_name.singularize.titleize + ' ' + human_action_name
   end
 
   def current_user_is_admin?
