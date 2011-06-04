@@ -67,7 +67,14 @@ class PlansController < ApplicationController
     redirect_to plans_url
   end
 
+protected
+
+  def page_title
+    %w[room_and_board prices_and_extras].index(action_name).present? ? human_action_name : super
+  end
+
 private
+
   def get_plan_categories_for_select
     PlanCategory.all.map {|c| [c.name, c.id]}
   end

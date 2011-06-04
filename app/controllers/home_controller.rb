@@ -32,4 +32,10 @@ class HomeController < ApplicationController
   def pricing
   end
 
+protected
+
+  def page_title
+    human_action_name
+  end
+
 end

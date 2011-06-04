@@ -22,8 +22,11 @@ class ApplicationController < ActionController::Base
   
 protected
 
+  def human_action_name
+    (action_name == "index") ? 'List' : action_name.titleize
+  end
+
   def page_title
-    human_action_name = (action_name == "index") ? 'List' : action_name.titleize
     return controller_name.singularize.titleize + ' ' + human_action_name
   end
 
