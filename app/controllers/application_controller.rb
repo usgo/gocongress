@@ -26,8 +26,19 @@ protected
     (action_name == "index") ? 'List' : action_name.titleize
   end
 
+  def human_controller_name
+    controller_name.singularize.titleize
+  end
+
   def page_title
-    return controller_name.singularize.titleize + ' ' + human_action_name
+    case action_name
+    when "new", "edit"
+      return human_action_name + ' ' + human_controller_name
+    when "show"
+      return human_controller_name + ' Details'
+    else
+      return human_controller_name + ' ' + human_action_name
+    end
   end
 
   def current_user_is_admin?

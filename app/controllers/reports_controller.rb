@@ -71,7 +71,7 @@ class ReportsController < ApplicationController
 protected
 
   def page_title
-    human_action_name + ' ' + controller_name.singularize.titleize
+    human_action_name.singularize + ' ' + human_controller_name
   end
 
 private
