@@ -1,11 +1,12 @@
-%h2 Transactions Report
+- mnh = Transaction.model_name.human
+- csv_path = reports_transactions_path + '.csv'
 
-%h3 Summary
+%h2= mnh + " Report"
 
 %table.semantic
   %thead
     %tr
-      %th
+      %th= mnh + " Type"
       %th.numeric #
       %th.numeric $
   %tbody
@@ -28,7 +29,7 @@
 
 %h3 All Transactions
 
-%p= link_to "Export as CSV", reports_transactions_path + '.csv'
+%p= button_to "Export #{mnh.pluralize} To CSV", csv_path, :method => "get"
 
 %table.semantic.zebra.fullwidth
   %thead
