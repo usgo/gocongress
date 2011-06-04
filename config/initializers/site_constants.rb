@@ -11,3 +11,7 @@ CONGRESS_YEAR = "2011"
 
 # Other
 CONGRESS_START_DATE = Time.utc(CONGRESS_YEAR, 7, 30)
+
+# The go congress traditionally has one "day off". Currently, this only affects
+# the display of this particular day on the event and tournament calendars.
+DAY_OFF_DATE = Date.civil(2011, 8, 3)
