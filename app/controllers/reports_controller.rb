@@ -68,6 +68,12 @@ class ReportsController < ApplicationController
     end
   end
 
+protected
+
+  def page_title
+    human_action_name + ' ' + controller_name.singularize.titleize
+  end
+
 private
 
   def render_csv(filename = nil)
