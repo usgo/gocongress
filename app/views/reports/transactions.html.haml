@@ -27,37 +27,4 @@
       %td.numeric= @transactions.length
       %td.numeric= number_to_currency(@total_sum, :unit => '')
 
-%h3 All Transactions
-
 %p= button_to "Export #{mnh.pluralize} To CSV", csv_path, :method => "get"
-
-%table.semantic.zebra.fullwidth
-  %thead
-    %tr
-      %th Created
-      %th= trl_attr 'transaction', 'trantype'
-      %th= trl_attr 'transaction', 'amount'
-      %th User
-      %th= trl_attr 'transaction', 'gwtranid'
-      %th= trl_attr 'transaction', 'check_number'
-      %th Last Edit
-      %th Updated
-      %th= trl_attr 'transaction', 'gwdate'
-      %th Comment
-  %tbody
-    - @transactions.each do |t|
-      %tr
-        %td= t.created_at.to_date
-        %td= t.get_trantype_name
-        %td.numeric= number_to_currency t.amount, :unit => ""
-        %td= t.user.email
-        %td.numeric= t.gwtranid
-        %td.numeric= t.check_number
-        %td
-          - if t.updated_by_user.present?
-            = t.updated_by_user.primary_attendee.given_name
-        %td= t.updated_at.to_date
-        %td
-          - if t.gwdate.present?
-            = t.gwdate.to_date
-        %td= t.comment
