@@ -1,4 +1,4 @@
 class Event < ActiveRecord::Base
-  attr_accessible :evtname, :evtdeparttime, :evtstarttime, :evtprice, :evtdate
-  validates_presence_of :evtdate, :evtname
+  attr_accessible :evtname, :evtdeparttime, :start, :evtprice, :notes
+  validates_presence_of :start, :evtname
 end

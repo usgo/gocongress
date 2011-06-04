@@ -6,8 +6,8 @@ class EventsController < ApplicationController
   # GET /events
   # GET /events.xml
   def index
-		@events = Event.all :order=>"evtdate asc"
-		@arEventsByDate = @events.group_by {|event| event.evtdate}
+		@events = Event.all :order => "start asc"
+		@arEventsByDate = @events.group_by {|event| event.start.to_date}
   end
 
   # GET /events/1

@@ -11,11 +11,11 @@ en:
         tshirt_size: "T-Shirt Size"
         zip: "Zip/Postal Code"
       event:
-        evtdate: "Date"
         evtname: "Event"
         evtdeparttime: "Departure Time"
-        evtstarttime: "Start Time"
         evtprice: "Price"
+        notes: "Notes"
+        start: "Start"
       job:
         jobname: "Position"
       plan:

@@ -2,7 +2,7 @@
 
 %table.lightweight
   %tbody
-    - %w[evtdate evtdeparttime evtstarttime].each do |a|
+    - %w[start evtdeparttime notes].each do |a|
       %tr
         %th= trl_attr 'event', a
         %td= @event[a]

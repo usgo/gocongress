@@ -1,25 +1,22 @@
 = form_for(@event) do |f|
   = render :partial => "shared/error_messages", :locals => { :resource => @event }
   
-  .field
-    = f.label :evtdate, "Event Date"
-    %br/
-    = f.date_select :evtdate, :start_year => CONGRESS_YEAR.to_i, :end_year => CONGRESS_YEAR.to_i
-  .field
-    = f.label :evtname, "Event Name"
-    %br/
-    = f.text_field :evtname
-  .field
-    = f.label :evtdeparttime, "Depart Time"
-    %br/
-    = f.text_field :evtdeparttime
-  .field
-    = f.label :evtstarttime, "Start Time"
-    %br/
-    = f.text_field :evtstarttime
-  .field
-    = f.label :evtprice, "Price"
-    %br/
-    = f.text_field :evtprice
+  %fieldset
+    .field
+      = f.label :evtname, "Event Name"
+      = f.text_field :evtname
+    .field
+      = f.label :start, "Start"
+      = f.datetime_select :start, :start_year => CONGRESS_YEAR.to_i, :end_year => CONGRESS_YEAR.to_i
+    .field
+      = f.label :evtdeparttime, "Depart Time"
+      = f.text_field :evtdeparttime
+    .field
+      = f.label :evtprice, "Price"
+      = f.text_field :evtprice, :size => 5
+    .field
+      = f.label :evtprice, "Notes"
+      = f.text_field :notes
+
   .actions
     = f.submit
