@@ -4,6 +4,8 @@
     %meta{:content => "text/html", "http-equiv" => "Content-Type"}/
     %title
       US Go Congress #{CONGRESS_YEAR}
+      - unless controller_name == "home" and action_name == "index"
+        = "- #{page_title}"
 
     -# Warning: Do not use stylesheet_link_tag :cache => true
     -# because that will try to write all.css, but Heroku is 

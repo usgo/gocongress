@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
-  helper_method :current_user_is_admin?
+  helper_method :current_user_is_admin?, :page_title
 
   # Redirect Devise to a specific page on successful sign in  -Jared
   def after_sign_in_path_for(resource_or_scope)
@@ -21,6 +21,16 @@ class ApplicationController < ActionController::Base
   end
   
 protected
+
+  def page_title
+    my_page_title = ""
+    if action_name == "index"
+      my_page_title = controller_name.capitalize + ' List'
+    else
+      my_page_title = action_name.capitalize + ' ' + controller_name.singularize.capitalize
+    end
+    return my_page_title
+  end
 
   def current_user_is_admin?
     current_user.present? && current_user.is_admin?
