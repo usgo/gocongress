@@ -103,9 +103,8 @@ class Attendee < ActiveRecord::Base
     
     # Lisa says:
     # put the name and email in the first few columns
-    # move city and zip next to address lines 1 and 2  
-    # phone should also go by address
-    first_attrs = %w[family_name given_name city zip address_1 address_2 phone]
+    # group together address, city, state, etc.
+    first_attrs = %w[aga_id family_name given_name address_1 address_2 city state zip country phone]
     
     # we should move roommate request next to the plans
     last_attrs = %w[special_request roomate_request]
