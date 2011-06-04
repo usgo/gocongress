@@ -17,6 +17,7 @@ module ReportsHelper
     a << t.get_trantype_name
     a << t.amount
     a << t.user.email
+    a << t.user.primary_attendee.get_full_name
     a << t.gwtranid
     a << t.check_number
     a << (t.updated_by_user.present? ? t.updated_by_user.primary_attendee.given_name : nil)
