@@ -176,6 +176,27 @@ class AttendeesController < ApplicationController
       params[:attendee].delete :discount_ids
     end
 
+    # handle selected plans
+    # to do: this causes a lot of little queries. surely there's a better way.
+    if (@page == 'roomboard')
+    
+      # start with a blank slate
+      @attendee.plans.clear
+      
+      # for each plan, has the attendee provided a quantity?
+      # to do: only consider plans appropriate for this attendee and shown on the form
+      Plan.all.each do |p|
+      
+        # get quantity for this plan.  if quantity is undefined, to_i will return 0
+        qty = params[:attendee]["plan_#{p.id}_qty"].to_i
+        
+        # if the quantity is nonzero, create it!
+        if qty > 0 then
+          @attendee.attendee_plans.create(:plan_id => p.id, :quantity => qty)
+        end
+      end
+    end
+
     # update attributes but do not save yet
     @attendee.attributes = params[:attendee]
 
@@ -228,7 +249,6 @@ protected
       age = @attendee.age_in_years.to_i
       @plans_ordered = Plan.reg_form.appropriate_for_age(age).order("price desc")
       @plans_grouped = @plans_ordered.group_by {|plan| plan.plan_category}
-      @attendee_plan_ids = @attendee.plans.map {|p| p.id}
     end
   end
 

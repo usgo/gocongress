@@ -13,8 +13,7 @@ class Attendee < ActiveRecord::Base
   attr_accessible :given_name, :family_name, :gender, :anonymous, :rank, :aga_id, \
     :address_1, :address_2, :city, :state, :zip, :country, :phone, :email, :birth_date, \
     :understand_minor, :congresses_attended, :is_player, :will_play_in_us_open, \
-    :is_current_aga_member, :tshirt_size, :special_request, :roomate_request, \
-    :plan_ids
+    :is_current_aga_member, :tshirt_size, :special_request, :roomate_request
 
   # define constant array of ranks
   RANKS = []
@@ -156,6 +155,11 @@ class Attendee < ActiveRecord::Base
   
   def objective_pronoun_or_name_and_copula
     is_primary? ? "You are" : get_full_name + " is"
+  end
+
+  def get_plan_qty(plan_id)
+    ap = self.attendee_plans.where(:plan_id => plan_id).first
+    return ap.present? ? ap.quantity : 0
   end
 
   def get_rank_name
