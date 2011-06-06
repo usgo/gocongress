@@ -73,28 +73,29 @@ class User < ActiveRecord::Base
     get_invoice_total - amount_paid
   end
 
-  def inv_item_hash( item_description, attendee_full_name, item_price )
+  def inv_item_hash( item_description, attendee_full_name, item_price, qty )
     item = {}
     item['item_description'] = item_description
     item['attendee_full_name'] = attendee_full_name
     item['item_price'] = item_price
+    item['qty'] = qty
     return item
   end
 
   def get_invoice_items
     invoice_items = []
-    self.attendees.each { |a|
+    self.attendees.each do |a|
 
       # registration fee for each attendee
       reg_desc = "Registration " + (a.is_player? ? "(Player)" : "(Non-Player)")
-      invoice_items.push inv_item_hash( reg_desc, a.get_full_name, a.get_registration_price )
+      invoice_items.push inv_item_hash( reg_desc, a.get_full_name, a.get_registration_price, 1 )
 
       # How old will the attendee be on the first day of the event?
       # Also, truncate to an integer age to simplify logic below
       atnd_age = a.age_in_years.truncate
 
       # Does this attendee qualify for any automatic discounts?
-      Discount.where("is_automatic = ?", true).each { |d|
+      Discount.where("is_automatic = ?", true).each do |d|
 
         # Currently, we only apply age-related automatic discounts.
         # In the future, there will also be "early bird" discounts,
@@ -102,25 +103,26 @@ class User < ActiveRecord::Base
         satisfy_age_min = d.age_min.blank? || atnd_age >= d.age_min
         satisfy_age_max = d.age_max.blank? || atnd_age <= d.age_max
         if (satisfy_age_min && satisfy_age_max) then
-          invoice_items.push inv_item_hash(d.get_invoice_item_name, a.get_full_name, -1 * d.amount)
+          invoice_items.push inv_item_hash(d.get_invoice_item_name, a.get_full_name, -1 * d.amount, 1)
         end
-      }
+      end
 
       # Did this attendee claim any non-automatic discounts?
-      a.discounts.where("is_automatic = ?", false).each { |d|
-        invoice_items.push inv_item_hash(d.get_invoice_item_name, a.get_full_name, -1 * d.amount)
-      }
+      a.discounts.where("is_automatic = ?", false).each do |d|
+        invoice_items.push inv_item_hash(d.get_invoice_item_name, a.get_full_name, -1 * d.amount, 1)
+      end
 
       # room and board invoice items
-      a.plans.each { |p|
-        invoice_items.push inv_item_hash('Plan: ' + p.name, a.get_full_name, p.price)
-      }
-    }
+      a.attendee_plans.each do |ap|
+        p = ap.plan
+        invoice_items.push inv_item_hash('Plan: ' + p.name, a.get_full_name, p.price, ap.quantity)
+      end
+    end
 
     # Comp transactions, eg. VIP discounts
-    self.transactions.where(:trantype => 'C').each { |t|
-      invoice_items.push inv_item_hash('Comp', 'N/A', -1 * t.amount)
-    }
+    self.transactions.where(:trantype => 'C').each do |t|
+      invoice_items.push inv_item_hash('Comp', 'N/A', -1 * t.amount, 1)
+    end
 
     # Note: Refund transactions are NOT invoice items.  They should not
     # appear on the cost summary.  Instead, they should appear on the
@@ -131,7 +133,7 @@ class User < ActiveRecord::Base
 
   def get_invoice_total
     sum = 0
-    self.get_invoice_items.each { |item| sum += item['item_price'] }
+    self.get_invoice_items.each { |item| sum += item['item_price'] * item['qty'] }
     return sum
   end
 
