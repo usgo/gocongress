@@ -4,7 +4,7 @@ class PlansControllerTest < ActionController::TestCase
   setup do
     @plan = Factory.create(:plan)
     @user = Factory.create(:user)
-    @admin_user = Factory.create(:admin_user)
+    @admin = Factory.create(:admin_user)
   end
 
   test "visitors can get roomboard page" do
@@ -23,7 +23,7 @@ class PlansControllerTest < ActionController::TestCase
   end
 
   test "admins can get index" do
-    sign_in @admin_user
+    sign_in @admin
     get :index
     assert_response :success
   end
@@ -41,7 +41,7 @@ class PlansControllerTest < ActionController::TestCase
   end
   
   test "admin can create plan" do
-    sign_in @admin_user
+    sign_in @admin
     assert_difference('Plan.count') do
       post :create, :plan => @plan.attributes
     end
@@ -52,6 +52,17 @@ class PlansControllerTest < ActionController::TestCase
   	sign_in @user
     get :show, :id => @plan.to_param
     assert_response 403
+  end
+
+  test "admin can set max quantity" do
+    sign_in @admin
+    new_max_quantity = 100+rand(10)
+    assert_not_equal @plan.max_quantity, new_max_quantity
+    @plan.max_quantity = new_max_quantity
+    put :update, :id => @plan.id, :plan => @plan.attributes
+    plan_after = Plan.find @plan.id
+    assert_equal new_max_quantity, plan_after.max_quantity
+    assert_redirected_to plans_path
   end
 
 end

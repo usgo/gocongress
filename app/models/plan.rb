@@ -1,5 +1,6 @@
 class Plan < ActiveRecord::Base
-attr_accessible :name, :price, :age_min, :age_max, :description, :plan_category_id
+attr_accessible :name, :price, :age_min, :age_max, :description, \
+  :plan_category_id, :max_quantity
 
 belongs_to :plan_category
 has_many :attendee_plans, :dependent => :destroy
@@ -13,8 +14,9 @@ scope :reg_form, joins(:plan_category).where('plan_categories.show_on_reg_form' 
 validates_presence_of :name, :description, :price, :age_min, :plan_category_id
 validates_length_of :name, :maximum => 50
 validates_numericality_of :price, :greater_than_or_equal_to => 0
-validates_numericality_of :age_min, :greater_than_or_equal_to => 0
-validates_numericality_of :age_max, :allow_nil => true
+validates_numericality_of :age_min, :only_integer => true, :greater_than_or_equal_to => 0
+validates_numericality_of :age_max, :only_integer => true, :allow_nil => true
+validates_numericality_of :max_quantity, :only_integer => true, :greater_than_or_equal_to => 1
 
 def age_range_in_words
   if age_min == 0 && age_max.blank?

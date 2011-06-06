@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110604223918) do
+ActiveRecord::Schema.define(:version => 20110606034413) do
 
   create_table "attendee_discounts", :force => true do |t|
     t.integer  "attendee_id", :null => false
@@ -110,14 +110,15 @@ ActiveRecord::Schema.define(:version => 20110604223918) do
   end
 
   create_table "plans", :force => true do |t|
-    t.string   "name",             :limit => 50, :null => false
-    t.decimal  "price",                          :null => false
-    t.integer  "age_min",                        :null => false
+    t.string   "name",             :limit => 50,                :null => false
+    t.decimal  "price",                                         :null => false
+    t.integer  "age_min",                                       :null => false
     t.integer  "age_max"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "description"
     t.integer  "plan_category_id"
+    t.integer  "max_quantity",                   :default => 1, :null => false
   end
 
   create_table "preregistrants", :force => true do |t|
