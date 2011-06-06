@@ -176,16 +176,11 @@ class AttendeesControllerTest < ActionController::TestCase
 
 	test "user can select a plan for their own attendee" do
     sign_in @user
-    random_attendee = @user.attendees.sample
-    assert_equal(0, random_attendee.plans.count)
-
-    # prepare attribute hash for submission
-    h = random_attendee.attributes.to_hash
-    h.merge!(:plan_ids => Plan.all.sample.to_param)
-
-    # put to update
-    assert_difference('random_attendee.plans.count', +1) do
-      put :update, :id => random_attendee.to_param, :attendee => h
+    a = @user.attendees.sample
+    assert_equal(0, a.plans.count)
+    p = Plan.all.sample
+    assert_difference('a.plans.count', +1) do
+      put :update, :id => a.to_param, :page => 'roomboard', :attendee => { "plan_#{p.id}_qty" => 1 }
     end
     assert_redirected_to user_path(@user.to_param)
 	end
@@ -209,10 +204,8 @@ class AttendeesControllerTest < ActionController::TestCase
     sign_in @admin_user
     a = @user.attendees.sample
     assert_equal(0, a.plans.count)
-    h = a.attributes.to_hash
-    h[:plan_ids] = @plan.to_param
     assert_difference('a.plans.count', +1) do
-      put :update, :id => a.to_param, :attendee => h
+      put :update, :id => a.to_param, :page => 'roomboard', :attendee => { "plan_#{@plan.id}_qty" => 1 }
     end
     assert_redirected_to user_path(@user.to_param)
   end
@@ -222,26 +215,9 @@ class AttendeesControllerTest < ActionController::TestCase
     a = @user.attendees.sample
     a.plans << @plan
     assert_equal(1, a.plans.count)
-
-    # prepare attribute hash for submission
-    h = a.attributes.to_hash
-    h[:plan_ids] = ''
-
-    # put to update
-    assert_difference('a.plans.count', -1) do
-      put :update, :id => a.to_param, :attendee => h
-    end
+    put :update, :id => a.to_param, :page => 'roomboard', :attendee => {}
     assert_equal(0, a.plans.count)
     assert_redirected_to user_path(@user.to_param)
-	end
-
-	test "edit form contains hidden plan_ids input even if attendee has zero plans" do
-    sign_in @user
-    a = @user.attendees.sample
-    assert(Plan.appropriate_for_age(a.age_in_years).count > 0)
-    assert_equal(0, a.plans.count)
-    get :edit, :page => "roomboard", :id => a.to_param
-    assert_tag({ :tag => "input", :attributes => { :name => "attendee[plan_ids][]", :type => "hidden" }})
 	end
 
   test "admin can update deposit_received_at" do
