@@ -20,6 +20,13 @@
     .field
       = f.label :price
       = f.text_field :price
+    .field
+      = f.label :max_quantity
+      = f.text_field :max_quantity, :size => 3
+      %span.smalltext
+        How many should each
+        %strong attendee
+        be allowed to purchase?
 
   %fieldset
     %legend Attendee Age Requirements
@@ -31,6 +38,8 @@
       = f.label :age_max
       = f.text_field :age_max
       %span.smalltext (optional)
+
+  %br
 
   .actions
     = f.submit 'Save'

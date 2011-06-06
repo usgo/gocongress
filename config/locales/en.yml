@@ -23,6 +23,7 @@ en:
         age_max: "Maximum Age"
         description: "Description"
         name: "Plan"
+        max_quantity: "Max. Qty."
         price: "Price"
       plan_category:
         name: "Category"
