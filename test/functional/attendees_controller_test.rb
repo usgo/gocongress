@@ -216,6 +216,17 @@ class AttendeesControllerTest < ActionController::TestCase
     assert_redirected_to user_path(@user.to_param)
 	end
 
+  test "user can deselect a plan" do
+    sign_in @user
+    a = @user.attendees.sample
+    a.plans << @plan
+    assert_equal(1, a.plans.count)
+    h = { "plan_#{@plan.id}_qty" => 0 }
+    put :update, :id => a.to_param, :page => 'roomboard', :attendee => h
+    assert_equal(0, a.plans.count)
+    assert_redirected_to user_path(@user.to_param)
+  end
+
   test "admin can update deposit_received_at" do
     sign_in @admin_user
 
