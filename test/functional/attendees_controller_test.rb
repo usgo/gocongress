@@ -188,14 +188,9 @@ class AttendeesControllerTest < ActionController::TestCase
   test "user cannot select plan for attendee belonging to someone else" do
     sign_in @user
     a = @user_two.attendees.sample
-
-    # prepare attribute hash for submission
-    h = a.attributes.to_hash
-    h.merge!(:plan_ids => Plan.all.sample.to_param)
-
-    # put to update
+    h = { "plan_#{@plan.id}_qty" => 1 }
     assert_no_difference('a.plans.count') do
-      put :update, :id => a.to_param, :attendee => h
+      put :update, :id => a.to_param, :page => 'roomboard', :attendee => h
     end
     assert_response 403
   end
@@ -203,9 +198,10 @@ class AttendeesControllerTest < ActionController::TestCase
   test "admin can select plan for attendee belonging to someone else" do
     sign_in @admin_user
     a = @user.attendees.sample
+    h = { "plan_#{@plan.id}_qty" => 1 }
     assert_equal(0, a.plans.count)
     assert_difference('a.plans.count', +1) do
-      put :update, :id => a.to_param, :page => 'roomboard', :attendee => { "plan_#{@plan.id}_qty" => 1 }
+      put :update, :id => a.to_param, :page => 'roomboard', :attendee => h
     end
     assert_redirected_to user_path(@user.to_param)
   end
