@@ -143,6 +143,11 @@ class UserTest < ActiveSupport::TestCase
     # assert that user's inv. item total increases by price * qty
     expected = total_before + qty * p.price
     assert_equal expected.to_f, u.get_invoice_total.to_f
+
+    # change plan qty by 1, assert that invoice total changes by price
+    assert_difference('u.get_invoice_total.to_f', p.price) do
+      ap.quantity += 1
+    end
   end
   
   private
