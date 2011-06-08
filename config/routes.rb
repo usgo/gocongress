@@ -44,6 +44,7 @@ Gocongress::Application.routes.draw do
   get "reports/overdue_deposits"
   get 'reports/transactions'
   get 'reports/attendees'
+  get 'reports/invoices'
   
   # The priority is based upon order of creation:
   # first created -> highest priority.
