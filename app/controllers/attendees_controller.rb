@@ -129,6 +129,11 @@ class AttendeesController < ApplicationController
     @page = get_valid_page_from_params
     @attendee = Attendee.find(params[:id])
 
+    # some extra validation errors may come up, especially with associated models, and
+    # we want to save these and add them to @attendee.errors[:base] later.  This
+    # produces better-looking, more meaningful validation error display -Jared
+    extra_errors = []
+
     # certain fields may only be set by admins
     # most of those fields are shown on the 'admin' page
     if (@page == 'admin')
@@ -192,7 +197,12 @@ class AttendeesController < ApplicationController
         
         # if the quantity is nonzero, create it!
         if qty > 0 then
-          @attendee.attendee_plans.create(:plan_id => p.id, :quantity => qty)
+          ap = AttendeePlan.new(:attendee_id => @attendee.id, :plan_id => p.id, :quantity => qty)
+          if ap.valid?
+            @attendee.attendee_plans << ap
+          else
+            ap.errors.each { |k,v| extra_errors << k.to_s + " " + v.to_s }
+          end
         end
       end
     end
@@ -201,7 +211,7 @@ class AttendeesController < ApplicationController
     @attendee.attributes = params[:attendee]
 
     # run the appropriate validations for this @page 
-    if @attendee.valid_in_form_page?(@page.to_sym)
+    if @attendee.valid_in_form_page?(@page.to_sym) and extra_errors.length == 0
       @attendee.save(:validate => false)
 
       # after saving the baduk page, if the attendee has not selected a plan yet,
@@ -213,6 +223,7 @@ class AttendeesController < ApplicationController
       end
     else
       init_multipage(@page)
+      extra_errors.each { |e| @attendee.errors[:base] << e }
       render get_view_name_from_page(@page)
     end
   end
