@@ -227,12 +227,7 @@ div.download-pdf {
 div.download-pdf a {
 	line-height: 40px;
 	}	
-#usgc-location {
-	font-size: 8px; 
-	margin-left: 12px;
-	font-family: sans-serif;
-	line-height: 15px;
-	}
+
 /* Error box */
 .error { 
 	border: 3px solid red; 
