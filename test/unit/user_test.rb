@@ -128,8 +128,37 @@ class UserTest < ActiveSupport::TestCase
     assert_equal false, find_item_description?(u.get_invoice_items, dc.get_invoice_item_name)
     assert_equal true, find_item_description?(u.get_invoice_items, dy.get_invoice_item_name)
   end
+
+  test "plan with qty increases invoice total" do
+    u = Factory(:user)
+    u.attendees << Factory(:attendee, :user_id => u.id)
+    total_before = u.get_invoice_total
+
+    # add a plan with qty > 1 to attendee
+    p = Factory :plan, :max_quantity => 10 + rand(10)
+    qty = 1 + rand(p.max_quantity)
+    ap = AttendeePlan.new :plan_id => p.id, :quantity => qty
+    u.attendees.first.attendee_plans << ap
+
+    # assert that user's inv. item total increases by price * qty
+    expected = total_before + qty * p.price
+    assert_equal expected.to_f, u.get_invoice_total.to_f
+
+    # change plan qty by 1, assert that invoice total changes by price
+    assert_difference('u.get_invoice_total.to_f', p.price.to_f) do
+      ap.quantity += 1
+    end
+  end
   
-  private
+  test "attendee cannot provide qty greater than plan max_qty" do
+    u = Factory(:user)
+    u.attendees << Factory(:attendee, :user_id => u.id)
+    p = Factory :plan, :max_quantity => 1
+    ap = AttendeePlan.new :plan_id => p.id, :quantity => p.max_quantity + 1
+    assert_equal false, ap.valid?
+  end
+  
+private
   
   def find_item_description? (items, description)
     found_description = false

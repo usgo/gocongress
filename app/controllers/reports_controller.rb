@@ -29,6 +29,12 @@ class ReportsController < ApplicationController
   def index
   end
 
+  def invoices
+    @user_count = User.all.count
+    @invoice_total_across_all_users = 0
+    User.all.each { |u| @invoice_total_across_all_users += u.get_invoice_total }
+  end
+
   def emails
     @atnd_email_list = ""
     Attendee.all.each { |a|

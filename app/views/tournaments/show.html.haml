@@ -6,6 +6,9 @@
   %tr
     %th Eligible:
     %td= @tournament.elligible
+  %tr
+    %th= trl_attr 'tournament', 'openness'
+    %td= @tournament.get_openness_type_name
 %br
 
 %h3 Description

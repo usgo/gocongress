@@ -5,6 +5,9 @@
     = f.label :name
     = f.text_field :name
   .field
+    = f.label :openness
+    = f.select :openness, Tournament::OPENNESS_TYPES
+  .field
     = f.label :elligible
     = f.text_field :elligible
   .field

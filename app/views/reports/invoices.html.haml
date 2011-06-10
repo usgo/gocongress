@@ -1,0 +1,9 @@
+%h2= page_title
+%table.semantic
+  %tbody
+    %tr
+      %th Users
+      %td.numeric= @user_count
+    %tr
+      %th Total of All User&#39;s Invoices
+      %td.numeric= number_to_currency @invoice_total_across_all_users
