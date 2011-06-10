@@ -31,16 +31,11 @@
   Please email the 
   = link_to 'registrar.', contact_path
 
+%br
+
 = form_for(@attendee) do |f|
 
-  - if @attendee.errors.any?
-    #error_explanation
-      %h2
-        = pluralize(@attendee.errors.count, "error")
-        prohibited this attendee from being saved:
-      %ul
-        - @attendee.errors.full_messages.each do |msg|
-          %li= msg
+  = render :partial => "shared/error_messages", :locals => { :resource => @attendee }
 
   -# The update action will inspect the page parameter to determine 
   -# which validations to run
