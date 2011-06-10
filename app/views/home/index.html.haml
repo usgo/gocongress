@@ -46,11 +46,10 @@
   %div{:style => "clear:left;"}
 
 %p
-  The venue is the University of California, Santa Barbara.
+  The venue is the
+  = link_to 'University of California, Santa Barbara.', 'http://www.ucsb.edu'
   %br
   552 University Road, Santa Barbara California, 93106
-  %br
-  = link_to 'www.ucsb.edu', 'http://www.ucsb.edu'
 
 - if @contents.size > 0
   %h3 Announcements
