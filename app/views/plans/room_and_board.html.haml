@@ -12,6 +12,11 @@
   = link_to "registrar", contact_path
   with any questions.
 
+%p
+  Interested in off-site options?  Click 
+  = link_to 'HERE', '../docs/Offsite-Room-Options.pdf'
+  for more information about off-site hotel options
+
 %table.semantic.zebra.fullwidth
   %tbody
     - @plans_grouped.each do |category, plans_in_group|
