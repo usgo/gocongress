@@ -274,15 +274,19 @@ div.field label.wide, div.field_with_errors label.wide { width: auto; }
 div.field textarea.wide { width: 650px; }
 div.field label.inline-label { width: auto; }
 
+/* Checkbox Lists */
+div.field .cbx-list { display: inline-block; }
+div.field .cbx-list label { width: auto; vertical-align: baseline; }
+
 /* Horizontally aligning stuff with inputs */
 fieldset .aligned-with-input { margin-left: 155px; }
 #content ul.aligned-with-input { margin-left: 155px; }
 
 /* Some forms need wider labels -Jared 1/8/11 */
 fieldset.wider-labels label { width: 200px; }
-fieldset.wider-labels .aligned-with-input { margin-left: 205px; }
+fieldset.wider-labels .aligned-with-input { margin-left: 205px !important; }
 fieldset.wordy-questions label { width: 350px; }
-fieldset.wordy-questions .aligned-with-input { margin-left: 355px; }
+fieldset.wordy-questions .aligned-with-input { margin-left: 355px !important; }
 
 /* Footer */
 #footer { 
