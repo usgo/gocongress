@@ -190,7 +190,7 @@ distribute and pad them.  I'm only human. -Jared 7/27/10 */
 /* Curving the text around the logo */
 #content .curvy-text-container { padding-top: 10px; position: relative; }
 #content .curvy-text-container #usgc-logo { position: absolute; left: -140px; top: 10px; }
-#content .curvy-text-container .curvy-spacer { clear: left; float: left; }
+#content .curvy-text-container .curvy-spacer { clear: left; float: left; height: 19px; }
 #content .curvy-text-container p { padding: 0.5em; text-align: justify; }
 #content .event-title { font-weight: bold; }
 
@@ -274,15 +274,19 @@ div.field label.wide, div.field_with_errors label.wide { width: auto; }
 div.field textarea.wide { width: 650px; }
 div.field label.inline-label { width: auto; }
 
+/* Checkbox Lists */
+div.field .cbx-list { display: inline-block; }
+div.field .cbx-list label { width: auto; vertical-align: baseline; }
+
 /* Horizontally aligning stuff with inputs */
 fieldset .aligned-with-input { margin-left: 155px; }
 #content ul.aligned-with-input { margin-left: 155px; }
 
 /* Some forms need wider labels -Jared 1/8/11 */
 fieldset.wider-labels label { width: 200px; }
-fieldset.wider-labels .aligned-with-input { margin-left: 205px; }
+fieldset.wider-labels .aligned-with-input { margin-left: 205px !important; }
 fieldset.wordy-questions label { width: 350px; }
-fieldset.wordy-questions .aligned-with-input { margin-left: 355px; }
+fieldset.wordy-questions .aligned-with-input { margin-left: 355px !important; }
 
 /* Footer */
 #footer { 

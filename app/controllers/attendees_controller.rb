@@ -260,6 +260,9 @@ protected
       age = @attendee.age_in_years.to_i
       @plans_ordered = Plan.reg_form.appropriate_for_age(age).order("price desc")
       @plans_grouped = @plans_ordered.group_by {|plan| plan.plan_category}
+    elsif page == "admin"
+      @invitational_tournaments = Tournament.where :openness => 'I'
+      @atnd_inv_trn_ids = @attendee.tournaments.where({:openness => 'I'}).map {|t| t.id}
     end
   end
 

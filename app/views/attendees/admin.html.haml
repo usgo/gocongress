@@ -7,16 +7,9 @@
   -# Page parameter.  Required.  Determines validations, among other things.
   = hidden_field_tag :page, @page
 
-  - if @attendee.errors.any?
-    #error_explanation
-      %h2
-        = pluralize(@attendee.errors.count, "error")
-        prohibited this attendee from being saved:
-      %ul
-        - @attendee.errors.full_messages.each do |msg|
-          %li= msg
+  = render :partial => "shared/error_messages", :locals => { :resource => @attendee }
 
-  %fieldset
+  %fieldset.wider-labels
     .field
       = f.label :deposit_received_at
       = f.date_select :deposit_received_at, |
@@ -42,7 +35,18 @@
       = f.label :comment
       = f.text_area :comment, {:class => "inline", :rows => 3 }
 
-  %fieldset
+  %fieldset.wider-labels
+    .field
+      %label Invitational Tournaments
+      .cbx-list
+        - @invitational_tournaments.each do |t|
+          - is_checked = @atnd_inv_trn_ids.index(t.id).present?
+          - cbx_id = 'tournament_id_' + t.id.to_s
+          = check_box_tag "attendee[tournament_id_list][]", t.id, is_checked, :id => cbx_id
+          = label_tag cbx_id, t.name, :class => 'smalltext'
+          %br
+
+  %fieldset.wider-labels
     .aligned-with-input
       = f.submit "Submit"
       = link_to "cancel", user_path(@attendee.user)
