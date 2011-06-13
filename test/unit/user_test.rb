@@ -145,7 +145,7 @@ class UserTest < ActiveSupport::TestCase
     assert_equal expected.to_f, u.get_invoice_total.to_f
 
     # change plan qty by 1, assert that invoice total changes by price
-    assert_difference('u.get_invoice_total.to_f.round(2)', p.price.to_f.round(2)) do
+    assert_difference('u.get_invoice_total', p.price) do
       ap.quantity += 1
     end
   end
