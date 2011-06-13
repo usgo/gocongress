@@ -190,7 +190,7 @@ distribute and pad them.  I'm only human. -Jared 7/27/10 */
 /* Curving the text around the logo */
 #content .curvy-text-container { padding-top: 10px; position: relative; }
 #content .curvy-text-container #usgc-logo { position: absolute; left: -140px; top: 10px; }
-#content .curvy-text-container .curvy-spacer { clear: left; float: left; }
+#content .curvy-text-container .curvy-spacer { clear: left; float: left; height: 19px; }
 #content .curvy-text-container p { padding: 0.5em; text-align: justify; }
 #content .event-title { font-weight: bold; }
 
