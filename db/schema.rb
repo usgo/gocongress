@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110609041456) do
+ActiveRecord::Schema.define(:version => 20110613041030) do
 
   create_table "attendee_discounts", :force => true do |t|
     t.integer  "attendee_id", :null => false
@@ -26,6 +26,15 @@ ActiveRecord::Schema.define(:version => 20110609041456) do
     t.datetime "updated_at"
     t.integer  "quantity",    :default => 1, :null => false
   end
+
+  create_table "attendee_tournaments", :force => true do |t|
+    t.integer  "attendee_id",   :null => false
+    t.integer  "tournament_id", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "attendee_tournaments", ["attendee_id", "tournament_id"], :name => "uniq_attendee_tournament", :unique => true
 
   create_table "attendees", :force => true do |t|
     t.string   "given_name",                                               :null => false
