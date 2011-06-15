@@ -1,6 +1,7 @@
 # Be sure to restart your server when you modify this file.
 
 Time::DATE_FORMATS[:american] = "%l:%M %p"
+Date::DATE_FORMATS[:long_with_day] = "%A, %B %d, %Y"
 
 # See http://www.ruby-doc.org/core/classes/Time.html
 # %a - The abbreviated weekday name (``Sun'')

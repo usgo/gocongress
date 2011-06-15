@@ -17,7 +17,7 @@
     - @arEventsByDate.each do |d,arEvt|
       %tr.greater-header
         %th{ :colspan => current_user_is_admin? ? 7 : 5 }
-          = d.to_formatted_s(:long)
+          = d.to_formatted_s(:long_with_day)
           = " - Day Off!" if d === DAY_OFF_DATE
       %tr.lesser-header
         %th Event
