@@ -4,7 +4,7 @@ attr_accessible :name, :price, :age_min, :age_max, :description, \
 
 belongs_to :plan_category
 has_many :attendee_plans, :dependent => :destroy
-has_many :users, :through => :attendee_plans
+has_many :attendees, :through => :attendee_plans
 
 scope :appropriate_for_age, lambda {|age| where("(age_min is null or age_min <= ?) and (age_max is null or age_max >= ?)", age, age)}
 scope :room_and_board_page, joins(:plan_category).where('plan_categories.show_on_roomboard_page' => true)
