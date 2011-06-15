@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110613041030) do
+ActiveRecord::Schema.define(:version => 20110615055951) do
 
   create_table "attendee_discounts", :force => true do |t|
     t.integer  "attendee_id", :null => false
@@ -19,6 +19,8 @@ ActiveRecord::Schema.define(:version => 20110613041030) do
     t.datetime "updated_at"
   end
 
+  add_index "attendee_discounts", ["attendee_id", "discount_id"], :name => "uniq_attendee_discount", :unique => true
+
   create_table "attendee_plans", :force => true do |t|
     t.integer  "attendee_id",                :null => false
     t.integer  "plan_id",                    :null => false
@@ -26,6 +28,8 @@ ActiveRecord::Schema.define(:version => 20110613041030) do
     t.datetime "updated_at"
     t.integer  "quantity",    :default => 1, :null => false
   end
+
+  add_index "attendee_plans", ["attendee_id", "plan_id"], :name => "uniq_attendee_plan", :unique => true
 
   create_table "attendee_tournaments", :force => true do |t|
     t.integer  "attendee_id",   :null => false
@@ -179,6 +183,8 @@ ActiveRecord::Schema.define(:version => 20110613041030) do
     t.integer  "user_id"
     t.integer  "job_id"
   end
+
+  add_index "user_jobs", ["user_id", "job_id"], :name => "uniq_user_job", :unique => true
 
   create_table "users", :force => true do |t|
     t.string   "email",                               :default => "",    :null => false
