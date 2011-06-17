@@ -13,11 +13,8 @@
 %h3 Tournament Schedule
 
 - if @rounds_by_date.size == 0
-  %p There are no tournament on the schedule.
-
+  %p There are no tournament rounds on the schedule yet.
 - else
-  %p.notice All tournaments, times, and eligible participants subject to change
-  %p Click on the tournament name for details.
   %table.semantic.fullwidth
     - @rounds_by_date.each do |d,rounds_this_date|
       %tr.greater-header
@@ -39,9 +36,7 @@
 
 - if @tournaments.size == 0
   %p There are no tournaments yet.
-
 - else
-  %p Click on the tournament name for details.
   %table.semantic.fullwidth
     %thead
       %tr
