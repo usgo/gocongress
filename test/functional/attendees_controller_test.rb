@@ -297,4 +297,11 @@ class AttendeesControllerTest < ActionController::TestCase
     assert_response 403
   end
 
+  test "non-admin cannot update the admin page" do
+    sign_in @user
+    a = @user.attendees.first
+    put :update, { :id => a.id, :attendee => a.attributes, :page => 'admin' }
+    assert_response 403
+  end
+
 end

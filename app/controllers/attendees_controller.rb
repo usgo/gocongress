@@ -137,40 +137,37 @@ class AttendeesController < ApplicationController
     # certain fields may only be set by admins
     # most of those fields are shown on the 'admin' page
     if (@page == 'admin')
-      if (!current_user.is_admin?)
-        render_access_denied and return
-      else
+      render_access_denied and return unless current_user.is_admin?
 
-        # for each simple "admin-only" field
-        [:comment, :confirmed, :minor_agreement_received].each do |p|
-          if (!params[:attendee][p].nil?)
-            @attendee[p] = params[:attendee][p]
-            params[:attendee].delete p
-          end
+      # for each simple "admin-only" field
+      [:comment, :confirmed, :minor_agreement_received].each do |p|
+        if (!params[:attendee][p].nil?)
+          @attendee[p] = params[:attendee][p]
+          params[:attendee].delete p
         end
-
-        # deposit_received_at is not as simple
-        if (params[:attendee][:"deposit_received_at(1i)"].present? &&
-            params[:attendee][:"deposit_received_at(2i)"].present? &&
-            params[:attendee][:"deposit_received_at(3i)"].present?) \
-        then
-          @attendee.deposit_received_at = convert_date(params[:attendee], :deposit_received_at)
-          params[:attendee].delete :"deposit_received_at(1i)"
-          params[:attendee].delete :"deposit_received_at(2i)"
-          params[:attendee].delete :"deposit_received_at(3i)"
-        else
-          @attendee.deposit_received_at = nil
-        end
-
-        # Invitational tournaments
-        @attendee.tournaments.clear
-        params[:attendee][:tournament_id_list] ||= Array.new
-        params[:attendee][:tournament_id_list].each do |tid|
-          t = Tournament.where("openness = ?", 'I').find(tid)
-          @attendee.tournaments << t if t.present?
-        end
-        params[:attendee].delete :tournament_id_list
       end
+
+      # deposit_received_at is not as simple
+      if (params[:attendee][:"deposit_received_at(1i)"].present? &&
+          params[:attendee][:"deposit_received_at(2i)"].present? &&
+          params[:attendee][:"deposit_received_at(3i)"].present?) \
+      then
+        @attendee.deposit_received_at = convert_date(params[:attendee], :deposit_received_at)
+        params[:attendee].delete :"deposit_received_at(1i)"
+        params[:attendee].delete :"deposit_received_at(2i)"
+        params[:attendee].delete :"deposit_received_at(3i)"
+      else
+        @attendee.deposit_received_at = nil
+      end
+
+      # Invitational tournaments
+      @attendee.tournaments.clear
+      params[:attendee][:tournament_id_list] ||= Array.new
+      params[:attendee][:tournament_id_list].each do |tid|
+        t = Tournament.where("openness = ?", 'I').find(tid)
+        @attendee.tournaments << t if t.present?
+      end
+      params[:attendee].delete :tournament_id_list
     end
 
     # handle claimed discounts
