@@ -161,6 +161,15 @@ class AttendeesController < ApplicationController
         else
           @attendee.deposit_received_at = nil
         end
+
+        # Invitational tournaments
+        @attendee.tournaments.clear
+        params[:attendee][:tournament_id_list] ||= Array.new
+        params[:attendee][:tournament_id_list].each do |tid|
+          t = Tournament.where("openness = ?", 'I').find(tid)
+          @attendee.tournaments << t if t.present?
+        end
+        params[:attendee].delete :tournament_id_list
       end
     end
 
