@@ -52,6 +52,10 @@ en:
       job:
         one: "Position"
         other: "Positions"
+  crud:
+    confirm:
+      tournament:
+        destroy: "Delete the entire tournament?  This will delete everything associated with this tournament too, including game records."
   views:
     pagination:
       next: "Next"

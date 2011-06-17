@@ -46,7 +46,7 @@
         %th Eligibility
         - if current_user_is_admin?
           %th{ :colspan => 2 }
-  
+    %tbody
       - @tournaments.each do |t|
         %tr
           %td= link_to t.name, t
@@ -55,4 +55,4 @@
           %td= t.elligible
           - if current_user_is_admin?
             %td= link_to 'Edit', edit_tournament_path(t)
-            %td= link_to 'Delete', t, :confirm => 'Delete the entire tournament?  This will delete everything associated with this tournament too, including game records.', :method => :delete
+            %td= link_to_destroy(t)
