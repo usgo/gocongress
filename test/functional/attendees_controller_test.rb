@@ -5,11 +5,12 @@ class AttendeesControllerTest < ActionController::TestCase
     @attendee = Factory.create(:attendee)
     @user = Factory.create(:user)
     @user_two = Factory.create(:user)
-    @admin_user = Factory.create(:admin_user)
+    @admin = Factory.create(:admin_user)
     @plan = Factory.create(:all_ages_plan)
     @discount_automatic = Factory.create(:automatic_discount)
     @discount_nonautomatic = Factory.create(:nonautomatic_discount)
     @discount_nonautomatic2 = Factory.create(:nonautomatic_discount)
+    @inv_trn = Factory.create(:invitational_tournament)
   end
 
   test "visitor can get index" do
@@ -40,7 +41,7 @@ class AttendeesControllerTest < ActionController::TestCase
   end
 
   test "admin can create attendee under a different user" do
-    sign_in @admin_user
+    sign_in @admin
     a = Factory.attributes_for(:attendee)
     a['user_id'] = @user.id
     assert_difference('@user.attendees.count', +1) do
@@ -90,7 +91,7 @@ class AttendeesControllerTest < ActionController::TestCase
   end
 
   test "admin can destroy attendee" do
-    sign_in @admin_user
+    sign_in @admin
     assert_difference('Attendee.count', -1) do
       delete :destroy, :id => @attendee.to_param
     end
@@ -99,7 +100,7 @@ class AttendeesControllerTest < ActionController::TestCase
   end
 
   test "admin can destroy primary attendee" do
-    sign_in @admin_user
+    sign_in @admin
     assert_equal 1, @user.attendees.where(:is_primary => true).count
     assert_difference('Attendee.count', -1) do
       delete :destroy, :id => @user.primary_attendee.to_param
@@ -125,12 +126,12 @@ class AttendeesControllerTest < ActionController::TestCase
   end
 
   test "admin can edit any attendee" do
-    sign_in @admin_user
+    sign_in @admin
     get :edit, :id => @attendee.to_param
     assert_response :success
     get :edit, :id => @user.attendees.last.to_param
     assert_response :success
-    get :edit, :id => @admin_user.attendees.first.to_param
+    get :edit, :id => @admin.attendees.first.to_param
     assert_response :success
   end
 
@@ -143,7 +144,7 @@ class AttendeesControllerTest < ActionController::TestCase
   end
 
   test "admin can update any user's attendee" do
-    sign_in @admin_user
+    sign_in @admin
 
     target_attendee = @user.attendees.last
     target_attendee.state = 'MI'
@@ -168,7 +169,7 @@ class AttendeesControllerTest < ActionController::TestCase
     end
 
     define_method "test_vistor_can_not_get_#{page}" do
-      get :edit, :id => @admin_user.attendees.sample.to_param, :page => page
+      get :edit, :id => @admin.attendees.sample.to_param, :page => page
       view_name = @controller.send( :get_view_name_from_page, page )
       assert_response 403
     end
@@ -196,7 +197,7 @@ class AttendeesControllerTest < ActionController::TestCase
   end
 
   test "admin can select plan for attendee belonging to someone else" do
-    sign_in @admin_user
+    sign_in @admin
     a = @user.attendees.sample
     h = { "plan_#{@plan.id}_qty" => 1 }
     assert_equal(0, a.plans.count)
@@ -228,7 +229,7 @@ class AttendeesControllerTest < ActionController::TestCase
   end
 
   test "admin can update deposit_received_at" do
-    sign_in @admin_user
+    sign_in @admin
 
     # pick a random attendee
     a = @user.attendees.sample
@@ -302,6 +303,21 @@ class AttendeesControllerTest < ActionController::TestCase
     a = @user.attendees.first
     put :update, { :id => a.id, :attendee => a.attributes, :page => 'admin' }
     assert_response 403
+  end
+
+  test "admin can update invitational tournaments" do
+    sign_in @admin
+    a = @user.attendees.first
+    a.tournaments.clear
+    assert_equal(0, AttendeeTournament.where('attendee_id = ?', a.id).count)
+    atn_attrs = {:tournament_id_list => [@inv_trn.id]}
+    assert_difference('AttendeeTournament.count', +1) do
+      put :update, { :id => a.id, :attendee => atn_attrs, :page => 'admin' }
+    end
+    a.tournaments.reload
+    assert a.tournaments.first.present?
+    assert_equal(@inv_trn.id, a.tournaments.first.id)
+    assert_redirected_to user_path(@user)
   end
 
 end
