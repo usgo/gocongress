@@ -1,6 +1,10 @@
 class Tournament < ActiveRecord::Base
   attr_protected :created_at, :updated_at
+
   has_many :rounds, :dependent => :destroy
+  has_many :attendee_tournaments, :dependent => :destroy
+  has_many :attendees, :through => :attendee_tournaments
+
   accepts_nested_attributes_for :rounds, :allow_destroy => true
 
   # Openness Types:
