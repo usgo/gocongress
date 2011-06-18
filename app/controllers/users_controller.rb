@@ -1,8 +1,18 @@
 class UsersController < ApplicationController
 
   # Access Control
-  before_filter :allow_only_admin, :except => [:edit_email, :edit_password, :show, :invoice, :pay, :ledger, :update]
-  before_filter :allow_only_self_or_admin, :only => [:edit_email, :edit_password, :show, :invoice, :pay, :ledger, :update]
+  before_filter :allow_only_admin, :except => [:choose_attendee, :edit_email, :edit_password, :show, :invoice, :pay, :ledger, :update]
+  before_filter :allow_only_self_or_admin, :only => [:choose_attendee, :edit_email, :edit_password, :show, :invoice, :pay, :ledger, :update]
+
+  # GET /users/1/choose_attendee
+  def choose_attendee
+    @user = User.find(params[:id])
+
+    # Currently this is just used when signing up attendees for tournaments,
+    # but in the future destination_page may come from the params
+    @destination_page = 'tournaments'
+    @destination_page_description = "sign up for tournaments"
+  end
 
   # GET /users/1/edit_email
   def edit_email

@@ -31,6 +31,7 @@ Gocongress::Application.routes.draw do
       get 'invoice'
       get 'ledger'
       get 'pay'
+      get 'choose_attendee'
 
       # todo: attendees should probably be a nested resource of users
       # see http://guides.rubyonrails.org/routing.html#nested-resources

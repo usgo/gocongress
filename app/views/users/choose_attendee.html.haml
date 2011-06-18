@@ -1,0 +1,16 @@
+%h2 Choose an attendee
+
+%p
+  Which 
+  = Attendee.model_name.human.downcase
+  would you like to #{@destination_page_description}?
+
+%p{:style=>"padding-left:20px;"}
+  - @user.attendees.each do |a|
+    = link_to a.get_full_name, edit_attendee_path(a) + '/' + @destination_page
+    %br
+
+%p
+  You can also #{@destination_page_description} from the
+  = link_to "My Account", user_path(@user)
+  page.
