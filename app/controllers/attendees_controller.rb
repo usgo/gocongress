@@ -310,10 +310,13 @@ protected
   end
 
   def allow_only_self_or_admin
-    target_attendee = Attendee.find_by_id(params[:id].to_i)
-    unless target_attendee.present? && current_user && (current_user.id.to_i == target_attendee.user_id || current_user.is_admin?)
-      render_access_denied
+    allow = false
+    if current_user.present?
+      a = Attendee.find(params[:id].to_i)
+      is_my_attendee = current_user.id.to_i == a.user_id
+      allow = is_my_attendee || current_user.is_admin?
     end
+    render_access_denied unless allow
   end
 
 end
