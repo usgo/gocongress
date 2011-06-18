@@ -5,7 +5,3 @@ Factory.define :tournament do |f|
   f.directors "blah"
   f.openness "O"
 end
-
-Factory.define :invitational_tournament, :parent => :tournament do |f|
-  f.openness "I"
-end

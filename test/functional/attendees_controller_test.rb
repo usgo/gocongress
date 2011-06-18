@@ -10,7 +10,8 @@ class AttendeesControllerTest < ActionController::TestCase
     @discount_automatic = Factory.create(:automatic_discount)
     @discount_nonautomatic = Factory.create(:nonautomatic_discount)
     @discount_nonautomatic2 = Factory.create(:nonautomatic_discount)
-    @inv_trn = Factory.create(:invitational_tournament)
+    @inv_trn = Factory.create(:tournament, :openness => 'I')
+    @open_trn = Factory.create(:tournament, :openness => 'O')
   end
 
   test "visitor can get index" do
@@ -317,6 +318,20 @@ class AttendeesControllerTest < ActionController::TestCase
     a.tournaments.reload
     assert a.tournaments.first.present?
     assert_equal(@inv_trn.id, a.tournaments.first.id)
+    assert_redirected_to user_path(@user)
+  end
+  
+  test "user can sign up for open tournaments" do
+    sign_in @user
+    a = @user.attendees.first
+    a.tournaments.clear
+    atn_attrs = {:tournament_id_list => [@open_trn.id]}
+    assert_difference('AttendeeTournament.count', +1) do
+      put :update, { :id => a.id, :attendee => atn_attrs, :page => 'tournaments' }
+    end
+    a.tournaments.reload
+    assert a.tournaments.first.present?
+    assert_equal(@open_trn.id, a.tournaments.first.id)
     assert_redirected_to user_path(@user)
   end
 
