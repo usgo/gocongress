@@ -37,6 +37,7 @@ table .numeric { text-align: right; }
 .align-center { text-align: center; }
 .align-right { text-align: right; }
 img.thin-border { border: 1px solid black; }
+.initially_hidden { display: none; }
 
 /* Use this class to pad flow elements (eg. div, form) -Jared 4/9/11 */
 .flow-padding { padding: 8px 0px; }
@@ -287,6 +288,9 @@ fieldset.wider-labels label { width: 200px; }
 fieldset.wider-labels .aligned-with-input { margin-left: 205px !important; }
 fieldset.wordy-questions label { width: 350px; }
 fieldset.wordy-questions .aligned-with-input { margin-left: 355px !important; }
+
+/* User attendee list */
+.attendee_name_column { width: 300px; }
 
 /* Footer */
 #footer { 

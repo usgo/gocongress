@@ -10,6 +10,14 @@ $(document).ready(function(){
 		, transition: 'fade'
 		, transition_speed: 1000
 	});
+	
+	$('.expand_attendee').live('click', function() {
+		var attendee_id = $(this).attr('id').split('_')[2];
+		var drawer = $('#attendee_drawer_' + attendee_id);
+		if (drawer.length != 1) { throw "Unable to find attendee drawer"; }
+		if (drawer.is(':hidden')) { drawer.show('blind'); } 
+		else { drawer.hide('blind'); }
+	});
 });
 
 function add_round (link, association, content) {

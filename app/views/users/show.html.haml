@@ -69,27 +69,26 @@
       %th Rank
       %th Age *
       %th Confirmed **
-      %th{:colspan => 3} Please complete all three forms
       %th
-      - if current_user.is_admin?
-        %th Admin
   %tbody
     - for a in @attendees
       %tr
-        %td= a.get_full_name
+        %td.attendee_name_column
+          %a{:href=>'#', :class=>"expand_attendee", :id=>"expand_attendee_#{a.id}" }= a.get_full_name
+          %ul.initially_hidden{:id=>"attendee_drawer_#{a.id}"}
+            %li= link_to 'Basics', edit_attendee_path(a) + '/basics'
+            %li= link_to 'Player Info', edit_attendee_path(a) + '/baduk'
+            %li= link_to 'Room and Board', edit_attendee_path(a) + '/roomboard'
+            - if current_user.is_admin?
+              %li= link_to 'Admin', edit_attendee_path(a) + '/admin'
         %td= a.get_rank_name
         %td= a.age_in_years.floor
         %td= a.confirmed.present? ? "Yes" : "No"
-        %td= link_to 'Basic Info', edit_attendee_path(a) + '/basics'
-        %td= link_to 'Go Info', edit_attendee_path(a) + '/baduk'
-        %td= link_to 'Room and Board', edit_attendee_path(a) + '/roomboard'
         %td
           - if a.is_primary
-            Primary<br>Attendee
+            Primary&nbsp;Attendee
           - else 
             =link_to 'Delete', a, :confirm => "Are you sure you want to delete this attendee?", :method => :delete
-        - if current_user.is_admin?
-          %td= link_to 'Admin', edit_attendee_path(a) + '/admin'
 
 %p
   * Age on #{CONGRESS_START_DATE.to_date.to_formatted_s(:long)}
