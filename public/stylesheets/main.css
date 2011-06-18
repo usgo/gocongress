@@ -290,7 +290,7 @@ fieldset.wordy-questions label { width: 350px; }
 fieldset.wordy-questions .aligned-with-input { margin-left: 355px !important; }
 
 /* User attendee list */
-.attendee_name_column { width: 300px; }
+.attendee_name_column { width: 400px; }
 
 /* Footer */
 #footer { 
