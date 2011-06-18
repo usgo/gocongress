@@ -1,0 +1,20 @@
+%h2 Tournaments for #{@attendee.get_full_name}
+
+%p
+  Which open tournaments will #{@attendee.get_full_name} be playing in?
+
+= form_for( @attendee ) do |f|
+  = hidden_field_tag :page, @page
+  = render :partial => "shared/error_messages", :locals => { :resource => @attendee }
+
+  %p
+    - @open_tournaments.each do |t|
+      - is_checked = @atnd_open_trn_ids.index(t.id).present?
+      - cbx_id = 'tournament_id_' + t.id.to_s
+      = check_box_tag "attendee[tournament_id_list][]", t.id, is_checked, :id => cbx_id
+      = label_tag cbx_id, t.name
+      %br
+
+  %br
+  = f.submit "Submit"
+  = link_to "cancel", user_path(@attendee.user)

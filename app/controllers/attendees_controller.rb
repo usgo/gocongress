@@ -105,6 +105,7 @@ class AttendeesController < ApplicationController
   # GET /attendees/1/edit/basics
   # GET /attendees/1/edit/baduk
   # GET /attendees/1/edit/roomboard
+  # GET /attendees/1/edit/tournaments
   def edit
     @attendee = Attendee.find_by_id(params[:id].to_i)
     
@@ -128,6 +129,7 @@ class AttendeesController < ApplicationController
   def update
     @page = get_valid_page_from_params
     @attendee = Attendee.find(params[:id])
+    params[:attendee] ||= Hash.new
 
     # some extra validation errors may come up, especially with associated models, and
     # we want to save these and add them to @attendee.errors[:base] later.  This
@@ -161,17 +163,17 @@ class AttendeesController < ApplicationController
       end
 
       # Invitational tournaments
-      @attendee.tournaments.clear
+      @attendee.tournaments.delete( @attendee.tournaments.where(:openness=>'I') )
       params[:attendee][:tournament_id_list] ||= Array.new
       params[:attendee][:tournament_id_list].each do |tid|
         t = Tournament.where("openness = ?", 'I').find(tid)
         @attendee.tournaments << t if t.present?
       end
       params[:attendee].delete :tournament_id_list
-    end
 
-    # handle claimed discounts
-    if (@page == 'baduk')
+    elsif (@page == 'baduk')
+      
+      # claimed discounts
       params[:attendee][:discount_ids] ||= Array.new
 
       # ignore non-integer discount ids (from unchecked boxes in the view)
@@ -185,12 +187,12 @@ class AttendeesController < ApplicationController
 
       # delete param to avoid attr_accessible warning
       params[:attendee].delete :discount_ids
-    end
 
-    # handle selected plans
-    # to do: this causes a lot of little queries. surely there's a better way.
-    if (@page == 'roomboard')
-    
+    elsif (@page == 'roomboard')
+
+      # handle selected plans
+      # to do: this causes a lot of little queries. surely there's a better way.
+          
       # start with a blank slate
       @attendee.plans.clear
       
@@ -211,6 +213,15 @@ class AttendeesController < ApplicationController
           end
         end
       end
+
+    elsif (@page == 'tournaments')
+      @attendee.tournaments.delete( @attendee.tournaments.where(:openness=>'O') )
+      params[:attendee][:tournament_id_list] ||= Array.new
+      params[:attendee][:tournament_id_list].each do |tid|
+        t = Tournament.where("openness = ?", 'O').find(tid)
+        @attendee.tournaments << t if t.present?
+      end
+      params[:attendee].delete :tournament_id_list
     end
 
     # update attributes but do not save yet
@@ -269,12 +280,15 @@ protected
     elsif page == "admin"
       @invitational_tournaments = Tournament.where :openness => 'I'
       @atnd_inv_trn_ids = @attendee.tournaments.where({:openness => 'I'}).map {|t| t.id}
+    elsif page == "tournaments"
+      @open_tournaments = Tournament.where(:openness => 'O').order(:name)
+      @atnd_open_trn_ids = @attendee.tournaments.where({:openness => 'O'}).map {|t| t.id}
     end
   end
 
   def get_valid_page_from_params
     params[:page].to_s.blank? ? page = 'basics' : page = params[:page].to_s
-    unless %w[admin basics baduk roomboard].include?(page) then raise 'invalid page' end
+    unless %w[admin basics baduk roomboard tournaments].include?(page) then raise 'invalid page' end
     return page
   end
   
@@ -287,6 +301,8 @@ protected
       view_name = "edit_baduk_info"
     elsif page == "roomboard"
       view_name = "room_and_board"
+    elsif page == "tournaments"
+      view_name = "edit_tournaments"
     else
       raise "invalid page"
     end
