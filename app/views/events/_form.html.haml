@@ -6,17 +6,34 @@
       = f.label :evtname, "Event Name"
       = f.text_field :evtname
     .field
-      = f.label :start, "Start"
-      = f.datetime_select :start, :start_year => CONGRESS_YEAR.to_i, :end_year => CONGRESS_YEAR.to_i
-    .field
-      = f.label :evtdeparttime, "Depart Time"
-      = f.text_field :evtdeparttime
-    .field
       = f.label :evtprice, "Price"
       = f.text_field :evtprice, :size => 5
     .field
       = f.label :evtprice, "Notes"
-      = f.text_field :notes
+      = f.text_area :notes, {:rows => 2, :cols => 60}
+
+  %h3 Schedule
+  %fieldset
+    .field
+      = f.label :evtdeparttime, "1. Departure Time"
+      = f.text_field :evtdeparttime
+    .field
+      = f.label :start, "2. Event Start / Arrive"
+      = f.datetime_select :start, :start_year => CONGRESS_YEAR.to_i, :end_year => CONGRESS_YEAR.to_i
+      %br
+      %span.smalltext.aligned-with-input 24-hour time, please
+    .field
+      = f.label :return_depart_time, "3. Return Depart Time"
+      = f.time_select :return_depart_time, {:minute_step => 5}
+      %br
+      %span.smalltext.aligned-with-input 24-hour time
+    .field
+      = f.label :return_arrive_time, "4. Return Arrive Time"
+      = f.time_select :return_arrive_time, {:minute_step => 5}
+      %br
+      %span.smalltext.aligned-with-input 24-hour time
+
+  %br
 
   .actions
     = f.submit

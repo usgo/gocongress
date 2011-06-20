@@ -16,13 +16,20 @@
   %tbody
     - @arEventsByDate.each do |d,arEvt|
       %tr.greater-header
-        %th{ :colspan => current_user_is_admin? ? 7 : 5 }
+        %th{ :colspan => current_user_is_admin? ? 9 : 7 }
           = d.to_formatted_s(:long_with_day)
           = " - Day Off!" if d === DAY_OFF_DATE
       %tr.lesser-header
+        %th
+        %th.align-center{:colspan => 2} Leaving
+        %th.align-center{:colspan => 2} Returning
+        %th{:colspan => current_user_is_admin? ? 4 : 2}
+      %tr.lesser-header
         %th Event
-        %th Transport Departure Time
-        %th Event Start/Arrival Time
+        %th Depart
+        %th Event Start / Arrive
+        %th Depart
+        %th Arrive
         %th.numeric Price
         %th Notes
         - if current_user_is_admin?
@@ -32,6 +39,12 @@
           %td= e.evtname
           %td= e.evtdeparttime
           %td= e.start.to_time.to_formatted_s(:american)
+          %td
+            - if e.return_depart_time.present?
+              = e.return_depart_time.to_formatted_s(:american)
+          %td
+            - if e.return_arrive_time.present?
+              = e.return_arrive_time.to_formatted_s(:american)
           %td.numeric= format_price(e.evtprice)
           %td= e.notes
           - if current_user_is_admin?

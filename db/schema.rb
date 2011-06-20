@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110615055951) do
+ActiveRecord::Schema.define(:version => 20110620043001) do
 
   create_table "attendee_discounts", :force => true do |t|
     t.integer  "attendee_id", :null => false
@@ -101,6 +101,8 @@ ActiveRecord::Schema.define(:version => 20110615055951) do
     t.datetime "updated_at"
     t.datetime "start"
     t.string   "notes"
+    t.time     "return_depart_time"
+    t.time     "return_arrive_time"
   end
 
   create_table "jobs", :force => true do |t|

@@ -2,13 +2,29 @@
 
 %table.lightweight
   %tbody
-    - %w[start evtdeparttime notes].each do |a|
-      %tr
-        %th= trl_attr 'event', a
-        %td= @event[a]
     %tr
       %th= trl_attr 'event', 'evtprice'
       %td= format_price(@event.evtprice)
+    %tr
+      %th= trl_attr 'event', 'notes'
+      %td= @event.notes
+    %tr
+      %th Date
+      %td= @event.start.to_date
+
+%br
+%h3 Schedule
+%table.lightweight
+  %tbody
+    %tr
+      %th= trl_attr 'event', 'evtdeparttime'
+      %td= @event.evtdeparttime
+    - %w[start return_depart_time return_arrive_time].each do |a|
+      %tr
+        %th= trl_attr 'event', a
+        %td
+          - if @event[a].present?
+            = @event[a].to_time.to_formatted_s(:american)
 
 %br
 
