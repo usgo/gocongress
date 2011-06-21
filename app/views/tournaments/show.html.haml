@@ -9,6 +9,9 @@
   %tr
     %th= trl_attr 'tournament', 'openness'
     %td= @tournament.get_openness_type_name
+  %tr
+    %th= trl_attr 'tournament', 'show_attendee_notes_field'
+    %td= @tournament.show_attendee_notes_field? ? 'Yes' : 'No'
 %br
 
 %h3 Description

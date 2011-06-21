@@ -21,7 +21,13 @@
         You can format the text (bold, etc.) with 
         %a{ :href => 'http://en.wikipedia.org/wiki/Markdown', :target => '_blank' } Markdown 
         syntax.
-    = f.text_area :description, :class => 'wide'
+    = f.text_area :description, {:class => 'wide', :rows => 4}
+  .field
+    = f.label :show_attendee_notes_field
+    = f.check_box :show_attendee_notes_field
+    %span.smalltext.aligned-with-input 
+      Allow attendees to provide comments (eg. pair go partner)
+      when signing up for tournament
 
   %h3 Rounds
   .rounds-container
