@@ -142,7 +142,7 @@ class AttendeesController < ApplicationController
       render_access_denied and return unless current_user.is_admin?
 
       # for each simple "admin-only" field
-      [:comment, :confirmed, :minor_agreement_received].each do |p|
+      [:comment, :confirmed, :minor_agreement_received, :guardian_full_name].each do |p|
         if (!params[:attendee][p].nil?)
           @attendee[p] = params[:attendee][p]
           params[:attendee].delete p

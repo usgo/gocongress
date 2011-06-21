@@ -21,9 +21,6 @@
         When was the initial deposit received for this attendee?
         This will determines eligibility for "early-bird" discounts.
     .field
-      = f.label :minor_agreement_received
-      = f.check_box :minor_agreement_received
-    .field
       = f.label :confirmed
       = f.check_box :confirmed
       %br
@@ -46,6 +43,16 @@
           = label_tag cbx_id, t.name, :class => 'smalltext'
           %br
 
+  %h3 For Minors
+  %fieldset.wider-labels
+    .field
+      = f.label :minor_agreement_received
+      = f.check_box :minor_agreement_received
+    .field
+      = f.label :guardian_full_name
+      = f.text_field :guardian_full_name
+
+  %br
   %fieldset.wider-labels
     .aligned-with-input
       = f.submit "Submit"
