@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110621044036) do
+ActiveRecord::Schema.define(:version => 20110621051617) do
 
   create_table "attendee_discounts", :force => true do |t|
     t.integer  "attendee_id", :null => false
@@ -36,6 +36,7 @@ ActiveRecord::Schema.define(:version => 20110621044036) do
     t.integer  "tournament_id", :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "notes"
   end
 
   add_index "attendee_tournaments", ["attendee_id", "tournament_id"], :name => "uniq_attendee_tournament", :unique => true

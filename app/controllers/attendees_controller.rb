@@ -219,7 +219,16 @@ class AttendeesController < ApplicationController
       params[:attendee][:tournament_id_list] ||= Array.new
       params[:attendee][:tournament_id_list].each do |tid|
         t = Tournament.where("openness = ?", 'O').find(tid)
-        @attendee.tournaments << t if t.present?
+        if t.present? then
+          at = AttendeeTournament.new(:attendee_id => @attendee.id, :tournament_id => t.id)
+          if t.show_attendee_notes_field then
+            if params[:attendee]["trn_#{t.id}_notes"].present? then
+              at.notes = params[:attendee]["trn_#{t.id}_notes"]
+              params[:attendee].delete "trn_#{t.id}_notes"
+            end
+          end
+          at.save!
+        end
       end
       params[:attendee].delete :tournament_id_list
     end
