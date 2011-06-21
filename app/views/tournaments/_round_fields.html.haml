@@ -1,4 +1,4 @@
 .field.tournament-round
   = f.label :round_start
-  = f.datetime_select :round_start
+  = f.datetime_select :round_start, :minute_step => 5
   = link_to_remove_fields "Remove", f
