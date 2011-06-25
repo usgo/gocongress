@@ -21,7 +21,7 @@ group :development, :test do
 end
 
 group :test do
-	gem 'factory_girl', '~>1.3.2'
+	gem 'factory_girl'
 	gem 'factory_girl_rails'
 	
 	# pretty console printing for tests
