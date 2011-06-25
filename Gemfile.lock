@@ -28,11 +28,12 @@ GEM
       activemodel (= 3.0.9)
       activesupport (= 3.0.9)
     activesupport (3.0.9)
+    ansi (1.2.5)
     arel (2.0.10)
     bcrypt-ruby (2.1.4)
     bluecloth (2.1.0)
     builder (2.1.2)
-    devise (1.3.4)
+    devise (1.4.0)
       bcrypt-ruby (~> 2.1.2)
       orm_adapter (~> 0.0.3)
       warden (~> 1.0.3)
@@ -54,7 +55,7 @@ GEM
       activesupport
       builder
     i18n (0.5.0)
-    jquery-rails (1.0.11)
+    jquery-rails (1.0.12)
       railties (~> 3.0)
       thor (~> 0.14)
     kaminari (0.12.4)
@@ -89,7 +90,6 @@ GEM
     rake (0.9.2)
     rcov (0.9.9)
     rdoc (3.6.1)
-    redgreen (1.2.2)
     rspec (2.6.0)
       rspec-core (~> 2.6.0)
       rspec-expectations (~> 2.6.0)
@@ -110,6 +110,8 @@ GEM
     timeliness (0.3.4)
     treetop (1.4.9)
       polyglot (>= 0.3.1)
+    turn (0.8.2)
+      ansi (>= 1.2.2)
     tzinfo (0.3.28)
     validates_timeliness (3.0.6)
       timeliness (~> 0.3.3)
@@ -132,7 +134,7 @@ DEPENDENCIES
   kaminari
   rails
   rcov
-  redgreen
   rspec-rails (~> 2.0)
   sqlite3-ruby
+  turn
   validates_timeliness

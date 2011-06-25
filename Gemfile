@@ -20,11 +20,14 @@ group :development, :test do
   gem 'rcov'
 end
 
-# redgreen does console coloring for tests
 group :test do
 	gem 'factory_girl', '~>1.3.2'
 	gem 'factory_girl_rails'
-	gem 'redgreen'
+	
+	# pretty console printing for tests
+	# the 'redgreen' gem does not support ruby 1.9.2,
+	# so we will try out the 'turn' gem
+	gem 'turn'
 end
 
 # To keep your heroku slug size down, try this
