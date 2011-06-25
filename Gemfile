@@ -1,6 +1,10 @@
 source 'http://rubygems.org'
 
-gem 'rails'
+# In order to use the release candidate, we must use the
+# PessimisticVersionConstraint operator (~>)
+# When Rails 3.1 stable is released, we should drop this version constraint
+gem 'rails', '~> 3.1.0.rc4'
+
 gem 'sqlite3-ruby', :require => 'sqlite3'
 gem "jquery-rails" # jquery and jquery-ui
 gem "devise" # authentication
