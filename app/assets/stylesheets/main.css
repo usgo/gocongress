@@ -170,33 +170,12 @@ distribute and pad them.  I'm only human. -Jared 7/27/10 */
 	width: 880px;
 }
 
-/* The homepage content area is the same, but it has no padding (mostly) */
-.homepage #content { 
-	padding: 0px 0px 20px 0px;
-	width: 900px;
-	}
-.homepage #content p,
-.homepage #content h2,
-.homepage #content h3,
-.homepage #content h4,
-.homepage #content h5 {  
-  padding: 0.5em 15px; 
-  }
-p#venue-address { text-align: right; }
-
 /* Basic styling for elements in the main content area */
 #content p, #content dl { padding: 0.5em 0em 0.5em 0em; }
 #content h1, #content h2, #content h3, #content h4, #content h5, #content h6 { padding: 0.5em 0em; }
 #content ul { margin-left: 20px; padding: 0.5em 0em 0.5em 0em; }
 #content li { margin-left: 10px; }
 #content table.semantic li { margin-left: 25px; }
-
-/* Curving the text around the logo */
-#content .curvy-text-container { padding-top: 10px; position: relative; }
-#content .curvy-text-container #usgc-logo { position: absolute; left: -140px; top: 10px; }
-#content .curvy-text-container .curvy-spacer { clear: left; float: left; height: 19px; }
-#content .curvy-text-container p { padding: 0.5em; text-align: justify; }
-#content .event-title { font-weight: bold; }
 
 /* Drawing extra attention to various things */
 .button-emphasis {
@@ -242,13 +221,6 @@ div.download-pdf a {
 /* Railsy validation errors */
 #error_explanation h2 { font-size: 16px; }
 #error_explanation ul li { font-size: 16px; }
-
-/* Image gallery */
-#gallery-column { float:right; padding-left: 20px; padding-bottom: 20px; }
-#gallery { width: 480px; height: 360px; }
-.galleria-stage { bottom:0px; left:0px; right:0px; top:0px; }
-.galleria-info-text { display: block; }
-.galleria-info-link { display: none; }
 
 /* Styles for the legacy Who's Coming table.  Don't delete just yet. */
 table.who { width: 90%; margin: 0 auto; }

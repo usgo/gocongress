@@ -1,0 +1,27 @@
+.homepage {
+  #content { 
+  
+    /* homepage overrides default padding so that the gallery will 
+    float snugly in the top right */
+    padding: 0px 0px 20px 0px;
+    width: 900px;
+    p, h2, h3, h4, h5 { padding: 0.5em 15px; }
+
+    /* Curving the text around the logo */
+    .curvy-text-container { padding-top: 10px; position: relative; }
+    .curvy-text-container #usgc-logo { position: absolute; left: -140px; top: 10px; }
+    .curvy-text-container .curvy-spacer { clear: left; float: left; height: 19px; }
+    .curvy-text-container p { padding: 0.5em; text-align: justify; }
+    .event-title { font-weight: bold; }
+    
+    /* Misc. */
+    p#venue-address { text-align: right; }
+  }
+}
+
+/* Image gallery */
+#gallery-column { float:right; padding-left: 20px; padding-bottom: 20px; }
+#gallery { width: 480px; height: 360px; }
+.galleria-stage { bottom:0px; left:0px; right:0px; top:0px; }
+.galleria-info-text { display: block; }
+.galleria-info-link { display: none; }
