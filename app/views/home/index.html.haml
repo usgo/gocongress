@@ -6,7 +6,7 @@
         The img title ends up in a div.galleria-info-title
         The img alt ends up in a div.galleria-info-description
         Leave the alt empty -Jared 12/20/10
-      = image_tag "slideshow/0" + i.to_s + ".jpg", :title=>@arSlideTitles[i-1], :alt=>""
+      = image_tag "slideshow/0" + i.to_s + ".jpg", :title => @arSlides[i-1][0], :alt => @arSlides[i-1][1]
 
 .curvy-text-container
   = image_tag "logo/gc2011-logo-300.png", :id => 'usgc-logo'

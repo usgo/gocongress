@@ -8,6 +8,7 @@ $(document).ready(function(){
   $('#gallery').galleria({
 		autoplay: 5000
 		, image_crop: true
+		, show_info: true
 		, transition: 'fade'
 		, transition_speed: 1000
 	});
