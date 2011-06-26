@@ -199,17 +199,10 @@ p#venue-address { text-align: right; }
 #content .event-title { font-weight: bold; }
 
 /* Drawing extra attention to various things */
-.rails-flash-alert {
-	background-color: yellow;
-	}
-.rails-flash-notice {
-	background-color: lightgreen;
-	}
 .button-emphasis {
   color: #0071BC;
   font-size: 20px;
   }
-
 #content .notice { 
 	background-image: url("../images/icons/attention.png");
 	background-repeat: no-repeat;
@@ -241,6 +234,10 @@ div.download-pdf a {
 	padding: 10px; 
 	text-align: center;
 }
+
+/* Rails flashes */
+.rails-flash-alert { background-color: Yellow; }
+.rails-flash-notice { background-color: LightGreen; }
 
 /* Railsy validation errors */
 #error_explanation h2 { font-size: 16px; }
