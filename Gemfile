@@ -44,8 +44,8 @@ end
 
 # You need a javascript engine for rails 3.1 (heroku doesn't have one), and it
 # appears that the javascript engine that works with Heroku is the rubyracer for
-# heroku. Heroku has a stack now that comes with node.js which will take care of
-# this issue when rails 3.1rc5 arrives
+# heroku. Heroku has a stack now [cedar (beta)] that comes with node.js which 
+# will take care of this issue when rails 3.1rc5 arrives
 group :production do
   gem 'therubyracer-heroku', '0.8.1.pre3'
   gem 'pg'
