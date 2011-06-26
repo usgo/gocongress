@@ -29,6 +29,11 @@
     = csrf_meta_tag
 
   %body{:class => @bodyClassList}
+
+    %noscript
+      #noscript-warning
+        %h3 GoCongress.org works best with Javascript enabled
+
     #header-container
       #header
         #usgc-title-container
@@ -107,16 +112,12 @@
       .rails-flash-notice= notice
       .rails-flash-alert= alert
 
-      / Friendly noscript warning - Jared 7/27/10
-      %noscript
-        .error
-          Please enable Javascript.  Thank you.
+      / Yield to view
       = yield
+
       %div{:style => "clear:both;"}
+
     #footer
-      /
-        Sponsor logos, small and circular, with anchors, in the lower
-        right corner - Jared 9/4/10
       #sponsors
         %a{:href => "http://www.usgo.org"}
           = image_tag "sponsors/aga.jpg"
