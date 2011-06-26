@@ -18,11 +18,12 @@ class Attendee < ActiveRecord::Base
     :understand_minor, :congresses_attended, :is_player, :will_play_in_us_open, \
     :is_current_aga_member, :tshirt_size, :special_request, :roomate_request
 
-  # define constant array of ranks
+  # Define constant array of integer ranks and corresponding rank names
+  # The highest official amateur dan rank in the AGA is 7 dan
   RANKS = []
   RANKS << [ "Non-player", 0]
   109.downto(101).each {|r| RANKS << ["#{r-100} pro", r] }
-  8.downto(1).each {|r| RANKS << [ "#{r} dan", r] }
+  7.downto(1).each {|r| RANKS << [ "#{r} dan", r] }
   -1.downto(-30).each {|r| RANKS << ["#{-r} kyu", r] }
 
   # define constant array of integer ranks
