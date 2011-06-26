@@ -50,7 +50,9 @@
     %thead
       %tr
         %th Name
+        %th Open?
         %th Rounds
+        %th Attendees
         %th Director(s)
         %th Eligibility
         - if current_user_is_admin?
@@ -59,7 +61,9 @@
       - @tournaments.each do |t|
         %tr
           %td= link_to t.name, t
+          %td= t.get_openness_type_name
           %td= t.rounds.count
+          %td= t.attendees.count
           %td= t.directors
           %td= t.elligible
           - if current_user_is_admin?

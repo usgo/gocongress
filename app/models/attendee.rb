@@ -145,8 +145,8 @@ class Attendee < ActiveRecord::Base
     return (self.birth_date + 18.years > deadline)
   end
 
-  def get_full_name
-    given_name + " " + family_name
+  def get_full_name(respect_anonymity = false)
+    (anonymous? && respect_anonymity) ? 'Anonymous' : given_name + " " + family_name
   end
 
   def full_name_possessive
