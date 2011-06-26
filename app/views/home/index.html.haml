@@ -1,12 +1,12 @@
 #gallery-column
 
-  / Slideshow.  Only displayed if JS is on - Jared 7/27/10
+  / Slideshow. Without JS, it's just a list of pictures, breaking the layout.
+  / So, we only display it if JS is on - Jared 7/27/10
   #gallery-container{:style => "display: none;"}
     #gallery
       - 1.upto(9) do |i|
-        /
-          The img title ends up in a div.galleria-info-title
-          The img alt ends up in a div.galleria-info-description
+        / img title becomes div.galleria-info-title
+        / img alt becomes div.galleria-info-description
         = image_tag "slideshow/0" + i.to_s + ".jpg", :title => @arSlides[i-1][0], :alt => @arSlides[i-1][1]
 
   %p#venue-address
