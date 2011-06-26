@@ -48,4 +48,5 @@ end
 # this issue when rails 3.1rc5 arrives
 group :production do
   gem 'therubyracer-heroku', '0.8.1.pre3'
+  gem 'pg'
 end
