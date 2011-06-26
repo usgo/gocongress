@@ -48,5 +48,9 @@ end
 # will take care of this issue when rails 3.1rc5 arrives
 group :production do
   gem 'therubyracer-heroku', '0.8.1.pre3'
+  
+  # since moving to Heroku's 1.9.2 stack (bamboo-mri-1.9.2) we must specify 'pg'
+  # so, when running locally, make sure to bundle --without production
+  # unless you want to install postgres locally
   gem 'pg'
 end
