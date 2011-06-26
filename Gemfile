@@ -5,6 +5,11 @@ source 'http://rubygems.org'
 # When Rails 3.1 stable is released, we should drop this version constraint
 gem 'rails', '~> 3.1.0.rc4'
 
+# Asset template engines
+gem 'sass'
+gem 'coffee-script'
+gem 'uglifier'
+
 gem 'sqlite3-ruby', :require => 'sqlite3'
 gem "jquery-rails" # jquery and jquery-ui
 gem "devise" # authentication

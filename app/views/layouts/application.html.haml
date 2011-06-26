@@ -10,20 +10,22 @@
     -# Warning: Do not use stylesheet_link_tag :cache => true
     -# because that will try to write all.css, but Heroku is 
     -# a readonly filesystem -Jared 2011.2.3
-    = stylesheet_link_tag "main"
-    = stylesheet_link_tag "scaffold"
-    = stylesheet_link_tag "ui-lightness/jquery-ui-1.8.11.custom.css"
+    -#= stylesheet_link_tag "main"
+    -#= stylesheet_link_tag "scaffold"
+    -#= stylesheet_link_tag "ui-lightness/jquery-ui-1.8.11.custom.css"
+    = stylesheet_link_tag :application
 
     -# These js files must be included in this exact order -Jared 11/30/10
-    = javascript_include_tag "jquery.min.js"
-    = javascript_include_tag "jquery-ui.min.js"
-    = javascript_include_tag "rails"
-    = javascript_include_tag "application"
-
+    -#= javascript_include_tag "jquery.min.js"
+    -#= javascript_include_tag "jquery-ui.min.js"
+    -#= javascript_include_tag "rails"
+    = javascript_include_tag :application
+    
     -# To do: We only need the galleria stuff on the homepage Hiding this on other
     -# pages could improve page load by 80ms or more -Jared 2011.2.3
-    = javascript_include_tag "galleria/galleria"
-    = javascript_include_tag "galleria/themes/dots/galleria.dots.js"
+    -#= javascript_include_tag "galleria/galleria"
+    -#= javascript_include_tag "galleria/themes/dots/galleria.dots.js"
+    
     = csrf_meta_tag
   %body{:class => @bodyClassList}
     / A few of the more verbose pages reference this named anchor -Jared 9/12/10
