@@ -4,4 +4,5 @@
  *= require "scaffold"
  *= require ../../../vendor/assets/stylesheets/ui-lightness/jquery-ui-1.8.11.custom.css
  *= require "home"
+ *= require "tables"
  */

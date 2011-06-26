@@ -1,0 +1,35 @@
+/* Lightweight table: Tighter, less colors, borders, etc. -Jared 1/2/11 */
+table.lightweight {
+  border-spacing: 0;
+  border-collapse: collapse;
+  td, th { border: 0px solid #666; }
+  td { padding: 0em 0.5em; }
+  th { padding: 0em 0.5em 0em 0em; }
+  .top-headed th { padding: 0em 0.5em; }
+  .lightly-spaced-rows td { padding: 0.25em 0.5em; }
+}
+
+/* Table options eg. zebra striping */
+table.zebra tr:nth-child(even) td { background-color: #FFECD1; }
+table.dont-wrap-th th { white-space:nowrap; }
+
+/* Semantic table: The basic table meant for data, not for layout */
+table.semantic {
+  border-spacing: 0;
+  border-collapse: collapse;
+  margin: 0.5em 0em;
+  thead th { vertical-align: bottom; }
+  td, th { border: 1px solid #666; padding: 0.25em; }
+  td { background-color: #FFDAA3; }
+  th { background-color: #FF9B05; }
+  tr.greater-header th { text-align: center; }
+  tr.lesser-header th { background-color: #FFC369; font-weight: normal; }
+  tr.total th { background-color: #FFDAA3; text-align: right; }
+
+  /* Semantic table: Row emphasis */
+  /* Emphasis is more important than zebra striping, so we must define it after zebra -Jared 1/13/11 */
+  tr.emphasized td { background-color: Yellow; }
+  tr td.emphasized { background-color: Yellow; }
+  tr.understated td { color: #666; }
+  tr.disabled td { background-color: #DDD; color: #666; }
+}
