@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110626194919) do
+ActiveRecord::Schema.define(:version => 20110628032146) do
 
   create_table "attendee_discounts", :force => true do |t|
     t.integer  "attendee_id", :null => false
@@ -102,7 +102,7 @@ ActiveRecord::Schema.define(:version => 20110626194919) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "start"
-    t.string   "notes"
+    t.string   "notes",              :limit => 250
     t.time     "return_depart_time"
     t.time     "return_arrive_time"
   end
