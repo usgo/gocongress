@@ -231,6 +231,15 @@ class AttendeesController < ApplicationController
         end
       end
       params[:attendee].delete :tournament_id_list
+
+    elsif (@page == 'events')
+      @attendee.events.clear
+      params[:attendee][:event_id_list] ||= Array.new
+      params[:attendee][:event_id_list].each do |eid|
+        e = Event.find(eid)
+        @attendee.events << e if e.present?
+      end
+      params[:attendee].delete :event_id_list
     end
 
     # update attributes but do not save yet
@@ -292,12 +301,15 @@ protected
     elsif page == "tournaments"
       @open_tournaments = Tournament.where(:openness => 'O').order(:name)
       @atnd_open_trn_ids = @attendee.tournaments.where({:openness => 'O'}).map {|t| t.id}
+    elsif page == "events"
+      @events = Event.order(:start, :evtname)
+      @atnd_event_ids = @attendee.events.map {|e| e.id}
     end
   end
 
   def get_valid_page_from_params
     params[:page].to_s.blank? ? page = 'basics' : page = params[:page].to_s
-    unless %w[admin basics baduk roomboard tournaments].include?(page) then raise 'invalid page' end
+    unless %w[admin basics baduk roomboard tournaments events].include?(page) then raise 'invalid page' end
     return page
   end
   
@@ -312,6 +324,8 @@ protected
       view_name = "room_and_board"
     elsif page == "tournaments"
       view_name = "edit_tournaments"
+    elsif page == "events"
+      view_name = "edit_events"
     else
       raise "invalid page"
     end

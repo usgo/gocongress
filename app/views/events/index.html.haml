@@ -1,8 +1,5 @@
 %h2 Events and Activities
 
-- if current_user_is_admin?
-  .flow-padding= button_to "New Event", new_event_path, :method => "get"
-
 %p
   In addition to many
   = link_to 'tournaments,', tournaments_path
@@ -10,8 +7,24 @@
   = link_to 'professionals,', vip_path
   the vendor area, and other Go-related activities, we also have
   these activities:
-%p.notice
-  All events, prices, and times subject to change.
+
+- if current_user.present?
+  .flow-padding
+    = form_tag choose_attendee_user_path(current_user), :method => "get" do
+      = hidden_field_tag :destination_page, :events
+      = submit_tag 'Sign Up for Events'
+- else
+  If you have already 
+  = link_to 'registered,', new_user_registration_path
+  please
+  = link_to 'sign in', new_user_session_path
+  and select the events you are interested in.
+
+- if current_user_is_admin?
+  .flow-padding= button_to "New Event", new_event_path, :method => "get"
+
+%p.notice All events, prices, and times subject to change.
+
 %table.semantic.fullwidth.zebra
   %tbody
     - @arEventsByDate.each do |d,arEvt|
@@ -49,5 +62,5 @@
           %td= e.notes
           - if current_user_is_admin?
             %td= link_to 'Edit', edit_event_path(e)
-            %td= link_to 'Delete', e, :confirm => 'Are you sure?', :method => :delete
+            %td= link_to 'Delete', e, :confirm => 'Delete event?  If any attendees are signed up, those signups will be lost too.', :method => :delete
 %br/

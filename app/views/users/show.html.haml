@@ -80,6 +80,7 @@
             %li= link_to 'Player Info', edit_attendee_path(a) + '/baduk'
             %li= link_to 'Room and Board', edit_attendee_path(a) + '/roomboard'
             %li= link_to 'Tournaments', edit_attendee_path(a) + '/tournaments'
+            %li= link_to 'Events', edit_attendee_path(a) + '/events'
             - if current_user.is_admin?
               %li= link_to 'Admin', edit_attendee_path(a) + '/admin'
         %td= a.get_rank_name

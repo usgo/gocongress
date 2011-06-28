@@ -7,11 +7,11 @@ class UsersController < ApplicationController
   # GET /users/1/choose_attendee
   def choose_attendee
     @user = User.find(params[:id])
-
-    # Currently this is just used when signing up attendees for tournaments,
-    # but in the future destination_page may come from the params
-    @destination_page = 'tournaments'
-    @destination_page_description = "sign up for tournaments"
+    params[:destination_page] ||= "tournaments"
+    is_valid_destination = %w[events tournaments].index params[:destination_page]
+    raise 'Invalid destination page' unless is_valid_destination
+    @destination_page = params[:destination_page]
+    @destination_page_description = "sign up for " + @destination_page
   end
 
   # GET /users/1/edit_email

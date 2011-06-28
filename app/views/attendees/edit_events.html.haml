@@ -1,0 +1,39 @@
+%h2 Events for #{@attendee.get_full_name}
+
+%p
+  Which events will #{@attendee.get_full_name} particpate in?
+  If you have questions, please consult the
+  = link_to "event schedule", events_path
+  or contact the
+  = link_to "registrar.", contact_path
+
+%p.notice All events, prices, and times subject to change.
+
+= form_for( @attendee ) do |f|
+  = hidden_field_tag :page, @page
+  = render :partial => "shared/error_messages", :locals => { :resource => @attendee }
+
+  %br
+  %table.lightweight.lightly-spaced-rows.zebra.fullwidth
+    %thead
+      %th
+      %th Date
+      %th Event 
+      %th Depart
+      %th Start
+      %th.numeric Price
+    %tbody
+      - @events.each do |e|
+        - is_checked = @atnd_event_ids.index(e.id).present?
+        - cbx_id = 'event_id_' + e.id.to_s
+        %tr
+          %td= check_box_tag "attendee[event_id_list][]", e.id, is_checked, :id => cbx_id
+          %td= e.start.to_date.to_formatted_s(:short)
+          %td= label_tag cbx_id, e.evtname
+          %td= e.evtdeparttime
+          %td= e.start.to_time.to_formatted_s(:american)
+          %td.numeric= format_price(e.evtprice)
+
+  %br
+  = f.submit "Submit"
+  = link_to "cancel", user_path(@attendee.user)

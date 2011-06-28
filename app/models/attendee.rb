@@ -10,6 +10,9 @@ class Attendee < ActiveRecord::Base
   has_many :attendee_tournaments, :dependent => :destroy
   has_many :tournaments, :through => :attendee_tournaments
 
+  has_many :attendee_events, :dependent => :destroy
+  has_many :events, :through => :attendee_events
+
   AGE_DEADLINE = "July 29, 2011"
 
   # Mass assignment config
