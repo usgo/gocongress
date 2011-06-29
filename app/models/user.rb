@@ -117,6 +117,13 @@ class User < ActiveRecord::Base
         p = ap.plan
         invoice_items.push inv_item_hash('Plan: ' + p.name, a.get_full_name, p.price, ap.quantity)
       end
+      
+      # Events
+      a.events.each do |e|
+        if e.evtprice.to_f > 0.0 then
+          invoice_items.push inv_item_hash('Event: ' + e.evtname, a.get_full_name, e.evtprice.to_f, 1)
+        end
+      end
     end
 
     # Comp transactions, eg. VIP discounts
