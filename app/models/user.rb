@@ -94,9 +94,7 @@ class User < ActiveRecord::Base
   end
 
   def get_invoice_total
-    sum = 0
-    self.get_invoice_items.each { |item| sum += item['item_price'] * item['qty'] }
-    return sum
+    InvoiceItem.inv_item_total(self.get_invoice_items)
   end
 
   def get_initial_deposit_due_date

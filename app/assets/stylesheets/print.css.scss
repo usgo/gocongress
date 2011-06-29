@@ -45,6 +45,8 @@ img.thin-border { border: 1px solid black; }
 .flow-padding { padding: 8px 0px; }
 
 /* Print-specific styles */
+p, table, h2 { padding: 0.5em 0em; }
+td, th { padding-right: 1em; }
 .logo-column {
 	float:left; 
 	padding-right:40px;
