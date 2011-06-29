@@ -161,9 +161,10 @@ class UserTest < ActiveSupport::TestCase
   test "event increases invoice total" do
     u = Factory(:user)
     u.attendees << Factory(:attendee, :user_id => u.id)
-    total_before = u.get_invoice_total
-    u.attendees.first.events << Factory(:event, :evtprice => "10")
-    assert_equal u.get_invoice_total + 10, total_before
+    event_price = 10
+    assert_difference('u.get_invoice_total', event_price) do
+      u.attendees.first.events << Factory(:event, :evtprice => event_price.to_s)
+    end
   end
 
   test "event with non-numeric price does not increase the invoice total" do
