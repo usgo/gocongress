@@ -1,3 +1,5 @@
+require "invoice_item"
+
 class Attendee < ActiveRecord::Base
   belongs_to :user
 
@@ -141,6 +143,51 @@ class Attendee < ActiveRecord::Base
   def valid_in_form_page?(form_page)
     @form_page = form_page
     valid?
+  end
+
+  def invoice_items
+    invoice_items = []
+    
+    # registration fee for each attendee
+    reg_desc = "Registration " + (self.is_player? ? "(Player)" : "(Non-Player)")
+    invoice_items.push InvoiceItem.inv_item_hash( reg_desc, self.get_full_name, self.get_registration_price, 1 )
+
+    # How old will the attendee be on the first day of the event?
+    # Also, truncate to an integer age to simplify logic below
+    atnd_age = self.age_in_years.truncate
+
+    # Does this attendee qualify for any automatic discounts?
+    Discount.where("is_automatic = ?", true).each do |d|
+
+      # Currently, we only apply age-related automatic discounts.
+      # In the future, there will also be "early bird" discounts,
+      # but we haven't figured out the details yet.
+      satisfy_age_min = d.age_min.blank? || atnd_age >= d.age_min
+      satisfy_age_max = d.age_max.blank? || atnd_age <= d.age_max
+      if (satisfy_age_min && satisfy_age_max) then
+        invoice_items.push InvoiceItem.inv_item_hash(d.get_invoice_item_name, self.get_full_name, -1 * d.amount, 1)
+      end
+    end
+
+    # Did this attendee claim any non-automatic discounts?
+    self.discounts.where("is_automatic = ?", false).each do |d|
+      invoice_items.push InvoiceItem.inv_item_hash(d.get_invoice_item_name, self.get_full_name, -1 * d.amount, 1)
+    end
+
+    # room and board invoice items
+    self.attendee_plans.each do |ap|
+      p = ap.plan
+      invoice_items.push InvoiceItem.inv_item_hash('Plan: ' + p.name, self.get_full_name, p.price, ap.quantity)
+    end
+    
+    # Events
+    self.events.each do |e|
+      if e.evtprice.to_f > 0.0 then
+        invoice_items.push InvoiceItem.inv_item_hash('Event: ' + e.evtname, self.get_full_name, e.evtprice.to_f, 1)
+      end
+    end
+    
+    return invoice_items
   end
 
   def is_minor
