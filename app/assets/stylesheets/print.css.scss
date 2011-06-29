@@ -1,0 +1,53 @@
+/* Basic element styling (no classes yet) */
+* { margin: 0px; padding: 0px; }
+body { background-color: white; margin: 20px; }
+hr { margin: 1em 0em 1em 0em; }
+blockquote {
+	font-size: 14px; 
+	font-style: oblique; 
+	padding: 0px 10px; 
+}
+fieldset {
+  border: none;
+  padding: 0.2em;
+  margin: 0em;
+}
+legend {
+	font-size: 18px; 
+	font-weight: bold;
+	padding: 1em 0em 0.25em 0em;
+}
+input[type="submit"], input[type="button"] { cursor: pointer; }
+
+/* Font Families */
+h1, h2, h3, h4, h5, h6, legend, th { font-family: Helvetica, sans-serif; }
+body, td, p, span, div, li, hr, blockquote { font-family: Times, serif; }
+
+/* Basic font sizing */
+h1 { font-size: 32px; }
+h2 { font-size: 24px; }
+h3 { font-size: 18px; }
+p, span, div { font-size: 16px; }
+
+/* Truly basic classes that could apply anywhere -Jared 12/30/10 */
+.fullwidth { width: 100%; }
+.inline { display: inline; }
+.smalltext { font-size: 12px; }
+th { text-align: left; }
+th.row { vertical-align: top; }
+table .numeric { text-align: right; }
+.align-center { text-align: center; }
+.align-right { text-align: right; }
+img.thin-border { border: 1px solid black; }
+.initially_hidden { display: none; }
+
+/* Use this class to pad flow elements (eg. div, form) -Jared 4/9/11 */
+.flow-padding { padding: 8px 0px; }
+
+/* Print-specific styles */
+.logo-column {
+	float:left; 
+	padding-right:40px;
+	text-align: right;
+	h2 { padding: 40px 0px 0px 10px;}
+}

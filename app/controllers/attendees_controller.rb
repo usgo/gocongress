@@ -280,6 +280,12 @@ class AttendeesController < ApplicationController
     redirect_to user_path(target_attendee_user_id)
   end
 
+  # GET /attendees/1/print_summary
+  def print_summary
+    @attendee = Attendee.find params[:id]
+    render :layout => "print"
+  end
+
   # GET /attendees/vip
   def vip
     @attendees = Attendee.where('rank >= 101')

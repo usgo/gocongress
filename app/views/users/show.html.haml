@@ -81,6 +81,7 @@
             %li= link_to 'Room and Board', edit_attendee_path(a) + '/roomboard'
             %li= link_to 'Tournaments', edit_attendee_path(a) + '/tournaments'
             %li= link_to 'Events', edit_attendee_path(a) + '/events'
+            %li= link_to 'Print Summary', print_summary_for_attendee_path(a)
             - if current_user.is_admin?
               %li= link_to 'Admin', edit_attendee_path(a) + '/admin'
         %td= a.get_rank_name

@@ -18,11 +18,17 @@ Gocongress::Application.routes.draw do
   match '/attendees/:id/edit/:page' => "attendees#edit"
 
   # resource routes (maps HTTP verbs to controller actions automatically):
-  resources :attendees, :contents, :discounts, :events, :jobs
+  resources :contents, :discounts, :events, :jobs
   resources :plans, :plan_categories, :tournaments, :transactions
 
   # some resources do not need all seven default actions
   resources :preregistrants, :only => [:index]
+
+  resources :attendees do
+    member do
+      get 'print_summary', :as => 'print_summary_for'
+    end
+  end
 
   resources :users do
     member do

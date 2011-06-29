@@ -1,0 +1,11 @@
+!!!
+%html
+  %head
+    %meta{:content => "text/html", "http-equiv" => "Content-Type"}/
+    %title US Go Congress #{CONGRESS_YEAR}
+    = stylesheet_link_tag :print
+  %body
+    = yield
+    %p
+      Printed:
+      = Time.now
