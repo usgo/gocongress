@@ -166,6 +166,19 @@ class UserTest < ActiveSupport::TestCase
     assert_equal u.get_invoice_total + 10, total_before
   end
 
+  test "event with non-numeric price does not increase the invoice total" do
+    u = Factory(:user)
+    u.attendees << Factory(:attendee, :user_id => u.id)
+    
+    # bypass validations to create event with non-numeric price
+    event_with_bad_price = Factory(:event)
+    event_with_bad_price.update_attribute :evtprice, "TBA"
+    
+    assert_no_difference('u.get_invoice_total') do
+      u.attendees.first.events << event_with_bad_price
+    end
+  end
+
 private
   
   def find_item_description? (items, description)
