@@ -44,9 +44,13 @@ img.thin-border { border: 1px solid black; }
 /* Use this class to pad flow elements (eg. div, form) -Jared 4/9/11 */
 .flow-padding { padding: 8px 0px; }
 
-/* Two column layout */
+/* Symetrical two column layout */
 .left-column { display: inline-block; width: 45%; vertical-align: top; }
 .right-column { display: inline-block; width: 45%; vertical-align: top; }
+
+/* Asymetrical two column layout (two-thirds / one-third) */
+.asymetrical-columns .left-column { display: inline-block; padding-right: 32px; width: 60%; vertical-align: top; }
+.asymetrical-columns .right-column { display: inline-block; width: 30%; vertical-align: top; }
 
 /* Remove the default border on anchored images */
 /* I hope this works as well as the img.border attribute -Jared 11/29/10 */

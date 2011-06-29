@@ -1,53 +1,56 @@
-.left-column
-  %h2= @tournament.name
-  %table.lightweight
-    %tr
-      %th Director(s):
-      %td= @tournament.directors
-    %tr
-      %th Eligible:
-      %td= @tournament.elligible
-    %tr
-      %th= trl_attr 'tournament', 'openness'
-      %td= @tournament.get_openness_type_name
-    %tr
-      %th= trl_attr 'tournament', 'show_attendee_notes_field'
-      %td= @tournament.show_attendee_notes_field? ? 'Yes' : 'No'
-  %br
-
-  %h3 Description
-  = Markdown.new( @tournament.description ).to_html.html_safe
-  %br
-
-  %h3 Rounds
-  - if @tournament.rounds.size == 0
-    %p 
-      This tournament has no rounds.  Unless this tournament is self-paired, 
-      you should probably add at least one round.
-  - else
+.asymetrical-columns
+  .left-column
+    %h2= @tournament.name
     %table.lightweight
-      %tbody
-        - @tournament.rounds.order('round_start asc').each_with_index do |r,i|
-          %tr
-            %th= i+1
-            %td= r.round_start.to_formatted_s(:long)
+      %tr
+        %th Director(s):
+        %td= @tournament.directors
+      %tr
+        %th Eligible:
+        %td= @tournament.elligible
+      %tr
+        %th= trl_attr 'tournament', 'openness'
+        %td= @tournament.get_openness_type_name
+      %tr
+        %th= trl_attr 'tournament', 'show_attendee_notes_field'
+        %td= @tournament.show_attendee_notes_field? ? 'Yes' : 'No'
+    %br
 
-.right-column
-  %h2 Attendees
-  - if @tournament.attendees.size == 0
-    No attendees yet
-  - else
-    %table.lightweight.top-headed
-      %thead
-        %th Attendee
-        %th Rank
-      %tbody
-        - @tournament.attendees.order('rank desc').each do |a|
-          %tr
-            %td= a.get_full_name(true)
-            %td= a.get_rank_name
+    %h3 Description
+    = Markdown.new( @tournament.description ).to_html.html_safe
+    %br
+
+    %h3 Rounds
+    - if @tournament.rounds.size == 0
+      %p 
+        This tournament has no rounds.  Unless this tournament is self-paired, 
+        you should probably add at least one round.
+    - else
+      %table.lightweight
+        %tbody
+          - @tournament.rounds.order('round_start asc').each_with_index do |r,i|
+            %tr
+              %th= i+1
+              %td= r.round_start.to_formatted_s(:long)
+
+  .right-column
+    %h2 Attendees
+    - if @tournament.attendees.size == 0
+      No attendees yet
+    - else
+      %table.lightweight.top-headed
+        %thead
+          %th Attendee
+          %th Rank
+        %tbody
+          - @tournament.attendees.order('rank desc').each do |a|
+            %tr
+              %td= a.get_full_name(true)
+              %td.nowrap= a.get_rank_name
 
 %br
-= link_to 'Edit', edit_tournament_path(@tournament)
-\|
-= link_to 'Back', tournaments_path
+%p
+  - if current_user_is_admin?
+    = link_to 'Edit', edit_tournament_path(@tournament)
+    %br
+  = link_to 'Back', tournaments_path
