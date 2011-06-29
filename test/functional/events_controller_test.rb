@@ -2,7 +2,7 @@ require 'test_helper'
 
 class EventsControllerTest < ActionController::TestCase
   setup do
-    @event = events(:one)
+    @event = Factory(:event)
     @user = Factory.create(:user)
     @admin_user = Factory.create(:admin_user)
   end
@@ -27,6 +27,7 @@ class EventsControllerTest < ActionController::TestCase
   
   test "admin can create event" do
     sign_in @admin_user
+    assert @event.valid?, "event is not valid"
     assert_difference('Event.count') do
       post :create, :event => @event.attributes
     end
