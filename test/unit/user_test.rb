@@ -157,7 +157,15 @@ class UserTest < ActiveSupport::TestCase
     ap = AttendeePlan.new :plan_id => p.id, :quantity => p.max_quantity + 1
     assert_equal false, ap.valid?
   end
-  
+
+  test "event increases invoice total" do
+    u = Factory(:user)
+    u.attendees << Factory(:attendee, :user_id => u.id)
+    total_before = u.get_invoice_total
+    u.attendees.first.events << Factory(:event, :evtprice => "10")
+    assert_equal u.get_invoice_total + 10, total_before
+  end
+
 private
   
   def find_item_description? (items, description)
