@@ -1,3 +1,5 @@
+require 'csv'
+
 class ReportsController < ApplicationController
 
   # Access Control
