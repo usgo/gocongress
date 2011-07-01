@@ -1,4 +1,4 @@
 User Email,Primary Attendee,Creation Date,Deposit Due,Attendees,Attendees with Deposit
-= FasterCSV.generate do |csv|
+= CSV.generate do |csv|
   - @overdue_users.each do |u|
     - csv << overdue_user_to_array(u)

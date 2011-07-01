@@ -4,4 +4,4 @@
   -# notice how we mark each line as html_safe to prevent 
   -# double escaping, or escaping of field-quotes.
   -# we also specify an empty row_sep to prevent double line-endings.
-  = FasterCSV.generate_line( attendee_to_array(a), {:row_sep => ""} ).html_safe
+  = CSV.generate_line( attendee_to_array(a), {:row_sep => ""} ).html_safe

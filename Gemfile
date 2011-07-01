@@ -15,8 +15,7 @@ gem "jquery-rails" # jquery and jquery-ui
 gem "devise" # authentication
 gem 'validates_timeliness'
 gem 'haml'
-gem 'haml-rails', :group => :development 
-gem 'fastercsv'
+gem 'haml-rails', :group => :development
 gem 'hoptoad_notifier' # uncaught exception notification
 gem 'bluecloth' # markdown
 gem 'kaminari' # pagination
