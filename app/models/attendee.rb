@@ -95,6 +95,13 @@ class Attendee < ActiveRecord::Base
   # validations for admin page
   validates_date :deposit_received_at, :if => :form_page_is_admin?, :allow_blank => true
 
+  def self.registration_price(registration_type)
+    unless %w[player nonplayer].include?(registration_type.to_s) then
+      raise 'Invalid registration_type: ' + registration_type.to_s
+    end
+    registration_type.to_s == 'player' ? 375 : 75
+  end
+
   def age_in_seconds
     # age on the start day of the event, not now
     (CONGRESS_START_DATE - self.birth_date.to_time).to_i
@@ -228,7 +235,8 @@ class Attendee < ActiveRecord::Base
   end
 
   def get_registration_price
-    self.is_player? ? 375 : 75
+    reg_type = self.is_player? ? :player : :nonplayer
+    self.registration_price reg_type
   end
 
   def get_tshirt_size_name

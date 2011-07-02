@@ -70,6 +70,11 @@ class ReportsController < ApplicationController
     @refunds_sum = @refunds.sum(:amount)
     @total_sum = @sales_sum - @comps_sum - @refunds_sum
 
+    @player_count = Attendee.where('is_player = ?', true).count
+    @player_reg_revenue_sum = @player_count * Attendee.registration_price(:player)
+    @nonplayer_count = Attendee.where('is_player = ?', false).count
+    @nonplayer_reg_revenue_sum = @nonplayer_count * Attendee.registration_price(:nonplayer)
+
     respond_to do |format|
       format.html do render 'transactions.html.haml' end
       format.csv do render_csv("usgc_transactions_#{Time.now.strftime("%Y-%m-%d")}") end

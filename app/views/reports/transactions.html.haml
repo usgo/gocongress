@@ -27,4 +27,34 @@
       %td.numeric= @transactions.length
       %td.numeric= number_to_currency(@total_sum, :unit => '')
 
+%h3 Registrations
+%p
+  The figures below are
+  %strong estimates
+  calculated as
+  %em number of attendees * registration price
+  (eg. $375 for players)
+  
+%table.semantic
+  %thead
+    %tr
+      %th= "Registration Type"
+      %th.numeric #
+      %th.numeric Reg. Price
+      %th.numeric Estimated $
+  %tbody
+    %tr
+      %td Players
+      %td.numeric= @player_count
+      %td.numeric= Attendee.registration_price 'player'
+      %td.numeric= number_to_currency(@player_reg_revenue_sum, :unit => '')
+    %tr
+      %td Non-Players
+      %td.numeric= @nonplayer_count
+      %td.numeric= Attendee.registration_price :nonplayer
+      %td.numeric= number_to_currency(@nonplayer_reg_revenue_sum, :unit => '')
+
+-# To do: how much for each room type
+
+%h3 All Transactions
 %p= button_to "Export #{mnh.pluralize} To CSV", csv_path, :method => "get"
