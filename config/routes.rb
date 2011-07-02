@@ -1,5 +1,7 @@
 Gocongress::Application.routes.draw do
 
+  # http://guides.rubyonrails.org/routing.html
+
   get "home/access_denied"
   get "home/index"
   get "home/transportation"
@@ -14,15 +16,15 @@ Gocongress::Application.routes.draw do
 
   devise_for :users
 
-  # override resource route for attendee#edit to supoort multiple pages
-  match '/attendees/:id/edit/:page' => "attendees#edit"
-
-  # resource routes (maps HTTP verbs to controller actions automatically):
+  # restful resources
   resources :contents, :discounts, :events, :jobs
   resources :plans, :plan_categories, :tournaments, :transactions
 
   # some resources do not need all seven default actions
   resources :preregistrants, :only => [:index]
+
+  # override resource route for attendee#edit to supoort multiple pages
+  match '/attendees/:id/edit/:page' => "attendees#edit"
 
   resources :attendees do
     member do
@@ -50,57 +52,5 @@ Gocongress::Application.routes.draw do
     get :index, :emails, :overdue_deposits, :transactions, :attendees, :invoices
   end
   
-  # The priority is based upon order of creation:
-  # first created -> highest priority.
-
-  # Sample of regular route:
-  #   match 'products/:id' => 'catalog#view'
-  # Keep in mind you can assign values other than :controller and :action
-
-  # Sample of named route:
-  #   match 'products/:id/purchase' => 'catalog#purchase', :as => :purchase
-  # This route can be invoked with purchase_url(:id => product.id)
-
-  # Sample resource route with options:
-  #   resources :products do
-  #     member do
-  #       get 'short'
-  #       post 'toggle'
-  #     end
-  #
-  #     collection do
-  #       get 'sold'
-  #     end
-  #   end
-
-  # Sample resource route with sub-resources:
-  #   resources :products do
-  #     resources :comments, :sales
-  #     resource :seller
-  #   end
-
-  # Sample resource route with more complex sub-resources
-  #   resources :products do
-  #     resources :comments
-  #     resources :sales do
-  #       get 'recent', :on => :collection
-  #     end
-  #   end
-
-  # Sample resource route within a namespace:
-  #   namespace :admin do
-  #     # Directs /admin/products/* to Admin::ProductsController
-  #     # (app/controllers/admin/products_controller.rb)
-  #     resources :products
-  #   end
-
-  # You can have the root of your site routed with "root"
-  # just remember to delete public/index.html.
   root :to => "home#index"
-
-  # See how all your routes lay out with "rake routes"
-
-  # This is a legacy wild controller route that's not recommended for RESTful applications.
-  # Note: This route will make all actions in every controller accessible via GET requests.
-  # match ':controller(/:action(/:id(.:format)))'
 end
