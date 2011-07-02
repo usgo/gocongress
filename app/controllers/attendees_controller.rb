@@ -227,7 +227,11 @@ class AttendeesController < ApplicationController
               params[:attendee].delete "trn_#{t.id}_notes"
             end
           end
-          at.save!
+          if at.valid?
+            at.save!
+          else
+            at.errors.each { |k,v| extra_errors << k.to_s + " " + v.to_s }
+          end
         end
       end
       params[:attendee].delete :tournament_id_list
