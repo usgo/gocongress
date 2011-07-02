@@ -40,8 +40,9 @@
   = PlanCategory.model_name.human.downcase.pluralize
   that can be selected by
   = Attendee.model_name.human.downcase.pluralize + '.'
-  Not shown:
-  = @hidden_plan_categories.map {|c| c.name}.join(', ')
+  - if @hidden_plan_categories.count > 0
+    Not shown:
+    = @hidden_plan_categories.map {|c| c.name}.join(', ')
 
 - plan_revenue_grand_total = 0
 %table.semantic
