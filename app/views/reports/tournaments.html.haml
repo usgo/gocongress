@@ -1,6 +1,5 @@
 - mnh = Tournament.model_name.human
 
--# Admins can aview a report of all attendees who have signed up for (or been invited to) tournaments.
 %h2= page_title
 
 %ul
@@ -20,9 +19,7 @@
       %tr
         %th= trl_attr('tournament', 'openness')
         %td= t.get_openness_type_name
-      %tr
-        %th Description
-        %td= Markdown.new( t.description ).to_html.html_safe
+
   %table.semantic
     %thead
       %tr
