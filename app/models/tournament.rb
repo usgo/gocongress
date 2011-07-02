@@ -12,7 +12,7 @@ class Tournament < ActiveRecord::Base
   # Invitational - Admins select certain attendees
   OPENNESS_TYPES = [['Open','O'], ['Invitational','I']]
 
-  validates_presence_of :name, :elligible, :description, :directors, :openness
+  validates_presence_of :name, :eligible, :description, :directors, :openness
   validates_length_of :openness, :is => 1
   validates_inclusion_of :openness, :in => OPENNESS_TYPES.flatten
 

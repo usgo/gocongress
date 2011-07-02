@@ -5,7 +5,7 @@ describe "tournaments/show.html.haml" do
     @tournament = assign(:tournament, stub_model(Tournament,
       :name => "Name",
       :time => "Time",
-      :elligible => "Elligible",
+      :eligible => "Eligible",
       :description => "MyText",
       :directors => "Directors"
     ))

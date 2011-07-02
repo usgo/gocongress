@@ -65,7 +65,7 @@
           %td= t.rounds.count
           %td= t.attendees.count
           %td= t.directors
-          %td= t.elligible
+          %td= t.eligible
           - if current_user_is_admin?
             %td= link_to 'Edit', edit_tournament_path(t)
             %td= link_to_destroy(t)

@@ -34,7 +34,7 @@ en:
         show_on_reg_form: "Show on Registration Form"
       tournament:
         directors: "Director(s)"
-        elligible: "Eligibility"
+        eligible: "Eligibility"
         openness: "Open or Invitational?"
         show_attendee_notes_field: "Show Attendee Notes Field?"
       transaction:
