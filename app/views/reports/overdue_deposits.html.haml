@@ -8,7 +8,7 @@
   Users with overdue initial deposits: 
   = @overdue_users.length
 
-%p= link_to "Export as CSV", overdue_deposits_reports_path + '.csv'
+%p= button_to "Export as CSV", overdue_deposits_reports_path + '.csv', :method => "get"
 
 %table.semantic.fullwidth.zebra
   %thead
