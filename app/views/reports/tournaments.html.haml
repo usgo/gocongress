@@ -1,0 +1,31 @@
+- mnh = Tournament.model_name.human
+
+-# Admins can aview a report of all attendees who have signed up for (or been invited to) tournaments.
+%h2= page_title
+
+- @tournaments.each do |t|
+  %h3= t.name
+  %table.lightweight
+    %tbody
+      - %w[directors elligible].each do |a|
+        %tr
+          %th= trl_attr('tournament', a)
+          %td= t[a]
+      %tr
+        %th= trl_attr('tournament', 'openness')
+        %td= t.get_openness_type_name
+      %tr
+        %th Description
+        %td= Markdown.new( t.description ).to_html.html_safe
+  %table.semantic
+    %thead
+      %tr
+        %th AGA ID
+        %th Attendee
+        %th Rank
+    %tbody
+      - t.attendees.order('rank desc').each do |a|
+        %tr
+          %td.numeric= a.aga_id
+          %td.numeric= a.get_full_name
+          %td.numeric= a.get_rank_name

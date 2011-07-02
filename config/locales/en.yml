@@ -33,6 +33,8 @@ en:
         show_on_roomboard_page: "Show on Room and Board Page"
         show_on_reg_form: "Show on Registration Form"
       tournament:
+        directors: "Director(s)"
+        elligible: "Eligibility"
         openness: "Open or Invitational?"
         show_attendee_notes_field: "Show Attendee Notes Field?"
       transaction:

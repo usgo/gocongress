@@ -86,6 +86,10 @@ class ReportsController < ApplicationController
     end
   end
 
+  def tournaments
+    @tournaments = Tournament.order(:name)
+  end
+
 protected
 
   def page_title

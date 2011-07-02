@@ -3,10 +3,10 @@
     %h2= @tournament.name
     %table.lightweight
       %tr
-        %th Director(s):
+        %th= trl_attr 'tournament', 'directors'
         %td= @tournament.directors
       %tr
-        %th Eligible:
+        %th= trl_attr 'tournament', 'elligible'
         %td= @tournament.elligible
       %tr
         %th= trl_attr 'tournament', 'openness'
