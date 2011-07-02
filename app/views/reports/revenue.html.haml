@@ -49,24 +49,25 @@
     %tr
       %th Category
       %th Plan
-      %th.numeric #
+      %th.numeric Attendees
+      %th.numeric Quantity
       %th.numeric Price
       %th.numeric Estimated $
   %tbody
     - @plan_categories.each do |c|
       - c.plans.order(:name).each do |p|
         - attnd_count = p.attendees.count
-        - plan_revenue_total = attnd_count * p.price
+        - total_quantity = p.attendee_plans.sum(:quantity)
+        - plan_revenue_total = total_quantity * p.price
         - plan_revenue_grand_total += plan_revenue_total
         %tr
           %td= c.name
           %td= p.name
           %td.numeric= attnd_count
-          %td.numeric= p.price
+          %td.numeric= total_quantity
+          %td.numeric= number_to_currency(p.price, :unit => '')
           %td.numeric= number_to_currency(plan_revenue_total, :unit => '')
     %tr
-      %td{:colspan => 2}
+      %td{:colspan => 5}
         %strong Total
-      %td.numeric= AttendeePlan.count
-      %td
       %td.numeric= number_to_currency(plan_revenue_grand_total, :unit => '')
