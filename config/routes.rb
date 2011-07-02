@@ -49,7 +49,7 @@ Gocongress::Application.routes.draw do
 
   # reports (not a restful resource, but this is a nice compact syntax)
   resource :reports, :only => [] do
-    get :index, :emails, :overdue_deposits, :transactions, :attendees, :invoices
+    get :attendees, :emails, :index, :invoices, :revenue, :overdue_deposits, :transactions
   end
   
   root :to => "home#index"

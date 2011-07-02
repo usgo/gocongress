@@ -59,6 +59,16 @@ class ReportsController < ApplicationController
     end
   end
 
+  def revenue
+    @player_count = Attendee.where('is_player = ?', true).count
+    @player_reg_revenue_sum = @player_count * Attendee.registration_price(:player)
+    @nonplayer_count = Attendee.where('is_player = ?', false).count
+    @nonplayer_reg_revenue_sum = @nonplayer_count * Attendee.registration_price(:nonplayer)
+
+    @plan_categories = PlanCategory.where('show_on_reg_form = ?', true).order(:name)
+    @hidden_plan_categories = PlanCategory.where('show_on_reg_form = ?', false).order(:name)
+  end
+
   def transactions
     @transactions = Transaction.all
     @sales = Transaction.where("trantype = ?", "S")
@@ -69,14 +79,6 @@ class ReportsController < ApplicationController
     @comps_sum = @comps.sum(:amount)
     @refunds_sum = @refunds.sum(:amount)
     @total_sum = @sales_sum - @comps_sum - @refunds_sum
-
-    @player_count = Attendee.where('is_player = ?', true).count
-    @player_reg_revenue_sum = @player_count * Attendee.registration_price(:player)
-    @nonplayer_count = Attendee.where('is_player = ?', false).count
-    @nonplayer_reg_revenue_sum = @nonplayer_count * Attendee.registration_price(:nonplayer)
-
-    @plan_categories = PlanCategory.where('show_on_reg_form = ?', true).order(:name)
-    @hidden_plan_categories = PlanCategory.where('show_on_reg_form = ?', false).order(:name)
 
     respond_to do |format|
       format.html do render 'transactions.html.haml' end
