@@ -45,13 +45,10 @@ Gocongress::Application.routes.draw do
     end
   end
 
-  # reports
-  get 'reports' => 'reports#index'
-  get "reports/emails"
-  get "reports/overdue_deposits"
-  get 'reports/transactions'
-  get 'reports/attendees'
-  get 'reports/invoices'
+  # reports (not a restful resource, but this is a nice compact syntax)
+  resource :reports, :only => [] do
+    get :index, :emails, :overdue_deposits, :transactions, :attendees, :invoices
+  end
   
   # The priority is based upon order of creation:
   # first created -> highest priority.
