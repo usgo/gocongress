@@ -87,7 +87,8 @@ class ReportsController < ApplicationController
   end
 
   def tournaments
-    @tournaments = Tournament.order(:name)
+    # Lisa wants "the US Open at the bottom, since it will be by far the longest"
+    @tournaments = Tournament.order("name <> 'US Open' desc, name asc")
   end
 
 protected
