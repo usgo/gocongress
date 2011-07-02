@@ -236,7 +236,7 @@ class Attendee < ActiveRecord::Base
 
   def get_registration_price
     reg_type = self.is_player? ? :player : :nonplayer
-    self.registration_price reg_type
+    Attendee.registration_price reg_type
   end
 
   def get_tshirt_size_name
