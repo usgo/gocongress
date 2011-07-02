@@ -57,9 +57,10 @@ module ReportsHelper
     end
 
     # lisa says: plans should come right after attendee attrs
-    plan_ids = a.plans.map { |p| p.id }
+    pqh = a.plan_qty_hash
     Plan.order(:name).each do |p|
-      ar << plan_ids.index(p.id).present? ? 'yes' : 'no'
+      plan_qty = pqh[p.id].present? ? pqh[p.id].to_i : 0
+      ar << plan_qty.to_i
     end
 
     # claimed discounts

@@ -226,6 +226,13 @@ class Attendee < ActiveRecord::Base
     ap = self.attendee_plans.where(:plan_id => plan_id).first
     return ap.present? ? ap.quantity : 0
   end
+  
+  def plan_qty_hash
+    ap_ordered = self.attendee_plans.order(:plan_id)
+    ids = ap_ordered.map { |ap| ap.plan_id }
+    qtys = ap_ordered.map { |ap| ap.quantity }
+    Hash[ids.zip(qtys)]
+  end
 
   def get_rank_name
     rank_name = ""
