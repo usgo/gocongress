@@ -3,7 +3,13 @@
 -# Admins can aview a report of all attendees who have signed up for (or been invited to) tournaments.
 %h2= page_title
 
+%ul
+  - @tournaments.each do |t|
+    %li
+      %a{:href=>"#tournament_#{t.id}"}= t.name
+
 - @tournaments.each do |t|
+  %a{:id=>"tournament_#{t.id}"}
   %h3= t.name
   %table.lightweight
     %tbody
