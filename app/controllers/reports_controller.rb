@@ -75,6 +75,9 @@ class ReportsController < ApplicationController
     @nonplayer_count = Attendee.where('is_player = ?', false).count
     @nonplayer_reg_revenue_sum = @nonplayer_count * Attendee.registration_price(:nonplayer)
 
+    @plan_categories = PlanCategory.where('show_on_reg_form = ?', true).order(:name)
+    @hidden_plan_categories = PlanCategory.where('show_on_reg_form = ?', false).order(:name)
+
     respond_to do |format|
       format.html do render 'transactions.html.haml' end
       format.csv do render_csv("usgc_transactions_#{Time.now.strftime("%Y-%m-%d")}") end

@@ -27,7 +27,7 @@
       %td.numeric= @transactions.length
       %td.numeric= number_to_currency(@total_sum, :unit => '')
 
-%h3 Registrations
+%h3 Revenue from Registrations
 %p
   The figures below are
   %strong estimates
@@ -38,7 +38,7 @@
 %table.semantic
   %thead
     %tr
-      %th= "Registration Type"
+      %th Registration Type
       %th.numeric #
       %th.numeric Reg. Price
       %th.numeric Estimated $
@@ -54,7 +54,33 @@
       %td.numeric= Attendee.registration_price :nonplayer
       %td.numeric= number_to_currency(@nonplayer_reg_revenue_sum, :unit => '')
 
--# To do: how much for each room type
+%h3 Revenue from Plans
+%p
+  The table below shows
+  = PlanCategory.model_name.human.downcase.pluralize
+  that can be selected by
+  = Attendee.model_name.human.downcase.pluralize + '.'
+  Not shown:
+  = @hidden_plan_categories.map {|c| c.name}.join(', ')
+  
+%table.semantic
+  %thead
+    %tr
+      %th Category
+      %th Plan
+      %th.numeric #
+      %th.numeric Price
+      %th.numeric Estimated $
+  %tbody
+    - @plan_categories.each do |c|
+      - c.plans.order(:name).each do |p|
+        - attnd_count = p.attendees.count
+        %tr
+          %td= c.name
+          %td= p.name
+          %td.numeric= attnd_count
+          %td.numeric= p.price
+          %td.numeric= number_to_currency(attnd_count * p.price, :unit => '')
 
 %h3 All Transactions
 %p= button_to "Export #{mnh.pluralize} To CSV", csv_path, :method => "get"
