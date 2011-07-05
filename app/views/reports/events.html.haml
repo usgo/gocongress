@@ -1,0 +1,25 @@
+%h2= page_title
+
+%ul
+  - @events.each do |e|
+    %li
+      %a{:href=>"#event_#{e.id}"}= e.evtname
+
+- @events.each do |e|
+  %a{:id=>"event_#{e.id}"}
+  %h3= e.evtname
+
+  %table.semantic
+    %thead
+      %tr
+        %th Attendee
+    %tbody
+      - if e.attendees.empty?
+        %tr
+          %td
+            %p{:style => "font-style: italic"}
+              No attendees currently signed up.
+      - else
+        - e.attendees.order('family_name').each do |a|
+          %tr
+            %td.numeric= a.get_full_name

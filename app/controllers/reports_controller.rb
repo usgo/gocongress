@@ -91,6 +91,10 @@ class ReportsController < ApplicationController
     @tournaments = Tournament.order("name <> 'US Open' desc, name asc")
   end
 
+  def events
+    @events = Event.all
+  end
+
 protected
 
   def page_title
