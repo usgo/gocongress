@@ -3,6 +3,7 @@
   %head
     %meta{:content => "text/html", "http-equiv" => "Content-Type"}/
     %title US Go Congress #{CONGRESS_YEAR}
-    = stylesheet_link_tag :print
+    = stylesheet_link_tag :print, :media => "all"
   %body
-    = yield
+    .paper-size-is-letter
+      = yield
