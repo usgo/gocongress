@@ -113,11 +113,7 @@ class Attendee < ActiveRecord::Base
 
   def attribute_names_for_csv
     
-    # do not export ids
-    no_export_attrs = %w[id user_id]
-    
-    # Lisa says:
-    # put the name and email in the first few columns
+    # Lisa wants the name and email in the first few columns
     # group together address, city, state, etc.
     first_attrs = %w[aga_id family_name given_name address_1 address_2 city state zip country phone]
     
@@ -127,7 +123,7 @@ class Attendee < ActiveRecord::Base
     attrs = self.attribute_names.delete_if { |x| 
       first_attrs.index(x) ||
       last_attrs.index(x) ||
-      no_export_attrs.index(x)
+      internal_attributes.index(x)
     }
 
     # note: the order must match attendee_to_array() in reports_helper.rb
@@ -136,6 +132,11 @@ class Attendee < ActiveRecord::Base
 
   def country_is_america?
     self.country == 'US'
+  end
+  
+  def internal_attributes
+    # attrs rarely useful for display
+    %w[created_at id is_primary updated_at user_id understand_minor]
   end
 
   def form_page_is_baduk?
