@@ -8,14 +8,16 @@
 %table
   %thead
     %th Invoice Items
-    %th Price
-    %th Qty
+    %th.numeric Price
+    %th.numeric Qty
+    %th.numeric Total
   %tbody
     - @attendee.invoice_items.each do |i|
       %tr
         %td= i['item_description']
-        %td= number_to_currency i['item_price']
-        %td= i['qty']
+        %td.numeric= number_to_currency i['item_price']
+        %td.numeric= i['qty']
+        %td.numeric= number_to_currency( i['item_price'] * i['qty'] )
 
 %p
   %strong Invoice Total:
