@@ -47,9 +47,13 @@ img.thin-border { border: 1px solid black; }
 /* Print-specific styles */
 p, table, h2 { padding: 0.5em 0em; }
 td, th { padding-right: 1em; }
-.logo-column {
-	float:left; 
-	padding-right:40px;
-	text-align: right;
+.narrow-column {
+	display: inline-block;
+	padding: 0px 40px;
+	vertical-align: top;
 	h2 { padding: 40px 0px 0px 10px;}
+}
+.wide-column {
+	display: inline-block;
+	vertical-align: top;
 }

@@ -1,24 +1,46 @@
-.logo-column
+.narrow-column.align-right
   = image_tag "logo/gc2011-logo-144.png"
   %h2 #{CONGRESS_YEAR} US <br> Go Congress
   %h2 Welcome <br> ようこそ <br>  欢迎 <br>  환영
 
-%h1= @attendee.get_full_name
+.wide-column
+  %h1= "#{@attendee.get_full_name}, #{@attendee.get_rank_name}"
+  %p= address_without_linebreaks @attendee
 
-%table
-  %thead
-    %th Invoice Items
-    %th.numeric Price
-    %th.numeric Qty
-    %th.numeric Total
-  %tbody
-    - @attendee.invoice_items.each do |i|
+  %table
+    %tbody
+      - @attendee_attr_names.each do |a|
+        %tr
+          %th= trl_attr 'attendee', a
+          %td
+            - if @attendee[a].is_a?(TrueClass) || @attendee[a].is_a?(FalseClass)
+              = @attendee[a] ? "Yes" : "No"
+            - else
+              = @attendee[a]
       %tr
-        %td= i['item_description']
-        %td.numeric= number_to_currency i['item_price']
-        %td.numeric= i['qty']
-        %td.numeric= number_to_currency( i['item_price'] * i['qty'] )
+        %th T-Shirt Size
+        %td= @attendee.get_tshirt_size_name
+      %tr
+        %th User Account
+        %td
+          = @attendee.user.primary_attendee.get_full_name
+          = "(#{@attendee.user.email})"
 
-%p
-  %strong Invoice Total:
-  = number_to_currency @attendee.invoice_total
+  %h2 Invoice
+  %table
+    %thead
+      %th Invoice Items
+      %th.numeric Price
+      %th.numeric Qty
+      %th.numeric Total
+    %tbody
+      - @attendee.invoice_items.each do |i|
+        %tr
+          %td= i['item_description']
+          %td.numeric= number_to_currency i['item_price']
+          %td.numeric= i['qty']
+          %td.numeric= number_to_currency( i['item_price'] * i['qty'] )
+
+  %p
+    %strong Invoice Total:
+    = number_to_currency @attendee.invoice_total
