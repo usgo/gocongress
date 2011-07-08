@@ -52,12 +52,18 @@ td, th { padding-right: 1em; }
 	padding: 0pt 20pt 0pt 0pt;
 	vertical-align: top;
 	width: 100pt;
-	h2 { padding: 40pt 0pt 0pt 10pt;}
+	h2 { padding: 20pt 0pt 0pt 10pt;}
 }
 .wide-column {
 	display: inline-block;
 	vertical-align: top;
 	width: 350pt;
+}
+tr.grand_total {
+	th, td { 
+		border-top: 1px solid black;
+		padding-top: 0.25em;
+	}
 }
 
 /* Paper size is US Letter Portraint with half-inch gutters */

@@ -5,10 +5,23 @@
 
 .wide-column
   %h1= "#{@attendee.get_full_name}, #{@attendee.get_rank_name}"
-  %p= address_without_linebreaks @attendee
+
+  - if @attendee.user.attendees.count > 1
+    %p
+      One of
+      = @attendee.user.attendees.count
+      attendees on the user account of
+      = @attendee.user.primary_attendee.get_full_name
+      = "(#{@attendee.user.email})"
 
   %table
     %tbody
+      %tr
+        %th Address
+        %td= address_without_linebreaks @attendee
+      %tr
+        %th Age
+        %td= @attendee.age_in_years.to_i
       - @attendee_attr_names.each do |a|
         %tr
           %th= trl_attr 'attendee', a
@@ -20,16 +33,11 @@
       %tr
         %th T-Shirt Size
         %td= @attendee.get_tshirt_size_name
-      %tr
-        %th User Account
-        %td
-          = @attendee.user.primary_attendee.get_full_name
-          = "(#{@attendee.user.email})"
 
-  %h2 Invoice
+  %h2 Cost Summary
   %table
     %thead
-      %th Invoice Items
+      %th Item
       %th.numeric Price
       %th.numeric Qty
       %th.numeric Total
@@ -40,7 +48,6 @@
           %td.numeric= number_to_currency i['item_price']
           %td.numeric= i['qty']
           %td.numeric= number_to_currency( i['item_price'] * i['qty'] )
-
-  %p
-    %strong Invoice Total:
-    = number_to_currency @attendee.invoice_total
+      %tr.grand_total
+        %th{:colspan=>3} Total
+        %td.numeric= number_to_currency @attendee.invoice_total
