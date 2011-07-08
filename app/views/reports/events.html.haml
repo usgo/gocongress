@@ -5,43 +5,25 @@
     %li
       %a{:href=>"#event_#{e.id}"}= e.evtname
 
-%h2{:style => "margin-top: 30px"}= @event_current.start.to_formatted_s(:long_with_day)
-- @events.each do |e|
-  -if e.start.day == @event_current.start.day
-    %a{:id=>"event_#{e.id}"}
-    %div{:style => "margin-left: 20px"}
-      %h3= e.evtname + " - " + e.start.to_s(:american)
+- @events_by_date.each do |d,events|
+  %h3= d.to_formatted_s(:long_with_day)
+  %div{:style => "margin-left: 20px"}
+    - events.each do |e|
+      %a{:id=>"event_#{e.id}"}
+      %h4= e.evtname + " - " + e.start.to_s(:american)
       -if e.attendees.empty?
-        %p{:style => "font-style: italic"}
-          No attendees currently signed up.
+        %p
+          %em No attendees currently signed up.
       -else
         %table.semantic
           %thead
             %tr
               %th Attendee
               %th Rank
+              %th Age
           %tbody
             - e.attendees.order('family_name').each do |a|
               %tr
-                %td.numeric= a.get_full_name
-                %td.numeric= a.get_rank_name
-  -else
-    %h2{:style => "margin-top: 30px"}= e.start.to_formatted_s(:long_with_day)
-    %a{:id=>"event_#{e.id}"}
-    %div{:style => "margin-left: 20px"}
-      %h3= e.evtname + " - " + e.start.to_s(:american)
-      -if e.attendees.empty?
-        %p{:style => "font-style: italic"}
-          No attendees currently signed up.
-      -else
-      %table.semantic
-        %thead
-          %tr
-            %th Attendee
-            %th Rank
-        %tbody
-          - e.attendees.order('family_name').each do |a|
-            %tr
-              %td.numeric= a.get_full_name
-              %td.numeric= a.get_rank_name
-    -@event_current = e
+                %td= a.get_full_name
+                %td= a.get_rank_name
+                %td.numeric= a.age_in_years.to_i

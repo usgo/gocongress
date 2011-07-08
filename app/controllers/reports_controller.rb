@@ -99,7 +99,7 @@ class ReportsController < ApplicationController
 
   def events
     @events = Event.order('start asc')
-    @event_current = @events[0]
+    @events_by_date = @events.group_by {|event| event.start.to_date}
   end
 
 protected
