@@ -98,7 +98,8 @@ class ReportsController < ApplicationController
   end
 
   def events
-    @events = Event.all
+    @events = Event.order('start asc')
+    @event_current = @events[0]
   end
 
 protected
