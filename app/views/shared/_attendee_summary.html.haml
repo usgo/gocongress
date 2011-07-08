@@ -1,0 +1,54 @@
+.attendee_reg_sheet
+  .narrow-column.align-right
+    = image_tag "logo/gc2011-logo-144.png"
+    %h2 #{CONGRESS_YEAR} US <br> Go Congress
+    %h2 Welcome <br> ようこそ <br>  欢迎 <br>  환영
+
+  .wide-column
+    %h1= "#{@attendee.get_full_name}, #{@attendee.get_rank_name}"
+
+    - if @attendee.user.attendees.count > 1
+      %p
+        One of
+        = @attendee.user.attendees.count
+        attendees on the user account of
+        = @attendee.user.primary_attendee.get_full_name
+        = "(#{@attendee.user.email})"
+
+    %table
+      %tbody
+        %tr
+          %th Address
+          %td= address_without_linebreaks @attendee
+        %tr
+          %th Age
+          %td= @attendee.age_in_years.to_i
+        - @attendee_attr_names.each do |a|
+          %tr
+            %th= trl_attr 'attendee', a
+            %td
+              - if @attendee[a].is_a?(TrueClass) || @attendee[a].is_a?(FalseClass)
+                = @attendee[a] ? "Yes" : "No"
+              - else
+                = @attendee[a]
+        %tr
+          %th T-Shirt Size
+          %td= @attendee.get_tshirt_size_name
+
+    %h2 Cost Summary
+    %table
+      %thead
+        %th Item
+        %th.numeric Price
+        %th.numeric Qty
+        %th.numeric Total
+      %tbody
+        - @attendee.invoice_items.each do |i|
+          %tr
+            %td= i['item_description']
+            %td.numeric= number_to_currency i['item_price']
+            %td.numeric= i['qty']
+            %td.numeric= number_to_currency( i['item_price'] * i['qty'] )
+        %tr.grand_total
+          %th{:colspan=>3} Total
+          %td.numeric= number_to_currency @attendee.invoice_total

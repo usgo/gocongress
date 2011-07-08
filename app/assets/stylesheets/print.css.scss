@@ -65,6 +65,9 @@ tr.grand_total {
 		padding-top: 0.25em;
 	}
 }
+.attendee_reg_sheet {
+	page-break-after: always;
+}
 
 /* Paper size is US Letter Portraint with half-inch gutters */
 /* 7.5 inches = 540 PostScript points */
