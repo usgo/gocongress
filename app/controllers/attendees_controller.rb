@@ -287,6 +287,7 @@ class AttendeesController < ApplicationController
   # GET /attendees/1/print_summary
   def print_summary
     @attendee = Attendee.find params[:id]
+    @attendee_attr_names = %w[aga_id birth_date comment confirmed email gender phone special_request roomate_request].sort
     render :layout => "print"
   end
 

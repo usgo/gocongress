@@ -28,6 +28,12 @@ class ReportsController < ApplicationController
     end
   end
 
+  def atn_reg_sheets
+    @attendee_attr_names = %w[aga_id birth_date comment confirmed email gender phone special_request roomate_request].sort
+    @attendees = Attendee.order('user_id, family_name, given_name')
+    render :layout => "print"
+  end
+
   def index
   end
 
@@ -92,7 +98,8 @@ class ReportsController < ApplicationController
   end
 
   def events
-    @events = Event.all
+    @events = Event.order('start asc')
+    @events_by_date = @events.group_by {|event| event.start.to_date}
   end
 
 protected

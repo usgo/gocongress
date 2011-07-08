@@ -1,11 +1,11 @@
 /* Basic element styling (no classes yet) */
-* { margin: 0px; padding: 0px; }
-body { background-color: white; margin: 20px; }
+* { margin: 0pt; padding: 0pt; }
+body { background-color: white; margin: 20pt; }
 hr { margin: 1em 0em 1em 0em; }
 blockquote {
-	font-size: 14px; 
+	font-size: 14pt; 
 	font-style: oblique; 
-	padding: 0px 10px; 
+	padding: 0pt 10pt; 
 }
 fieldset {
   border: none;
@@ -13,7 +13,7 @@ fieldset {
   margin: 0em;
 }
 legend {
-	font-size: 18px; 
+	font-size: 18pt; 
 	font-weight: bold;
 	padding: 1em 0em 0.25em 0em;
 }
@@ -24,32 +24,51 @@ h1, h2, h3, h4, h5, h6, legend, th { font-family: Helvetica, sans-serif; }
 body, td, p, span, div, li, hr, blockquote { font-family: Times, serif; }
 
 /* Basic font sizing */
-h1 { font-size: 32px; }
-h2 { font-size: 24px; }
-h3 { font-size: 18px; }
-p, span, div { font-size: 16px; }
+h1 { font-size: 18pt; }
+h2 { font-size: 14pt; }
+h3 { font-size: 12pt; }
+p, span, div, th, td { font-size: 10pt; }
 
 /* Truly basic classes that could apply anywhere -Jared 12/30/10 */
 .fullwidth { width: 100%; }
 .inline { display: inline; }
-.smalltext { font-size: 12px; }
+.smalltext { font-size: 12pt; }
 th { text-align: left; }
 th.row { vertical-align: top; }
 table .numeric { text-align: right; }
 .align-center { text-align: center; }
 .align-right { text-align: right; }
-img.thin-border { border: 1px solid black; }
+img.thin-border { border: 1pt solid black; }
 .initially_hidden { display: none; }
 
 /* Use this class to pad flow elements (eg. div, form) -Jared 4/9/11 */
-.flow-padding { padding: 8px 0px; }
+.flow-padding { padding: 8pt 0pt; }
 
 /* Print-specific styles */
 p, table, h2 { padding: 0.5em 0em; }
 td, th { padding-right: 1em; }
-.logo-column {
-	float:left; 
-	padding-right:40px;
-	text-align: right;
-	h2 { padding: 40px 0px 0px 10px;}
+.narrow-column {
+	display: inline-block;
+	padding: 0pt 20pt 0pt 0pt;
+	vertical-align: top;
+	width: 100pt;
+	h2 { padding: 20pt 0pt 0pt 10pt;}
 }
+.wide-column {
+	display: inline-block;
+	vertical-align: top;
+	width: 350pt;
+}
+tr.grand_total {
+	th, td { 
+		border-top: 1px solid black;
+		padding-top: 0.25em;
+	}
+}
+.attendee_reg_sheet {
+	page-break-after: always;
+}
+
+/* Paper size is US Letter Portraint with half-inch gutters */
+/* 7.5 inches = 540 PostScript points */
+.paper-size-is-letter { overflow:hidden; width: 540pt; }
