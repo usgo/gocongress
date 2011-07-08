@@ -34,6 +34,13 @@
         %tr
           %th T-Shirt Size
           %td= @attendee.get_tshirt_size_name
+        %tr
+          %th Tournaments
+          %td
+            - if @attendee.tournaments.count > 0
+              = @attendee.tournaments.map{|t| t.name}.join(', ')
+            - else
+              None
 
     %h2 Cost Summary
     %table
