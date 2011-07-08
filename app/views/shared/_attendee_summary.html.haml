@@ -5,40 +5,40 @@
     %h2 Welcome <br> ようこそ <br>  欢迎 <br>  환영
 
   .wide-column
-    %h1= "#{@attendee.get_full_name}, #{@attendee.get_rank_name}"
+    %h1= "#{attendee.get_full_name}, #{attendee.get_rank_name}"
 
-    - if @attendee.user.attendees.count > 1
+    - if attendee.user.attendees.count > 1
       %p
         One of
-        = @attendee.user.attendees.count
+        = attendee.user.attendees.count
         attendees on the user account of
-        = @attendee.user.primary_attendee.get_full_name
-        = "(#{@attendee.user.email})"
+        = attendee.user.primary_attendee.get_full_name
+        = "(#{attendee.user.email})"
 
     %table
       %tbody
         %tr
           %th Address
-          %td= address_without_linebreaks @attendee
+          %td= address_without_linebreaks attendee
         %tr
           %th Age
-          %td= @attendee.age_in_years.to_i
+          %td= attendee.age_in_years.to_i
         - @attendee_attr_names.each do |a|
           %tr
             %th= trl_attr 'attendee', a
             %td
-              - if @attendee[a].is_a?(TrueClass) || @attendee[a].is_a?(FalseClass)
-                = @attendee[a] ? "Yes" : "No"
+              - if attendee[a].is_a?(TrueClass) || attendee[a].is_a?(FalseClass)
+                = attendee[a] ? "Yes" : "No"
               - else
-                = @attendee[a]
+                = attendee[a]
         %tr
           %th T-Shirt Size
-          %td= @attendee.get_tshirt_size_name
+          %td= attendee.get_tshirt_size_name
         %tr
           %th Tournaments
           %td
-            - if @attendee.tournaments.count > 0
-              = @attendee.tournaments.map{|t| t.name}.join(', ')
+            - if attendee.tournaments.count > 0
+              = attendee.tournaments.map{|t| t.name}.join(', ')
             - else
               None
 
@@ -50,7 +50,7 @@
         %th.numeric Qty
         %th.numeric Total
       %tbody
-        - @attendee.invoice_items.each do |i|
+        - attendee.invoice_items.each do |i|
           %tr
             %td= i['item_description']
             %td.numeric= number_to_currency i['item_price']
@@ -58,4 +58,4 @@
             %td.numeric= number_to_currency( i['item_price'] * i['qty'] )
         %tr.grand_total
           %th{:colspan=>3} Total
-          %td.numeric= number_to_currency @attendee.invoice_total
+          %td.numeric= number_to_currency attendee.invoice_total
