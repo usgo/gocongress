@@ -30,6 +30,7 @@ class AttendeesController < ApplicationController
     @preregistrants = Preregistrant.order('preregdate asc')
 
     # get some fun statistics
+    @pro_count = Attendee.where("rank IN (?)", (101)..(109)).count
     @dan_count = Attendee.where("rank IN (?)", (1)..(9)).count
     @kyu_count = Attendee.where("rank IN (?)", (-30)..(-1)).count
     @np_count = Attendee.where(:rank => 0).count
@@ -37,6 +38,13 @@ class AttendeesController < ApplicationController
     @oldest_attendee = Attendee.reasonable_birth_date.order('birth_date desc').last
     @male_count = Attendee.where(:gender => 'm').count
     @female_count = Attendee.where(:gender => 'f').count
+    
+    total_seconds_of_life = 0
+    Attendee.reasonable_birth_date.each do |a|
+      total_seconds_of_life += a.age_in_seconds
+    end
+    avg_age_in_seconds = total_seconds_of_life.to_f / Attendee.reasonable_birth_date.count
+    @avg_age_in_years = avg_age_in_seconds.to_f / 60 / 60 / 24 / 365
   end
 
   # GET /attendees/new
