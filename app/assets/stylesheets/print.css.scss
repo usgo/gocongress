@@ -27,7 +27,7 @@ body, td, p, span, div, li, hr, blockquote { font-family: Times, serif; }
 h1 { font-size: 18pt; }
 h2 { font-size: 14pt; }
 h3 { font-size: 12pt; }
-p, span, div, th, td { font-size: 10pt; }
+p, span, div, th, td { font-size: 9pt; }
 
 /* Truly basic classes that could apply anywhere -Jared 12/30/10 */
 .fullwidth { width: 100%; }
@@ -40,6 +40,7 @@ table .numeric { text-align: right; }
 .align-right { text-align: right; }
 img.thin-border { border: 1pt solid black; }
 .initially_hidden { display: none; }
+.clear { clear: both; }
 
 /* Use this class to pad flow elements (eg. div, form) -Jared 4/9/11 */
 .flow-padding { padding: 8pt 0pt; }
@@ -57,17 +58,16 @@ td, th { padding-right: 1em; }
 .wide-column {
 	display: inline-block;
 	vertical-align: top;
-	width: 350pt;
+	width: 415pt;
 }
-tr.grand_total {
+tr.total {
 	th, td { 
 		border-top: 1px solid black;
 		padding-top: 0.25em;
 	}
 }
-.attendee_reg_sheet {
-	page-break-after: always;
-}
+.logo { float: left; padding-right: 20pt; }
+.registration-sheet { page-break-after: always; }
 
 /* Paper size is US Letter Portraint with half-inch gutters */
 /* 7.5 inches = 540 PostScript points */

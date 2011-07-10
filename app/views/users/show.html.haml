@@ -19,22 +19,12 @@
     %br
     - if current_user.is_admin?
       = link_to 'User Administration', edit_user_path(@user)
+      %br
+      = link_to 'Print Cost Summary', print_cost_summary_for_user_path(@user)
 
 .right-column
   %h2 Balance
-  %table.lightweight
-    %tbody
-      %tr
-        %th Total cost
-        %td.numeric= number_to_currency @user.get_invoice_total
-        %td.smalltext= link_to "Cost Summary", invoice_user_path(@user)
-      %tr
-        %th Amount paid
-        %td.numeric= number_to_currency @user.amount_paid
-        %td.smalltext= link_to "Payment History", ledger_user_path(@user)
-      %tr
-        %th Balance
-        %td.numeric= number_to_currency @user.balance
+  = render :partial => 'shared/balance', :locals => {:user => @user, :show_detail_links => true}
   
   %p= button_to "Make a Payment", pay_user_path(@user), :method => "get", :class => 'button-emphasis'
 
@@ -75,15 +65,18 @@
       %tr
         %td.attendee_name_column
           %a{:href=>'#', :class=>"expand_attendee", :id=>"expand_attendee_#{a.id}" }= a.get_full_name
-          %ul.initially_hidden{:id=>"attendee_drawer_#{a.id}"}
-            %li= link_to 'Basics', edit_attendee_path(a) + '/basics'
-            %li= link_to 'Player Info', edit_attendee_path(a) + '/baduk'
-            %li= link_to 'Room and Board', edit_attendee_path(a) + '/roomboard'
-            %li= link_to 'Tournaments', edit_attendee_path(a) + '/tournaments'
-            %li= link_to 'Events', edit_attendee_path(a) + '/events'
-            %li= link_to 'Print Summary', print_summary_for_attendee_path(a)
+          .initially_hidden{:id=>"attendee_drawer_#{a.id}"}
+            %ul
+              %li= link_to 'Basics', edit_attendee_path(a) + '/basics'
+              %li= link_to 'Player Info', edit_attendee_path(a) + '/baduk'
+              %li= link_to 'Room and Board', edit_attendee_path(a) + '/roomboard'
+              %li= link_to 'Tournaments', edit_attendee_path(a) + '/tournaments'
+              %li= link_to 'Events', edit_attendee_path(a) + '/events'
             - if current_user.is_admin?
-              %li= link_to 'Admin', edit_attendee_path(a) + '/admin'
+              %p Administration
+              %ul
+                %li= link_to 'Admin', edit_attendee_path(a) + '/admin'
+                %li= link_to 'Print Registration Sheet', print_summary_for_attendee_path(a)
         %td= a.get_rank_name
         %td= a.age_in_years.floor
         %td= a.confirmed.present? ? "Yes" : "No"

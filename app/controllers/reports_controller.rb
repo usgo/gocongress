@@ -102,6 +102,11 @@ class ReportsController < ApplicationController
     @events_by_date = @events.group_by {|event| event.start.to_date}
   end
 
+  def user_invoices
+    @users = User.joins(:primary_attendee).order('family_name, given_name')
+    render :layout => "print"
+  end
+
 protected
 
   def page_title

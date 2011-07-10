@@ -2,24 +2,7 @@
 
 %p Updated every few days, please be patient.
 
-- if @user.transactions.size == 0
-  %p No transactions found.
-- else
-  %table.semantic.fullwidth
-    %thead
-      %tr
-        %th Date
-        %th Type
-        %th.numeric Amount
-    %tbody
-      - for t in @transactions
-        %tr
-          %td= t.created_at.to_date.to_formatted_s(:long)
-          %td= t.get_trantype_name_public
-          %td.numeric= number_to_currency t.get_ledger_amount
-      %tr.total
-        %th{ :colspan => 2 } Total
-        %td.numeric= number_to_currency @user.amount_paid
+= render :partial => 'shared/ledger', :locals => {:user => @user}
 
 - if current_user.is_admin?
   %p= link_to "Return to #{@user.primary_attendee.full_name_possessive} Account", user_path(@user)

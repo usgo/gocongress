@@ -13,6 +13,8 @@ class Transaction < ActiveRecord::Base
 	# Sale - User makes a payment
 	TRANTYPES = [['Comp','C'], ['Refund','R'], ['Sale','S']]
 
+  scope :for_payment_history, where(:trantype => ['S','R'])
+
 	validates_presence_of :user_id, :trantype, :amount, :updated_by_user
 
 	validates_length_of :trantype, :is => 1

@@ -39,6 +39,7 @@ Gocongress::Application.routes.draw do
       get 'invoice'
       get 'ledger'
       get 'pay'
+      get 'print_cost_summary', :as => 'print_cost_summary_for'
       get 'choose_attendee'
 
       # todo: attendees should probably be a nested resource of users
@@ -51,7 +52,7 @@ Gocongress::Application.routes.draw do
   resource :reports, :only => [] do
     get :attendees, :atn_reg_sheets, :emails, :events, :index
     get :invoices, :revenue, :overdue_deposits, :tournaments
-    get :transactions
+    get :transactions, :user_invoices
   end
   
   root :to => "home#index"

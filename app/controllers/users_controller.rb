@@ -74,7 +74,6 @@ class UsersController < ApplicationController
     @page_title = @showing_current_user ?
       'My Payment History' :
       @user.primary_attendee.full_name_possessive + ' Payment History'
-    @transactions = @user.transactions.where(:trantype => ['S','R']).order('created_at desc')
   end
 
   # GET /users/new
@@ -147,6 +146,11 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @user.destroy
     redirect_to users_url, :notice => "User deleted"
+  end
+  
+  def print_cost_summary
+    @user = User.find(params[:id])
+    render :layout => 'print'
   end
 
 private

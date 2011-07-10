@@ -1,0 +1,38 @@
+.registration-sheet
+
+  .logo= image_tag "logo/gc2011-logo-144.png"
+  %h1 Cost Summary
+  
+  %table
+    %tr
+      %th User Email
+      %td= user.email
+    %tr
+      %th Primary Attendee
+      %td= user.primary_attendee.name_and_rank
+
+  = render :partial => 'shared/balance', :locals => {:user => user, :show_detail_links => false}
+  
+  %br.clear
+  %br
+  
+  %table.fullwidth
+    %thead
+      %th Attendee
+      %th Item
+      %th.numeric Price
+      %th.numeric Qty
+      %th.numeric Total
+    %tbody
+      - user.get_invoice_items.each do |i|
+        %tr
+          %td= truncate(strip_tags(i['attendee_full_name']), :length => 30)
+          %td= truncate(strip_tags(i['item_description']), :length => 45)
+          %td.numeric= number_to_currency i['item_price']
+          %td.numeric= i['qty']
+          %td.numeric= number_to_currency( i['item_price'] * i['qty'] )
+      %tr.total
+        %th{:colspan=>4} Total
+        %td.numeric= number_to_currency user.get_invoice_total
+
+  = render :partial => 'shared/ledger', :locals => {:user => user}

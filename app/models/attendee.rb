@@ -215,6 +215,10 @@ class Attendee < ActiveRecord::Base
     given_name + " " + family_name + ('s' == family_name[-1,1] ? "'" : "'s")
   end
 
+  def name_and_rank
+    get_full_name(false) + ", " + get_rank_name
+  end
+
   def possessive_pronoun_or_name
     is_primary? ? "My" : full_name_possessive
   end
