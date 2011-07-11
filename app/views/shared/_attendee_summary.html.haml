@@ -37,11 +37,7 @@
           %td= attendee.get_tshirt_size_name
         %tr
           %th Tournaments
-          %td
-            - if attendee.tournaments.count > 0
-              = attendee.tournaments.map{|t| t.name}.join(', ')
-            - else
-              None
+          %td= tmt_names.length > 0 ? tmt_names.join(', ') : 'None'
 
     %h2 Cost Summary
     %table

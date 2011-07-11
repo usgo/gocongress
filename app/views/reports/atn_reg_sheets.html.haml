@@ -1,1 +1,3 @@
-= render :partial => 'shared/attendee_summary', :collection => @attendees, :as => :attendee
+- @attendees.each do |a|
+  - tmt_names_atn = @tmt_names[a.id].present? ? @tmt_names[a.id] : Array.new
+  = render :partial => 'shared/attendee_summary', :locals => {:attendee => a, :tmt_names => tmt_names_atn}
