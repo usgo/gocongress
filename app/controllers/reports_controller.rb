@@ -30,7 +30,8 @@ class ReportsController < ApplicationController
 
   def atn_reg_sheets
     @attendee_attr_names = %w[aga_id birth_date comment confirmed email gender phone special_request roomate_request].sort
-    @attendees = Attendee.order('user_id, family_name, given_name')
+    @attendees = Attendee.where('lower(substr(family_name,1,1)) between ? and ?', params[:min], params[:max])
+    @attendees.order('user_id, family_name, given_name')
     @tmt_names = AttendeeTournament.tmt_names_by_attendee
     render :layout => "print"
   end
@@ -104,7 +105,9 @@ class ReportsController < ApplicationController
   end
 
   def user_invoices
-    @users = User.joins(:primary_attendee).order('family_name, given_name')
+    @users = User.joins(:primary_attendee)
+    @users.where('lower(substr(family_name,1,1)) between ? and ?', params[:min], params[:max])
+    @users.order('family_name, given_name')
     render :layout => "print"
   end
 
