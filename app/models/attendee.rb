@@ -136,7 +136,7 @@ class Attendee < ActiveRecord::Base
   
   def internal_attributes
     # attrs rarely useful for display
-    %w[created_at id is_primary updated_at user_id understand_minor]
+    %w[id user_id understand_minor]
   end
 
   def form_page_is_baduk?
