@@ -61,6 +61,7 @@ en:
         check_number: "Check Number"
         gwtranid: "Gateway Trns. ID"
         gwdate: "Gateway Date"
+        instrument: "Instrument"
         trantype: "Type"
       discount:
         age_min: "Minimum Age"
