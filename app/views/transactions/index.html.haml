@@ -19,21 +19,21 @@
       %th{ :colspan => 3 }
 
   %tbody
-    - @transactions.each do |transaction|
+    - @transactions.each do |t|
       %tr
-        %td= transaction.created_at.to_date
-        %td= transaction.get_trantype_name
-        %td= transaction.get_instrument_name
-        %td.numeric= number_to_currency transaction.amount, :unit => ""
+        %td= t.created_at.to_date
+        %td= t.get_trantype_name
+        %td= t.get_instrument_name
+        %td.numeric= number_to_currency t.amount, :unit => ""
         %td
-          - link_text = transaction.user.primary_attendee.get_full_name
-          - link_path = ledger_user_path(transaction.user)
-          = link_to link_text, link_path, :title => transaction.user.email
-        %td.numeric= transaction.gwtranid
-        %td.numeric= transaction.check_number
+          - link_text = t.user.primary_attendee.get_full_name
+          - link_path = ledger_user_path(t.user)
+          = link_to link_text, link_path, :title => t.user.email
+        %td.numeric= t.gwtranid
+        %td.numeric= t.check_number
         %td
-          - if transaction.updated_by_user.present?
-            = transaction.updated_by_user.primary_attendee.given_name
-        %td= link_to 'Details', transaction
-        %td= link_to 'Edit', edit_transaction_path(transaction)
-        %td= link_to 'Delete', transaction, :confirm => 'Are you sure?', :method => :delete
+          - if t.updated_by_user.present?
+            = t.updated_by_user.primary_attendee.given_name
+        %td= link_to 'Details', t
+        %td= link_to 'Edit', edit_transaction_path(t)
+        %td= link_to 'Delete', t, :confirm => 'Are you sure?', :method => :delete
