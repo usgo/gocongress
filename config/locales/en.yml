@@ -68,6 +68,7 @@ en:
         age_max: "Maximum Age"
         is_automatic: "Automatic?"
         name: "Discount Name"
+        players_only: "Players Only"
       user:
         created_at: "Created"
     models:

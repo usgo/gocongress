@@ -30,4 +30,17 @@ class AttendeeTest < ActiveSupport::TestCase
     assert_equal 0, AttendeePlan.where(:attendee_id => destroyed_attendee_id).count
   end
 
+  test "some discounts apply only to players" do
+    a = Factory(:ten_year_old)
+    d = Factory(:discount, {:is_automatic => true, :players_only => false, :age_min => 0, :age_max => 12})
+    assert attendee_has_discount(a,d)
+    d.players_only = true
+    d.save!
+    assert_equal false, attendee_has_discount(a,d)
+  end
+  
+  def attendee_has_discount(a,d)
+    invoice_item_names = a.invoice_items.map{|i| i['item_description']}
+    return invoice_item_names.index(d.get_invoice_item_name).present?
+  end
 end
