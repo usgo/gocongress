@@ -40,6 +40,7 @@ Gocongress::Application.routes.draw do
       get 'ledger'
       get 'pay'
       get 'print_cost_summary', :as => 'print_cost_summary_for'
+      get 'print_badge', :as => 'print_badge_for'
       get 'choose_attendee'
 
       # todo: attendees should probably be a nested resource of users
@@ -50,7 +51,7 @@ Gocongress::Application.routes.draw do
 
   # reports (not a restful resource, but this is a nice compact syntax)
   resource :reports, :only => [] do
-    get :attendees, :atn_reg_sheets, :emails, :events, :index
+    get :attendees, :atn_badges_all, :atn_badges_ind, :atn_reg_sheets, :emails, :events, :index
     get :invoices, :revenue, :overdue_deposits, :tournaments
     get :transactions, :user_invoices
   end
