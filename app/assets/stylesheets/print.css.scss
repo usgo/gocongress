@@ -3,9 +3,9 @@
 body { background-color: white; margin: 20pt; }
 hr { margin: 1em 0em 1em 0em; }
 blockquote {
-	font-size: 14pt; 
-	font-style: oblique; 
-	padding: 0pt 10pt; 
+  font-size: 14pt; 
+  font-style: oblique; 
+  padding: 0pt 10pt; 
 }
 fieldset {
   border: none;
@@ -13,9 +13,9 @@ fieldset {
   margin: 0em;
 }
 legend {
-	font-size: 18pt; 
-	font-weight: bold;
-	padding: 1em 0em 0.25em 0em;
+  font-size: 18pt; 
+  font-weight: bold;
+  padding: 1em 0em 0.25em 0em;
 }
 input[type="submit"], input[type="button"] { cursor: pointer; }
 
@@ -49,22 +49,22 @@ img.thin-border { border: 1pt solid black; }
 p, table, h2 { padding: 0.5em 0em; }
 td, th { padding-right: 1em; }
 .narrow-column {
-	display: inline-block;
-	padding: 0pt 20pt 0pt 0pt;
-	vertical-align: top;
-	width: 100pt;
-	h2 { padding: 20pt 0pt 0pt 10pt;}
+  display: inline-block;
+  padding: 0pt 20pt 0pt 0pt;
+  vertical-align: top;
+  width: 100pt;
+  h2 { padding: 20pt 0pt 0pt 10pt;}
 }
 .wide-column {
-	display: inline-block;
-	vertical-align: top;
-	width: 415pt;
+  display: inline-block;
+  vertical-align: top;
+  width: 415pt;
 }
 tr.total {
-	th, td { 
-		border-top: 1px solid black;
-		padding-top: 0.25em;
-	}
+  th, td { 
+    border-top: 1px solid black;
+    padding-top: 0.25em;
+  }
 }
 .logo { float: left; padding-right: 20pt; }
 .registration-sheet { page-break-after: always; }
