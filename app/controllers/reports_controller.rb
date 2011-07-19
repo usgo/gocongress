@@ -28,6 +28,12 @@ class ReportsController < ApplicationController
     end
   end
 
+  def atn_badges_all
+    @attendees = Attendee.where('lower(substr(family_name,1,1)) between ? and ?', params[:min], params[:max])
+    @attendees.order('family_name, given_name')
+    render :layout => "print"
+  end
+
   def atn_reg_sheets
     @attendee_attr_names = %w[aga_id birth_date comment confirmed email gender phone special_request roomate_request].sort
     @attendees = Attendee.where('lower(substr(family_name,1,1)) between ? and ?', params[:min], params[:max])
@@ -50,6 +56,11 @@ class ReportsController < ApplicationController
     Attendee.all.each { |a|
       @atnd_email_list += "\"#{a.get_full_name}\" <#{a.email}>, "
       }
+  end
+
+  def events
+    @events = Event.order('start asc')
+    @events_by_date = @events.group_by {|event| event.start.to_date}
   end
 
   def overdue_deposits
@@ -97,11 +108,6 @@ class ReportsController < ApplicationController
   def tournaments
     # Lisa wants "the US Open at the bottom, since it will be by far the longest"
     @tournaments = Tournament.order("name <> 'US Open' desc, name asc")
-  end
-
-  def events
-    @events = Event.order('start asc')
-    @events_by_date = @events.group_by {|event| event.start.to_date}
   end
 
   def user_invoices

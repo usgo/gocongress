@@ -22,7 +22,11 @@
     %ul
       %li= link_to "A-L", atn_reg_sheets_reports_path(:min=>'a', :max=>'l')
       %li= link_to "M-Z", atn_reg_sheets_reports_path(:min=>'m', :max=>'z')
-  %li Attendee Badges
+  %li
+    Attendee Badges
+    %ul
+      %li= link_to "A-L", atn_badges_all_reports_path(:min=>'a', :max=>'l')
+      %li= link_to "M-Z", atn_badges_all_reports_path(:min=>'m', :max=>'z')
   %li
     User Cost Summaries
     %ul
