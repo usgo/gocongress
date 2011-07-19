@@ -58,7 +58,7 @@ GEM
       activesupport (~> 3.0)
       haml (~> 3.0)
       railties (~> 3.0)
-    hike (1.1.0)
+    hike (1.2.0)
     hoptoad_notifier (2.4.11)
       activesupport
       builder
