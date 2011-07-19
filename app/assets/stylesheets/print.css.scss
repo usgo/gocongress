@@ -76,53 +76,50 @@ tr.total {
   height: 207pt;
   border: 1pt dotted;
   margin: 0 0 18pt;
-  .year {
+  h1 { font-size: 25pt; }
+  .badge-attendee {
+    position: absolute;
+    width: 342pt;
+    text-align: center;
+    top: 10pt;
+  }
+  .badge-year {
     position: absolute;
     width: 342pt;
     bottom: 10pt;
     text-align: center;
   }
-}
-.badge h1 {
-  font-size: 25pt;
+  .badge-logo {
+    position: relative;
+    top: 44pt;
+    text-align: center;
+  }
+  .badge-rank {
+    position: absolute;
+    width: 95pt;
+    top: 78pt;
+    left: 16pt;
+    font-size: 30pt;
+    border-top: solid 2pt;
+    border-bottom: solid 2pt;
+    text-align: center;
+    padding: 4pt 0;
+  }
+  .badge-player-status {
+    position: absolute;
+    width: 95pt;
+    left: 232pt;
+    top: 78pt;
+    font-size: 18pt;
+    text-align: center;
+    border-top: solid 2pt;
+    border-bottom: solid 2pt;
+    padding: 11pt 0pt;
+  }
 }
 
-#name {
-  position: absolute;
-  width: 342pt;
-  text-align: center;
-  top: 10pt;
-}
-
-#rank {
-  position: absolute;
-  width: 95pt;
-  top: 78pt;
-  left: 16pt;
-  font-size: 30pt;
-  border-top: solid 2pt;
-  border-bottom: solid 2pt;
-  text-align: center;
-  padding: 4pt 0;
-}
-#player {
-  position: absolute;
-  width: 95pt;
-  left: 232pt;
-  top: 78pt;
-  font-size: 18pt;
-  text-align: center;
-  border-top: solid 2pt;
-  border-bottom: solid 2pt;
-  padding: 11pt 0pt;
-}
 .badge-last {
   page-break-after: always;
-}
-.badge #logo {
-  position: relative;
-  top: 44pt;
-  text-align: center;
 }
 
 /* Paper size is US Letter Portraint with half-inch gutters */

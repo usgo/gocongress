@@ -4,17 +4,11 @@
   - badge = "badge badge-last"
 
 %div{:class => badge}
-  #logo= image_tag "logo/gc2011-logo-144.png"
-  %h1#name= attendee.get_full_name 
-  
-  %h1#rank= attendee.get_rank_name
-  -if attendee.is_player?
-    %h1#player
-      Player
-  -else
-    %h1#player
-      Non-Player
-  %h1.year USGC #{CONGRESS_YEAR} 
+  .badge-logo= image_tag "logo/gc2011-logo-144.png"
+  %h1.badge-attendee= attendee.get_full_name  
+  %h1.badge-rank= attendee.get_rank_name
+  %h1.badge-player-status= attendee.is_player? ? "Player" : "Non-Player"
+  %h1.badge-year USGC #{CONGRESS_YEAR} 
   
   %br.clear
   %br
