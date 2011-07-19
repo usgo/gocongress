@@ -21,8 +21,6 @@
       = link_to 'User Administration', edit_user_path(@user)
       %br
       = link_to 'Print Cost Summary', print_cost_summary_for_user_path(@user)
-      %br
-      = link_to 'Print Badge', print_badge_for_user_path(@user)
 
 .right-column
   %h2 Balance
@@ -79,6 +77,7 @@
               %ul
                 %li= link_to 'Admin', edit_attendee_path(a) + '/admin'
                 %li= link_to 'Print Registration Sheet', print_summary_for_attendee_path(a)
+                %li= link_to 'Print Badge', print_badge_for_attendee_path(a)
         %td= a.get_rank_name
         %td= a.age_in_years.floor
         %td= a.confirmed.present? ? "Yes" : "No"

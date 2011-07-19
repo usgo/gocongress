@@ -153,11 +153,6 @@ class UsersController < ApplicationController
     render :layout => 'print'
   end
 
-  def print_badge
-    @attendee = Attendee.find(params[:id])
-    render :layout=> 'print'
-  end
-
 private
 
   def get_jobs_for_cbx_list

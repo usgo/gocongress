@@ -299,6 +299,11 @@ class AttendeesController < ApplicationController
     render :layout => "print"
   end
 
+  def print_badge
+    @attendee = Attendee.find params[:id]
+    render :layout=> 'print'
+  end
+  
   # GET /attendees/vip
   def vip
     @attendees = Attendee.where('rank >= 101')

@@ -29,6 +29,7 @@ Gocongress::Application.routes.draw do
   resources :attendees do
     member do
       get 'print_summary', :as => 'print_summary_for'
+      get 'print_badge', :as => 'print_badge_for'
     end
   end
 
@@ -40,7 +41,6 @@ Gocongress::Application.routes.draw do
       get 'ledger'
       get 'pay'
       get 'print_cost_summary', :as => 'print_cost_summary_for'
-      get 'print_badge', :as => 'print_badge_for'
       get 'choose_attendee'
 
       # todo: attendees should probably be a nested resource of users
