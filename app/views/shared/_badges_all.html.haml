@@ -6,7 +6,7 @@
 %div{:class => badge}
   .badge-logo= image_tag "logo/gc2011-logo-144.png"
   %h1.badge-attendee= attendee.get_full_name  
-  %h1.badge-rank= attendee.get_rank_name
+  %h1.badge-rank= attendee.rank_name_for_badge
   %h1.badge-player-status= attendee.is_player? ? "Player" : "Non-Player"
   %h1.badge-year USGC #{CONGRESS_YEAR} 
   

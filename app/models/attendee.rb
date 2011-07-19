@@ -245,6 +245,10 @@ class Attendee < ActiveRecord::Base
     if rank_name.empty? then raise "assertion failed: invalid rank" end
     return rank_name
   end
+  
+  def rank_name_for_badge
+    rank == 0 ? "NP" : get_rank_name
+  end
 
   def get_registration_price
     reg_type = self.is_player? ? :player : :nonplayer
