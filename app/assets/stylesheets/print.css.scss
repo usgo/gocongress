@@ -76,6 +76,12 @@ tr.total {
   height: 207pt;
   border: 1pt dotted;
   margin: 0 0 18pt;
+  .year {
+    position: absolute;
+    width: 342pt;
+    bottom: 10pt;
+    text-align: center;
+  }
 }
 .badge h1 {
   font-size: 25pt;
@@ -86,13 +92,6 @@ tr.total {
   width: 342pt;
   text-align: center;
   top: 10pt;
-}
-#year {
-  position: absolute;
-  width: 342pt;
-  bottom: 10pt;
-  text-align: center;
-  font-size: 32pt;
 }
 
 #rank {
