@@ -13,6 +13,7 @@ class TournamentsController < ApplicationController
   # GET /tournaments/1
   def show
     @tournament = Tournament.find(params[:id])
+    @attendees = @tournament.attendees.order('rank desc')
   end
 
   # GET /tournaments/new

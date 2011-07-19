@@ -35,7 +35,7 @@
 
   .right-column
     %h2 Attendees
-    - if @tournament.attendees.size == 0
+    - if @attendees.size == 0
       No attendees yet
     - else
       %table.lightweight.top-headed
@@ -43,7 +43,7 @@
           %th Attendee
           %th Rank
         %tbody
-          - @tournament.attendees.order('rank desc').each do |a|
+          - @attendees.each do |a|
             %tr
               %td= a.get_full_name(true)
               %td.nowrap= a.get_rank_name
