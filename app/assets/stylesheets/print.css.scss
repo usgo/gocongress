@@ -41,6 +41,7 @@ table .numeric { text-align: right; }
 img.thin-border { border: 1pt solid black; }
 .initially_hidden { display: none; }
 .clear { clear: both; }
+.page-break-after { page-break-after: always; }
 
 /* Use this class to pad flow elements (eg. div, form) -Jared 4/9/11 */
 .flow-padding { padding: 8pt 0pt; }
@@ -116,10 +117,6 @@ tr.total {
     border-bottom: solid 2pt;
     padding: 11pt 0pt;
   }
-}
-
-.badge-last {
-  page-break-after: always;
 }
 
 /* Paper size is US Letter Portraint with half-inch gutters */

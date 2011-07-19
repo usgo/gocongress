@@ -1,9 +1,8 @@
-- b = attendee_counter + 1
-- badge = "badge"
-- if b.modulo(3).zero?
-  - badge = "badge badge-last"
+- badge_class_list = "badge"
+- if (attendee_counter + 1).modulo(3).zero?
+  - badge_class_list = "badge page-break-after"
 
-%div{:class => badge}
+%div{:class => badge_class_list}
   .badge-logo= image_tag "logo/gc2011-logo-144.png"
   %h1.badge-attendee= attendee.get_full_name
   %h1.badge-rank= attendee.rank_name_for_badge
