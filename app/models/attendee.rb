@@ -20,7 +20,7 @@ class Attendee < ActiveRecord::Base
   # Mass assignment config
   attr_accessible :given_name, :family_name, :gender, :anonymous, :rank, :aga_id, \
     :address_1, :address_2, :city, :state, :zip, :country, :phone, :email, :birth_date, \
-    :understand_minor, :congresses_attended, :is_player, :will_play_in_us_open, \
+    :understand_minor, :congresses_attended, :is_player, \
     :is_current_aga_member, :tshirt_size, :special_request, :roomate_request
 
   # Define constant array of integer ranks and corresponding rank names
@@ -88,7 +88,6 @@ class Attendee < ActiveRecord::Base
   with_options :on => :update, :if => :form_page_is_baduk? do |b|
     b.validates_numericality_of :congresses_attended, :greater_than_or_equal_to => 0
     b.validates_inclusion_of :is_player, :in => [true, false]
-    b.validates_inclusion_of :will_play_in_us_open, :in => [true, false]
     b.validates_inclusion_of :is_current_aga_member, :in => [true, false]
   end
   

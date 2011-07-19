@@ -43,14 +43,6 @@
       = f.radio_button :is_player, false
       %span No
     .field
-      = f.label :will_play_in_us_open, "Will " + |
-        (@attendee.is_primary ? "you" : "this person") + |
-        " be participating in the US Open Tournament?" |
-      = f.radio_button :will_play_in_us_open, true
-      %span Yes &nbsp;
-      = f.radio_button :will_play_in_us_open, false
-      %span No
-    .field
       = f.label :is_current_aga_member, "Is " + |
         (@attendee.is_primary ? "your" : "this person's") + " AGA membership current?" |
       = f.radio_button :is_current_aga_member, true

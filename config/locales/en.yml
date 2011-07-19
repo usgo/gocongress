@@ -22,7 +22,6 @@ en:
         birth_date: "Birth Date"
         congresses_attended: "Number of Congresses Attended"
         is_player: "Will play go at the Congress?"
-        will_play_in_us_open: "Will play in the US Open?"
         is_current_aga_member: "Current AGA Member?"
         special_request: "Special Request"
         roomate_request: "Roomate Request"
