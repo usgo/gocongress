@@ -10,3 +10,8 @@ Factory.define :attendee do |f|
   f.tshirt_size 'AL'
   f.rank 3
 end
+
+Factory.define :ten_year_old, :parent => :attendee do |f|
+  f.birth_date 10.years.ago
+  f.understand_minor true
+end

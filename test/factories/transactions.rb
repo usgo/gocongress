@@ -6,16 +6,25 @@ end
 
 Factory.define :tr_comp, :parent => :transaction do |f|
   f.trantype 'C' # comp
+  f.instrument nil
 end
 
 Factory.define :tr_refund, :parent => :transaction do |f|
   f.trantype 'R'
+  f.instrument %w[K S].sample
 end
 
 Factory.define :tr_sale, :parent => :transaction do |f|
   f.trantype 'S' # sale
-  f.gwdate { Factory.next(:gwdate) }
-  f.sequence(:gwtranid) { |n| n }
+  ins = %w[C S K].sample
+  f.instrument ins
+  case ins
+  when 'C'
+    f.gwdate { Factory.next(:gwdate) }
+    f.sequence(:gwtranid) { |n| n }
+  when 'K'
+    f.check_number 101
+  end
 end
 
 Factory.sequence :gwdate do |n|

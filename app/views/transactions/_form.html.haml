@@ -18,6 +18,9 @@
         %strong sale
         for user payments.
     .field
+      = f.label :instrument
+      = f.select :instrument, Transaction::INSTRUMENTS, :include_blank => true
+    .field
       = f.label :amount
       = f.text_field :amount, :size => 10
       %span.smalltext $
@@ -27,7 +30,10 @@
       %br
       %span.smalltext.aligned-with-input
         Optional.  Useful for Comps and Refunds.
-
+    .field
+      = f.label :check_number
+      = f.text_field :check_number, :size => 10
+      
   %fieldset.wider-labels
     %legend Gateway Transactions (Credit Card "Sale")
     .field
@@ -36,12 +42,6 @@
     .field
       = f.label :gwtranid
       = f.text_field :gwtranid
-
-  %fieldset.wider-labels
-    %legend USGC Checking Account Transactions
-    .field
-      = f.label :check_number
-      = f.text_field :check_number, :size => 10
 
   %fieldset.wider-labels
     .field

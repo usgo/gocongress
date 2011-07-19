@@ -136,7 +136,7 @@ class Attendee < ActiveRecord::Base
   
   def internal_attributes
     # attrs rarely useful for display
-    %w[created_at id is_primary updated_at user_id understand_minor]
+    %w[id user_id understand_minor]
   end
 
   def form_page_is_baduk?
@@ -172,7 +172,8 @@ class Attendee < ActiveRecord::Base
       # but we haven't figured out the details yet.
       satisfy_age_min = d.age_min.blank? || atnd_age >= d.age_min
       satisfy_age_max = d.age_max.blank? || atnd_age <= d.age_max
-      if (satisfy_age_min && satisfy_age_max) then
+      satisfy_players_only = !d.players_only || self.is_player
+      if (satisfy_age_min && satisfy_age_max && satisfy_players_only) then
         invoice_items.push InvoiceItem.inv_item_hash(d.get_invoice_item_name, self.get_full_name, -1 * d.amount, 1)
       end
     end

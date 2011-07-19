@@ -8,15 +8,11 @@ class TransactionTest < ActiveSupport::TestCase
   test "sales factory is valid" do
     assert Factory.build(:tr_sale).valid?
   end
-  
-  test "sale without gwtranid is not valid" do
-    s = Factory.build(:tr_sale)
-    s.gwtranid = nil
-    assert_equal false, s.valid?
-  end
 
-  test "sale without gwdate is not valid" do
-    s = Factory.build(:tr_sale, :gwdate => nil)
+  test "sale with card requires gwdate and gwtranid" do
+    s = Factory.build(:tr_sale, :instrument => 'C', :gwdate => nil)
+    assert_equal false, s.valid?
+    s = Factory.build(:tr_sale, :instrument => 'C', :gwtranid => nil)
     assert_equal false, s.valid?
   end
 
@@ -32,7 +28,8 @@ class TransactionTest < ActiveSupport::TestCase
 
   # Begin tests for comps
   test "comps factory is valid" do
-    assert Factory.build(:tr_comp).valid?
+    t = Factory.build(:tr_comp)
+    assert t.valid?, t.errors.full_messages.join(',')
   end
   
   test "comp with gwtranid is not valid" do

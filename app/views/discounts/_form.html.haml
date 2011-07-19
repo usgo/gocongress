@@ -18,9 +18,6 @@
     .field
       = f.label :is_automatic
       = f.check_box :is_automatic
-    
-  %fieldset
-    %legend Criteria: Attendee Age
     .field
       = f.label :age_min
       = f.text_field :age_min
@@ -28,6 +25,9 @@
       = f.label :age_max
       = f.text_field :age_max
       %span.smalltext (optional)
+    .field
+      = f.label :players_only
+      = f.check_box :players_only
 
   %br
 

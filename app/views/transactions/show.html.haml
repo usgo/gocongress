@@ -9,6 +9,9 @@
     %th= trl_attr 'transaction', 'trantype'
     %td= @transaction.get_trantype_name
   %tr
+    %th= trl_attr 'transaction', 'instrument'
+    %td= @transaction.get_instrument_name
+  %tr
     %th Amount
     %td= number_to_currency @transaction.amount, :unit => ''
   %tr
@@ -19,6 +22,9 @@
       - else
         No comment
   %tr
+    %th= trl_attr 'transaction', 'check_number'
+    %td= @transaction.check_number
+  %tr
     %th= trl_attr 'transaction', 'gwtranid'
     %td= @transaction.gwtranid
     %td.smalltext Unique ID from payment gateway
@@ -28,10 +34,6 @@
       - if @transaction.gwdate.present?
         = @transaction.gwdate.to_formatted_s(:long)
     %td.smalltext When the payment gateway received the transaction
-  %tr
-    %th= trl_attr 'transaction', 'check_number'
-    %td= @transaction.check_number
-    %td.smalltext For transactions involving the USGC checking account
   %tr
     %th Creation Date
     %td= @transaction.created_at.to_formatted_s(:long)

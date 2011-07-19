@@ -2,12 +2,15 @@ class Discount < ActiveRecord::Base
   has_many :attendee_discounts, :dependent => :destroy
   has_many :attendees, :through => :attendee_discounts
 
+  attr_accessible :name, :amount, :age_min, :age_max, :is_automatic, :players_only
+
   validates_presence_of :name, :amount
   validates_length_of :name, :maximum => 50
   validates_numericality_of :amount, :greater_than => 0
   validates_numericality_of :age_min, :only_integer => true, :allow_nil => true
   validates_numericality_of :age_max, :only_integer => true, :allow_nil => true
   validates_inclusion_of :is_automatic, :in => [true, false]
+  validates_inclusion_of :players_only, :in => [true, false]
 
   def get_age_range_in_words
     returned_words = ""
