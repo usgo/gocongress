@@ -54,4 +54,15 @@ class TransactionTest < ActiveSupport::TestCase
     assert tr_comp.valid?
   end
 
+  test "comp transaction instrument must be blank" do
+    c = Factory.build(:tr_comp, :instrument => nil)
+    assert c.valid?, "nil instrument should be valid"
+    c = Factory.build(:tr_comp, :instrument => '')
+    assert c.valid?, "emptystring instrument should be valid"
+    %w[C S K].each do |i|
+      c = Factory.build(:tr_comp, :instrument => i)
+      assert_equal false, c.valid?, "if instrument is present, comp transaction should be invalid"
+    end
+  end
+
 end

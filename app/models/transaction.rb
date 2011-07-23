@@ -21,7 +21,7 @@ class Transaction < ActiveRecord::Base
 	validates_presence_of :user_id, :trantype, :amount, :updated_by_user
 	
   validates_presence_of :instrument, :if => :requires_instrument?
-  validates_inclusion_of :instrument, :in => [nil], :if => :forbids_instrument?, \
+  validates_inclusion_of :instrument, :in => [nil, ''], :if => :forbids_instrument?, \
     :message => "must be blank.  (Not applicable for selected transaction type)"
   validates_length_of :instrument, :is => 1, :if => :requires_instrument?
   validates_inclusion_of :instrument, :in => INSTRUMENTS.flatten, :if => :requires_instrument?
