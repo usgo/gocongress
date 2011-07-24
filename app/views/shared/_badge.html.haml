@@ -1,11 +1,21 @@
+-# which classes for the badge div?
 - badge_class_list = "badge"
 - if (attendee_counter + 1).modulo(3).zero?
   - badge_class_list = "badge page-break-after"
 
+-# which classes for the rank h1?
+- rank_classes = %w[badge-rank]
+- case attendee.rank
+  - when 0 then rank_classes.push "badge-rank-np"
+  - when 101..109 then rank_classes.push "badge-rank-pro"
+  - when 1..9 then rank_classes.push "badge-rank-dan"
+  - when -35..-1 then rank_classes.push "badge-rank-kyu"
+  - else throw "unexpected rank " + attendee.rank.to_s
+
 %div{:class => badge_class_list}
   .badge-logo= image_tag "logo/gc2011-logo-144.png"
   %h1.badge-attendee= attendee.get_full_name
-  %h1.badge-rank= attendee.rank_name_for_badge
+  %h1{:class => rank_classes.join(" ")}= attendee.rank_name_for_badge
   %h1.badge-player-status= attendee.is_player? ? "Player" : "Non-Player"
   %h1.badge-year USGC #{CONGRESS_YEAR} 
   

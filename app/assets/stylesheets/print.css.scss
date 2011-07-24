@@ -1,3 +1,8 @@
+/* Color scheme */
+$dark-orange: #FF9B05;
+$dark-blue: #0071BC;
+$light-blue: #64AEDE;
+
 /* Basic element styling (no classes yet) */
 * { margin: 0pt; padding: 0pt; }
 body { background-color: white; margin: 20pt; }
@@ -101,10 +106,18 @@ tr.total {
     top: 78pt;
     left: 16pt;
     font-size: 30pt;
-    border-top: solid 2pt;
-    border-bottom: solid 2pt;
+    border-top: 2pt solid black;
+    border-bottom: 2pt solid black;
+	  text-shadow: -1pt 0 1pt black
+	              , 0 1pt 1pt black
+	              , 1pt 0 1pt black
+	              , 0 -1pt 1pt black;
     text-align: center;
     padding: 4pt 0;
+    &.badge-rank-pro { color: $dark-orange; border-color: $dark-orange; }
+    &.badge-rank-dan { color: $light-blue; border-color: $light-blue; }
+    &.badge-rank-kyu { color: black; text-shadow: none; border-color: black;}
+    &.badge-rank-np { color: #DDD; border-color: #BBB; }
   }
   .badge-player-status {
     position: absolute;
@@ -113,8 +126,8 @@ tr.total {
     top: 78pt;
     font-size: 18pt;
     text-align: center;
-    border-top: solid 2pt;
-    border-bottom: solid 2pt;
+    border-top: solid 2pt black;
+    border-bottom: solid 2pt black;
     padding: 11pt 0pt;
   }
 }
