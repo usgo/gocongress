@@ -83,6 +83,8 @@ tr.total {
   border: 1pt dotted;
   margin: 0 0 18pt;
   h1 { font-size: 25pt; }
+  h2 { font-size: 18pt; }
+  p { font-size: 16pt; }
   .badge-attendee {
     position: absolute;
     width: 342pt;
@@ -92,7 +94,13 @@ tr.total {
   .badge-year {
     position: absolute;
     width: 342pt;
-    bottom: 10pt;
+    bottom: 20pt;
+    text-align: center;
+  }
+  .badge-misc {
+    position: absolute;
+    width: 342pt;
+    bottom: 0pt;
     text-align: center;
   }
   .badge-logo {

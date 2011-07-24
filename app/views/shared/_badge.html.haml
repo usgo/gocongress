@@ -17,7 +17,14 @@
   %h1.badge-attendee= attendee.get_full_name
   %h1{:class => rank_classes.join(" ")}= attendee.rank_name_for_badge
   %h1.badge-player-status= attendee.is_player? ? "Player" : "Non-Player"
-  %h1.badge-year USGC #{CONGRESS_YEAR} 
-  
+  %h2.badge-year USGC #{CONGRESS_YEAR}
+  %p.badge-misc
+    AGA#
+    = attendee.aga_id.present? ? attendee.aga_id : "______"
+    \-
+    = attendee.country
+    \-
+    = attendee.congresses_attended.blank? ? "First" : (attendee.congresses_attended + 1).ordinalize
+    Congress
   %br.clear
   %br
