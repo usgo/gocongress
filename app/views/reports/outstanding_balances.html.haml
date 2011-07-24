@@ -1,0 +1,40 @@
+- mnh = User.model_name.human
+
+%h2= page_title
+
+- if @users.size == 0
+  %p
+    Good news! There are no 
+    = mnh.pluralize.downcase
+    with outstanding balances.
+- else
+  %p
+    There are
+    %strong= pluralize @users.size, mnh.downcase
+    with outstanding balances.  The 
+    = mnh.pluralize.downcase
+    are sorted by the
+    family name of their
+    %strong primary attendee.
+    
+  %table.semantic.fullwidth.zebra
+    %thead
+      %tr
+        %th= "#{mnh.titleize} Email"
+        %th{:colspan => 2} Primary Attendee
+        %th.numeric Balance
+        %th
+      %tr
+        %th
+        %th= trl_attr('attendee', 'family_name')
+        %th= trl_attr('attendee', 'given_name')
+        %th
+        %th
+    %tbody
+      - @users.each do |u|
+        %tr
+          %td= u.email
+          %td= u.primary_attendee.family_name
+          %td= u.primary_attendee.given_name
+          %td.numeric= number_to_currency u.balance
+          %td.align-center= link_to "Account", user_path(u)

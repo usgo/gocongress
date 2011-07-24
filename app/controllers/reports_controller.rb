@@ -63,6 +63,11 @@ class ReportsController < ApplicationController
     @events_by_date = @events.group_by {|event| event.start.to_date}
   end
 
+  def outstanding_balances
+    @users = User.joins(:primary_attendee).order :family_name, :given_name
+    @users.keep_if { |u| u.balance != 0.0 }
+  end
+
   def overdue_deposits
     @overdue_users = []
     User.all.each { |u|
