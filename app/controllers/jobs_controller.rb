@@ -1,36 +1,26 @@
 class JobsController < ApplicationController
 
-  # Access Control
-  before_filter :allow_only_admin, :except => [:show, :index]
+  load_and_authorize_resource
 
   # GET /jobs
-  # GET /jobs.xml
   def index
-    @jobs = Job.order :jobname
-    authorize! :read, Job
+    @jobs = @jobs.order :jobname
   end
 
   # GET /jobs/1
-  # GET /jobs/1.xml
   def show
-    @job = Job.find(params[:id])
   end
 
   # GET /jobs/new
-  # GET /jobs/new.xml
   def new
-    @job = Job.new
   end
 
   # GET /jobs/1/edit
   def edit
-    @job = Job.find(params[:id])
   end
 
   # POST /jobs
-  # POST /jobs.xml
   def create
-    @job = Job.new(params[:job])
     if @job.save
       redirect_to jobs_path, :notice => 'Job was successfully created.'
     else
@@ -39,9 +29,7 @@ class JobsController < ApplicationController
   end
 
   # PUT /jobs/1
-  # PUT /jobs/1.xml
   def update
-    @job = Job.find(params[:id])
     if @job.update_attributes(params[:job])
       redirect_to jobs_path, :notice => 'Job was successfully updated.'
     else
@@ -50,9 +38,7 @@ class JobsController < ApplicationController
   end
 
   # DELETE /jobs/1
-  # DELETE /jobs/1.xml
   def destroy
-    @job = Job.find(params[:id])
     @job.destroy
     redirect_to jobs_url
   end

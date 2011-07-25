@@ -7,25 +7,25 @@ class JobsControllerTest < ActionController::TestCase
     @admin_user = Factory.create(:admin_user)
   end
 
-  test "visitor should get index" do
+  test "visitor can get index" do
     get :index
     assert_response :success
     assert_not_nil assigns(:jobs)
   end
 
-  test "admin should get new" do
+  test "admin can get new" do
     sign_in(@admin_user)
     get :new
     assert_response :success
   end
   
-  test "user should not get new" do
+  test "user cannot get new" do
     sign_in(@user)
     get :new
     assert_response 403
   end
 
-  test "admin should create job" do
+  test "admin can create job" do
     sign_in(@admin_user)
     assert_difference('Job.count') do
       post :create, :job => @job.attributes
@@ -38,19 +38,19 @@ class JobsControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  test "admin should get edit" do
+  test "admin can get edit" do
     sign_in(@admin_user)
     get :edit, :id => @job.to_param
     assert_response :success
   end
   
-  test "user should not get edit" do
+  test "user cannot get edit" do
     sign_in(@user)
     get :edit, :id => @job.to_param
     assert_response 403
   end
 
-  test "admin should update job" do
+  test "admin can update job" do
     sign_in(@admin_user)
     put :update, :id => @job.to_param, :job => @job.attributes
     assert_redirected_to jobs_path
@@ -64,4 +64,13 @@ class JobsControllerTest < ActionController::TestCase
 
     assert_redirected_to jobs_path
   end
+  
+  test "user cannot destroy job" do
+    sign_in @user
+    assert_no_difference 'Job.count' do
+      delete :destroy, :id => @job.id
+    end
+    assert_response 403
+  end
+
 end
