@@ -36,6 +36,7 @@ GEM
     bcrypt-ruby (2.1.4)
     bluecloth (2.1.0)
     builder (3.0.0)
+    cancan (1.6.5)
     coffee-script (2.2.0)
       coffee-script-source
       execjs
@@ -147,6 +148,7 @@ PLATFORMS
 
 DEPENDENCIES
   bluecloth
+  cancan
   coffee-script
   devise
   factory_girl

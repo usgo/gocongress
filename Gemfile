@@ -1,5 +1,6 @@
 source 'http://rubygems.org'
 
+# Rails
 # In order to use the release candidate, we must use the
 # PessimisticVersionConstraint operator (~>)
 # When Rails 3.1 stable is released, we should drop this version constraint
@@ -12,13 +13,16 @@ gem 'uglifier'
 
 gem 'sqlite3-ruby', :require => 'sqlite3'
 gem "jquery-rails" # jquery and jquery-ui
-gem "devise" # authentication
 gem 'validates_timeliness'
 gem 'haml'
 gem 'haml-rails', :group => :development
 gem 'hoptoad_notifier' # uncaught exception notification
 gem 'bluecloth' # markdown
 gem 'kaminari' # pagination
+
+# AAA - Authentication, Authorization, and Access Control
+gem 'devise' # authentication
+gem 'cancan' # authorization
 
 # Bundle gems for the local environment. Make sure to
 # put test-only gems in this group so their generators
@@ -28,6 +32,7 @@ group :development, :test do
   gem 'rcov'
 end
 
+# Testing
 group :test do
 	gem 'factory_girl'
 	gem 'factory_girl_rails'

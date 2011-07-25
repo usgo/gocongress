@@ -20,6 +20,11 @@ class ApplicationController < ActionController::Base
     end
   end
   
+  rescue_from CanCan::AccessDenied do |exception|
+    # redirect_to root_url, :alert => exception.message
+    render_access_denied
+  end
+  
 protected
 
   def human_action_name

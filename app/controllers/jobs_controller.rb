@@ -7,6 +7,7 @@ class JobsController < ApplicationController
   # GET /jobs.xml
   def index
     @jobs = Job.order :jobname
+    authorize! :read, Job
   end
 
   # GET /jobs/1
