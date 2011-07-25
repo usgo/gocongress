@@ -19,6 +19,7 @@ class ReportsController < ApplicationController
       Plan.order(:name).each { |p| cols << "Plan: " + safe_for_csv(p.name) }
       claimable_discounts = Discount.where('is_automatic = ?', false).order(:name)
       claimable_discounts.each { |d| cols << "Discount: " + safe_for_csv(d.name) }
+      Tournament.order(:name).each { |t| cols << "Tournament: " + safe_for_csv(t.name) }
     end
     @csv_header_line = cols.join(',')
     

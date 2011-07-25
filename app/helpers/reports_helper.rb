@@ -70,6 +70,12 @@ module ReportsHelper
       ar << claimed_discount_ids.index(d.id).present? ? 'yes' : 'no'
     end
 
+    # tournament participation. order must match reports_controller.attendees()
+    tournament_ids = a.tournaments.map { |t| t.id }
+    Tournament.order(:name).each do |t|
+      ar << tournament_ids.index(t.id).present? ? 'yes' : 'no'
+    end
+
     return ar
   end
 
