@@ -1,8 +1,5 @@
 class HomeController < ApplicationController
 
-  # Access Control
-  before_filter :allow_only_admin, :only => [:pricing]
-
 	def index
 		@bodyClassList = "homepage"		
 		@arSlides = [ \
@@ -30,6 +27,7 @@ class HomeController < ApplicationController
   end
 
   def pricing
+    authorize! :see_admin_menu, :layout
   end
 
 protected

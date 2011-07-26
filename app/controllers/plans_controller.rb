@@ -1,11 +1,11 @@
 class PlansController < ApplicationController
 
-  # Access Control
-  before_filter :allow_only_admin, :except => [:room_and_board,:prices_and_extras]
+  load_and_authorize_resource
+  skip_authorize_resource :only => [:room_and_board,:prices_and_extras]
 
   # GET /plans
   def index
-    plans_ordered = Plan.all :order=>"plan_category_id, name"
+    plans_ordered = @plans.order "plan_category_id, name"
     @plans_grouped = plans_ordered.group_by {|plan| plan.plan_category_id}
   end
 
@@ -23,24 +23,20 @@ class PlansController < ApplicationController
 
   # GET /plans/1
   def show
-    @plan = Plan.find(params[:id])
   end
 
   # GET /plans/new
   def new
-    @plan = Plan.new
     @plan_categories = get_plan_categories_for_select
   end
 
   # GET /plans/1/edit
   def edit
-    @plan = Plan.find(params[:id])
     @plan_categories = get_plan_categories_for_select
   end
 
   # POST /plans
   def create
-    @plan = Plan.new(params[:plan])
     @plan_categories = get_plan_categories_for_select
     if @plan.save
       redirect_to plans_path, :notice => 'Plan was successfully created.'
@@ -51,7 +47,6 @@ class PlansController < ApplicationController
 
   # PUT /plans/1
   def update
-    @plan = Plan.find(params[:id])
     @plan_categories = get_plan_categories_for_select
     if @plan.update_attributes(params[:plan])
       redirect_to plans_path, :notice => 'Plan was successfully updated.'
@@ -62,7 +57,6 @@ class PlansController < ApplicationController
 
   # DELETE /plans/1
   def destroy
-    @plan = Plan.find(params[:id])
     @plan.destroy
     redirect_to plans_url
   end
