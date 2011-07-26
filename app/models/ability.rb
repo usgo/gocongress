@@ -16,9 +16,10 @@ class Ability
       can :see_admin_menu, :layout
     end
     
-    # Users can manage their own resources only
-    if user.role == 'U' then
-      can :manage, User, :id => user.id
+    # User and Staff can manage their own resources, except for 
+    # their User record, which they can only read and update
+    if %w[S U].index(user.role).present? then
+      can [:read, :update], User, :id => user.id
     end
     
     # Guests can read public resources, but cannot write anything

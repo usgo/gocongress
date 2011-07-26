@@ -123,11 +123,40 @@ class UsersControllerTest < ActionController::TestCase
 
     # put to update
     u = @user.attributes.merge({ 'email' => new_email_addy })
-    put :update, :id => @user.to_param, :user => u
+    put :update, :id => @user.id, :user => u
     
     # assert that email changed
     @user = User.find(@user.id)
     assert_not_equal email_before, @user.email
+  end
+  
+  test "staff can update own email address" do
+    sign_in @staff
+    email_before = @staff.email
+
+    # define a new email that is different from the old one
+    new_email_addy = 'freeb@narf.com'
+    assert_not_equal new_email_addy, @staff.email
+
+    # put to update
+    u = @staff.attributes.merge({ 'email' => new_email_addy })
+    put :update, :id => @staff.id, :user => u
+    
+    # assert that email changed
+    @staff = User.find(@staff.id)
+    assert_not_equal email_before, @staff.email
+  end
+  
+  test "staff can get edit email form" do
+    sign_in @staff
+    get :edit_email, :id => @staff.id
+    assert_response :success
+  end
+  
+  test "user can get edit password form" do
+    sign_in @user
+    get :edit_password, :id => @user.id
+    assert_response :success
   end
   
   test "user cannot promote themselves" do

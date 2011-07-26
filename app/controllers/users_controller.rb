@@ -1,12 +1,10 @@
 class UsersController < ApplicationController
 
-  # Access Control
-  before_filter :allow_only_admin, :except => [:choose_attendee, :edit_email, :edit_password, :index, :show, :invoice, :pay, :ledger, :update]
-  before_filter :allow_only_self_or_admin, :only => [:choose_attendee, :edit_email, :edit_password, :invoice, :pay, :ledger, :update]
-
   # GET /users/1/choose_attendee
   def choose_attendee
     @user = User.find(params[:id])
+    authorize! :update, @user
+    
     params[:destination_page] ||= "tournaments"
     is_valid_destination = %w[events tournaments].index params[:destination_page]
     raise 'Invalid destination page' unless is_valid_destination
@@ -17,11 +15,13 @@ class UsersController < ApplicationController
   # GET /users/1/edit_email
   def edit_email
     @user = User.find(params[:id])
+    authorize! :update, @user
   end
 
   # GET /users/1/edit_password
   def edit_password
     @user = User.find(params[:id])
+    authorize! :update, @user
   end
 
   # GET /users
@@ -61,18 +61,22 @@ class UsersController < ApplicationController
   # GET /users/1/pay
   def pay
     @user = User.find(params[:id])
+    authorize! :update, @user
     @formAction = "https://secure.merchantonegateway.com/cart/cart.php"
   end
   
   # GET /users/1/invoice
   def invoice
     @user = User.find(params[:id])
+    authorize! :read, @user
     @invoice_items = @user.get_invoice_items
   end
   
   # GET /users/1/ledger
   def ledger
     @user = User.find(params[:id])
+    authorize! :read, @user
+    
     @showing_current_user = signed_in?(nil) && (current_user.id == @user.id)
     @page_title = @showing_current_user ?
       'My Payment History' :
@@ -80,21 +84,26 @@ class UsersController < ApplicationController
   end
 
   # GET /users/new
-  # GET /users/new.xml
   def new
     @user = User.new
+    authorize! :create, @user
   end
 
   # GET /users/1/edit
   def edit
     @user = User.find(params[:id])
+    
+    # edit form is meant for admins only, hence the custom cancan action name
+    authorize! :admin_edit, @user
+    
     @jobs = get_jobs_for_cbx_list
   end
 
   # POST /users
-  # POST /users.xml
   def create
     @user = User.new(params[:user])
+    authorize! :create, @user
+    
     if @user.save
       redirect_to(edit_attendee_path(@user.primary_attendee.id) + "/baduk")
     else
@@ -103,9 +112,9 @@ class UsersController < ApplicationController
   end
 
   # PUT /users/1
-  # PUT /users/1.xml
   def update
     @user = User.find(params[:id])
+    authorize! :update, @user
     
     # Which view did we come from?
     params[:page] ||= 'edit'
@@ -147,12 +156,14 @@ class UsersController < ApplicationController
   # DELETE /users/1.xml
   def destroy
     @user = User.find(params[:id])
+    authorize! :destroy, @user
     @user.destroy
     redirect_to users_url, :notice => "User deleted"
   end
   
   def print_cost_summary
     @user = User.find(params[:id])
+    authorize! :read, @user
     render :layout => 'print'
   end
 
