@@ -1,8 +1,7 @@
 class AttendeesController < ApplicationController
 
-  # Access Control
-  before_filter :allow_only_admin, :except => [:create, :destroy, :edit, :index, :new, :update, :vip]
-  before_filter :allow_only_self_or_admin, :only => [:destroy, :edit, :update]
+  load_and_authorize_resource
+  skip_authorize_resource :only => [:create, :index, :new, :vip]
   
   def index
     # by default, sort by rank (0 is non-player)
@@ -22,7 +21,7 @@ class AttendeesController < ApplicationController
     end
 
     # get all attendees
-    @attendees = Attendee.order(order_by_clause)
+    @attendees = @attendees.order(order_by_clause)
 
     # We are also going to show the list of pre-registrants, at least for now.
     # Obviously, at some point they will all hopefully sign up for real user accounts
@@ -67,7 +66,6 @@ class AttendeesController < ApplicationController
     end
 
     # Instantiate a blank attendee for the target user
-    @attendee = Attendee.new
     @attendee.user_id = target_user_id
 
     # Copy certain fields from the target user's primary_attendee
@@ -99,7 +97,6 @@ class AttendeesController < ApplicationController
       return
     end
 
-    @attendee = Attendee.new(params[:attendee])
     @attendee.user_id = target_user_id
     if @attendee.save
       # After successful save, redirect to the "Edit Go Info" form
@@ -115,7 +112,6 @@ class AttendeesController < ApplicationController
   # GET /attendees/1/edit/roomboard
   # GET /attendees/1/edit/tournaments
   def edit
-    @attendee = Attendee.find_by_id(params[:id].to_i)
     
     # there are too many attendee attributes to fit them all on
     # one form page. so, I've added a param called page
@@ -136,7 +132,6 @@ class AttendeesController < ApplicationController
   # PUT /attendees/1
   def update
     @page = get_valid_page_from_params
-    @attendee = Attendee.find(params[:id])
     params[:attendee] ||= Hash.new
 
     # some extra validation errors may come up, especially with associated models, and
@@ -277,17 +272,16 @@ class AttendeesController < ApplicationController
 
   # DELETE /attendees/1
   def destroy
-    target_attendee = Attendee.find(params[:id])
-    belonged_to_current_user = (current_user.id == target_attendee.user_id)
+    belonged_to_current_user = (current_user.id == @attendee.user_id)
 
     # only admins can destroy primary attendees
-    if target_attendee.is_primary and !current_user_is_admin? then
+    if @attendee.is_primary? and !current_user_is_admin? then
       render_access_denied
       return
     end
 
-    target_attendee_user_id = target_attendee.user_id
-    target_attendee.destroy
+    target_attendee_user_id = @attendee.user_id
+    @attendee.destroy
     flash[:notice] = "Attendee deleted"
     redirect_to user_path(target_attendee_user_id)
   end
@@ -295,12 +289,15 @@ class AttendeesController < ApplicationController
   # GET /attendees/1/print_summary
   def print_summary
     @attendee = Attendee.find params[:id]
+    authorize! :read, @attendee
     @attendee_attr_names = %w[aga_id birth_date comment confirmed email gender phone special_request roomate_request].sort
     render :layout => "print"
   end
 
+  # GET /attendees/1/print_badge
   def print_badge
     @attendee = Attendee.find params[:id]
+    authorize! :read, @attendee
     render :layout=> 'print'
   end
   

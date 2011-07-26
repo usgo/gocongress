@@ -144,19 +144,18 @@ class AttendeesControllerTest < ActionController::TestCase
     assert_response 403
   end
 
-  test "admin can update any user's attendee" do
+  test "admin can update attendee of any user" do
     sign_in @admin
 
     target_attendee = @user.attendees.last
+    state_before = target_attendee.state
     target_attendee.state = 'MI'
     put :update, :id => target_attendee.id, :attendee => target_attendee.attributes
-    assert_redirected_to user_path(target_attendee.user_id)
-    assert_equal 'Attendee successfully updated', flash[:notice]
+    
+    target_attendee = Attendee.find(target_attendee.id)
+    assert_not_equal state_before, target_attendee.state
 
-    target_attendee = @user_two.attendees.first
-    target_attendee.state = 'AK'
-    put :update, :id => target_attendee.id, :attendee => target_attendee.attributes
-    assert_redirected_to user_path(target_attendee.user_id)
+    assert_redirected_to user_path(@user.id)
     assert_equal 'Attendee successfully updated', flash[:notice]
   end
 
