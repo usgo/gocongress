@@ -1,10 +1,9 @@
 class PreregistrantsController < ApplicationController
 
-  # Access Control
-  before_filter :allow_only_admin
+  load_and_authorize_resource
 
   def index
-    @preregistrants = Preregistrant.order('preregdate asc')
+    @preregistrants = @preregistrants.order 'preregdate asc'
   end
 
 end
