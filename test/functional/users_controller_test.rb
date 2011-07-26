@@ -4,39 +4,64 @@ class UsersControllerTest < ActionController::TestCase
   setup do
     @user = Factory.create(:user)
     @user_two = Factory.create(:user)
+    @staff = Factory.create(:staff)
     @admin_user = Factory.create(:admin_user)
     @job = Factory.create(:job)
   end
 
-  test "admins should get index" do
+  test "admin can get index" do
     sign_in @admin_user
     get :index
     assert_response :success
   end
   
-  test "non-admins should NOT get index" do
+  test "staff can get index" do
+    sign_in @staff
     get :index
-    assert_response 403
-  end
-
-  test "admins should show user" do
-    sign_in @admin_user
-    get :show, :id => @user.to_param
     assert_response :success
   end
   
-  test "visitors should NOT show user" do
-    get :show, :id => @user.to_param
-    assert_response 403
-  end
-
-  test "users can show their own user" do
+  test "user cannot get index" do
     sign_in @user
+    get :index
+    assert_response 403
+  end
+  
+  test "guest cannot get index" do
+    get :index
+    assert_response 403
+  end
+
+  test "admin can show user" do
+    sign_in @admin_user
     get :show, :id => @user.to_param
     assert_response :success
   end
 
-  test "users should NOT show a different user" do
+  test "staff can show user" do
+    sign_in @staff
+    get :show, :id => @user.to_param
+    assert_response :success
+  end
+  
+  test "guest cannot show user" do
+    get :show, :id => @user.to_param
+    assert_response 403
+  end
+
+  test "user can show self" do
+    sign_in @user
+    get :show, :id => @user.id
+    assert_response :success
+  end
+
+  test "staff can show self" do
+    sign_in @staff
+    get :show, :id => @staff.id
+    assert_response :success
+  end
+
+  test "user cannot show a different user" do
     sign_in @user
     get :show, :id => Factory.create(:user).to_param
     assert_response 403
@@ -48,35 +73,47 @@ class UsersControllerTest < ActionController::TestCase
     assert_response :success
   end
   
-  test "visitors cannot get edit" do
+  test "guest cannot get edit" do
     get :edit, :id => @user.to_param
     assert_response 403
   end
   
-  test "users cannot edit other users" do
+  test "user cannot edit other user" do
     sign_in @user
     get :edit, :id => @user_two.to_param
     assert_response 403
   end
+
+  test "staff cannot edit other user" do
+    sign_in @staff
+    get :edit, :id => @user.to_param
+    assert_response 403
+  end
   
-  test "users cannot edit themselves" do
+  test "user cannot edit themselves" do
     sign_in @user
     get :edit, :id => @user.to_param
     assert_response 403
   end
 
-  test "admin should update user" do
+  test "staff cannot edit themselves" do
+    sign_in @staff
+    get :edit, :id => @staff.to_param
+    assert_response 403
+  end
+
+  test "admin can update user" do
     sign_in @admin_user
     put :update, :id => @user.to_param, :user => @user.attributes
     assert_redirected_to user_path(@user)
   end
   
-  test "visitor should NOT update user" do
+  test "guest cannot update user" do
     put :update, :id => @user.to_param, :user => @user.attributes
     assert_response 403
   end
   
-  test "users can update own email address" do
+  test "user can update own email address" do
     sign_in @user
     email_before = @user.email
 
@@ -93,7 +130,7 @@ class UsersControllerTest < ActionController::TestCase
     assert_not_equal email_before, @user.email
   end
   
-  test "users cannot promote themselves" do
+  test "user cannot promote themselves" do
     sign_in @user
     assert_equal 'U', @user.role
     u = @user.attributes.merge({ 'role' => 'A' })
@@ -103,10 +140,10 @@ class UsersControllerTest < ActionController::TestCase
     assert_equal 'U', User.find(@user.id).role
   end
 
-  test "non-admin cannot destroy a user" do
+  test "user cannot destroy self" do
     sign_in @user
-    assert_difference('User.count', 0) do
-      delete :destroy, :id => @user.to_param
+    assert_no_difference('User.count') do
+      delete :destroy, :id => @user.id
     end
     assert_response 403
   end

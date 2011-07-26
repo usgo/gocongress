@@ -1,8 +1,8 @@
 class UsersController < ApplicationController
 
   # Access Control
-  before_filter :allow_only_admin, :except => [:choose_attendee, :edit_email, :edit_password, :show, :invoice, :pay, :ledger, :update]
-  before_filter :allow_only_self_or_admin, :only => [:choose_attendee, :edit_email, :edit_password, :show, :invoice, :pay, :ledger, :update]
+  before_filter :allow_only_admin, :except => [:choose_attendee, :edit_email, :edit_password, :index, :show, :invoice, :pay, :ledger, :update]
+  before_filter :allow_only_self_or_admin, :only => [:choose_attendee, :edit_email, :edit_password, :invoice, :pay, :ledger, :update]
 
   # GET /users/1/choose_attendee
   def choose_attendee
@@ -28,6 +28,7 @@ class UsersController < ApplicationController
   # GET /users.xml
   def index
     @users = User.order("role = 'A' desc")
+    authorize! :read, @users
 
     respond_to do |format|
       format.html # index.html.erb
@@ -39,6 +40,8 @@ class UsersController < ApplicationController
   # GET /users/1.xml
   def show
     @user = User.find(params[:id])
+    authorize! :read, @user
+    
     @attendees = @user.attendees.order "is_primary desc"
     @showing_current_user = signed_in?(nil) && (current_user.id == @user.id)
     @page_title = @showing_current_user ?

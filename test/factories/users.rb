@@ -23,3 +23,7 @@ end
 Factory.define :admin_user, :parent => :user do |f|
   f.role 'A'
 end
+
+Factory.define :staff, :parent => :user do |f|
+  f.role 'S'
+end

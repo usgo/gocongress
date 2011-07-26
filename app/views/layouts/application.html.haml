@@ -85,7 +85,7 @@
               %a.hmenu{:href => destroy_user_session_path}
                 Sign <br> Out
     
-    - if user_signed_in? && current_user.is_admin?
+    - if can? :see_admin_menu, :layout
       .nav-container-admin
         .nav
           %ul
