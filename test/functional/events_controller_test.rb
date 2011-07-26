@@ -13,13 +13,13 @@ class EventsControllerTest < ActionController::TestCase
     assert_not_nil assigns(:events)
   end
 
-  test "non-admin should NOT get new" do
+  test "user cannot get new" do
     sign_in @user
     get :new
     assert_response 403
   end
 
-  test "non-admin cannot create event" do
+  test "user cannot create event" do
     sign_in @user
     post :create, :event => @event.attributes
     assert_response 403
