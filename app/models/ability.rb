@@ -30,7 +30,7 @@ class Ability
     end
     
     # Guests can read public resources, but cannot write anything
-    can :read, [Content, Event, Job]
+    can :read, [Content, Event, Job, Tournament]
     
   end
 end

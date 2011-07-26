@@ -1,35 +1,30 @@
 class TournamentsController < ApplicationController
 
-  # Access Control
-  before_filter :allow_only_admin, :except => [:index, :show]
+  load_and_authorize_resource
 
   # GET /tournaments
   def index
-    @tournaments = Tournament.order 'lower(name)'
+    @tournaments = @tournaments.order 'lower(name)'
     @rounds = Round.order 'round_start'
     @rounds_by_date = @rounds.group_by {|r| r.round_start.to_date}
   end
 
   # GET /tournaments/1
   def show
-    @tournament = Tournament.find(params[:id])
     @attendees = @tournament.attendees.order('rank desc')
   end
 
   # GET /tournaments/new
   def new
-    @tournament = Tournament.new
     @tournament.rounds.build # Start with one round
   end
 
   # GET /tournaments/1/edit
   def edit
-    @tournament = Tournament.find(params[:id])
   end
 
   # POST /tournaments
   def create
-    @tournament = Tournament.new(params[:tournament])
     if @tournament.save
       redirect_to(@tournament, :notice => 'Tournament was successfully created.')
     else
@@ -39,7 +34,6 @@ class TournamentsController < ApplicationController
 
   # PUT /tournaments/1
   def update
-    @tournament = Tournament.find(params[:id])
     if @tournament.update_attributes(params[:tournament])
       redirect_to(@tournament, :notice => 'Tournament was successfully updated.')
     else
@@ -49,8 +43,7 @@ class TournamentsController < ApplicationController
 
   # DELETE /tournaments/1
   def destroy
-    @tournament = Tournament.find(params[:id])
     @tournament.destroy
-    redirect_to(tournaments_url)
+    redirect_to tournaments_url
   end
 end
