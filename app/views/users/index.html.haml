@@ -21,8 +21,8 @@
   %tbody
     - @users.each do |user|
       %tr
-        %td{ :class => user.is_admin ? "emphasized" : "no-emphasis" }
-          = user.is_admin ? "Admin" : "User"
+        %td{ :class => user.is_admin? ? "emphasized" : "no-emphasis" }
+          = user.role
         %td= user.email
         %td
           - user.attendees.each do |atn|

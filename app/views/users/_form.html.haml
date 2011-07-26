@@ -8,10 +8,13 @@
         - @user.errors.full_messages.each do |msg|
           %li= msg
 
-  %h3 Basic Information
+  %h3 Role
+  %p Admins can edit anything, staff can view anything.
   .field
-    = f.label :is_admin
-    = f.check_box :is_admin
+    - User::ROLES.each do |r|
+      = radio_button :user, :role, r[1]
+      = r[0]
+      %br
 
   %h3 Volunteer Positions
   .field

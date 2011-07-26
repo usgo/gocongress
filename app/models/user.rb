@@ -7,13 +7,9 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
   
-  # Specify a white list of model attributes that CAN be set via mass-assignment
   attr_accessible :email, :password, :password_confirmation, :remember_me, :primary_attendee_attributes
-
-  # Specify a black list of model attributes that CAN'T be set via mass-assignment
-  # On an unrelated note, I added a db-level default value of false for is_admin
-  # -Jared 2010-12-30
-  attr_protected :is_admin, :job_ids, :created_at, :updated_at
+  
+  attr_protected :role, :job_ids, :created_at, :updated_at
 
   # The following attributes come from Devise, AFAIK.
   # I'd like them to be attr_protected, but I'm not sure I can do that.
@@ -34,12 +30,13 @@ class User < ActiveRecord::Base
 
   # A user may register multiple people, eg. their family
   # The primary attendee corresponds with the user themselves
-  # TO DO: add is_admin condition to primary_attendee association
   has_one  :primary_attendee, :class_name => 'Attendee', :conditions => { :is_primary => true }
   has_many :attendees, :dependent => :destroy
 
+  ROLES = [['Admin','A'], ['Staff','S'], ['User','U']]
+
   validates_uniqueness_of :email, :case_sensitive => false
-  validates_inclusion_of :is_admin, :in => [true, false]
+  validates_inclusion_of :role, :in => %w[A S U]
 
   # Email may not contain commas or single-quotes,
   # Because I do not want to escape them in JS
@@ -105,6 +102,10 @@ class User < ActiveRecord::Base
     num_atnd_paid = 0
     self.attendees.each { |a| num_atnd_paid += 1 if a.deposit_received_at.present? }
     return num_atnd_paid
+  end
+  
+  def is_admin?
+    role == 'A'
   end
 
   # Override the built-in devise method update_with_password()

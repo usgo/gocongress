@@ -5,6 +5,7 @@ Factory.define :user do |f|
   f.sequence(:email) { |n| "factorytest#{n}@j.singlebrook.com" }
   f.password "whocares"
   f.password_confirmation "whocares"
+  f.role 'U'
   
   # We could do this ...
   # f.association :primary_attendee, :factory => :attendee
@@ -20,5 +21,5 @@ end
 # the admin factory is actually based off of the user factory!
 # how cool is that! -Jared
 Factory.define :admin_user, :parent => :user do |f|
-  f.is_admin true
+  f.role 'A'
 end

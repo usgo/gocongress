@@ -3,7 +3,8 @@ require 'csv'
 class ReportsController < ApplicationController
 
   # Access Control
-  before_filter :allow_only_admin
+  before_filter :authorize_read_report
+  def authorize_read_report() authorize! :read, :report end
 
   def attendees
     @attendees = Attendee.all

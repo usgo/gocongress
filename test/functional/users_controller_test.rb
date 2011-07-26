@@ -95,12 +95,12 @@ class UsersControllerTest < ActionController::TestCase
   
   test "users cannot promote themselves" do
     sign_in @user
-    assert_equal false, @user.is_admin
-    u = @user.attributes.merge({ 'is_admin' => true })
-    assert_no_difference('User.find(@user.id).is_admin ? 1 : 0') do
-      put :update, :id => @user.to_param, :user => u
+    assert_equal 'U', @user.role
+    u = @user.attributes.merge({ 'role' => 'A' })
+    assert_no_difference('User.find(@user.id).is_admin? ? 1 : 0') do
+      put :update, :id => @user.id, :user => u
     end
-    assert_equal false, User.find(@user.id).is_admin
+    assert_equal 'U', User.find(@user.id).role
   end
 
   test "non-admin cannot destroy a user" do

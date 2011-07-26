@@ -11,6 +11,7 @@ class Ability
     can :manage, :all if user.is_admin?
     
     # Staff have the same permissions as Users, except they can read anything
+    can :read, :all if user.role == 'S'
     
     # Users can manage their own resources only
     

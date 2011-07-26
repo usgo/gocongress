@@ -27,7 +27,7 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.xml
   def index
-    @users = User.order("is_admin desc")
+    @users = User.order("role = 'A' desc")
 
     respond_to do |format|
       format.html # index.html.erb
@@ -108,8 +108,8 @@ class UsersController < ApplicationController
     params[:page] ||= 'edit'
 
     # Only admins can promote or demote other admins -Jared 2011.1.13
-    if current_user_is_admin? && params[:user][:is_admin].present?
-      @user.is_admin = params[:user][:is_admin]
+    if current_user_is_admin? && params[:user][:role].present?
+      @user.role = params[:user][:role]
       @user.save
     end
 
@@ -121,7 +121,7 @@ class UsersController < ApplicationController
 
     # Now that we have handled the protected attributes, remove them
     # from the params hash to avoid a warning. -Jared 2011.1.30
-    mass_assignable_attrs = params[:user].except(:is_admin, :job_ids)
+    mass_assignable_attrs = params[:user].except(:role, :job_ids)
 
     # Update mass-assignable attributes. update_with_password() performs 
     # some extra validation before calling update_attributes
