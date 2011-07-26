@@ -3,11 +3,12 @@ require 'test_helper'
 class TransactionsControllerTest < ActionController::TestCase
   setup do
     @user = Factory.create :user
+    @staff = Factory.create :staff
     @admin_user = Factory.create :admin_user
     @transaction = Factory.create :tr_sale
   end
 
-  test "admin can get list of transactions" do
+  test "admin can index transactions" do
     sign_in @admin_user
     get :index
     assert_response :success
@@ -35,9 +36,17 @@ class TransactionsControllerTest < ActionController::TestCase
     assert_redirected_to transaction_path(assigns(:transaction))
   end
 
-  test "neither visitor nor non-admin can create transaction" do
+  test "staff can index transactions" do
+    sign_in @staff
+    get :index
+    assert_response :success
+  end
+
+  test "guest and user and staff cannot create transaction" do
     post_to_create_should_be_denied
     sign_in @user
+    post_to_create_should_be_denied
+    sign_in @staff
     post_to_create_should_be_denied
   end
 
@@ -48,10 +57,13 @@ class TransactionsControllerTest < ActionController::TestCase
     assert_redirected_to transaction_path(assigns(:transaction))
   end
 
-  test "neither visitor nor non-admin can update transaction" do
+  test "guest and user and staff cannot update transaction" do
     put_to_update(rand(100), 0)
     assert_response 403
     sign_in @user
+    put_to_update(rand(100), 0)
+    assert_response 403
+    sign_in @staff
     put_to_update(rand(100), 0)
     assert_response 403
   end
@@ -64,9 +76,11 @@ class TransactionsControllerTest < ActionController::TestCase
     assert_redirected_to transactions_path
   end
 
-  test "neither visitor nor non-admin can destroy transaction" do
+  test "guest and user and staff cannot destroy transaction" do
     delete_transaction_should_be_denied
     sign_in @user
+    delete_transaction_should_be_denied
+    sign_in @staff
     delete_transaction_should_be_denied
   end
 
