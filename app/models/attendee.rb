@@ -170,7 +170,7 @@ class Attendee < ActiveRecord::Base
       # Criteria can include any combination of minimum age, max age, min deposit date, etc.
       satisfy_age_min = d.age_min.blank? || atnd_age >= d.age_min
       satisfy_age_max = d.age_max.blank? || atnd_age <= d.age_max
-      satisfy_min_reg_date = d.min_reg_date.blank? || self.created_at <= d.min_reg_date
+      satisfy_min_reg_date = d.min_reg_date.blank? || self.created_at.to_date <= d.min_reg_date.to_date
       satisfy_players_only = !d.players_only || self.is_player
 
       if (satisfy_age_min && satisfy_age_max && satisfy_min_reg_date && satisfy_players_only) then

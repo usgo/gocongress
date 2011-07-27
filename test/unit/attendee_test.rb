@@ -34,9 +34,20 @@ class AttendeeTest < ActiveSupport::TestCase
     a = Factory(:ten_year_old)
     d = Factory(:discount, {:is_automatic => true, :players_only => false, :age_min => 0, :age_max => 12})
     assert attendee_has_discount(a,d)
-    d.players_only = true
-    d.save!
+    d.update_attribute :players_only, true
     assert_equal false, attendee_has_discount(a,d)
+  end
+  
+  test "early bird discount" do
+    a = Factory(:attendee, {:created_at => Time.new(2011,1,2)})
+    d = Factory(:discount, {:is_automatic => true, :min_reg_date => Time.new(2011,1,3)})
+    assert attendee_has_discount(a,d), "min_reg_date should be satisfied with future date"
+    
+    d.update_attribute :min_reg_date, Time.new(2011,1,2)
+    assert attendee_has_discount(a,d), "min_reg_date should be satisfied with matching date"
+    
+    d.update_attribute :min_reg_date, Time.new(2011,1,1)
+    assert_equal false, attendee_has_discount(a,d), "min_reg_date should not be satisfied with past date"
   end
   
   def attendee_has_discount(a,d)
