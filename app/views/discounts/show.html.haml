@@ -1,24 +1,24 @@
-%h2 Discount Details
+%h2= @discount.name
 
 %table.lightweight
   %tr
-    %th= trl_attr 'discount', 'name'
-    %td= @discount.name
-  %tr
-    %th Amount
-    %td= @discount.amount
+    %th{:style => "width:150px; padding-right:20px;"} Amount
+    %td= number_to_currency @discount.amount
   %tr
     %th= trl_attr 'discount', 'is_automatic'
-    %td= @discount.is_automatic
+    %td= @discount.is_automatic? ? "Yes" : "No"
   %tr
     %th= trl_attr 'discount', 'age_min'
-    %td= @discount.age_min
+    %td= @discount.age_min.present? ? @discount.age_min : "None"
   %tr
     %th= trl_attr 'discount', 'age_max'
-    %td= @discount.age_max
+    %td= @discount.age_max.present? ? @discount.age_max : "None"
   %tr
     %th= trl_attr 'discount', 'players_only'
     %td= @discount.players_only ? "Players" : "Everyone"
+  %tr
+    %th= trl_attr 'discount', 'min_reg_date'
+    %td= @discount.min_reg_date
 
 %br
 

@@ -12,22 +12,25 @@
   %fieldset
     %legend Automatic?
     %p
-      Automatic discounts are applied immediately to all applicable
-      attendees, according to the criteria below.  Non-automatic
-      discounts must be "claimed" by attendees.
+      Automatic discounts are applied immediately to all applicable attendees.
+      Non-automatic discounts must be claimed. To qualify for an automatic
+      discount, the attendee must satisfy all specified criteria.
+      
     .field
       = f.label :is_automatic
       = f.check_box :is_automatic
     .field
       = f.label :age_min
-      = f.text_field :age_min
+      = f.text_field :age_min, :size => 5
     .field
       = f.label :age_max
-      = f.text_field :age_max
-      %span.smalltext (optional)
+      = f.text_field :age_max, :size => 5
     .field
       = f.label :players_only
       = f.check_box :players_only
+    .field
+      = f.label :min_reg_date
+      = f.date_select :min_reg_date, :include_blank => true, :start_year => Time.now.year - 1, :end_year => Time.now.year + 1
 
   %br
 

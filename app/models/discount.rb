@@ -2,7 +2,8 @@ class Discount < ActiveRecord::Base
   has_many :attendee_discounts, :dependent => :destroy
   has_many :attendees, :through => :attendee_discounts
 
-  attr_accessible :name, :amount, :age_min, :age_max, :is_automatic, :players_only
+  attr_accessible :name, :amount, :age_min, :age_max, :is_automatic, \
+    :players_only, :min_reg_date
 
   validates_presence_of :name, :amount
   validates_length_of :name, :maximum => 50

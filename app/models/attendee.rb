@@ -166,15 +166,17 @@ class Attendee < ActiveRecord::Base
     # Does this attendee qualify for any automatic discounts?
     Discount.where("is_automatic = ?", true).each do |d|
 
-      # Currently, we only apply age-related automatic discounts.
-      # In the future, there will also be "early bird" discounts,
-      # but we haven't figured out the details yet.
+      # To qualify for an automatic discount, the attendee must satisfy all criteria.
+      # Criteria can include any combination of minimum age, max age, min deposit date, etc.
       satisfy_age_min = d.age_min.blank? || atnd_age >= d.age_min
       satisfy_age_max = d.age_max.blank? || atnd_age <= d.age_max
+      satisfy_min_reg_date = d.min_reg_date.blank? || self.created_at <= d.min_reg_date
       satisfy_players_only = !d.players_only || self.is_player
-      if (satisfy_age_min && satisfy_age_max && satisfy_players_only) then
+
+      if (satisfy_age_min && satisfy_age_max && satisfy_min_reg_date && satisfy_players_only) then
         invoice_items.push InvoiceItem.inv_item_hash(d.get_invoice_item_name, self.get_full_name, -1 * d.amount, 1)
       end
+
     end
 
     # Did this attendee claim any non-automatic discounts?

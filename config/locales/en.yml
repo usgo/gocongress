@@ -68,6 +68,7 @@ en:
         is_automatic: "Automatic?"
         name: "Discount Name"
         players_only: "Players Only"
+        min_reg_date: "Registered On or Before Date"
       user:
         created_at: "Created"
     models:
