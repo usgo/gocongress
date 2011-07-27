@@ -1,6 +1,7 @@
 class AttendeesController < ApplicationController
 
   load_and_authorize_resource
+  skip_load_resource :only => [:index, :vip]
   skip_authorize_resource :only => [:create, :index, :new, :vip]
   
   def index
@@ -21,7 +22,7 @@ class AttendeesController < ApplicationController
     end
 
     # get all attendees
-    @attendees = @attendees.order(order_by_clause)
+    @attendees = Attendee.order order_by_clause
 
     # We are also going to show the list of pre-registrants, at least for now.
     # Obviously, at some point they will all hopefully sign up for real user accounts
