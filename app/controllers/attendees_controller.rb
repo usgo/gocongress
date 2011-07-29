@@ -292,6 +292,8 @@ class AttendeesController < ApplicationController
     @attendee = Attendee.find params[:id]
     authorize! :read, @attendee
     @attendee_attr_names = %w[aga_id birth_date comment confirmed email gender phone special_request roomate_request].sort
+    tmt_names = AttendeeTournament.tmt_names_by_attendee
+    @tmt_names_atn = tmt_names[@attendee.id].present? ? tmt_names[@attendee.id] : Array.new
     render :layout => "print"
   end
 
