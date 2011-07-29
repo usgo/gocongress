@@ -41,7 +41,7 @@
           %br
           %input{ :type => "submit", :name => "submit", :value => "Submit" }
 
--# The following line is a HAML Filter
+-# The following line is called a HAML "Filter"
 :javascript
 
   // Check the payment amount, and warn people who overpay
@@ -61,12 +61,14 @@
     var b = parseFloat('#{@user.balance}');
 
     // Warn people who overpay
+/*
     if (!isNaN(b) && a.val() > b) {
       var msg = "It looks like the amount that you entered is greater";
       msg += " than your account balance.  Are you sure you want to";
       msg += " make a donation?";
       return confirm(msg);
       }
+*/
 
     // Otherwise, everything looks OK.  Submit the form.
     return true;
