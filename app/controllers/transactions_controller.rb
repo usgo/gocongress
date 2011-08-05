@@ -7,6 +7,10 @@ class TransactionsController < ApplicationController
 
   # GET /transactions
   def index
+    if params[:email].present? then
+      search_expression = '%' + params[:email] + '%'
+      @transactions = @transactions.joins(:user).where("email like ?", search_expression)
+    end
     @transactions = @transactions.order('created_at desc').page(params[:page]).per(PER_PAGE)
   end
 

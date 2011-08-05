@@ -2,6 +2,11 @@
 
 .flow-padding= button_to 'New Transaction', new_transaction_path, :method => "get"
 
+.trn-search-form
+  %form{ :href => transactions_path, :method => :get }
+    = text_field_tag 'email', nil, :placeholder => "Enter part of user email"
+    %button{ :type => :submit } Search
+
 .pagination-controls
   = paginate @transactions
 
