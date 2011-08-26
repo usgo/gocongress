@@ -1,4 +1,7 @@
-- if user.transactions.size == 0
+- show_detail_links ||= false
+- transactions = user.transactions.for_payment_history.order('created_at desc')
+
+- if transactions.size == 0
   %p No transactions found.
 - else
   %table.semantic.fullwidth
@@ -8,10 +11,13 @@
         %th Type
         %th.numeric Amount
     %tbody
-      - for t in user.transactions.for_payment_history.order('created_at desc')
+      - for t in transactions
         %tr
           %td= t.created_at.to_date.to_formatted_s(:long)
-          %td= t.get_trantype_name_public
+          %td
+            = t.get_trantype_name_public
+            - if show_detail_links and can? :read, t
+              = link_to "(details)", t
           %td.numeric= number_to_currency t.get_ledger_amount
       %tr.total
         %th{ :colspan => 2 } Total

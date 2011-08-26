@@ -2,7 +2,7 @@
 
 %p Updated every few days, please be patient.
 
-= render :partial => 'shared/ledger', :locals => {:user => @user}
+= render :partial => 'shared/ledger', :locals => {:user => @user, :show_detail_links => true}
 
 - if current_user.is_admin?
   %p= link_to "Return to #{@user.primary_attendee.full_name_possessive} Account", user_path(@user)
