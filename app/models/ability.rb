@@ -2,7 +2,7 @@ class Ability
   include CanCan::Ability
 
   def initialize(user)
-    # Define abilities for the passed in user here.
+    # Define abilities for specified user
     # See the wiki for details: https://github.com/ryanb/cancan/wiki/Defining-Abilities
     
     # If there is no user logged in, instantiate a guest user.
