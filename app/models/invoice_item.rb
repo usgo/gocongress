@@ -10,7 +10,7 @@ class InvoiceItem
   end
 
   def self.inv_item_total(item_array)
-    sum = 0
+    sum = 0.0
     item_array.each { |item| sum += item['item_price'] * item['qty'] }
     return sum
   end
