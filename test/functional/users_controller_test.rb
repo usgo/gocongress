@@ -20,7 +20,25 @@ class UsersControllerTest < ActionController::TestCase
     get :index
     assert_response :success
   end
-  
+
+  test "admin can get user cost summary" do
+    sign_in @admin_user
+    get :print_cost_summary, :id => @user.id
+    assert_response :success
+  end
+
+  test "staff can get user cost summary" do
+    sign_in @staff
+    get :print_cost_summary, :id => @user.id
+    assert_response :success
+  end
+
+  test "user cannot get user cost summary" do
+    sign_in @user
+    get :print_cost_summary, :id => @user.id
+    assert_response 403
+  end
+
   test "user cannot get index" do
     sign_in @user
     get :index
@@ -67,7 +85,7 @@ class UsersControllerTest < ActionController::TestCase
     assert_response 403
   end
 
-  test "admins can get edit" do
+  test "admin can get edit" do
     sign_in @admin_user
     get :edit, :id => @user.to_param
     assert_response :success

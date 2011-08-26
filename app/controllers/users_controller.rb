@@ -163,7 +163,7 @@ class UsersController < ApplicationController
   
   def print_cost_summary
     @user = User.find(params[:id])
-    authorize! :read, @user
+    authorize! :print_official_docs, @user
     render :layout => 'print'
   end
 

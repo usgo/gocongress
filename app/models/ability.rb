@@ -19,6 +19,7 @@ class Ability
     # Staff have the same permissions as Users, except they can read anything
     if user.role == 'S' then
       can :read, :all
+      can :print_official_docs, :all
       can :see_admin_menu, :layout
     end
     
