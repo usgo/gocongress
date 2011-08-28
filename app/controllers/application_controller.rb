@@ -3,9 +3,9 @@ class ApplicationController < ActionController::Base
   helper_method :current_user_is_admin?, :page_title
   before_filter :set_year
 
-  # Overrides helper methods like tournaments_path
-  include YearAwareRouteHelpers
-  year_aware_route_helpers_for :tournament
+  def default_url_options(options={})
+    { :year => @year }
+  end
 
   def set_year
     # In 2011 we used the constant CONGRESS_YEAR to determine the

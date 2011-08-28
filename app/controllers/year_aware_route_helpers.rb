@@ -1,5 +1,10 @@
 module YearAwareRouteHelpers
   
+  # This module is no longer in use now that default_url_options
+  # has been added to the application_controller, however I'd
+  # like to keep it around for a little while longer in case 
+  # the default_url_options approach does not pan out.
+  
   def self.included(base)
     base.extend ClassMethods
   end

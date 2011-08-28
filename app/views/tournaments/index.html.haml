@@ -37,7 +37,7 @@
       - rounds_this_date.each do |r|
         %tr
           %td= r.round_start.strftime '%l:%M %p'
-          %td= link_to r.tournament.name, tournament_path(r.tournament)
+          %td= link_to r.tournament.name, r.tournament
           %td= r.tournament.directors
   %br
 
@@ -60,7 +60,7 @@
     %tbody
       - @tournaments.each do |t|
         %tr
-          %td= link_to t.name, tournament_path(t)
+          %td= link_to t.name, t
           %td= t.get_openness_type_name
           %td= t.rounds.count
           %td= t.attendees.count
