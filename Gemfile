@@ -1,10 +1,8 @@
 source 'http://rubygems.org'
 
-# Rails
-# In order to use the release candidate, we must use the
-# PessimisticVersionConstraint operator (~>)
-# When Rails 3.1 stable is released, we should drop this version constraint
-gem 'rails', '~> 3.1.0.rc4'
+# When Rails 3.1-stable is finally released, 
+# we should drop this version constraint
+gem 'rails', '3.1.0.rc6'
 
 # Asset template engines
 gem 'sass'
