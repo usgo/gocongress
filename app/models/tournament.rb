@@ -1,5 +1,5 @@
 class Tournament < ActiveRecord::Base
-  attr_protected :created_at, :updated_at
+  attr_protected :created_at, :updated_at, :year
 
   has_many :rounds, :dependent => :destroy
   has_many :attendee_tournaments, :dependent => :destroy

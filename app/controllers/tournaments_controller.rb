@@ -25,6 +25,7 @@ class TournamentsController < ApplicationController
 
   # POST /tournaments
   def create
+    @tournament.year = @year
     if @tournament.save
       redirect_to tournament_path(@tournament), :notice => 'Tournament was successfully created.'
     else
