@@ -70,7 +70,7 @@
               Who is <br> Coming?
           %li#nav-registration
             - if current_user.nil?
-              = image_tag "icons/star.png", :class => 'preregister-star'
+              = image_tag "icons/star.png", :class => 'register-star'
               %a{:href => new_user_registration_path}
                 %br
                 Register
@@ -96,9 +96,6 @@
             %li#nav-admin-transactions
               %a{:href => transactions_path}
                 Transactions
-            %li#nav-admin-preregistrants
-              %a{:href => preregistrants_path}
-                Pre-registrants
             %li#nav-admin-pricing
               = link_to "Pricing", pricing_path
             %li#nav-admin-content

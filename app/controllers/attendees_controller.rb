@@ -24,11 +24,6 @@ class AttendeesController < ApplicationController
     # get all attendees
     @attendees = Attendee.order order_by_clause
 
-    # We are also going to show the list of pre-registrants, at least for now.
-    # Obviously, at some point they will all hopefully sign up for real user accounts
-    # and then this list will be defunct. -Jared 1/23/11
-    @preregistrants = Preregistrant.order('preregdate asc')
-
     # get some fun statistics
     @pro_count = Attendee.where("rank IN (?)", (101)..(109)).count
     @dan_count = Attendee.where("rank IN (?)", (1)..(9)).count

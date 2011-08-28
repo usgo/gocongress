@@ -24,9 +24,6 @@ Gocongress::Application.routes.draw do
   # restful resources
   resources :plans, :plan_categories, :transactions
 
-  # some resources do not need all seven default actions
-  resources :preregistrants, :only => [:index]
-
   # override resource route for attendee#edit to supoort multiple pages
   match '/attendees/:id/edit/:page' => "attendees#edit"
 

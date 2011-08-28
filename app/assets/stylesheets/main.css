@@ -118,7 +118,7 @@ distribute and pad them.  I'm only human. -Jared 7/27/10 */
 .nav li#nav-registration { position:relative; width: 80px; }
 .nav li#nav-login { width: 70px; }
 .nav li#nav-registration a { color: #FF2; }
-.nav li#nav-registration img.preregister-star { position: absolute; top: -10px; left: 3px; }
+.nav li#nav-registration img.register-star { position: absolute; top: -10px; left: 3px; }
 
 /* Admin menu is slightly different -Jared 1/12/11 */
 .nav-container-admin { background-color: #64AEDE; }
@@ -126,11 +126,10 @@ distribute and pad them.  I'm only human. -Jared 7/27/10 */
 .nav li#nav-admin-title { width: 120px; }
 .nav li#nav-admin-users { width: 70px; }
 .nav li#nav-admin-transactions { width: 120px; }
-.nav li#nav-admin-preregistrants { width: 130px; }
 .nav li#nav-admin-pricing { width: 90px; }
 .nav li#nav-admin-content { width: 150px; }
 .nav li#nav-admin-reports { width: 90px; }
-.nav li#nav-admin-placeholder { width: 123px; }
+.nav li#nav-admin-placeholder { width: 254px; }
 .nav-container-admin .nav li { height: 18px; }
 
 /* Secondary navigation */

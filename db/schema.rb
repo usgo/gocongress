@@ -1,3 +1,4 @@
+# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -10,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110727005058) do
+ActiveRecord::Schema.define(:version => 20110828192445) do
 
   create_table "attendee_discounts", :force => true do |t|
     t.integer  "attendee_id", :null => false
@@ -146,19 +147,6 @@ ActiveRecord::Schema.define(:version => 20110727005058) do
     t.text     "description"
     t.integer  "plan_category_id"
     t.integer  "max_quantity",                   :default => 1, :null => false
-  end
-
-  create_table "preregistrants", :force => true do |t|
-    t.string   "firstname",  :null => false
-    t.string   "lastname",   :null => false
-    t.date     "preregdate", :null => false
-    t.string   "ranktype",   :null => false
-    t.integer  "rank",       :null => false
-    t.string   "country",    :null => false
-    t.string   "email",      :null => false
-    t.boolean  "anonymous",  :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
   end
 
   create_table "rounds", :force => true do |t|
