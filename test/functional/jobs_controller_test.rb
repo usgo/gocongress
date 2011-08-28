@@ -8,67 +8,66 @@ class JobsControllerTest < ActionController::TestCase
   end
 
   test "visitor can get index" do
-    get :index
+    get :index, :year => Time.now.year
     assert_response :success
     assert_not_nil assigns(:jobs)
   end
 
   test "admin can get new" do
     sign_in(@admin_user)
-    get :new
+    get :new, :year => Time.now.year
     assert_response :success
   end
   
   test "user cannot get new" do
     sign_in(@user)
-    get :new
+    get :new, :year => Time.now.year
     assert_response 403
   end
 
   test "admin can create job" do
     sign_in(@admin_user)
     assert_difference('Job.count') do
-      post :create, :job => @job.attributes
+      post :create, :year => Time.now.year, :job => @job.attributes
     end
     assert_redirected_to jobs_path
   end
 
   test "visitor can show job" do
-    get :show, :id => @job.to_param
+    get :show, :year => Time.now.year, :id => @job.to_param
     assert_response :success
   end
 
   test "admin can get edit" do
     sign_in(@admin_user)
-    get :edit, :id => @job.to_param
+    get :edit, :year => Time.now.year, :id => @job.to_param
     assert_response :success
   end
   
   test "user cannot get edit" do
     sign_in(@user)
-    get :edit, :id => @job.to_param
+    get :edit, :year => Time.now.year, :id => @job.to_param
     assert_response 403
   end
 
   test "admin can update job" do
     sign_in(@admin_user)
-    put :update, :id => @job.to_param, :job => @job.attributes
+    put :update, :year => Time.now.year, :id => @job.to_param, :job => @job.attributes
     assert_redirected_to jobs_path
   end
 
   test "admin can destroy job" do
     sign_in(@admin_user)
     assert_difference('Job.count', -1) do
-      delete :destroy, :id => @job.to_param
+      delete :destroy, :year => Time.now.year, :id => @job.to_param
     end
-
     assert_redirected_to jobs_path
   end
   
   test "user cannot destroy job" do
     sign_in @user
     assert_no_difference 'Job.count' do
-      delete :destroy, :id => @job.id
+      delete :destroy, :year => Time.now.year, :id => @job.id
     end
     assert_response 403
   end
