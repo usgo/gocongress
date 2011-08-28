@@ -93,12 +93,13 @@ private
     assert_response 403
   end
 
-  def put_to_update(delta_amount, expected_difference)
-    expected_difference = BigDecimal.new expected_difference.to_s
+  def put_to_update(delta_amount, expected_diff)
+    amount_before = Transaction.find(@transaction.id).amount
     trn_atr_hash = @transaction.attributes.merge( 'amount' => @transaction.amount + delta_amount )
-    assert_difference('Transaction.find(@transaction.to_param).amount', expected_difference) do
-      put :update, :id => @transaction.to_param, :transaction => trn_atr_hash
-    end
+    put :update, :id => @transaction.id, :transaction => trn_atr_hash
+    amount_after = Transaction.find(@transaction.id).amount
+    actual_diff = amount_after - amount_before
+    assert (actual_diff - expected_diff).abs < 0.0001, "unexpected change in amount"
   end
 
   def delete_transaction_should_be_denied
