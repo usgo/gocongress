@@ -26,7 +26,7 @@ class TournamentsController < ApplicationController
   # POST /tournaments
   def create
     if @tournament.save
-      redirect_to(@tournament, :notice => 'Tournament was successfully created.')
+      redirect_to tournament_path(@tournament), :notice => 'Tournament was successfully created.'
     else
       render :action => "new"
     end
@@ -35,7 +35,7 @@ class TournamentsController < ApplicationController
   # PUT /tournaments/1
   def update
     if @tournament.update_attributes(params[:tournament])
-      redirect_to(@tournament, :notice => 'Tournament was successfully updated.')
+      redirect_to tournament_path(@tournament), :notice => 'Tournament was successfully updated.'
     else
       render :action => "edit"
     end
