@@ -10,7 +10,6 @@ Gocongress::Application.routes.draw do
   get 'prices_and_extras' => 'plans#prices_and_extras'
   get 'pricing' => 'home#pricing'
   get 'room_and_board' => 'plans#room_and_board'
-  get 'vip' => 'attendees#vip'
 
   match '/popup/:action' => 'popup', :as => 'popup'
 
@@ -33,6 +32,9 @@ Gocongress::Application.routes.draw do
   match '/attendees/:id/edit/:page' => "attendees#edit"
 
   resources :attendees do
+    collection do
+      get 'vip'
+    end
     member do
       get 'print_summary', :as => 'print_summary_for'
       get 'print_badge', :as => 'print_badge_for'
