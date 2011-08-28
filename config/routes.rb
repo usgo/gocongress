@@ -18,11 +18,12 @@ Gocongress::Application.routes.draw do
 
   # support multiple years by scoping the resources
   scope ":year" do
+    resources :contents, :events
     resources :tournaments
   end
 
   # restful resources
-  resources :contents, :discounts, :events, :jobs
+  resources :discounts, :jobs
   resources :plans, :plan_categories, :transactions
 
   # some resources do not need all seven default actions
@@ -61,6 +62,8 @@ Gocongress::Application.routes.draw do
     get :outstanding_balances, :overdue_deposits
     get :tournaments, :transactions, :user_invoices
   end
-  
+
+  # these routes should come last
+  get ":year" => 'home#index'
   root :to => "home#index"
 end
