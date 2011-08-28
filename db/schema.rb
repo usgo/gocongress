@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110828192445) do
+ActiveRecord::Schema.define(:version => 20110828221333) do
 
   create_table "attendee_discounts", :force => true do |t|
     t.integer  "attendee_id", :null => false
@@ -165,6 +165,7 @@ ActiveRecord::Schema.define(:version => 20110828192445) do
     t.datetime "updated_at"
     t.string   "openness",                  :limit => 1,  :default => "O",   :null => false
     t.boolean  "show_attendee_notes_field",               :default => false, :null => false
+    t.integer  "year",                                                       :null => false
   end
 
   create_table "transactions", :force => true do |t|

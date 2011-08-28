@@ -4,9 +4,9 @@ class TournamentsController < ApplicationController
 
   # GET /tournaments
   def index
-    @tournaments = @tournaments.order 'lower(name)'
-    @rounds = Round.order 'round_start'
-    @rounds_by_date = @rounds.group_by {|r| r.round_start.to_date}
+    @tournaments = @tournaments.where(:year => @year).order('lower(name)').all
+    rounds = Round.where(:tournament_id => @tournaments).order 'round_start'
+    @rounds_by_date = rounds.group_by {|r| r.round_start.to_date}
   end
 
   # GET /tournaments/1
