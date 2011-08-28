@@ -16,9 +16,14 @@ Gocongress::Application.routes.draw do
 
   devise_for :users
 
+  # support multiple years by scoping the resources
+  scope ":year" do
+    resources :tournaments
+  end
+
   # restful resources
   resources :contents, :discounts, :events, :jobs
-  resources :plans, :plan_categories, :tournaments, :transactions
+  resources :plans, :plan_categories, :transactions
 
   # some resources do not need all seven default actions
   resources :preregistrants, :only => [:index]

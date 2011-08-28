@@ -1,6 +1,20 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
   helper_method :current_user_is_admin?, :page_title
+  before_filter :set_year
+
+  def set_year
+    # In 2011 we used the constant CONGRESS_YEAR to determine the
+    # current year, but going forward we will use params[:year] in most
+    # places. Hopefully, when this transition is complete we will be
+    # able to drop the constant.
+    if params[:year].present?
+      @year = params[:year].to_i
+    else
+      @year = CONGRESS_YEAR.to_i
+    end
+    raise "Invalid year" unless (2011..2100).include?(@year)
+  end
 
   # Redirect Devise to a specific page on successful sign in  -Jared
   def after_sign_in_path_for(resource_or_scope)

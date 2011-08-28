@@ -3,7 +3,7 @@
 %p
   Which tournaments will #{@attendee.get_full_name} be playing in?
   If you have questions, please consult the
-  = link_to "tournament schedule", tournaments_path
+  = link_to "tournament schedule", tournaments_path(@year)
   or contact the appropriate
   = link_to "tournament director.", contact_path
   

@@ -3,7 +3,8 @@
   %head
     %meta{:content => "text/html", "http-equiv" => "Content-Type"}/
     %title
-      US Go Congress #{CONGRESS_YEAR}
+      US Go Congress
+      = @year
       - unless controller_name == "home" and action_name == "index"
         = "- #{page_title}"
 
@@ -38,12 +39,11 @@
       #header
         #usgc-title-container
           %h1
-            %a{:href => "/"}
-              = CONGRESS_YEAR
-              US Go Congress
+            %a{:href => "/"}= "#{@year} US Go Congress"
         #usgc-when-where-container
           \#{CONGRESS_CITY}, #{CONGRESS_STATE} &nbsp;
-          \#{CONGRESS_DATE_RANGE}, #{CONGRESS_YEAR}
+          \#{CONGRESS_DATE_RANGE},
+          = @year
         %div{:style => "clear:both;"}
     .nav-container
       .nav
@@ -52,7 +52,7 @@
             %a{:href => events_path}
               Events &amp; <br> Activities
           %li#nav-tournaments
-            %a{:href => tournaments_path} Tournaments
+            %a{:href => tournaments_path(@year)} Tournaments
           %li#nav-pros
             %a{:href => vip_path} Pros <br> &amp; VIPs
           %li#nav-rooms
