@@ -81,7 +81,7 @@ en:
   crud:
     confirm:
       tournament:
-        destroy: "Delete the entire tournament?  This will delete everything associated with this tournament too, including game records."
+        destroy: "Delete the entire tournament?  This will delete everything associated with this tournament too."
   views:
     pagination:
       next: "Next"
