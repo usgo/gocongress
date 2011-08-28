@@ -17,12 +17,11 @@ Gocongress::Application.routes.draw do
 
   # support multiple years by scoping the resources
   scope ":year" do
-    resources :contents, :events
+    resources :contents, :discounts, :events, :jobs
     resources :tournaments
   end
 
   # restful resources
-  resources :discounts, :jobs
   resources :plans, :plan_categories, :transactions
 
   # some resources do not need all seven default actions
