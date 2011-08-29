@@ -15,6 +15,7 @@ class Tournament < ActiveRecord::Base
   validates_presence_of :name, :eligible, :description, :directors, :openness
   validates_length_of :openness, :is => 1
   validates_inclusion_of :openness, :in => OPENNESS_TYPES.flatten
+  validates_numericality_of :year, :only_integer => true, :greater_than => 2010, :less_than => 2100
 
   def get_openness_type_name
     openness_name = ''
