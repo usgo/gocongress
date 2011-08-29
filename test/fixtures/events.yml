@@ -1,7 +1,0 @@
-# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
-
-one:
-  evtname: MyString
-  start: 2011-07-31
-  evtdeparttime: MyString
-  evtprice: MyString
