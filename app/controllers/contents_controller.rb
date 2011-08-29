@@ -4,6 +4,7 @@ class ContentsController < ApplicationController
 
   # GET /contents
   def index
+    @contents = @contents.where(:year => @year)
   end
 
   # GET /contents/1
@@ -20,6 +21,7 @@ class ContentsController < ApplicationController
 
   # POST /contents
   def create
+    @content.year = @year
     if @content.save
       redirect_to(@content, :notice => 'Content was successfully created.')
     else
