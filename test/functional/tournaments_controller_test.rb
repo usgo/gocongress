@@ -9,7 +9,7 @@ class TournamentsControllerTest < ActionController::TestCase
 
   test "index has expected tournaments and rounds" do
     t = Factory.create(:tournament, :year => Time.now.year)
-    x = Factory.create(:tournament, :year => 1.year.ago)
+    x = Factory.create(:tournament, :year => 1.year.from_now.year)
     get :index, :year => Time.now.year
     
     # we expect to see only this year's tournament and rounds
