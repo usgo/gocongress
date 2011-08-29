@@ -4,8 +4,8 @@ class EventsController < ApplicationController
 
   # GET /events
   def index
-		@events = @events.order "start asc"
-		@arEventsByDate = @events.group_by {|event| event.start.to_date}
+    events = @events.where(:year => @year).order "start asc"
+    @events_by_date = events.group_by {|event| event.start.to_date}
   end
 
   # GET /events/1
@@ -22,6 +22,7 @@ class EventsController < ApplicationController
 
   # POST /events
   def create
+    @event.year = @year
     if @event.save
       redirect_to @event, :notice => 'Event was successfully created.'
     else

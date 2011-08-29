@@ -27,7 +27,7 @@
 
 %table.semantic.fullwidth.zebra
   %tbody
-    - @arEventsByDate.each do |d,arEvt|
+    - @events_by_date.each do |d,arEvt|
       %tr.greater-header
         %th{ :colspan => current_user_is_admin? ? 9 : 7 }
           = d.to_formatted_s(:long_with_day)

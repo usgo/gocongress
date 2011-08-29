@@ -7,6 +7,7 @@ class Event < ActiveRecord::Base
 
   validates_presence_of :start, :evtname
   validates_length_of :notes, :maximum => 250
+  validates_numericality_of :year, :only_integer => true, :greater_than => 2010, :less_than => 2100
 
   # Price should be numeric, but for some crazy reason, 
   # evtprice is a string.  Hence the ugly :unless blank? option
