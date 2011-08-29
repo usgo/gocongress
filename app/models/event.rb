@@ -5,7 +5,7 @@ class Event < ActiveRecord::Base
   has_many :attendee_events, :dependent => :destroy
   has_many :attendees, :through => :attendee_events
 
-  validates_presence_of :start, :evtname
+  validates_presence_of :start, :evtname, :year
   validates_length_of :notes, :maximum => 250
   validates_numericality_of :year, :only_integer => true, :greater_than => 2010, :less_than => 2100
 
