@@ -137,7 +137,7 @@ distribute and pad them.  I'm only human. -Jared 7/27/10 */
 .pagination-controls nav { display: inline; }
 
 /* Main content area */
-#content { 
+.content { 
 	border-left: 1px solid #AAA; 
 	border-right: 1px solid #AAA;
 	border-bottom: 1px solid #AAA;
@@ -147,18 +147,21 @@ distribute and pad them.  I'm only human. -Jared 7/27/10 */
 }
 
 /* Basic styling for elements in the main content area */
-#content p, #content dl { padding: 0.5em 0em 0.5em 0em; }
-#content h1, #content h2, #content h3, #content h4, #content h5, #content h6 { padding: 0.5em 0em; }
-#content ul { margin-left: 20px; padding: 0.5em 0em 0.5em 0em; }
-#content li { margin-left: 10px; }
-#content table.semantic li { margin-left: 25px; }
+.content p, .content dl { padding: 0.5em 0em 0.5em 0em; }
+.content h1, .content h2, .content h3, .content h4, .content h5, .content h6 { padding: 0.5em 0em; }
+.content ul { margin-left: 20px; padding: 0.5em 0em 0.5em 0em; }
+.content li { margin-left: 10px; }
+.content table.semantic li { margin-left: 25px; }
+.content.past-years { padding: 0px 10px; }
+.past-years p, .past-years a { font-family: Helvetica, sans-serif; }
+.past-years a { padding-right: 10px; }
 
 /* Drawing extra attention to various things */
 .button-emphasis {
   color: #0071BC;
   font-size: 20px;
   }
-#content .notice { 
+.content .notice { 
 	background-image: url("/assets/icons/attention.png");
 	background-repeat: no-repeat;
 	background-position: 5px;
@@ -227,7 +230,7 @@ div.field .cbx-list label { width: auto; vertical-align: baseline; }
 
 /* Horizontally aligning stuff with inputs */
 fieldset .aligned-with-input { margin-left: 155px; }
-#content ul.aligned-with-input { margin-left: 155px; }
+.content ul.aligned-with-input { margin-left: 155px; }
 
 /* Some forms need wider labels -Jared 1/8/11 */
 fieldset.wider-labels label { width: 200px; }

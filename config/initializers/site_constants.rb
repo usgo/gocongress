@@ -8,6 +8,7 @@ CONGRESS_STATE = "CA"
 # In 2011, for example, we started working on the 
 # website in early Fall 2010
 CONGRESS_YEAR = "2011"
+LATEST_YEAR = 2012
 
 # Other
 CONGRESS_START_DATE = Time.utc(CONGRESS_YEAR, 7, 30)

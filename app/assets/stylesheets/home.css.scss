@@ -1,5 +1,5 @@
 .homepage {
-  #content { 
+  .content { 
   
     /* homepage overrides default padding so that the gallery will 
     float snugly in the top right */
@@ -16,6 +16,7 @@
     
     /* Misc. */
     p#venue-address { text-align: right; }
+    &.past-years { padding: 0px; }
   }
 }
 

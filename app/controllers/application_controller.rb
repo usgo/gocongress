@@ -21,6 +21,10 @@ class ApplicationController < ActionController::Base
     # Validate year to protect against sql injection, or begign
     # programmer error.
     raise "Invalid year" unless (2011..2100).include?(@year)
+    
+    # Define a range of all expected years
+    # Currently just used for year navigation in footer
+    @years = 2011..LATEST_YEAR
   end
 
   # Redirect Devise to a specific page on successful sign in  -Jared

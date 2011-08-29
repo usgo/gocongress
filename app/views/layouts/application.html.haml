@@ -39,7 +39,7 @@
       #header
         #usgc-title-container
           %h1
-            %a{:href => "/"}= "#{@year} US Go Congress"
+            %a{:href => "/#{@year}"}= "#{@year} US Go Congress"
         #usgc-when-where-container
           \#{CONGRESS_CITY}, #{CONGRESS_STATE} &nbsp;
           \#{CONGRESS_DATE_RANGE},
@@ -104,7 +104,7 @@
               = link_to "Reports", reports_path
             %li#nav-admin-placeholder.last-child
     
-    #content
+    .content
       / "Flash messages" required by Devise -Jared 12/20/10
       .rails-flash-notice= notice
       .rails-flash-alert= alert
@@ -113,6 +113,13 @@
       = yield
 
       %div{:style => "clear:both;"}
+
+    .content.past-years
+      %p
+        - [2007,2009,2010].each do |y|
+          = link_to y, "http://www.usgo.org/congresses/#{y}"
+        - @years.each do |y|
+          = link_to y, "/#{y}"
 
     #footer
       #sponsors
