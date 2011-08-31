@@ -1,8 +1,6 @@
 source 'http://rubygems.org'
 
-# When Rails 3.1-stable is finally released, 
-# we should drop this version constraint
-gem 'rails', '3.1.0.rc6'
+gem 'rails', '~> 3.1.0'
 
 # Asset template engines
 gem 'sass'
@@ -33,11 +31,7 @@ end
 group :test do
 	gem 'factory_girl'
 	gem 'factory_girl_rails'
-	
-	# pretty console printing for tests
-	# the 'redgreen' gem does not support ruby 1.9.2,
-	# so we will try out the 'turn' gem
-	gem 'turn'
+	gem 'turn' # pretty printing for tests
 end
 
 # To keep your heroku slug size down, try this
