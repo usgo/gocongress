@@ -160,7 +160,7 @@ body .nav-container-admin .nav li:hover { background-color: #53CEF7; }
 .content ul { margin-left: 20px; padding: 0.5em 0em 0.5em 0em; }
 .content li { margin-left: 10px; }
 .content table.semantic li { margin-left: 25px; }
-.content.past-years { padding: 0px 10px; }
+.content.past-years { padding: 3px 10px 0px 10px; }
 .past-years p, .past-years a { font-family: Helvetica, sans-serif; }
 .past-years a { padding-right: 10px; }
 
