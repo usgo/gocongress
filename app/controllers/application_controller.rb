@@ -25,6 +25,19 @@ class ApplicationController < ActionController::Base
     # Define a range of all expected years
     # Currently just used for year navigation in footer
     @years = 2011..LATEST_YEAR
+    
+    # Location and date also used to be constants
+    # For now, an if-else is fine, but in the future, when there are
+    # more years, we may want some other way to store these.
+    if @year == 2011
+      @congress_city = "Santa Barbara"
+      @congress_state = "CA"
+      @congress_date_range = "Jul 30 - Aug 7"
+    elsif @year == 2012
+      @congress_city = "Black Mountain"
+      @congress_state = "NC"
+      @congress_date_range = "August 4 - 11"
+    end
   end
 
   # Redirect Devise to a specific page on successful sign in  -Jared

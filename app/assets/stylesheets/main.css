@@ -61,7 +61,8 @@ dt { clear: left; float: left; padding-right: 1em; font-weight: bold; }
 dd { float: left; }
 
 /* Header */
-#header-container { background-color: #FF9B05; }
+body.year2011 #header-container { background-color: #FF9B05; }
+body.year2012 #header-container { background-color: #453775; }
 #header { margin: 0 auto; padding: 8px 0px 5px 0px; width: 900px; }
 
 #usgc-title-container { float: left; }
@@ -85,7 +86,9 @@ dd { float: left; }
 }
 
 /* Nav */
-.nav-container { background-color: #0071BC; }
+body.year2011 .nav-container { background-color: #0071BC; }
+body.year2012 .nav-container { background-color: #8D7AC9; }
+
 .nav { margin: 0 auto; width: 902px; }
 .nav ul { height: 40px; }
 .nav li { 

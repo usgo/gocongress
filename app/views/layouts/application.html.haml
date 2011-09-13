@@ -29,7 +29,7 @@
     
     = csrf_meta_tag
 
-  %body{:class => @bodyClassList}
+  %body{:class => "#{@bodyClassList} year#{@year}"}
 
     %noscript
       #noscript-warning
@@ -41,8 +41,8 @@
           %h1
             %a{:href => "/#{@year}"}= "#{@year} US Go Congress"
         #usgc-when-where-container
-          \#{CONGRESS_CITY}, #{CONGRESS_STATE} &nbsp;
-          \#{CONGRESS_DATE_RANGE},
+          = @congress_city + ', ' + @congress_state
+          = @congress_date_range + ','
           = @year
         %div{:style => "clear:both;"}
     .nav-container
@@ -116,6 +116,7 @@
 
     .content.past-years
       %p
+        = link_to 2006, "http://www.trianglegoclub.org/gocongress06"
         - [2007,2009,2010].each do |y|
           = link_to y, "http://www.usgo.org/congresses/#{y}"
         - @years.each do |y|
