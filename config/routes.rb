@@ -24,10 +24,7 @@ Gocongress::Application.routes.draw do
   # restful resources
   resources :plans, :plan_categories
 
-  # override resource route for attendee#edit to supoort multiple pages
-  match '/attendees/:id/edit/:page' => "attendees#edit", :as => :atnd_edit_page
-
-  resources :attendees do
+  resources :attendees, :except => :edit do
     collection do
       get 'vip'
     end
@@ -36,6 +33,9 @@ Gocongress::Application.routes.draw do
       get 'print_badge', :as => 'print_badge_for'
     end
   end
+
+  # Replace the normal attendee#edit with a route that supports multiple pages
+  get '/:year/attendees/:id/edit/:page' => "attendees#edit", :as => :atnd_edit_page
 
   resources :users do
     member do
