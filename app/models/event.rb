@@ -14,4 +14,8 @@ class Event < ActiveRecord::Base
   validates_numericality_of :evtprice, \
     :greater_than_or_equal_to => 0, :allow_nil => true, \
     :unless => Proc.new { |e| e.evtprice.blank? }
+
+  # Scopes, and class methods that act like scopes
+  def self.yr(year) where("year = ?", year) end
+
 end

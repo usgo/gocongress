@@ -17,6 +17,10 @@ class Tournament < ActiveRecord::Base
   validates_inclusion_of :openness, :in => OPENNESS_TYPES.flatten
   validates_numericality_of :year, :only_integer => true, :greater_than => 2010, :less_than => 2100
 
+  # Scopes, and class methods that act like scopes
+  def self.openness(o) where(:openness => o) end
+  def self.yr(year) where("year = ?", year) end
+
   def get_openness_type_name
     openness_name = ''
     OPENNESS_TYPES.each { |t| if (t[1] == self.openness) then openness_name = t[0] end }

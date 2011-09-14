@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110914014355) do
+ActiveRecord::Schema.define(:version => 20110914043829) do
 
   create_table "attendee_discounts", :force => true do |t|
     t.integer  "attendee_id", :null => false
@@ -105,6 +105,7 @@ ActiveRecord::Schema.define(:version => 20110914014355) do
     t.datetime "updated_at"
     t.boolean  "players_only",               :default => false, :null => false
     t.date     "min_reg_date"
+    t.integer  "year",                                          :null => false
   end
 
   create_table "events", :force => true do |t|

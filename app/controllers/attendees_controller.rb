@@ -308,20 +308,20 @@ protected
 
   def init_multipage( page )
     if page == "baduk"
-      @discounts = Discount.where("is_automatic = ?", false)
-      @attendee_discount_ids = @attendee.discounts.map { |d| d.id }
+      @discounts = Discount.yr(@year).automatic(false)
+      @attendee_discount_ids = @attendee.discounts.automatic(false).map { |d| d.id }
     elsif page == "roomboard"
       age = @attendee.age_in_years.to_i
       @plans_ordered = Plan.reg_form.appropriate_for_age(age).order("price desc")
       @plans_grouped = @plans_ordered.group_by {|plan| plan.plan_category}
     elsif page == "admin"
-      @invitational_tournaments = Tournament.where :openness => 'I'
-      @atnd_inv_trn_ids = @attendee.tournaments.where({:openness => 'I'}).map {|t| t.id}
+      @invitational_tournaments = Tournament.yr(@year).openness('I')
+      @atnd_inv_trn_ids = @attendee.tournaments.openness('I').map {|t| t.id}
     elsif page == "tournaments"
-      @open_tournaments = Tournament.where(:openness => 'O').order(:name)
-      @atnd_open_trn_ids = @attendee.tournaments.where({:openness => 'O'}).map {|t| t.id}
+      @open_tournaments = Tournament.yr(@year).openness('O').order(:name)
+      @atnd_open_trn_ids = @attendee.tournaments.openness('O').map {|t| t.id}
     elsif page == "events"
-      @events = Event.order(:start, :evtname)
+      @events = Event.yr(@year).order(:start, :evtname)
       @atnd_event_ids = @attendee.events.map {|e| e.id}
     end
   end

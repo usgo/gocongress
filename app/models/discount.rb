@@ -5,13 +5,18 @@ class Discount < ActiveRecord::Base
   attr_accessible :name, :amount, :age_min, :age_max, :is_automatic, \
     :players_only, :min_reg_date
 
-  validates_presence_of :name, :amount
+  validates_presence_of :name, :amount, :year
   validates_length_of :name, :maximum => 50
   validates_numericality_of :amount, :greater_than => 0
   validates_numericality_of :age_min, :only_integer => true, :allow_nil => true
   validates_numericality_of :age_max, :only_integer => true, :allow_nil => true
   validates_inclusion_of :is_automatic, :in => [true, false]
   validates_inclusion_of :players_only, :in => [true, false]
+  validates_numericality_of :year, :only_integer => true, :greater_than => 2010, :less_than => 2100
+
+  # Scopes, and class methods that act like scopes
+  def self.automatic(a) where(:is_automatic => a) end
+  def self.yr(year) where("year = ?", year) end
 
   def get_age_range_in_words
     returned_words = ""

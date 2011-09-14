@@ -4,6 +4,7 @@ class DiscountsController < ApplicationController
 
   # GET /discounts
   def index
+    @discounts = @discounts.yr(@year)
   end
 
   # GET /discounts/1
@@ -20,8 +21,9 @@ class DiscountsController < ApplicationController
 
   # POST /discounts
   def create
+    @discount.year = @year
     if @discount.save
-      redirect_to(@discount, :notice => 'Discount was successfully created.')
+      redirect_to @discount, :notice => 'Discount created.'
     else
       render :action => "new"
     end
@@ -30,7 +32,7 @@ class DiscountsController < ApplicationController
   # PUT /discounts/1
   def update
     if @discount.update_attributes(params[:discount])
-      redirect_to(@discount, :notice => 'Discount was successfully updated.')
+      redirect_to @discount, :notice => 'Discount updated.'
     else
       render :action => "edit"
     end
@@ -39,7 +41,7 @@ class DiscountsController < ApplicationController
   # DELETE /discounts/1
   def destroy
     @discount.destroy
-    redirect_to(discounts_url)
+    redirect_to discounts_url
   end
 
 end

@@ -67,15 +67,15 @@
           %a{:href=>'#', :class=>"expand_attendee", :id=>"expand_attendee_#{a.id}" }= a.get_full_name
           .initially_hidden{:id=>"attendee_drawer_#{a.id}"}
             %ul
-              %li= link_to 'Basics', edit_attendee_path(a) + '/basics'
-              %li= link_to 'Player Info', edit_attendee_path(a) + '/baduk'
-              %li= link_to 'Room and Board', edit_attendee_path(a) + '/roomboard'
-              %li= link_to 'Tournaments', edit_attendee_path(a) + '/tournaments'
-              %li= link_to 'Events', edit_attendee_path(a) + '/events'
+              %li= link_to 'Basics', atnd_edit_page_path(a, :basics)
+              %li= link_to 'Player Info', atnd_edit_page_path(a, :baduk)
+              %li= link_to 'Room and Board', atnd_edit_page_path(a, :roomboard)
+              %li= link_to 'Tournaments', atnd_edit_page_path(a, :tournaments)
+              %li= link_to 'Events', atnd_edit_page_path(a, :events)
             - if current_user.is_admin?
               %p Administration
               %ul
-                %li= link_to 'Admin', edit_attendee_path(a) + '/admin'
+                %li= link_to 'Admin', atnd_edit_page_path(a, :admin)
                 %li= link_to 'Print Registration Sheet', print_summary_for_attendee_path(a)
                 %li= link_to 'Print Badge', print_badge_for_attendee_path(a)
         %td= a.get_rank_name

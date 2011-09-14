@@ -25,7 +25,7 @@ Gocongress::Application.routes.draw do
   resources :plans, :plan_categories
 
   # override resource route for attendee#edit to supoort multiple pages
-  match '/attendees/:id/edit/:page' => "attendees#edit"
+  match '/attendees/:id/edit/:page' => "attendees#edit", :as => :atnd_edit_page
 
   resources :attendees do
     collection do
