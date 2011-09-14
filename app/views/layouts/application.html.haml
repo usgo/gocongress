@@ -90,18 +90,11 @@
         .nav
           %ul
             %li#nav-admin-title Admin Menu:
-            %li#nav-admin-users
-              %a{:href => users_path}
-                Users
-            %li#nav-admin-transactions
-              %a{:href => transactions_path}
-                Transactions
-            %li#nav-admin-pricing
-              = link_to "Pricing", pricing_path
-            %li#nav-admin-content
-              = link_to "Announcements", contents_path
-            %li#nav-admin-reports
-              = link_to "Reports", reports_path
+            %li#nav-admin-users= link_to "Users", users_path
+            %li#nav-admin-transactions= link_to "Transactions", transactions_path
+            %li#nav-admin-pricing= link_to "Pricing", pricing_path
+            %li#nav-admin-content= link_to "Announcements", contents_path
+            %li#nav-admin-reports= link_to "Reports", reports_path
             %li#nav-admin-placeholder.last-child
     
     .content
@@ -132,14 +125,10 @@
         %a{:href => "http://www.gokgs.com"}
           = image_tag "sponsors/kgs.jpg"
       #site-credit
-        Content &copy; #{CONGRESS_YEAR} US Go Congress
+        Content &copy; #{@year} US Go Congress
         %br/
         Web Programming by
         %a{:href => "http://www.jaredbeck.com", :target => "_blank"} Jared Beck
         %br/
         Hosted at
         %a{:href => "http://www.heroku.com", :target => "_blank"} Heroku
-        - if Rails.env.present?
-          %br/
-          Environment is
-          = Rails.env
