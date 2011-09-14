@@ -12,6 +12,7 @@ class AttendeesControllerTest < ActionController::TestCase
     @discount_nonautomatic2 = Factory.create(:nonautomatic_discount)
     @inv_trn = Factory.create(:tournament, :openness => 'I')
     @open_trn = Factory.create(:tournament, :openness => 'O')
+    @year = Time.now.year
   end
 
   test "visitor can get index" do
@@ -110,29 +111,29 @@ class AttendeesControllerTest < ActionController::TestCase
   end
 
   test "visitor cannot get edit" do
-    get :edit, :id => @attendee.to_param
+    get :edit, :id => @attendee.to_param, :year => @year, :page => :basics
     assert_response 403
   end
 
   test "user cannot edit another user's attendee" do
     sign_in @user
-    get :edit, :id => @attendee.to_param
+    get :edit, :id => @attendee.to_param, :year => @year, :page => :basics
     assert_response 403
   end
 
   test "user can edit their own attendees" do
     sign_in @user
-    get :edit, :id => @user.attendees.first.to_param
+    get :edit, :id => @user.attendees.first.to_param, :year => @year, :page => :basics
     assert_response :success
   end
 
   test "admin can edit any attendee" do
     sign_in @admin
-    get :edit, :id => @attendee.to_param
+    get :edit, :id => @attendee.to_param, :year => @year, :page => :basics
     assert_response :success
-    get :edit, :id => @user.attendees.last.to_param
+    get :edit, :id => @user.attendees.last.to_param, :year => @year, :page => :basics
     assert_response :success
-    get :edit, :id => @admin.attendees.first.to_param
+    get :edit, :id => @admin.attendees.first.to_param, :year => @year, :page => :basics
     assert_response :success
   end
 
@@ -162,14 +163,14 @@ class AttendeesControllerTest < ActionController::TestCase
   %w[basics baduk roomboard].each do |page|
     define_method "test_user_can_get_#{page}" do
       sign_in @user
-      get :edit, :id => @user.attendees.sample.to_param, :page => page
+      get :edit, :id => @user.attendees.sample.to_param, :page => page, :year => @year
       view_name = @controller.send( :get_view_name_from_page, page )
       assert_response :success
       assert_template view_name
     end
 
     define_method "test_vistor_can_not_get_#{page}" do
-      get :edit, :id => @admin.attendees.sample.to_param, :page => page
+      get :edit, :id => @admin.attendees.sample.to_param, :page => page, :year => @year
       view_name = @controller.send( :get_view_name_from_page, page )
       assert_response 403
     end
@@ -294,7 +295,7 @@ class AttendeesControllerTest < ActionController::TestCase
 
   test "non-admin cannot get admin page of edit form" do
     sign_in @user
-    get :edit, {:page => 'admin', :id => @user.attendees.sample.to_param}
+    get :edit, :page => :admin, :id => @user.attendees.sample.to_param, :year => @year
     assert_response 403
   end
 

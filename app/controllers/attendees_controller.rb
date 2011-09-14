@@ -96,8 +96,8 @@ class AttendeesController < ApplicationController
     @attendee.user_id = target_user_id
     if @attendee.save
       # After successful save, redirect to the "Edit Go Info" form
-      # We are afraid if we do not, then no one will fill it out -Jared
-      redirect_to(edit_attendee_path(@attendee.id) + "/baduk")
+      # We are afraid if we do not, then no one will fill it out
+      redirect_to atnd_edit_page_path(@attendee, :baduk)
     else
       render :action => "new"
     end
