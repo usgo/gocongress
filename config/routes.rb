@@ -18,11 +18,11 @@ Gocongress::Application.routes.draw do
   # support multiple years by scoping the resources
   scope ":year" do
     resources :contents, :discounts, :events, :jobs
-    resources :tournaments
+    resources :tournaments, :transactions
   end
 
   # restful resources
-  resources :plans, :plan_categories, :transactions
+  resources :plans, :plan_categories
 
   # override resource route for attendee#edit to supoort multiple pages
   match '/attendees/:id/edit/:page' => "attendees#edit"

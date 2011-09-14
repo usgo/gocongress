@@ -1,4 +1,5 @@
 Factory.define :transaction do |f|
+  f.year Time.now.year
   f.association :user, :factory => :user
   f.association :updated_by_user, :factory => :user
   f.sequence(:amount) { |n| n * 3 }

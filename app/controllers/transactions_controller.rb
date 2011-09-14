@@ -7,6 +7,7 @@ class TransactionsController < ApplicationController
 
   # GET /transactions
   def index
+    @transactions = @transactions.where(:year => @year)
     if params[:email].present? then
       search_expression = '%' + params[:email] + '%'
       @transactions = @transactions.joins(:user).where("email like ?", search_expression)
@@ -33,6 +34,7 @@ class TransactionsController < ApplicationController
 
   # POST /transactions
   def create
+    @transaction.year = @year
     @transaction.updated_by_user = current_user
     @transaction.user_id = User.find_by_email(params[:user_email]).to_param
 

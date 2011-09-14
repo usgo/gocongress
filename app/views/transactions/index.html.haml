@@ -1,44 +1,52 @@
-%h2 All Transactions
+%h2 Transactions
 
-.flow-padding= button_to 'New Transaction', new_transaction_path, :method => "get"
+%div{:style=>"float:right;"}= button_to 'New Transaction', new_transaction_path, :method => "get"
 
-.trn-search-form
-  %form{ :href => transactions_path, :method => :get }
-    = text_field_tag 'email', nil, :placeholder => "Enter part of user email"
+.trn-search-form{:style=>"float:left;"}
+  %form{ :href => transactions_path, :method => :get, :style => "display:inline-block" }
+    = text_field_tag 'email', params['email'], :placeholder => "Enter part of email"
     %button{ :type => :submit } Search
+  - if params['email'].present?
+    = link_to "reset", transactions_path
 
-.pagination-controls
-  = paginate @transactions
+%br.clear
 
-%table.semantic.zebra.fullwidth
-  %thead
-    %tr
-      %th Creation Date
-      %th= trl_attr 'transaction', 'trantype'
-      %th= trl_attr 'transaction', 'instrument'
-      %th Amount
-      %th Primary Attendee
-      %th= trl_attr 'transaction', 'gwtranid'
-      %th= trl_attr 'transaction', 'check_number'
-      %th Last Edit
-      %th{ :colspan => 3 }
+- if @transactions.empty?
+  %p No transactions found.
 
-  %tbody
-    - @transactions.each do |t|
+- else
+  .pagination-controls
+    = paginate @transactions
+
+  %table.semantic.zebra.fullwidth
+    %thead
       %tr
-        %td= t.created_at.to_date
-        %td= t.get_trantype_name
-        %td= t.get_instrument_name
-        %td.numeric= number_to_currency t.amount, :unit => ""
-        %td
-          - link_text = t.user.primary_attendee.get_full_name
-          - link_path = ledger_user_path(t.user)
-          = link_to link_text, link_path, :title => t.user.email
-        %td.numeric= t.gwtranid
-        %td.numeric= t.check_number
-        %td
-          - if t.updated_by_user.present?
-            = t.updated_by_user.primary_attendee.given_name
-        %td= link_to 'Details', t
-        %td= link_to 'Edit', edit_transaction_path(t)
-        %td= link_to 'Delete', t, :confirm => 'Are you sure?', :method => :delete
+        %th Creation Date
+        %th= trl_attr 'transaction', 'trantype'
+        %th= trl_attr 'transaction', 'instrument'
+        %th Amount
+        %th Primary Attendee
+        %th= trl_attr 'transaction', 'gwtranid'
+        %th= trl_attr 'transaction', 'check_number'
+        %th Last Edit
+        %th{ :colspan => 3 }
+
+    %tbody
+      - @transactions.each do |t|
+        %tr
+          %td= t.created_at.to_date
+          %td= t.get_trantype_name
+          %td= t.get_instrument_name
+          %td.numeric= number_to_currency t.amount, :unit => ""
+          %td
+            - link_text = t.user.primary_attendee.get_full_name
+            - link_path = ledger_user_path(t.user)
+            = link_to link_text, link_path, :title => t.user.email
+          %td.numeric= t.gwtranid
+          %td.numeric= t.check_number
+          %td
+            - if t.updated_by_user.present?
+              = t.updated_by_user.primary_attendee.given_name
+          %td= link_to 'Details', t
+          %td= link_to 'Edit', edit_transaction_path(t)
+          %td= link_to 'Delete', t, :confirm => 'Are you sure?', :method => :delete
