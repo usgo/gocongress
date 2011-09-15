@@ -16,7 +16,7 @@ class Discount < ActiveRecord::Base
 
   # Scopes, and class methods that act like scopes
   def self.automatic(a) where(:is_automatic => a) end
-  def self.yr(year) where("year = ?", year) end
+  def self.yr(year) where(:year => year) end
 
   def get_age_range_in_words
     returned_words = ""

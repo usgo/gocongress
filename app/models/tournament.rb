@@ -19,7 +19,7 @@ class Tournament < ActiveRecord::Base
 
   # Scopes, and class methods that act like scopes
   def self.openness(o) where(:openness => o) end
-  def self.yr(year) where("year = ?", year) end
+  def self.yr(year) where(:year => year) end
 
   def get_openness_type_name
     openness_name = ''

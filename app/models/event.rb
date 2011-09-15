@@ -16,6 +16,6 @@ class Event < ActiveRecord::Base
     :unless => Proc.new { |e| e.evtprice.blank? }
 
   # Scopes, and class methods that act like scopes
-  def self.yr(year) where("year = ?", year) end
+  def self.yr(year) where(:year => year) end
 
 end
