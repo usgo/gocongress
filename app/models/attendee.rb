@@ -101,9 +101,13 @@ class Attendee < ActiveRecord::Base
     registration_type.to_s == 'player' ? 375 : 75
   end
 
+  # FIXME: huge hack here.  remove this method once a year column is 
+  # added to the attendee table.
+  def year() 2012 end
+
   def age_in_seconds
     # age on the start day of the event, not now
-    (CONGRESS_START_DATE - self.birth_date.to_time).to_i
+    (CONGRESS_START_DATE[self.year] - self.birth_date.to_time).to_i
   end
   
   def age_in_years
