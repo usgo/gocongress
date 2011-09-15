@@ -11,22 +11,21 @@
     %tr
       %th Category
       %th{:colspan=>3} Show on Which Pages?
-      %th{:colspan=>3}      
+      %th{:colspan=>2}      
     %tr.lesser-header
       %th
       %th Prices Page
       %th Room and Board Page
       %th Registration Form
-      %th{:colspan=>3}
+      %th{:colspan=>2}
   %tbody
-    - @plan_categories.each do |plan_category|
+    - @plan_categories.each do |pc|
       %tr
-        %td= plan_category.name
-        %td= plan_category.show_on_prices_page ? "Yes" : "No"
-        %td= plan_category.show_on_roomboard_page ? "Yes" : "No"
-        %td= plan_category.show_on_reg_form ? "Yes" : "No"
-        %td= link_to 'Details', plan_category
-        %td= link_to 'Edit', edit_plan_category_path(plan_category)
-        %td= link_to 'Delete', plan_category, :confirm => 'Are you sure?', :method => :delete
+        %td= link_to pc.name, pc
+        %td= pc.show_on_prices_page ? "Yes" : "No"
+        %td= pc.show_on_roomboard_page ? "Yes" : "No"
+        %td= pc.show_on_reg_form ? "Yes" : "No"
+        %td= link_to 'Edit', edit_plan_category_path(pc)
+        %td= link_to 'Delete', pc, :confirm => 'Are you sure?', :method => :delete
 
 %br

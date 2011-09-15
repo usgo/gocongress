@@ -6,7 +6,7 @@
     %td= @plan.name
   %tr
     %th= trl_attr 'plan_category', 'name'
-    %td= @plan.plan_category.name
+    %td= link_to @plan.plan_category.name, @plan.plan_category
   %tr
     %th= trl_attr 'plan', 'price'
     %td= format_price @plan.price

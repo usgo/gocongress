@@ -14,6 +14,26 @@
 
 %br
 
+- if @plan_category.plans.empty?
+  %p This category has no plans yet.
+- else
+  %table.semantic.zebra.fullwidth
+    %thead
+      %tr
+        %th Plan
+        %th Attendee Age
+        %th Description
+        %th.numeric Price
+    %tbody
+      - @plan_category.plans.each do |p|
+        %tr
+          %td= link_to p.name, p
+          %td= p.age_range_in_words
+          %td= Markdown.new( p.description ).to_html.html_safe
+          %td.numeric= format_price p.price
+
+%br
+
 = link_to 'Edit', edit_plan_category_path(@plan_category)
 \|
 = link_to 'Back', plan_categories_path
