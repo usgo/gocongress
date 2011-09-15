@@ -7,22 +7,23 @@ Gocongress::Application.routes.draw do
   get "home/transportation"
   get "home/kaboom"
   get 'contact' => 'user_jobs#index'
-  get 'prices_and_extras' => 'plans#prices_and_extras'
   get 'pricing' => 'home#pricing'
-  get 'room_and_board' => 'plans#room_and_board'
 
   match '/popup/:action' => 'popup', :as => 'popup'
 
   devise_for :users
 
-  # support multiple years by scoping the resources
+  # these restful resources support multiple years with a year scope
   scope ":year" do
     resources :contents, :discounts, :events, :jobs
-    resources :tournaments, :transactions
+    resources :plan_categories, :tournaments, :transactions
+    resources :plans do
+      collection do
+        get 'room_and_board'
+        get 'prices_and_extras'
+      end
+    end
   end
-
-  # restful resources
-  resources :plans, :plan_categories
 
   resources :attendees, :except => :edit do
     collection do
@@ -60,6 +61,10 @@ Gocongress::Application.routes.draw do
     get :outstanding_balances, :overdue_deposits
     get :tournaments, :transactions, :user_invoices
   end
+
+  # deprecated routes: redirect with 301 status code
+  get 'prices_and_extras' => redirect('/2012/plans/prices_and_extras')
+  get 'room_and_board' => redirect('/2012/plans/room_and_board')
 
   # these routes should come last
   get ":year" => 'home#index'

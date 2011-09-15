@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110914043829) do
+ActiveRecord::Schema.define(:version => 20110915030805) do
 
   create_table "attendee_discounts", :force => true do |t|
     t.integer  "attendee_id", :null => false
@@ -138,6 +138,7 @@ ActiveRecord::Schema.define(:version => 20110914043829) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "show_on_reg_form"
+    t.integer  "year",                   :null => false
   end
 
   create_table "plans", :force => true do |t|
@@ -150,6 +151,7 @@ ActiveRecord::Schema.define(:version => 20110914043829) do
     t.text     "description"
     t.integer  "plan_category_id"
     t.integer  "max_quantity",                   :default => 1, :null => false
+    t.integer  "year",                                          :null => false
   end
 
   create_table "rounds", :force => true do |t|

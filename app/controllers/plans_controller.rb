@@ -5,19 +5,19 @@ class PlansController < ApplicationController
 
   # GET /plans
   def index
-    plans_ordered = @plans.order "plan_category_id, name"
+    plans_ordered = @plans.yr(@year).order "plan_category_id, name"
     @plans_grouped = plans_ordered.group_by {|plan| plan.plan_category_id}
   end
 
   # GET /plans/room_and_board
   def room_and_board
-    plans_ordered = Plan.room_and_board_page.order("plan_category_id, name asc")
+    plans_ordered = Plan.yr(@year).room_and_board_page.order("plan_category_id, name asc")
     @plans_grouped = plans_ordered.group_by {|plan| plan.plan_category}
   end
 
   # GET /plans/prices_and_extras
   def prices_and_extras
-    plans_ordered = Plan.prices_page.order("plan_category_id, name")
+    plans_ordered = Plan.yr(@year).prices_page.order("plan_category_id, name")
     @plans_grouped = plans_ordered.group_by {|plan| plan.plan_category_id}
   end
 
@@ -37,6 +37,7 @@ class PlansController < ApplicationController
 
   # POST /plans
   def create
+    @plan.year = @year
     @plan_categories = get_plan_categories_for_select
     if @plan.save
       redirect_to plans_path, :notice => 'Plan was successfully created.'
@@ -70,7 +71,7 @@ protected
 private
 
   def get_plan_categories_for_select
-    PlanCategory.all.map {|c| [c.name, c.id]}
+    PlanCategory.yr(@year).all.map {|c| [c.name, c.id]}
   end
 
 end

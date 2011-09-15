@@ -4,7 +4,7 @@ class PlanCategoriesController < ApplicationController
 
   # GET /plan_categories
   def index
-    @plan_categories = @plan_categories.order :name
+    @plan_categories = @plan_categories.yr(@year).order :name
   end
 
   # GET /plan_categories/1
@@ -21,6 +21,7 @@ class PlanCategoriesController < ApplicationController
 
   # POST /plan_categories
   def create
+    @plan_category.year = @year
     if @plan_category.save
       redirect_to(@plan_category, :notice => 'Plan category was successfully created.')
     else
