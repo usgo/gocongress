@@ -5,6 +5,7 @@ Factory.define :plan do |f|
   f.age_max       1 + rand(100)
   f.description   %w['asdf' 'fdsa'].sample
   f.max_quantity  1
+  f.year          Time.now.year
   f.association   :plan_category
 end
 

@@ -3,6 +3,7 @@ Factory.define :plan_category do |f|
   f.show_on_prices_page false
   f.show_on_roomboard_page false
   f.show_on_reg_form false
+  f.year Time.now.year
 end
 
 Factory.define :roomboard_category, :parent => :plan_category do |f|
