@@ -1,9 +1,12 @@
 %h2 Room and Board Plans
 
-%div
-  - 1.upto(6) do |x|
-    %a{ :href => "assets/plans/big/0#{x}.jpg" }
-      = image_tag "plans/thumb/0#{x}.jpg", :class => "thin-border"
+-# The 2011 congress has a few thumbnails here
+-# Proabably should do the same for 2012
+- if @year == 2011
+  %div
+    - 1.upto(6) do |x|
+      %a{ :href => "assets/plans/big/0#{x}.jpg" }
+        = image_tag "plans/thumb/0#{x}.jpg", :class => "thin-border"
 
 %p
   Room and Board plans are designed to fit a variety of attendees. 
