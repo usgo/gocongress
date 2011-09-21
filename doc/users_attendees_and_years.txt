@@ -1,0 +1,28 @@
+Potential data models:
+
+1. User belongs to a particular year
+  + easiest data model to understand because absolutely all resources belong to a particular year
+  - must sign up again each year (not much work and people are totally used to this)
+  - switching years requires logout, but how often would anyone ever want to see the previous year's account?
+    - admins may want to do this? not really though.  ppl are pretty much done with the previous year at some point
+    - in future years, if we want to support user switching, we could do it based on email address
+
+2. User does not belong to a particular year, but attendees do
+  - must add attendees each year
+  when registering for a new year
+    as a returning user
+      send them to the new attendee form (basics) -> becomes primary attendee
+        fill out basics form with info from previous year
+    as a new user
+      send them to the existing registration form
+  - access control is more complicated
+    - user is an admin one year, but a regular user the next, then a staff person the next year!
+
+3. Neither users nor attendees belong to a particular year
+  - how do we keep track of who's attending which year?  (maybe a year model and linking table)
+  - still need to go through the forms for each attendee b/c things like discounts and plans will be different
+  - potentially confusing interface for asking "which attendees are coming this year?"
+    - confusion re: register new attendee, or maybe you wanted to bring an attendee from a previous year?
+  less confusing in the sense that there is only one record representing each person
+     - that is, until the kid grows up and starts their own account
+  add year to linking tables, eg. attendee_plans? no, because plans already have a year
