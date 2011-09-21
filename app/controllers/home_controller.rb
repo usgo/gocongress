@@ -26,6 +26,7 @@ class HomeController < ApplicationController
         , ["Michael, Xianxian, and Nakayama Sensei", "Bob Felice"] \
         , ["US Open Panorama", "Bob Felice"] \
         , ["Evening comes to the US Go Congress", "Roy Laird"] \
+        , ["North Carolina Goban by unknown craftsperson", "Jared Beck"]
         ]
       @venue_url = 'http://www.blueridgeassembly.org/'
       @venue_name = 'YMCA Blue Ridge Assembly'
