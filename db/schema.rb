@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110926002816) do
+ActiveRecord::Schema.define(:version => 20110926015614) do
 
   create_table "attendee_discounts", :force => true do |t|
     t.integer  "attendee_id", :null => false
@@ -216,7 +216,7 @@ ActiveRecord::Schema.define(:version => 20110926002816) do
     t.integer  "year",                                                 :null => false
   end
 
-  add_index "users", ["email"], :name => "index_users_on_email", :unique => true
+  add_index "users", ["email", "year"], :name => "index_users_on_email_and_year", :unique => true
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
 
 end

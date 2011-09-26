@@ -2,10 +2,10 @@ require "invoice_item"
 
 class User < ActiveRecord::Base
 
-  # Include default devise modules. Others available are:
-  # :token_authenticatable, :confirmable, :lockable and :timeoutable
+  # Devise modules: Do not use :validatable now that
+  # the email uniqueness validation has a year scope
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
+         :recoverable, :rememberable, :trackable
   
   attr_accessible :email, :password, :password_confirmation, :remember_me, :primary_attendee_attributes
   
@@ -34,16 +34,16 @@ class User < ActiveRecord::Base
   has_many :attendees, :dependent => :destroy
 
   ROLES = [['Admin','A'], ['Staff','S'], ['User','U']]
-
-  validates_uniqueness_of :email, :case_sensitive => false
   validates_inclusion_of :role, :in => %w[A S U]
 
-  # Email may not contain commas or single-quotes,
-  # Because I do not want to escape them in JS
-  validates_format_of :email, :with => /^[^',]*$/, :message => "may not contain commas or single-quotes"
-  # Reset syntax highlighting for '
+  # Email must be unique within each year and may not contain commas or 
+  # single-quotes because I do not want to escape them in JS
+  validates :email, \
+    :presence => true, \
+    :uniqueness => { :scope => :year, :case_sensitive => false }, \
+    :format => { :with => /^[^',]*$/, :message => "may not contain commas or quotes" }
 
-  # There must always be at least one attendee -Jared
+  # There must always be at least one attendee
   validates_presence_of :primary_attendee
 
   after_create :send_welcome_email

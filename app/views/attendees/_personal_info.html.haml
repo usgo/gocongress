@@ -1,3 +1,12 @@
+-# FIXME: For new registrations, we need to set the user's year
+-# (and pri. att. year) before validation, but because we are using
+-# Devise::RegistrationsController we can't exactly add a before_filter.
+-# If we do not specify a year before validation, then validations like the
+-# uniqueness check on email will use a null year, thus making the
+-# validation pointless.
+= hidden_field_tag "user[year]", @year
+= hidden_field_tag "user[primary_attendee_attributes[year]]", @year
+
 %fieldset
   %legend Personal Information
   .field

@@ -70,14 +70,18 @@ class Attendee < ActiveRecord::Base
   validates_inclusion_of :gender, :in => ["m","f"], :message => "is not valid"
   validates_inclusion_of :is_primary, :in => [true, false]
   validates_inclusion_of :minor_agreement_received, :in => [true, false]
-  validates_uniqueness_of :aga_id, :allow_nil => true
   validates_presence_of :address_1, :birth_date, :city,  :country, :email, :family_name, :given_name, :rank
   validates_inclusion_of :rank, :in => NUMERIC_RANK_LIST, :message => "is not a valid rank"
   validates_inclusion_of :tshirt_size, :in => TSHIRT_SIZE_LIST, :message => "is not valid"
   validates_length_of :special_request, :maximum => 250
   validates_length_of :roomate_request, :maximum => 250
   validates_date :birth_date, :after => Date.civil(1900,1,1), :allow_blank => false
-  
+
+  # AGA ID must be unique within each year
+  validates :aga_id, \
+    :uniqueness => { :scope => :year, :allow_nil => true }, \
+    :numericality => { :only_integer => true }
+
   # Attendees must belong to a user (except when they are first being created,      
   # because in a nested form there might not be a user_id yet.  I think that is what
   # is going on, anyway) I'm surprised this is necessary at all, and I'm unsettled  
