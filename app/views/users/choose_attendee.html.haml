@@ -7,7 +7,7 @@
 
 %p{:style=>"padding-left:20px;"}
   - @user.attendees.each do |a|
-    = link_to a.get_full_name, edit_attendee_path(a) + '/' + @destination_page
+    = link_to a.get_full_name, atnd_edit_page_path(a, @destination_page)
     %br
 
 %p

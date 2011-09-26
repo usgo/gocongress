@@ -256,7 +256,7 @@ class AttendeesController < ApplicationController
       # after saving the baduk page, if the attendee has not selected a plan yet,
       # then go to the roomboard page, else return to "my account"
       if @page == 'baduk' && @attendee.plans.count == 0
-        redirect_to(edit_attendee_path(@attendee.id) + "/roomboard")
+        redirect_to atnd_edit_page_path(@attendee, :roomboard)
       else
         redirect_to user_path(@attendee.user_id), :notice => "Attendee successfully updated"
       end
@@ -313,7 +313,8 @@ protected
       @attendee_discount_ids = @attendee.discounts.automatic(false).map { |d| d.id }
     elsif page == "roomboard"
       age = @attendee.age_in_years.to_i
-      @plans_ordered = Plan.reg_form.appropriate_for_age(age).order("price desc")
+      plans = Plan.yr(@year).reg_form.appropriate_for_age(age)
+      @plans_ordered = plans.order("price desc")
       @plans_grouped = @plans_ordered.group_by {|plan| plan.plan_category}
     elsif page == "admin"
       @invitational_tournaments = Tournament.yr(@year).openness('I')
