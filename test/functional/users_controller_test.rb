@@ -2,132 +2,149 @@ require 'test_helper'
 
 class UsersControllerTest < ActionController::TestCase
   setup do
+    # Is it OK to use build() instead of create()?
+    # I have asked this question:
+    # http://stackoverflow.com/questions/7548934/can-devise-sign-in-test-helper-accept-a-new-record
     @user = Factory.create(:user)
     @user_two = Factory.create(:user)
     @staff = Factory.create(:staff)
-    @admin_user = Factory.create(:admin_user)
+    @admin_user = Factory.create(:admin)
     @job = Factory.create(:job)
+  end
+
+  test "admin cannot read user from different year" do
+    sign_in @admin_user
+    u = Factory.create(:user, :year => 1.year.ago)
+    get :show, :id => u.id, :year => Time.now.year
+    assert_response 403
+  end
+
+  test "staff cannot read user from different year" do
+    sign_in @staff
+    u = Factory.create(:user, :year => 1.year.ago)
+    get :show, :id => u.id, :year => Time.now.year
+    assert_response 403
   end
 
   test "admin can get index" do
     sign_in @admin_user
-    get :index
+    get :index, :year => Time.now.year
     assert_response :success
   end
   
   test "staff can get index" do
     sign_in @staff
-    get :index
+    get :index, :year => Time.now.year
     assert_response :success
   end
 
   test "admin can get user cost summary" do
     sign_in @admin_user
-    get :print_cost_summary, :id => @user.id
+    get :print_cost_summary, :id => @user.id, :year => Time.now.year
     assert_response :success
   end
 
   test "staff can get user cost summary" do
     sign_in @staff
-    get :print_cost_summary, :id => @user.id
+    get :print_cost_summary, :id => @user.id, :year => Time.now.year
     assert_response :success
   end
 
   test "user cannot get user cost summary" do
     sign_in @user
-    get :print_cost_summary, :id => @user.id
+    get :print_cost_summary, :id => @user.id, :year => Time.now.year
     assert_response 403
   end
 
   test "user cannot get index" do
     sign_in @user
-    get :index
+    get :index, :year => Time.now.year
     assert_response 403
   end
   
   test "guest cannot get index" do
-    get :index
+    get :index, :year => Time.now.year
     assert_response 403
   end
 
-  test "admin can show user" do
+  test "admin can show user from same year" do
     sign_in @admin_user
-    get :show, :id => @user.to_param
+    get :show, :id => @user.to_param, :year => Time.now.year
     assert_response :success
   end
 
-  test "staff can show user" do
+  test "staff can show user from same year" do
     sign_in @staff
-    get :show, :id => @user.to_param
+    get :show, :id => @user.to_param, :year => Time.now.year
     assert_response :success
   end
   
   test "guest cannot show user" do
-    get :show, :id => @user.to_param
+    get :show, :id => @user.to_param, :year => Time.now.year
     assert_response 403
   end
 
   test "user can show self" do
     sign_in @user
-    get :show, :id => @user.id
+    get :show, :id => @user.id, :year => Time.now.year
     assert_response :success
   end
 
   test "staff can show self" do
     sign_in @staff
-    get :show, :id => @staff.id
+    get :show, :id => @staff.id, :year => Time.now.year
     assert_response :success
   end
 
   test "user cannot show a different user" do
     sign_in @user
-    get :show, :id => Factory.create(:user).to_param
+    get :show, :id => Factory.create(:user).id, :year => Time.now.year
     assert_response 403
   end
 
   test "admin can get edit" do
     sign_in @admin_user
-    get :edit, :id => @user.to_param
+    get :edit, :id => @user.id, :year => Time.now.year
     assert_response :success
   end
   
   test "guest cannot get edit" do
-    get :edit, :id => @user.to_param
+    get :edit, :id => @user.id, :year => Time.now.year
     assert_response 403
   end
   
   test "user cannot edit other user" do
     sign_in @user
-    get :edit, :id => @user_two.to_param
+    get :edit, :id => @user_two.id, :year => Time.now.year
     assert_response 403
   end
 
   test "staff cannot edit other user" do
     sign_in @staff
-    get :edit, :id => @user.to_param
+    get :edit, :id => @user.id, :year => Time.now.year
     assert_response 403
   end
   
   test "user cannot edit themselves" do
     sign_in @user
-    get :edit, :id => @user.to_param
+    get :edit, :id => @user.id, :year => Time.now.year
     assert_response 403
   end
 
   test "staff cannot edit themselves" do
     sign_in @staff
-    get :edit, :id => @staff.to_param
+    get :edit, :id => @staff.id, :year => Time.now.year
     assert_response 403
   end
 
   test "admin can update user" do
     sign_in @admin_user
-    put :update, :id => @user.to_param, :user => @user.attributes
+    put :update, :id => @user.id, :user => @user.attributes, :year => Time.now.year
     assert_redirected_to user_path(@user)
   end
   
   test "guest cannot update user" do
-    put :update, :id => @user.to_param, :user => @user.attributes
+    put :update, :id => @user.id, :user => @user.attributes, :year => Time.now.year
     assert_response 403
   end
   
@@ -141,7 +158,7 @@ class UsersControllerTest < ActionController::TestCase
 
     # put to update
     u = @user.attributes.merge({ 'email' => new_email_addy })
-    put :update, :id => @user.id, :user => u
+    put :update, :id => @user.id, :user => u, :year => Time.now.year
     
     # assert that email changed
     @user = User.find(@user.id)
@@ -158,7 +175,7 @@ class UsersControllerTest < ActionController::TestCase
 
     # put to update
     u = @staff.attributes.merge({ 'email' => new_email_addy })
-    put :update, :id => @staff.id, :user => u
+    put :update, :id => @staff.id, :user => u, :year => Time.now.year
     
     # assert that email changed
     @staff = User.find(@staff.id)
@@ -167,13 +184,13 @@ class UsersControllerTest < ActionController::TestCase
   
   test "staff can get edit email form" do
     sign_in @staff
-    get :edit_email, :id => @staff.id
+    get :edit_email, :id => @staff.id, :year => Time.now.year
     assert_response :success
   end
   
   test "user can get edit password form" do
     sign_in @user
-    get :edit_password, :id => @user.id
+    get :edit_password, :id => @user.id, :year => Time.now.year
     assert_response :success
   end
   
@@ -182,7 +199,7 @@ class UsersControllerTest < ActionController::TestCase
     assert_equal 'U', @user.role
     u = @user.attributes.merge({ 'role' => 'A' })
     assert_no_difference('User.find(@user.id).is_admin? ? 1 : 0') do
-      put :update, :id => @user.id, :user => u
+      put :update, :id => @user.id, :user => u, :year => Time.now.year
     end
     assert_equal 'U', User.find(@user.id).role
   end
@@ -190,7 +207,7 @@ class UsersControllerTest < ActionController::TestCase
   test "user cannot destroy self" do
     sign_in @user
     assert_no_difference('User.count') do
-      delete :destroy, :id => @user.id
+      delete :destroy, :id => @user.id, :year => Time.now.year
     end
     assert_response 403
   end
@@ -200,7 +217,7 @@ class UsersControllerTest < ActionController::TestCase
     destroyed_user_id = @user.id
 
     assert_difference('User.count', -1) do
-      delete :destroy, :id => @user.to_param
+      delete :destroy, :id => @user.to_param, :year => Time.now.year
     end
 
     assert_redirected_to users_path
@@ -213,7 +230,7 @@ class UsersControllerTest < ActionController::TestCase
   test "admin can assign jobs to any user" do
     sign_in @admin_user
     u = @user.attributes.merge({ 'job_ids' => [@job.id] })
-    put :update, :id => @user.to_param, :user => u
+    put :update, :id => @user.to_param, :user => u, :year => Time.now.year
     @user = User.find(@user.id)
     assert_equal @job.id, @user.jobs.first.id
   end
@@ -227,7 +244,7 @@ class UsersControllerTest < ActionController::TestCase
     # mass assignment should NOT change job count
     u = @user.attributes.merge({ 'job_ids' => [@job.id] })
     assert_no_difference('@user.jobs.size') do
-      put :update, :id => @user.to_param, :user => u
+      put :update, :id => @user.id, :user => u, :year => Time.now.year
     end
 
     # reload user and double check that they have zero jobs
@@ -239,7 +256,7 @@ class UsersControllerTest < ActionController::TestCase
     sign_in @admin_user
     enc_pw_before = @user.encrypted_password
     u = { 'password' => 'greeblesnarf' }
-    put :update, :id => @user.to_param, :user => u
+    put :update, :id => @user.id, :user => u, :year => Time.now.year
     
     # re-load the user to see if the encrypted_password changed
     @user = User.find @user.id

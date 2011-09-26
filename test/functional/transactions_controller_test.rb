@@ -4,7 +4,7 @@ class TransactionsControllerTest < ActionController::TestCase
   setup do
     @user = Factory.create :user
     @staff = Factory.create :staff
-    @admin_user = Factory.create :admin_user
+    @admin_user = Factory.create :admin
     @transaction = Factory.create :tr_sale
     @year = Time.now.year
   end

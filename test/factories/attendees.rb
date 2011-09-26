@@ -9,6 +9,7 @@ Factory.define :attendee do |f|
   f.email "thisgetsoverwrittenanyways@j.singlebrook.com"
   f.tshirt_size 'AL'
   f.rank 3
+  f.year Time.now.year
 end
 
 Factory.define :ten_year_old, :parent => :attendee do |f|

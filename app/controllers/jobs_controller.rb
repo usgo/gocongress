@@ -4,7 +4,7 @@ class JobsController < ApplicationController
 
   # GET /jobs
   def index
-    @jobs = @jobs.order :jobname
+    @jobs = @jobs.yr(@year).order :jobname
   end
 
   # GET /jobs/1
@@ -21,6 +21,7 @@ class JobsController < ApplicationController
 
   # POST /jobs
   def create
+    @job.year = @year
     if @job.save
       redirect_to jobs_path, :notice => 'Job was successfully created.'
     else

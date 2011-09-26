@@ -110,19 +110,19 @@ class UserTest < ActiveSupport::TestCase
     u = Factory(:user)
     
     # 12 year old should get child discount and NOT youth discount
-    a = Factory(:attendee, :birth_date => Time.utc(1998,9,10), :user_id => u.id, :understand_minor => true)
+    a = Factory(:attendee, :birth_date => 12.years.ago, :user_id => u.id, :understand_minor => true)
     assert_equal true, find_item_description?(u.get_invoice_items, dc.get_invoice_item_name)
     assert_equal false, find_item_description?(u.get_invoice_items, dy.get_invoice_item_name)
 
     # 11 year old should get child discount and NOT youth discount
-    a.update_attribute :birth_date, Time.utc(1999,9,10)
+    a.update_attribute :birth_date, 11.years.ago
     assert_equal 11, a.age_in_years.truncate
     u.reload
     assert_equal true, find_item_description?(u.get_invoice_items, dc.get_invoice_item_name)
     assert_equal false, find_item_description?(u.get_invoice_items, dy.get_invoice_item_name)
 
     # 13 year old should get YOUTH discount, not child discount
-    a.update_attribute :birth_date, Time.utc(1997,9,10)
+    a.update_attribute :birth_date, 13.years.ago
     assert_equal 13, a.age_in_years.truncate
     u.reload
     assert_equal false, find_item_description?(u.get_invoice_items, dc.get_invoice_item_name)

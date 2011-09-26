@@ -23,6 +23,10 @@ class Attendee < ActiveRecord::Base
     :understand_minor, :congresses_attended, :is_player, \
     :is_current_aga_member, :tshirt_size, :special_request, :roomate_request
 
+  # FIXME: in the controller, somehow year needs to get set 
+  # before authorize! runs.  until then, year needs to be accessible.
+  attr_accessible :year
+
   # Define constant array of integer ranks and corresponding rank names
   # The highest official amateur dan rank in the AGA is 7 dan
   RANKS = []
@@ -50,6 +54,9 @@ class Attendee < ActiveRecord::Base
   # define constant array of tshirt sizes
   TSHIRT_SIZE_LIST = []
   Attendee::TSHIRT_CHOICES.each { |t| TSHIRT_SIZE_LIST << t[1] }
+
+  # Scopes, and class methods that act like scopes
+  def self.yr(year) where(:year => year) end
 
   # Some "blank" birth_date values have made it into production. The following
   # scope is a useful way to filter out those records when querying birth_date
@@ -100,10 +107,6 @@ class Attendee < ActiveRecord::Base
     end
     registration_type.to_s == 'player' ? 375 : 75
   end
-
-  # FIXME: huge hack here.  remove this method once a year column is 
-  # added to the attendee table.
-  def year() 2012 end
 
   def age_in_seconds
     # age on the start day of the event, not now

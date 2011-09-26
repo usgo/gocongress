@@ -59,7 +59,7 @@ class ApplicationController < ActionController::Base
   end
   
   rescue_from CanCan::AccessDenied do |exception|
-    # redirect_to root_url, :alert => exception.message
+    # Rails.logger.debug exception.subject.inspect
     render_access_denied
   end
   
@@ -99,6 +99,10 @@ protected
     unless current_user && (current_user.id.to_i == target_user_id || current_user.is_admin?)
       render_access_denied
     end
+  end
+
+  def deny_users_from_wrong_year
+    render_access_denied unless current_user && current_user.year == @year
   end
 
 private

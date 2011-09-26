@@ -4,7 +4,7 @@ class PlansControllerTest < ActionController::TestCase
   setup do
     @plan = Factory.create(:plan)
     @user = Factory.create(:user)
-    @admin = Factory.create(:admin_user)
+    @admin = Factory.create(:admin)
     @year = Time.now.year
   end
 

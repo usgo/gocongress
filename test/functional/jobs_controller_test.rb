@@ -2,9 +2,9 @@ require 'test_helper'
 
 class JobsControllerTest < ActionController::TestCase
   setup do
-    @job = jobs(:one)
+    @job = Factory.create(:job)
     @user = Factory.create(:user)
-    @admin_user = Factory.create(:admin_user)
+    @admin_user = Factory.create(:admin)
   end
 
   test "visitor can get index" do

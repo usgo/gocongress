@@ -59,6 +59,9 @@ class User < ActiveRecord::Base
   # object and its associations in one go with fields_for()
   accepts_nested_attributes_for :primary_attendee
 
+  # Scopes, and class methods that act like scopes
+  def self.yr(year) where(:year => year) end
+
   def amount_paid
     sum = 0
     sales = transactions.where(:trantype => 'S')

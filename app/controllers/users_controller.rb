@@ -1,5 +1,8 @@
 class UsersController < ApplicationController
 
+  before_filter :deny_users_from_wrong_year, :only => [:index]
+  load_and_authorize_resource :only => [:index]
+
   # GET /users/1/choose_attendee
   def choose_attendee
     @user = User.find(params[:id])
@@ -27,20 +30,14 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.xml
   def index
-    @users = User.order("role = 'A' desc")
-    authorize! :read, @users
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @users }
-    end
+    @users = @users.yr(@year).order("role = 'A' desc")
   end
 
   # GET /users/1
   # GET /users/1.xml
   def show
     @user = User.find(params[:id])
-    authorize! :read, @user
+    authorize! :show, @user
     
     @attendees = @user.attendees.order "is_primary desc"
     @showing_current_user = signed_in?(nil) && (current_user.id == @user.id)
@@ -102,6 +99,7 @@ class UsersController < ApplicationController
   # POST /users
   def create
     @user = User.new(params[:user])
+    @user.year = @year
     authorize! :create, @user
     
     if @user.save

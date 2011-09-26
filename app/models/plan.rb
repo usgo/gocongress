@@ -2,6 +2,10 @@ class Plan < ActiveRecord::Base
 attr_accessible :name, :price, :age_min, :age_max, :description, \
   :plan_category_id, :max_quantity
 
+# FIXME: in the controller, somehow year needs to get set 
+# before authorize! runs.  until then, year needs to be accessible.
+attr_accessible :year
+
 belongs_to :plan_category
 has_many :attendee_plans, :dependent => :destroy
 has_many :attendees, :through => :attendee_plans

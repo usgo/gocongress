@@ -1,6 +1,10 @@
 class Transaction < ActiveRecord::Base
   attr_accessible :instrument, :user_id, :trantype, :amount, :gwtranid, :gwdate, :check_number, :comment
 
+  # FIXME: in the controller, somehow year needs to get set 
+  # before authorize! runs.  until then, year needs to be accessible.
+  attr_accessible :year
+
   # The account this transaction applies to
   belongs_to :user
 

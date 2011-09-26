@@ -4,7 +4,7 @@ class EventsControllerTest < ActionController::TestCase
   setup do
     @event = Factory(:event)
     @user = Factory.create(:user)
-    @admin_user = Factory.create(:admin_user)
+    @admin_user = Factory.create(:admin)
   end
 
   test "anybody can get index" do

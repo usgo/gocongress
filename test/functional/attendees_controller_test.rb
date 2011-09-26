@@ -5,7 +5,7 @@ class AttendeesControllerTest < ActionController::TestCase
     @attendee = Factory.create(:attendee)
     @user = Factory.create(:user)
     @user_two = Factory.create(:user)
-    @admin = Factory.create(:admin_user)
+    @admin = Factory.create(:admin)
     @plan = Factory.create(:all_ages_plan)
     @discount_automatic = Factory.create(:automatic_discount)
     @discount_nonautomatic = Factory.create(:nonautomatic_discount)

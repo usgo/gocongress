@@ -4,7 +4,7 @@ class ReportsControllerTest < ActionController::TestCase
   setup do
     @user = Factory.create(:user)
     @staff = Factory.create(:staff)
-    @admin = Factory.create(:admin_user)
+    @admin = Factory.create(:admin)
   end
 
   test "admin can get overdue_deposits csv export" do

@@ -22,7 +22,7 @@ class AttendeesController < ApplicationController
     end
 
     # get all attendees
-    @attendees = Attendee.order order_by_clause
+    @attendees = Attendee.yr(@year).order order_by_clause
 
     # get some fun statistics
     @pro_count = Attendee.where("rank IN (?)", (101)..(109)).count
@@ -94,6 +94,7 @@ class AttendeesController < ApplicationController
     end
 
     @attendee.user_id = target_user_id
+    @attendee.year = @year
     if @attendee.save
       # After successful save, redirect to the "Edit Go Info" form
       # We are afraid if we do not, then no one will fill it out

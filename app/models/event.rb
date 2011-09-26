@@ -2,6 +2,10 @@ class Event < ActiveRecord::Base
   attr_accessible :evtname, :evtdeparttime, :start, :evtprice, :notes, \
     :return_depart_time, :return_arrive_time
 
+  # FIXME: in the controller, somehow year needs to get set 
+  # before authorize! runs.  until then, year needs to be accessible.
+  attr_accessible :year
+
   has_many :attendee_events, :dependent => :destroy
   has_many :attendees, :through => :attendee_events
 
