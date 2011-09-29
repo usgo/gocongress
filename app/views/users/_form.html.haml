@@ -8,12 +8,12 @@
         - @user.errors.full_messages.each do |msg|
           %li= msg
 
-  %h3 Role
-  %p Admins can edit anything, staff can view anything.
   .field
     - User::ROLES.each do |r|
       = radio_button :user, :role, r[1]
       = r[0]
+      = "- can edit anything" if r[1] == 'A'
+      = "- can view anything" if r[1] == 'S'
       %br
 
   %h3 Volunteer Positions
