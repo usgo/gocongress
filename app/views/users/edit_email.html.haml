@@ -1,4 +1,4 @@
-%h2 Change Email Address
+%h2 Change Email Address for #{@user.primary_attendee.get_full_name}
 
 = form_for(@user) do |f|
   = hidden_field_tag 'page', 'edit_email'

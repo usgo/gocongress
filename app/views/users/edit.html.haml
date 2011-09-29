@@ -1,4 +1,4 @@
-%h2 Editing user
+%h2 Editing User: #{@user.primary_attendee.get_full_name}
 = render 'form'
 = link_to 'Details', @user
 |
