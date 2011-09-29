@@ -172,9 +172,9 @@ private
     # whether the user we're editing has that particular job
     # Is this a railsy way to do things, or is it too much SQL?
     # -Jared 12/3/2010
-    Job.all :order=>"jobname asc" \
-      , :joins=>"left join user_jobs on user_jobs.job_id = jobs.id and user_jobs.user_id = " + @user.id.to_s \
-      , :select=>"jobs.id, jobname, coalesce(user_jobs.user_id, 0) as has_job"
+    Job.yr(@year).all :select => "jobs.id, jobname, coalesce(user_jobs.user_id, 0) as has_job" \
+      , :joins => "left join user_jobs on user_jobs.job_id = jobs.id and user_jobs.user_id = " + @user.id.to_s \
+      , :order => :jobname
   end
 
 end
