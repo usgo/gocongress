@@ -2,19 +2,18 @@
   %h2= @page_title
   %table.lightweight
     %tbody
-      - if @user.is_admin?
+      - if @user.role != 'U'
         %tr
           %th Type
-          %td Administrator
+          %td= @user.role_name
       %tr
         %th Email
         %td= @user.email
+        %td.smalltext= link_to 'Edit', edit_email_for_user_path(@user)
       %tr
         %th Created
         %td= @user.created_at.to_formatted_s(:long)
   %p
-    = link_to 'Change Email', edit_email_for_user_path(@user)
-    %br
     = link_to 'Change Password', edit_password_for_user_path(@user)
     %br
     - if current_user.is_admin?
