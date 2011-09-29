@@ -118,7 +118,15 @@ class Attendee < ActiveRecord::Base
   end
   
   def age_in_years
-    self.age_in_seconds / 60.0 / 60.0 / 24.0 / 365.0
+    # Returns age in years on the start day of the event, now now.  Note that
+    # age in years is a human concept which is NOT easily derived from age in
+    # seconds!  This function used to return a fractional year, and now
+    # returns an integer.
+    congress_start = CONGRESS_START_DATE[self.year]
+    year_delta = congress_start.year - birth_date.year
+    bday_at_congress_start = Time.new(congress_start.year, birth_date.month, birth_date.day)
+    will_bday_have_passed = (bday_at_congress_start <=> congress_start) == 1
+    return will_bday_have_passed ? year_delta : year_delta - 1
   end
 
   def attribute_names_for_csv

@@ -105,24 +105,28 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test "age-based discounts" do
-    dc = Factory(:discount, :name => "Child", :amount => 150, :age_min => 0, :age_max => 12, :is_automatic => true)
-    dy = Factory(:discount, :name => "Youth", :amount => 100, :age_min => 13, :age_max => 18, :is_automatic => true)
-    u = Factory(:user)
+    y = Time.now.year
+    dc = Factory(:discount, :name => "Child", :amount => 150, :age_min => 0, :age_max => 12, :is_automatic => true, :year => y)
+    dy = Factory(:discount, :name => "Youth", :amount => 100, :age_min => 13, :age_max => 18, :is_automatic => true, :year => y)
+    u = Factory(:user, :year => y)
+    congress_start = CONGRESS_START_DATE[y]
     
-    # 12 year old should get child discount and NOT youth discount
-    a = Factory(:attendee, :birth_date => 12.years.ago, :user_id => u.id, :understand_minor => true)
+    # If 12 years old on the first day of congress, then attendee
+    # should get child discount and NOT youth discount
+    a = Factory(:attendee, :birth_date => congress_start - 12.years, :user_id => u.id, :understand_minor => true, :year => y)
+    assert_equal 12, a.age_in_years
     assert_equal true, find_item_description?(u.get_invoice_items, dc.get_invoice_item_name)
     assert_equal false, find_item_description?(u.get_invoice_items, dy.get_invoice_item_name)
 
     # 11 year old should get child discount and NOT youth discount
-    a.update_attribute :birth_date, 11.years.ago
-    assert_equal 11, a.age_in_years.truncate
+    a.update_attribute :birth_date, congress_start - 11.years
+    assert_equal 11, a.age_in_years.truncate, "Expected (#{a.age_in_years}).truncate to equal 11.  The birth_date is #{11.years.ago}"
     u.reload
     assert_equal true, find_item_description?(u.get_invoice_items, dc.get_invoice_item_name)
     assert_equal false, find_item_description?(u.get_invoice_items, dy.get_invoice_item_name)
 
     # 13 year old should get YOUTH discount, not child discount
-    a.update_attribute :birth_date, 13.years.ago
+    a.update_attribute :birth_date, congress_start - 13.years
     assert_equal 13, a.age_in_years.truncate
     u.reload
     assert_equal false, find_item_description?(u.get_invoice_items, dc.get_invoice_item_name)
