@@ -59,9 +59,7 @@
             %a{:href => room_and_board_plans_path} Room &amp; <br> Board 
           %li#nav-prices-extras
             %a{:href => prices_and_extras_plans_path} Prices &amp; <br> Extras
-          %li#nav-transportation
-            %a{:href => "/home/transportation"}
-              Trans-<br>portation
+          %li#nav-faq= link_to "FAQ", faq_contents_path
           %li#nav-contact
             %a{:href => contact_path}
               Contact /<br> Volunteer
@@ -93,7 +91,7 @@
             %li#nav-admin-users= link_to "Users", users_path
             %li#nav-admin-transactions= link_to "Transactions", transactions_path
             %li#nav-admin-pricing= link_to "Pricing", pricing_path
-            %li#nav-admin-content= link_to "Announcements", contents_path
+            %li#nav-admin-content= link_to "Content", contents_path
             %li#nav-admin-reports= link_to "Reports", reports_path
             %li#nav-admin-placeholder.last-child
     

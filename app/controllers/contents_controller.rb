@@ -4,7 +4,11 @@ class ContentsController < ApplicationController
 
   # GET /contents
   def index
-    @contents = @contents.where(:year => @year)
+    @contents = @contents.yr(@year)
+  end
+
+  def faq
+    @contents = Content.faq.yr(@year)
   end
 
   # GET /contents/1

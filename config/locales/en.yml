@@ -28,6 +28,9 @@ en:
         comment: "Comments"
         confirmed: "Registration Confirmed?"
         guardian_full_name: "Guardian"
+      content:
+        show_on_homepage: "Show on Homepage?"
+        is_faq: "FAQ?"
       event:
         evtname: "Event"
         evtdeparttime: "Departure Time"
@@ -72,9 +75,6 @@ en:
       user:
         created_at: "Created"
     models:
-      content:
-        one: "Announcement"
-        other: "Announcements"
       job:
         one: "Position"
         other: "Positions"

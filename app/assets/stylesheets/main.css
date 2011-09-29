@@ -114,7 +114,7 @@ distribute and pad them. */
 .nav li#nav-pros { width: 76px; }
 .nav li#nav-tournaments { width: 115px; }
 .nav li#nav-rooms { width: 90px; }
-.nav li#nav-transportation { width: 90px; }
+.nav li#nav-faq { width: 90px; }
 .nav li#nav-prices-extras { width: 90px; }
 .nav li#nav-contact { width: 95px; }
 .nav li#nav-who { width: 90px; }
@@ -130,9 +130,9 @@ distribute and pad them. */
 .nav li#nav-admin-users { width: 70px; }
 .nav li#nav-admin-transactions { width: 120px; }
 .nav li#nav-admin-pricing { width: 90px; }
-.nav li#nav-admin-content { width: 150px; }
+.nav li#nav-admin-content { width: 90px; }
 .nav li#nav-admin-reports { width: 90px; }
-.nav li#nav-admin-placeholder { width: 254px; }
+.nav li#nav-admin-placeholder { width: 314px; }
 .nav-container-admin .nav li { height: 18px; }
 
 /* Nav hover colors */

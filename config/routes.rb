@@ -13,8 +13,14 @@ Gocongress::Application.routes.draw do
 
   # these restful resources support multiple years with a year scope
   scope ":year" do
-    resources :contents, :discounts, :events, :jobs
+    resources :discounts, :events, :jobs
     resources :plan_categories, :tournaments, :transactions
+
+    resources :contents do
+      collection do
+        get 'faq'
+      end
+    end
 
     resources :plans do
       collection do
