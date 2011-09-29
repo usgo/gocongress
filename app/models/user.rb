@@ -5,7 +5,8 @@ class User < ActiveRecord::Base
   # Devise modules: Do not use :validatable now that
   # the email uniqueness validation has a year scope
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable
+         :recoverable, :rememberable, :trackable,
+         {:authentication_keys => [:email, :year]}
   
   attr_accessible :email, :password, :password_confirmation, :remember_me, :primary_attendee_attributes
   
