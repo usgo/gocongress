@@ -53,12 +53,6 @@
 
   %div{:style => "clear:left;"}
 
-- if @contents.size > 0
-  %h3 Announcements
-
 - @contents.each do |c|
-  %h4
-    = c.created_at.to_date.to_formatted_s(:long)
-    \-
-    = c.subject
+  %h3= c.subject
   = Markdown.new(c.body).to_html.html_safe

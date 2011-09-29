@@ -1,27 +1,8 @@
-%h2 Professionals and VIPs
+%h2 Professionals
 
 %p
-  Many professionals, including all US and Canadian professionals, are invited to
-  attend the 2011 US Go Congress.
-
-%h3 16 Pros Confirmed for U.S. Go Congress
-%p
-  By Chris Garlock,
-  %i American Go E-Journal,
-  June 6, 2011
-%p
-  Sixteen professionals have been confirmed for this year&#39;s Congress .. 
-  The line-up includes popular American-born professional Michael Redmond
-  9P (l), Feng Yun 9P, Seo Neong-Wook 9P, Wang Qun 8P, Kong Xiangming 8P,
-  Mingjiu Jiang 7P, Yilun Yang 7p, Ryo Maeda 6P, Guo Juan 5P, Janice Kim
-  3P, Lee Ha-Jin 3P, Jennie Shen 2P, Cathy Li 1P, Huiren Yang 1P,  Xuefen
-  Lin 1P, and Li Ting 1P as resident pros at the weeklong Congress. 
-%p
-  &quot;It&#39;s great to be able to bring such a great group of
-  professionals to the Congress,&quot; says Congress Director Lisa
-  Scott.&quot; We&#39;re committed to providing Congress attendees with as
-  many opportunities as possible to attend lectures by pros and to
-  participate in simuls with the professionals.&quot;
+  Professional Go teachers will attend the 2012 US Go Congress. As the list of
+  attending Pros is created, descriptions of them will appear on this webpage.
 
 - if @attendees.size > 0
   %h3= pluralize(@attendees.size, 'Registered Pro')
@@ -41,13 +22,3 @@
           %td= a.get_rank_name
           %td= a.country
           %td= a.created_at.to_date.to_formatted_s(:rfc822)
-
-%h3 Pay it forward
-
-%p
-  Wish that you had more review time with professionals and strong players?  Our
-  "pay it forward" system will allow strong players to earn one-on-one and
-  small-group time with professionals, while also giving other players more
-  review time with strong amateurs.  Please 
-  = link_to "contact", contact_path
-  the Professional Coordinator for more information.
