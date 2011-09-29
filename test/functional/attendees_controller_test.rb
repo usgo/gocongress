@@ -16,18 +16,19 @@ class AttendeesControllerTest < ActionController::TestCase
   end
 
   test "visitor can get index" do
-    get :index
+    get :index, :year => @year
     assert_response :success
   end
 
   test "visitor cannot get new form" do
-    get :new
+    get :new, :year => @year
     assert_response 403
   end
 
   test "visitor cannot create attendee" do
+    a = Factory.attributes_for(:attendee)
     assert_no_difference('Attendee.count', 0) do
-      post :create, :attendee => Factory.attributes_for(:attendee)
+      post :create, :attendee => a, :year => @year
     end
     assert_response 403
   end
@@ -37,7 +38,7 @@ class AttendeesControllerTest < ActionController::TestCase
     a = Factory.attributes_for(:attendee)
     a['user_id'] = @user_two.id
     assert_no_difference('Attendee.count', 0) do
-      post :create, :attendee => a
+      post :create, :attendee => a, :year => @year
     end
     assert_response 403
   end
@@ -47,7 +48,7 @@ class AttendeesControllerTest < ActionController::TestCase
     a = Factory.attributes_for(:attendee)
     a['user_id'] = @user.id
     assert_difference('@user.attendees.count', +1) do
-      post :create, :attendee => a
+      post :create, :attendee => a, :year => @year
     end
   end
 
@@ -56,7 +57,7 @@ class AttendeesControllerTest < ActionController::TestCase
     a = Factory.attributes_for(:attendee)
     a['user_id'] = @user.id
     assert_difference('Attendee.where(:user_id => @user.id).count', +1) do
-      post :create, :attendee => a
+      post :create, :attendee => a, :year => @year
     end
   end
 
@@ -66,7 +67,7 @@ class AttendeesControllerTest < ActionController::TestCase
     @user.save
     assert_equal 1, @user.attendees.where(:is_primary => false).count
     assert_difference('Attendee.count', -1) do
-      delete :destroy, :id => a.id
+      delete :destroy, :id => a.id, :year => @year
     end
     assert_equal 0, @user.attendees.where(:is_primary => false).count
     assert_redirected_to user_path(@user)
@@ -75,7 +76,7 @@ class AttendeesControllerTest < ActionController::TestCase
   test "non-admin cannot destroy any primary attendee" do
     sign_in @user
     assert_no_difference('Attendee.count') do
-      delete :destroy, :id => @user.primary_attendee.to_param
+      delete :destroy, :id => @user.primary_attendee.id, :year => @year
     end
     assert_response 403
   end
@@ -87,7 +88,7 @@ class AttendeesControllerTest < ActionController::TestCase
     @user_two.save
     assert_equal 1, @user_two.attendees.where(:is_primary => false).count
     assert_no_difference('Attendee.count') do
-      delete :destroy, :id => a.id
+      delete :destroy, :id => a.id, :year => @year
     end
     assert_response 403
   end
@@ -95,7 +96,7 @@ class AttendeesControllerTest < ActionController::TestCase
   test "admin can destroy attendee" do
     sign_in @admin
     assert_difference('Attendee.count', -1) do
-      delete :destroy, :id => @attendee.to_param
+      delete :destroy, :id => @attendee.id, :year => @year
     end
     assert_redirected_to user_path(@attendee.user)
     assert_equal 'Attendee deleted', flash[:notice]
@@ -105,35 +106,35 @@ class AttendeesControllerTest < ActionController::TestCase
     sign_in @admin
     assert_equal 1, @user.attendees.where(:is_primary => true).count
     assert_difference('Attendee.count', -1) do
-      delete :destroy, :id => @user.primary_attendee.to_param
+      delete :destroy, :id => @user.primary_attendee.id, :year => @year
     end
     assert_redirected_to user_path(@user)
   end
 
   test "visitor cannot get edit" do
-    get :edit, :id => @attendee.to_param, :year => @year, :page => :basics
+    get :edit, :id => @attendee.id, :year => @year, :page => :basics
     assert_response 403
   end
 
   test "user cannot edit another user's attendee" do
     sign_in @user
-    get :edit, :id => @attendee.to_param, :year => @year, :page => :basics
+    get :edit, :id => @attendee.id, :year => @year, :page => :basics
     assert_response 403
   end
 
   test "user can edit their own attendees" do
     sign_in @user
-    get :edit, :id => @user.attendees.first.to_param, :year => @year, :page => :basics
+    get :edit, :id => @user.attendees.first.id, :year => @year, :page => :basics
     assert_response :success
   end
 
   test "admin can edit any attendee" do
     sign_in @admin
-    get :edit, :id => @attendee.to_param, :year => @year, :page => :basics
+    get :edit, :id => @attendee.id, :year => @year, :page => :basics
     assert_response :success
-    get :edit, :id => @user.attendees.last.to_param, :year => @year, :page => :basics
+    get :edit, :id => @user.attendees.last.id, :year => @year, :page => :basics
     assert_response :success
-    get :edit, :id => @admin.attendees.first.to_param, :year => @year, :page => :basics
+    get :edit, :id => @admin.attendees.first.id, :year => @year, :page => :basics
     assert_response :success
   end
 
@@ -141,7 +142,7 @@ class AttendeesControllerTest < ActionController::TestCase
     sign_in @user
     target_attendee = @user_two.attendees.first
     target_attendee.state = 'NY'
-    put :update, :id => target_attendee.id, :attendee => target_attendee.attributes
+    put :update, :id => target_attendee.id, :attendee => target_attendee.attributes, :year => @year
     assert_response 403
   end
 
@@ -151,7 +152,7 @@ class AttendeesControllerTest < ActionController::TestCase
     target_attendee = @user.attendees.last
     state_before = target_attendee.state
     target_attendee.state = 'MI'
-    put :update, :id => target_attendee.id, :attendee => target_attendee.attributes
+    put :update, :id => target_attendee.id, :attendee => target_attendee.attributes, :year => @year
     
     target_attendee = Attendee.find(target_attendee.id)
     assert_not_equal state_before, target_attendee.state
@@ -163,14 +164,14 @@ class AttendeesControllerTest < ActionController::TestCase
   %w[basics baduk roomboard].each do |page|
     define_method "test_user_can_get_#{page}" do
       sign_in @user
-      get :edit, :id => @user.attendees.sample.to_param, :page => page, :year => @year
+      get :edit, :id => @user.attendees.sample.id, :page => page, :year => @year
       view_name = @controller.send( :get_view_name_from_page, page )
       assert_response :success
       assert_template view_name
     end
 
     define_method "test_vistor_can_not_get_#{page}" do
-      get :edit, :id => @admin.attendees.sample.to_param, :page => page, :year => @year
+      get :edit, :id => @admin.attendees.sample.id, :page => page, :year => @year
       view_name = @controller.send( :get_view_name_from_page, page )
       assert_response 403
     end
@@ -182,9 +183,9 @@ class AttendeesControllerTest < ActionController::TestCase
     assert_equal(0, a.plans.count)
     p = Plan.all.sample
     assert_difference('a.plans.count', +1) do
-      put :update, :id => a.to_param, :page => 'roomboard', :attendee => { "plan_#{p.id}_qty" => 1 }
+      put :update, :id => a.id, :page => 'roomboard', :attendee => { "plan_#{p.id}_qty" => 1 }, :year => @year
     end
-    assert_redirected_to user_path(@user.to_param)
+    assert_redirected_to user_path(@user.id)
 	end
 
   test "user cannot select plan for attendee belonging to someone else" do
@@ -192,7 +193,7 @@ class AttendeesControllerTest < ActionController::TestCase
     a = @user_two.attendees.sample
     h = { "plan_#{@plan.id}_qty" => 1 }
     assert_no_difference('a.plans.count') do
-      put :update, :id => a.to_param, :page => 'roomboard', :attendee => h
+      put :update, :id => a.id, :page => 'roomboard', :attendee => h, :year => @year
     end
     assert_response 403
   end
@@ -203,9 +204,9 @@ class AttendeesControllerTest < ActionController::TestCase
     h = { "plan_#{@plan.id}_qty" => 1 }
     assert_equal(0, a.plans.count)
     assert_difference('a.plans.count', +1) do
-      put :update, :id => a.to_param, :page => 'roomboard', :attendee => h
+      put :update, :id => a.id, :page => 'roomboard', :attendee => h, :year => @year
     end
-    assert_redirected_to user_path(@user.to_param)
+    assert_redirected_to user_path(@user.id)
   end
 
 	test "user can clear own attendee plans" do
@@ -213,9 +214,9 @@ class AttendeesControllerTest < ActionController::TestCase
     a = @user.attendees.sample
     a.plans << @plan
     assert_equal(1, a.plans.count)
-    put :update, :id => a.to_param, :page => 'roomboard', :attendee => {}
+    put :update, :id => a.id, :page => 'roomboard', :attendee => {}, :year => @year
     assert_equal(0, a.plans.count)
-    assert_redirected_to user_path(@user.to_param)
+    assert_redirected_to user_path(@user.id)
 	end
 
   test "user can deselect a plan" do
@@ -224,9 +225,9 @@ class AttendeesControllerTest < ActionController::TestCase
     a.plans << @plan
     assert_equal(1, a.plans.count)
     h = { "plan_#{@plan.id}_qty" => 0 }
-    put :update, :id => a.to_param, :page => 'roomboard', :attendee => h
+    put :update, :id => a.id, :page => 'roomboard', :attendee => h, :year => @year
     assert_equal(0, a.plans.count)
-    assert_redirected_to user_path(@user.to_param)
+    assert_redirected_to user_path(@user.id)
   end
 
   test "admin can update deposit_received_at" do
@@ -250,7 +251,7 @@ class AttendeesControllerTest < ActionController::TestCase
     atn_atr_hash["deposit_received_at(3i)"] = new_date.day
 
     # perform update
-    put :update, { :id => a.id, :attendee => atn_atr_hash, :page => 'admin' }
+    put :update, :id => a.id, :attendee => atn_atr_hash, :page => 'admin', :year => @year
 
     # assert that deposit_received_at has been updated
     a = Attendee.find(a.id)
@@ -259,7 +260,7 @@ class AttendeesControllerTest < ActionController::TestCase
     # PUTing a date with any missing fields should clear the date entirely
     atn_atr_hash = {}
     atn_atr_hash["deposit_received_at(3i)"] = ""
-    put :update, { :id => a.id, :attendee => atn_atr_hash, :page => 'admin' }
+    put :update, :id => a.id, :attendee => atn_atr_hash, :page => 'admin', :year => @year
     a = Attendee.find(a.id)
     assert_equal nil, a.deposit_received_at
   end
@@ -269,16 +270,16 @@ class AttendeesControllerTest < ActionController::TestCase
     a = @user.attendees.sample
     assert_equal 0, a.discounts.count
     atn_attrs = {:discount_ids => []}
-    atn_attrs[:discount_ids] << @discount_nonautomatic.to_param
-    atn_attrs[:discount_ids] << @discount_nonautomatic2.to_param
-    atn_attrs[:discount_ids] << @discount_automatic.to_param
+    atn_attrs[:discount_ids] << @discount_nonautomatic.id
+    atn_attrs[:discount_ids] << @discount_nonautomatic2.id
+    atn_attrs[:discount_ids] << @discount_automatic.id
 
     # the checkbox list in the view will throw in some empty strings too,
     # so we will test that, and make sure it does not crash
     atn_attrs[:discount_ids] << ""
 
     assert_difference('a.discounts.count', +2) do
-      put :update, {:page => 'baduk', :id => a.to_param, :attendee => atn_attrs}
+      put :update, :page => 'baduk', :id => a.id, :attendee => atn_attrs, :year => @year
     end
   end
 
@@ -287,22 +288,22 @@ class AttendeesControllerTest < ActionController::TestCase
     a = @user.attendees.sample
     assert_equal 0, a.discounts.count
     atn_attrs = {:discount_ids => []}
-    atn_attrs[:discount_ids] << @discount_automatic.to_param
+    atn_attrs[:discount_ids] << @discount_automatic.id
     assert_no_difference('a.discounts.count') do
-      put :update, {:page => 'baduk', :id => a.to_param, :attendee => atn_attrs}
+      put :update, :page => 'baduk', :id => a.id, :attendee => atn_attrs, :year => @year
     end
   end
 
   test "non-admin cannot get admin page of edit form" do
     sign_in @user
-    get :edit, :page => :admin, :id => @user.attendees.sample.to_param, :year => @year
+    get :edit, :page => :admin, :id => @user.attendees.sample.id, :year => @year
     assert_response 403
   end
 
   test "non-admin cannot update the admin page" do
     sign_in @user
     a = @user.attendees.first
-    put :update, { :id => a.id, :attendee => a.attributes, :page => 'admin' }
+    put :update, :id => a.id, :attendee => a.attributes, :page => 'admin', :year => @year
     assert_response 403
   end
 
@@ -313,7 +314,7 @@ class AttendeesControllerTest < ActionController::TestCase
     assert_equal(0, AttendeeTournament.where('attendee_id = ?', a.id).count)
     atn_attrs = {:tournament_id_list => [@inv_trn.id]}
     assert_difference('AttendeeTournament.count', +1) do
-      put :update, { :id => a.id, :attendee => atn_attrs, :page => 'admin' }
+      put :update, :id => a.id, :attendee => atn_attrs, :page => 'admin', :year => @year
     end
     a.tournaments.reload
     assert a.tournaments.first.present?
@@ -327,7 +328,7 @@ class AttendeesControllerTest < ActionController::TestCase
     a.tournaments.clear
     atn_attrs = {:tournament_id_list => [@open_trn.id]}
     assert_difference('AttendeeTournament.count', +1) do
-      put :update, { :id => a.id, :attendee => atn_attrs, :page => 'tournaments' }
+      put :update, :id => a.id, :attendee => atn_attrs, :page => 'tournaments', :year => @year
     end
     a.tournaments.reload
     assert a.tournaments.first.present?
@@ -343,7 +344,7 @@ class AttendeesControllerTest < ActionController::TestCase
     e2 = Factory :event
     atn_attrs = {:event_id_list => [e.id, e2.id]}
     assert_difference('a.events.count', +2) do
-      put :update, { :id => a.id, :attendee => atn_attrs, :page => 'events' }
+      put :update, :id => a.id, :attendee => atn_attrs, :page => 'events', :year => @year
     end
     assert_redirected_to user_path(@user)
   end
@@ -355,7 +356,7 @@ class AttendeesControllerTest < ActionController::TestCase
     e = Factory :event
     atn_attrs = {:event_id_list => [e.id]}
     assert_no_difference('AttendeeEvent.count') do
-      put :update, { :id => a.id, :attendee => atn_attrs, :page => 'events' }
+      put :update, :id => a.id, :attendee => atn_attrs, :page => 'events', :year => @year
     end
     assert_response 403
   end
@@ -367,7 +368,7 @@ class AttendeesControllerTest < ActionController::TestCase
     e = Factory :event
     atn_attrs = {:event_id_list => [e.id]}
     assert_difference('a.events.count', +1) do
-      put :update, { :id => a.id, :attendee => atn_attrs, :page => 'events' }
+      put :update, :id => a.id, :attendee => atn_attrs, :page => 'events', :year => @year
     end
     assert_redirected_to user_path(@user_two)
   end
