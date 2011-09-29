@@ -303,7 +303,7 @@ class AttendeesController < ApplicationController
   
   # GET /attendees/vip
   def vip
-    @attendees = Attendee.where('rank >= 101')
+    @attendees = Attendee.yr(@year).where('rank >= 101')
   end
 
 protected
