@@ -2,12 +2,15 @@ source 'http://rubygems.org'
 
 gem 'rails', '~> 3.1.0'
 
+# Database
+# To install the 'pg' gem, the postgres bin directory must be on your path
+# export PATH=/path/to/postgres/bin:${PATH}
+gem 'pg'
+
 # Asset template engines
 gem 'sass'
 gem 'coffee-script'
 gem 'uglifier'
-
-gem 'sqlite3-ruby', :require => 'sqlite3'
 gem "jquery-rails" # jquery and jquery-ui
 gem 'validates_timeliness'
 gem 'haml'
@@ -43,9 +46,4 @@ end
 # will take care of this issue when rails 3.1rc5 arrives
 group :production do
   gem 'therubyracer-heroku', '0.8.1.pre3'
-  
-  # since moving to Heroku's 1.9.2 stack (bamboo-mri-1.9.2) we must specify 'pg'
-  # so, when running locally, make sure to bundle --without production
-  # unless you want to install postgres locally
-  gem 'pg'
 end
