@@ -29,17 +29,18 @@
   .field
     = f.label :birth_date, 'Birth date'
     = f.date_select :birth_date, :start_year => Time.now.year, :end_year => 1900, :include_blank => true
+    %div.smalltext.aligned-with-input
+      Because we need to know if you are a minor.
   .field
     = f.label :understand_minor, 'Minor Agreement'
     = f.check_box :understand_minor
     %div.smalltext.aligned-with-input
-      I understand that if this attendee will not be at least 18 years
-      old on July 29, 2011, I must
-      %br
-      submit the
+      I understand that if this attendee will not be at least 18 years old on 
+      = CONGRESS_START_DATE[@year].to_date.to_formatted_s(:long)
+      then I must submit the
       %a{:href => "/docs/USGC2011-Liability-Release-Form.doc"} Minor Agreement Form
       to the 
-      = link_to 'deputy registrar.', contact_path, :target => '_blank'
+      = link_to 'registrar.', contact_path, :target => '_blank'
   .field
     = f.label :tshirt_size
     = f.select :tshirt_size, Attendee::TSHIRT_CHOICES, :include_blank => ''
