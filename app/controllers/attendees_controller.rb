@@ -25,9 +25,9 @@ class AttendeesController < ApplicationController
     @attendees = Attendee.yr(@year).order order_by_clause
 
     # get some fun statistics
-    @pro_count = @attendees.where("rank IN (?)", (101)..(109)).count
-    @dan_count = @attendees.where("rank IN (?)", (1)..(9)).count
-    @kyu_count = @attendees.where("rank IN (?)", (-30)..(-1)).count
+    @pro_count = @attendees.where(:rank => 101..109).count
+    @dan_count = @attendees.where(:rank => 1..9).count
+    @kyu_count = @attendees.where(:rank => -30..-1).count
     @np_count = @attendees.where(:rank => 0).count
     @youngest_attendee = @attendees.reasonable_birth_date.order('birth_date desc').first
     @oldest_attendee = @attendees.reasonable_birth_date.order('birth_date desc').last
