@@ -36,7 +36,7 @@ class TransactionsController < ApplicationController
   def create
     @transaction.year = @year
     @transaction.updated_by_user = current_user
-    @transaction.user_id = User.find_by_email(params[:user_email]).to_param
+    @transaction.user_id = User.yr(@year).find_by_email(params[:user_email]).id
 
     @email_list = get_list_of_user_emails
     @email_picker_value = params[:user_email]
@@ -51,7 +51,7 @@ class TransactionsController < ApplicationController
   # PUT /transactions/1
   def update
     @transaction.updated_by_user = current_user
-    @transaction.user_id = User.find_by_email(params[:user_email]).to_param
+    @transaction.user_id = User.yr(@year).find_by_email(params[:user_email]).id
 
     @email_list = get_list_of_user_emails
     @email_picker_value = params[:user_email]
@@ -72,7 +72,7 @@ class TransactionsController < ApplicationController
 protected
 
   def get_list_of_user_emails
-    email_array = User.order('lower(email)').collect {|u| [u.email] }
+    email_array = User.yr(@year).order('lower(email)').collect {|u| [u.email] }
     email_array.join(',')
   end
 
