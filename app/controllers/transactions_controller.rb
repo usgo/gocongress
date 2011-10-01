@@ -7,7 +7,7 @@ class TransactionsController < ApplicationController
 
   # GET /transactions
   def index
-    @transactions = @transactions.where(:year => @year)
+    @transactions = @transactions.yr(@year)
     if params[:email].present? then
       search_expression = '%' + params[:email] + '%'
       @transactions = @transactions.joins(:user).where("email like ?", search_expression)

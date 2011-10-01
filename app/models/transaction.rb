@@ -20,6 +20,8 @@ class Transaction < ActiveRecord::Base
 	# Instruments
 	INSTRUMENTS = [['Card','C'], ['Cash','S'], ['Check','K']]
 
+  # Scopes, and class methods that act like scopes
+  def self.yr(year) where(:year => year) end
   scope :for_payment_history, where(:trantype => ['S','R'])
 
 	validates_presence_of :user_id, :trantype, :amount, :updated_by_user, :year
