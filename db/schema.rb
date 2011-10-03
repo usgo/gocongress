@@ -11,13 +11,14 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110929054500) do
+ActiveRecord::Schema.define(:version => 20111003003728) do
 
   create_table "attendee_discounts", :force => true do |t|
     t.integer  "attendee_id", :null => false
     t.integer  "discount_id", :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "year",        :null => false
   end
 
   add_index "attendee_discounts", ["attendee_id", "discount_id"], :name => "uniq_attendee_discount", :unique => true
@@ -27,6 +28,7 @@ ActiveRecord::Schema.define(:version => 20110929054500) do
     t.integer  "event_id",    :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "year",        :null => false
   end
 
   add_index "attendee_events", ["attendee_id", "event_id"], :name => "uniq_attendee_event", :unique => true
@@ -37,6 +39,7 @@ ActiveRecord::Schema.define(:version => 20110929054500) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "quantity",    :default => 1, :null => false
+    t.integer  "year",                       :null => false
   end
 
   add_index "attendee_plans", ["attendee_id", "plan_id"], :name => "uniq_attendee_plan", :unique => true
@@ -47,6 +50,7 @@ ActiveRecord::Schema.define(:version => 20110929054500) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "notes"
+    t.integer  "year",          :null => false
   end
 
   add_index "attendee_tournaments", ["attendee_id", "tournament_id"], :name => "uniq_attendee_tournament", :unique => true
@@ -196,6 +200,7 @@ ActiveRecord::Schema.define(:version => 20110929054500) do
     t.datetime "updated_at"
     t.integer  "user_id"
     t.integer  "job_id"
+    t.integer  "year",       :null => false
   end
 
   add_index "user_jobs", ["user_id", "job_id"], :name => "uniq_user_job", :unique => true

@@ -155,10 +155,10 @@ class UserTest < ActiveSupport::TestCase
   end
   
   test "attendee cannot provide qty greater than plan max_qty" do
-    u = Factory(:user)
-    u.attendees << Factory(:attendee, :user_id => u.id)
+    u = Factory :user
+    a = Factory :attendee, :user_id => u.id
     p = Factory :plan, :max_quantity => 1
-    ap = AttendeePlan.new :plan_id => p.id, :quantity => p.max_quantity + 1
+    ap = AttendeePlan.new :plan_id => p.id, :quantity => p.max_quantity + 1, :attendee_id => a.id
     assert_equal false, ap.valid?
   end
 

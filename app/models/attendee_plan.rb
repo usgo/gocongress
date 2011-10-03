@@ -5,6 +5,7 @@ class AttendeePlan < ActiveRecord::Base
   # attr_accessible is not necessary, because
   # there is no AttendeePlan controller
 
+  validates :year, :numericality => { :only_integer => true, :greater_than => 2010, :less_than => 2100 }
   validates_presence_of :attendee, :plan
 
   validates_numericality_of :quantity, \
@@ -18,6 +19,13 @@ class AttendeePlan < ActiveRecord::Base
     if value > max_qty then
       model.errors.add(attr.to_s.titleize, ' of ' + model.plan.name + ' must be less than or equal to ' + max_qty.to_s)
     end
+  end
+
+  before_validation do |ap|
+    if ap.plan.year != ap.attendee.year
+      raise "Attendee and Plan have different years"
+    end
+    ap.year ||= ap.attendee.year
   end
 
 end
