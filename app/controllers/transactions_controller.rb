@@ -50,15 +50,21 @@ class TransactionsController < ApplicationController
 
   # PUT /transactions/1
   def update
+    extra_errors = []
     @transaction.updated_by_user = current_user
-    @transaction.user_id = User.yr(@year).find_by_email(params[:user_email]).id
-
     @email_list = get_list_of_user_emails
     @email_picker_value = params[:user_email]
 
-    if @transaction.update_attributes(params[:transaction])
+    if params[:user_email].present?
+      u = User.yr(@year).find_by_email(params[:user_email])
+      if u.nil? then extra_errors << "Could not find a user with that email" end
+      @transaction.user_id = u.id
+    end
+
+    if extra_errors.empty? && @transaction.update_attributes(params[:transaction])
       redirect_to(@transaction, :notice => 'Transaction was successfully updated.')
     else
+      extra_errors.each { |e| @transaction.errors[:base] << e }
       render :action => "edit"
     end
   end
