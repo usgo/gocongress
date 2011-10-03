@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111003003728) do
+ActiveRecord::Schema.define(:version => 20111003052045) do
 
   create_table "attendee_discounts", :force => true do |t|
     t.integer  "attendee_id", :null => false
@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(:version => 20111003003728) do
   end
 
   add_index "attendee_discounts", ["attendee_id", "discount_id"], :name => "uniq_attendee_discount", :unique => true
+  add_index "attendee_discounts", ["discount_id"], :name => "index_attendee_discounts_on_discount_id"
 
   create_table "attendee_events", :force => true do |t|
     t.integer  "attendee_id", :null => false
@@ -32,6 +33,7 @@ ActiveRecord::Schema.define(:version => 20111003003728) do
   end
 
   add_index "attendee_events", ["attendee_id", "event_id"], :name => "uniq_attendee_event", :unique => true
+  add_index "attendee_events", ["event_id"], :name => "index_attendee_events_on_event_id"
 
   create_table "attendee_plans", :force => true do |t|
     t.integer  "attendee_id",                :null => false
@@ -54,6 +56,7 @@ ActiveRecord::Schema.define(:version => 20111003003728) do
   end
 
   add_index "attendee_tournaments", ["attendee_id", "tournament_id"], :name => "uniq_attendee_tournament", :unique => true
+  add_index "attendee_tournaments", ["tournament_id"], :name => "index_attendee_tournaments_on_tournament_id"
 
   create_table "attendees", :force => true do |t|
     t.string   "given_name",                                               :null => false
@@ -90,6 +93,10 @@ ActiveRecord::Schema.define(:version => 20111003003728) do
     t.integer  "year",                                                     :null => false
   end
 
+  add_index "attendees", ["aga_id", "year"], :name => "index_attendees_on_aga_id_and_year", :unique => true
+  add_index "attendees", ["id", "year"], :name => "index_attendees_on_id_and_year", :unique => true
+  add_index "attendees", ["user_id"], :name => "index_attendees_on_user_id"
+
   create_table "contents", :force => true do |t|
     t.text     "body",             :null => false
     t.string   "subject",          :null => false
@@ -100,6 +107,9 @@ ActiveRecord::Schema.define(:version => 20111003003728) do
     t.integer  "year",             :null => false
     t.boolean  "is_faq",           :null => false
   end
+
+  add_index "contents", ["year", "is_faq", "expires_at"], :name => "index_contents_on_year_and_is_faq_and_expires_at"
+  add_index "contents", ["year", "show_on_homepage", "expires_at"], :name => "index_contents_on_year_and_show_on_homepage_and_expires_at"
 
   create_table "discounts", :force => true do |t|
     t.string   "name",         :limit => 50,                    :null => false
@@ -114,6 +124,9 @@ ActiveRecord::Schema.define(:version => 20111003003728) do
     t.integer  "year",                                          :null => false
   end
 
+  add_index "discounts", ["id", "year"], :name => "index_discounts_on_id_and_year", :unique => true
+  add_index "discounts", ["year", "is_automatic"], :name => "index_discounts_on_year_and_is_automatic"
+
   create_table "events", :force => true do |t|
     t.string   "evtname"
     t.string   "evtdeparttime"
@@ -127,6 +140,9 @@ ActiveRecord::Schema.define(:version => 20111003003728) do
     t.integer  "year",                              :null => false
   end
 
+  add_index "events", ["id", "year"], :name => "index_events_on_id_and_year", :unique => true
+  add_index "events", ["year", "start"], :name => "index_events_on_year_and_start"
+
   create_table "jobs", :force => true do |t|
     t.string   "jobname"
     t.datetime "created_at"
@@ -138,6 +154,8 @@ ActiveRecord::Schema.define(:version => 20111003003728) do
     t.integer  "year",         :null => false
   end
 
+  add_index "jobs", ["id", "year"], :name => "index_jobs_on_id_and_year", :unique => true
+
   create_table "plan_categories", :force => true do |t|
     t.string   "name",                   :null => false
     t.boolean  "show_on_prices_page",    :null => false
@@ -147,6 +165,8 @@ ActiveRecord::Schema.define(:version => 20111003003728) do
     t.boolean  "show_on_reg_form"
     t.integer  "year",                   :null => false
   end
+
+  add_index "plan_categories", ["id", "year"], :name => "index_plan_categories_on_id_and_year", :unique => true
 
   create_table "plans", :force => true do |t|
     t.string   "name",             :limit => 50,                :null => false
@@ -161,12 +181,17 @@ ActiveRecord::Schema.define(:version => 20111003003728) do
     t.integer  "year",                                          :null => false
   end
 
+  add_index "plans", ["id", "year"], :name => "index_plans_on_id_and_year", :unique => true
+  add_index "plans", ["plan_category_id"], :name => "index_plans_on_plan_category_id"
+
   create_table "rounds", :force => true do |t|
     t.datetime "round_start",   :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "tournament_id"
   end
+
+  add_index "rounds", ["tournament_id", "round_start"], :name => "index_rounds_on_tournament_id_and_round_start", :unique => true
 
   create_table "tournaments", :force => true do |t|
     t.string   "name",                      :limit => 50,                    :null => false
@@ -179,6 +204,8 @@ ActiveRecord::Schema.define(:version => 20111003003728) do
     t.boolean  "show_attendee_notes_field",               :default => false, :null => false
     t.integer  "year",                                                       :null => false
   end
+
+  add_index "tournaments", ["id", "year"], :name => "index_tournaments_on_id_and_year", :unique => true
 
   create_table "transactions", :force => true do |t|
     t.integer  "user_id",                         :null => false
@@ -195,6 +222,10 @@ ActiveRecord::Schema.define(:version => 20111003003728) do
     t.integer  "year",                            :null => false
   end
 
+  add_index "transactions", ["gwtranid"], :name => "index_transactions_on_gwtranid", :unique => true
+  add_index "transactions", ["user_id"], :name => "index_transactions_on_user_id"
+  add_index "transactions", ["year", "created_at"], :name => "index_transactions_on_year_and_created_at"
+
   create_table "user_jobs", :force => true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -203,6 +234,7 @@ ActiveRecord::Schema.define(:version => 20111003003728) do
     t.integer  "year",       :null => false
   end
 
+  add_index "user_jobs", ["job_id"], :name => "index_user_jobs_on_job_id"
   add_index "user_jobs", ["user_id", "job_id"], :name => "uniq_user_job", :unique => true
 
   create_table "users", :force => true do |t|
@@ -223,6 +255,8 @@ ActiveRecord::Schema.define(:version => 20111003003728) do
   end
 
   add_index "users", ["email", "year"], :name => "index_users_on_email_and_year", :unique => true
+  add_index "users", ["id", "year"], :name => "index_users_on_id_and_year", :unique => true
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
+  add_index "users", ["year"], :name => "index_users_on_year"
 
 end
