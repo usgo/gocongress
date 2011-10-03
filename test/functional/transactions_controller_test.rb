@@ -21,18 +21,15 @@ class TransactionsControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  test "admin can create valid transaction" do
+  test "admin can create transaction" do
     sign_in @admin_user
 
-    # build a valid transaction, but do not save it
-    t = Factory.build :tr_sale
-    assert_equal true, t.valid?
-
-    # post to create
-    # note that we also need to pass user_email.
-    # this is a new required param, since I added the autocomplete
-    assert_difference('Transaction.count', +1) do
-      post :create, :transaction => t.attributes, :user_email => t.user.email, :year => @year
+    # Build (do not save) a transaction with no user.  The user will
+    # be specified via user_email.  This is a new required param, 
+    # since I added the autocomplete.
+    t = Factory.build :tr_sale, {:user => nil}
+    assert_difference("Transaction.yr(#{@year}).count", +1) do
+      post :create, :transaction => t.attributes, :user_email => @user.email, :year => @year
     end
     assert_redirected_to transaction_path(assigns(:transaction))
   end
