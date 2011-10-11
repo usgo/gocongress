@@ -105,14 +105,8 @@
 
       %div{:style => "clear:both;"}
 
-    .content.past-years
-      %p
-        Other Years: &nbsp;
-        = link_to 2006, "http://www.trianglegoclub.org/gocongress06"
-        - [2007,2009,2010].each do |y|
-          = link_to y, "http://www.usgo.org/congresses/#{y}"
-        - @years.each do |y|
-          = link_to y, "/#{y}"
+    -# The homepage (only) provides content_for this yield (a list of past years)
+    = yield :before_footer
 
     #footer
       #sponsors
