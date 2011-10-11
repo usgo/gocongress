@@ -5,24 +5,35 @@ class AttendeesController < ApplicationController
   skip_authorize_resource :only => [:create, :index, :new, :vip]
   
   def index
-    # by default, sort by rank (0 is non-player)
-    order_by_clause = "rank = 0, rank desc"
+    params[:direction] ||= "asc"
+    @opposite_direction = (params[:direction] == 'asc') ? 'desc' : 'asc'
 
     # if a sort order was specified, make sure it is not a SQL injection attack
     valid_sortable_columns = %w[given_name family_name rank created_at country]
     if (valid_sortable_columns.include?(params[:sort])) then
-      order_by_clause = params[:sort]
-    end
+      order_clause = params[:sort]
 
-    # some sort orders could reveal clues about anonymous people,
-    # so we must first order by anonymity to protect against that -Jared
-    unsafe_for_anon = %w[given_name family_name]
-    if (unsafe_for_anon.include?(order_by_clause)) then
-      order_by_clause = 'anonymous, ' + order_by_clause
+      # some sort orders could reveal clues about anonymous people,
+      # so we must first order by anonymity to protect against that -Jared
+      unsafe_for_anon = %w[given_name family_name]
+      if (unsafe_for_anon.include?(order_clause)) then
+        order_clause = 'anonymous, ' + order_clause
+      end
+
+      # sort direction
+      valid_directions = %w[asc desc]
+      if valid_directions.include?(params[:direction]) then
+        order_clause += " " + params[:direction]
+      end
+
+    else
+
+      # by default, sort by rank (0 is non-player)
+      order_clause = "rank = 0, rank desc"
     end
 
     # get all attendees
-    @attendees = Attendee.yr(@year).order order_by_clause
+    @attendees = Attendee.yr(@year).order(order_clause)
 
     # get some fun statistics
     @pro_count = @attendees.where(:rank => 101..109).count

@@ -23,11 +23,9 @@
   %thead
     %tr
       %th
-      %th= link_to "Given Name", :sort => "given_name"
-      %th= link_to "Family Name", :sort => "family_name"
-      %th= link_to "Rank", :sort => "rank"
-      %th= link_to "Country", :sort => "country"
-      %th= link_to "Registration Date", :sort => "created_at"
+      - %w[given_name family_name rank country created_at].each do |c|
+        - drn = (c == params[:sort]) ? @opposite_direction : :asc
+        %th= link_to trl_attr(:attendee, c), :sort => c, :direction => drn
   %tbody
     - @attendees.each_with_index do |a,i|
       %tr{:class => if a.anonymous then "understated" end }

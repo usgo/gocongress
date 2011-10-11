@@ -8,6 +8,7 @@ en:
         anonymous: "Anonymous"
         city: "City"
         country: "Country Code"
+        created_at: "Registration Date"
         deposit_received_at: "Deposit Received On"
         gender: "Gender"
         given_name: "Given Name"
