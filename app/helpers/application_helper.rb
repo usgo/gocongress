@@ -11,7 +11,7 @@ module ApplicationHelper
 
 	def trl_attr ( modelname, attributename )
 		# see config/locales/en.yaml
-		translate "activerecord.attributes." + modelname + "." + attributename
+		translate "activerecord.attributes." + modelname.to_s + "." + attributename.to_s
 	end
 
   # The following two helpers come from Ryan Bates' Railscast episodes 196 and 197.
