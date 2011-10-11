@@ -60,6 +60,11 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     authorize! :update, @user
     @formAction = "https://secure.merchantonegateway.com/cart/cart.php"
+    if @year == 2011
+      @merchantone_username = "lscott60637"
+    elsif @year == 2012
+      @merchantone_username = "" # FIXME: ask Peter and Paul to set up MO account
+    end
   end
   
   # GET /users/1/invoice
