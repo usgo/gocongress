@@ -34,7 +34,11 @@ end
 group :test do
 	gem 'factory_girl'
 	gem 'factory_girl_rails'
-	gem 'turn' # pretty printing for tests
+
+	# turn - pretty printing for tests
+	# turn has a bug in version 0.8.3 causing it to require minitest,
+	# so for now we'll stay on 0.8.2
+	gem 'turn', '< 0.8.3'
 end
 
 # To keep your heroku slug size down, try this
