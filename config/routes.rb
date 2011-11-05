@@ -1,18 +1,18 @@
 Gocongress::Application.routes.draw do
   get "home/access_denied"
-  get "home/index"
-  get "home/transportation"
   get "home/kaboom"
-  get 'contact' => 'user_jobs#index'
-  get 'pricing' => 'home#pricing'
 
-  # TODO: do not use popups as they will just get blocked
+  # Deprecated: do not use popups as they will just get blocked
   match '/popup/:action' => 'popup', :as => 'popup'
 
   devise_for :users
 
-  # these restful resources support multiple years with a year scope
+  # these routes support multiple years with a year scope
   scope ":year" do
+    get 'contact' => 'user_jobs#index'
+    get 'pricing' => 'home#pricing'
+    get 'transportation' => 'home#'
+
     resources :discounts, :events, :jobs
     resources :plan_categories, :tournaments, :transactions
 
@@ -65,13 +65,16 @@ Gocongress::Application.routes.draw do
       get :outstanding_balances, :overdue_deposits
       get :tournaments, :transactions, :user_invoices
     end
+
   end
 
   # deprecated routes: redirect with 301 status code
+  # these routes will be deleted eventually
+  get 'contact' => redirect('/2012/contact')
   get 'prices_and_extras' => redirect('/2012/plans/prices_and_extras')
   get 'room_and_board' => redirect('/2012/plans/room_and_board')
 
   # these routes should come last
-  get ":year" => 'home#index'
+  get ":year" => 'home#index', :as => :year
   root :to => "home#index"
 end

@@ -9,7 +9,7 @@
         = "- #{page_title}"
 
     -# Warning: Do not use stylesheet_link_tag :cache => true
-    -# because that will try to write all.css, but Heroku is 
+    -# because that will try to write all.css, but Heroku is
     -# a readonly filesystem -Jared 2011.2.3
     -#= stylesheet_link_tag "main"
     -#= stylesheet_link_tag "scaffold"
@@ -21,12 +21,12 @@
     -#= javascript_include_tag "jquery-ui.min.js"
     -#= javascript_include_tag "rails"
     = javascript_include_tag :application
-    
+
     -# To do: We only need the galleria stuff on the homepage Hiding this on other
     -# pages could improve page load by 80ms or more -Jared 2011.2.3
     -#= javascript_include_tag "galleria/galleria"
     -#= javascript_include_tag "galleria/themes/dots/galleria.dots.js"
-    
+
     = csrf_meta_tag
 
   %body{:class => "#{@bodyClassList} year#{@year}"}
@@ -38,8 +38,7 @@
     #header-container
       #header
         #usgc-title-container
-          %h1
-            %a{:href => "/#{@year}"}= "#{@year} US Go Congress"
+          %h1= link_to "#{@year} US Go Congress", year_path
         #usgc-when-where-container
           = @congress_city + ', ' + @congress_state
           = @congress_date_range + ','
@@ -56,7 +55,7 @@
           %li#nav-pros
             %a{:href => vip_attendees_path} Pros
           %li#nav-rooms
-            %a{:href => room_and_board_plans_path} Room &amp; <br> Board 
+            %a{:href => room_and_board_plans_path} Room &amp; <br> Board
           %li#nav-prices-extras
             %a{:href => prices_and_extras_plans_path} Prices &amp; <br> Extras
           %li#nav-faq= link_to "FAQ", faq_contents_path
@@ -82,7 +81,7 @@
             - else
               %a.hmenu{:href => destroy_user_session_path}
                 Sign <br> Out
-    
+
     - if can? :see_admin_menu, :layout
       .nav-container-admin
         .nav
@@ -94,7 +93,7 @@
             %li#nav-admin-content= link_to "Content", contents_path
             %li#nav-admin-reports= link_to "Reports", reports_path
             %li#nav-admin-placeholder.last-child
-    
+
     .content
       / "Flash messages" required by Devise -Jared 12/20/10
       .rails-flash-notice= notice
