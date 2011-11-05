@@ -1,10 +1,10 @@
 %h2 Volunteers
 
-%p 
-  From 
-  %strong tournament directors 
-  to the people who volunteer 
-  %strong only a few hours at the front desk, 
+%p
+  From
+  %strong tournament directors
+  to the people who volunteer
+  %strong only a few hours at the front desk,
   we need your help. The Go Congress would not be possible without the
   dedication of dozens of volunteers.
 
@@ -38,7 +38,8 @@
       %tr
         %td= uj.job.jobname
         %td= uj.user.primary_attendee.get_full_name
-        %td
-          -# Note how we display job.email instead of the private user.email
-          = uj.job.email
+
+        -# Note how we display the public job.email
+        -# instead of the private user.email
+        %td= mail_to uj.job.email
         %td
