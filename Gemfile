@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '~> 3.1.0'
+gem 'rails'
 
 # Avoid rack 1.3.4, because it causes a warning
 # The warning was silenced with this commit:
