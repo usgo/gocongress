@@ -12,6 +12,5 @@
       a payment, or add an attendee to your account.
     %p
       If you have any questions, comments, or suggestions, feel free to
-      %a{:href => 'http://www.gocongress.org/contact'}
-        contact us
+      = link_to "contact us", contact_url(@user.year)
       at any time.
