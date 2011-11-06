@@ -2,7 +2,7 @@
 
 %p
   In addition to many
-  = link_to 'tournaments,', tournaments_path(@year)
+  = link_to 'tournaments,', tournaments_path
   game reviews and lessons by
   = link_to 'professionals,', vip_attendees_path
   the vendor area, and other Go-related activities, we also have
@@ -44,12 +44,11 @@
         %th Depart
         %th Arrive
         %th.numeric Price
-        %th Notes
         - if current_user_is_admin?
           %th{:colspan => "2"}
       - arEvt.each do |e|
         %tr
-          %td= e.evtname
+          %td= link_to e.evtname, e
           %td= e.evtdeparttime
           %td= e.start.to_time.to_formatted_s(:american)
           %td
@@ -59,7 +58,6 @@
             - if e.return_arrive_time.present?
               = e.return_arrive_time.to_formatted_s(:american)
           %td.numeric= format_price(e.evtprice)
-          %td= e.notes
           - if current_user_is_admin?
             %td= link_to 'Edit', edit_event_path(e)
             %td= link_to 'Delete', e, :confirm => 'Delete event?  If any attendees are signed up, those signups will be lost too.', :method => :delete

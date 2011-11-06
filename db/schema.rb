@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111003052045) do
+ActiveRecord::Schema.define(:version => 20111106231419) do
 
   create_table "attendee_discounts", :force => true do |t|
     t.integer  "attendee_id", :null => false
@@ -138,6 +138,7 @@ ActiveRecord::Schema.define(:version => 20111003052045) do
     t.time     "return_depart_time"
     t.time     "return_arrive_time"
     t.integer  "year",                              :null => false
+    t.string   "location",           :limit => 50
   end
 
   add_index "events", ["id", "year"], :name => "index_events_on_id_and_year", :unique => true
@@ -203,6 +204,7 @@ ActiveRecord::Schema.define(:version => 20111003052045) do
     t.string   "openness",                  :limit => 1,  :default => "O",   :null => false
     t.boolean  "show_attendee_notes_field",               :default => false, :null => false
     t.integer  "year",                                                       :null => false
+    t.string   "location",                  :limit => 50
   end
 
   add_index "tournaments", ["id", "year"], :name => "index_tournaments_on_id_and_year", :unique => true

@@ -33,12 +33,12 @@
       %tr.lesser-header
         %th Time
         %th Name
-        %th Director(s)
+        %th Location
       - rounds_this_date.each do |r|
         %tr
           %td= r.round_start.strftime '%l:%M %p'
           %td= link_to r.tournament.name, r.tournament
-          %td= r.tournament.directors
+          %td= r.tournament.location
   %br
 
 %h3 Tournament List

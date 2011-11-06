@@ -6,6 +6,9 @@
       %th= trl_attr 'event', 'evtprice'
       %td= format_price(@event.evtprice)
     %tr
+      %th= trl_attr 'event', 'location'
+      %td= @event.location
+    %tr
       %th= trl_attr 'event', 'notes'
       %td= @event.notes
     %tr

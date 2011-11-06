@@ -36,6 +36,7 @@ en:
         evtname: "Event"
         evtdeparttime: "Departure Time"
         evtprice: "Price"
+        location: "Location"
         notes: "Notes"
         return_depart_time: "Return Departure Time"
         return_arrive_time: "Return Arrival Time"
@@ -57,6 +58,7 @@ en:
       tournament:
         directors: "Director(s)"
         eligible: "Eligibility"
+        location: "Location"
         openness: "Open or Invitational?"
         show_attendee_notes_field: "Show Attendee Notes Field?"
       transaction:

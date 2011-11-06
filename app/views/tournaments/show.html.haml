@@ -3,6 +3,9 @@
     %h2= @tournament.name
     %table.lightweight
       %tr
+        %th= trl_attr 'tournament', 'location'
+        %td= @tournament.location
+      %tr
         %th= trl_attr 'tournament', 'directors'
         %td= @tournament.directors
       %tr
