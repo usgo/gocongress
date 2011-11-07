@@ -48,7 +48,7 @@ en:
         age_max: "Maximum Age"
         description: "Description"
         name: "Plan"
-        max_quantity: "Max. Qty."
+        max_quantity: "Max. Qty. Per Attendee"
         price: "Price"
       plan_category:
         name: "Category"
