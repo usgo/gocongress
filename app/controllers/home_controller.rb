@@ -20,13 +20,13 @@ class HomeController < ApplicationController
       @venue_city_state_zip = 'Santa Barbara CA, 93106'
     else
       @slides = [ \
-        ["Lee Hall Panorama", "Bob Felice"] \
+        ["Lee Hall", "Bob Felice"] \
         , ["Blue Ridge Center", "Bob Felice"] \
-        , ["Jimmy Tries Out a Rocker", "Bob Felice"] \
-        , ["Michael, Xianxian, and Nakayama Sensei", "Bob Felice"] \
-        , ["US Open Panorama", "Bob Felice"] \
+        , ["Trying Out a Rocker", "Bob Felice"] \
+        , ["Redmond, Xianxian, and Nakayama Sensei", "Bob Felice"] \
+        , ["US Open", "Bob Felice"] \
         , ["Evening comes to the US Go Congress", "Roy Laird"] \
-        , ["North Carolina Goban by unknown craftsperson", "Jared Beck"]
+        , ["North Carolina Goban by Frank Salantrie", "Jared Beck"]
         ]
       @venue_url = 'http://www.blueridgeassembly.org/'
       @venue_name = 'YMCA Blue Ridge Assembly'
