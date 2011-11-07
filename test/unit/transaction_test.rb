@@ -65,4 +65,25 @@ class TransactionTest < ActiveSupport::TestCase
     end
   end
 
+  test "unreasonable years are invalid" do
+    t = Factory.build(:tr_sale)
+    assert t.valid?
+    t.year = nil
+    assert_equal false, t.valid?
+    t.year = 2100
+    assert_equal false, t.valid?
+    t.year = 2010
+    assert_equal false, t.valid?
+    t.year = 2011
+    assert t.valid?
+  end
+  
+  test "yr" do
+    assert Transaction.respond_to?(:yr)
+    (rand(4)+1).times { Factory.create(:tr_sale, :year => 2011) }
+    (rand(4)+1).times { Factory.create(:tr_sale, :year => 2012) }
+    assert_equal Transaction.where(:year => 2011).count, Transaction.yr(2011).count
+    assert_equal Transaction.where(:year => 2012).count, Transaction.yr(2012).count
+  end
+
 end

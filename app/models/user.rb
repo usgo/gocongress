@@ -1,6 +1,7 @@
 require "invoice_item"
 
 class User < ActiveRecord::Base
+  include YearlyModel
 
   # Devise modules: Do not use :validatable now that
   # the email uniqueness validation has a year scope
@@ -59,9 +60,6 @@ class User < ActiveRecord::Base
   # Nested Attributes allow us to create forms for attributes of a parent
   # object and its associations in one go with fields_for()
   accepts_nested_attributes_for :primary_attendee
-
-  # Scopes, and class methods that act like scopes
-  def self.yr(year) where(:year => year) end
 
   def amount_paid
     sum = 0

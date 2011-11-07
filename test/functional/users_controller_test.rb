@@ -14,15 +14,15 @@ class UsersControllerTest < ActionController::TestCase
 
   test "admin cannot read user from different year" do
     sign_in @admin_user
-    u = Factory.create(:user, :year => 1.year.ago)
-    get :show, :id => u.id, :year => Time.now.year
+    u = Factory.create(:user, :year => @admin_user.year + 1)
+    get :show, :id => u.id, :year => @admin_user.year
     assert_response 403
   end
 
   test "staff cannot read user from different year" do
     sign_in @staff
-    u = Factory.create(:user, :year => 1.year.ago)
-    get :show, :id => u.id, :year => Time.now.year
+    u = Factory.create(:user, :year => @staff.year + 1)
+    get :show, :id => u.id, :year => @staff.year
     assert_response 403
   end
 

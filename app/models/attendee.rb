@@ -1,6 +1,8 @@
 require "invoice_item"
 
 class Attendee < ActiveRecord::Base
+  include YearlyModel
+
   belongs_to :user
 
   has_many :attendee_plans, :dependent => :destroy
@@ -54,9 +56,6 @@ class Attendee < ActiveRecord::Base
   # define constant array of tshirt sizes
   TSHIRT_SIZE_LIST = []
   Attendee::TSHIRT_CHOICES.each { |t| TSHIRT_SIZE_LIST << t[1] }
-
-  # Scopes, and class methods that act like scopes
-  def self.yr(year) where(:year => year) end
 
   # Some "blank" birth_date values have made it into production. The following
   # scope is a useful way to filter out those records when querying birth_date

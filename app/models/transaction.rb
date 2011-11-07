@@ -1,4 +1,6 @@
 class Transaction < ActiveRecord::Base
+  include YearlyModel
+  
   attr_accessible :instrument, :user_id, :trantype, :amount, :gwtranid, :gwdate, :check_number, :comment
 
   # FIXME: in the controller, somehow year needs to get set 
@@ -21,10 +23,9 @@ class Transaction < ActiveRecord::Base
 	INSTRUMENTS = [['Card','C'], ['Cash','S'], ['Check','K']]
 
   # Scopes, and class methods that act like scopes
-  def self.yr(year) where(:year => year) end
   scope :for_payment_history, where(:trantype => ['S','R'])
 
-	validates_presence_of :user_id, :trantype, :amount, :updated_by_user, :year
+	validates_presence_of :user_id, :trantype, :amount, :updated_by_user
 	
   validates_presence_of :instrument, :if => :requires_instrument?
   validates_inclusion_of :instrument, :in => [nil, ''], :if => :forbids_instrument?, \
@@ -36,7 +37,6 @@ class Transaction < ActiveRecord::Base
   validates_inclusion_of :trantype, :in => TRANTYPES.flatten
 
 	validates_numericality_of :amount, :greater_than => 0
-  validates_numericality_of :year, :only_integer => true, :greater_than => 2010, :less_than => 2100
 
   # Certain attributes apply only to gateway transaction types (eg. Sale)
   validates_presence_of :gwdate, :if => :is_gateway_transaction?
