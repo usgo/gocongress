@@ -47,6 +47,7 @@ en:
         age_min: "Minimum Age"
         age_max: "Maximum Age"
         description: "Description"
+        inventory: "Inventory"
         name: "Plan"
         max_quantity: "Max. Qty. Per Attendee"
         price: "Price"

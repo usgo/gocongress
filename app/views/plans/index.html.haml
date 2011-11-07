@@ -9,7 +9,7 @@
   %tbody
     - @plans_grouped.each do |grouping, plans_in_group|
       %tr.greater-header
-        %th{ :colspan => 8 }
+        %th{ :colspan => 9 }
           - if plans_in_group.first.plan_category_id.present?
             = plans_in_group.first.plan_category.name
           - else
@@ -18,6 +18,7 @@
         %th Attendee Age
         %th= trl_attr 'plan', 'name'
         %th= trl_attr 'plan', 'description'
+        %th.numeric= trl_attr 'plan', 'inventory'
         %th.numeric= trl_attr 'plan', 'max_quantity'
         %th.numeric= trl_attr 'plan', 'price'
         %th{ :colspan => 3 }
@@ -27,6 +28,7 @@
           %td= plan.age_range_in_words
           %td= plan.name
           %td= Markdown.new( plan.description ).to_html.html_safe
+          %td.numeric= plan.inventory
           %td.numeric= plan.max_quantity
           %td.numeric= format_price plan.price
           %td= link_to 'Details', plan

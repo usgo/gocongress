@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111106231419) do
+ActiveRecord::Schema.define(:version => 20111107010225) do
 
   create_table "attendee_discounts", :force => true do |t|
     t.integer  "attendee_id", :null => false
@@ -180,6 +180,7 @@ ActiveRecord::Schema.define(:version => 20111106231419) do
     t.integer  "plan_category_id"
     t.integer  "max_quantity",                   :default => 1, :null => false
     t.integer  "year",                                          :null => false
+    t.integer  "inventory"
   end
 
   add_index "plans", ["id", "year"], :name => "index_plans_on_id_and_year", :unique => true
