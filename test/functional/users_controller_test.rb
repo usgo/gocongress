@@ -6,10 +6,8 @@ class UsersControllerTest < ActionController::TestCase
     # I have asked this question:
     # http://stackoverflow.com/questions/7548934/can-devise-sign-in-test-helper-accept-a-new-record
     @user = Factory.create(:user)
-    @user_two = Factory.create(:user)
     @staff = Factory.create(:staff)
     @admin_user = Factory.create(:admin)
-    @job = Factory.create(:job)
   end
 
   test "admin cannot read user from different year" do
@@ -115,7 +113,8 @@ class UsersControllerTest < ActionController::TestCase
   
   test "user cannot edit other user" do
     sign_in @user
-    get :edit, :id => @user_two.id, :year => Time.now.year
+    user_two = Factory.create(:user)
+    get :edit, :id => user_two.id, :year => Time.now.year
     assert_response 403
   end
 
@@ -229,20 +228,22 @@ class UsersControllerTest < ActionController::TestCase
 
   test "admin can assign jobs to any user" do
     sign_in @admin_user
-    u = @user.attributes.merge({ 'job_ids' => [@job.id] })
+    job = Factory.create(:job)
+    u = @user.attributes.merge({ 'job_ids' => [job.id] })
     put :update, :id => @user.to_param, :user => u, :year => Time.now.year
     @user = User.find(@user.id)
-    assert_equal @job.id, @user.jobs.first.id
+    assert_equal job.id, @user.jobs.first.id
   end
 
   test "user cannot assign jobs even to themself" do
     sign_in @user
+    job = Factory.create(:job)
 
-    # starting with zero jobs ..
+    # starting with zero jobs assigned ..
     assert_equal 0, @user.jobs.size
 
     # mass assignment should NOT change job count
-    u = @user.attributes.merge({ 'job_ids' => [@job.id] })
+    u = @user.attributes.merge({ 'job_ids' => [job.id] })
     assert_no_difference('@user.jobs.size') do
       put :update, :id => @user.id, :user => u, :year => Time.now.year
     end
