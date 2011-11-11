@@ -222,7 +222,7 @@ class Attendee < ActiveRecord::Base
     InvoiceItem.inv_item_total(self.invoice_items)
   end
 
-  def is_minor
+  def minor?
     deadline = Date.strptime(AGE_DEADLINE, "%B %d, %Y")
     return (self.birth_date + 18.years > deadline)
   end

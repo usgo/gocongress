@@ -48,7 +48,7 @@ class UsersController < ApplicationController
     # are there any minors?
     @has_minor_attendee = false
     @user.attendees.each { |a|
-      if a.is_minor then @has_minor_attendee = true end
+      if a.minor? then @has_minor_attendee = true end
     }
     
     @is_deposit_paid = @user.get_num_attendee_deposits_paid == @user.attendees.count
