@@ -17,7 +17,6 @@ class RegistrationsControllerTest < ActionController::TestCase
     
     assert_difference ["User.count", "Attendee.count"], +1 do
       post :create, :user => u
-      puts assigns(:user).errors.full_messages
     end
     assert assigns(:user).primary_attendee.user_id.present?
     assert assigns(:user).primary_attendee.is_primary?
@@ -29,5 +28,19 @@ class RegistrationsControllerTest < ActionController::TestCase
       post :create, :user => {}
     end
     assert_template "new"
+  end
+  
+  test "minor agreement validator" do
+    a = Factory.attributes_for(:attendee)
+    a[:birth_date] = 5.years.ago # definitely a minor
+    a[:understand_minor] = 0 # did not click "understand" checkbox
+    u = Factory.attributes_for(:user).merge( { :primary_attendee_attributes => a } )
+
+    assert_no_difference ["User.count", "Attendee.count"] do
+      post :create, :user => u
+    end
+    assert_template "new"
+    assert_equal false, assigns(:user).errors.empty?
+    assert assigns(:user).errors.include?(:"primary_attendee.understand_minor")
   end
 end
