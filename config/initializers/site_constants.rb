@@ -16,8 +16,8 @@ LATEST_YEAR = 2012
 # application controller, for example, the model would be
 # unable to access it.
 CONGRESS_START_DATE = {
-  2011 => Time.utc(2011, 7, 30),
-  2012 => Time.utc(2012, 8, 4)
+  2011 => Date.civil(2011, 7, 30),
+  2012 => Date.civil(2012, 8, 4)
 }
 
 # DAY_OFF_DATE - The go congress traditionally has one "day off". 

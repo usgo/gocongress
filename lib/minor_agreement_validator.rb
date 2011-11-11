@@ -1,11 +1,9 @@
 class MinorAgreementValidator < ActiveModel::EachValidator
-  AGE_DEADLINE = "July 29, 2011"
 
-  def validate_each(user, attribute, checkbox_value)
-    deadline = Date.strptime(AGE_DEADLINE, "%B %d, %Y")
-
-    unless checkbox_value || !user.birth_date || (user.birth_date + 18.years < deadline)
-      user.errors[attribute] << (options[:message] || " - Because this attendee will not be 18 years of age on or before #{AGE_DEADLINE}, you must agree to submit the Minor Agreement Form to the deputy registrar.")
+  def validate_each(attendee, attribute, checkbox_value)
+    unless checkbox_value || !attendee.birth_date || !attendee.minor?
+      msg = " - Because this attendee will not be 18 years of age on the first day of the Congress, you must agree to submit the Minor Agreement Form to the deputy registrar."
+      attendee.errors[attribute] << (options[:message] || msg)
     end
   end
 end

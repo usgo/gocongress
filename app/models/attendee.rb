@@ -17,8 +17,6 @@ class Attendee < ActiveRecord::Base
   has_many :attendee_events, :dependent => :destroy
   has_many :events, :through => :attendee_events
 
-  AGE_DEADLINE = "July 29, 2011"
-
   # Mass assignment config
   attr_accessible :given_name, :family_name, :gender, :anonymous, :rank, :aga_id, \
     :address_1, :address_2, :city, :state, :zip, :country, :phone, :email, :birth_date, \
@@ -113,7 +111,7 @@ class Attendee < ActiveRecord::Base
 
   def age_in_seconds
     # age on the start day of the event, not now
-    (CONGRESS_START_DATE[self.year] - self.birth_date.to_time).to_i
+    (CONGRESS_START_DATE[self.year] - self.birth_date).to_i
   end
   
   def age_in_years
@@ -223,7 +221,8 @@ class Attendee < ActiveRecord::Base
   end
 
   def minor?
-    deadline = Date.strptime(AGE_DEADLINE, "%B %d, %Y")
+    deadline = CONGRESS_START_DATE[self.year]
+    throw "Invalid year" if deadline.nil?
     return (self.birth_date + 18.years > deadline)
   end
 
