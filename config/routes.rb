@@ -11,7 +11,6 @@ Gocongress::Application.routes.draw do
   scope ":year" do
     get 'contact' => 'user_jobs#index'
     get 'pricing' => 'home#pricing'
-    get 'transportation' => 'home#'
 
     resources :discounts, :events, :jobs
     resources :plan_categories, :tournaments, :transactions
