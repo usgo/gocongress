@@ -89,50 +89,61 @@ body.year2012 #header-container { background-color: #453775; }
 body.year2011 .nav-container { background-color: #0071BC; }
 body.year2012 .nav-container { background-color: #8D7AC9; }
 
-.nav { margin: 0 auto; width: 902px; }
-.nav ul { height: 40px; }
-.nav li { 
-  height: 33px;
-  border-left: 1px solid #EEE;
-  display: block;
-  float: left;
-  font-family: Helvetica, sans-serif;
-  font-size: 14px;
-  font-weight: bold; 
-  line-height: 16px;
-  text-align: center;
-  padding: 5px 0px 2px 0px;
-  list-style: none;
+.nav {
+  margin: 0 auto;
+  width: 902px;
+
+  ul { height: 40px; }
+  li { 
+    height: 33px;
+    border-left: 1px solid #EEE;
+    display: block;
+    float: left;
+    font-family: Helvetica, sans-serif;
+    font-size: 14px;
+    font-weight: bold; 
+    line-height: 16px;
+    text-align: center;
+    padding: 5px 0px 2px 0px;
+    list-style: none;
+    
+    &.last-child { border-right: 1px solid #EEE; }
+
+    /* Nav item widths are hardcoded because I couldn't figure out how to evenly
+    distribute and pad them. */
+    &#nav-events { width: 95px; }
+    &#nav-pros { width: 76px; }
+    &#nav-tournaments { width: 115px; }
+    &#nav-faq { width: 90px; }
+    &#nav-costs { width: 181px; }
+    &#nav-contact { width: 95px; }
+    &#nav-who { width: 90px; }
+    &#nav-registration { position:relative; width: 80px; }
+    &#nav-login { width: 70px; }
+    &#nav-registration a { color: #FF2; }
+    &#nav-registration img.register-star { position: absolute; top: -10px; left: 3px; }
+  
+    a { color: white; text-decoration: none; }
+  }
 }
 
-.nav li.last-child { border-right: 1px solid #EEE; }
-.nav li a { color: white; text-decoration: none; }
-
-/* Nav item widths are hardcoded because I couldn't figure out how to evenly
-distribute and pad them. */
-.nav li#nav-events { width: 95px; }
-.nav li#nav-pros { width: 76px; }
-.nav li#nav-tournaments { width: 115px; }
-.nav li#nav-faq { width: 90px; }
-.nav li#nav-costs { width: 180px; }
-.nav li#nav-contact { width: 95px; }
-.nav li#nav-who { width: 90px; }
-.nav li#nav-registration { position:relative; width: 80px; }
-.nav li#nav-login { width: 70px; }
-.nav li#nav-registration a { color: #FF2; }
-.nav li#nav-registration img.register-star { position: absolute; top: -10px; left: 3px; }
-
 /* Admin menu is slightly different */
-.nav-container-admin { background-color: #64AEDE; }
-.nav-container-admin ul { height: 25px; }
-.nav li#nav-admin-title { width: 120px; }
-.nav li#nav-admin-users { width: 70px; }
-.nav li#nav-admin-transactions { width: 120px; }
-.nav li#nav-admin-pricing { width: 90px; }
-.nav li#nav-admin-content { width: 90px; }
-.nav li#nav-admin-reports { width: 90px; }
-.nav li#nav-admin-placeholder { width: 314px; }
-.nav-container-admin .nav li { height: 18px; }
+.nav-container-admin {
+  background-color: #64AEDE;
+  ul { height: 25px; }
+  .nav {
+    li { 
+      height: 18px;
+      &#nav-admin-title { width: 120px; }
+      &#nav-admin-users { width: 70px; }
+      &#nav-admin-transactions { width: 120px; }
+      &#nav-admin-pricing { width: 90px; }
+      &#nav-admin-content { width: 90px; }
+      &#nav-admin-reports { width: 90px; }
+      &#nav-admin-placeholder { width: 314px; }
+    }
+  }
+}
 
 /* Nav hover colors */
 body.year2011 .nav li:hover { background-color: #29ABE2; }
