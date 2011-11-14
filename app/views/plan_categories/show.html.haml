@@ -1,18 +1,18 @@
 %h2= @plan_category.name
 
-%table.lightweight
-  %tbody
-    %tr
-      %th Show on Prices Page:
-      %td= @plan_category.show_on_prices_page ? "Yes" : "No"
-    %tr
-      %th Show on Room and Board Page:
-      %td= @plan_category.show_on_roomboard_page ? "Yes" : "No"
-    %tr
-      %th Show on Registration Form:
-      %td= @plan_category.show_on_reg_form ? "Yes" : "No"
-
-%br
+- if can? :manage, PlanCategory
+  %table.lightweight
+    %tbody
+      %tr
+        %th Show on Prices Page:
+        %td= @plan_category.show_on_prices_page ? "Yes" : "No"
+      %tr
+        %th Show on Room and Board Page:
+        %td= @plan_category.show_on_roomboard_page ? "Yes" : "No"
+      %tr
+        %th Show on Registration Form:
+        %td= @plan_category.show_on_reg_form ? "Yes" : "No"
+  %br
 
 - if @plan_category.plans.empty?
   %p This category has no plans yet.
@@ -34,6 +34,5 @@
 
 %br
 
-= link_to 'Edit', edit_plan_category_path(@plan_category)
-\|
-= link_to 'Back', plan_categories_path
+- if can? :manage, PlanCategory
+  = link_to 'Edit this category', edit_plan_category_path(@plan_category)

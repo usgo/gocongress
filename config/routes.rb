@@ -10,21 +10,15 @@ Gocongress::Application.routes.draw do
   # these routes support multiple years with a year scope
   scope ":year" do
     get 'contact' => 'user_jobs#index'
+    get 'costs' => 'plan_categories#index'
     get 'pricing' => 'home#pricing'
 
-    resources :discounts, :events, :jobs
+    resources :discounts, :events, :jobs, :plans
     resources :plan_categories, :tournaments, :transactions
 
     resources :contents do
       collection do
         get 'faq'
-      end
-    end
-
-    resources :plans do
-      collection do
-        get 'room_and_board'
-        get 'prices_and_extras'
       end
     end
 

@@ -8,17 +8,10 @@ class PlanCategoriesControllerTest < ActionController::TestCase
     @year = Time.now.year
   end
 
-  test "admin can get index" do
-    sign_in @admin
+  test "visitors can get index" do
     get :index, :year => @year
     assert_response :success
     assert_not_nil assigns(:plan_categories)
-  end
-
-  test "user cannot get index" do
-    sign_in @user
-    get :index, :year => @year
-    assert_response 403
   end
 
   test "user cannot create" do

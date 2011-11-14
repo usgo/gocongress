@@ -8,16 +8,6 @@ class PlansControllerTest < ActionController::TestCase
     @year = Time.now.year
   end
 
-  test "visitors can get roomboard page" do
-    get :room_and_board, :year => @year
-    assert_response :success
-  end
-
-  test "visitors can get prices and extras page" do
-    get :prices_and_extras, :year => @year
-    assert_response :success
-  end
-
   test "visitors cannot get index" do
     get :index, :year => @year
     assert_response 403
@@ -29,7 +19,7 @@ class PlansControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  test "non-admin should NOT get new" do
+  test "non-admin cannot get new" do
     sign_in @user
     get :new, :year => @year
     assert_response 403
@@ -49,10 +39,9 @@ class PlansControllerTest < ActionController::TestCase
     assert_redirected_to plans_path
   end
 
-  test "non-admin cannot show plan" do
-  	sign_in @user
+  test "visitor can show plan" do
     get :show, :id => @plan.to_param, :year => @year
-    assert_response 403
+    assert_response :success
   end
 
   test "admin can set max quantity" do

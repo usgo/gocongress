@@ -9,18 +9,6 @@ class PlansController < ApplicationController
     @plans_grouped = plans_ordered.group_by {|plan| plan.plan_category_id}
   end
 
-  # GET /plans/room_and_board
-  def room_and_board
-    plans_ordered = Plan.yr(@year).room_and_board_page.order("plan_category_id, name asc")
-    @plans_grouped = plans_ordered.group_by {|plan| plan.plan_category}
-  end
-
-  # GET /plans/prices_and_extras
-  def prices_and_extras
-    plans_ordered = Plan.yr(@year).prices_page.order("plan_category_id, name")
-    @plans_grouped = plans_ordered.group_by {|plan| plan.plan_category_id}
-  end
-
   # GET /plans/1
   def show
   end

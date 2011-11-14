@@ -113,9 +113,8 @@ distribute and pad them. */
 .nav li#nav-events { width: 95px; }
 .nav li#nav-pros { width: 76px; }
 .nav li#nav-tournaments { width: 115px; }
-.nav li#nav-rooms { width: 90px; }
 .nav li#nav-faq { width: 90px; }
-.nav li#nav-prices-extras { width: 90px; }
+.nav li#nav-costs { width: 180px; }
 .nav li#nav-contact { width: 95px; }
 .nav li#nav-who { width: 90px; }
 .nav li#nav-registration { position:relative; width: 80px; }
