@@ -270,7 +270,7 @@ class AttendeesController < ApplicationController
       if @page == 'baduk' && @attendee.plans.count == 0
         redirect_to atnd_edit_page_path(@attendee, :roomboard)
       else
-        redirect_to user_path(@attendee.user_id), :notice => "Attendee successfully updated"
+        redirect_to user_path(@attendee.user_id), :notice => "Attendee updated"
       end
     else
       init_multipage(@page)

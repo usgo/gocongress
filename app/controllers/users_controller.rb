@@ -147,7 +147,7 @@ class UsersController < ApplicationController
       # Credit: Bill Eisenhauer
       sign_in(@user, :bypass => true) if (current_user.id == @user.id)
 
-      redirect_to user_path(@user), :notice => "User successfully updated"
+      redirect_to user_path(@user), :notice => "User updated"
     else
       @jobs = get_jobs_for_cbx_list
       render :action => params[:page]

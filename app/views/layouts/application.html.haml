@@ -58,19 +58,14 @@
           %li#nav-registration
             - if current_user.nil?
               = image_tag "icons/star.png", :class => 'register-star'
-              %a{:href => new_user_registration_path}
-                %br
-                Register
+              = link_to "<br>Register".html_safe, new_user_registration_path
             - else
-              %a{:href => user_path(current_user.id) }
-                My <br> Account
+              =link_to "My <br> Account".html_safe, user_path(current_user.id)
           %li#nav-login.last-child
             - if current_user.nil?
-              %a.hmenu{:href => new_user_session_path}
-                Sign <br> In
+              =link_to "Sign<br>In".html_safe, new_user_session_path
             - else
-              %a.hmenu{:href => destroy_user_session_path}
-                Sign <br> Out
+              =link_to "Sign<br>Out".html_safe, destroy_user_session_path
 
     - if can? :see_admin_menu, :layout
       .nav-container-admin
@@ -85,9 +80,12 @@
             %li#nav-admin-placeholder.last-child
 
     .content
-      / "Flash messages" required by Devise -Jared 12/20/10
-      .rails-flash-notice= notice
-      .rails-flash-alert= alert
+
+      / Rails flash messages
+      - if flash[:notice]
+        .flash.flash-notice= notice
+      - if flash[:alert]
+        .flash.flash-alert= alert
 
       / Yield to view
       = yield

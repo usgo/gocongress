@@ -23,7 +23,7 @@ class JobsController < ApplicationController
   def create
     @job.year = @year
     if @job.save
-      redirect_to jobs_path, :notice => 'Job was successfully created.'
+      redirect_to jobs_path, :notice => 'Job created.'
     else
       render 'new'
     end
@@ -32,7 +32,7 @@ class JobsController < ApplicationController
   # PUT /jobs/1
   def update
     if @job.update_attributes(params[:job])
-      redirect_to jobs_path, :notice => 'Job was successfully updated.'
+      redirect_to jobs_path, :notice => 'Job updated.'
     else
       render 'edit'
     end

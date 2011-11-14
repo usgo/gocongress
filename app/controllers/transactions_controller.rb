@@ -42,7 +42,7 @@ class TransactionsController < ApplicationController
     @email_picker_value = params[:user_email]
 
     if @transaction.save
-      redirect_to(@transaction, :notice => 'Transaction was successfully created.')
+      redirect_to(@transaction, :notice => 'Transaction created.')
     else
       render :action => "new"
     end
@@ -62,7 +62,7 @@ class TransactionsController < ApplicationController
     end
 
     if extra_errors.empty? && @transaction.update_attributes(params[:transaction])
-      redirect_to(@transaction, :notice => 'Transaction was successfully updated.')
+      redirect_to(@transaction, :notice => 'Transaction updated.')
     else
       extra_errors.each { |e| @transaction.errors[:base] << e }
       render :action => "edit"

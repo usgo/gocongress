@@ -27,7 +27,7 @@ class ContentsController < ApplicationController
   def create
     @content.year = @year
     if @content.save
-      redirect_to(@content, :notice => 'Content was successfully created.')
+      redirect_to(@content, :notice => 'Content created.')
     else
       render :action => "new"
     end
@@ -36,7 +36,7 @@ class ContentsController < ApplicationController
   # PUT /contents/1
   def update
     if @content.update_attributes(params[:content])
-      redirect_to(@content, :notice => 'Content was successfully updated.')
+      redirect_to(@content, :notice => 'Content updated.')
     else
       render :action => "edit"
     end

@@ -158,7 +158,7 @@ class AttendeesControllerTest < ActionController::TestCase
     assert_not_equal state_before, target_attendee.state
 
     assert_redirected_to user_path(@user.id)
-    assert_equal 'Attendee successfully updated', flash[:notice]
+    assert_equal 'Attendee updated', flash[:notice]
   end
 
   %w[basics baduk roomboard].each do |page|

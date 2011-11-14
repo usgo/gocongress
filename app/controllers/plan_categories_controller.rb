@@ -23,7 +23,7 @@ class PlanCategoriesController < ApplicationController
   def create
     @plan_category.year = @year
     if @plan_category.save
-      redirect_to(@plan_category, :notice => 'Plan category was successfully created.')
+      redirect_to(@plan_category, :notice => 'Plan category created.')
     else
       render :action => "new"
     end
@@ -32,7 +32,7 @@ class PlanCategoriesController < ApplicationController
   # PUT /plan_categories/1
   def update
     if @plan_category.update_attributes(params[:plan_category])
-      redirect_to(@plan_category, :notice => 'Plan category was successfully updated.')
+      redirect_to(@plan_category, :notice => 'Plan category updated.')
     else
       render :action => "edit"
     end
