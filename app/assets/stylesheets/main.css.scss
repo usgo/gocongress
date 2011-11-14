@@ -109,17 +109,17 @@ body.year2012 .nav-container { background-color: #8D7AC9; }
     
     &.last-child { border-right: 1px solid #EEE; }
 
-    /* Nav item widths are hardcoded because I couldn't figure out how to evenly
-    distribute and pad them. */
-    &#nav-events { width: 95px; }
+    /* Nav item widths are hardcoded because I couldn't figure out how to
+    evenly distribute and pad them. */
+    &#nav-events { width: 120px; }
     &#nav-pros { width: 76px; }
-    &#nav-tournaments { width: 115px; }
+    &#nav-tournaments { width: 130px; }
     &#nav-faq { width: 90px; }
-    &#nav-costs { width: 181px; }
-    &#nav-contact { width: 95px; }
-    &#nav-who { width: 90px; }
-    &#nav-registration { position:relative; width: 80px; }
-    &#nav-login { width: 70px; }
+    &#nav-costs { width: 90px; }
+    &#nav-contact { width: 110px; }
+    &#nav-who { width: 110px; }
+    &#nav-registration { position:relative; width: 90px; }
+    &#nav-login { width: 76px; }
     &#nav-registration a { color: #FF2; }
     &#nav-registration img.register-star { position: absolute; top: -10px; left: 3px; }
   

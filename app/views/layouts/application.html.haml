@@ -34,6 +34,12 @@
     .nav-container
       .nav
         %ul
+          %li#nav-registration
+            - if current_user.nil?
+              = image_tag "icons/star.png", :class => 'register-star'
+              = link_to "<br>Register".html_safe, new_user_registration_path
+            - else
+              =link_to "My <br> Account".html_safe, user_path(current_user.id)
           %li#nav-events= link_to "Events & Activities", events_path
           %li#nav-tournaments= link_to "Tournaments", tournaments_path
           %li#nav-pros= link_to "Pros", vip_attendees_path
@@ -41,12 +47,6 @@
           %li#nav-faq= link_to "FAQ", faq_contents_path
           %li#nav-contact= link_to "Contact / Volunteer", contact_path
           %li#nav-who= link_to "Who is Coming?", attendees_path
-          %li#nav-registration
-            - if current_user.nil?
-              = image_tag "icons/star.png", :class => 'register-star'
-              = link_to "<br>Register".html_safe, new_user_registration_path
-            - else
-              =link_to "My <br> Account".html_safe, user_path(current_user.id)
           %li#nav-login.last-child
             - if current_user.nil?
               =link_to "Sign<br>In".html_safe, new_user_session_path
