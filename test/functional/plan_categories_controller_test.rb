@@ -14,6 +14,12 @@ class PlanCategoriesControllerTest < ActionController::TestCase
     assert_not_nil assigns(:plan_categories)
   end
 
+  test "admin can get index" do
+    sign_in @admin
+    get :index, :year => @year
+    assert_response :success
+  end
+
   test "user cannot create" do
     sign_in @user
     post :create, :plan_category => @pc.attributes, :year => @year
