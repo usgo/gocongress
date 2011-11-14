@@ -199,9 +199,11 @@ div.download-pdf a {
 }
 
 /* Rails flashes */
-.flash { padding: 5px 10px; }
-.flash-alert { background-color: Yellow; }
-.flash-notice { background-color: LightGreen; }
+.flash {
+  padding: 5px 10px;
+  .flash-alert { background-color: Yellow; }
+  .flash-notice { background-color: LightGreen; }
+}
 
 /* Railsy validation errors */
 #error_explanation h2 { font-size: 16px; }
