@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111113233804) do
+ActiveRecord::Schema.define(:version => 20111130061353) do
 
   create_table "attendee_discounts", :force => true do |t|
     t.integer  "attendee_id", :null => false
@@ -97,18 +97,27 @@ ActiveRecord::Schema.define(:version => 20111113233804) do
   add_index "attendees", ["id", "year"], :name => "index_attendees_on_id_and_year", :unique => true
   add_index "attendees", ["user_id"], :name => "index_attendees_on_user_id"
 
-  create_table "contents", :force => true do |t|
-    t.text     "body",             :null => false
-    t.string   "subject",          :null => false
-    t.datetime "expires_at"
-    t.boolean  "show_on_homepage", :null => false
+  create_table "content_categories", :force => true do |t|
+    t.integer  "year",                     :null => false
+    t.string   "name",       :limit => 50
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "year",             :null => false
-    t.boolean  "is_faq",           :null => false
   end
 
-  add_index "contents", ["year", "is_faq", "expires_at"], :name => "index_contents_on_year_and_is_faq_and_expires_at"
+  add_index "content_categories", ["id", "year"], :name => "index_content_categories_on_id_and_year", :unique => true
+
+  create_table "contents", :force => true do |t|
+    t.text     "body",                :null => false
+    t.string   "subject",             :null => false
+    t.datetime "expires_at"
+    t.boolean  "show_on_homepage",    :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "year",                :null => false
+    t.integer  "content_category_id", :null => false
+  end
+
+  add_index "contents", ["content_category_id"], :name => "index_contents_on_content_category_id"
   add_index "contents", ["year", "show_on_homepage", "expires_at"], :name => "index_contents_on_year_and_show_on_homepage_and_expires_at"
 
   create_table "discounts", :force => true do |t|

@@ -1,8 +1,0 @@
-%h2 Frequently Asked Questions
-
-- if @contents.empty?
-  %p Sorry, no FAQs yet.  Please check again later.
-- else
-  - @contents.each do |c|
-    %h3= c.subject
-    = Markdown.new(c.body).to_html.html_safe

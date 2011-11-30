@@ -32,6 +32,7 @@ p, span, div { font-size: 16px; }
 /* Truly basic classes that could apply anywhere -Jared 12/30/10 */
 .fullwidth { width: 100%; }
 .inline { display: inline; }
+.inline-children { display: inline; * { display: inline;} }
 .smalltext { font-size: 12px; }
 th { text-align: left; }
 th.row { vertical-align: top; }

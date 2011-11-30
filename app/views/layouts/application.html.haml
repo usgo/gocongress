@@ -43,7 +43,8 @@
           %li= link_to "Tournaments", tournaments_path
           %li= link_to "Pros", vip_attendees_path
           %li= link_to "Costs", costs_path
-          %li= link_to "FAQ", faq_contents_path
+          - @content_categories_for_menu.each do |c|
+            %li= link_to c.name, c
           %li= link_to "Contact / Volunteer", contact_path
           %li= link_to "Who is Coming?", attendees_path
           %li
@@ -60,7 +61,7 @@
             %li= link_to "Users", users_path
             %li= link_to "Transactions", transactions_path
             %li= link_to "Pricing", pricing_path
-            %li= link_to "Content", contents_path
+            %li= link_to "Content", content_categories_path
             %li= link_to "Reports", reports_path
 
     .content

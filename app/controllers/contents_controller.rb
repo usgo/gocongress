@@ -7,10 +7,6 @@ class ContentsController < ApplicationController
     @contents = @contents.yr(@year)
   end
 
-  def faq
-    @contents = Content.faq.yr(@year)
-  end
-
   # GET /contents/1
   def show
   end
@@ -45,7 +41,12 @@ class ContentsController < ApplicationController
   # DELETE /contents/1
   def destroy
     @content.destroy
-    redirect_to(contents_url)
+    redirect_to(content_categories_url, :notice => 'Content deleted')
   end
+  
+  def content_category_options
+    ContentCategory.yr(@year).all.map {|c| [ c.name, c.id ] }
+  end
+  helper_method :content_category_options
 
 end

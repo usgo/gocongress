@@ -1,0 +1,21 @@
+%h2 Content Categories
+
+- if can? :create, ContentCategory
+  .flow-padding= button_to 'New Category', new_content_category_path, :method => "get"
+
+- if @content_categories.empty?
+  %p There are no categories yet.
+- else
+  %table.semantic.zebra.fullwidth
+    %tr
+      %th Category
+      %th
+      %th
+  
+    - @content_categories.each do |c|
+      %tr
+        %td= link_to c.name, c
+        %td= link_to 'Edit', edit_content_category_path(c)
+        %td= link_to 'Delete', c, :confirm => 'Are you sure?', :method => :delete
+
+%br

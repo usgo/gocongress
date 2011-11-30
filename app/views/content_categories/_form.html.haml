@@ -1,0 +1,10 @@
+= form_for @content_category do |f|
+  = render :partial => "shared/error_messages", :locals => { :resource => @content_category }
+
+  .field
+    = f.label :name
+    = f.text_field :name
+
+  .field
+    %label
+    = f.submit 'Save'

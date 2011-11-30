@@ -3,7 +3,10 @@
 
   .field
     = f.label :subject
-    = f.text_field :subject    
+    = f.text_field :subject
+  .field
+    = f.label :content_category_id
+    = f.select :content_category_id, content_category_options
   .field
     %label{ :for => 'body'}
       Body
@@ -20,9 +23,6 @@
   .field
     = f.label :show_on_homepage
     = f.check_box :show_on_homepage
-  .field
-    = f.label :is_faq
-    = f.check_box :is_faq
 
   .field
     %label

@@ -1,13 +1,13 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
   helper_method :current_user_is_admin?, :page_title
-  before_filter :set_year
+  before_filter :set_yearly_vars
 
   def default_url_options(options={})
     { :year => @year }
   end
 
-  def set_year
+  def set_yearly_vars
     # In 2011 we used the constant CONGRESS_YEAR to determine the
     # current year, but going forward we will use params[:year] in most
     # places. Hopefully, when this transition is complete we will be
@@ -38,6 +38,9 @@ class ApplicationController < ActionController::Base
       @congress_state = "NC"
       @congress_date_range = "August 4 - 11"
     end
+
+    # The layout needs a list of content categories
+    @content_categories_for_menu = ContentCategory.yr(@year).order(:name)
   end
 
   # Redirect Devise to a specific page on successful sign in  -Jared

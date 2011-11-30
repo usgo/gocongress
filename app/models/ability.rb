@@ -37,7 +37,7 @@ class Ability
     end
     
     # Guests can read public resources, but cannot write anything
-    can :read, [Content, Event, Job, Tournament, PlanCategory]
+    can :read, [Content, ContentCategory, Event, Job, Tournament, PlanCategory]
     can :show, Plan
     can :faq, Content
     
@@ -47,7 +47,7 @@ class Ability
     # Define an array of all resource classes, to be used
     # when the cancan syntax does not allow the symbol :all
     # For example, when applying conditions, eg. :year
-    [Attendee,Content,Discount,Event,Job,PlanCategory,Plan,Transaction,Tournament,User]
+    [Attendee,Content,ContentCategory,Discount,Event,Job,PlanCategory,Plan,Transaction,Tournament,User]
   end
 
 end

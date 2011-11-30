@@ -1,6 +1,7 @@
-%h2 Content (Announcements and FAQs)
+%h2 All Content
 
 .flow-padding= button_to 'Create New Content', new_content_path, :method => "get"
+.flow-padding= button_to 'Manage Categories', new_content_category_path, :method => "get"
 
 - if @contents.count == 0
   %p There are no announcements yet.
@@ -8,10 +9,10 @@
   %table.semantic.zebra.fullwidth
     %tr
       %th Date
+      %th Category
       %th Subject
       %th Expires
       %th Homepage
-      %th FAQ
       %th
       %th
       %th
@@ -19,10 +20,10 @@
     - @contents.each do |content|
       %tr
         %td= content.created_at.to_date
+        %td= content.content_category.name
         %td= content.subject
         %td= content.expires_at.to_date if content.expires_at.present?
         %td= content.show_on_homepage ? "Yes" : "No"
-        %td= content.is_faq ? "Yes" : "No"
         %td= link_to 'Details', content
         %td= link_to 'Edit', edit_content_path(content)
         %td= link_to 'Delete', content, :confirm => 'Are you sure?', :method => :delete
