@@ -13,8 +13,11 @@ module PostgresMigrationHelpers
 
   def remove_pg_foreign_key(from_table, columns)
     constraint_name = gocongress_constraint_name(from_table, columns)
+
+    # to preserve compatability with postgres 8.3,
+    # we do not use the 'if exists' clause here
     execute %{alter table #{from_table} 
-      drop constraint if exists #{constraint_name} restrict}
+      drop constraint #{constraint_name} restrict}
   end
 
   def gocongress_constraint_name(from_table, columns)
