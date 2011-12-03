@@ -1,9 +1,12 @@
-Factory.define :event do |f|
-  f.evtname             "eating lasagna"
-  f.evtdeparttime       "round about dinner time"
-  f.evtprice            "10"
-  f.start               2.days.from_now
-  f.return_depart_time  Time.now.to_time
-  f.return_arrive_time  Time.now.to_time
-  f.year                Time.now.year
+FactoryGirl.define do
+  factory :event do
+    evtname             "eating lasagna"
+    evtdeparttime       "round about dinner time"
+    evtprice            "10"
+    start               2.days.from_now
+    return_depart_time  Time.now.to_time
+    return_arrive_time  Time.now.to_time
+    year                Time.now.year
+    association         :event_category
+  end
 end
