@@ -31,7 +31,6 @@ en:
         guardian_full_name: "Guardian"
       content:
         show_on_homepage: "Show on Homepage?"
-        is_faq: "FAQ?"
       event:
         evtname: "Event"
         evtdeparttime: "Departure Time"

@@ -39,9 +39,6 @@ class Ability
     # Guests can read public resources, but cannot write anything
     can :read, [Content, ContentCategory, Event, Job, Tournament, PlanCategory]
     can :show, [Plan, EventCategory]
-    
-    # Possibly defunct
-    can :faq, Content
   end
 
   def self.congress_resources
