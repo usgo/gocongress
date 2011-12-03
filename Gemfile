@@ -2,13 +2,6 @@ source 'http://rubygems.org'
 
 gem 'rails'
 
-# Avoid rack 1.3.4, because it causes a warning
-# The warning was silenced with this commit:
-# https://github.com/rack/rack/commit/8c638c2ba8ed2190d8aa16821c42fffe0bc7a1a4
-# So, when later versions are released, we can remove this line entirely.
-# Rack is already a dependency of something, probably rails.
-gem 'rack', '!= 1.3.4'
-
 # Database
 # To install the 'pg' gem, the postgres bin directory must be on your path
 # export PATH=/path/to/postgres/bin:${PATH}
