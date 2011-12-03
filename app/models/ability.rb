@@ -30,7 +30,7 @@ class Ability
     end
     
     # User and Staff can manage their own resources, except for 
-    # their User record, which they can only read and update
+    # their User record, which they can only show and update
     if %w[S U].index(user.role).present? then
       can [:show, :update], User, :id => user.id
       can :manage, Attendee, :user_id => user.id
@@ -38,16 +38,18 @@ class Ability
     
     # Guests can read public resources, but cannot write anything
     can :read, [Content, ContentCategory, Event, Job, Tournament, PlanCategory]
-    can :show, Plan
-    can :faq, Content
+    can :show, [Plan, EventCategory]
     
+    # Possibly defunct
+    can :faq, Content
   end
 
   def self.congress_resources
     # Define an array of all resource classes, to be used
     # when the cancan syntax does not allow the symbol :all
     # For example, when applying conditions, eg. :year
-    [Attendee,Content,ContentCategory,Discount,Event,Job,PlanCategory,Plan,Transaction,Tournament,User]
+    [Attendee,Content,ContentCategory,Discount,Event,EventCategory,
+      Job,PlanCategory,Plan,Transaction,Tournament,User]
   end
 
 end

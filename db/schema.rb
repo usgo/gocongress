@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111130061353) do
+ActiveRecord::Schema.define(:version => 20111203211827) do
 
   create_table "attendee_discounts", :force => true do |t|
     t.integer  "attendee_id", :null => false
@@ -136,6 +136,13 @@ ActiveRecord::Schema.define(:version => 20111130061353) do
   add_index "discounts", ["id", "year"], :name => "index_discounts_on_id_and_year", :unique => true
   add_index "discounts", ["year", "is_automatic"], :name => "index_discounts_on_year_and_is_automatic"
 
+  create_table "event_categories", :force => true do |t|
+    t.string  "name", :limit => 25, :null => false
+    t.integer "year",               :null => false
+  end
+
+  add_index "event_categories", ["id", "year"], :name => "index_event_categories_on_id_and_year", :unique => true
+
   create_table "events", :force => true do |t|
     t.string   "evtname"
     t.string   "evtdeparttime"
@@ -148,8 +155,10 @@ ActiveRecord::Schema.define(:version => 20111130061353) do
     t.time     "return_arrive_time"
     t.integer  "year",                              :null => false
     t.string   "location",           :limit => 50
+    t.integer  "event_category_id"
   end
 
+  add_index "events", ["event_category_id"], :name => "index_events_on_event_category_id"
   add_index "events", ["id", "year"], :name => "index_events_on_id_and_year", :unique => true
   add_index "events", ["year", "start"], :name => "index_events_on_year_and_start"
 

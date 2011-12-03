@@ -17,6 +17,8 @@ Gocongress::Application.routes.draw do
     resources :discounts, :events, :jobs, :plans
     resources :plan_categories, :tournaments, :transactions
 
+    resources :event_categories, :only => [:show]
+
     resources :attendees, :except => :edit do
       collection do
         get 'vip'

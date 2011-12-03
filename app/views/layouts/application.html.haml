@@ -39,8 +39,9 @@
               = link_to "Register".html_safe, new_user_registration_path
             - else
               =link_to "My Account".html_safe, user_path(current_user.id)
-          %li= link_to "Events & Activities", events_path
           %li= link_to "Tournaments", tournaments_path
+          - @event_categories_for_menu.each do |c|
+            %li= link_to c.name, c
           %li= link_to "Pros", vip_attendees_path
           %li= link_to "Costs", costs_path
           - @content_categories_for_menu.each do |c|
