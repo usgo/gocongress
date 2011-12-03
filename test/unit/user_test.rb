@@ -145,13 +145,14 @@ class UserTest < ActiveSupport::TestCase
     u.attendees.first.attendee_plans << ap
 
     # assert that user's inv. item total increases by price * qty
-    expected = total_before + qty * p.price
-    assert_equal expected.to_f, u.get_invoice_total.to_f, "user total should increase by price * qty"
+    expected = (total_before + qty * p.price).to_f
+    actual = u.get_invoice_total.to_f
+    assert_in_delta expected, actual, 0.001, "user total should increase by price * qty"
 
     # change plan qty by 1, assert that invoice total changes by price
     expected = u.get_invoice_total + p.price
     ap.quantity += 1
-    assert (expected - u.get_invoice_total).abs < 0.0001, "increase qty should increase price"
+    assert_in_delta expected, u.get_invoice_total, 0.001, "increase qty should increase price"
   end
   
   test "attendee cannot provide qty greater than plan max_qty" do
