@@ -38,4 +38,10 @@ class EventsController < ApplicationController
     @event.destroy
     redirect_to events_url
   end
+
+  def event_category_options
+    EventCategory.yr(@year).all.map {|c| [ c.name, c.id ] }
+  end
+  helper_method :event_category_options
+
 end

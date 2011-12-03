@@ -1,13 +1,14 @@
 class Event < ActiveRecord::Base
   include YearlyModel
 
-  attr_accessible :evtname, :evtdeparttime, :start, :evtprice, :notes, \
-    :return_depart_time, :return_arrive_time, :location
+  attr_accessible :event_category_id, :evtname, :evtdeparttime, :start, 
+    :evtprice, :notes, :return_depart_time, :return_arrive_time, :location
 
   # FIXME: in the controller, somehow year needs to get set 
   # before authorize! runs.  until then, year needs to be accessible.
   attr_accessible :year
 
+  belongs_to :event_category
   has_many :attendee_events, :dependent => :destroy
   has_many :attendees, :through => :attendee_events
 

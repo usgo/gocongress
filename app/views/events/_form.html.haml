@@ -6,6 +6,9 @@
       = f.label :evtname, "Event Name"
       = f.text_field :evtname
     .field
+      = f.label :event_category_id
+      = f.select :event_category_id, event_category_options
+    .field
       = f.label :evtprice, "Price"
       = f.text_field :evtprice, :size => 5
     .field
