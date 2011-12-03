@@ -14,9 +14,10 @@ Gocongress::Application.routes.draw do
     get 'pricing' => 'home#pricing'
 
     resources :content_categories, :contents
-    resources :discounts, :events, :jobs, :plans
+    resources :discounts, :jobs, :plans
     resources :plan_categories, :tournaments, :transactions
 
+    resources :events, :except => [:index]
     resources :event_categories, :only => [:show]
 
     resources :attendees, :except => :edit do

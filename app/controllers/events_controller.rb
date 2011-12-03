@@ -2,12 +2,6 @@ class EventsController < ApplicationController
 
   load_and_authorize_resource
 
-  # GET /events
-  def index
-    events = @events.where(:year => @year).order "start asc"
-    @events_by_date = events.group_by {|event| event.start.to_date}
-  end
-
   # GET /events/1
   def show
   end

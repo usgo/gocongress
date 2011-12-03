@@ -7,12 +7,6 @@ class EventsControllerTest < ActionController::TestCase
     @admin_user = Factory.create(:admin)
   end
 
-  test "anybody can get index" do
-    get :index, :year => Time.now.year
-    assert_response :success
-    assert_not_nil assigns(:events)
-  end
-
   test "user cannot get new" do
     sign_in @user
     get :new, :year => Time.now.year
