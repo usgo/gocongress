@@ -58,21 +58,21 @@ module ReportsHelper
 
     # lisa says: plans should come right after attendee attrs
     pqh = a.plan_qty_hash
-    Plan.order(:name).each do |p|
+    Plan.yr(a.year).order(:name).each do |p|
       plan_qty = pqh[p.id].present? ? pqh[p.id].to_i : 0
       ar << plan_qty.to_i
     end
 
     # claimed discounts
     claimed_discount_ids = a.discounts.where('is_automatic = ?', false).map { |d| d.id }
-    claimable_discounts = Discount.where('is_automatic = ?', false).order(:name)
+    claimable_discounts = Discount.yr(a.year).where('is_automatic = ?', false).order(:name)
     claimable_discounts.each do |d|
       ar << claimed_discount_ids.index(d.id).present? ? 'yes' : 'no'
     end
 
     # tournament participation. order must match reports_controller.attendees()
     tournament_ids = a.tournaments.map { |t| t.id }
-    Tournament.order(:name).each do |t|
+    Tournament.yr(a.year).order(:name).each do |t|
       ar << tournament_ids.index(t.id).present? ? 'yes' : 'no'
     end
 

@@ -1,9 +1,10 @@
 class AttendeeTournament < ActiveRecord::Base
+  include YearlyModel
+
   belongs_to :attendee
   belongs_to :tournament
   validates_presence_of :attendee, :tournament
   validates_length_of :notes, :maximum => 50
-  validates :year, :numericality => { :only_integer => true, :greater_than => 2010, :less_than => 2100 }
 
   before_validation do |at|
     if at.tournament.year != at.attendee.year
@@ -12,9 +13,9 @@ class AttendeeTournament < ActiveRecord::Base
     at.year ||= at.attendee.year
   end
 
-  def self.tmt_names_by_attendee
+  def self.tmt_names_by_attendee(year)
     attendee_tournaments = Hash.new
-    AttendeeTournament.includes(:tournament).order(:attendee_id).each do |at|
+    AttendeeTournament.yr(year).includes(:tournament).order(:attendee_id).each do |at|
       if at.tournament.present? then
         if attendee_tournaments[at.attendee_id].nil?
           attendee_tournaments[at.attendee_id] = Array.new
