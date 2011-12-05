@@ -67,7 +67,7 @@ class ReportsController < ApplicationController
 
   def outstanding_balances
     @users = User.yr(@year).joins(:primary_attendee).order :family_name, :given_name
-    @users.keep_if { |u| u.balance != 0.0 }
+    @users.keep_if { |u| u.balance >= 0.01 }
   end
 
   def overdue_deposits
