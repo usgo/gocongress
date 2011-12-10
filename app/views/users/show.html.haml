@@ -34,7 +34,8 @@
       - else
         We have received the initial deposit for all of your attendees.  Thank you.
     - elsif !@is_past_deposit_due_date
-      Your initial deposit is due 
+      To confirm your registration, please pay an initial deposit of 
+      $75 per attendee by
       = @user.get_initial_deposit_due_date.to_formatted_s(:long)
 
 %br/
@@ -99,13 +100,3 @@
     %a{:href => "/docs/USGC2011-Liability-Release-Form.doc"} Minor Agreement Form
     to the 
     = link_to 'Deputy Registrar', contact_path, :target => '_blank'
-
-%h3 Do I need an AGA membership?
-%p
-  Attendees who wish to play
-  or participate in Go-related activities must have a
-  = link_to "current AGA membership", "https://www.usgo.org/cgi-bin/application.cgi"
-  or a membership in a national organization with which the AGA has a 
-  reciprocal agreement.  Please email the 
-  = link_to 'registrar', contact_path
-  if you have any questions.
