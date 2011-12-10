@@ -5,7 +5,7 @@ class Discount < ActiveRecord::Base
   has_many :attendees, :through => :attendee_discounts
 
   attr_accessible :name, :amount, :age_min, :age_max, :is_automatic, \
-    :players_only, :min_reg_date
+    :min_reg_date
 
   validates_presence_of :name, :amount
   validates_length_of :name, :maximum => 50
@@ -13,7 +13,6 @@ class Discount < ActiveRecord::Base
   validates_numericality_of :age_min, :only_integer => true, :allow_nil => true
   validates_numericality_of :age_max, :only_integer => true, :allow_nil => true
   validates_inclusion_of :is_automatic, :in => [true, false]
-  validates_inclusion_of :players_only, :in => [true, false]
 
   # Scopes, and class methods that act like scopes
   def self.automatic(a) where(:is_automatic => a) end

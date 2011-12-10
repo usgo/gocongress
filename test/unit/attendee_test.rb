@@ -29,14 +29,6 @@ class AttendeeTest < ActiveSupport::TestCase
     # double check
     assert_equal 0, AttendeePlan.where(:attendee_id => destroyed_attendee_id).count
   end
-
-  test "some discounts apply only to players" do
-    a = Factory(:ten_year_old)
-    d = Factory(:discount, {:is_automatic => true, :players_only => false, :age_min => 0, :age_max => 12})
-    assert attendee_has_discount(a,d)
-    d.update_attribute :players_only, true
-    assert_equal false, attendee_has_discount(a,d)
-  end
   
   test "early bird discount" do
     a = Factory(:attendee, {:created_at => Time.new(2011,1,2)})

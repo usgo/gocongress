@@ -85,17 +85,6 @@ class ReportsController < ApplicationController
     end
   end
 
-  def revenue
-    @player_count = Attendee.yr(@year).where('is_player = ?', true).count
-    @player_reg_revenue_sum = @player_count * Attendee.registration_price(:player)
-
-    @nonplayer_count = Attendee.yr(@year).where('is_player = ?', false).count
-    @nonplayer_reg_revenue_sum = @nonplayer_count * Attendee.registration_price(:nonplayer)
-
-    @plan_categories = PlanCategory.yr(@year).where('show_on_reg_form = ?', true).order(:name)
-    @hidden_plan_categories = PlanCategory.yr(@year).where('show_on_reg_form = ?', false).order(:name)
-  end
-
   def transactions
     @transactions = Transaction.yr(@year).all
     @sales = Transaction.yr(@year).where("trantype = ?", "S")

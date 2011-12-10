@@ -9,51 +9,10 @@ class UserTest < ActiveSupport::TestCase
     assert Factory.build(:user).valid?
   end
 
-  test "user (playing) with N go-playing attendees owes N * 375 dollars" do
-    @user.primary_attendee.is_player = true
-    @user.save
-    num_extra_attendees = 1 + rand(3)
-    1.upto(num_extra_attendees) { |a|
-      @user.attendees << Factory(:attendee, :user_id => @user.id, :is_player => true)
-      }
-    assert_equal num_extra_attendees + 1, @user.attendees.size
-    assert_equal (num_extra_attendees + 1) * 375, @user.get_invoice_total
-  end
-
-  test "user (non-playing) with N non-playing attendees owes N * 75 dollars" do
-    @user.primary_attendee.is_player = false
-    @user.save
-    num_extra_attendees = 1 + rand(3)
-    1.upto(num_extra_attendees) { |a|
-      @user.attendees << Factory(:attendee, :user_id => @user.id, :is_player => false)
-      }
-    assert_equal num_extra_attendees + 1, @user.attendees.size
-    assert_equal (num_extra_attendees + 1) * 75, @user.get_invoice_total
-  end
-
-  test "user (non-playing) with N players and M non-players owes N * 375 + M * 75 dollars" do
-    @user.primary_attendee.is_player = false
-    @user.save
-    num_players = 1 + rand(3)
-    num_non_players = 1 + rand(3)
-    1.upto(num_players) { |a|
-      @user.attendees << Factory(:attendee, :user_id => @user.id, :is_player => true)
-      }
-    1.upto(num_non_players) { |a|
-      @user.attendees << Factory(:attendee, :user_id => @user.id, :is_player => false)
-      }
-    assert_equal num_players + num_non_players + 1, @user.attendees.size
-    expected_cost = (num_non_players + 1) * 75 + (num_players * 375)
-    assert_equal expected_cost, @user.get_invoice_total
-  end
-
   test "comp transaction" do
-    @user.primary_attendee.is_player = true
-    @user.save
-    assert_equal 375, @user.get_invoice_total
     @user.transactions << Factory(:tr_comp, :user_id => @user.id, :amount => 33)
     @user.transactions << Factory(:tr_comp, :user_id => @user.id, :amount => 40)
-    assert_equal 302, @user.get_invoice_total
+    assert_equal -73, @user.get_invoice_total
   end
 
   test "amount paid is sum of sale transactions" do

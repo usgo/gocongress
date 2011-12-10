@@ -14,7 +14,7 @@ class ReportsControllerTest < ActionController::TestCase
     # of the reports, just to make sure they are successful
     
     # The following reports take no paramters, and only respond to html
-    %w[index invoices emails events outstanding_balances revenue
+    %w[index invoices emails events outstanding_balances
         tournaments user_invoices].each do |r|
       get r, :year => Time.now.year
       assert_response :success

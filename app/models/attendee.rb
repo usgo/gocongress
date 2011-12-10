@@ -20,7 +20,7 @@ class Attendee < ActiveRecord::Base
   # Mass assignment config
   attr_accessible :given_name, :family_name, :gender, :anonymous, :rank, :aga_id, \
     :address_1, :address_2, :city, :state, :zip, :country, :phone, :email, :birth_date, \
-    :understand_minor, :congresses_attended, :is_player, \
+    :understand_minor, :congresses_attended, \
     :is_current_aga_member, :tshirt_size, :special_request, :roomate_request
 
   # FIXME: in the controller, somehow year needs to get set 
@@ -95,7 +95,6 @@ class Attendee < ActiveRecord::Base
   # only apply these validations on the baduk form page ("player info")
   with_options :on => :update, :if => :form_page_is_baduk? do |b|
     b.validates_numericality_of :congresses_attended, :greater_than_or_equal_to => 0
-    b.validates_inclusion_of :is_player, :in => [true, false]
     b.validates_inclusion_of :is_current_aga_member, :in => [true, false]
   end
   
@@ -172,8 +171,8 @@ class Attendee < ActiveRecord::Base
     invoice_items = []
     
     # registration fee for each attendee
-    reg_desc = "Registration " + (self.is_player? ? "(Player)" : "(Non-Player)")
-    invoice_items.push InvoiceItem.inv_item_hash( reg_desc, self.get_full_name, self.get_registration_price, 1 )
+    # reg_desc = "Registration " + (self.is_player? ? "(Player)" : "(Non-Player)")
+    # invoice_items.push InvoiceItem.inv_item_hash( reg_desc, self.get_full_name, self.get_registration_price, 1 )
 
     # How old will the attendee be on the first day of the event?
     # Also, truncate to an integer age to simplify logic below
@@ -187,9 +186,8 @@ class Attendee < ActiveRecord::Base
       satisfy_age_min = d.age_min.blank? || atnd_age >= d.age_min
       satisfy_age_max = d.age_max.blank? || atnd_age <= d.age_max
       satisfy_min_reg_date = d.min_reg_date.blank? || self.created_at.to_date <= d.min_reg_date.to_date
-      satisfy_players_only = !d.players_only || self.is_player
 
-      if (satisfy_age_min && satisfy_age_max && satisfy_min_reg_date && satisfy_players_only) then
+      if (satisfy_age_min && satisfy_age_max && satisfy_min_reg_date) then
         invoice_items.push InvoiceItem.inv_item_hash(d.get_invoice_item_name, self.get_full_name, -1 * d.amount, 1)
       end
 
@@ -270,8 +268,9 @@ class Attendee < ActiveRecord::Base
   end
 
   def get_registration_price
-    reg_type = self.is_player? ? :player : :nonplayer
-    Attendee.registration_price reg_type
+    # reg_type = self.is_player? ? :player : :nonplayer
+    # Attendee.registration_price reg_type
+    raise "Defunct Method"
   end
 
   def get_tshirt_size_name

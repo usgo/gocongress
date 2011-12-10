@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111203234446) do
+ActiveRecord::Schema.define(:version => 20111210072524) do
 
   create_table "attendee_discounts", :force => true do |t|
     t.integer  "attendee_id", :null => false
@@ -81,7 +81,6 @@ ActiveRecord::Schema.define(:version => 20111203234446) do
     t.boolean  "is_primary",                            :default => false, :null => false
     t.boolean  "minor_agreement_received",              :default => false, :null => false
     t.integer  "congresses_attended"
-    t.boolean  "is_player"
     t.boolean  "is_current_aga_member"
     t.string   "tshirt_size",              :limit => 2
     t.text     "special_request"
@@ -121,16 +120,15 @@ ActiveRecord::Schema.define(:version => 20111203234446) do
   add_index "contents", ["year", "show_on_homepage", "expires_at"], :name => "index_contents_on_year_and_show_on_homepage_and_expires_at"
 
   create_table "discounts", :force => true do |t|
-    t.string   "name",         :limit => 50,                    :null => false
-    t.decimal  "amount",                                        :null => false
+    t.string   "name",         :limit => 50, :null => false
+    t.decimal  "amount",                     :null => false
     t.integer  "age_min"
     t.integer  "age_max"
-    t.boolean  "is_automatic",                                  :null => false
+    t.boolean  "is_automatic",               :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "players_only",               :default => false, :null => false
     t.date     "min_reg_date"
-    t.integer  "year",                                          :null => false
+    t.integer  "year",                       :null => false
   end
 
   add_index "discounts", ["id", "year"], :name => "index_discounts_on_id_and_year", :unique => true
@@ -186,16 +184,16 @@ ActiveRecord::Schema.define(:version => 20111203234446) do
   add_index "plan_categories", ["id", "year"], :name => "index_plan_categories_on_id_and_year", :unique => true
 
   create_table "plans", :force => true do |t|
-    t.string   "name",             :limit => 50,                :null => false
-    t.decimal  "price",                                         :null => false
-    t.integer  "age_min",                                       :null => false
+    t.string   "name",             :limit => 50,                                               :null => false
+    t.decimal  "price",                          :precision => 10, :scale => 2,                :null => false
+    t.integer  "age_min",                                                                      :null => false
     t.integer  "age_max"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "description"
     t.integer  "plan_category_id"
-    t.integer  "max_quantity",                   :default => 1, :null => false
-    t.integer  "year",                                          :null => false
+    t.integer  "max_quantity",                                                  :default => 1, :null => false
+    t.integer  "year",                                                                         :null => false
     t.integer  "inventory"
   end
 
@@ -227,9 +225,9 @@ ActiveRecord::Schema.define(:version => 20111203234446) do
   add_index "tournaments", ["id", "year"], :name => "index_tournaments_on_id_and_year", :unique => true
 
   create_table "transactions", :force => true do |t|
-    t.integer  "user_id",                         :null => false
-    t.string   "trantype",           :limit => 1, :null => false
-    t.decimal  "amount",                          :null => false
+    t.integer  "user_id",                                                        :null => false
+    t.string   "trantype",           :limit => 1,                                :null => false
+    t.decimal  "amount",                          :precision => 10, :scale => 2, :null => false
     t.integer  "gwtranid"
     t.date     "gwdate"
     t.datetime "created_at"
@@ -238,7 +236,7 @@ ActiveRecord::Schema.define(:version => 20111203234446) do
     t.integer  "updated_by_user_id"
     t.string   "comment"
     t.string   "instrument",         :limit => 1
-    t.integer  "year",                            :null => false
+    t.integer  "year",                                                           :null => false
   end
 
   add_index "transactions", ["gwtranid"], :name => "index_transactions_on_gwtranid", :unique => true
