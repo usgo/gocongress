@@ -28,7 +28,7 @@ class PlansController < ApplicationController
     @plan.year = @year
     @plan_categories = get_plan_categories_for_select
     if @plan.save
-      redirect_to plans_path, :notice => 'Plan created.'
+      redirect_to plan_category_path(@plan.plan_category), :notice => 'Plan created.'
     else
       render :action => "new"
     end
@@ -38,7 +38,7 @@ class PlansController < ApplicationController
   def update
     @plan_categories = get_plan_categories_for_select
     if @plan.update_attributes(params[:plan])
-      redirect_to plans_path, :notice => 'Plan updated.'
+      redirect_to plan_category_path(@plan.plan_category), :notice => 'Plan updated.'
     else
       render :action => "edit"
     end
