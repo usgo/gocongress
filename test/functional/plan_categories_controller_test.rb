@@ -14,6 +14,19 @@ class PlanCategoriesControllerTest < ActionController::TestCase
     assert_not_nil assigns(:plan_categories)
   end
 
+  test "visitor can show" do
+    get :show, id: @pc.id, year: @year
+    assert_response :success
+    assert_not_nil assigns(:plan_category)
+  end
+
+  test "admin can show" do
+    sign_in @admin
+    get :show, id: @pc.id, year: @year
+    assert_response :success
+    assert_not_nil assigns(:plan_category)
+  end
+
   test "admin can get index" do
     sign_in @admin
     get :index, :year => @year
