@@ -325,7 +325,7 @@ protected
       @attendee_discount_ids = @attendee.discounts.automatic(false).map { |d| d.id }
     elsif page == "roomboard"
       age = @attendee.age_in_years.to_i
-      plans = Plan.yr(@year).reg_form.appropriate_for_age(age)
+      plans = Plan.yr(@year).appropriate_for_age(age)
       @plans_ordered = plans.order("price desc")
       @plans_grouped = @plans_ordered.group_by {|plan| plan.plan_category}
     elsif page == "admin"

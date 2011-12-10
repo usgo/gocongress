@@ -1,23 +1,16 @@
 - if can? :manage, PlanCategory
   %h2 Plan Categories
   .flow-padding= button_to 'Create a new Plan Category', new_plan_category_path, :method => "get"
-  %p.notice
-    Most Plan Categories should be shown on the Registration
-    Form. However, the Congress Registration Plans are added
-    automatically to each Attendee (based on age, etc.) so
-    please do not show those plans on the Registration Form.
 
   %table.semantic.fullwidth.zebra
     %thead
       %tr
         %th Category
-        %th Show on Registration Form?
         %th{:colspan=>2}
     %tbody
       - @plan_categories.each do |pc|
         %tr
           %td= link_to pc.name, pc
-          %td= pc.show_on_reg_form ? "Yes" : "No"
           %td= link_to 'Edit', edit_plan_category_path(pc)
           %td= link_to 'Delete', pc, :confirm => 'Are you sure?', :method => :delete
 

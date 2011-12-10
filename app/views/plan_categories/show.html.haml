@@ -1,13 +1,5 @@
 %h2= @plan_category.name
 
-- if can? :manage, PlanCategory
-  %table.lightweight
-    %tbody
-      %tr
-        %th Show on Registration Form:
-        %td= @plan_category.show_on_reg_form ? "Yes" : "No"
-  %br
-
 - if @plan_category.plans.empty?
   %p This category has no plans yet.
 - else

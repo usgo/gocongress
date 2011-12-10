@@ -52,7 +52,6 @@ en:
         price: "Price"
       plan_category:
         name: "Category"
-        show_on_reg_form: "Show on Registration Form"
       tournament:
         directors: "Director(s)"
         eligible: "Eligibility"
