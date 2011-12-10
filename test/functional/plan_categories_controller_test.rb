@@ -20,6 +20,12 @@ class PlanCategoriesControllerTest < ActionController::TestCase
     assert_response :success
   end
 
+  test "admin can edit" do
+    sign_in @admin
+    get :edit, id: @pc.id, year: @year
+    assert_response :success
+  end
+
   test "user cannot create" do
     sign_in @user
     post :create, :plan_category => @pc.attributes, :year => @year
