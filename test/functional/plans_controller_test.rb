@@ -36,7 +36,7 @@ class PlansControllerTest < ActionController::TestCase
     assert_difference('Plan.count') do
       post :create, :plan => @plan.attributes, :year => @year
     end
-    assert_redirected_to plans_path
+    assert_redirected_to plan_category_path(@plan.plan_category)
   end
 
   test "visitor can show plan" do
@@ -52,7 +52,7 @@ class PlansControllerTest < ActionController::TestCase
     put :update, :id => @plan.id, :plan => @plan.attributes, :year => @year
     plan_after = Plan.find @plan.id
     assert_equal new_max_quantity, plan_after.max_quantity
-    assert_redirected_to plans_path
+    assert_redirected_to plan_category_path(@plan.plan_category)
   end
 
 end
