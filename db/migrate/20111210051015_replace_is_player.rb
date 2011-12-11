@@ -1,4 +1,28 @@
 class ReplaceIsPlayer < ActiveRecord::Migration
+  
+  # Faux models protect against validations which may be added in future
+  # http://guides.rubyonrails.org/migrations.html#using-models-in-your-migrations
+  # But, if I had to do this again, I'd just write SQL!
+  class PlanCategory < ActiveRecord::Base
+    include YearlyModel
+    has_many :plans
+  end
+  class Plan < ActiveRecord::Base
+    include YearlyModel
+    has_many :attendee_plans, :dependent => :destroy
+    has_many :attendees, :through => :attendee_plans
+  end
+  class AttendeePlan < ActiveRecord::Base
+    include YearlyModel
+    belongs_to :attendee
+    belongs_to :plan
+  end
+  class Attendee < ActiveRecord::Base
+    include YearlyModel
+    has_many :attendee_plans, :dependent => :destroy
+    has_many :plans, :through => :attendee_plans
+  end
+  
   def up
 
     # In order to drop attendees.is_player, we must first migrate
@@ -29,10 +53,6 @@ class ReplaceIsPlayer < ActiveRecord::Migration
         description: plan_name)
     end
     
-    # We've already tried to save the plans, but let's just raise
-    # an error if they're invalid, as a sanity check
-    cat.save!
-    
     # Check that the category has the expected number of plans
     unless cat.plans.count == plan_specs.count
       raise "Expected #{plan_specs.count} plans in category, found #{cat.plans.count}"
@@ -42,11 +62,8 @@ class ReplaceIsPlayer < ActiveRecord::Migration
     # we may begin assigning them to their respective 2011 attendees
     Attendee.yr(2011).each do |a|
       cat.plans.each do |p|
-        old_enough = a.age_in_years >= p.age_min
-        young_enough = (p.age_max.nil? or a.age_in_years <= p.age_max)
-        appropriate = a.is_player ^ (p.name == "Non-Player Registration")
-        if old_enough and young_enough and appropriate
-          a.plans << p
+        if a.is_player ^ (p.name == "Non-Player Registration")
+          AttendeePlan.create!(:attendee_id => a.id, :plan_id => p.id, :quantity => 1, :year => 2011)
         end
       end
     end
