@@ -1,4 +1,5 @@
 %h2= @plan_category.name
+= markdown_if_present(@plan_category.description)
 
 - if @plan_category.plans.empty?
   %p This category has no plans yet.
@@ -22,3 +23,5 @@
 
 - if can? :manage, PlanCategory
   = link_to 'Edit this category', edit_plan_category_path(@plan_category)
+  %br
+  = link_to 'Delete this category', @plan_category, :confirm => 'Really delete this category? Are you sure?', :method => :delete

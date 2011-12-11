@@ -30,6 +30,10 @@ module ApplicationHelper
     f.hidden_field(:_destroy, :class => 'tournament-round-destroy') + link_to_function( anchor_text, "remove_round(this)" )
   end
 
+  def markdown_if_present(s)
+    s.blank? ? '' : Markdown.new(s).to_html.html_safe
+  end
+
   # min_precision() returns the minimum precision necessary to express a given Float
   def min_precision(f)
     raise "invalid argument: expected floatable" unless floatable?(f)
