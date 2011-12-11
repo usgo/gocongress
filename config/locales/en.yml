@@ -7,7 +7,7 @@ en:
         aga_id: "AGA ID"
         anonymous: "Anonymous"
         city: "City"
-        country: "Country Code"
+        country: "Country"
         created_at: "Registration Date"
         deposit_received_at: "Deposit Received On"
         gender: "Gender"
