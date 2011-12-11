@@ -22,6 +22,6 @@
 %br
 
 - if can? :manage, PlanCategory
-  = link_to 'Edit this category', edit_plan_category_path(@plan_category)
-  %br
-  = link_to 'Delete this category', @plan_category, :confirm => 'Really delete this category? Are you sure?', :method => :delete
+  .inline-children
+    = button_to 'Edit this Category', edit_plan_category_path(@plan_category), :method => :get
+    = button_to 'Delete this Category', @plan_category, :method => :delete, :confirm => 'Really delete this category? Are you sure?'
