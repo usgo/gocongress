@@ -1,11 +1,11 @@
 class AttendeePlan < ActiveRecord::Base
+  include YearlyModel
   belongs_to :attendee
   belongs_to :plan
 
   # attr_accessible is not necessary, because
   # there is no AttendeePlan controller
 
-  validates :year, :numericality => { :only_integer => true, :greater_than => 2010, :less_than => 2100 }
   validates_presence_of :attendee, :plan
 
   validates_numericality_of :quantity, \
