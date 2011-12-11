@@ -51,7 +51,7 @@ class AttendeesController < ApplicationController
     # calculate average age
     aged_attendees = @attendees.reasonable_birth_date.all
     total_years_of_life = aged_attendees.map(&:age_in_years).reduce(:+)
-    @avg_age_in_years = total_years_of_life / aged_attendees.count
+    @avg_age = total_years_of_life / aged_attendees.count
   end
 
   # GET /attendees/new

@@ -12,7 +12,7 @@
     = distance_of_time_in_words @oldest_attendee.birth_date.to_date, Time.now.to_date
     old.
 
-  The average age is #{@avg_age_in_years.round}.
+  The average age is #{@avg_age.round}.
   There are #{@male_count} men and #{@female_count} women.
 
 - unless anyone_signed_in?
