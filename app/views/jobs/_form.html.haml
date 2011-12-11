@@ -20,16 +20,8 @@
     .field
       = f.label :vacancies
       = f.text_field :vacancies
-
     .field
-      %label{ :for => 'job_description'}
-        Description
-        %br
-        %span.smalltext
-          You can format the text (bold, etc.) with 
-          %a{ :href => 'http://en.wikipedia.org/wiki/Markdown', :target => '_blank' } Markdown 
-          syntax.
-      = f.text_area :description, :class => 'wide', :rows => 4
+      = render partial: "shared/md_area", locals: { :obj => :job, :atr => :description }
 
   .field
     %label

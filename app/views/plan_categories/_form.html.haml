@@ -6,14 +6,7 @@
       = f.label trl_attr 'plan_category', 'name'
       = f.text_field :name
     .field
-      %label{ :for => 'description'}
-        Description
-        %br
-        %span.smalltext
-          You can format the text (bold, etc.) with
-          %a{ :href => 'http://en.wikipedia.org/wiki/Markdown', :target => '_blank' } Markdown
-          syntax.
-      = f.text_area :description, { :class => 'wide', :rows => 5 }
+      = render partial: "shared/md_area", locals: { :obj => :plan_category, :atr => :description }
 
   .actions
     = f.submit 'Save'

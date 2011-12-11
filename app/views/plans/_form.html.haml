@@ -9,14 +9,7 @@
       = f.label :plan_category_id
       = f.select :plan_category_id, @plan_categories
     .field
-      %label{ :for => 'plan_description'}
-        Description
-        %br
-        %span.smalltext
-          You can format the text (bold, etc.) with
-          %a{ :href => 'http://en.wikipedia.org/wiki/Markdown', :target => '_blank' } Markdown
-          syntax.
-      = f.text_area :description, { :class => 'wide', :rows => 5 }
+      = render partial: "shared/md_area", locals: { :obj => :plan, :atr => :description }
     .field
       = f.label :price
       = f.text_field :price

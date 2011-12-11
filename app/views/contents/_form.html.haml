@@ -8,15 +8,7 @@
     = f.label :content_category_id
     = f.select :content_category_id, content_category_options
   .field
-    %label{ :for => 'body'}
-      Body
-      %br
-      %span.smalltext
-        You can format the text (bold, etc.) with
-        %a{ :href => 'http://en.wikipedia.org/wiki/Markdown', :target => '_blank' } Markdown
-        syntax.
-    = f.text_area :body, { :class => 'wide', :rows => 5 }
-    
+    = render partial: "shared/md_area", locals: { :obj => :content, :atr => :body }
   .field
     = f.label :expires_at
     = f.datetime_select :expires_at, :include_blank => true
