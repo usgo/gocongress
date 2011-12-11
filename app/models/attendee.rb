@@ -107,11 +107,6 @@ class Attendee < ActiveRecord::Base
     end
     registration_type.to_s == 'player' ? 375 : 75
   end
-
-  def age_in_seconds
-    # age on the start day of the event, not now
-    (CONGRESS_START_DATE[self.year] - self.birth_date).to_i
-  end
   
   def age_in_years
     # Returns age in years on the start day of the event, now now.  Note that

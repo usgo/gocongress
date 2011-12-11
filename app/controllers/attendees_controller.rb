@@ -40,18 +40,18 @@ class AttendeesController < ApplicationController
     @dan_count = @attendees.where(:rank => 1..9).count
     @kyu_count = @attendees.where(:rank => -30..-1).count
     @np_count = @attendees.where(:rank => 0).count
-    @youngest_attendee = @attendees.reasonable_birth_date.order('birth_date desc').first
-    @oldest_attendee = @attendees.reasonable_birth_date.order('birth_date desc').last
     @male_count = @attendees.where(:gender => 'm').count
     @female_count = @attendees.where(:gender => 'f').count
     
+    # for the age statistics, our query will use a different order clause
+    age_before_beauty = Attendee.yr(@year).reasonable_birth_date.order('birth_date')
+    @oldest_attendee = age_before_beauty.first
+    @youngest_attendee = age_before_beauty.last
+
     # calculate average age
-    total_seconds_of_life = 0
-    @attendees.reasonable_birth_date.each do |a|
-      total_seconds_of_life += a.age_in_seconds
-    end
-    avg_age_in_seconds = total_seconds_of_life.to_f / @attendees.reasonable_birth_date.count
-    @avg_age_in_years = avg_age_in_seconds.to_f / 60 / 60 / 24 / 365
+    aged_attendees = @attendees.reasonable_birth_date.all
+    total_years_of_life = aged_attendees.map(&:age_in_years).reduce(:+)
+    @avg_age_in_years = total_years_of_life / aged_attendees.count
   end
 
   # GET /attendees/new
