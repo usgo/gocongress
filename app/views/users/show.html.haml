@@ -24,31 +24,9 @@
 .right-column
   %h2 Balance
   = render :partial => 'shared/balance', :locals => {:user => @user, :show_detail_links => true}
-  
   %p= button_to "Make a Payment", pay_user_path(@user), :method => "get", :class => 'button-emphasis'
 
-  %p
-    - if @is_deposit_paid
-      - if @user.attendees.count == 1
-        We have received your initial deposit.  Thank you.
-      - else
-        We have received the initial deposit for all of your attendees.  Thank you.
-    - elsif !@is_past_deposit_due_date
-      To confirm your registration, please pay an initial deposit of 
-      $75 per attendee by
-      = @user.get_initial_deposit_due_date.to_formatted_s(:long)
-
 %br/
-
-- if (!@is_deposit_paid && @is_past_deposit_due_date)
-  %p.notice
-    %strong Your initial deposit is overdue.
-    %br
-    We have not received the initial deposit for all attendees. Please make
-    an initial payment of $75 per attendee. Thank you. 
-    %br
-    If you have any questions, please contact the
-    = link_to "registrar.", contact_path
 
 %h2 My Attendees
 %p= link_to 'Register another attendee', add_attendee_to_user_path  
@@ -90,7 +68,7 @@
 %p
   * Age on #{CONGRESS_START_DATE[@year].to_formatted_s(:long)}
   %br
-  ** Initial deposit received, all forms filled out, association membership verified, etc.
+  ** Payment received, all forms filled out, association membership verified, etc.
 
 -if @has_minor_attendee
   %h3 Regarding Minors

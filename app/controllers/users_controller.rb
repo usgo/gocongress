@@ -45,9 +45,7 @@ class UsersController < ApplicationController
       'My Account' :
       @user.primary_attendee.full_name_possessive + ' Account'
 
-    @has_minor_attendee = @user.attendees.map(&:minor?).include?(true)    
-    @is_deposit_paid = @user.get_num_attendee_deposits_paid == @user.attendees.count
-    @is_past_deposit_due_date = @user.get_initial_deposit_due_date < Time.now.to_date
+    @has_minor_attendee = @user.attendees.map(&:minor?).include?(true)
   end
   
   # GET /users/1/pay
