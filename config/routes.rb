@@ -61,8 +61,6 @@ Gocongress::Application.routes.draw do
   # deprecated routes: redirect with 301 status code
   # these routes will be deleted eventually
   get 'contact' => redirect('/2012/contact')
-  get 'prices_and_extras' => redirect('/2012/plans/prices_and_extras')
-  get 'room_and_board' => redirect('/2012/plans/room_and_board')
 
   # these routes should come last
   get ":year" => 'home#index', :as => :year
