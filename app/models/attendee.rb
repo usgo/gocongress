@@ -109,15 +109,9 @@ class Attendee < ActiveRecord::Base
   end
   
   def age_in_years
-    # Returns age in years on the start day of the event, now now.  Note that
-    # age in years is a human concept which is NOT easily derived from age in
-    # seconds!  This function used to return a fractional year, and now
-    # returns an integer.
-    congress_start = CONGRESS_START_DATE[self.year]
+    # Returns integer age in years on the start day of the event, not now.
     year_delta = congress_start.year - birth_date.year
-    bday_at_congress_start = Time.new(congress_start.year, birth_date.month, birth_date.day)
-    will_bday_have_passed = (bday_at_congress_start <=> congress_start) == 1
-    return will_bday_have_passed ? year_delta : year_delta - 1
+    birthday_after_congress ? year_delta - 1 : year_delta
   end
 
   def attribute_names_for_csv
@@ -137,6 +131,15 @@ class Attendee < ActiveRecord::Base
 
     # note: the order must match attendee_to_array() in reports_helper.rb
     return first_attrs.concat(attrs.concat(last_attrs))
+  end
+  
+  def birthday_after_congress
+    bday = Time.new(congress_start.year, birth_date.month, birth_date.day)
+    (bday <=> congress_start) == 1
+  end
+  
+  def congress_start
+    CONGRESS_START_DATE[self.year]
   end
 
   def country_is_america?
