@@ -16,7 +16,6 @@
 = form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f|
   = devise_error_messages!
   %fieldset
-    %legend User Account
     .field
       = f.label :email
       = f.text_field :email
