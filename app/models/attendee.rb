@@ -101,13 +101,6 @@ class Attendee < ActiveRecord::Base
   # validations for admin page
   validates_date :deposit_received_at, :if => :form_page_is_admin?, :allow_blank => true
 
-  def self.registration_price(registration_type)
-    unless %w[player nonplayer].include?(registration_type.to_s) then
-      raise 'Invalid registration_type: ' + registration_type.to_s
-    end
-    registration_type.to_s == 'player' ? 375 : 75
-  end
-  
   def age_in_years
     # Returns integer age in years on the start day of the event, not now.
     year_delta = congress_start.year - birth_date.year
@@ -167,10 +160,6 @@ class Attendee < ActiveRecord::Base
 
   def invoice_items
     invoice_items = []
-    
-    # registration fee for each attendee
-    # reg_desc = "Registration " + (self.is_player? ? "(Player)" : "(Non-Player)")
-    # invoice_items.push InvoiceItem.inv_item_hash( reg_desc, self.get_full_name, self.get_registration_price, 1 )
 
     # How old will the attendee be on the first day of the event?
     # Also, truncate to an integer age to simplify logic below
@@ -258,15 +247,9 @@ class Attendee < ActiveRecord::Base
     if rank_name.empty? then raise "assertion failed: invalid rank" end
     return rank_name
   end
-  
+
   def rank_name_for_badge
     rank == 0 ? "NP" : get_rank_name
-  end
-
-  def get_registration_price
-    # reg_type = self.is_player? ? :player : :nonplayer
-    # Attendee.registration_price reg_type
-    raise "Defunct Method"
   end
 
   def get_tshirt_size_name
