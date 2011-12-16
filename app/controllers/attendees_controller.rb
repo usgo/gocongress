@@ -153,25 +153,12 @@ class AttendeesController < ApplicationController
     if (@page == 'admin')
       render_access_denied and return unless current_user.is_admin?
 
-      # for each simple "admin-only" field
+      # admin-only fields
       [:comment, :confirmed, :minor_agreement_received, :guardian_full_name].each do |p|
         if (!params[:attendee][p].nil?)
           @attendee[p] = params[:attendee][p]
           params[:attendee].delete p
         end
-      end
-
-      # deposit_received_at is not as simple
-      if (params[:attendee][:"deposit_received_at(1i)"].present? &&
-          params[:attendee][:"deposit_received_at(2i)"].present? &&
-          params[:attendee][:"deposit_received_at(3i)"].present?) \
-      then
-        @attendee.deposit_received_at = convert_date(params[:attendee], :deposit_received_at)
-        params[:attendee].delete :"deposit_received_at(1i)"
-        params[:attendee].delete :"deposit_received_at(2i)"
-        params[:attendee].delete :"deposit_received_at(3i)"
-      else
-        @attendee.deposit_received_at = nil
       end
 
       # Invitational tournaments

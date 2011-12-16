@@ -11,21 +11,10 @@
 
   %fieldset.wider-labels
     .field
-      = f.label :deposit_received_at
-      = f.date_select :deposit_received_at, |
-        :start_year => Time.now.year - 1, |
-        :end_year => Time.now.year + 1, |
-        :include_blank => true
-      %br
-      %span.smalltext.aligned-with-input
-        When was the initial deposit received for this attendee?
-        This will determines eligibility for "early-bird" discounts.
-    .field
       = f.label :confirmed
       = f.check_box :confirmed
       %br
       %ul.smalltext.aligned-with-input
-        %li Inital deposit paid
         %li Minor agreement received (if applicable)
         %li Check membership in reciprocating foreign association
     .field

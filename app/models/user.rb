@@ -96,16 +96,6 @@ class User < ActiveRecord::Base
     InvoiceItem.inv_item_total(self.get_invoice_items)
   end
 
-  def get_initial_deposit_due_date
-    self.created_at.to_date + 1.month
-  end
-
-  def get_num_attendee_deposits_paid
-    num_atnd_paid = 0
-    self.attendees.each { |a| num_atnd_paid += 1 if a.deposit_received_at.present? }
-    return num_atnd_paid
-  end
-  
   def is_admin?
     role == 'A'
   end

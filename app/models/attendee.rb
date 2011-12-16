@@ -97,9 +97,6 @@ class Attendee < ActiveRecord::Base
     b.validates_numericality_of :congresses_attended, :greater_than_or_equal_to => 0
     b.validates_inclusion_of :is_current_aga_member, :in => [true, false]
   end
-  
-  # validations for admin page
-  validates_date :deposit_received_at, :if => :form_page_is_admin?, :allow_blank => true
 
   def age_in_years
     # Returns integer age in years on the start day of the event, not now.
@@ -148,10 +145,6 @@ class Attendee < ActiveRecord::Base
     @form_page == :baduk
   end
 
-  def form_page_is_admin?
-    @form_page == :admin
-  end
-
   # is the model valid for a given form page? -Jared
   def valid_in_form_page?(form_page)
     @form_page = form_page
@@ -169,7 +162,6 @@ class Attendee < ActiveRecord::Base
     Discount.where("is_automatic = ?", true).each do |d|
 
       # To qualify for an automatic discount, the attendee must satisfy all criteria.
-      # Criteria can include any combination of minimum age, max age, min deposit date, etc.
       satisfy_age_min = d.age_min.blank? || atnd_age >= d.age_min
       satisfy_age_max = d.age_max.blank? || atnd_age <= d.age_max
       satisfy_min_reg_date = d.min_reg_date.blank? || self.created_at.to_date <= d.min_reg_date.to_date

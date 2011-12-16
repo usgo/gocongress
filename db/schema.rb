@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111211025337) do
+ActiveRecord::Schema.define(:version => 20111216030309) do
 
   create_table "attendee_discounts", :force => true do |t|
     t.integer  "attendee_id", :null => false
@@ -85,7 +85,6 @@ ActiveRecord::Schema.define(:version => 20111211025337) do
     t.string   "tshirt_size",              :limit => 2
     t.text     "special_request"
     t.text     "roomate_request"
-    t.date     "deposit_received_at"
     t.string   "comment"
     t.boolean  "confirmed"
     t.string   "guardian_full_name"
