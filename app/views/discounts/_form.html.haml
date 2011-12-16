@@ -26,9 +26,6 @@
       = f.label :age_max
       = f.text_field :age_max, :size => 5
     .field
-      = f.label :players_only
-      = f.check_box :players_only
-    .field
       = f.label :min_reg_date
       = f.date_select :min_reg_date, :include_blank => true, :start_year => Time.now.year - 1, :end_year => Time.now.year + 1
 

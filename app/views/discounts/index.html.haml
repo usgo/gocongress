@@ -12,7 +12,6 @@
       %th= trl_attr 'discount', 'is_automatic'
       %th= trl_attr 'discount', 'age_min'
       %th= trl_attr 'discount', 'age_max'
-      %th= trl_attr 'discount', 'players_only'
       %th{ :colspan => 3 }
 
     - @discounts.each do |discount|
@@ -22,7 +21,6 @@
         %td= discount.is_automatic ? "Yes" : "No"
         %td= discount.age_min
         %td= discount.age_max
-        %td= discount.players_only ? "Players" : "Everyone"
         %td= link_to 'Details', discount
         %td= link_to 'Edit', edit_discount_path(discount)
         %td= link_to 'Delete', discount, :confirm => 'Are you sure?', :method => :delete
