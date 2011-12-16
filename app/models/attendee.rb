@@ -217,9 +217,7 @@ class Attendee < ActiveRecord::Base
   end
 
   def minor?
-    deadline = CONGRESS_START_DATE[self.year]
-    throw "Invalid year" if deadline.nil?
-    return (self.birth_date + 18.years > deadline)
+    self.birth_date + 18.years > congress_start
   end
 
   def get_full_name(respect_anonymity = false)
