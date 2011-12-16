@@ -31,7 +31,7 @@
           %input{ :type => "hidden", :name => "action", :value => "process_variable" }
           %input{ :type => "hidden", :name => "order_description", :value => "USGC Payment for #{@user.email}" }
           %input{ :type => "hidden", :name => "language", :value => "en" }
-          %input{ :type => "hidden", :name => "url_finish", :value => "http://www.gocongress.org/#{@year}" }
+          %input{ :type => "hidden", :name => "url_finish", :value => year_url }
           %input{ :type => "hidden", :name => "customer_receipt", :value => "true" }
           %input{ :type => "hidden", :name => "username", :value => @merchantone_username }
         %td.smalltext Your payment will be processed by secure.merchantonegateway.com
