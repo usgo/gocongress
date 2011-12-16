@@ -20,8 +20,13 @@ class AttendeeTest < ActiveSupport::TestCase
   test "#birthday_after_congress" do
     jared = Factory.build(:attendee, birth_date: Date.new(1981, 9, 10), year: 2012)
     assert jared.birthday_after_congress
+
     john = Factory.build(:attendee, birth_date: Date.new(1990, 7, 5), year: 2012)
-    assert_equal false, john.birthday_after_congress
+    assert !john.birthday_after_congress
+
+    jane = Factory.build(:attendee, year: 2012)
+    jane.birth_date = Date.new(2000, jane.congress_start.month, jane.congress_start.day)
+    assert !jane.birthday_after_congress
   end
 
   test "#age_in_years" do

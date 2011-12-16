@@ -127,7 +127,7 @@ class Attendee < ActiveRecord::Base
   end
   
   def birthday_after_congress
-    bday = Time.new(congress_start.year, birth_date.month, birth_date.day)
+    bday = Date.new(congress_start.year, birth_date.month, birth_date.day)
     (bday <=> congress_start) == 1
   end
   
