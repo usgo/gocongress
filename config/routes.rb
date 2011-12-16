@@ -50,10 +50,9 @@ Gocongress::Application.routes.draw do
 
     # reports (not a restful resource, but this is a nice compact syntax)
     resource :reports, :only => [] do
-      get :attendees, :atn_badges_all, :atn_badges_ind, :atn_reg_sheets
-      get :emails, :events, :index, :invoices
-      get :outstanding_balances, :overdue_deposits
-      get :tournaments, :transactions, :user_invoices
+      get :attendees, :atn_badges_all, :atn_badges_ind, :atn_reg_sheets,
+        :emails, :events, :index, :invoices, :outstanding_balances,
+        :tournaments, :transactions, :user_invoices
     end
 
   end

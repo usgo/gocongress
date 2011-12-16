@@ -21,7 +21,7 @@ class ReportsControllerTest < ActionController::TestCase
     end
     
     # These reports also respond to csv
-    %w[attendees overdue_deposits transactions].each do |r|
+    %w[attendees transactions].each do |r|
       %w[html csv].each do |f|
         get r, :format => f, :year => Time.now.year
       end

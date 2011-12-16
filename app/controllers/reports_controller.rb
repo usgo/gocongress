@@ -70,21 +70,6 @@ class ReportsController < ApplicationController
     @users.keep_if { |u| u.balance >= 0.01 }
   end
 
-  def overdue_deposits
-    @overdue_users = []
-    User.yr(@year).each { |u|
-      is_deposit_paid = u.get_num_attendee_deposits_paid == u.attendees.count
-      is_past_deposit_due_date = u.get_initial_deposit_due_date < Time.now.to_date
-      if (is_past_deposit_due_date && !is_deposit_paid) then
-        @overdue_users << u
-      end
-    }
-    respond_to do |format|
-      format.html do render 'overdue_deposits.html.haml' end
-      format.csv do render_csv("usgc_overdue_users_#{Time.now.strftime("%Y-%m-%d")}") end
-    end
-  end
-
   def transactions
     @transactions = Transaction.yr(@year).all
     @sales = Transaction.yr(@year).where("trantype = ?", "S")
