@@ -13,4 +13,8 @@ class PlanCategory < ActiveRecord::Base
   def self.reg_form(year)
     yr(year).nonempty.order(:name)
   end
+
+  def next_category_on_reg_form
+    PlanCategory.reg_form(self.year).where("plan_categories.name > ?", self.name).first
+  end
 end

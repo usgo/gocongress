@@ -34,8 +34,7 @@ class AttendeesController < ApplicationController
 
     # if valid, go to next category or return to account
     if vldn_errs.length == 0 && @attendee.save
-      cats = PlanCategory.reg_form(@year).all
-      next_category = cats[1 + cats.index(@plan_category)]
+      next_category = @plan_category.next_category_on_reg_form
       if next_category.present?
         redirect_to edit_plans_for_attendee_path(@attendee, next_category)
       else
