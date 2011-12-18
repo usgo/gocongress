@@ -17,7 +17,8 @@ class AttendeePlan < ActiveRecord::Base
   validates_each :quantity do |model, attr, value|
     max_qty = model.plan.max_quantity
     if value > max_qty then
-      model.errors.add(attr.to_s.titleize, ' of ' + model.plan.name + ' must be less than or equal to ' + max_qty.to_s)
+      model.errors.add("The maximum #{attr.to_s.downcase}",
+        " of #{model.plan.name.pluralize.downcase} is #{max_qty}")
     end
   end
 
