@@ -24,7 +24,7 @@ class AttendeesController < ApplicationController
     # to do: only consider plans appropriate for this attendee and shown on the form
     plan_category.plans.each do |p|
     
-      # get quantity for this plan.  if quantity is undefined, to_i will return 0
+      # get quantity for this plan.  if nil, to_i will return 0
       qty = params[:attendee]["plan_#{p.id}_qty"].to_i
       
       # if the quantity is nonzero, try to create it
