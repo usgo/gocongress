@@ -71,9 +71,9 @@ class AttendeesControllerEditPlansTest < ActionController::TestCase
     u = Factory :user, year: 2012
     a = u.attendees.sample
     c1 = Factory :plan_category, {name: "aaaaaa", year: 2011}
-    p1 = Factory :plan, plan_category_id: c1.id
+    p1 = Factory :all_ages_plan, plan_category_id: c1.id
     c2 = Factory :plan_category, {name: "bbbbbb", year: 2012}
-    p2 = Factory :plan, plan_category_id: c2.id
+    p2 = Factory :all_ages_plan, plan_category_id: c2.id
     sign_in u
     put :update, :page => 'baduk', :id => a.id, :year => 2012,
       :attendee => {congresses_attended: 1, is_current_aga_member: true}

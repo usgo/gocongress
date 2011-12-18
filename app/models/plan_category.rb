@@ -21,11 +21,14 @@ class PlanCategory < ActiveRecord::Base
       .having("count(*) > 0")
   end
 
-  def self.reg_form(year)
-    yr(year).nonempty.order(:name)
+  def self.reg_form(year, age)
+    yr(year)
+      .nonempty
+      .where("(age_min is null or age_min <= ?) and (age_max is null or age_max >= ?)", age, age)
+      .order(:name)
   end
 
-  def next_category_on_reg_form
-    PlanCategory.reg_form(self.year).where("plan_categories.name > ?", self.name).first
+  def next_category_on_reg_form(age)
+    PlanCategory.reg_form(self.year, age).where("plan_categories.name > ?", self.name).first
   end
 end

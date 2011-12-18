@@ -5,7 +5,7 @@ class AttendeesController < ApplicationController
   skip_authorize_resource :only => [:create, :index, :new, :vip]
 
   def show
-    @plan_categories = PlanCategory.reg_form(@year)
+    @plan_categories = PlanCategory.reg_form(@year, @attendee.age_in_years)
   end
 
   def edit_plans
@@ -34,7 +34,7 @@ class AttendeesController < ApplicationController
 
     # if valid, go to next category or return to account
     if vldn_errs.length == 0 && @attendee.save
-      next_category = @plan_category.next_category_on_reg_form
+      next_category = @plan_category.next_category_on_reg_form(@attendee.age_in_years)
       if next_category.present?
         redirect_to edit_plans_for_attendee_path(@attendee, next_category)
       else
@@ -269,7 +269,8 @@ class AttendeesController < ApplicationController
 
       # after saving the baduk page, if the attendee has not selected a plan yet,
       # then go to the edit_plans form, else return to "my account"
-      first_category = PlanCategory.reg_form(@year).first
+      Rails.logger.debug "derpbookmark"
+      first_category = PlanCategory.reg_form(@year, @attendee.age_in_years).first
       if @page == 'baduk' && @attendee.plans.count == 0 && first_category.present?
         redirect_to edit_plans_for_attendee_path(@attendee, first_category)
       else
@@ -339,7 +340,7 @@ protected
   end
   
   def init_plans
-    @plan_category = PlanCategory.reg_form(@year).find(params[:plan_category_id])
+    @plan_category = PlanCategory.reg_form(@year, @attendee.age_in_years).find(params[:plan_category_id])
     age = @attendee.age_in_years
     @plans = @plan_category.plans.appropriate_for_age(age).order("price desc")
   end
