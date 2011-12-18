@@ -11,13 +11,19 @@ class AttendeesControllerEditPlansTest < ActionController::TestCase
 
   test "user can get edit_plans form" do
     sign_in @user
-    get :edit_plans, :id => @user.attendees.sample.id, :plan_category_id => @plan_category.id, :year => @year
+    visit_edit_plans_form
     assert_response :success
   end
   
   test "visitor cannot get edit_plans form" do
-    get :edit_plans, :id => @user.attendees.sample.id, :plan_category_id => @plan_category.id, :year => @year
+    visit_edit_plans_form
     assert_response :forbidden
+  end
+
+  private
+
+  def visit_edit_plans_form
+    get :edit_plans, :id => @user.attendees.sample.id, :plan_category_id => @plan_category.id, :year => @year
   end
 
 end
