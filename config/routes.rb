@@ -29,6 +29,12 @@ Gocongress::Application.routes.draw do
         
         # Replace #edit with a route that supports multiple pages
         get 'edit/:page', :action => :edit, :as => :edit
+
+        # Because there are so many plans, we want to show one category at
+        # a time. Because we are batch-editing attendee_plan records, it
+        # does not make sense to use nested resources here.
+        get 'edit/plans/:plan_category_id', :action => :edit_plans, :as => :edit_plans_for
+        put 'edit/plans/:plan_category_id', :action => :update_plans, :as => :update_plans_for
       end
     end
 

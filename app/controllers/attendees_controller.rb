@@ -3,7 +3,71 @@ class AttendeesController < ApplicationController
   load_and_authorize_resource
   skip_load_resource :only => [:index, :vip]
   skip_authorize_resource :only => [:create, :index, :new, :vip]
-  
+
+  def show
+    @plan_categories = PlanCategory.yr(@year).nonempty.order(:name)
+  end
+
+  def edit_plans
+    init_plans
+  end
+
+  def update_plans
+    plan_category = PlanCategory.yr(@year).find(params[:plan_category_id])
+    params[:attendee] ||= {}
+    
+    # handle selected plans
+    # TODO: this causes a lot of little queries. surely there's a better way.
+    
+    # some extra validation errors may come up, especially with associated models, and
+    # we want to save these and add them to @attendee.errors[:base] later.  This
+    # produces better-looking, more meaningful validation error display -Jared
+    extra_errors = []
+    
+    # start with a blank slate
+    # TODO: move this into attendee model
+    @attendee.attendee_plans.joins(:plan).where('plans.plan_category_id = ?', plan_category.id).destroy_all
+    
+    # for each plan, has the attendee provided a quantity?
+    # to do: only consider plans appropriate for this attendee and shown on the form
+    plan_category.plans.each do |p|
+    
+      # get quantity for this plan.  if quantity is undefined, to_i will return 0
+      qty = params[:attendee]["plan_#{p.id}_qty"].to_i
+      
+      # if the quantity is nonzero, try to create it
+      if qty > 0 then
+        ap = AttendeePlan.new(:attendee_id => @attendee.id, :plan_id => p.id, :quantity => qty)
+        if ap.valid?
+          @attendee.attendee_plans << ap
+        else
+          ap.errors.each { |k,v| extra_errors << k.to_s + " " + v.to_s }
+        end
+      end
+    end
+    
+    # run the appropriate validations
+    if @attendee.valid? and extra_errors.length == 0
+      @attendee.save(:validate => false)
+
+      # go to next category or return to account
+      cats = PlanCategory.yr(@year).order(:name).all
+      cats.keep_if {|c| c.plans.count > 0}
+      current_cat_index = cats.index(plan_category)
+      next_category = current_cat_index.nil? ? nil : cats[current_cat_index + 1]
+      no_plans_in_next_cat = @attendee.plans.where(plan_category_id: next_category).count == 0
+      if next_category.present? and no_plans_in_next_cat and next_category.plans.count > 0
+        redirect_to edit_plans_for_attendee_path(@attendee, next_category)
+      else
+        redirect_to attendee_path(@attendee), :notice => "Changes to #{plan_category.name.downcase} saved"
+      end
+    else
+      init_plans
+      extra_errors.each { |e| @attendee.errors[:base] << e }
+      render :edit_plans
+    end
+  end
+
   def index
     params[:direction] ||= "asc"
     @opposite_direction = (params[:direction] == 'asc') ? 'desc' : 'asc'
@@ -118,7 +182,6 @@ class AttendeesController < ApplicationController
 
   # GET /attendees/1/edit/basics
   # GET /attendees/1/edit/baduk
-  # GET /attendees/1/edit/roomboard
   # GET /attendees/1/edit/tournaments
   def edit
     
@@ -187,32 +250,6 @@ class AttendeesController < ApplicationController
       # delete param to avoid attr_accessible warning
       params[:attendee].delete :discount_ids
 
-    elsif (@page == 'roomboard')
-
-      # handle selected plans
-      # to do: this causes a lot of little queries. surely there's a better way.
-          
-      # start with a blank slate
-      @attendee.plans.clear
-      
-      # for each plan, has the attendee provided a quantity?
-      # to do: only consider plans appropriate for this attendee and shown on the form
-      Plan.all.each do |p|
-      
-        # get quantity for this plan.  if quantity is undefined, to_i will return 0
-        qty = params[:attendee]["plan_#{p.id}_qty"].to_i
-        
-        # if the quantity is nonzero, create it!
-        if qty > 0 then
-          ap = AttendeePlan.new(:attendee_id => @attendee.id, :plan_id => p.id, :quantity => qty)
-          if ap.valid?
-            @attendee.attendee_plans << ap
-          else
-            ap.errors.each { |k,v| extra_errors << k.to_s + " " + v.to_s }
-          end
-        end
-      end
-
     elsif (@page == 'tournaments')
       @attendee.tournaments.delete( @attendee.tournaments.where(:openness=>'O') )
       params[:attendee][:tournament_id_list] ||= Array.new
@@ -255,9 +292,10 @@ class AttendeesController < ApplicationController
       # after saving the baduk page, if the attendee has not selected a plan yet,
       # then go to the roomboard page, else return to "my account"
       if @page == 'baduk' && @attendee.plans.count == 0
-        redirect_to edit_attendee_path(@attendee, :roomboard)
+        category = PlanCategory.order(:name).first
+        redirect_to edit_plans_for_attendee_path(@attendee, category)
       else
-        redirect_to user_path(@attendee.user_id), :notice => "Attendee updated"
+        redirect_to attendee_path(@attendee), :notice => "Attendee updated"
       end
     else
       init_multipage(@page)
@@ -310,11 +348,6 @@ protected
     if page == "baduk"
       @discounts = Discount.yr(@year).automatic(false)
       @attendee_discount_ids = @attendee.discounts.automatic(false).map { |d| d.id }
-    elsif page == "roomboard"
-      age = @attendee.age_in_years.to_i
-      plans = Plan.yr(@year).appropriate_for_age(age)
-      @plans_ordered = plans.order("price desc")
-      @plans_grouped = @plans_ordered.group_by {|plan| plan.plan_category}
     elsif page == "admin"
       @invitational_tournaments = Tournament.yr(@year).openness('I')
       @atnd_inv_trn_ids = @attendee.tournaments.openness('I').map {|t| t.id}
@@ -326,10 +359,16 @@ protected
       @atnd_event_ids = @attendee.events.map {|e| e.id}
     end
   end
+  
+  def init_plans
+    @plan_category = PlanCategory.yr(@year).find(params[:plan_category_id])
+    age = @attendee.age_in_years
+    @plans = @plan_category.plans.appropriate_for_age(age).order("price desc")
+  end
 
   def get_valid_page_from_params
     params[:page].to_s.blank? ? page = 'basics' : page = params[:page].to_s
-    unless %w[admin basics baduk roomboard tournaments events].include?(page) then raise 'invalid page' end
+    unless %w[admin basics baduk tournaments events].include?(page) then raise 'invalid page' end
     return page
   end
   
@@ -340,8 +379,6 @@ protected
       view_name = "edit"
     elsif page == "baduk"
       view_name = "edit_baduk_info"
-    elsif page == "roomboard"
-      view_name = "room_and_board"
     elsif page == "tournaments"
       view_name = "edit_tournaments"
     elsif page == "events"

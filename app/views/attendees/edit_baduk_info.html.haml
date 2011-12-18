@@ -53,6 +53,15 @@
         not a member
 
   %fieldset.wordy-questions
+    %legend Special Concerns or Requests
+    .field
+      = f.label :roomate_request
+      = f.text_area :roomate_request, :rows => 2
+    .field
+      = f.label :special_request
+      = f.text_area :special_request, :rows => 2
+
+  %fieldset.wordy-questions
     .field
       = label '', ''
       = f.submit "Submit"
