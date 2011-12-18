@@ -9,4 +9,8 @@ class PlanCategory < ActiveRecord::Base
       .group("plan_categories.id") \
       .having("count(*) > 0")
   end
+
+  def self.reg_form(year)
+    yr(year).nonempty.order(:name)
+  end
 end

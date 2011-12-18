@@ -5,7 +5,7 @@ class AttendeesController < ApplicationController
   skip_authorize_resource :only => [:create, :index, :new, :vip]
 
   def show
-    @plan_categories = PlanCategory.yr(@year).nonempty.order(:name)
+    @plan_categories = PlanCategory.reg_form(@year)
   end
 
   def edit_plans
@@ -13,17 +13,13 @@ class AttendeesController < ApplicationController
   end
 
   def update_plans
-    plan_category = PlanCategory.yr(@year).find(params[:plan_category_id])
+    plan_category = PlanCategory.reg_form(@year).find(params[:plan_category_id])
     params[:attendee] ||= {}
-    
+    extra_errors = []
+
     # handle selected plans
     # TODO: this causes a lot of little queries. surely there's a better way.
-    
-    # some extra validation errors may come up, especially with associated models, and
-    # we want to save these and add them to @attendee.errors[:base] later.  This
-    # produces better-looking, more meaningful validation error display -Jared
-    extra_errors = []
-    
+
     # start with a blank slate
     # TODO: move this into attendee model
     @attendee.attendee_plans.joins(:plan).where('plans.plan_category_id = ?', plan_category.id).destroy_all
@@ -361,7 +357,7 @@ protected
   end
   
   def init_plans
-    @plan_category = PlanCategory.yr(@year).find(params[:plan_category_id])
+    @plan_category = PlanCategory.reg_form(@year).find(params[:plan_category_id])
     age = @attendee.age_in_years
     @plans = @plan_category.plans.appropriate_for_age(age).order("price desc")
   end
