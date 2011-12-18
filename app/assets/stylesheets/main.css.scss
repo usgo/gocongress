@@ -141,6 +141,9 @@ body.year2012 .nav-container { background-color: #8D7AC9; }
     a { padding-right: 10px; }
   }
 
+  /* Nested lists look better without padding */
+  ul li ul { padding: 0px; }
+
   /* Drawing extra attention to various things */
   .notice { 
     background-image: url("/assets/icons/attention.png");
