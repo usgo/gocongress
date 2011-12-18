@@ -161,7 +161,7 @@ class AttendeesControllerTest < ActionController::TestCase
     assert_equal 'Attendee updated', flash[:notice]
   end
 
-  %w[basics baduk roomboard].each do |page|
+  %w[basics baduk].each do |page|
     define_method "test_user_can_get_#{page}" do
       sign_in @user
       get :edit, :id => @user.attendees.sample.id, :page => page, :year => @year

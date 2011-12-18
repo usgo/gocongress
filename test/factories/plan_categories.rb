@@ -1,4 +1,6 @@
-Factory.define :plan_category do |f|
-  f.sequence(:name) { |n| "Factory Plan Category #{n}" }
-  f.year Time.now.year
+FactoryGirl.define do
+  factory :plan_category do
+    sequence(:name){ |n| "Factory Plan Category #{n}" }
+    year Time.now.year
+  end
 end
