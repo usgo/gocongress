@@ -37,21 +37,15 @@ class AttendeesController < ApplicationController
         end
       end
     end
-    
-    # run the appropriate validations
-    if @attendee.valid? and vldn_errs.length == 0
-      @attendee.save(:validate => false)
 
-      # go to next category or return to account
-      cats = PlanCategory.yr(@year).order(:name).all
-      cats.keep_if {|c| c.plans.count > 0}
-      current_cat_index = cats.index(plan_category)
-      next_category = current_cat_index.nil? ? nil : cats[current_cat_index + 1]
-      no_plans_in_next_cat = @attendee.plans.where(plan_category_id: next_category).count == 0
-      if next_category.present? and no_plans_in_next_cat and next_category.plans.count > 0
+    # if valid, go to next category or return to account
+    if vldn_errs.length == 0 && @attendee.save
+      cats = PlanCategory.reg_form(@year).all
+      next_category = cats[1 + cats.index(plan_category)]
+      if next_category.present?
         redirect_to edit_plans_for_attendee_path(@attendee, next_category)
       else
-        redirect_to attendee_path(@attendee), :notice => "Changes to #{plan_category.name.downcase} saved"
+        redirect_to attendee_path(@attendee), :notice => "Changes saved"
       end
     else
       init_plans
