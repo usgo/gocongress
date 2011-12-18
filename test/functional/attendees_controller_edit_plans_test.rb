@@ -3,9 +3,11 @@ require 'test_helper'
 class AttendeesControllerEditPlansTest < ActionController::TestCase
   setup do
     @controller = AttendeesController.new
+    @admin = Factory :admin
     @plan_category = Factory :plan_category
     @plan = Factory :all_ages_plan, plan_category_id: @plan_category.id
     @user = Factory :user
+    @user_two = Factory :user
     @year = Time.now.year
   end
 
@@ -23,12 +25,10 @@ class AttendeesControllerEditPlansTest < ActionController::TestCase
   test "admin can select plan for attendee belonging to someone else" do
     sign_in @admin
     a = @user.attendees.sample
-    h = { "plan_#{@plan.id}_qty" => 1 }
     assert_equal(0, a.plans.count)
     assert_difference('a.plans.count', +1) do
-      put :update, :id => a.id, :page => 'roomboard', :attendee => h, :year => @year
+      submit_plans_form a, params_for_plan(1)
     end
-    assert_redirected_to user_path(@user.id)
   end
 
 	test "user can clear own attendee plans" do
@@ -36,9 +36,8 @@ class AttendeesControllerEditPlansTest < ActionController::TestCase
     a = @user.attendees.sample
     a.plans << @plan
     assert_equal(1, a.plans.count)
-    put :update, :id => a.id, :page => 'roomboard', :attendee => {}, :year => @year
+    submit_plans_form a, {} # submit an empty hash for params[:attendee]
     assert_equal(0, a.plans.count)
-    assert_redirected_to user_path(@user.id)
 	end
 
   test "user can deselect a plan" do
@@ -46,31 +45,26 @@ class AttendeesControllerEditPlansTest < ActionController::TestCase
     a = @user.attendees.sample
     a.plans << @plan
     assert_equal(1, a.plans.count)
-    h = { "plan_#{@plan.id}_qty" => 0 }
-    put :update, :id => a.id, :page => 'roomboard', :attendee => h, :year => @year
+    submit_plans_form a, params_for_plan(0)
     assert_equal(0, a.plans.count)
-    assert_redirected_to user_path(@user.id)
   end
 
 	test "user can select a plan for their own attendee" do
     sign_in @user
     a = @user.attendees.sample
     assert_equal(0, a.plans.count)
-    p = Plan.all.sample
     assert_difference('a.plans.count', +1) do
-      put :update, :id => a.id, :page => 'roomboard', :attendee => { "plan_#{p.id}_qty" => 1 }, :year => @year
+      submit_plans_form a, params_for_plan(1)
     end
-    assert_redirected_to user_path(@user.id)
 	end
 
   test "user cannot select plan for attendee belonging to someone else" do
     sign_in @user
     a = @user_two.attendees.sample
-    h = { "plan_#{@plan.id}_qty" => 1 }
     assert_no_difference('a.plans.count') do
-      put :update, :id => a.id, :page => 'roomboard', :attendee => h, :year => @year
+      submit_plans_form a, params_for_plan(1)
     end
-    assert_response 403
+    assert_response :forbidden
   end
 
   private
@@ -79,4 +73,12 @@ class AttendeesControllerEditPlansTest < ActionController::TestCase
     get :edit_plans, :id => @user.attendees.sample.id, :plan_category_id => @plan_category.id, :year => @year
   end
 
+  def submit_plans_form(attendee, attendee_params_hash)
+    put :update_plans, :id => attendee.id, :plan_category_id => @plan_category.id,
+      :attendee => attendee_params_hash, :year => @year
+  end
+
+  def params_for_plan(qty)
+    { "plan_#{@plan.id}_qty" => qty }
+  end
 end
