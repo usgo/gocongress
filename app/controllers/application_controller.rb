@@ -55,7 +55,7 @@ class ApplicationController < ActionController::Base
       if pa.congresses_attended.present?
         user_path(current_user.id)
       else
-        atnd_edit_page_path pa, :baduk
+        edit_attendee_path pa, :baduk
       end
     else
       super

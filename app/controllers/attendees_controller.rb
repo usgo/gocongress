@@ -110,7 +110,7 @@ class AttendeesController < ApplicationController
     if @attendee.save
       # After successful save, redirect to the "Edit Go Info" form
       # We are afraid if we do not, then no one will fill it out
-      redirect_to atnd_edit_page_path(@attendee, :baduk)
+      redirect_to edit_attendee_path(@attendee, :baduk)
     else
       render :action => "new"
     end
@@ -255,7 +255,7 @@ class AttendeesController < ApplicationController
       # after saving the baduk page, if the attendee has not selected a plan yet,
       # then go to the roomboard page, else return to "my account"
       if @page == 'baduk' && @attendee.plans.count == 0
-        redirect_to atnd_edit_page_path(@attendee, :roomboard)
+        redirect_to edit_attendee_path(@attendee, :roomboard)
       else
         redirect_to user_path(@attendee.user_id), :notice => "Attendee updated"
       end

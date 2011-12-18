@@ -26,11 +26,11 @@ Gocongress::Application.routes.draw do
       member do
         get 'print_summary', :as => 'print_summary_for'
         get 'print_badge', :as => 'print_badge_for'
+        
+        # Replace #edit with a route that supports multiple pages
+        get 'edit/:page', :action => :edit, :as => :edit
       end
     end
-
-    # Replace the normal attendee#edit with a route that supports multiple pages
-    get '/attendees/:id/edit/:page' => "attendees#edit", :as => :atnd_edit_page
 
     resources :users do
       member do

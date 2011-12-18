@@ -101,7 +101,7 @@ class UsersController < ApplicationController
     authorize! :create, @user
     
     if @user.save
-      redirect_to atnd_edit_page_path(@user.primary_attendee, :baduk)
+      redirect_to edit_attendee_path(@user.primary_attendee, :baduk)
     else
       render :action => "new"
     end
