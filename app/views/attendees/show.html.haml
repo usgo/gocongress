@@ -15,7 +15,7 @@
   %li= link_to 'Basics', edit_attendee_path(a, :basics)
   %li= link_to 'Player Info', edit_attendee_path(a, :baduk)
   %li 
-    Room and Board
+    Costs
     %ul
       - @plan_categories.each do |c|
         %li= link_to c.name, edit_plans_for_attendee_path(a, c)
