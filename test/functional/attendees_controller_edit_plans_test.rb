@@ -67,6 +67,19 @@ class AttendeesControllerEditPlansTest < ActionController::TestCase
     assert_response :forbidden
   end
 
+  test "after baduk page redirect to plan category in correct year" do
+    u = Factory :user, year: 2012
+    a = u.attendees.sample
+    c1 = Factory :plan_category, {name: "aaaaaa", year: 2011}
+    p1 = Factory :plan, plan_category_id: c1.id
+    c2 = Factory :plan_category, {name: "bbbbbb", year: 2012}
+    p2 = Factory :plan, plan_category_id: c2.id
+    sign_in u
+    put :update, :page => 'baduk', :id => a.id, :year => 2012,
+      :attendee => {congresses_attended: 1, is_current_aga_member: true}
+    assert_redirected_to edit_plans_for_attendee_path(a, c2)
+  end
+
   private
 
   def visit_edit_plans_form

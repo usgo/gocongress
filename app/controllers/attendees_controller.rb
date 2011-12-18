@@ -263,15 +263,15 @@ class AttendeesController < ApplicationController
     # update attributes but do not save yet
     @attendee.attributes = params[:attendee]
 
-    # run the appropriate validations for this @page 
+    # run the appropriate validations for this @page
     if @attendee.valid_in_form_page?(@page.to_sym) and extra_errors.length == 0
       @attendee.save(:validate => false)
 
       # after saving the baduk page, if the attendee has not selected a plan yet,
-      # then go to the roomboard page, else return to "my account"
-      if @page == 'baduk' && @attendee.plans.count == 0
-        category = PlanCategory.order(:name).first
-        redirect_to edit_plans_for_attendee_path(@attendee, category)
+      # then go to the edit_plans form, else return to "my account"
+      first_category = PlanCategory.reg_form(@year).first
+      if @page == 'baduk' && @attendee.plans.count == 0 && first_category.present?
+        redirect_to edit_plans_for_attendee_path(@attendee, first_category)
       else
         redirect_to attendee_path(@attendee), :notice => "Attendee updated"
       end
