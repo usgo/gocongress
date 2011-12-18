@@ -38,7 +38,7 @@ class AttendeesController < ApplicationController
       if next_category.present?
         redirect_to edit_plans_for_attendee_path(@attendee, next_category)
       else
-        redirect_to attendee_path(@attendee), :notice => "Changes saved"
+        redirect_to user_path(@attendee.user), :notice => "Changes saved"
       end
     else
       @attendee.errors[:base].concat vldn_errs
@@ -273,7 +273,7 @@ class AttendeesController < ApplicationController
       if @page == 'baduk' && @attendee.plans.count == 0 && first_category.present?
         redirect_to edit_plans_for_attendee_path(@attendee, first_category)
       else
-        redirect_to attendee_path(@attendee), :notice => "Attendee updated"
+        redirect_to user_path(@attendee.user), :notice => "Attendee updated"
       end
     else
       init_multipage(@page)
