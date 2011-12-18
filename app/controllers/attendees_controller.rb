@@ -17,12 +17,8 @@ class AttendeesController < ApplicationController
     params[:attendee] ||= {}
     extra_errors = []
 
-    # handle selected plans
-    # TODO: this causes a lot of little queries. surely there's a better way.
-
     # start with a blank slate
-    # TODO: move this into attendee model
-    @attendee.attendee_plans.joins(:plan).where('plans.plan_category_id = ?', plan_category.id).destroy_all
+    @attendee.clear_plan_category!(plan_category.id)
     
     # for each plan, has the attendee provided a quantity?
     # to do: only consider plans appropriate for this attendee and shown on the form

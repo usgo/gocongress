@@ -127,7 +127,11 @@ class Attendee < ActiveRecord::Base
     bday = Date.new(congress_start.year, birth_date.month, birth_date.day)
     (bday <=> congress_start) == 1
   end
-  
+
+  def clear_plan_category!(pc_id)
+    attendee_plans.joins(:plan).where('plans.plan_category_id = ?', pc_id).destroy_all
+  end
+
   def congress_start
     CONGRESS_START_DATE[self.year]
   end
