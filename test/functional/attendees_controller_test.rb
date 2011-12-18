@@ -157,7 +157,7 @@ class AttendeesControllerTest < ActionController::TestCase
     target_attendee = Attendee.find(target_attendee.id)
     assert_not_equal state_before, target_attendee.state
 
-    assert_redirected_to user_path(@user.id)
+    assert_redirected_to attendee_path(target_attendee)
     assert_equal 'Attendee updated', flash[:notice]
   end
 
@@ -284,7 +284,7 @@ class AttendeesControllerTest < ActionController::TestCase
     a.tournaments.reload
     assert a.tournaments.first.present?
     assert_equal(@inv_trn.id, a.tournaments.first.id)
-    assert_redirected_to user_path(@user)
+    assert_redirected_to attendee_path(a)
   end
   
   test "user can sign up for open tournaments" do
@@ -298,7 +298,7 @@ class AttendeesControllerTest < ActionController::TestCase
     a.tournaments.reload
     assert a.tournaments.first.present?
     assert_equal(@open_trn.id, a.tournaments.first.id)
-    assert_redirected_to user_path(@user)
+    assert_redirected_to attendee_path(a)
   end
 
   test "user can add events to own attendee" do
@@ -311,7 +311,7 @@ class AttendeesControllerTest < ActionController::TestCase
     assert_difference('a.events.count', +2) do
       put :update, :id => a.id, :attendee => atn_attrs, :page => 'events', :year => @year
     end
-    assert_redirected_to user_path(@user)
+    assert_redirected_to attendee_path(a)
   end
 
   test "user cannot add events to attendee belonging to someone else" do
@@ -335,7 +335,7 @@ class AttendeesControllerTest < ActionController::TestCase
     assert_difference('a.events.count', +1) do
       put :update, :id => a.id, :attendee => atn_attrs, :page => 'events', :year => @year
     end
-    assert_redirected_to user_path(@user_two)
+    assert_redirected_to attendee_path(a)
   end
 
 end
