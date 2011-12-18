@@ -13,21 +13,15 @@ class AttendeesController < ApplicationController
   end
 
   def update_plans
-    plan_category = PlanCategory.reg_form(@year).find(params[:plan_category_id])
+    init_plans
     params[:attendee] ||= {}
     vldn_errs = []
 
-    # start with a blank slate
-    @attendee.clear_plan_category!(plan_category.id)
-    
-    # for each plan, has the attendee provided a quantity?
-    # to do: only consider plans appropriate for this attendee and shown on the form
-    plan_category.plans.each do |p|
-    
-      # get quantity for this plan.  if nil, to_i will return 0
-      qty = params[:attendee]["plan_#{p.id}_qty"].to_i
-      
-      # if the quantity is nonzero, try to create it
+    # Replace attendee_plan records in this category with plans specified
+    # on the form, unless the maximum quantity is exceeded.
+    @attendee.clear_plan_category!(@plan_category.id)
+    @plans.each do |p|
+      qty = params[:attendee]["plan_#{p.id}_qty"].to_i # if nil, to_i returns 0
       if qty > 0 then
         ap = AttendeePlan.new(:attendee_id => @attendee.id, :plan_id => p.id, :quantity => qty)
         if ap.valid?
@@ -41,14 +35,13 @@ class AttendeesController < ApplicationController
     # if valid, go to next category or return to account
     if vldn_errs.length == 0 && @attendee.save
       cats = PlanCategory.reg_form(@year).all
-      next_category = cats[1 + cats.index(plan_category)]
+      next_category = cats[1 + cats.index(@plan_category)]
       if next_category.present?
         redirect_to edit_plans_for_attendee_path(@attendee, next_category)
       else
         redirect_to attendee_path(@attendee), :notice => "Changes saved"
       end
     else
-      init_plans
       @attendee.errors[:base].concat vldn_errs
       render :edit_plans
     end
