@@ -15,7 +15,7 @@ class AttendeesController < ApplicationController
   def update_plans
     plan_category = PlanCategory.reg_form(@year).find(params[:plan_category_id])
     params[:attendee] ||= {}
-    extra_errors = []
+    vldn_errs = []
 
     # start with a blank slate
     @attendee.clear_plan_category!(plan_category.id)
@@ -33,13 +33,13 @@ class AttendeesController < ApplicationController
         if ap.valid?
           @attendee.attendee_plans << ap
         else
-          ap.errors.each { |k,v| extra_errors << k.to_s + " " + v.to_s }
+          vldn_errs.concat ap.errors.map {|k,v| k.to_s + " " + v.to_s}
         end
       end
     end
     
     # run the appropriate validations
-    if @attendee.valid? and extra_errors.length == 0
+    if @attendee.valid? and vldn_errs.length == 0
       @attendee.save(:validate => false)
 
       # go to next category or return to account
@@ -55,7 +55,7 @@ class AttendeesController < ApplicationController
       end
     else
       init_plans
-      extra_errors.each { |e| @attendee.errors[:base] << e }
+      @attendee.errors[:base].concat vldn_errs
       render :edit_plans
     end
   end
