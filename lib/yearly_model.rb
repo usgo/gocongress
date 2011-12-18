@@ -13,6 +13,8 @@ module YearlyModel
   # class YearlyModel is mixed into.
   module ClassMethods
     def yr(year)
+      year = year.to_i
+      raise "invalid year" unless (2011..2100).include?(year)
       where(:year => year) 
     end
   end
