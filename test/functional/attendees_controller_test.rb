@@ -6,7 +6,6 @@ class AttendeesControllerTest < ActionController::TestCase
     @user = Factory.create(:user)
     @user_two = Factory.create(:user)
     @admin = Factory.create(:admin)
-    @plan = Factory.create(:all_ages_plan)
     @discount_automatic = Factory.create(:automatic_discount)
     @discount_nonautomatic = Factory.create(:nonautomatic_discount)
     @discount_nonautomatic2 = Factory.create(:nonautomatic_discount)
@@ -175,59 +174,6 @@ class AttendeesControllerTest < ActionController::TestCase
       view_name = @controller.send( :get_view_name_from_page, page )
       assert_response 403
     end
-  end
-
-	test "user can select a plan for their own attendee" do
-    sign_in @user
-    a = @user.attendees.sample
-    assert_equal(0, a.plans.count)
-    p = Plan.all.sample
-    assert_difference('a.plans.count', +1) do
-      put :update, :id => a.id, :page => 'roomboard', :attendee => { "plan_#{p.id}_qty" => 1 }, :year => @year
-    end
-    assert_redirected_to user_path(@user.id)
-	end
-
-  test "user cannot select plan for attendee belonging to someone else" do
-    sign_in @user
-    a = @user_two.attendees.sample
-    h = { "plan_#{@plan.id}_qty" => 1 }
-    assert_no_difference('a.plans.count') do
-      put :update, :id => a.id, :page => 'roomboard', :attendee => h, :year => @year
-    end
-    assert_response 403
-  end
-
-  test "admin can select plan for attendee belonging to someone else" do
-    sign_in @admin
-    a = @user.attendees.sample
-    h = { "plan_#{@plan.id}_qty" => 1 }
-    assert_equal(0, a.plans.count)
-    assert_difference('a.plans.count', +1) do
-      put :update, :id => a.id, :page => 'roomboard', :attendee => h, :year => @year
-    end
-    assert_redirected_to user_path(@user.id)
-  end
-
-	test "user can clear own attendee plans" do
-    sign_in @user
-    a = @user.attendees.sample
-    a.plans << @plan
-    assert_equal(1, a.plans.count)
-    put :update, :id => a.id, :page => 'roomboard', :attendee => {}, :year => @year
-    assert_equal(0, a.plans.count)
-    assert_redirected_to user_path(@user.id)
-	end
-
-  test "user can deselect a plan" do
-    sign_in @user
-    a = @user.attendees.sample
-    a.plans << @plan
-    assert_equal(1, a.plans.count)
-    h = { "plan_#{@plan.id}_qty" => 0 }
-    put :update, :id => a.id, :page => 'roomboard', :attendee => h, :year => @year
-    assert_equal(0, a.plans.count)
-    assert_redirected_to user_path(@user.id)
   end
 
   test "non-admin can claim non-automatic discounts" do
