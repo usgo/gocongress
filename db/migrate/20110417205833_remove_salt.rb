@@ -1,6 +1,7 @@
 class RemoveSalt < ActiveRecord::Migration
   def self.up
-    remove_column :users, :password_salt
+    User.reset_column_information
+    remove_column :users, :password_salt if User.column_names.include?('password_salt')
   end
 
   def self.down
