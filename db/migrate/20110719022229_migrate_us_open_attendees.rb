@@ -11,8 +11,7 @@ class MigrateUsOpenAttendees < ActiveRecord::Migration
         eligible: 'Anyone',
         description: 'The national championship',
         directors: 'TBA',
-        openness: 'O',
-        location: 'TBA')
+        openness: 'O')
     end
     execute <<-EOQ
       insert into attendee_tournaments (attendee_id, tournament_id)
