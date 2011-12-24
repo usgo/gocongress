@@ -117,7 +117,6 @@ GEM
       hike (~> 1.2)
       rack (~> 1.0)
       tilt (~> 1.1, != 1.3.0)
-    therubyracer-heroku (0.8.1.pre3)
     thin (1.3.1)
       daemons (>= 1.0.9)
       eventmachine (>= 0.12.6)
@@ -158,7 +157,6 @@ DEPENDENCIES
   rails
   rcov
   sass
-  therubyracer-heroku (= 0.8.1.pre3)
   thin
   turn (< 0.8.3)
   uglifier
