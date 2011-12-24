@@ -47,5 +47,12 @@ module Gocongress
 
     # Enable the asset pipeline
     config.assets.enabled = true
+
+    # We don't want Heroku to try to initialize our models during assets:precompile
+    # because on Heroku Cedar, the database is not available during slug compilation.
+    # http://stackoverflow.com/questions/8622297/heroku-cedar-assetsprecompile-has-beef-with-attr-protected
+    # http://guides.rubyonrails.org/asset_pipeline.html
+    config.assets.initialize_on_precompile = false
+
   end
 end
