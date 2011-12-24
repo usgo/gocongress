@@ -8,23 +8,9 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable,
          {:authentication_keys => [:email, :year]}
-  
-  attr_accessible :email, :password, :password_confirmation, :remember_me, :primary_attendee_attributes
-  
-  attr_protected :role, :job_ids, :created_at, :updated_at
 
-  # The following attributes come from Devise, AFAIK.
-  # I'd like them to be attr_protected, but I'm not sure I can do that.
-  # encrypted_password
-  # password_salt
-  # reset_password_token
-  # remember_token
-  # remember_created_at
-  # sign_in_count
-  # current_sign_in_at
-  # last_sign_in_at
-  # current_sign_in_ip
-  # last_sign_in_ip
+  attr_accessible :email, :password, :password_confirmation,
+    :remember_me, :primary_attendee_attributes
 
   has_many :transactions, :dependent => :destroy
   has_many :user_jobs, :dependent => :destroy
