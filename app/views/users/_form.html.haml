@@ -8,6 +8,7 @@
         - @user.errors.full_messages.each do |msg|
           %li= msg
 
+  %h3 Role
   .field
     - User::ROLES.each do |r|
       = radio_button :user, :role, r[1]
