@@ -12,6 +12,10 @@ class User < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation,
     :remember_me, :primary_attendee_attributes
 
+  # FIXME: in the controller, somehow year needs to get set
+  # before authorize! runs.  until then, year needs to be accessible.
+  attr_accessible :year
+
   has_many :transactions, :dependent => :destroy
   has_many :user_jobs, :dependent => :destroy
   has_many :jobs, :through => :user_jobs
