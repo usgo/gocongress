@@ -90,10 +90,9 @@ class AttendeesController < ApplicationController
     @oldest_attendee = age_before_beauty.first
     @youngest_attendee = age_before_beauty.last
 
-    # calculate average age
-    aged_attendees = @attendees.reasonable_birth_date.all
-    total_years_of_life = aged_attendees.map(&:age_in_years).reduce(:+)
-    @avg_age = total_years_of_life / aged_attendees.count
+    # calculate average age, being careful not to call reduce on an empty array
+    ages = @attendees.reasonable_birth_date.all.map(&:age_in_years)
+    @avg_age = ages.empty? ? nil : ages.reduce(:+) / ages.count
   end
 
   # GET /attendees/new
