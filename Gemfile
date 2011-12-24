@@ -23,6 +23,9 @@ gem 'kaminari' # pagination
 gem 'devise' # authentication
 gem 'cancan' # authorization and access control
 
+# After migrating to Cedar, Heroku recommends thin over webrick
+gem 'thin'
+
 # Bundle gems for the local environment. Make sure to
 # put test-only gems in this group so their generators
 # and rake tasks are available in development mode:
