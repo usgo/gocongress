@@ -2,12 +2,9 @@ require 'test_helper'
 
 class UsersControllerTest < ActionController::TestCase
   setup do
-    # Is it OK to use build() instead of create()?
-    # I have asked this question:
-    # http://stackoverflow.com/questions/7548934/can-devise-sign-in-test-helper-accept-a-new-record
-    @user = Factory.create(:user)
-    @staff = Factory.create(:staff)
-    @admin_user = Factory.create(:admin)
+    @user = Factory :user
+    @staff = Factory :staff
+    @admin_user = Factory :admin
   end
 
   test "admin cannot read user from different year" do
