@@ -30,6 +30,15 @@ class RegistrationsControllerTest < ActionController::TestCase
     assert_template "new"
   end
 
+  test "visitor cannot specify role" do
+    @u[:role] = 'A' # A for admin
+    post :create, :user => @u, :year => @year
+
+    # we expect the user to be created, but the specified role to be ignored
+    assert_response :redirect
+    assert assigns(:user).role == 'U'
+  end
+
   test "minor agreement validator" do
 
     # Our visitor is a minor, but did not click the "understand" checkbox
