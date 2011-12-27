@@ -1,6 +1,8 @@
 class UsersController < ApplicationController
 
   before_filter :deny_users_from_wrong_year, :only => [:index]
+  before_filter :remove_year_from_params
+
   load_and_authorize_resource :only => [:index]
 
   # GET /users/1/choose_attendee
@@ -163,6 +165,18 @@ class UsersController < ApplicationController
     render :layout => 'print'
   end
 
+protected
+
+  def remove_year_from_params
+    # Leaving user.year accessible and just removing it on all actions
+    # is easier than completely re-writing 
+    # Devise::RegistrationsController.create()
+    if params_contains_user_attr :year
+      Rails.logger.warn "WARNING: Removing protected attribute: year"
+      params[:user].delete :year
+    end
+  end
+  
 private
 
   def get_jobs_for_cbx_list
@@ -173,6 +187,10 @@ private
     Job.yr(@year).all :select => "jobs.id, jobname, coalesce(user_jobs.user_id, 0) as has_job" \
       , :joins => "left join user_jobs on user_jobs.job_id = jobs.id and user_jobs.user_id = " + @user.id.to_s \
       , :order => :jobname
+  end
+
+  def params_contains_user_attr(attribute)
+    params.key?(:user) && params[:user].key?(attribute)
   end
 
 end

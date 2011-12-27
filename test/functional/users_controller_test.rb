@@ -261,4 +261,13 @@ class UsersControllerTest < ActionController::TestCase
     assert_not_equal @user.encrypted_password, enc_pw_before
   end
 
+  test "admin cannot update user year" do
+    sign_in @admin_user
+    year_before = @user.year
+    u = { 'year' => @user.year + 1 }
+    put :update, :id => @user.id, :user => u, :year => @user.year
+    @user.reload
+    assert_equal year_before, @user.year
+  end
+
 end
