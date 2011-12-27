@@ -53,6 +53,5 @@ module Gocongress
     # http://stackoverflow.com/questions/8622297/heroku-cedar-assetsprecompile-has-beef-with-attr-protected
     # http://guides.rubyonrails.org/asset_pipeline.html
     config.assets.initialize_on_precompile = false
-
   end
 end

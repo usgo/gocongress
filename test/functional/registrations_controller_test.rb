@@ -1,31 +1,31 @@
 require 'test_helper'
 
 class RegistrationsControllerTest < ActionController::TestCase
-  tests Devise::RegistrationsController
+  tests RegistrationsController
 
-  test "sign up page displays" do
-    get :new
+  setup do
+    @year = Time.now.year
+  end
+
+  test "visitor can get sign up page" do
+    get :new, :year => @year
     assert_response :success
   end
 
-  test "valid registration data creates a new user" do
-
-    # using our user factory, prepare a user hash that mimics what the 
-    # params would look like on a valid create request -Jared
+  test "visitor can create a user with valid registration data" do
     a = { :primary_attendee_attributes => Factory.attributes_for(:attendee) }
-    u = Factory.attributes_for(:user).merge( a )
-    
+    u = Factory.attributes_for(:user).merge a
     assert_difference ["User.count", "Attendee.count"], +1 do
-      post :create, :user => u
+      post :create, :user => u, :year => @year
     end
     assert assigns(:user).primary_attendee.user_id.present?
     assert assigns(:user).primary_attendee.is_primary?
     assert_response :redirect
   end
 
-  test "invalid registration data does not create new user" do
+  test "visitor cannot create a user with invalid registration data" do
     assert_no_difference ["User.count", "Attendee.count"] do
-      post :create, :user => {}
+      post :create, :user => {}, :year => @year
     end
     assert_template "new"
   end
@@ -37,7 +37,7 @@ class RegistrationsControllerTest < ActionController::TestCase
     u = Factory.attributes_for(:user).merge( { :primary_attendee_attributes => a } )
 
     assert_no_difference ["User.count", "Attendee.count"] do
-      post :create, :user => u
+      post :create, :user => u, :year => @year
     end
     assert_template "new"
     assert_equal false, assigns(:user).errors.empty?

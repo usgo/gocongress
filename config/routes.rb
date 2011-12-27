@@ -5,13 +5,13 @@ Gocongress::Application.routes.draw do
   # Deprecated: do not use popups as they will just get blocked
   match '/popup/:action' => 'popup', :as => 'popup'
 
-  devise_for :users
-
   # these routes support multiple years with a year scope
   scope ":year" do
     get 'contact' => 'user_jobs#index'
     get 'costs' => 'plan_categories#index'
     get 'pricing' => 'home#pricing'
+
+    devise_for :users, :controllers => { :registrations => "registrations" }
 
     resources :content_categories, :contents, :discounts, :jobs
     resources :plan_categories, :tournaments, :transactions
