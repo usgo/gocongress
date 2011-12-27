@@ -5,6 +5,8 @@ class RegistrationsControllerTest < ActionController::TestCase
 
   setup do
     @year = Time.now.year
+    @u = Factory.attributes_for(:user)
+    @u.merge!({ :primary_attendee_attributes => Factory.attributes_for(:attendee) })
   end
 
   test "visitor can get sign up page" do
@@ -13,10 +15,8 @@ class RegistrationsControllerTest < ActionController::TestCase
   end
 
   test "visitor can create a user with valid registration data" do
-    a = { :primary_attendee_attributes => Factory.attributes_for(:attendee) }
-    u = Factory.attributes_for(:user).merge a
     assert_difference ["User.count", "Attendee.count"], +1 do
-      post :create, :user => u, :year => @year
+      post :create, :user => @u, :year => @year
     end
     assert assigns(:user).primary_attendee.user_id.present?
     assert assigns(:user).primary_attendee.is_primary?
@@ -29,15 +29,15 @@ class RegistrationsControllerTest < ActionController::TestCase
     end
     assert_template "new"
   end
-  
+
   test "minor agreement validator" do
-    a = Factory.attributes_for(:attendee)
-    a[:birth_date] = 5.years.ago # definitely a minor
-    a[:understand_minor] = 0 # did not click "understand" checkbox
-    u = Factory.attributes_for(:user).merge( { :primary_attendee_attributes => a } )
+
+    # Our visitor is a minor, but did not click the "understand" checkbox
+    @u[:primary_attendee_attributes][:birth_date] = 5.years.ago
+    @u[:primary_attendee_attributes][:understand_minor] = 0
 
     assert_no_difference ["User.count", "Attendee.count"] do
-      post :create, :user => u, :year => @year
+      post :create, :user => @u, :year => @year
     end
     assert_template "new"
     assert_equal false, assigns(:user).errors.empty?
