@@ -20,9 +20,12 @@ validates_length_of :name, :maximum => 50
 validates_numericality_of :price, :greater_than_or_equal_to => 0
 validates_numericality_of :age_min, :only_integer => true, :greater_than_or_equal_to => 0
 validates_numericality_of :age_max, :only_integer => true, :allow_nil => true
-validates_numericality_of :max_quantity, :only_integer => true, :greater_than_or_equal_to => 1
 
-validates :inventory, 
+validates :max_quantity,
+  :presence => true,
+  :numericality => {:only_integer => true, :greater_than_or_equal_to => 1}
+
+validates :inventory,
   :numericality => {:only_integer => true, :greater_than_or_equal_to => 0, :allow_nil => true}
 
 def age_range_in_words
