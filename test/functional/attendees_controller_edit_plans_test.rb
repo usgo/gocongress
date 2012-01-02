@@ -88,12 +88,18 @@ class AttendeesControllerEditPlansTest < ActionController::TestCase
   private
 
   def visit_edit_plans_form
-    get :edit_plans, :id => @user.attendees.sample.id, :plan_category_id => @plan_category.id, :year => @year
+    get :edit_plans,
+      :id => @user.attendees.sample.id,
+      :plan_category_id => @plan_category.id,
+      :year => @year
   end
 
   def submit_plans_form(attendee, attendee_params_hash)
-    put :update_plans, :id => attendee.id, :plan_category_id => @plan_category.id,
-      :attendee => attendee_params_hash, :year => @year
+    put :update_plans,
+      :id => attendee.id,
+      :plan_category_id => @plan_category.id,
+      :attendee => attendee_params_hash,
+      :year => @year
   end
 
   def params_for_plan(qty)
