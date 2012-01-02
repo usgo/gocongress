@@ -12,6 +12,9 @@
     %th= trl_attr 'plan', 'inventory'
     %td= @plan.inventory.nil? ? "Unlimited" : @plan.inventory
   %tr
+    %th= trl_attr 'plan', 'max_quantity'
+    %td= @plan.max_quantity.nil? ? "Unlimited" : @plan.max_quantity
+  %tr
     %th Attendee Age
     %td= @plan.age_range_in_words
 
