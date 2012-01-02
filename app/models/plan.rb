@@ -36,4 +36,12 @@ def age_range_in_words
   end
 end
 
+def inventory_consumed(excluded_attendee_id)
+  attendee_plans.where('attendee_id <> ?', excluded_attendee_id).sum(:quantity)
+end
+
+def inventory_available(excluded_attendee_id)
+  inventory - inventory_consumed(excluded_attendee_id)
+end
+
 end
