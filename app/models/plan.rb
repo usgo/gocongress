@@ -41,6 +41,7 @@ def inventory_consumed(excluded_attendee_id)
 end
 
 def inventory_available(excluded_attendee_id)
+  return nil if inventory.nil?
   inventory - inventory_consumed(excluded_attendee_id)
 end
 
