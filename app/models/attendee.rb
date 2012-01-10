@@ -163,7 +163,7 @@ class Attendee < ActiveRecord::Base
     atnd_age = self.age_in_years.truncate
 
     # Does this attendee qualify for any automatic discounts?
-    Discount.where("is_automatic = ?", true).each do |d|
+    Discount.yr(self.year).where("is_automatic = ?", true).each do |d|
 
       # To qualify for an automatic discount, the attendee must satisfy all criteria.
       satisfy_age_min = d.age_min.blank? || atnd_age >= d.age_min
