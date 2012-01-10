@@ -2,14 +2,14 @@ require 'test_helper'
 
 class AttendeeTest < ActiveSupport::TestCase
   setup do
-    @user = Factory.create(:user)
-    @plan = Factory.create(:plan)
+    @user = Factory :user
+    @plan = Factory :plan
   end
 
   test "#invoice_items" do
     # only discounts from the attendee's year should be included
-    dc_2011 = Factory(:automatic_discount, :age_min => 0, :age_max => 12, :year => 2011)
-    dc_now = Factory(:automatic_discount, :age_min => 0, :age_max => 12)
+    dc_2011 = Factory :discount_for_child, :year => 2011
+    dc_now = Factory :discount_for_child
     birth_date = CONGRESS_START_DATE[Time.now.year] - 11.years
     a = Factory(:attendee_minor, :birth_date => birth_date, :user_id => @user.id)
     item_descriptions = a.invoice_items.map{|i| i["item_description"]}

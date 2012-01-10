@@ -12,4 +12,9 @@ FactoryGirl.define do
   factory :nonautomatic_discount, :parent => :discount do
     is_automatic false
   end
+
+  factory :discount_for_child, :parent => :automatic_discount do
+    age_min 0
+    age_max 12
+  end
 end
