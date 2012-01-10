@@ -63,7 +63,6 @@ class UserTest < ActiveSupport::TestCase
     y = Time.now.year
     dc = Factory(:discount, :name => "Child", :amount => 150, :age_min => 0, :age_max => 12, :is_automatic => true, :year => y)
     dy = Factory(:discount, :name => "Youth", :amount => 100, :age_min => 13, :age_max => 18, :is_automatic => true, :year => y)
-    u = Factory(:user, :year => y)
     congress_start = CONGRESS_START_DATE[y]
     
     # If 12 years old on the first day of congress, then attendee
