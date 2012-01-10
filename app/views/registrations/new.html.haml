@@ -1,47 +1,38 @@
 %h2 Register for the #{CONGRESS_YEAR} US Go Congress!
 
-%p
-  Registration for the 2012 Go Congress will open soon!
-  We are finalizing the prices and other information
-  and then we'll be ready to accept your registration.
-  Please check back around the end of January.
-  Thanks for your interest.
+%p.vertical-form-instructions
+  %strong Registering more than one person?
+  %br/
+  If you already have an account, you can add more people to it.
+  You do not need to create extra accounts for everyone.
 
--# 
--# %p.vertical-form-instructions
--#   %strong Registering more than one person?
--#   %br/
--#   If you already have an account, you can add more people to it.
--#   You do not need to create extra accounts for everyone.
--# 
--# %p.vertical-form-instructions
--#   %strong I already registered!
--#   %br/
--#   In that case, please
--#   = link_to "sign in", new_user_session_path
--#   to see your account.
--# 
--# = form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f|
--#   = devise_error_messages!
--#   %fieldset
--#     .field
--#       = f.label :email
--#       = f.text_field :email
--#     .field
--#       = f.label :password, 'Password'
--#       = f.password_field :password, :size => 10
--#     .field
--#       = f.label :password_confirmation, 'Confirm Password'
--#       = f.password_field :password_confirmation, :size => 10
--# 
--#   - resource.primary_attendee ||= Attendee.new
--#   = f.fields_for :primary_attendee do |attendee_fields|
--#     = render :partial => "attendees/personal_info", :locals => { :f => attendee_fields }
--#     = render :partial => "attendees/player_info", :locals => { :f => attendee_fields }
--#     = render :partial => "attendees/contact_info", :locals => { :f => attendee_fields, :show_email_field => false }
--# 
--#   %fieldset
--#     .field
--#       = label '', ''
--#       = f.submit "Sign me up!"
--# 
+%p.vertical-form-instructions
+  %strong I already registered!
+  %br/
+  In that case, please
+  = link_to "sign in", new_user_session_path
+  to see your account.
+
+= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f|
+  = devise_error_messages!
+  %fieldset
+    .field
+      = f.label :email
+      = f.text_field :email
+    .field
+      = f.label :password, 'Password'
+      = f.password_field :password, :size => 10
+    .field
+      = f.label :password_confirmation, 'Confirm Password'
+      = f.password_field :password_confirmation, :size => 10
+
+  - resource.primary_attendee ||= Attendee.new
+  = f.fields_for :primary_attendee do |attendee_fields|
+    = render :partial => "attendees/personal_info", :locals => { :f => attendee_fields }
+    = render :partial => "attendees/player_info", :locals => { :f => attendee_fields }
+    = render :partial => "attendees/contact_info", :locals => { :f => attendee_fields, :show_email_field => false }
+
+  %fieldset
+    .field
+      = label '', ''
+      = f.submit "Sign me up!"
