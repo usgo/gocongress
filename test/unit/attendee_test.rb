@@ -8,11 +8,10 @@ class AttendeeTest < ActiveSupport::TestCase
 
   test "#invoice_items" do
     # only discounts from the attendee's year should be included
-    y = @user.year
     dc_2011 = Factory(:automatic_discount, :age_min => 0, :age_max => 12, :year => 2011)
-    dc_now = Factory(:automatic_discount, :age_min => 0, :age_max => 12, :year => y)
-    congress_start = CONGRESS_START_DATE[y]
-    a = Factory(:attendee_minor, :birth_date => congress_start - 11.years, :user_id => @user.id, :year => y)
+    dc_now = Factory(:automatic_discount, :age_min => 0, :age_max => 12)
+    birth_date = CONGRESS_START_DATE[Time.now.year] - 11.years
+    a = Factory(:attendee_minor, :birth_date => birth_date, :user_id => @user.id)
     item_descriptions = a.invoice_items.map{|i| i["item_description"]}
     assert_equal true, item_descriptions.include?(dc_now.get_invoice_item_name)
     assert_equal false, item_descriptions.include?(dc_2011.get_invoice_item_name)
