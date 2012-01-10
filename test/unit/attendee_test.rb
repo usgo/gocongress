@@ -3,7 +3,6 @@ require 'test_helper'
 class AttendeeTest < ActiveSupport::TestCase
   setup do
     @user = Factory :user
-    @plan = Factory :plan
   end
 
   test "#invoice_items" do
@@ -64,7 +63,7 @@ class AttendeeTest < ActiveSupport::TestCase
 
   test "destroying an attendee also destroys dependent AttendeePlans" do
     a = Factory(:attendee, :user_id => @user.id)
-    a.plans << @plan
+    a.plans << Factory(:plan)
 
     # when we destroy the attendee, we expect all dependent AttendeePlans to be destroyed
     destroyed_attendee_id = a.id
