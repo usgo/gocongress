@@ -14,11 +14,11 @@
   %tbody
     - for i in @invoice_items
       %tr
-        %td= i['attendee_full_name']
-        %td= i['item_description']
-        %td.numeric= number_to_currency i['item_price']
-        %td.numeric= i['qty']
-        %td.numeric= number_to_currency i['item_price'] * i['qty']
+        %td= i.attendee_full_name
+        %td= i.description
+        %td.numeric= number_to_currency i.price
+        %td.numeric= i.qty
+        %td.numeric= number_to_currency( i.price * i.qty )
     %tr.total
       %th{ :colspan => 4, :style => 'text-align:right;' } Grand Total
       %td.numeric= number_to_currency @user.get_invoice_total

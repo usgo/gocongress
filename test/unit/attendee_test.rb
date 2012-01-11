@@ -5,13 +5,18 @@ class AttendeeTest < ActiveSupport::TestCase
     @user = Factory :user
   end
 
+  test "#invoice_total" do
+    # a user with no plans, discounts, events, etc. should have a $0 total
+    assert_equal 0, @user.primary_attendee.invoice_total
+  end
+
   test "#invoice_items" do
     # only discounts from the attendee's year should be included
     dc_2011 = Factory :discount_for_child, :year => 2011
     dc_now = Factory :discount_for_child
     birth_date = CONGRESS_START_DATE[Time.now.year] - 11.years
     a = Factory(:attendee_minor, :birth_date => birth_date, :user_id => @user.id)
-    item_descriptions = a.invoice_items.map{|i| i["item_description"]}
+    item_descriptions = a.invoice_items.map{|i| i.description}
     assert_equal true, item_descriptions.include?(dc_now.get_invoice_item_name)
     assert_equal false, item_descriptions.include?(dc_2011.get_invoice_item_name)
   end
@@ -88,7 +93,7 @@ class AttendeeTest < ActiveSupport::TestCase
   end
   
   def attendee_has_discount(a,d)
-    invoice_item_names = a.invoice_items.map{|i| i['item_description']}
+    invoice_item_names = a.invoice_items.map{|i| i.description}
     return invoice_item_names.index(d.get_invoice_item_name).present?
   end
 end

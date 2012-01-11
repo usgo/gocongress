@@ -1,18 +1,10 @@
 class InvoiceItem
+  attr_reader :description, :attendee_full_name, :price, :qty
 
-  def self.inv_item_hash( item_description, attendee_full_name, item_price, qty )
-    item = {}
-    item['item_description'] = item_description
-    item['attendee_full_name'] = attendee_full_name
-    item['item_price'] = Float(item_price)
-    item['qty'] = qty
-    return item
+  def initialize(description, attendee_full_name, price, qty)
+    @description = description.to_s
+    @attendee_full_name = attendee_full_name.to_s
+    @price = price.to_f
+    @qty = qty.to_i
   end
-
-  def self.inv_item_total(item_array)
-    sum = 0.0
-    item_array.each { |item| sum += item['item_price'] * item['qty'] }
-    return sum
-  end
-
 end

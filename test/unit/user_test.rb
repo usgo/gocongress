@@ -37,7 +37,7 @@ class UserTest < ActiveSupport::TestCase
   test "sum of invoice equals invoice total" do
     1.upto(1+rand(3)) { |a| @user.attendees << Factory(:attendee, :user_id => @user.id) }
     expected_sum = 0
-    @user.get_invoice_items.each { |ii| expected_sum += ii['item_price'] }
+    @user.get_invoice_items.each { |ii| expected_sum += ii.price }
     assert_equal expected_sum, @user.get_invoice_total
   end
 
@@ -140,7 +140,7 @@ private
   def find_item_description? (items, description)
     found_description = false
     items.each do |i|
-      if i['item_description'] == description then
+      if i.description == description then
         found_description = true
       end
     end

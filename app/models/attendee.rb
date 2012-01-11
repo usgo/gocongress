@@ -171,26 +171,26 @@ class Attendee < ActiveRecord::Base
       satisfy_min_reg_date = d.min_reg_date.blank? || self.created_at.to_date <= d.min_reg_date.to_date
 
       if (satisfy_age_min && satisfy_age_max && satisfy_min_reg_date) then
-        invoice_items.push InvoiceItem.inv_item_hash(d.get_invoice_item_name, self.get_full_name, -1 * d.amount, 1)
+        invoice_items << InvoiceItem.new(d.get_invoice_item_name, self.get_full_name, -1 * d.amount, 1)
       end
 
     end
 
     # Did this attendee claim any non-automatic discounts?
     self.discounts.where("is_automatic = ?", false).each do |d|
-      invoice_items.push InvoiceItem.inv_item_hash(d.get_invoice_item_name, self.get_full_name, -1 * d.amount, 1)
+      invoice_items << InvoiceItem.new(d.get_invoice_item_name, self.get_full_name, -1 * d.amount, 1)
     end
 
     # room and board invoice items
     self.attendee_plans.each do |ap|
       p = ap.plan
-      invoice_items.push InvoiceItem.inv_item_hash('Plan: ' + p.name, self.get_full_name, p.price, ap.quantity)
+      invoice_items << InvoiceItem.new('Plan: ' + p.name, self.get_full_name, p.price, ap.quantity)
     end
     
     # Events
     self.events.each do |e|
       if e.evtprice.to_f > 0.0 then
-        invoice_items.push InvoiceItem.inv_item_hash('Event: ' + e.evtname, self.get_full_name, e.evtprice.to_f, 1)
+        invoice_items << InvoiceItem.new('Event: ' + e.evtname, self.get_full_name, e.evtprice.to_f, 1)
       end
     end
     
@@ -198,7 +198,8 @@ class Attendee < ActiveRecord::Base
   end
 
   def invoice_total
-    InvoiceItem.inv_item_total(self.invoice_items)
+    subtotals = invoice_items.map{|i| i.price * i.qty}
+    subtotals.empty? ? 0 : subtotals.reduce(:+)
   end
 
   def minor?

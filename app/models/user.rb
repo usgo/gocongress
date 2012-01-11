@@ -72,7 +72,7 @@ class User < ActiveRecord::Base
 
     # Comp transactions, eg. VIP discounts
     self.transactions.where(:trantype => 'C').each do |t|
-      invoice_items.push InvoiceItem.inv_item_hash('Comp', 'N/A', -1 * t.amount, 1)
+      invoice_items << InvoiceItem.new('Comp', 'N/A', -1 * t.amount, 1)
     end
 
     # Note: Refund transactions are NOT invoice items.  They should not
@@ -83,7 +83,8 @@ class User < ActiveRecord::Base
   end
 
   def get_invoice_total
-    InvoiceItem.inv_item_total(self.get_invoice_items)
+    subtotals = get_invoice_items.map{|i| i.price * i.qty}
+    subtotals.empty? ? 0 : subtotals.reduce(:+)
   end
 
   def is_admin?
