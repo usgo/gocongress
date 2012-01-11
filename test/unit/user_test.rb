@@ -69,22 +69,22 @@ class UserTest < ActiveSupport::TestCase
     # should get child discount and NOT youth discount
     a = Factory(:attendee, :birth_date => congress_start - 12.years, :user_id => @user.id, :understand_minor => true, :year => y)
     assert_equal 12, a.age_in_years
-    assert_equal true, find_item_description?(@user.get_invoice_items, dc.get_invoice_item_name)
-    assert_equal false, find_item_description?(@user.get_invoice_items, dy.get_invoice_item_name)
+    assert_equal true, user_has_discount?(@user, dc)
+    assert_equal false, user_has_discount?(@user, dy)
 
     # 11 year old should get child discount and NOT youth discount
     a.update_attribute :birth_date, congress_start - 11.years
     assert_equal 11, a.age_in_years.truncate, "Expected (#{a.age_in_years}).truncate to equal 11.  The birth_date is #{11.years.ago}"
     @user.reload
-    assert_equal true, find_item_description?(@user.get_invoice_items, dc.get_invoice_item_name)
-    assert_equal false, find_item_description?(@user.get_invoice_items, dy.get_invoice_item_name)
+    assert_equal true, user_has_discount?(@user, dc)
+    assert_equal false, user_has_discount?(@user, dy)
 
     # 13 year old should get YOUTH discount, not child discount
     a.update_attribute :birth_date, congress_start - 13.years
     assert_equal 13, a.age_in_years.truncate
     @user.reload
-    assert_equal false, find_item_description?(@user.get_invoice_items, dc.get_invoice_item_name)
-    assert_equal true, find_item_description?(@user.get_invoice_items, dy.get_invoice_item_name)
+    assert_equal false, user_has_discount?(@user, dc)
+    assert_equal true, user_has_discount?(@user, dy)
   end
 
   test "plan with qty increases invoice total" do
@@ -137,14 +137,8 @@ class UserTest < ActiveSupport::TestCase
 
 private
   
-  def find_item_description? (items, description)
-    found_description = false
-    items.each do |i|
-      if i.description == description then
-        found_description = true
-      end
-    end
-    return found_description
+  def user_has_discount? (user, discount)
+    user.get_invoice_items.map(&:description).include?(discount.get_invoice_item_name)
   end
 
 end
