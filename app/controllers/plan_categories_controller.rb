@@ -9,6 +9,7 @@ class PlanCategoriesController < ApplicationController
 
   # GET /plan_categories/1
   def show
+    @plans = @plan_category.plans
   end
 
   # GET /plan_categories/new

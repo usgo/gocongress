@@ -1,7 +1,7 @@
 %h2= @plan_category.name
 = markdown_if_present(@plan_category.description)
 
-- if @plan_category.plans.empty?
+- if @plans.empty?
   %p This category has no plans yet.
 - else
   %table.semantic.zebra.fullwidth
@@ -12,7 +12,7 @@
         %th Description
         %th.numeric Price
     %tbody
-      - @plan_category.plans.each do |p|
+      - @plans.each do |p|
         %tr
           %td= link_to p.name, p
           %td= p.age_range_in_words
