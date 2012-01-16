@@ -10,7 +10,7 @@ class PlanCategoriesController < ApplicationController
   # GET /plan_categories/1
   def show
     @plans = @plan_category.plans
-    @show_availability = @plans.map{|p| p.inventory.present?}.reduce{|disj, n| disj || n}
+    @show_availability = Plan.show_availability?(@plans)
   end
 
   # GET /plan_categories/new

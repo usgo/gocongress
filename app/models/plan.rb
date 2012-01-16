@@ -55,4 +55,8 @@ def inventory_available(excluded_attendee=nil)
   c > inventory ? 0 : inventory - c
 end
 
+def self.show_availability?(plans)
+  plans.map{|p| p.inventory.present?}.reduce{|disj, n| disj || n}
+end
+
 end
