@@ -27,6 +27,8 @@
           %th= trl_attr 'plan', 'name'
           %th Attendee Age
           %th= trl_attr 'plan', 'description'
+          - if @show_availability
+            %th # Available*
           %th.numeric= trl_attr 'plan', 'price'
         - @plans.each do |plan|
           %tr
@@ -40,7 +42,15 @@
             %td= plan.name
             %td= plan.age_range_in_words
             %td= Markdown.new( plan.description ).to_html.html_safe
+            - if @show_availability
+              %td= plan.describe_inventory_available
             %td.numeric= format_price(plan.price)
+
+  - if @show_availability
+    - pcnpd = @plan_category.name.pluralize.downcase
+    %p.smalltext
+      * Some #{pcnpd} have limited availability. To reserve these #{pcnpd},
+      please pay your full cost immediately after registration.
 
   .actions
     %br

@@ -342,6 +342,7 @@ protected
     @plan_category = PlanCategory.reg_form(@year, @attendee.age_in_years).find(params[:plan_category_id])
     age = @attendee.age_in_years
     @plans = @plan_category.plans.appropriate_for_age(age).order("price desc")
+    @show_availability = @plans.map{|p| p.inventory.present?}.reduce{|disj, n| disj || n}
   end
 
   def get_valid_page_from_params
