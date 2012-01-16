@@ -11,6 +11,10 @@ class PlanTest < ActiveSupport::TestCase
     assert Factory.build(:plan).valid?
   end
 
+  test "an inventory of zero is invalid" do
+    assert !Factory.build(:plan, inventory: 0).valid?
+  end
+
   test "max qty" do
     p = Factory.build(:plan, :max_quantity => 1)
     assert p.valid?

@@ -26,7 +26,10 @@ validates :max_quantity,
   :numericality => {:only_integer => true, :greater_than_or_equal_to => 1}
 
 validates :inventory,
-  :numericality => {:only_integer => true, :greater_than_or_equal_to => 0, :allow_nil => true}
+  :numericality => {
+    :only_integer => true, :greater_than => 0, :allow_nil => true,
+    :message => " should be blank (if unlimited) or greater than 0"
+    }
 
 def age_range_in_words
   if age_min == 0 && age_max.blank?
