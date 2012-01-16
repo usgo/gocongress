@@ -29,8 +29,8 @@ class AttendeePlan < ActiveRecord::Base
 
     # Quantity may not exceed available inventory
     if available.present? && value > available then
-      model.errors.add("The requested quantity of #{plan_name}",
-        " exceeds the available inventory of #{available}")
+      model.errors.add("#{model.plan.name.pluralize}:",
+        "You requested #{value}, but there are only #{available} available.")
     end
   end
 
