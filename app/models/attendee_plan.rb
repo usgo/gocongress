@@ -35,10 +35,12 @@ class AttendeePlan < ActiveRecord::Base
   end
 
   before_validation do |ap|
-    if ap.plan.year != ap.attendee.year
-      raise "Attendee and Plan have different years"
+    if ap.plan.present? && ap.attendee.present?
+      if ap.plan.year != ap.attendee.year
+        raise "Attendee and Plan have different years"
+      end
+      ap.year ||= ap.attendee.year
     end
-    ap.year ||= ap.attendee.year
   end
 
 end
