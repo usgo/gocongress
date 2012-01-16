@@ -40,7 +40,7 @@ def age_range_in_words
 end
 
 def describe_inventory_available
-  inventory.present? ? "#{inventory_available} of #{inventory}" : ""
+  inventory.present? ? "#{inventory_available} of #{inventory}" : "Unlimited"
 end
 
 def inventory_consumed(excluded_attendee=nil)
@@ -51,7 +51,8 @@ end
 
 def inventory_available(excluded_attendee=nil)
   return nil if inventory.nil?
-  inventory - inventory_consumed(excluded_attendee)
+  c = inventory_consumed(excluded_attendee)
+  c > inventory ? 0 : inventory - c
 end
 
 end

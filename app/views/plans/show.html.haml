@@ -10,7 +10,7 @@
     %td= format_price @plan.price
   %tr
     %th= trl_attr 'plan', 'inventory'
-    %td= @plan.inventory.nil? ? "Unlimited" : @plan.inventory
+    %td= @plan.describe_inventory_available
   %tr
     %th= trl_attr 'plan', 'max_quantity'
     %td= @plan.max_quantity.nil? ? "Unlimited" : @plan.max_quantity

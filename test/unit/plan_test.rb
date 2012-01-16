@@ -3,7 +3,8 @@ require 'test_helper'
 class PlanTest < ActiveSupport::TestCase
   test "#inventory_consumed" do
     p = Factory :plan, max_quantity: 3
-    p.attendee_plans.create! quantity: 3, year: p.year
+    a = Factory :attendee
+    p.attendee_plans.create! quantity: 3, year: p.year, attendee_id: a.id
     assert_equal 3, p.inventory_consumed
   end
 
