@@ -3,8 +3,8 @@ table.lightweight {
   border-spacing: 0;
   border-collapse: collapse;
   td, th { border: 0px solid #666; }
-  td { padding: 0em 0.5em; }
-  th { padding: 0em 0.5em 0em 0em; }
+  td { padding: 0em 1em; }
+  th { padding: 0em 1em 0em 0em; }
   &.top-headed th, td { padding: 0em 1em 0em 0em; }
   &.lightly-spaced-rows td { padding-top: 0.25em; padding-bottom: 0.25em; }
 }
