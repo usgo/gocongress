@@ -36,6 +36,10 @@ def age_range_in_words
   end
 end
 
+def describe_inventory_available
+  inventory.present? ? "#{inventory_available} of #{inventory}" : ""
+end
+
 def inventory_consumed(excluded_attendee=nil)
   ap = attendee_plans
   ap.where('attendee_id <> ?', excluded_attendee.id) if excluded_attendee.present?

@@ -10,6 +10,7 @@
         %th Plan
         %th Attendee Age
         %th Description
+        %th # Available*
         %th.numeric Price
     %tbody
       - @plans.each do |p|
@@ -17,7 +18,14 @@
           %td= link_to p.name, p
           %td= p.age_range_in_words
           %td= Markdown.new( p.description ).to_html.html_safe
+          %td= p.describe_inventory_available
           %td.numeric= format_price p.price
+
+- pcnpd = @plan_category.name.pluralize.downcase
+%p.smalltext
+  * Some #{pcnpd} have limited availability.
+  To reserve these #{pcnpd}, please pay your
+  full cost immediately after registration.
 
 %br
 
