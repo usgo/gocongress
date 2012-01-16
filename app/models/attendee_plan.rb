@@ -25,7 +25,7 @@ class AttendeePlan < ActiveRecord::Base
 
     # What is the available inventory for this plan, excluding the
     # current attendee who may be trying to increase their quantity?
-    available = model.plan.inventory_available(model.attendee.id)
+    available = model.plan.inventory_available(model.attendee)
 
     # Quantity may not exceed available inventory
     if available.present? && value > available then

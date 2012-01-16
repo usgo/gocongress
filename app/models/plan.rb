@@ -36,13 +36,15 @@ def age_range_in_words
   end
 end
 
-def inventory_consumed(excluded_attendee_id)
-  attendee_plans.where('attendee_id <> ?', excluded_attendee_id).sum(:quantity)
+def inventory_consumed(excluded_attendee=nil)
+  ap = attendee_plans
+  ap.where('attendee_id <> ?', excluded_attendee.id) if excluded_attendee.present?
+  ap.sum(:quantity)
 end
 
-def inventory_available(excluded_attendee_id)
+def inventory_available(excluded_attendee=nil)
   return nil if inventory.nil?
-  inventory - inventory_consumed(excluded_attendee_id)
+  inventory - inventory_consumed(excluded_attendee)
 end
 
 end
