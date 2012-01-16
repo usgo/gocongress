@@ -16,7 +16,9 @@
     .field
       = f.label :inventory
       = f.text_field :inventory, :size => 3
-      %span.smalltext Useful for room plans with limited availability.
+      %span.smalltext
+        Useful for room plans with limited availability.
+        Leave blank if unlimited.
     .field
       = f.label :max_quantity
       = f.text_field :max_quantity, :size => 3
