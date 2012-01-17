@@ -1,3 +1,6 @@
+/* Configuration: Layout */
+$content_width: 880px;
+
 /* Basic element styling (no classes yet) */
 * { margin: 0px; padding: 0px; }
 body { background-color: white; }
@@ -115,6 +118,7 @@ body.year2012 .nav-container { background-color: #8D7AC9; }
     }
   }
 }
+#nav-list-main { margin:0 auto; max-width: $content_width; }
 
 /* Secondary navigation */
 .pagination-controls { float: right; }
@@ -127,7 +131,7 @@ body.year2012 .nav-container { background-color: #8D7AC9; }
   border-bottom: 1px solid #AAA;
   margin: 0 auto;
   padding: 10px;
-  width: 880px;
+  width: $content_width;
 
   /* Basic styling for elements in the main content area */
   p, dl { padding: 0.5em 0em 0.5em 0em; }
