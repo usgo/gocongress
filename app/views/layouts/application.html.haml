@@ -41,7 +41,11 @@
               =link_to "Sign In", new_user_session_path
             - else
               =link_to "Sign Out", destroy_user_session_path
-          %li= link_to "Tournaments", tournaments_path
+          - @tournaments_for_nav_menu.each do |t|
+            %li= link_to t.name, t
+          %li
+            - tournaments_plural_phrase = @tournaments_for_nav_menu.empty? ? "Tournaments" : "Other Tournaments"
+            = link_to tournaments_plural_phrase, tournaments_path
           - @event_categories_for_menu.each do |c|
             %li= link_to c.name, c
           %li= link_to "Who is Coming?", attendees_path

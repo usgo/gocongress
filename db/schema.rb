@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111216030309) do
+ActiveRecord::Schema.define(:version => 20120117063006) do
 
   create_table "attendee_discounts", :force => true do |t|
     t.integer  "attendee_id", :null => false
@@ -219,6 +219,7 @@ ActiveRecord::Schema.define(:version => 20111216030309) do
     t.boolean  "show_attendee_notes_field",               :default => false, :null => false
     t.integer  "year",                                                       :null => false
     t.string   "location",                  :limit => 50
+    t.boolean  "show_in_nav_menu",                        :default => false, :null => false
   end
 
   add_index "tournaments", ["id", "year"], :name => "index_tournaments_on_id_and_year", :unique => true

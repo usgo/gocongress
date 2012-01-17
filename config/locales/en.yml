@@ -57,6 +57,7 @@ en:
         location: "Location"
         openness: "Open or Invitational?"
         show_attendee_notes_field: "Show Attendee Notes Field?"
+        show_in_nav_menu: "Show in Navigation Menu?"
       transaction:
         amount: "Amount"
         check_number: "Check Number"

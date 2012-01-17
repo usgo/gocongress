@@ -27,6 +27,12 @@
       %span.smalltext
         Allow attendees to provide comments (eg. pair go partner)
         when signing up for tournament
+    .field
+      = f.label :show_in_nav_menu
+      = f.check_box :show_in_nav_menu
+      %span.smalltext
+        Highlight this particular tournament by showing it in the
+        navigation menu at the top of the page
 
   %h3 Rounds
   .rounds-container
