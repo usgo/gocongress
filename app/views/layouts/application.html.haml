@@ -11,9 +11,6 @@
 
     = csrf_meta_tag
     = javascript_include_tag :application
-
-    -# Warning: Do not use stylesheet_link_tag :cache => true
-    -# because Heroku is a readonly filesystem -Jared 2011.2.3
     = stylesheet_link_tag :application
 
   %body{:class => "#{@bodyClassList} year#{@year}"}
