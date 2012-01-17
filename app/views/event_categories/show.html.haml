@@ -61,4 +61,6 @@
           - if current_user_is_admin?
             %td= link_to 'Edit', edit_event_path(e)
             %td= link_to 'Delete', e, :confirm => 'Delete event?  If any attendees are signed up, those signups will be lost too.', :method => :delete
-%br/
+
+-if can? :update, @event_category
+  %p= button_to "Edit this Event Category", edit_event_category_path(@event_category), :method => :get

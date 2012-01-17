@@ -16,7 +16,7 @@ Gocongress::Application.routes.draw do
     resources :content_categories, :contents, :discounts, :jobs
     resources :plan_categories, :tournaments, :transactions
     resources :events, :except => [:index]
-    resources :event_categories, :only => [:show]
+    resources :event_categories, :only => [:show, :edit, :update]
     resources :plans, :except => [:index]
 
     resources :attendees, :except => :edit do

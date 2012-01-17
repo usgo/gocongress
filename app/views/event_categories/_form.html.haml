@@ -1,0 +1,12 @@
+= form_for @event_category do |f|
+  = render :partial => "shared/error_messages", :locals => { :resource => @event_category }
+
+  %fieldset
+    .field
+      = f.label :name, "Category Name"
+      = f.text_field :name
+
+  %br
+
+  .actions
+    = f.submit 'Save'
