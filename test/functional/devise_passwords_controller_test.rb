@@ -16,7 +16,7 @@ class DevisePasswordsControllerTest < ActionController::TestCase
     get :new, :year => u.year
     assert_response :success
     assert_select "input[name*=email]"
-    assert_select "input[name*=year]"
+    assert_select "input[name*=year][value=#{u.year}]"
   end
 
   test "reset password token is created for the correct user" do
