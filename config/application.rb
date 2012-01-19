@@ -9,10 +9,12 @@ Bundler.require(:default, Rails.env) if defined?(Bundler)
 module Gocongress
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
-    
-    # I think these things called helpers (eg. edit_password_url) 
-    # need :host to be defined, and I think this is the place to do it. 
-    # -Jared 2010-12-22
+
+    # action_mailer's default_url_options should not be confused with
+    # ActionController#default_url_options().  Unlike in ActionController, we
+    # can only set static values here, and we can only use what's available
+    # during initialization.  Specifically, this means that we cannot specify
+    # a deafult year, as we do in ActionController.  -Jared 2012-01-18
     config.action_mailer.default_url_options = { :host => "www.gocongress.org" }
     
     # Application configuration should go into files in config/initializers
