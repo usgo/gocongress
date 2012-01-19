@@ -11,6 +11,14 @@ class DevisePasswordsControllerTest < ActionController::TestCase
     assert_redirected_to new_user_session_path
   end
 
+  test "pw reset form has both year and email" do
+    u = Factory :user
+    get :new, :year => u.year
+    assert_response :success
+    assert_select "input[name*=email]"
+    assert_select "input[name*=year]"
+  end
+
   test "reset password token is created for the correct user" do
 
     # Create two users with the same email address, but different years.
