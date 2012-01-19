@@ -9,6 +9,6 @@ class DevisePasswordsControllerTest < ActionController::TestCase
 
   test "user can create reset password token" do
     post :create, :user => {:email => @user.email}, :year => @year
-    assert_response :success
+    assert_redirected_to new_user_session_path
   end
 end
