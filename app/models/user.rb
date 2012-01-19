@@ -3,11 +3,15 @@ require "invoice_item"
 class User < ActiveRecord::Base
   include YearlyModel
 
+  # In practice, we often load users based on the compound key (email,year).
+  # For example, when authenticating or resetting a password.
+  PRACTICAL_KEY = [:email,:year]
+
   # Devise modules: Do not use :validatable now that
   # the email uniqueness validation has a year scope
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable,
-         {:authentication_keys => [:email, :year]}
+         {:authentication_keys => PRACTICAL_KEY, :reset_password_keys => PRACTICAL_KEY}
 
   attr_accessible :email, :password, :password_confirmation,
     :remember_me, :primary_attendee_attributes
