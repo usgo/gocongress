@@ -61,13 +61,13 @@ class Attendee < ActiveRecord::Base
   scope :reasonable_birth_date, where("birth_date > ? AND birth_date < ?", '1880-01-01', Time.now())
 
   # Begin validations
-  validates_format_of :country, :with => /^[A-Z]{2}$/, :message => "must be exactly two capital letters"
+  validates :country, :format => {:with => /^[A-Z]{2}$/}, :presence => true
   validates_format_of :zip, :allow_blank => true, :with => /^\d{5}(-\d{4})?$/, :if => :country_is_america?, :message => "is not valid for the selected country"
   validates_presence_of :gender
   validates_inclusion_of :gender, :in => ["m","f"], :message => "is not valid"
   validates_inclusion_of :is_primary, :in => [true, false]
   validates_inclusion_of :minor_agreement_received, :in => [true, false]
-  validates_presence_of :address_1, :birth_date, :city,  :country, :email, :family_name, :given_name, :rank
+  validates_presence_of :address_1, :birth_date, :city, :email, :family_name, :given_name, :rank
   validates_inclusion_of :rank, :in => NUMERIC_RANK_LIST, :message => "is not a valid rank"
   validates_inclusion_of :tshirt_size, :in => TSHIRT_SIZE_LIST, :message => "is not valid"
   validates_length_of :special_request, :maximum => 250

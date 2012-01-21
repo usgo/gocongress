@@ -27,3 +27,10 @@ DAY_OFF_DATE = {
   2011 => Date.civil(2011, 8, 3),
   2012 => Date.civil(2012, 8, 8)
 }
+
+# PRIORITY_COUNTRIES will appear at the top of the country_select dropdown menu
+PRIORITY_COUNTRIES = {
+  "United States" => "US",
+  "Japan" => "JP",
+  "China" => "CN"
+}
