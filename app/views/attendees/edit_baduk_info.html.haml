@@ -1,6 +1,4 @@
-%h2
-  Player Info. for
-  = @attendee.get_full_name
+%h2= @attendee.get_full_name
 
 = form_for( @attendee ) do |f|
 
@@ -26,31 +24,6 @@
           - cbx_id = 'attendee_discount_id_' + d.id.to_s
           - cbx_checked = @attendee_discount_ids.index(d.id).present?
           = check_box_tag "attendee[discount_ids][]", d.id, cbx_checked, :id => cbx_id
-
-  %fieldset.wordy-questions
-    %legend Player Information
-    .field
-      = f.label :congresses_attended, 'How many previous US Go Congresses ' + |
-        (@attendee.is_primary ? "have" : "has") + ' ' + |
-        (@attendee.is_primary ? "you" : "this person") + ' attended?' |
-      = f.number_field :congresses_attended, :size => 3, :min => 0, :max => 99, :step => 1
-    .field
-      = f.label :is_current_aga_member, "Is " + |
-        (@attendee.is_primary ? "your" : "this person's") + " AGA membership current?" |
-      = f.radio_button :is_current_aga_member, true
-      %span 
-        Yes, as of today, 
-        = @attendee.is_primary ? "my" : "this person's"
-        membership is current
-      %br
-      %label
-      = f.radio_button :is_current_aga_member, false
-      %span 
-        No, 
-        = @attendee.is_primary ? "my" : "this person's"
-        membership has expired or 
-        = @attendee.is_primary ? "I am" : "they are"
-        not a member
 
   %fieldset.wordy-questions
     %legend Special Concerns or Requests

@@ -262,8 +262,8 @@ class AttendeesController < ApplicationController
     # update attributes but do not save yet
     @attendee.attributes = params[:attendee]
 
-    # run the appropriate validations for this @page
-    if @attendee.valid_in_form_page?(@page.to_sym) and extra_errors.length == 0
+    # validate
+    if @attendee.valid? and extra_errors.length == 0
       @attendee.save(:validate => false)
 
       # after saving the baduk page, if the attendee has not selected a plan yet,

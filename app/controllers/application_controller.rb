@@ -48,16 +48,13 @@ class ApplicationController < ActionController::Base
   # Redirect Devise to a specific page on successful sign in  -Jared
   def after_sign_in_path_for(resource_or_scope)
     if resource_or_scope.is_a?(User)
-      pa = resource_or_scope.primary_attendee
+      user = resource_or_scope
+      pa = user.primary_attendee
 
       # Go to the "My Account" page, unless the primary attendee
-      # has not filled out the baduk page yet (for example, immediately
+      # has not filled out the second page yet (for example, immediately
       # after submitting the devise registration form)
-      if pa.congresses_attended.present?
-        user_path(current_user.id)
-      else
-        edit_attendee_path pa, :baduk
-      end
+      return (pa.plan_count > 0) ? user_path(user) : edit_attendee_path(pa, :baduk)
     else
       super
     end

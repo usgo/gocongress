@@ -2,11 +2,13 @@ Factory.define :attendee do |f|
   f.address_1 "askldfj"
   f.birth_date "1981-09-10"
   f.city "aaaaaa"
+  f.congresses_attended 0
   f.country 'JP'
+  f.email "thisgetsoverwrittenanyways@j.singlebrook.com"
+  f.family_name 'Vespucci'
   f.gender 'm'
   f.given_name 'Amerigo'
-  f.family_name 'Vespucci'
-  f.email "thisgetsoverwrittenanyways@j.singlebrook.com"
+  f.is_current_aga_member true
   f.tshirt_size 'AL'
   f.rank 3
   f.year Time.now.year

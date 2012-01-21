@@ -73,6 +73,8 @@ class Attendee < ActiveRecord::Base
   validates_length_of :special_request, :maximum => 250
   validates_length_of :roomate_request, :maximum => 250
   validates_date :birth_date, :after => Date.civil(1900,1,1), :allow_blank => false
+  validates :congresses_attended, :numericality => {:greater_than_or_equal_to => 0}
+  validates :is_current_aga_member, :inclusion => {:in => [true, false]}
 
   # AGA ID must be unique within each year
   validates :aga_id, \
@@ -91,12 +93,6 @@ class Attendee < ActiveRecord::Base
   
   # Validate that each user has exactly one primary attendee -Jared
   validates_uniqueness_of :is_primary, :scope => :user_id, :if => :is_primary?
-
-  # only apply these validations on the baduk form page ("player info")
-  with_options :on => :update, :if => :form_page_is_baduk? do |b|
-    b.validates_numericality_of :congresses_attended, :greater_than_or_equal_to => 0
-    b.validates_inclusion_of :is_current_aga_member, :in => [true, false]
-  end
 
   def age_in_years
     # Returns integer age in years on the start day of the event, not now.
@@ -143,16 +139,6 @@ class Attendee < ActiveRecord::Base
   def internal_attributes
     # attrs rarely useful for display
     %w[id user_id understand_minor]
-  end
-
-  def form_page_is_baduk?
-    @form_page == :baduk
-  end
-
-  # is the model valid for a given form page? -Jared
-  def valid_in_form_page?(form_page)
-    @form_page = form_page
-    valid?
   end
 
   def invoice_items
@@ -216,6 +202,10 @@ class Attendee < ActiveRecord::Base
 
   def name_and_rank
     get_full_name(false) + ", " + get_rank_name
+  end
+
+  def plan_count
+    plans.count
   end
 
   def possessive_pronoun_or_name

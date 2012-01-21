@@ -14,7 +14,9 @@
   to see your account.
 
 = form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f|
-  = devise_error_messages!
+
+  = render :partial => "shared/error_messages", :locals => { :resource => resource }
+
   %fieldset
     .field
       = f.label :email
@@ -35,4 +37,4 @@
   %fieldset
     .field
       = label '', ''
-      = f.submit "Sign me up!"
+      = f.submit "Continue"
