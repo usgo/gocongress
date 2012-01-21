@@ -66,7 +66,7 @@ class Transaction < ActiveRecord::Base
   def requires_check_number?() instrument == 'K' end
 
   def description
-    get_trantype_name_public + (comment.empty? ? '' : ": #{comment}")
+    get_trantype_name_public + (comment.blank? ? '' : ": #{comment}")
   end
 
   def get_trantype_name

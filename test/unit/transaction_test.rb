@@ -31,7 +31,14 @@ class TransactionTest < ActiveSupport::TestCase
     t = Factory.build(:tr_comp)
     assert t.valid?, t.errors.full_messages.join(',')
   end
-  
+
+  test "#description" do
+    t = Factory.build(:tr_comp, :comment => "foobar")
+    assert_equal "Comp: foobar", t.description
+    t.comment = nil
+    assert_equal "Comp", t.description
+  end
+
   test "comp with gwtranid is not valid" do
     tr_comp = Factory.build(:tr_comp)
     tr_comp.gwtranid = 12897
