@@ -1,8 +1,13 @@
 class Ability
   include CanCan::Ability
 
+  # Define an array of all resource classes, to be used
+  # when the cancan syntax does not allow the symbol :all
+  # For example, when applying conditions, eg. :year
+  ALL_RESOURCES = [Attendee, Content, ContentCategory, Discount, Event,
+    EventCategory, Job, PlanCategory, Plan, Transaction, Tournament, User]
+
   def initialize(user)
-    all_resources = Ability.congress_resources
 
     # If there is no user logged in, instantiate a guest user.
     # Be sure to set the role to the empty string, or else
@@ -14,12 +19,12 @@ class Ability
     
     # Admins can do anything in their own year
     if user.is_admin? then
-      can :manage, all_resources, :year => user.year
+      can :manage, ALL_RESOURCES, :year => user.year
     end
     
     # Staff can read anything in their own year
     if user.role == 'S' then
-      can :read, all_resources, :year => user.year
+      can :read, ALL_RESOURCES, :year => user.year
     end
 
     # Admins and Staff share a few special abilities
@@ -31,7 +36,7 @@ class Ability
     
     # User and Staff can manage their own resources, except for 
     # their User record, which they can only show and update
-    if %w[S U].index(user.role).present? then
+    if %w[S U].include?(user.role) then
       can [:show, :update], User, :id => user.id
       can :manage, Attendee, :user_id => user.id
     end
@@ -40,13 +45,4 @@ class Ability
     can :read, [Content, ContentCategory, Event, Job, Tournament, PlanCategory]
     can :show, [Plan, EventCategory]
   end
-
-  def self.congress_resources
-    # Define an array of all resource classes, to be used
-    # when the cancan syntax does not allow the symbol :all
-    # For example, when applying conditions, eg. :year
-    [Attendee,Content,ContentCategory,Discount,Event,EventCategory,
-      Job,PlanCategory,Plan,Transaction,Tournament,User]
-  end
-
 end
