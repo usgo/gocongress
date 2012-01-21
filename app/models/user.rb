@@ -76,7 +76,7 @@ class User < ActiveRecord::Base
 
     # Comp transactions, eg. VIP discounts
     self.transactions.where(:trantype => 'C').each do |t|
-      invoice_items << InvoiceItem.new('Comp', 'N/A', -1 * t.amount, 1)
+      invoice_items << InvoiceItem.new(t.description, 'N/A', -1 * t.amount, 1)
     end
 
     # Note: Refund transactions are NOT invoice items.  They should not

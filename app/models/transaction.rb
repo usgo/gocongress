@@ -65,6 +65,10 @@ class Transaction < ActiveRecord::Base
   def is_gateway_transaction?() trantype == 'S' and instrument == 'C' end
   def requires_check_number?() instrument == 'K' end
 
+  def description
+    get_trantype_name_public + (comment.empty? ? '' : ": #{comment}")
+  end
+
   def get_trantype_name
   	trantype_name = ''
     TRANTYPES.each { |t| if (t[1] == self.trantype) then trantype_name = t[0] end }

@@ -15,7 +15,7 @@
         %tr
           %td= t.created_at.to_date.to_formatted_s(:long)
           %td
-            = t.get_trantype_name_public
+            = t.description
             - if show_detail_links and can? :read, t
               = link_to "(details)", t
           %td.numeric= number_to_currency t.get_ledger_amount
