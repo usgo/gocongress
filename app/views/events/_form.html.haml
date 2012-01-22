@@ -27,7 +27,7 @@
       = f.text_field :evtdeparttime
     .field
       = f.label :start, "2. Event Start / Arrive"
-      = f.datetime_select :start, :start_year => CONGRESS_YEAR.to_i, :end_year => CONGRESS_YEAR.to_i
+      = f.datetime_select :start, :start_year => @year.to_i, :end_year => @year.to_i
       %br
       %span.smalltext.aligned-with-input 24-hour time, please
     .field

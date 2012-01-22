@@ -19,7 +19,7 @@
   %h1.badge-player-status 
     -# column attendee.is_player was dropped
     -#= attendee.is_player? ? "Player" : "Non-Player"
-  %h2.badge-year USGC #{CONGRESS_YEAR}
+  %h2.badge-year USGC #{@year}
   %p.badge-misc
     AGA#
     = attendee.aga_id.present? ? attendee.aga_id : "______"
