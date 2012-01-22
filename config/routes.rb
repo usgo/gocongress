@@ -2,9 +2,6 @@ Gocongress::Application.routes.draw do
   get "home/access_denied"
   get "home/kaboom"
 
-  # Deprecated: do not use popups as they will just get blocked
-  match '/popup/:action' => 'popup', :as => 'popup'
-
   # these routes support multiple years with a year scope
   scope ":year" do
     get 'contact' => 'user_jobs#index'
