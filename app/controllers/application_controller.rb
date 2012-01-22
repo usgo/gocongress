@@ -41,7 +41,7 @@ class ApplicationController < ActionController::Base
 
     # The layout needs a list of content and event categories
     @content_categories_for_menu = ContentCategory.yr(@year).order(:name)
-    @event_categories_for_menu = EventCategory.yr(@year)
+    @event_categories_for_menu = EventCategory.yr(@year).order(:name)
     @tournaments_for_nav_menu = Tournament.yr(@year).nav_menu
   end
 
@@ -77,6 +77,8 @@ protected
 
   def page_title
     case action_name
+    when "index"
+      return human_controller_name.pluralize.titleize
     when "new", "edit"
       return human_action_name + ' ' + human_controller_name
     when "show"

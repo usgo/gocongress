@@ -13,10 +13,9 @@ Gocongress::Application.routes.draw do
 
     devise_for :users, :controllers => { :registrations => "registrations" }
 
-    resources :content_categories, :contents, :discounts, :jobs
-    resources :plan_categories, :tournaments, :transactions
+    resources :content_categories, :contents, :discounts, :event_categories
+    resources :jobs, :plan_categories, :tournaments, :transactions
     resources :events, :except => [:index]
-    resources :event_categories, :only => [:show, :edit, :update]
     resources :plans, :except => [:index]
 
     resources :attendees, :except => :edit do

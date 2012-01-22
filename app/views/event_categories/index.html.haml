@@ -1,0 +1,25 @@
+%h2= page_title
+
+- if can? :create, EventCategory
+  .flow-padding= button_to 'New Category', new_event_category_path, :method => "get"
+
+- if @event_categories.empty?
+  %p There are no event categories yet.
+- else
+  %table.semantic.zebra.fullwidth
+    %tr
+      %th Category
+      %th
+      %th
+  
+    - @event_categories.each do |c|
+      %tr
+        %td= link_to c.name, c
+        %td
+          -if can? :update, c
+            = link_to 'Edit', edit_event_category_path(c)
+        %td
+          -if can? :delete, c
+            = link_to 'Delete', c, :confirm => 'Are you sure?', :method => :delete
+
+%br
