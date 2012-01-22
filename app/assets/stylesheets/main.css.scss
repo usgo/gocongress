@@ -133,21 +133,6 @@ body.year2012 .nav-container { background-color: #8D7AC9; }
   padding: 10px;
   width: $content_width;
 
-  /* Basic styling for elements in the main content area */
-  p, dl { padding: 0.5em 0em 0.5em 0em; }
-  h1, h2, h3, h4, h5, h6 { padding: 0.5em 0em; }
-  ul { margin-left: 20px; padding: 0.5em 0em 0.5em 0em; }
-  li { margin-left: 10px; }
-  table.semantic li { margin-left: 25px; }
-  &.past-years {
-    padding: 3px 10px 0px 10px;
-    p, a { font-family: Helvetica, sans-serif; }
-    a { padding-right: 10px; }
-  }
-
-  /* Nested lists look better without padding */
-  ul li ul { padding: 0px; }
-
   /* Drawing extra attention to various things */
   .notice { 
     background-image: url("/assets/icons/attention.png");
@@ -164,6 +149,24 @@ body.year2012 .nav-container { background-color: #8D7AC9; }
     color: #0071BC;
     font-size: 20px;
     }
+}
+
+/* Basic styling for elements in the main content area.  
+Also applies to contents of dialogs. */
+.content, .dialog {
+  p, dl { padding: 0.5em 0em 0.5em 0em; }
+  h1, h2, h3, h4, h5, h6 { padding: 0.5em 0em; }
+  ul { margin-left: 20px; padding: 0.5em 0em 0.5em 0em; }
+  li { margin-left: 10px; }
+  table.semantic li { margin-left: 25px; }
+  &.past-years {
+    padding: 3px 10px 0px 10px;
+    p, a { font-family: Helvetica, sans-serif; }
+    a { padding-right: 10px; }
+  }
+
+  /* Nested lists look better without padding */
+  ul li ul { padding: 0px; }
 }
 
 div.download-pdf {

@@ -4,10 +4,8 @@
   .field
     = f.label :rank, 'Rank'
     = f.select :rank, Attendee::RANKS, :include_blank => 'Select Rank'
-    %br/
-    %span.smalltext.aligned-with-input
-      = link_to 'What is rank?', popup_path('rank'), :target => '_blank'
-      = link_to 'What is my AGA rank?', 'http://usgo.org/ratings/RatingsQuery.php', :target => '_blank'
+    %span.smalltext
+      = link_to 'What is my AGA rank?', '#', :id => 'open_dialog_rank'
 
   .field
     = f.label :aga_id, 'AGA ID'
@@ -15,7 +13,7 @@
     %br/
     %span.smalltext.aligned-with-input
       If you do not have an
-      = link_to 'AGA ID', popup_path('aga_id'), :target => '_blank'
+      = link_to 'AGA ID', '#', :id => 'open_dialog_aga_id'
       you may leave this blank
 
   .field
@@ -29,3 +27,46 @@
     Yes &nbsp;
     = f.radio_button :is_current_aga_member, false
     No (expired or not a member)
+
+.dialog#dialog_aga_id{:title => "What is an AGA ID?"}
+  %p
+    Each AGA member is assigned an identification number.  Only AGA members
+    may participate in AGA tournaments.
+  %p
+    If you are not currently an AGA member, you may register at
+    = link_to "the AGA website", "http://www.usgo.org"
+    now, or when you check in at the 2011 US Go Congress, at which time you
+    will be assigned a provisional number.    
+
+.dialog#dialog_rank{:title => "What is my AGA Rank?"}
+  %p
+    If you have played in AGA tournaments, you can look up your rank
+    = link_to 'here.', 'http://usgo.org/ratings/RatingsQuery.php', :target => '_blank'
+  %p
+    If you are not sure of your AGA rating or
+    rank, but know your rating from another system, please consult
+    = link_to "Sensei's Library", "http://senseis.xmp.net/?RankWorldwideComparison"
+    for a rough comparison.
+  %p
+    Please contact the Registrar at
+    = link_to "Registrar@gocongress.org", "mailto:registrar@gocongress.org"
+    if you have further questions.
+
+:javascript
+  $(function() {
+    $( ".dialog" ).dialog({
+      autoOpen: false,
+      modal: true,
+      width: 450
+    });
+
+    $( "#open_dialog_aga_id" ).click(function() {
+      $( "#dialog_aga_id" ).dialog( "open" );
+      return false;
+    });
+
+    $( "#open_dialog_rank" ).click(function() {
+      $( "#dialog_rank" ).dialog( "open" );
+      return false;
+    });
+  });
