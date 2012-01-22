@@ -1,7 +1,10 @@
-// The following three files must be included in this exact order:
-//= require ../../../vendor/assets/javascripts/jquery/jquery.min.js
-//= require ../../../vendor/assets/javascripts/jquery/jquery-ui.min.js
-//= require rails.js
+// The following three files are provided by the jquery-rails gem.
+// https://github.com/indirect/jquery-rails
+// They must be included in this exact order:
+
+//= require jquery
+//= require jquery_ujs
+//= require jquery-ui
 
 // The order is less importent for the other files:
 //= require usgc.js
