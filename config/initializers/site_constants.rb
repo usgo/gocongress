@@ -31,6 +31,7 @@ DAY_OFF_DATE = {
 # PRIORITY_COUNTRIES will appear at the top of the country_select dropdown menu
 PRIORITY_COUNTRIES = {
   "United States" => "US",
+  "China" => "CN",
   "Japan" => "JP",
-  "China" => "CN"
+  "Korea, Republic of" => "KR"
 }
