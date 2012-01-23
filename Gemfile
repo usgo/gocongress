@@ -3,6 +3,8 @@ source 'http://rubygems.org'
 # Core rails stuff
 gem 'rails'
 gem 'sass-rails'
+gem 'coffee-rails'
+gem 'uglifier'
 
 # Database
 # To install the 'pg' gem, the postgres bin directory must be on your path
@@ -10,8 +12,6 @@ gem 'sass-rails'
 gem 'pg'
 
 # Asset template engines
-gem 'coffee-script'
-gem 'uglifier'
 gem "jquery-rails" # jquery and jquery-ui
 gem 'validates_timeliness'
 gem 'haml'
