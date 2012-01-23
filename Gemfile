@@ -27,6 +27,11 @@ gem 'cancan' # authorization and access control
 # After migrating to Cedar, Heroku recommends thin over webrick
 gem 'thin'
 
+# A simple helper to get an HTML select list of countries.
+# The jaredbeck fork uses ISO 3166-1 alpha-2 codes as option values,
+# instead of the full country names.
+gem 'country-select', :git => 'git://github.com/jaredbeck/country-select.git'
+
 # Testing
 group :test do
 	gem 'factory_girl'

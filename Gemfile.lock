@@ -1,3 +1,9 @@
+GIT
+  remote: git://github.com/jaredbeck/country-select.git
+  revision: 5d3fb45f5e4a262904646caa006f0c6347bf8724
+  specs:
+    country-select (1.1.0)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -144,6 +150,7 @@ DEPENDENCIES
   bluecloth
   cancan
   coffee-rails
+  country-select!
   devise
   factory_girl
   factory_girl_rails
