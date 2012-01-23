@@ -21,7 +21,6 @@ en:
         email: "Email Address"
         birth_date: "Birth Date"
         congresses_attended: "Number of Congresses Attended"
-        is_current_aga_member: "Current AGA Member?"
         special_request: "Special Request"
         roomate_request: "Roomate Request"
         comment: "Comments"

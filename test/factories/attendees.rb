@@ -8,7 +8,6 @@ Factory.define :attendee do |f|
   f.family_name 'Vespucci'
   f.gender 'm'
   f.given_name 'Amerigo'
-  f.is_current_aga_member true
   f.tshirt_size 'AL'
   f.rank 3
   f.year Time.now.year

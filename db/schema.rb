@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120117063006) do
+ActiveRecord::Schema.define(:version => 20120123030732) do
 
   create_table "attendee_discounts", :force => true do |t|
     t.integer  "attendee_id", :null => false
@@ -81,7 +81,6 @@ ActiveRecord::Schema.define(:version => 20120117063006) do
     t.boolean  "is_primary",                            :default => false, :null => false
     t.boolean  "minor_agreement_received",              :default => false, :null => false
     t.integer  "congresses_attended"
-    t.boolean  "is_current_aga_member"
     t.string   "tshirt_size",              :limit => 2
     t.text     "special_request"
     t.text     "roomate_request"

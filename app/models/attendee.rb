@@ -18,10 +18,10 @@ class Attendee < ActiveRecord::Base
   has_many :events, :through => :attendee_events
 
   # Mass assignment config
-  attr_accessible :given_name, :family_name, :gender, :anonymous, :rank, :aga_id, \
-    :address_1, :address_2, :city, :state, :zip, :country, :phone, :email, :birth_date, \
-    :understand_minor, :congresses_attended, \
-    :is_current_aga_member, :tshirt_size, :special_request, :roomate_request
+  attr_accessible :given_name, :family_name, :gender, :anonymous, :rank, :aga_id,
+    :address_1, :address_2, :city, :state, :zip, :country, :phone, :email, :birth_date,
+    :understand_minor, :congresses_attended,
+    :tshirt_size, :special_request, :roomate_request
 
   # FIXME: in the controller, somehow year needs to get set 
   # before authorize! runs.  until then, year needs to be accessible.
@@ -74,7 +74,6 @@ class Attendee < ActiveRecord::Base
   validates_length_of :roomate_request, :maximum => 250
   validates_date :birth_date, :after => Date.civil(1900,1,1), :allow_blank => false
   validates :congresses_attended, :numericality => {:greater_than_or_equal_to => 0}
-  validates :is_current_aga_member, :inclusion => {:in => [true, false]}
 
   # AGA ID must be unique within each year
   validates :aga_id, \

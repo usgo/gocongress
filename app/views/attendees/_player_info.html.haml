@@ -21,13 +21,6 @@
     = f.number_field :congresses_attended, :size => 3, :min => 0, :max => 99, :step => 1
     %span.smalltext How many previous US Go Congresses attended?
 
-  .field
-    = f.label :is_current_aga_member, "AGA membership is current?"
-    = f.radio_button :is_current_aga_member, true
-    Yes &nbsp;
-    = f.radio_button :is_current_aga_member, false
-    No (expired or not a member)
-
 .dialog#dialog_aga_id{:title => "What is an AGA ID?"}
   %p
     Each AGA member is assigned an identification number.  Only AGA members

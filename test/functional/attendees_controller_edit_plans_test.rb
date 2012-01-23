@@ -75,9 +75,8 @@ class AttendeesControllerEditPlansTest < ActionController::TestCase
     c2 = Factory :plan_category, {name: "bbbbbb", year: 2012}
     p2 = Factory :all_ages_plan, plan_category_id: c2.id
 
-    sign_in u
-    put :update, :page => 'baduk', :id => a.id, :year => 2012,
-      :attendee => {congresses_attended: 1, is_current_aga_member: true}
+    sign_in(u)
+    put :update, :page => 'baduk', :id => a.id, :year => 2012
     assert_response :redirect
 
     # expect to be redirected to a 2012 plan category
