@@ -78,7 +78,7 @@ class Attendee < ActiveRecord::Base
   # AGA ID must be unique within each year
   validates :aga_id, \
     :uniqueness => { :scope => :year, :allow_nil => true }, \
-    :numericality => { :only_integer => true, :allow_nil => true }
+    :numericality => { :only_integer => true, :allow_nil => true, :message => "id is not a number" }
 
   # Attendees must belong to a user (except when they are first being created,      
   # because in a nested form there might not be a user_id yet.  I think that is what

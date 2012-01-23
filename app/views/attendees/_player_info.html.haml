@@ -9,16 +9,15 @@
 
   .field
     = f.label :aga_id, 'AGA ID'
-    = f.text_field :aga_id
-    %br/
-    %span.smalltext.aligned-with-input
+    = f.number_field :aga_id, :size => 8, :min => 1, :step => 1
+    %span.smalltext
       If you do not have an
       = link_to 'AGA ID', '#', :id => 'open_dialog_aga_id'
       you may leave this blank
 
   .field
     = f.label :congresses_attended, 'Congresses Attended'
-    = f.number_field :congresses_attended, :size => 3, :min => 0, :max => 99, :step => 1
+    = f.number_field :congresses_attended, :size => 8, :min => 0, :max => 99, :step => 1
     %span.smalltext How many previous US Go Congresses attended?
 
 .dialog#dialog_aga_id{:title => "What is an AGA ID?"}
