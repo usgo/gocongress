@@ -25,7 +25,7 @@ class ReportsController < ApplicationController
     @csv_header_line = cols.join(',')
     
     respond_to do |format|
-      format.html do render 'attendees.html.haml' end
+      format.html do render :attendees end
       format.csv do render_csv("usgc_attendees_#{Time.now.strftime("%Y-%m-%d")}") end
     end
   end
@@ -82,7 +82,7 @@ class ReportsController < ApplicationController
     @total_sum = @sales_sum - @comps_sum - @refunds_sum
 
     respond_to do |format|
-      format.html do render 'transactions.html.haml' end
+      format.html do render :transactions end
       format.csv do render_csv("usgc_transactions_#{Time.now.strftime("%Y-%m-%d")}") end
     end
   end
