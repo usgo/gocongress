@@ -24,32 +24,37 @@
   .curvy-spacer{:style => "width: 145px;"} &nbsp;
   .curvy-spacer{:style => "width: 155px;"} &nbsp;
   .curvy-spacer{:style => "width: 165px;"} &nbsp;
+  .curvy-spacer{:style => "width: 170px;"} &nbsp;
+  .curvy-spacer{:style => "width: 170px;"} &nbsp;
+  .curvy-spacer{:style => "width: 170px;"} &nbsp;
+  .curvy-spacer{:style => "width: 170px;"} &nbsp;
   .curvy-spacer{:style => "width: 165px;"} &nbsp;
-  .curvy-spacer{:style => "width: 165px;"} &nbsp;
-  .curvy-spacer{:style => "width: 165px;"} &nbsp;
-  .curvy-spacer{:style => "width: 165px;"} &nbsp;
-  .curvy-spacer{:style => "width: 160px;"} &nbsp;
   .curvy-spacer{:style => "width: 155px;"} &nbsp;
   .curvy-spacer{:style => "width: 150px;"} &nbsp;
   .curvy-spacer{:style => "width: 140px;"} &nbsp;
   .curvy-spacer{:style => "width: 125px;"} &nbsp;
-  .curvy-spacer{:style => "width: 60px;"} &nbsp;
+  .curvy-spacer{:style => "width: 90px;"} &nbsp;
 
   %p
     The US Go Congress is the largest Go tournament in the United States.
     It happens once a year and spans one week. Events include the US Open,
     the largest annual Go tournament in the US.
+  - if @year == 2012
+    %p
+      = image_tag "icons/pdf-16x16.gif"
+      = link_to "Brochure", "docs/USGC2012-Brochure.pdf"
   %p
     Attending the US Go Congress or any of the AGA sponsored events at the Blue
     Ridge Assembly is as easy as:
     %ul
       %li
         = link_to "Start Here", new_user_registration_path
-        to create a 2012 account
+        to create an account
       %li
         = link_to "Sign In", new_user_session_path
         to manage your account
       %li Check back regularly for updates
+
 
   %div{:style => "clear:left;"}
 
