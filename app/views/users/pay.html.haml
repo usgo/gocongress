@@ -1,7 +1,6 @@
-%h2 Make a Payment
-
 %form{ :action => @formAction, :method => "POST", :onSubmit => "return confirmAmount();" }
-  
+
+  %h2 Balance
   %table.lightweight
     %tbody
       %tr
@@ -18,7 +17,7 @@
       %tr
         %td{ :colspan => "3", :style => "padding-left: 0px;" }
           %br
-          %h2 Payment Information
+          %h2 Make a Payment
       %tr
         %th Account Email Address
         %td= @user.email
@@ -39,9 +38,14 @@
         %th
         %td.align-right
           %br
-          %input{ :type => "submit", :name => "submit", :value => "Submit" }
+          %input{ :type => "submit", :name => "submit", :value => "Continue" }
 
--# The following line is called a HAML "Filter"
+%h3 Refund Policy
+%p
+  Full refunds minus a $50 processing fee and any credit card fees will be
+  provided until July 1, 2012. After July 1st, a $75 processing fee and any
+  credit card fees will be deducted from the refund.
+
 :javascript
 
   // Check the payment amount, and warn people who overpay

@@ -8,7 +8,15 @@
   we need your help. The Go Congress would not be possible without the
   dedication of dozens of volunteers.
 
-%p= link_to "Volunteer Opportunities", jobs_path
+- if @year == 2012
+  %p
+    Please
+    - peter = "parmenia@earthlink.net"
+    - paul = "pcelmer@earthlink.net"
+    = mail_to(paul, "contact the congress directors", :cc => peter)
+    to volunteer at this year’s congress.
+- else
+  %p= link_to "Volunteer Opportunities", jobs_path
 
 %h2 Contact Us
 

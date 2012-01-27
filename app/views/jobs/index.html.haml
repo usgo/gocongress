@@ -1,6 +1,6 @@
 %h2 Volunteer Opportunities
 
-- if current_user_is_admin?
+- if can? :create, Job
   .flow-padding= button_to 'Create a new volunteer position', new_job_path, :method => "get"
 
 %p

@@ -1,24 +1,17 @@
 %h2= @event_category.name.titleize
 
-%p
-  In addition to many
-  = link_to 'tournaments,', tournaments_path
-  game reviews and lessons by
-  = link_to 'professionals,', vip_attendees_path
-  the vendor area, and other Go-related activities, we also have
-  these activities:
-
 - if current_user.present?
   .flow-padding
     = form_tag choose_attendee_user_path(current_user), :method => "get" do
       = hidden_field_tag :destination_page, :events
       = submit_tag 'Sign Up for Events'
 - else
-  If you have already 
-  = link_to 'registered,', new_user_registration_path
-  please
-  = link_to 'sign in', new_user_session_path
-  and select the events you are interested in.
+  %p
+    These activities are available to all
+    = link_to "registrants.", new_user_registration_path
+    If you have already registered, please
+    = link_to "sign in", new_user_session_path
+    and select the activities you want to participate in.
 
 - if current_user_is_admin?
   .flow-padding= button_to "New Event", new_event_path, :method => "get"

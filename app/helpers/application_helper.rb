@@ -6,7 +6,7 @@ module ApplicationHelper
   end
 
   def format_price(price)
-    floatable?(price) ? number_to_currency(price, :precision=>min_precision(price)) : price
+    floatable?(price) ? number_to_currency(price, :precision => 2) : price
   end
 
 	def trl_attr ( modelname, attributename )
@@ -32,13 +32,6 @@ module ApplicationHelper
 
   def markdown_if_present(s)
     s.blank? ? '' : Markdown.new(s).to_html.html_safe
-  end
-
-  # min_precision() returns the minimum precision necessary to express a given Float
-  def min_precision(f)
-    raise "invalid argument: expected floatable" unless floatable?(f)
-    d = f.to_f.to_s.split('.')[1]
-    d.to_f == 0 ? 0 : d.length
   end
 
   def floatable?(object)
