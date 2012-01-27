@@ -58,7 +58,7 @@ class UsersController < ApplicationController
     if @year == 2011
       @merchantone_username = "lscott60637"
     elsif @year == 2012
-      @merchantone_username = "" # FIXME: ask Peter and Paul to set up MO account
+      @merchantone_username = "abridges27278"
     end
   end
   
