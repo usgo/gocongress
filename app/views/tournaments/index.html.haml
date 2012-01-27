@@ -1,7 +1,7 @@
 %h2 Tournaments
 
 - if current_user.present?
-  .flow-padding= button_to 'Sign Up for Tournaments', choose_attendee_user_path(current_user), :method => "get"
+  .flow-padding= button_to_sign_up(current_user)
 - else
   If you have already 
   = link_to 'registered,', new_user_registration_path
