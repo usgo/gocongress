@@ -36,12 +36,12 @@
             - if current_user.nil?
               = link_to "Start Here", new_user_registration_path
             - else
-              =link_to "My Account", user_path(current_user.id)
+              = link_to "My Account", user_path(current_user.id)
           %li
             - if current_user.nil?
-              =link_to "Sign In", new_user_session_path
+              = link_to "Sign In", new_user_session_path
             - else
-              =link_to "Sign Out", destroy_user_session_path
+              = link_to "Sign Out", destroy_user_session_path
           - @tournaments_for_nav_menu.each do |t|
             %li= link_to t.name, t
           %li
