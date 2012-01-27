@@ -3,18 +3,13 @@
 - if current_user.present?
   .flow-padding= button_to_sign_up(current_user)
 - else
-  If you have already 
-  = link_to 'registered,', new_user_registration_path
-  please
-  = link_to 'sign in', new_user_session_path
-  and select the tournaments you want to play in.
+  %p
+    If you'd like to participate in these tournaments, please
+    = link_to "register", new_user_registration_path
+    as a player. &nbsp; Non-players are not allowed to participate or observe.
 
-- if current_user_is_admin?
+- if can? :create, Tournament
   .flow-padding= button_to 'Create a New Tournament', new_tournament_path, :method => "get"
-
-%p
-  In addition to these Go-related activities, there are
-  events and activities for non-players.
 
 %a{ :name => "tournament_schedule" }
 
@@ -26,13 +21,9 @@
   %table.semantic.fullwidth
     - @rounds_by_date.each do |d,rounds_this_date|
       %tr.greater-header
-        %th{ :colspan => current_user_is_admin? ? 5 : 3 }
-          = d.to_formatted_s(:long_with_day)
+        %th.align-left{ :colspan => current_user_is_admin? ? 5 : 3 }
+          = d.to_formatted_s(:month_day_dow)
           = " - Day Off!" if d === DAY_OFF_DATE[@year]
-      %tr.lesser-header
-        %th Time
-        %th Name
-        %th Location
       - rounds_this_date.each do |r|
         %tr
           %td= r.round_start.strftime '%l:%M %p'

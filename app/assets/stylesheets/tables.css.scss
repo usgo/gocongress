@@ -1,3 +1,15 @@
+$orange-light: #FFE8BD;
+$orange: #FFDAA3;
+$orange-dark: #FFC369;
+$zebra: darken($orange-light, 8%);
+
+/* These are the 2011 table colors.  They are a little too vibrant for 2012. */
+/*
+$orange-light: #FFDAA3;
+$orange: #FFC369;
+$orange-dark: #FF9B05;
+*/
+
 /* Lightweight table: Tighter, less colors, borders, etc. -Jared 1/2/11 */
 table.lightweight {
   border-spacing: 0;
@@ -10,7 +22,7 @@ table.lightweight {
 }
 
 /* Table options eg. zebra striping */
-table.zebra tr:nth-child(even) td { background-color: #FFECD1; }
+table.zebra tr:nth-child(even) td { background-color: $zebra; }
 table.dont-wrap-th th { white-space:nowrap; }
 td.nowrap { white-space:nowrap; }
 
@@ -21,11 +33,10 @@ table.semantic {
   margin: 0.5em 0em;
   thead th { vertical-align: bottom; }
   td, th { border: 1px solid #666; padding: 0.25em; }
-  td { background-color: #FFDAA3; }
-  th { background-color: #FF9B05; }
-  tr.greater-header th { text-align: center; }
-  tr.lesser-header th { background-color: #FFC369; font-weight: normal; }
-  tr.total th { background-color: #FFDAA3; text-align: right; }
+  td { background-color: $orange-light; }
+  th { background-color: $orange-dark; }
+  tr.lesser-header th { background-color: $orange; font-weight: normal; }
+  tr.total th { background-color: $orange-light; text-align: right; }
 
   /* Semantic table: Row emphasis */
   /* Emphasis is more important than zebra striping, so we must define it after zebra -Jared 1/13/11 */
