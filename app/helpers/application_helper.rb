@@ -6,7 +6,8 @@ module ApplicationHelper
   end
 
   def format_price(price)
-    floatable?(price) ? number_to_currency(price, :precision => 2) : price
+    return price unless floatable?(price)
+    price.to_f == 0.0 ? "Free" : number_to_currency(price, :precision => 2)
   end
 
 	def trl_attr ( modelname, attributename )
