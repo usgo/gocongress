@@ -2,6 +2,7 @@
 
 Date::DATE_FORMATS[:long_with_day] = "%A, %B %e, %Y"
 Date::DATE_FORMATS[:month_day_dow] = "%B %e, %A"
+Date::DATE_FORMATS[:dow_month_day] = "%A, %B %e"
 
 Time::DATE_FORMATS[:american] = "%l:%M %p"
 Time::DATE_FORMATS[:long_with_day] = "%A, %B %e, %Y"
