@@ -31,7 +31,7 @@ en:
       event:
         event_category_id: "Category"
         name: "Event"
-        evtdeparttime: "Departure Time"
+        depart_time: "Departure Time"
         evtprice: "Price"
         location: "Location"
         notes: "Notes"

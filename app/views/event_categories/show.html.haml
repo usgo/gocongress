@@ -42,7 +42,9 @@
       - arEvt.each do |e|
         %tr
           %td= link_to e.name, e
-          %td= e.evtdeparttime
+          %td
+            - if e.depart_time.present?
+              = e.depart_time.to_formatted_s(:american)
           %td= e.start.to_time.to_formatted_s(:american)
           %td
             - if e.return_depart_time.present?

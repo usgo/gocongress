@@ -23,8 +23,8 @@
   %h3 Schedule
   %fieldset
     .field
-      = f.label :evtdeparttime, "1. Departure Time"
-      = f.text_field :evtdeparttime
+      = f.label :depart_time, "1. Departure Time"
+      = f.time_select :depart_time, {:minute_step => 5}
     .field
       = f.label :start, "2. Event Start / Arrive"
       = f.datetime_select :start, :start_year => @year.to_i, :end_year => @year.to_i

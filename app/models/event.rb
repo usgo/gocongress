@@ -1,7 +1,7 @@
 class Event < ActiveRecord::Base
   include YearlyModel
 
-  attr_accessible :event_category_id, :name, :evtdeparttime, :start, 
+  attr_accessible :event_category_id, :name, :depart_time, :start, 
     :evtprice, :notes, :return_depart_time, :return_arrive_time, :location
 
   # FIXME: in the controller, somehow year needs to get set 

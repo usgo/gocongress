@@ -23,9 +23,7 @@
 %table.lightweight
   %tbody
     %tr
-      %th= trl_attr 'event', 'evtdeparttime'
-      %td= @event.evtdeparttime
-    - %w[start return_depart_time return_arrive_time].each do |a|
+    - %w[depart_time start return_depart_time return_arrive_time].each do |a|
       %tr
         %th= trl_attr 'event', a
         %td

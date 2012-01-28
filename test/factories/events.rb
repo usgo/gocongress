@@ -1,11 +1,11 @@
 FactoryGirl.define do
   factory :event do
     name             "eating lasagna"
-    evtdeparttime       "round about dinner time"
+    depart_time         5.minutes.from_now
     evtprice            "10"
-    start               2.days.from_now
-    return_depart_time  Time.now.to_time
-    return_arrive_time  Time.now.to_time
+    start               10.minutes.from_now
+    return_depart_time  15.minutes.from_now
+    return_arrive_time  20.minutes.from_now
     year                Time.now.year
     association         :event_category
   end
