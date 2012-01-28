@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120123030732) do
+ActiveRecord::Schema.define(:version => 20120128023429) do
 
   create_table "attendee_discounts", :force => true do |t|
     t.integer  "attendee_id", :null => false
@@ -140,7 +140,7 @@ ActiveRecord::Schema.define(:version => 20120123030732) do
   add_index "event_categories", ["id", "year"], :name => "index_event_categories_on_id_and_year", :unique => true
 
   create_table "events", :force => true do |t|
-    t.string   "evtname"
+    t.string   "name"
     t.string   "evtdeparttime"
     t.string   "evtprice"
     t.datetime "created_at"

@@ -1,7 +1,7 @@
 class Event < ActiveRecord::Base
   include YearlyModel
 
-  attr_accessible :event_category_id, :evtname, :evtdeparttime, :start, 
+  attr_accessible :event_category_id, :name, :evtdeparttime, :start, 
     :evtprice, :notes, :return_depart_time, :return_arrive_time, :location
 
   # FIXME: in the controller, somehow year needs to get set 
@@ -13,7 +13,7 @@ class Event < ActiveRecord::Base
   has_many :attendees, :through => :attendee_events
 
   validates :event_category, :presence => true
-  validates_presence_of :start, :evtname
+  validates_presence_of :start, :name
   validates_length_of :notes, :maximum => 250
   
   validates :location, :length => {:maximum => 50}

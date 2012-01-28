@@ -41,7 +41,7 @@
           %th{:colspan => "2"}
       - arEvt.each do |e|
         %tr
-          %td= link_to e.evtname, e
+          %td= link_to e.name, e
           %td= e.evtdeparttime
           %td= e.start.to_time.to_formatted_s(:american)
           %td

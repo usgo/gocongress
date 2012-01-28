@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :event do
-    evtname             "eating lasagna"
+    name             "eating lasagna"
     evtdeparttime       "round about dinner time"
     evtprice            "10"
     start               2.days.from_now

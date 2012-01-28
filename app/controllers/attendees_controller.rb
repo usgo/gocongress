@@ -333,7 +333,7 @@ protected
       @open_tournaments = Tournament.yr(@year).openness('O').order(:name)
       @atnd_open_trn_ids = @attendee.tournaments.openness('O').map {|t| t.id}
     elsif page == "events"
-      @events = Event.yr(@year).order(:start, :evtname)
+      @events = Event.yr(@year).order(:start, :name)
       @atnd_event_ids = @attendee.events.map {|e| e.id}
     end
   end

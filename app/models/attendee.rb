@@ -175,7 +175,7 @@ class Attendee < ActiveRecord::Base
     # Events
     self.events.each do |e|
       if e.evtprice.to_f > 0.0 then
-        invoice_items << InvoiceItem.new('Event: ' + e.evtname, self.get_full_name, e.evtprice.to_f, 1)
+        invoice_items << InvoiceItem.new('Event: ' + e.name, self.get_full_name, e.evtprice.to_f, 1)
       end
     end
     
