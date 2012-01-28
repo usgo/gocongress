@@ -116,10 +116,9 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test "event increases invoice total" do
-    @user.attendees << Factory(:attendee, :user_id => @user.id)
-    event_price = 19.81
-    assert_difference('@user.get_invoice_total', event_price) do
-      @user.attendees.first.events << Factory(:event, :price => event_price)
+    e = Factory :event
+    assert_difference('@user.get_invoice_total', e.price) do
+      @user.attendees.first.events << e
     end
   end
 
