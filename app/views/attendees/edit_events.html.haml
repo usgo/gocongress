@@ -33,7 +33,7 @@
             - if e.depart_time.present?
               = e.depart_time.to_formatted_s(:american)
           %td= e.start.to_time.to_formatted_s(:american)
-          %td.numeric= format_price(e.evtprice)
+          %td.numeric= format_price(e.price)
 
   %br
   = f.submit "Submit"

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120128042617) do
+ActiveRecord::Schema.define(:version => 20120128045830) do
 
   create_table "attendee_discounts", :force => true do |t|
     t.integer  "attendee_id", :null => false
@@ -141,17 +141,17 @@ ActiveRecord::Schema.define(:version => 20120128042617) do
 
   create_table "events", :force => true do |t|
     t.string   "name"
-    t.string   "evtprice"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "start"
     t.string   "notes",              :limit => 250
     t.time     "return_depart_time"
     t.time     "return_arrive_time"
-    t.integer  "year",                              :null => false
+    t.integer  "year",                                                             :null => false
     t.string   "location",           :limit => 50
-    t.integer  "event_category_id",                 :null => false
+    t.integer  "event_category_id",                                                :null => false
     t.time     "depart_time"
+    t.decimal  "price",                             :precision => 10, :scale => 2
   end
 
   add_index "events", ["event_category_id"], :name => "index_events_on_event_category_id"

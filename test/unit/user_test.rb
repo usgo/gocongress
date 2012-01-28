@@ -117,21 +117,16 @@ class UserTest < ActiveSupport::TestCase
 
   test "event increases invoice total" do
     @user.attendees << Factory(:attendee, :user_id => @user.id)
-    event_price = 10
+    event_price = 19.81
     assert_difference('@user.get_invoice_total', event_price) do
-      @user.attendees.first.events << Factory(:event, :evtprice => event_price.to_s)
+      @user.attendees.first.events << Factory(:event, :price => event_price)
     end
   end
 
-  test "event with non-numeric price does not increase the invoice total" do
-    @user.attendees << Factory(:attendee, :user_id => @user.id)
-    
-    # bypass validations to create event with non-numeric price
-    event_with_bad_price = Factory(:event)
-    event_with_bad_price.update_attribute :evtprice, "TBA"
-    
+  test "event with nil price does not increase the invoice total" do
+    e = Factory :event, price: nil
     assert_no_difference('@user.get_invoice_total') do
-      @user.attendees.first.events << event_with_bad_price
+      @user.attendees.first.events << e
     end
   end
 

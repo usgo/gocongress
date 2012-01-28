@@ -6,8 +6,8 @@
       %th= trl_attr 'event', 'event_category_id'
       %td= @event.event_category.name
     %tr
-      %th= trl_attr 'event', 'evtprice'
-      %td= format_price(@event.evtprice)
+      %th= trl_attr 'event', 'price'
+      %td= format_price @event.price
     %tr
       %th= trl_attr 'event', 'location'
       %td= @event.location

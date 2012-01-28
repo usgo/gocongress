@@ -52,7 +52,7 @@
           %td
             - if e.return_arrive_time.present?
               = e.return_arrive_time.to_formatted_s(:american)
-          %td.numeric= format_price(e.evtprice)
+          %td.numeric= format_price(e.price)
           - if current_user_is_admin?
             %td= link_to 'Edit', edit_event_path(e)
             %td= link_to 'Delete', e, :confirm => 'Delete event?  If any attendees are signed up, those signups will be lost too.', :method => :delete

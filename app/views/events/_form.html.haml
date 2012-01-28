@@ -9,15 +9,15 @@
       = f.label :event_category_id
       = f.select :event_category_id, event_category_options
     .field
-      = f.label :evtprice, "Price"
-      = f.text_field :evtprice, :size => 5
+      = f.label :price, "Price"
+      = f.text_field :price, :size => 5
     .field
       = f.label :location, "Location"
       = f.text_field :location
       %p.smalltext.aligned-with-input
         Include room number, if applicable
     .field
-      = f.label :evtprice, "Notes"
+      = f.label :notes, "Notes"
       = f.text_area :notes, {:rows => 2, :cols => 60}
 
   %h3 Schedule
