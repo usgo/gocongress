@@ -30,8 +30,7 @@
     = f.label :zip
     = f.text_field :zip
 
-  -# The `country_select` method is provided by /vendor/plugins/country_select
-  -# See https://github.com/jaredbeck/country_select
+  -# The `country_select` method is provided by the country-select gem
   .field
     = f.label :country
     = f.country_select :country, PRIORITY_COUNTRIES, { :include_blank => true }
