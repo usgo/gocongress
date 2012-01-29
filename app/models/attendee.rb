@@ -93,8 +93,8 @@ class Attendee < ActiveRecord::Base
   # Validate that each user has exactly one primary attendee -Jared
   validates_uniqueness_of :is_primary, :scope => :user_id, :if => :is_primary?
 
+  # `age_in_years` Returns integer age in years on the start day of congress, not now.
   def age_in_years
-    # Returns integer age in years on the start day of the event, not now.
     year_delta = congress_start.year - birth_date.year
     birthday_after_congress ? year_delta - 1 : year_delta
   end
