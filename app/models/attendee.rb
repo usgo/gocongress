@@ -143,9 +143,8 @@ class Attendee < ActiveRecord::Base
   def invoice_items
     invoice_items = []
 
-    # How old will the attendee be on the first day of the event?
-    # Also, truncate to an integer age to simplify logic below
-    atnd_age = self.age_in_years.truncate
+    # How old will the attendee be on the first day of congress?
+    atnd_age = self.age_in_years
 
     # Does this attendee qualify for any automatic discounts?
     Discount.yr(self.year).where("is_automatic = ?", true).each do |d|
