@@ -12,6 +12,7 @@ module ApplicationHelper
 
 	def trl_attr ( modelname, attributename )
 		# see config/locales/en.yaml
+		# TODO: replace this with Model.human_attribute_name("attr")
 		translate "activerecord.attributes." + modelname.to_s + "." + attributename.to_s
 	end
 
