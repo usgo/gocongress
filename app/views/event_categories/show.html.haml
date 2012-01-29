@@ -1,22 +1,25 @@
+- emh = Event.model_name.human
+- emhp = emh.pluralize
+
 %h2= @event_category.name.titleize
 
 - if current_user.present?
   .flow-padding
     = form_tag choose_attendee_user_path(current_user), :method => "get" do
       = hidden_field_tag :destination_page, :events
-      = submit_tag 'Sign Up for Events'
+      = submit_tag "Sign Up for #{emhp}"
 - else
   %p
-    These activities are available to all
+    These #{emhp.downcase} are available to all
     = link_to "registrants.", new_user_registration_path
     If you have already registered, please
     = link_to "sign in", new_user_session_path
     and select the activities you want to participate in.
 
 - if current_user_is_admin?
-  .flow-padding= button_to "New Event", new_event_path, :method => "get"
+  .flow-padding= button_to "New #{emh}", new_event_path, :method => "get"
 
-%p.notice All events, prices, and times subject to change.
+%p.notice All #{emhp.downcase}, prices, and times subject to change.
 
 %table.semantic.fullwidth.zebra
   %tbody
@@ -31,13 +34,13 @@
         %th.align-center{:colspan => 2} Returning
         %th{:colspan => current_user_is_admin? ? 4 : 2}
       %tr.lesser-header
-        %th Event
+        %th= emh
         %th Depart
-        %th Event Start / Arrive
+        %th Arrive / Start
         %th Depart
         %th Arrive
         %th.numeric Price
-        - if current_user_is_admin?
+        - if can?(:edit, Event) && can?(:delete, Event)
           %th{:colspan => "2"}
       - arEvt.each do |e|
         %tr
@@ -53,6 +56,8 @@
             - if e.return_arrive_time.present?
               = e.return_arrive_time.to_formatted_s(:american)
           %td.numeric= format_price(e.price)
-          - if current_user_is_admin?
+
+          - if can? :edit, e
             %td= link_to 'Edit', edit_event_path(e)
-            %td= link_to 'Delete', e, :confirm => 'Delete event?  If any attendees are signed up, those signups will be lost too.', :method => :delete
+          - if can? :delete, e
+            %td= link_to 'Delete', e, :confirm => "Delete #{emh}?  If any attendees are signed up, those signups will be lost too.", :method => :delete

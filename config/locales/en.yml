@@ -73,9 +73,9 @@ en:
       user:
         created_at: "Created"
     models:
-      job:
-        one: "Position"
-        other: "Positions"
+      job: "Position"
+      event: "Activity"
+      event_category: "Activity Category"
   crud:
     confirm:
       tournament:
