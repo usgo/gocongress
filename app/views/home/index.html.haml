@@ -5,9 +5,7 @@
   #gallery-container{:style => "display: none;"}
     #gallery
       - 1.upto(@slides.length) do |i|
-        / img title becomes div.galleria-info-title
-        / img alt becomes div.galleria-info-description
-        = image_tag "slideshow/#{@year}/0" + i.to_s + ".jpg", :title => @slides[i-1][0], :alt => @slides[i-1][1]
+        = slideshow_image_tag(i)
 
   %p#venue-address
     = link_to @venue_name, @venue_url

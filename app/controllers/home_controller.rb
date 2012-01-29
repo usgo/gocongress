@@ -2,32 +2,14 @@ class HomeController < ApplicationController
 
   def index
     @bodyClassList = "homepage"
+    @slides = SlideSet.new(@year).slides_as_arrays
+
     if @year == 2011
-      @slides = [ \
-        ["UCSB campus", "A view of the UCSB campus from the ocean"] \
-        , ["The main playing area", "Corwin Pavillion, lying at the heart of campus, is steps away from the dorms, Youth room, dining hall, and the Lagoon"] \
-        , ["A view across the Lagoon", "A view across the Lagoon of the University Center, housing the main playing area"] \
-        , ["Bike paths", "Beautifully manicured bike paths provide access to campus facilities, as well as to nearby off-campus amenities"] \
-        , ["The view inland from campus", ""] \
-        , ["Santa Barbara", "City-scape from the courthouse tower"] \
-        , ["The historic Santa Barbara Mission", ""] \
-        , ["The beach at UCSB", ""] \
-        , ["Aerial view of the UCSB campus", ""] \
-        ]
       @venue_url = 'http://www.ucsb.edu'
       @venue_name = 'University of California, Santa Barbara'
       @venue_address = '552 University Road'
       @venue_city_state_zip = 'Santa Barbara CA, 93106'
     else
-      @slides = [ \
-        ["Lee Hall", "Bob Felice"] \
-        , ["Blue Ridge Center", "Bob Felice"] \
-        , ["Trying Out a Rocker", "Bob Felice"] \
-        , ["Redmond, Xianxian, and Nakayama Sensei", "Bob Felice"] \
-        , ["US Open", "Bob Felice"] \
-        , ["Evening comes to the US Go Congress", "Roy Laird"] \
-        , ["North Carolina Goban by Frank Salantrie", "Jared Beck"]
-        ]
       @venue_url = 'http://www.blueridgeassembly.org/'
       @venue_name = 'YMCA Blue Ridge Assembly'
       @venue_address = '84 Blue Ridge Cir'
