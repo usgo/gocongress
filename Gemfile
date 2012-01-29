@@ -21,8 +21,8 @@ gem 'bluecloth' # markdown
 gem 'kaminari' # pagination
 
 # AAA - Authentication, Authorization, and Access Control
-gem 'devise' # authentication
-gem 'cancan' # authorization and access control
+gem 'devise', "~> 1.5" # not ready for devise 2.0 yet
+gem 'cancan'
 
 # After migrating to Cedar, Heroku recommends thin over webrick
 gem 'thin'
