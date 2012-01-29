@@ -50,6 +50,6 @@ class RegistrationsControllerTest < ActionController::TestCase
     end
     assert_template "new"
     assert_equal false, assigns(:user).errors.empty?
-    assert assigns(:user).errors.include?(:"primary_attendee.understand_minor")
+    assert assigns(:user).errors.include?(:"primary_attendee.liability_release")
   end
 end
