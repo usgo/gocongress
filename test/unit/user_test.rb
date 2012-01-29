@@ -115,14 +115,14 @@ class UserTest < ActiveSupport::TestCase
     assert_equal false, ap.valid?
   end
 
-  test "event increases invoice total" do
+  test "activity increases invoice total" do
     e = Factory :event
     assert_difference('@user.get_invoice_total', e.price) do
       @user.attendees.first.events << e
     end
   end
 
-  test "event with nil price does not increase the invoice total" do
+  test "activity with nil price does not increase the invoice total" do
     e = Factory :event, price: nil
     assert_no_difference('@user.get_invoice_total') do
       @user.attendees.first.events << e

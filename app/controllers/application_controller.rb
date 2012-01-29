@@ -39,9 +39,9 @@ class ApplicationController < ActionController::Base
       @congress_date_range = "August 4 - 11"
     end
 
-    # The layout needs a list of content and event categories
+    # The layout needs a list of content and activity categories
     @content_categories_for_menu = ContentCategory.yr(@year).order(:name)
-    @event_categories_for_menu = EventCategory.yr(@year).order(:name)
+    @activity_categories_for_menu = EventCategory.yr(@year).order(:name)
     @tournaments_for_nav_menu = Tournament.yr(@year).nav_menu
   end
 

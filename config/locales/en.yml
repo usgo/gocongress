@@ -30,7 +30,7 @@ en:
         show_on_homepage: "Show on Homepage?"
       event:
         event_category_id: "Category"
-        name: "Event"
+        name: "Activity"
         depart_time: "Departure Time"
         price: "Price"
         location: "Location"

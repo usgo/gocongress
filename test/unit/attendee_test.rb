@@ -6,7 +6,7 @@ class AttendeeTest < ActiveSupport::TestCase
   end
 
   test "#invoice_total" do
-    # a user with no plans, discounts, events, etc. should have a $0 total
+    # a user with no plans, discounts, activities, etc. should have a $0 total
     assert_equal 0, @user.primary_attendee.invoice_total
   end
 

@@ -18,7 +18,7 @@ class EventsController < ApplicationController
   def create
     @event.year = @year
     if @event.save
-      redirect_to @event, :notice => 'Event created.'
+      redirect_to @event, :notice => "#{Event.model_name.human} created"
     else
       render :action => "new"
     end
@@ -27,7 +27,7 @@ class EventsController < ApplicationController
   # PUT /events/1
   def update
     if @event.update_attributes(params[:event])
-      redirect_to @event, :notice => 'Event updated.'
+      redirect_to @event, :notice => "#{Event.model_name.human} updated"
     else
       render :action => "edit"
     end

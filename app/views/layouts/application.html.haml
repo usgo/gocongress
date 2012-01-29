@@ -42,16 +42,20 @@
               = link_to "Sign In", new_user_session_path
             - else
               = link_to "Sign Out", destroy_user_session_path
+
+          -# Tournaments
           - @tournaments_for_nav_menu.each do |t|
             %li= link_to t.name, t
           %li
             - tournaments_plural_phrase = @tournaments_for_nav_menu.empty? ? "Tournaments" : "Other Tournaments"
             = link_to tournaments_plural_phrase, tournaments_path
-          - @event_categories_for_menu.each do |c|
+
+          -# Activities
+          - @activity_categories_for_menu.each do |c|
             %li= link_to c.name, c
+
           %li= link_to "Who is Coming?", attendees_path
-          %li
-            = link_to "Pros", vip_attendees_path
+          %li= link_to "Pros", vip_attendees_path
           %li= link_to "Costs", costs_path
           - @content_categories_for_menu.each do |c|
             %li= link_to c.name, c
@@ -65,7 +69,7 @@
             %li= link_to "Users", users_path
             %li= link_to "Transactions", transactions_path
             %li= link_to "Pricing", pricing_path
-            %li= link_to "Events", event_categories_path
+            %li= link_to Event.model_name.human.pluralize, event_categories_path
             %li= link_to "Content", content_categories_path
             %li= link_to "Reports", reports_path
 

@@ -2,7 +2,7 @@
 %ul
   %li= link_to "Attendee Email Addresses", "reports/emails"
   %li= link_to "Attendees", attendees_reports_path
-  %li= link_to "Events", events_reports_path
+  %li= link_to Event.model_name.human.pluralize, events_reports_path
   %li= link_to "Invoices", invoices_reports_path
   %li= link_to "Outstanding Balances", outstanding_balances_reports_path
   %li= link_to "Tournaments", tournaments_reports_path

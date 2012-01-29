@@ -1,9 +1,11 @@
+- mnh = Event.model_name.human
+
 = form_for(@event) do |f|
   = render :partial => "shared/error_messages", :locals => { :resource => @event }
   
   %fieldset
     .field
-      = f.label :name, "Event Name"
+      = f.label :name, mnh
       = f.text_field :name
     .field
       = f.label :event_category_id
@@ -25,11 +27,13 @@
     .field
       = f.label :depart_time, "1. Departure Time"
       = f.time_select :depart_time, {:minute_step => 5}
-    .field
-      = f.label :start, "2. Event Start / Arrive"
-      = f.datetime_select :start, :start_year => @year.to_i, :end_year => @year.to_i
       %br
       %span.smalltext.aligned-with-input 24-hour time, please
+    .field
+      = f.label :start, "2. Arrive / Start"
+      = f.datetime_select :start, :start_year => @year.to_i, :end_year => @year.to_i
+      %br
+      %span.smalltext.aligned-with-input 24-hour time
     .field
       = f.label :return_depart_time, "3. Return Depart Time"
       = f.time_select :return_depart_time, {:minute_step => 5}

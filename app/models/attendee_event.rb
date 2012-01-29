@@ -6,7 +6,7 @@ class AttendeeEvent < ActiveRecord::Base
 
   before_validation do |ae|
     if ae.event.year != ae.attendee.year
-      raise "Attendee and Event have different years"
+      raise "#{Attendee.model_name.human} and #{Event.model_name.human} have different years"
     end
     ae.year ||= ae.attendee.year
   end

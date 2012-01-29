@@ -1,12 +1,15 @@
-%h2 Events for #{@attendee.get_full_name}
+- mnh = Event.model_name.human
+- mnhp = mnh.pluralize
+
+%h2 #{mnhp} for #{@attendee.get_full_name}
 
 %p
-  Which events will #{@attendee.get_full_name} particpate in?
-  If you have questions, please consult the event schedule
+  Which #{mnhp.downcase} will #{@attendee.given_name} particpate in?
+  If you have questions, please consult the #{mnh.downcase} schedule
   or contact the
   = link_to "registrar.", contact_path
 
-%p.notice All events, prices, and times subject to change.
+%p.notice All #{mnhp}, prices, and times subject to change.
 
 = form_for( @attendee ) do |f|
   = hidden_field_tag :page, @page
@@ -17,7 +20,7 @@
     %thead
       %th
       %th Date
-      %th Event 
+      %th= mnh
       %th Depart
       %th Start
       %th.numeric Price

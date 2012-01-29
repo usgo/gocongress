@@ -22,7 +22,7 @@ CONGRESS_START_DATE = {
 
 # DAY_OFF_DATE - The go congress traditionally has one "day off". 
 # Currently, this only affects the display of this particular day
-# on the event and tournament calendars.
+# on the activity and tournament calendars.
 DAY_OFF_DATE = {
   2011 => Date.civil(2011, 8, 3),
   2012 => Date.civil(2012, 8, 8)

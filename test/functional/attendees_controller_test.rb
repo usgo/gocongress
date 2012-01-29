@@ -247,7 +247,7 @@ class AttendeesControllerTest < ActionController::TestCase
     assert_redirected_to user_path(@user)
   end
 
-  test "user can add events to own attendee" do
+  test "user can add activities to own attendee" do
     sign_in @user
     a = @user.attendees.first
     a.events.clear
@@ -260,7 +260,7 @@ class AttendeesControllerTest < ActionController::TestCase
     assert_redirected_to user_path(@user)
   end
 
-  test "user cannot add events to attendee belonging to someone else" do
+  test "user cannot add activities to attendee belonging to someone else" do
     sign_in @user
     a = @user_two.attendees.first
     a.events.clear
@@ -272,7 +272,7 @@ class AttendeesControllerTest < ActionController::TestCase
     assert_response 403
   end
 
-  test "admin can add events to attendee belonging to someone else" do
+  test "admin can add activities to attendee belonging to someone else" do
     sign_in @admin
     a = @user_two.attendees.first
     a.events.clear
