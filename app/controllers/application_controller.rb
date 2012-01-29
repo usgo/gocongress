@@ -72,7 +72,12 @@ protected
   end
 
   def human_controller_name
-    controller_name.singularize.titleize
+    model_class = controller_name.classify.constantize
+    if model_class.respond_to?(:model_name)
+      return model_class.model_name.human
+    else
+      return controller_name.singularize.titleize
+    end
   end
 
   def page_title
