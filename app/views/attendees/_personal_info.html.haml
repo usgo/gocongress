@@ -32,14 +32,12 @@
     %div.smalltext.aligned-with-input
       Because we need to know if you are a minor.
   .field
-    = f.label :understand_minor, 'Minor Agreement'
-    = f.check_box :understand_minor
-    %div.smalltext.aligned-with-input
+    = f.label :understand_minor, 'Liability Release for Minors'
+    = f.check_box :understand_minor, class: "valign-middle"
+    %div#liability-release-instructions.smalltext
       I understand that if this attendee will not be at least 18 years old on 
       = CONGRESS_START_DATE[@year].to_formatted_s(:long)
-      then I must submit the
-      %a{:href => "/docs/USGC2011-Liability-Release-Form.doc"} Minor Agreement Form
-      to the 
+      then I must submit the #{link_to_liability_release} to the
       = link_to 'registrar.', contact_path, :target => '_blank'
   .field
     = f.label :tshirt_size

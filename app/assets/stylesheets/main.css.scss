@@ -40,10 +40,13 @@ p, span, div { font-size: 16px; }
 th { text-align: left; }
 th.row { vertical-align: top; }
 table .numeric { text-align: right; }
-.align-center { text-align: center; }
-.align-right { text-align: right; }
 img.thin-border { border: 1px solid black; }
 .initially_hidden { display: none; }
+
+/* Basic shortcuts: alignment */
+.align-center { text-align: center; }
+.align-right { text-align: right; }
+.valign-middle { vertical-align: middle; }
 
 /* Use this class to pad flow elements (eg. div, form) -Jared 4/9/11 */
 .flow-padding { padding: 8px 0px; }
@@ -231,6 +234,15 @@ fieldset.wider-labels label { width: 200px; }
 fieldset.wider-labels .aligned-with-input { margin-left: 205px !important; }
 fieldset.wordy-questions label { width: 350px; }
 fieldset.wordy-questions .aligned-with-input { margin-left: 355px !important; }
+
+/* Specific stuff on the registration form */
+#liability-release-instructions {
+    display: inline-block;
+    padding-left: 10px;
+    padding-top: 5px;
+    vertical-align: middle;
+    width: 350px;
+}
 
 /* User attendee list */
 .attendee_name_column { width: 400px; }

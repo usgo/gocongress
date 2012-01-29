@@ -15,6 +15,12 @@ module ApplicationHelper
 		translate "activerecord.attributes." + modelname.to_s + "." + attributename.to_s
 	end
 
+  def link_to_liability_release()
+    link_to "Liability Release",
+      "/docs/liability_release/USGC#{@year}-Liability-Release.pdf",
+      :target => '_blank'
+  end
+
   # The following two helpers come from Ryan Bates' Railscast episodes 196 and 197.
   # They are supposed to be generic, handling any association (model), but I
   # couldn't be bothered to preserve that functionality.  They only handle
