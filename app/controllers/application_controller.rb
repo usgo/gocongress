@@ -71,12 +71,22 @@ protected
     (action_name == "index") ? 'List' : action_name.titleize
   end
 
+  # `model_class` returns the constant that refers to the model associated
+  # with this controller.  If there is no associated model, return nil.
+  # eg. UsersController.model_class() returns User
+  # eg. ReportsController.model_class() returns nil
+  def model_class
+    controller_name.classify.constantize rescue nil
+  end
+
+  # `human_controller_name` is a bit of a misnomer, since it actually
+  # returns the associated model name if it can, otherwise it just chops
+  # off the string "Controller" from itself and returns the remainder.
   def human_controller_name
-    model_class = controller_name.classify.constantize
     if model_class.respond_to?(:model_name)
-      return model_class.model_name.human
+      model_class.model_name.human
     else
-      return controller_name.singularize.titleize
+      controller_name.singularize.titleize
     end
   end
 
