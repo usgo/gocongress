@@ -6,7 +6,7 @@
   %p
     If you'd like to participate in these tournaments, please
     = link_to "register", new_user_registration_path
-    as a player. &nbsp; Non-players are not allowed to participate or observe.
+    as a player. &nbsp; Non-players are not allowed to participate.
 
 - if can? :create, Tournament
   .flow-padding= button_to 'Create a New Tournament', new_tournament_path, :method => "get"
