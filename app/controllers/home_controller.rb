@@ -10,9 +10,9 @@ class HomeController < ApplicationController
       @venue_address = '552 University Road'
       @venue_city_state_zip = 'Santa Barbara CA, 93106'
     else
-      @venue_url = 'http://www.blueridgeassembly.org/'
-      @venue_name = 'YMCA Blue Ridge Assembly'
-      @venue_address = '84 Blue Ridge Cir'
+      @venue_url = 'http://g.co/maps/agyb5'
+      @venue_name = 'Blue Ridge Assembly'
+      @venue_address = nil
       @venue_city_state_zip = 'Black Mountain, NC 28711'
     end
 

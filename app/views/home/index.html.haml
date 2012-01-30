@@ -9,8 +9,9 @@
 
   %p#venue-address
     = link_to @venue_name, @venue_url
-    %br
-    = @venue_address
+    - if @venue_address.present?
+      %br
+      = @venue_address
     %br
     = @venue_city_state_zip
 
