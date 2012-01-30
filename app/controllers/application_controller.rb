@@ -35,8 +35,8 @@ class ApplicationController < ActionController::Base
       @congress_date_range = "Jul 30 - Aug 7"
     elsif @year == 2012
       @congress_city = "Black Mountain"
-      @congress_state = "NC"
-      @congress_date_range = "August 4 - 11"
+      @congress_state = "North Carolina" # Peter wants the state spelled out
+      @congress_date_range = "August 4 - 12"
     end
 
     # The layout needs a list of content and activity categories
