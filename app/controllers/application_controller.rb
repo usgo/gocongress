@@ -18,7 +18,7 @@ class ApplicationController < ActionController::Base
       @year = CONGRESS_YEAR.to_i
     end
     
-    # Validate year to protect against sql injection, or begign
+    # Validate year to protect against sql injection, or benign
     # programmer error.
     raise "Invalid year" unless (2011..2100).include?(@year)
     
