@@ -1,7 +1,8 @@
 - emh = Event.model_name.human
 - emhp = emh.pluralize
 
-%h2= @event_category.name.titleize
+-# Do not titleize the category name because that will downcase acronyms
+%h2= @event_category.name
 
 - if current_user.present?
   .flow-padding
