@@ -7,7 +7,7 @@ class EventCategoriesControllerTest < ActionController::TestCase
 
   test "anyone can show" do
     get :show, :year => Time.now.year, :id => @ec
-    assert_not_nil assigns[:events_by_date]
+    assert_not_nil assigns[:activities_by_date]
     assert_response :success
   end
 

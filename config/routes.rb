@@ -25,7 +25,7 @@ Gocongress::Application.routes.draw do
 
         resources :content_categories, :contents, :discounts, :event_categories
         resources :jobs, :plan_categories, :tournaments, :transactions
-        resources :events, :except => [:index]
+        resources :activities, :except => [:index]
         resources :plans, :except => [:index]
 
         resources :attendees, :except => :edit do
@@ -67,7 +67,7 @@ Gocongress::Application.routes.draw do
         resource :reports, :only => [] do
 
           get :atn_badges_all, :atn_badges_ind, :atn_reg_sheets,
-            :emails, :events, :index, :invoices, :outstanding_balances,
+            :emails, :activities, :index, :invoices, :outstanding_balances,
             :tournaments, :user_invoices
 
           # these two reports are the only routes in the entire app

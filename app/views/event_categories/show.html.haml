@@ -1,4 +1,4 @@
-- emh = Event.model_name.human
+- emh = Activity.model_name.human
 - emhp = emh.pluralize
 
 -# Do not titleize the category name because that will downcase acronyms
@@ -7,7 +7,7 @@
 - if current_user.present?
   .flow-padding
     = form_tag choose_attendee_user_path(current_user), :method => "get" do
-      = hidden_field_tag :destination_page, :events
+      = hidden_field_tag :destination_page, :activities
       = submit_tag "Sign Up for #{emhp}"
 - else
   %p
@@ -18,13 +18,13 @@
     and select the activities you want to participate in.
 
 - if current_user_is_admin?
-  .flow-padding= button_to "New #{emh}", new_event_path, :method => "get"
+  .flow-padding= button_to "New #{emh}", new_activity_path, :method => "get"
 
 %p.notice All #{emhp.downcase}, prices, and times subject to change.
 
 %table.semantic.fullwidth.zebra
   %tbody
-    - @events_by_date.each do |d,arEvt|
+    - @activities_by_date.each do |d,arEvt|
       %tr.greater-header
         %th{ :colspan => current_user_is_admin? ? 9 : 7 }
           = d.to_formatted_s(:long_with_day)
@@ -41,7 +41,7 @@
         %th Depart
         %th Arrive
         %th.numeric Price
-        - if can?(:edit, Event) && can?(:delete, Event)
+        - if can?(:edit, Activity) && can?(:delete, Activity)
           %th{:colspan => "2"}
       - arEvt.each do |e|
         %tr
@@ -59,6 +59,6 @@
           %td.numeric= format_price(e.price)
 
           - if can? :edit, e
-            %td= link_to 'Edit', edit_event_path(e)
+            %td= link_to 'Edit', edit_activity_path(e)
           - if can? :delete, e
             %td= link_to 'Delete', e, :confirm => "Delete #{emh}?  If any attendees are signed up, those signups will be lost too.", :method => :delete

@@ -1,4 +1,4 @@
-class Event < ActiveRecord::Base
+class Activity < ActiveRecord::Base
   include YearlyModel
 
   attr_accessible :event_category_id, :name, :depart_time, :start, 
@@ -9,8 +9,8 @@ class Event < ActiveRecord::Base
   attr_accessible :year
 
   belongs_to :event_category
-  has_many :attendee_events, :dependent => :destroy
-  has_many :attendees, :through => :attendee_events
+  has_many :attendee_activities, :dependent => :destroy
+  has_many :attendees, :through => :attendee_activities
 
   validates :event_category, :presence => true
   validates_presence_of :start, :name

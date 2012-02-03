@@ -2,7 +2,7 @@ require 'test_helper'
 
 class EventsControllerTest < ActionController::TestCase
   setup do
-    @activity = Factory(:event)
+    @activity = Factory(:activity)
     @user = Factory.create(:user)
     @admin_user = Factory.create(:admin)
   end
@@ -15,17 +15,17 @@ class EventsControllerTest < ActionController::TestCase
 
   test "user cannot create activity" do
     sign_in @user
-    post :create, :year => Time.now.year, :event => @activity.attributes
+    post :create, :year => Time.now.year, :activity => @activity.attributes
     assert_response 403
   end
   
   test "admin can create activity" do
     sign_in @admin_user
     assert @activity.valid?, "activity is not valid"
-    assert_difference('Event.count') do
-      post :create, :year => Time.now.year, :event => @activity.attributes
+    assert_difference('Activity.count') do
+      post :create, :year => Time.now.year, :activity => @activity.attributes
     end
-    assert_redirected_to event_path(assigns(:event))
+    assert_redirected_to event_path(assigns(:activity))
   end
 
   test "anyone can show activity" do

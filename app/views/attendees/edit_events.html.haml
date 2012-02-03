@@ -1,4 +1,4 @@
-- mnh = Event.model_name.human
+- mnh = Activity.model_name.human
 - mnhp = mnh.pluralize
 
 %h2 #{mnhp} for #{@attendee.get_full_name}
@@ -25,8 +25,8 @@
       %th Start
       %th.numeric Price
     %tbody
-      - @events.each do |e|
-        - is_checked = @atnd_event_ids.index(e.id).present?
+      - @activities.each do |e|
+        - is_checked = @atnd_activity_ids.index(e.id).present?
         - cbx_id = 'event_id_' + e.id.to_s
         %tr
           %td.align-center= check_box_tag "attendee[event_id_list][]", e.id, is_checked, :id => cbx_id

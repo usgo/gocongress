@@ -250,12 +250,12 @@ class AttendeesControllerTest < ActionController::TestCase
   test "user can add activities to own attendee" do
     sign_in @user
     a = @user.attendees.first
-    a.events.clear
-    e = Factory :event
-    e2 = Factory :event
+    a.activities.clear
+    e = Factory :activity
+    e2 = Factory :activity
     atn_attrs = {:event_id_list => [e.id, e2.id]}
-    assert_difference('a.events.count', +2) do
-      put :update, :id => a.id, :attendee => atn_attrs, :page => 'events', :year => @year
+    assert_difference('a.activities.count', +2) do
+      put :update, :id => a.id, :attendee => atn_attrs, :page => 'activities', :year => @year
     end
     assert_redirected_to user_path(@user)
   end
@@ -263,11 +263,11 @@ class AttendeesControllerTest < ActionController::TestCase
   test "user cannot add activities to attendee belonging to someone else" do
     sign_in @user
     a = @user_two.attendees.first
-    a.events.clear
-    e = Factory :event
+    a.activities.clear
+    e = Factory :activity
     atn_attrs = {:event_id_list => [e.id]}
     assert_no_difference('AttendeeEvent.count') do
-      put :update, :id => a.id, :attendee => atn_attrs, :page => 'events', :year => @year
+      put :update, :id => a.id, :attendee => atn_attrs, :page => 'activities', :year => @year
     end
     assert_response 403
   end
@@ -275,11 +275,11 @@ class AttendeesControllerTest < ActionController::TestCase
   test "admin can add activities to attendee belonging to someone else" do
     sign_in @admin
     a = @user_two.attendees.first
-    a.events.clear
-    e = Factory :event
+    a.activities.clear
+    e = Factory :activity
     atn_attrs = {:event_id_list => [e.id]}
-    assert_difference('a.events.count', +1) do
-      put :update, :id => a.id, :attendee => atn_attrs, :page => 'events', :year => @year
+    assert_difference('a.activities.count', +1) do
+      put :update, :id => a.id, :attendee => atn_attrs, :page => 'activities', :year => @year
     end
     assert_redirected_to user_path(@user_two)
   end

@@ -1,14 +1,14 @@
 %h2= page_title
 
 %ul
-  - @events.each do |e|
+  - @activities.each do |e|
     %li
       %a{:href=>"#event_#{e.id}"}= e.name
 
-- @events_by_date.each do |d,events|
+- @activities_by_date.each do |d,activities|
   %h3= d.to_formatted_s(:long_with_day)
   %div{:style => "margin-left: 20px"}
-    - events.each do |e|
+    - activities.each do |e|
       %a{:id=>"event_#{e.id}"}
       %h4= e.name + " - " + e.start.to_s(:american)
       -if e.attendees.empty?

@@ -14,8 +14,8 @@ class Attendee < ActiveRecord::Base
   has_many :attendee_tournaments, :dependent => :destroy
   has_many :tournaments, :through => :attendee_tournaments
 
-  has_many :attendee_events, :dependent => :destroy
-  has_many :events, :through => :attendee_events
+  has_many :attendee_activities, :dependent => :destroy
+  has_many :activities, :through => :attendee_activities
 
   # Mass assignment config
   attr_accessible :given_name, :family_name, :gender, :anonymous, :rank, :aga_id,
@@ -171,10 +171,10 @@ class Attendee < ActiveRecord::Base
       invoice_items << InvoiceItem.new('Plan: ' + p.name, self.get_full_name, p.price, ap.quantity)
     end
     
-    # Events
-    self.events.each do |e|
+    # Activities
+    self.activities.each do |e|
       if (e.price.present? && e.price > 0.0)
-        invoice_items << InvoiceItem.new('Event: ' + e.name, self.get_full_name, e.price, 1)
+        invoice_items << InvoiceItem.new('Activity: ' + e.name, self.get_full_name, e.price, 1)
       end
     end
     

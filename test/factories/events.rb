@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :event do
+  factory :activity do
     name                "eating lasagna"
     depart_time         5.minutes.from_now
     price               99.0

@@ -11,7 +11,7 @@ class UsersController < ApplicationController
     authorize! :update, @user
     
     params[:destination_page] ||= "tournaments"
-    is_valid_destination = %w[events tournaments].index params[:destination_page]
+    is_valid_destination = %w[activities tournaments].index params[:destination_page]
     raise 'Invalid destination page' unless is_valid_destination
     @destination_page = params[:destination_page]
     @destination_page_description = "sign up for " + @destination_page

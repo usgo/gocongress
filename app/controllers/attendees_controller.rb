@@ -249,12 +249,12 @@ class AttendeesController < ApplicationController
       end
       params[:attendee].delete :tournament_id_list
 
-    elsif (@page == 'events')
-      @attendee.events.clear
+    elsif (@page == 'activities')
+      @attendee.activities.clear
       params[:attendee][:event_id_list] ||= Array.new
       params[:attendee][:event_id_list].each do |eid|
-        e = Event.find(eid)
-        @attendee.events << e if e.present?
+        e = Activity.find(eid)
+        @attendee.activities << e if e.present?
       end
       params[:attendee].delete :event_id_list
     end
@@ -332,9 +332,9 @@ protected
     elsif page == "tournaments"
       @open_tournaments = Tournament.yr(@year).openness('O').order(:name)
       @atnd_open_trn_ids = @attendee.tournaments.openness('O').map {|t| t.id}
-    elsif page == "events"
-      @events = Event.yr(@year).order(:start, :name)
-      @atnd_event_ids = @attendee.events.map {|e| e.id}
+    elsif page == "activities"
+      @activities = Activity.yr(@year).order(:start, :name)
+      @atnd_activity_ids = @attendee.activities.map {|e| e.id}
     end
   end
   
@@ -347,7 +347,7 @@ protected
 
   def get_valid_page_from_params
     params[:page].to_s.blank? ? page = 'basics' : page = params[:page].to_s
-    unless %w[admin basics baduk tournaments events].include?(page) then raise 'invalid page' end
+    unless %w[admin basics baduk tournaments activities].include?(page) then raise 'invalid page' end
     return page
   end
   
@@ -360,8 +360,8 @@ protected
       view_name = "edit_baduk_info"
     elsif page == "tournaments"
       view_name = "edit_tournaments"
-    elsif page == "events"
-      view_name = "edit_events"
+    elsif page == "activities"
+      view_name = "edit_activities"
     else
       raise "invalid page"
     end

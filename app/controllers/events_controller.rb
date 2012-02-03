@@ -2,41 +2,41 @@ class EventsController < ApplicationController
 
   load_and_authorize_resource
 
-  # GET /events/1
+  # GET /activities/1
   def show
   end
 
-  # GET /events/new
+  # GET /activities/new
   def new
   end
 
-  # GET /events/1/edit
+  # GET /activities/1/edit
   def edit
   end
 
-  # POST /events
+  # POST /activities
   def create
-    @event.year = @year
-    if @event.save
-      redirect_to @event, :notice => "#{Event.model_name.human} created"
+    @activity.year = @year
+    if @activity.save
+      redirect_to @activity, :notice => "#{Activity.model_name.human} created"
     else
       render :action => "new"
     end
   end
 
-  # PUT /events/1
+  # PUT /activities/1
   def update
-    if @event.update_attributes(params[:event])
-      redirect_to @event, :notice => "#{Event.model_name.human} updated"
+    if @activity.update_attributes(params[:activity])
+      redirect_to @activity, :notice => "#{Activity.model_name.human} updated"
     else
       render :action => "edit"
     end
   end
 
-  # DELETE /events/1
+  # DELETE /activities/1
   def destroy
-    @event.destroy
-    redirect_to events_url
+    @activity.destroy
+    redirect_to activities_url
   end
 
   def event_category_options

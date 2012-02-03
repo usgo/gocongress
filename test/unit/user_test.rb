@@ -116,16 +116,16 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test "activity increases invoice total" do
-    e = Factory :event
+    e = Factory :activity
     assert_difference('@user.get_invoice_total', e.price) do
-      @user.attendees.first.events << e
+      @user.attendees.first.activities << e
     end
   end
 
   test "activity with nil price does not increase the invoice total" do
-    e = Factory :event, price: nil
+    e = Factory :activity, price: nil
     assert_no_difference('@user.get_invoice_total') do
-      @user.attendees.first.events << e
+      @user.attendees.first.activities << e
     end
   end
 

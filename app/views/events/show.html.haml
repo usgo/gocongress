@@ -1,22 +1,22 @@
-%h2= @event.name
+%h2= @activity.name
 
 %table.lightweight
   %tbody
     %tr
-      %th= trl_attr 'event', 'event_category_id'
-      %td= @event.event_category.name
+      %th= trl_attr 'activity', 'event_category_id'
+      %td= @activity.event_category.name
     %tr
-      %th= trl_attr 'event', 'price'
-      %td= format_price @event.price
+      %th= trl_attr 'activity', 'price'
+      %td= format_price @activity.price
     %tr
-      %th= trl_attr 'event', 'location'
-      %td= @event.location
+      %th= trl_attr 'activity', 'location'
+      %td= @activity.location
     %tr
-      %th= trl_attr 'event', 'notes'
-      %td= @event.notes
+      %th= trl_attr 'activity', 'notes'
+      %td= @activity.notes
     %tr
       %th Date
-      %td= @event.start.to_date
+      %td= @activity.start.to_date
 
 %br
 %h3 Schedule
@@ -25,11 +25,11 @@
     %tr
     - %w[depart_time start return_depart_time return_arrive_time].each do |a|
       %tr
-        %th= trl_attr 'event', a
+        %th= trl_attr 'activity', a
         %td
-          - if @event[a].present?
-            = @event[a].to_time.to_formatted_s(:american)
+          - if @activity[a].present?
+            = @activity[a].to_time.to_formatted_s(:american)
 
 %br
 
-= link_to 'Edit', edit_event_path(@event)
+= link_to 'Edit', edit_activity_path(@activity)

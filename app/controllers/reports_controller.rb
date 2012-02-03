@@ -60,9 +60,9 @@ class ReportsController < ApplicationController
       }
   end
 
-  def events
-    @events = Event.yr(@year).order('start asc')
-    @events_by_date = @events.group_by {|event| event.start.to_date}
+  def activities
+    @activities = Activity.yr(@year).order('start asc')
+    @activities_by_date = @activities.group_by {|activity| activity.start.to_date}
   end
 
   def outstanding_balances
