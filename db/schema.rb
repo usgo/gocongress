@@ -11,7 +11,44 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120128045830) do
+ActiveRecord::Schema.define(:version => 20120203000522) do
+
+  create_table "activities", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.datetime "start"
+    t.string   "notes",                :limit => 250
+    t.time     "return_depart_time"
+    t.time     "return_arrive_time"
+    t.integer  "year",                                                               :null => false
+    t.string   "location",             :limit => 50
+    t.integer  "activity_category_id",                                               :null => false
+    t.time     "depart_time"
+    t.decimal  "price",                               :precision => 10, :scale => 2
+  end
+
+  add_index "activities", ["activity_category_id"], :name => "index_activities_on_activity_category_id"
+  add_index "activities", ["id", "year"], :name => "uniq_activities_on_id_and_year", :unique => true
+  add_index "activities", ["year", "start"], :name => "index_activities_on_year_and_start"
+
+  create_table "activity_categories", :force => true do |t|
+    t.string  "name", :limit => 25, :null => false
+    t.integer "year",               :null => false
+  end
+
+  add_index "activity_categories", ["id", "year"], :name => "uniq_activity_categories_on_id_and_year", :unique => true
+
+  create_table "attendee_activities", :force => true do |t|
+    t.integer  "attendee_id", :null => false
+    t.integer  "activity_id", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "year",        :null => false
+  end
+
+  add_index "attendee_activities", ["activity_id"], :name => "index_attendee_activities_on_activity_id"
+  add_index "attendee_activities", ["attendee_id", "activity_id"], :name => "uniq_attendee_activity", :unique => true
 
   create_table "attendee_discounts", :force => true do |t|
     t.integer  "attendee_id", :null => false
@@ -23,17 +60,6 @@ ActiveRecord::Schema.define(:version => 20120128045830) do
 
   add_index "attendee_discounts", ["attendee_id", "discount_id"], :name => "uniq_attendee_discount", :unique => true
   add_index "attendee_discounts", ["discount_id"], :name => "index_attendee_discounts_on_discount_id"
-
-  create_table "attendee_events", :force => true do |t|
-    t.integer  "attendee_id", :null => false
-    t.integer  "event_id",    :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "year",        :null => false
-  end
-
-  add_index "attendee_events", ["attendee_id", "event_id"], :name => "uniq_attendee_event", :unique => true
-  add_index "attendee_events", ["event_id"], :name => "index_attendee_events_on_event_id"
 
   create_table "attendee_plans", :force => true do |t|
     t.integer  "attendee_id",                :null => false
@@ -131,32 +157,6 @@ ActiveRecord::Schema.define(:version => 20120128045830) do
 
   add_index "discounts", ["id", "year"], :name => "index_discounts_on_id_and_year", :unique => true
   add_index "discounts", ["year", "is_automatic"], :name => "index_discounts_on_year_and_is_automatic"
-
-  create_table "event_categories", :force => true do |t|
-    t.string  "name", :limit => 25, :null => false
-    t.integer "year",               :null => false
-  end
-
-  add_index "event_categories", ["id", "year"], :name => "index_event_categories_on_id_and_year", :unique => true
-
-  create_table "events", :force => true do |t|
-    t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.datetime "start"
-    t.string   "notes",              :limit => 250
-    t.time     "return_depart_time"
-    t.time     "return_arrive_time"
-    t.integer  "year",                                                             :null => false
-    t.string   "location",           :limit => 50
-    t.integer  "event_category_id",                                                :null => false
-    t.time     "depart_time"
-    t.decimal  "price",                             :precision => 10, :scale => 2
-  end
-
-  add_index "events", ["event_category_id"], :name => "index_events_on_event_category_id"
-  add_index "events", ["id", "year"], :name => "index_events_on_id_and_year", :unique => true
-  add_index "events", ["year", "start"], :name => "index_events_on_year_and_start"
 
   create_table "jobs", :force => true do |t|
     t.string   "jobname"
