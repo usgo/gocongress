@@ -23,7 +23,7 @@ Gocongress::Application.routes.draw do
 
         devise_for :users, :controllers => { :registrations => "registrations" }
 
-        resources :content_categories, :contents, :discounts, :event_categories
+        resources :content_categories, :contents, :discounts, :activity_categories
         resources :jobs, :plan_categories, :tournaments, :transactions
         resources :activities, :except => [:index]
         resources :plans, :except => [:index]

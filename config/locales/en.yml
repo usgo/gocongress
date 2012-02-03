@@ -29,7 +29,7 @@ en:
       content:
         show_on_homepage: "Show on Homepage?"
       activity:
-        event_category_id: "Category"
+        activity_category_id: "Category"
         name: "Activity"
         depart_time: "Departure Time"
         price: "Price"
@@ -75,7 +75,7 @@ en:
     models:
       job: "Position"
       activity: "Activity"
-      event_category: "Activity Category"
+      activity_category: "Activity Category"
   crud:
     confirm:
       tournament:

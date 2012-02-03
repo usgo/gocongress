@@ -7,6 +7,6 @@ FactoryGirl.define do
     return_depart_time  15.minutes.from_now
     return_arrive_time  20.minutes.from_now
     year                Time.now.year
-    association         :event_category
+    association         :activity_category
   end
 end

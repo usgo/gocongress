@@ -1,12 +1,12 @@
-- mnh = EventCategory.model_name.human
+- mnh = ActivityCategory.model_name.human
 - mnhp = mnh.pluralize
 
 %h2= page_title
 
-- if can? :create, EventCategory
+- if can? :create, ActivityCategory
   .flow-padding= button_to "New #{mnh}", new_activity_category_path, :method => "get"
 
-- if @event_categories.empty?
+- if @activity_categories.empty?
   %p There are no #{mnhp.downcase} yet.
 - else
   %table.semantic.zebra.fullwidth
@@ -15,7 +15,7 @@
       %th
       %th
   
-    - @event_categories.each do |c|
+    - @activity_categories.each do |c|
       %tr
         %td= link_to c.name, c
         %td

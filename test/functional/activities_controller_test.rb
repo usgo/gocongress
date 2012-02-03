@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class EventsControllerTest < ActionController::TestCase
+class ActivitiesControllerTest < ActionController::TestCase
   setup do
     @activity = Factory(:activity)
     @user = Factory.create(:user)
@@ -25,7 +25,7 @@ class EventsControllerTest < ActionController::TestCase
     assert_difference('Activity.count') do
       post :create, :year => Time.now.year, :activity => @activity.attributes
     end
-    assert_redirected_to event_path(assigns(:activity))
+    assert_redirected_to activity_path(assigns(:activity))
   end
 
   test "anyone can show activity" do

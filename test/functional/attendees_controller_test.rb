@@ -253,7 +253,7 @@ class AttendeesControllerTest < ActionController::TestCase
     a.activities.clear
     e = Factory :activity
     e2 = Factory :activity
-    atn_attrs = {:event_id_list => [e.id, e2.id]}
+    atn_attrs = {:activity_id_list => [e.id, e2.id]}
     assert_difference('a.activities.count', +2) do
       put :update, :id => a.id, :attendee => atn_attrs, :page => 'activities', :year => @year
     end
@@ -265,8 +265,8 @@ class AttendeesControllerTest < ActionController::TestCase
     a = @user_two.attendees.first
     a.activities.clear
     e = Factory :activity
-    atn_attrs = {:event_id_list => [e.id]}
-    assert_no_difference('AttendeeEvent.count') do
+    atn_attrs = {:activity_id_list => [e.id]}
+    assert_no_difference('AttendeeActivity.count') do
       put :update, :id => a.id, :attendee => atn_attrs, :page => 'activities', :year => @year
     end
     assert_response 403
@@ -277,7 +277,7 @@ class AttendeesControllerTest < ActionController::TestCase
     a = @user_two.attendees.first
     a.activities.clear
     e = Factory :activity
-    atn_attrs = {:event_id_list => [e.id]}
+    atn_attrs = {:activity_id_list => [e.id]}
     assert_difference('a.activities.count', +1) do
       put :update, :id => a.id, :attendee => atn_attrs, :page => 'activities', :year => @year
     end

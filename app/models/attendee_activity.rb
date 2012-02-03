@@ -1,4 +1,4 @@
-class AttendeeEvent < ActiveRecord::Base
+class AttendeeActivity < ActiveRecord::Base
   belongs_to :attendee
   belongs_to :activity
   validates_presence_of :attendee, :activity

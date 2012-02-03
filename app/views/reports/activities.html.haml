@@ -3,13 +3,13 @@
 %ul
   - @activities.each do |e|
     %li
-      %a{:href=>"#event_#{e.id}"}= e.name
+      %a{:href=>"#activity_#{e.id}"}= e.name
 
 - @activities_by_date.each do |d,activities|
   %h3= d.to_formatted_s(:long_with_day)
   %div{:style => "margin-left: 20px"}
     - activities.each do |e|
-      %a{:id=>"event_#{e.id}"}
+      %a{:id=>"activity_#{e.id}"}
       %h4= e.name + " - " + e.start.to_s(:american)
       -if e.attendees.empty?
         %p

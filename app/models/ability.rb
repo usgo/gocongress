@@ -5,7 +5,7 @@ class Ability
   # when the cancan syntax does not allow the symbol :all
   # For example, when applying conditions, eg. :year
   ALL_RESOURCES = [Attendee, Content, ContentCategory, Discount, Activity,
-    EventCategory, Job, PlanCategory, Plan, Transaction, Tournament, User]
+    ActivityCategory, Job, PlanCategory, Plan, Transaction, Tournament, User]
 
   def initialize(user)
 
@@ -43,6 +43,6 @@ class Ability
     
     # Guests can read public resources, but cannot write anything
     can :read, [Content, ContentCategory, Activity, Job, Tournament, PlanCategory]
-    can :show, [Plan, EventCategory]
+    can :show, [Plan, ActivityCategory]
   end
 end

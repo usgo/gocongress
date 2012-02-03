@@ -1,8 +1,8 @@
 require 'test_helper'
 
-class EventCategoriesControllerTest < ActionController::TestCase
+class ActivityCategoriesControllerTest < ActionController::TestCase
   setup do
-    @ec = Factory(:event_category)
+    @ec = Factory(:activity_category)
   end
 
   test "anyone can show" do

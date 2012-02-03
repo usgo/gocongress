@@ -251,12 +251,12 @@ class AttendeesController < ApplicationController
 
     elsif (@page == 'activities')
       @attendee.activities.clear
-      params[:attendee][:event_id_list] ||= Array.new
-      params[:attendee][:event_id_list].each do |eid|
+      params[:attendee][:activity_id_list] ||= Array.new
+      params[:attendee][:activity_id_list].each do |eid|
         e = Activity.find(eid)
         @attendee.activities << e if e.present?
       end
-      params[:attendee].delete :event_id_list
+      params[:attendee].delete :activity_id_list
     end
 
     # update attributes but do not save yet

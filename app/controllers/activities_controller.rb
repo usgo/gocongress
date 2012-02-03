@@ -1,4 +1,4 @@
-class EventsController < ApplicationController
+class ActivitiesController < ApplicationController
 
   load_and_authorize_resource
 
@@ -39,9 +39,9 @@ class EventsController < ApplicationController
     redirect_to activities_url
   end
 
-  def event_category_options
-    EventCategory.yr(@year).all.map {|c| [ c.name, c.id ] }
+  def activity_category_options
+    ActivityCategory.yr(@year).all.map {|c| [ c.name, c.id ] }
   end
-  helper_method :event_category_options
+  helper_method :activity_category_options
 
 end
