@@ -9,7 +9,7 @@ class UsersController < ApplicationController
   def choose_attendee
     @user = User.find(params[:id])
     authorize! :update, @user
-    
+
     params[:destination_page] ||= "tournaments"
     is_valid_destination = %w[activities tournaments].index params[:destination_page]
     raise 'Invalid destination page' unless is_valid_destination
@@ -40,7 +40,7 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
     authorize! :show, @user
-    
+
     @attendees = @user.attendees.order "is_primary desc"
     @showing_current_user = signed_in?(nil) && (current_user.id == @user.id)
     @page_title = @showing_current_user ?
@@ -49,7 +49,7 @@ class UsersController < ApplicationController
 
     @has_minor_attendee = @user.attendees.map(&:minor?).include?(true)
   end
-  
+
   # GET /users/1/pay
   def pay
     @user = User.find(params[:id])
@@ -61,59 +61,40 @@ class UsersController < ApplicationController
       @merchantone_username = "abridges27278"
     end
   end
-  
+
   # GET /users/1/invoice
   def invoice
     @user = User.find(params[:id])
     authorize! :read, @user
     @invoice_items = @user.get_invoice_items
   end
-  
+
   # GET /users/1/ledger
   def ledger
     @user = User.find(params[:id])
     authorize! :read, @user
-    
+
     @showing_current_user = signed_in?(nil) && (current_user.id == @user.id)
     @page_title = @showing_current_user ?
       'My Payment History' :
       @user.primary_attendee.full_name_possessive + ' Payment History'
   end
 
-  # GET /users/new
-  def new
-    @user = User.new
-    authorize! :create, @user
-  end
-
   # GET /users/1/edit
   def edit
     @user = User.find(params[:id])
-    
+
     # edit form is meant for admins only, hence the custom cancan action name
     authorize! :admin_edit, @user
-    
-    @jobs = get_jobs_for_cbx_list
-  end
 
-  # POST /users
-  def create
-    @user = User.new(params[:user])
-    @user.year = @year
-    authorize! :create, @user
-    
-    if @user.save
-      redirect_to edit_attendee_path(@user.primary_attendee, :baduk)
-    else
-      render :action => "new"
-    end
+    @jobs = get_jobs_for_cbx_list
   end
 
   # PUT /users/1
   def update
     @user = User.find(params[:id])
     authorize! :update, @user
-    
+
     # Which view did we come from?
     params[:page] ||= 'edit'
 
@@ -133,7 +114,7 @@ class UsersController < ApplicationController
     # from the params hash to avoid a warning. -Jared 2011.1.30
     mass_assignable_attrs = params[:user].except(:role, :job_ids)
 
-    # Update mass-assignable attributes. update_with_password() performs 
+    # Update mass-assignable attributes. update_with_password() performs
     # some extra validation before calling update_attributes
     if @user.update_with_password(mass_assignable_attrs)
 
@@ -158,7 +139,7 @@ class UsersController < ApplicationController
     @user.destroy
     redirect_to users_url, :notice => "User deleted"
   end
-  
+
   def print_cost_summary
     @user = User.find(params[:id])
     authorize! :print_official_docs, @user
@@ -169,14 +150,14 @@ protected
 
   def remove_year_from_params
     # Leaving user.year accessible and just removing it on all actions
-    # is easier than completely re-writing 
+    # is easier than completely re-writing
     # Devise::RegistrationsController.create()
     if params_contains_user_attr :year
       Rails.logger.warn "WARNING: Removing protected attribute: year"
       params[:user].delete :year
     end
   end
-  
+
 private
 
   def get_jobs_for_cbx_list

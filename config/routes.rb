@@ -47,7 +47,7 @@ Gocongress::Application.routes.draw do
           end
         end
 
-        resources :users do
+        resources :users, :except => [:new, :create] do
           member do
             get 'edit_email', :as => 'edit_email_for'
             get 'edit_password', :as => 'edit_password_for'
