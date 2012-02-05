@@ -84,7 +84,7 @@ class AttendeesController < ApplicationController
     @np_count = @attendees.where(:rank => 0).count
     @male_count = @attendees.where(:gender => 'm').count
     @female_count = @attendees.where(:gender => 'f').count
-    
+
     # for the age statistics, our query will use a different order clause
     age_before_beauty = Attendee.yr(@year).reasonable_birth_date.order('birth_date')
     @oldest_attendee = age_before_beauty.first
@@ -123,7 +123,7 @@ class AttendeesController < ApplicationController
       @attendee[f] = target_user.primary_attendee[f]
     }
   end
-  
+
   # POST /attendees
   def create
 
@@ -161,7 +161,7 @@ class AttendeesController < ApplicationController
   # GET /attendees/1/edit/baduk
   # GET /attendees/1/edit/tournaments
   def edit
-    
+
     # there are too many attendee attributes to fit them all on
     # one form page. so, I've added a param called page
     @page = get_valid_page_from_params
@@ -211,7 +211,7 @@ class AttendeesController < ApplicationController
       params[:attendee].delete :tournament_id_list
 
     elsif (@page == 'baduk')
-      
+
       # claimed discounts
       params[:attendee][:discount_ids] ||= Array.new
 
@@ -268,7 +268,6 @@ class AttendeesController < ApplicationController
 
       # after saving the baduk page, if the attendee has not selected a plan yet,
       # then go to the edit_plans form, else return to "my account"
-      Rails.logger.debug "derpbookmark"
       first_category = PlanCategory.reg_form(@year, @attendee.age_in_years).first
       if @page == 'baduk' && @attendee.plans.count == 0 && first_category.present?
         redirect_to edit_plans_for_attendee_path(@attendee, first_category)
@@ -314,7 +313,7 @@ class AttendeesController < ApplicationController
     authorize! :read, @attendee
     render :layout=> 'print'
   end
-  
+
   # GET /attendees/vip
   def vip
     @attendees = Attendee.yr(@year).where('rank >= 101')
@@ -337,7 +336,7 @@ protected
       @atnd_activity_ids = @attendee.activities.map {|e| e.id}
     end
   end
-  
+
   def init_plans
     @plan_category = PlanCategory.reg_form(@year, @attendee.age_in_years).find(params[:plan_category_id])
     age = @attendee.age_in_years
@@ -350,7 +349,7 @@ protected
     unless %w[admin basics baduk tournaments activities].include?(page) then raise 'invalid page' end
     return page
   end
-  
+
   def get_view_name_from_page( page )
     if page == "admin"
       view_name = "admin"
