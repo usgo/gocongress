@@ -143,6 +143,10 @@ class Attendee < ActiveRecord::Base
     self.country == 'US'
   end
 
+  def has_plans?
+    plan_count > 0
+  end
+
   def internal_attributes
     # attrs rarely useful for display
     %w[id user_id understand_minor]
