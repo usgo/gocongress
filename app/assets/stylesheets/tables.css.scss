@@ -22,7 +22,7 @@ table.lightweight {
 }
 
 /* Table options eg. zebra striping */
-table.zebra tr:nth-child(even) td { background-color: $zebra; }
+table.zebra tr:nth-child(odd) td { background-color: $zebra; }
 table.dont-wrap-th th { white-space:nowrap; }
 td.nowrap { white-space:nowrap; }
 
@@ -35,7 +35,7 @@ table.semantic {
   td, th { border: 1px solid #666; padding: 0.25em; }
   td { background-color: $orange-light; }
   th { background-color: $orange-dark; }
-  tr.lesser-header th { background-color: $orange; font-weight: normal; }
+  tr.lesser-header th { background-color: $orange-dark; font-weight: normal; }
   tr.total th { background-color: $orange-light; text-align: right; }
 
   /* Semantic table: Row emphasis */
