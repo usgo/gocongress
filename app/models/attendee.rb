@@ -23,7 +23,7 @@ class Attendee < ActiveRecord::Base
     :understand_minor, :congresses_attended,
     :tshirt_size, :special_request, :roomate_request
 
-  # FIXME: in the controller, somehow year needs to get set 
+  # FIXME: in the controller, somehow year needs to get set
   # before authorize! runs.  until then, year needs to be accessible.
   attr_accessible :year
 
@@ -38,7 +38,7 @@ class Attendee < ActiveRecord::Base
   # define constant array of integer ranks
   NUMERIC_RANK_LIST = []
   Attendee::RANKS.each { |r| NUMERIC_RANK_LIST << r[1] }
-  
+
   # tshirt sizes
   TSHIRT_CHOICES = []
   TSHIRT_CHOICES << ["None",            "NO"]
@@ -76,20 +76,28 @@ class Attendee < ActiveRecord::Base
   validates :congresses_attended, :numericality => {:greater_than_or_equal_to => 0}
 
   # AGA ID must be unique within each year
-  validates :aga_id, \
-    :uniqueness => { :scope => :year, :allow_nil => true }, \
-    :numericality => { :only_integer => true, :allow_nil => true, :message => "id is not a number" }
+  validates :aga_id,
+    :uniqueness => {
+      :scope => :year,
+      :allow_nil => true,
+      :message => "id has already been taken"
+    },
+    :numericality => {
+      :only_integer => true,
+      :allow_nil => true,
+      :message => "id is not a number"
+    }
 
-  # Attendees must belong to a user (except when they are first being created,      
+  # Attendees must belong to a user (except when they are first being created,
   # because in a nested form there might not be a user_id yet.  I think that is what
-  # is going on, anyway) I'm surprised this is necessary at all, and I'm unsettled  
+  # is going on, anyway) I'm surprised this is necessary at all, and I'm unsettled
   # by the lack of a foreign key constraint. -Jared 2011.1.2
   validates_presence_of :user_id, :on => :update
 
   # Use MinorAgreementValidator (found in lib/) to require that understand_minor
   # be checked if the attendee will not be 18 before the first day of the Congress.
   validates :understand_minor, :minor_agreement => true
-  
+
   # Validate that each user has exactly one primary attendee -Jared
   validates_uniqueness_of :is_primary, :scope => :user_id, :if => :is_primary?
 
@@ -100,15 +108,15 @@ class Attendee < ActiveRecord::Base
   end
 
   def attribute_names_for_csv
-    
+
     # Lisa wants the name and email in the first few columns
     # group together address, city, state, etc.
     first_attrs = %w[aga_id family_name given_name address_1 address_2 city state zip country phone]
-    
+
     # we should move roommate request next to the plans
     last_attrs = %w[special_request roomate_request]
 
-    attrs = self.attribute_names.delete_if { |x| 
+    attrs = self.attribute_names.delete_if { |x|
       first_attrs.index(x) ||
       last_attrs.index(x) ||
       internal_attributes.index(x)
@@ -117,7 +125,7 @@ class Attendee < ActiveRecord::Base
     # note: the order must match attendee_to_array() in reports_helper.rb
     return first_attrs.concat(attrs.concat(last_attrs))
   end
-  
+
   def birthday_after_congress
     bday = Date.new(congress_start.year, birth_date.month, birth_date.day)
     (bday <=> congress_start) == 1
@@ -134,7 +142,7 @@ class Attendee < ActiveRecord::Base
   def country_is_america?
     self.country == 'US'
   end
-  
+
   def internal_attributes
     # attrs rarely useful for display
     %w[id user_id understand_minor]
@@ -170,14 +178,14 @@ class Attendee < ActiveRecord::Base
       p = ap.plan
       invoice_items << InvoiceItem.new('Plan: ' + p.name, self.get_full_name, p.price, ap.quantity)
     end
-    
+
     # Activities
     self.activities.each do |e|
       if (e.price.present? && e.price > 0.0)
         invoice_items << InvoiceItem.new('Activity: ' + e.name, self.get_full_name, e.price, 1)
       end
     end
-    
+
     return invoice_items
   end
 
@@ -209,7 +217,7 @@ class Attendee < ActiveRecord::Base
   def possessive_pronoun_or_name
     is_primary? ? "My" : full_name_possessive
   end
-  
+
   def objective_pronoun_or_name_and_copula
     is_primary? ? "You are" : get_full_name + " is"
   end
@@ -218,7 +226,7 @@ class Attendee < ActiveRecord::Base
     ap = self.attendee_plans.where(:plan_id => plan_id).first
     return ap.present? ? ap.quantity : 0
   end
-  
+
   def plan_qty_hash
     ap_ordered = self.attendee_plans.order(:plan_id)
     ids = ap_ordered.map { |ap| ap.plan_id }
