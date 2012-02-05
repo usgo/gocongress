@@ -5,7 +5,6 @@ class UsersController < ApplicationController
 
   load_and_authorize_resource :only => [:index]
 
-  # GET /users/1/choose_attendee
   def choose_attendee
     @user = User.find(params[:id])
     authorize! :update, @user
@@ -17,26 +16,20 @@ class UsersController < ApplicationController
     @destination_page_description = "sign up for " + @destination_page
   end
 
-  # GET /users/1/edit_email
   def edit_email
     @user = User.find(params[:id])
     authorize! :update, @user
   end
 
-  # GET /users/1/edit_password
   def edit_password
     @user = User.find(params[:id])
     authorize! :update, @user
   end
 
-  # GET /users
-  # GET /users.xml
   def index
     @users = @users.yr(@year).order("role = 'A' desc")
   end
 
-  # GET /users/1
-  # GET /users/1.xml
   def show
     @user = User.find(params[:id])
     authorize! :show, @user
@@ -50,7 +43,6 @@ class UsersController < ApplicationController
     @has_minor_attendee = @user.attendees.map(&:minor?).include?(true)
   end
 
-  # GET /users/1/pay
   def pay
     @user = User.find(params[:id])
     authorize! :update, @user
@@ -62,14 +54,12 @@ class UsersController < ApplicationController
     end
   end
 
-  # GET /users/1/invoice
   def invoice
     @user = User.find(params[:id])
     authorize! :read, @user
     @invoice_items = @user.get_invoice_items
   end
 
-  # GET /users/1/ledger
   def ledger
     @user = User.find(params[:id])
     authorize! :read, @user
@@ -80,7 +70,6 @@ class UsersController < ApplicationController
       @user.primary_attendee.full_name_possessive + ' Payment History'
   end
 
-  # GET /users/1/edit
   def edit
     @user = User.find(params[:id])
 
@@ -90,7 +79,6 @@ class UsersController < ApplicationController
     @jobs = get_jobs_for_cbx_list
   end
 
-  # PUT /users/1
   def update
     @user = User.find(params[:id])
     authorize! :update, @user
@@ -128,11 +116,8 @@ class UsersController < ApplicationController
       @jobs = get_jobs_for_cbx_list
       render :action => params[:page]
     end
-
   end
 
-  # DELETE /users/1
-  # DELETE /users/1.xml
   def destroy
     @user = User.find(params[:id])
     authorize! :destroy, @user
