@@ -34,7 +34,7 @@ class AttendeesController < ApplicationController
 
     # if valid, go to next category or return to account
     if vldn_errs.length == 0 && @attendee.save
-      next_category = @plan_category.next_category_on_reg_form(@attendee.age_in_years)
+      next_category = @plan_category.next_reg_form_category(@attendee)
       if next_category.present?
         redirect_to edit_plans_for_attendee_path(@attendee, next_category)
       else
@@ -266,10 +266,10 @@ class AttendeesController < ApplicationController
     if @attendee.valid? and extra_errors.length == 0
       @attendee.save(:validate => false)
 
-      # after saving the baduk page, if the attendee has not selected a plan yet,
-      # then go to the edit_plans form, else return to "my account"
-      first_category = PlanCategory.reg_form(@year, @attendee.age_in_years).first
-      if @page == 'baduk' && @attendee.plans.count == 0 && first_category.present?
+      # If the attendee has not selected any plans yet, then go to the
+      # edit_plans form, else return to "my account"
+      first_category = PlanCategory.first_reg_form_category(@year, @attendee)
+      if !@attendee.has_plans? && first_category.present?
         redirect_to edit_plans_for_attendee_path(@attendee, first_category)
       else
         redirect_to user_path(@attendee.user), :notice => "Attendee updated"

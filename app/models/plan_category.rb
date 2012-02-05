@@ -28,7 +28,16 @@ class PlanCategory < ActiveRecord::Base
       .order(:name)
   end
 
-  def next_category_on_reg_form(age)
-    PlanCategory.reg_form(self.year, age).where("plan_categories.name > ?", self.name).first
+  # `first_reg_form_category` returns nil if there are no appropriate categories
+  def self.first_reg_form_category(year, attendee)
+    reg_form(year, attendee.age_in_years).first
+  end
+
+  # Instance methods
+
+  def next_reg_form_category(attendee)
+    PlanCategory.reg_form(self.year, attendee.age_in_years) \
+      .where("plan_categories.name > ?", self.name) \
+      .first
   end
 end
