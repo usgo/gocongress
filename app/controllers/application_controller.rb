@@ -17,15 +17,15 @@ class ApplicationController < ActionController::Base
     else
       @year = CONGRESS_YEAR.to_i
     end
-    
+
     # Validate year to protect against sql injection, or benign
     # programmer error.
     raise "Invalid year" unless (2011..2100).include?(@year)
-    
+
     # Define a range of all expected years
     # Currently just used for year navigation in footer
     @years = 2011..LATEST_YEAR
-    
+
     # Location and date also used to be constants
     # For now, an if-else is fine, but in the future, when there are
     # more years, we may want some other way to store these.
@@ -52,19 +52,19 @@ class ApplicationController < ActionController::Base
       pa = user.primary_attendee
 
       # Go to the "My Account" page, unless the primary attendee
-      # has not filled out the second page yet (for example, immediately
-      # after submitting the devise registration form)
+      # has not filled out the registration form yet (for example,
+      # immediately after submitting the devise registration form)
       return (pa.plan_count > 0) ? user_path(user) : edit_attendee_path(pa, :baduk)
     else
       super
     end
   end
-  
+
   rescue_from CanCan::AccessDenied do |exception|
     # Rails.logger.debug exception.subject.inspect
     render_access_denied
   end
-  
+
 protected
 
   def human_action_name
@@ -133,7 +133,7 @@ private
     @deny_message += (action_name == "index") ? 'list all' : action_name
     @deny_message += ' ' + controller_name
     @deny_message += ' (or perhaps just this particular ' + controller_name.singularize + ').'
-    
+
     # Alf says: render or redirect and the filter chain stops there
     render 'home/access_denied', :status => :forbidden
   end
