@@ -34,12 +34,7 @@ class AttendeesController < ApplicationController
 
     # if valid, go to next category or return to account
     if vldn_errs.length == 0 && @attendee.save
-      next_category = @plan_category.next_reg_form_category(@attendee)
-      if next_category.present?
-        redirect_to edit_plans_for_attendee_path(@attendee, next_category)
-      else
-        redirect_to user_path(@attendee.user), :notice => "Changes saved"
-      end
+      redirect_to @attendee.next_page(nil, @plan_category), :notice => "Changes saved"
     else
       @attendee.errors[:base].concat vldn_errs
       render :edit_plans
@@ -149,16 +144,15 @@ class AttendeesController < ApplicationController
     @attendee.user_id = target_user_id
     @attendee.year = @year
     if @attendee.save
-      # After successful save, redirect to the "Edit Go Info" form
-      # We are afraid if we do not, then no one will fill it out
-      redirect_to edit_attendee_path(@attendee, :baduk)
+      notice_msg = translate "devise.registrations.signed_up"
+      redirect_to @attendee.next_page(:basics), :notice => notice_msg
     else
       render :action => "new"
     end
   end
 
   # GET /attendees/1/edit/basics
-  # GET /attendees/1/edit/baduk
+  # GET /attendees/1/edit/wishes
   # GET /attendees/1/edit/tournaments
   def edit
 
@@ -210,7 +204,7 @@ class AttendeesController < ApplicationController
       end
       params[:attendee].delete :tournament_id_list
 
-    elsif (@page == 'baduk')
+    elsif (@page == 'wishes')
 
       # claimed discounts
       params[:attendee][:discount_ids] ||= Array.new
@@ -265,15 +259,7 @@ class AttendeesController < ApplicationController
     # validate
     if @attendee.valid? and extra_errors.length == 0
       @attendee.save(:validate => false)
-
-      # If the attendee has not selected any plans yet, then go to the
-      # edit_plans form, else return to "my account"
-      first_category = PlanCategory.first_reg_form_category(@year, @attendee)
-      if !@attendee.has_plans? && first_category.present?
-        redirect_to edit_plans_for_attendee_path(@attendee, first_category)
-      else
-        redirect_to user_path(@attendee.user), :notice => "Attendee updated"
-      end
+      redirect_to @attendee.next_page(@page), :notice => "Attendee updated"
     else
       init_multipage(@page)
       extra_errors.each { |e| @attendee.errors[:base] << e }
@@ -322,7 +308,7 @@ class AttendeesController < ApplicationController
 protected
 
   def init_multipage( page )
-    if page == "baduk"
+    if page == "wishes"
       @discounts = Discount.yr(@year).automatic(false)
       @attendee_discount_ids = @attendee.discounts.automatic(false).map { |d| d.id }
     elsif page == "admin"
@@ -346,23 +332,22 @@ protected
 
   def get_valid_page_from_params
     params[:page].to_s.blank? ? page = 'basics' : page = params[:page].to_s
-    unless %w[admin basics baduk tournaments activities].include?(page) then raise 'invalid page' end
+    Attendee.assert_valid_page(page)
     return page
   end
 
   def get_view_name_from_page( page )
-    if page == "admin"
-      view_name = "admin"
+    Attendee.assert_valid_page(page)
+    if %w[admin wishes].include?(page.to_s)
+      view_name = page.to_s
     elsif page == "basics"
       view_name = "edit"
-    elsif page == "baduk"
-      view_name = "edit_baduk_info"
     elsif page == "tournaments"
       view_name = "edit_tournaments"
     elsif page == "activities"
       view_name = "edit_activities"
     else
-      raise "invalid page"
+      raise "No view for page: #{page}"
     end
     return view_name
   end

@@ -2,6 +2,7 @@ require "invoice_item"
 
 class Attendee < ActiveRecord::Base
   include YearlyModel
+  include Rails.application.routes.url_helpers
 
   belongs_to :user
 
@@ -100,6 +101,22 @@ class Attendee < ActiveRecord::Base
 
   # Validate that each user has exactly one primary attendee -Jared
   validates_uniqueness_of :is_primary, :scope => :user_id, :if => :is_primary?
+
+  # Class Methods
+  # =============
+
+  def self.assert_valid_page(p)
+    raise "Invalid page: #{p}" unless Attendee.pages.include?(p.to_s)
+  end
+
+  # `pages` returns an array of page names, in no particular order.
+  # Not all pages are part of the registration process.
+  def self.pages
+    %w[admin basics tournaments activities wishes]
+  end
+
+  # Public Instance Methods
+  # =======================
 
   # `age_in_years` Returns integer age in years on the start day of congress, not now.
   def age_in_years
@@ -200,6 +217,43 @@ class Attendee < ActiveRecord::Base
 
   def minor?
     self.birth_date + 18.years > congress_start
+  end
+
+  # `next_page` returns the path to the next "page", usually in the
+  # registration process.
+  def next_page(current_page, plan_category = nil)
+    raise ArgumentError if (current_page.nil? && plan_category.nil?)
+    Attendee.assert_valid_page(current_page) if plan_category.nil?
+
+    my_account_path = user_path(self.year, self.user)
+
+    # Coming from the first page (basics) go to the first
+    # appropriate plan category, if there is one.
+    if current_page.to_s == "basics"
+      first_category = PlanCategory.first_reg_form_category(self.year, self)
+      if first_category.present?
+        return edit_plans_for_attendee_path(self.year, self, first_category)
+      end
+    end
+
+    # Coming from the final page, we always go to the "My Account" page next
+    if current_page.to_s == "wishes"
+      return my_account_path
+    end
+
+    # If we're coming from one plan category, go to the next.
+    # If this is the last category, go to :wishes.
+    if plan_category.present?
+      next_category = plan_category.next_reg_form_category(self)
+      if next_category.present?
+        return edit_plans_for_attendee_path(self.year, self, next_category)
+      else
+        return edit_attendee_path(self.year, self, :wishes)
+      end
+    end
+
+    # By default, return to the "My Account" page
+    return my_account_path
   end
 
   def get_full_name(respect_anonymity = false)

@@ -152,7 +152,7 @@ class AttendeesControllerTest < ActionController::TestCase
     state_before = target_attendee.state
     target_attendee.state = 'MI'
     put :update, :id => target_attendee.id, :attendee => target_attendee.attributes, :year => @year
-    
+
     target_attendee = Attendee.find(target_attendee.id)
     assert_not_equal state_before, target_attendee.state
 
@@ -160,7 +160,7 @@ class AttendeesControllerTest < ActionController::TestCase
     assert_equal 'Attendee updated', flash[:notice]
   end
 
-  %w[basics baduk].each do |page|
+  %w[basics wishes].each do |page|
     define_method "test_user_can_get_#{page}" do
       sign_in @user
       get :edit, :id => @user.attendees.sample.id, :page => page, :year => @year
@@ -173,35 +173,6 @@ class AttendeesControllerTest < ActionController::TestCase
       get :edit, :id => @admin.attendees.sample.id, :page => page, :year => @year
       view_name = @controller.send( :get_view_name_from_page, page )
       assert_response 403
-    end
-  end
-
-  test "non-admin can claim non-automatic discounts" do
-    sign_in @user
-    a = @user.attendees.sample
-    assert_equal 0, a.discounts.count
-    atn_attrs = {:discount_ids => []}
-    atn_attrs[:discount_ids] << @discount_nonautomatic.id
-    atn_attrs[:discount_ids] << @discount_nonautomatic2.id
-    atn_attrs[:discount_ids] << @discount_automatic.id
-
-    # the checkbox list in the view will throw in some empty strings too,
-    # so we will test that, and make sure it does not crash
-    atn_attrs[:discount_ids] << ""
-
-    assert_difference('a.discounts.count', +2) do
-      put :update, :page => 'baduk', :id => a.id, :attendee => atn_attrs, :year => @year
-    end
-  end
-
-  test "non-admin cannot claim automatic discounts" do
-    sign_in @user
-    a = @user.attendees.sample
-    assert_equal 0, a.discounts.count
-    atn_attrs = {:discount_ids => []}
-    atn_attrs[:discount_ids] << @discount_automatic.id
-    assert_no_difference('a.discounts.count') do
-      put :update, :page => 'baduk', :id => a.id, :attendee => atn_attrs, :year => @year
     end
   end
 
@@ -232,7 +203,7 @@ class AttendeesControllerTest < ActionController::TestCase
     assert_equal(@inv_trn.id, a.tournaments.first.id)
     assert_redirected_to user_path(@user)
   end
-  
+
   test "user can sign up for open tournaments" do
     sign_in @user
     a = @user.attendees.first
@@ -283,5 +254,35 @@ class AttendeesControllerTest < ActionController::TestCase
     end
     assert_redirected_to user_path(@user_two)
   end
+
+  test "non-admin can claim non-automatic discounts" do
+    sign_in @user
+    a = @user.attendees.sample
+    assert_equal 0, a.discounts.count
+    atn_attrs = {:discount_ids => []}
+    atn_attrs[:discount_ids] << @discount_nonautomatic.id
+    atn_attrs[:discount_ids] << @discount_nonautomatic2.id
+    atn_attrs[:discount_ids] << @discount_automatic.id
+
+    # the checkbox list in the view will throw in some empty strings too,
+    # so we will test that, and make sure it does not crash
+    atn_attrs[:discount_ids] << ""
+
+    assert_difference('a.discounts.count', +2) do
+      put :update, :page => 'wishes', :id => a.id, :attendee => atn_attrs, :year => @year
+    end
+  end
+
+  test "non-admin cannot claim automatic discounts" do
+    sign_in @user
+    a = @user.attendees.sample
+    assert_equal 0, a.discounts.count
+    atn_attrs = {:discount_ids => []}
+    atn_attrs[:discount_ids] << @discount_automatic.id
+    assert_no_difference('a.discounts.count') do
+      put :update, :page => 'wishes', :id => a.id, :attendee => atn_attrs, :year => @year
+    end
+  end
+
 
 end

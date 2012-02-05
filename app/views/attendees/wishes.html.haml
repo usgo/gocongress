@@ -2,20 +2,20 @@
 
 = form_for( @attendee ) do |f|
 
-  -# This hidden field is a necessary workaround 
-  -# for the case when no checkboxes are selected.
-  = hidden_field_tag "attendee[discount_ids][]", nil
-
-  -# The update action will inspect the page parameter to determine 
+  -# The update action will inspect the page parameter to determine
   -# which validations to run
   = hidden_field_tag :page, @page
 
   = render :partial => "shared/error_messages", :locals => { :resource => @attendee }
 
+  -# This hidden field is a necessary workaround
+  -# for the case when no discounts are selected.
+  = hidden_field_tag "attendee[discount_ids][]", nil
+
   - if @discounts.count > 0
     %fieldset
       %legend Discounts
-      %p 
+      %p
         = @attendee.is_primary? ? "Do you" : "Does this attendee"
         qualify for any of these discounts?
       - @discounts.each do |d|

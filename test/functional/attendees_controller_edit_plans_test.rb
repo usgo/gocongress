@@ -16,7 +16,7 @@ class AttendeesControllerEditPlansTest < ActionController::TestCase
     visit_edit_plans_form
     assert_response :success
   end
-  
+
   test "visitor cannot get edit_plans form" do
     visit_edit_plans_form
     assert_response :forbidden
@@ -67,7 +67,7 @@ class AttendeesControllerEditPlansTest < ActionController::TestCase
     assert_response :forbidden
   end
 
-  test "after baduk page redirect to plan category in correct year" do
+  test "after basics page redirect to plan category in correct year" do
     u = Factory :user, year: 2012
     a = u.attendees.sample
     c1 = Factory :plan_category, {name: "aaaaaa", year: 2011}
@@ -76,7 +76,7 @@ class AttendeesControllerEditPlansTest < ActionController::TestCase
     p2 = Factory :all_ages_plan, plan_category_id: c2.id
 
     sign_in(u)
-    put :update, :page => 'baduk', :id => a.id, :year => 2012
+    put :update, :page => 'basics', :id => a.id, :year => 2012
     assert_response :redirect
 
     # expect to be redirected to a 2012 plan category

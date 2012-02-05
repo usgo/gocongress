@@ -54,7 +54,7 @@ class ApplicationController < ActionController::Base
       # Go to the "My Account" page, unless the primary attendee
       # has not filled out the registration form yet (for example,
       # immediately after submitting the devise registration form)
-      return pa.has_plans? ? user_path(user) : edit_attendee_path(pa, :baduk)
+      return pa.next_page(:basics)
     else
       super
     end
