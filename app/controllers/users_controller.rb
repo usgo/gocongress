@@ -3,7 +3,7 @@ class UsersController < ApplicationController
   before_filter :deny_users_from_wrong_year, :only => [:index]
   before_filter :remove_year_from_params
 
-  load_and_authorize_resource :only => [:index]
+  load_and_authorize_resource :only => [:destroy, :index, :show, :update]
 
   def choose_attendee
     @user = User.find(params[:id])
@@ -31,9 +31,6 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user = User.find(params[:id])
-    authorize! :show, @user
-
     @attendees = @user.attendees.order "is_primary desc"
     @showing_current_user = signed_in?(nil) && (current_user.id == @user.id)
     @page_title = @showing_current_user ?
@@ -80,8 +77,6 @@ class UsersController < ApplicationController
   end
 
   def update
-    @user = User.find(params[:id])
-    authorize! :update, @user
 
     # Which view did we come from?
     params[:page] ||= 'edit'
@@ -119,8 +114,6 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    @user = User.find(params[:id])
-    authorize! :destroy, @user
     @user.destroy
     redirect_to users_url, :notice => "User deleted"
   end
