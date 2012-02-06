@@ -5,7 +5,12 @@ class PlanCategory < ActiveRecord::Base
   has_many :plans
 
   validates :event, :presence => true
-  validates :name, :presence => true
+  validates :name, :presence => true,
+    :uniqueness => {
+      :scope => :year,
+      :case_sensitive => false,
+      :message => "with that name already exists"
+    }
   validates :description, :length => {maximum: 200}
 
   scope :alphabetical, order(:name)
