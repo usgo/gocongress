@@ -4,7 +4,10 @@ class PlanCategoriesController < ApplicationController
   before_filter :events_for_select, :only => [:create, :edit, :new, :update]
 
   def index
-    @plan_categories = @plan_categories.yr(@year).alphabetical
+    categories = @plan_categories \
+      .select("plan_categories.*, events.name as event_name") \
+      .yr(@year).joins(:event).order("events.name, plan_categories.name")
+    @plan_categories_by_event = categories.group_by {|c| c.event_name}
   end
 
   def show

@@ -3,8 +3,17 @@
 - if can? :manage, PlanCategory
   .flow-padding= button_to 'Create New Category', new_plan_category_path, :method => "get"
 
-- @plan_categories.each do |pc|
-  %h3= link_to pc.name, pc
-  = markdown_if_present(pc.description)
+%table.semantic.fullwidth
+  %tbody
+    - @plan_categories_by_event.each do |event, cats|
+      %tr
+        %th{colspan: can?(:manage, PlanCategory) ? 4 : 2}= event.to_s
+      - cats.each do |c|
+        %tr
+          %td= link_to c.name, c
+          %td= markdown_if_present(c.description)
+          - if can?(:manage, c)
+            %td= link_to 'Edit', edit_plan_category_path(c)
+            %td= link_to 'Delete', c, :confirm => "Delete #{c.name}?", :method => :delete
 
 %br
