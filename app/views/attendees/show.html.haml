@@ -8,7 +8,7 @@
 - if can?(:manage, a.user) && a.user != current_user
   %p
     #{a.given_name.titleize} is an #{Attendee.model_name.human.downcase}
-    on the acount: 
+    on this acount:
     = link_to a.user.email, a.user
 
 %ul
