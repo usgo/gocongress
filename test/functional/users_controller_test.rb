@@ -26,7 +26,7 @@ class UsersControllerTest < ActionController::TestCase
     get :index, :year => Time.now.year
     assert_response :success
   end
-  
+
   test "staff can get index" do
     sign_in @staff
     get :index, :year => Time.now.year
@@ -56,7 +56,7 @@ class UsersControllerTest < ActionController::TestCase
     get :index, :year => Time.now.year
     assert_response 403
   end
-  
+
   test "guest cannot get index" do
     get :index, :year => Time.now.year
     assert_response 403
@@ -73,7 +73,7 @@ class UsersControllerTest < ActionController::TestCase
     get :show, :id => @user.to_param, :year => Time.now.year
     assert_response :success
   end
-  
+
   test "guest cannot show user" do
     get :show, :id => @user.to_param, :year => Time.now.year
     assert_response 403
@@ -102,12 +102,12 @@ class UsersControllerTest < ActionController::TestCase
     get :edit, :id => @user.id, :year => Time.now.year
     assert_response :success
   end
-  
+
   test "guest cannot get edit" do
     get :edit, :id => @user.id, :year => Time.now.year
     assert_response 403
   end
-  
+
   test "user cannot edit other user" do
     sign_in @user
     user_two = Factory.create(:user)
@@ -120,7 +120,7 @@ class UsersControllerTest < ActionController::TestCase
     get :edit, :id => @user.id, :year => Time.now.year
     assert_response 403
   end
-  
+
   test "user cannot edit themselves" do
     sign_in @user
     get :edit, :id => @user.id, :year => Time.now.year
@@ -138,12 +138,12 @@ class UsersControllerTest < ActionController::TestCase
     put :update, :id => @user.id, :user => @user.attributes, :year => Time.now.year
     assert_redirected_to user_path(@user)
   end
-  
+
   test "guest cannot update user" do
     put :update, :id => @user.id, :user => @user.attributes, :year => Time.now.year
     assert_response 403
   end
-  
+
   test "user can update own email address" do
     sign_in @user
     email_before = @user.email
@@ -155,12 +155,12 @@ class UsersControllerTest < ActionController::TestCase
     # put to update
     u = @user.attributes.merge({ 'email' => new_email_addy })
     put :update, :id => @user.id, :user => u, :year => Time.now.year
-    
+
     # assert that email changed
     @user = User.find(@user.id)
     assert_not_equal email_before, @user.email
   end
-  
+
   test "staff can update own email address" do
     sign_in @staff
     email_before = @staff.email
@@ -172,24 +172,24 @@ class UsersControllerTest < ActionController::TestCase
     # put to update
     u = @staff.attributes.merge({ 'email' => new_email_addy })
     put :update, :id => @staff.id, :user => u, :year => Time.now.year
-    
+
     # assert that email changed
     @staff = User.find(@staff.id)
     assert_not_equal email_before, @staff.email
   end
-  
+
   test "staff can get edit email form" do
     sign_in @staff
     get :edit_email, :id => @staff.id, :year => Time.now.year
     assert_response :success
   end
-  
+
   test "user can get edit password form" do
     sign_in @user
     get :edit_password, :id => @user.id, :year => Time.now.year
     assert_response :success
   end
-  
+
   test "user cannot promote themselves" do
     sign_in @user
     assert_equal 'U', @user.role
@@ -255,7 +255,7 @@ class UsersControllerTest < ActionController::TestCase
     enc_pw_before = @user.encrypted_password
     u = { 'password' => 'greeblesnarf' }
     put :update, :id => @user.id, :user => u, :year => Time.now.year
-    
+
     # re-load the user to see if the encrypted_password changed
     @user = User.find @user.id
     assert_not_equal @user.encrypted_password, enc_pw_before
