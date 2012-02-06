@@ -1,4 +1,4 @@
-.left-column  
+.left-column
   %h2= @page_title
   %table.lightweight
     %tbody
@@ -29,35 +29,41 @@
 %br/
 
 %h2 My Attendees
-%p
-  = link_to 'Register another attendee', add_attendee_to_user_path
-  or click on an attendee to edit.
 
-%table.semantic.fullwidth
-  %thead
-    %tr
-      %th Name
-      %th Rank
-      %th Age *
-      %th Confirmed **
-      %th
-  %tbody
-    - for a in @attendees
+- if @user.attendees.empty?
+  %p
+    You don't have any attendees!  Please
+    = link_to 'register', add_attendee_to_user_path
+    at least one person!
+- else
+  %p
+    = link_to 'Register another attendee', add_attendee_to_user_path
+    or click on an attendee to edit.
+  %table.semantic.fullwidth
+    %thead
       %tr
-        %td.attendee_name_column= link_to a.get_full_name, a
-        %td= a.get_rank_name
-        %td= a.age_in_years.floor
-        %td= a.confirmed.present? ? "Yes" : "No"
-        %td
-          - if a.is_primary
-            Primary&nbsp;Attendee
-          - else 
-            =link_to 'Delete', a, :confirm => "Are you sure you want to delete this attendee?", :method => :delete
+        %th Name
+        %th Rank
+        %th Age *
+        %th Confirmed **
+        %th
+    %tbody
+      - for a in @attendees
+        %tr
+          %td.attendee_name_column= link_to a.get_full_name, a
+          %td= a.get_rank_name
+          %td= a.age_in_years.floor
+          %td= a.confirmed.present? ? "Yes" : "No"
+          %td
+            - if a.is_primary
+              Primary&nbsp;Attendee
+            - else
+              =link_to 'Delete', a, :confirm => "Are you sure you want to delete this attendee?", :method => :delete
 
-%p.smalltext
-  * Age on #{CONGRESS_START_DATE[@year].to_formatted_s(:long)}
-  %br
-  ** Confirmed when payment is received, all forms are filled out, association membership verified, etc.
+  %p.smalltext
+    * Age on #{CONGRESS_START_DATE[@year].to_formatted_s(:long)}
+    %br
+    ** Confirmed when payment is received, all forms are filled out, association membership verified, etc.
 
 %br
 

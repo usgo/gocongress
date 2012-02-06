@@ -1,9 +1,12 @@
-%h2 Register an Attendee
-%p 
-  Use this form to add another 
-  %strong attendee 
-  on your 
-  %strong user account.  
-  Bring the whole family!
+- if current_user.primary_attendee.present?
+  %h2 Register an Attendee
+  %p
+    Use this form to add another
+    %strong attendee
+    on your
+    %strong user account.
+    Bring the whole family!
+- else
+  %h2 Registration
 
 = render 'form'

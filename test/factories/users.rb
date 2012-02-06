@@ -6,10 +6,15 @@ FactoryGirl.define do
     role 'U'
     year Time.now.year
 
-    # When creating (saving to db) the associated resources (eg. primary
-    # attendee), I think we want to create the user record first.
-    # So, at this point, we should only build, but not save the association.
-    association :primary_attendee, :factory => :attendee, :method => :build
+    # I think we want to create the user record first, then the
+    # associated resources. So, we should only build (not save)
+    # the association.  Note that we must override the :is_primary
+    # attribute.  Devise does not infer attributes from association
+    # conditions.
+    association :primary_attendee,
+      :factory => :attendee,
+      :method => :build,
+      :is_primary => true
 
     factory :admin do
       role 'A'

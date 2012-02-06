@@ -39,13 +39,7 @@ class User < ActiveRecord::Base
     :uniqueness => { :scope => :year, :case_sensitive => false }, \
     :format => { :with => /^[^',]*$/, :message => "may not contain commas or quotes" }
 
-  # There must always be at least one attendee
-  validates_presence_of :primary_attendee
-
   after_create :send_welcome_email
-
-  # Set association attrs which cannot be set via mass assignment
-  before_create :set_protected_attrs
 
   # Both User and Attendee have an email column, and we don't want to ask the
   # enduser to enter the same email twice when signing up -Jared 2010.12.31
@@ -59,8 +53,12 @@ class User < ActiveRecord::Base
   # attendee has not filled out the registration form yet (for example,
   # immediately after submitting the devise registration form)
   def after_sign_in_path
-    pa = primary_attendee
-    pa.has_plans? ? pa.my_account_path : pa.next_page(:basics)
+    if primary_attendee.present?
+      pa = primary_attendee
+      pa.has_plans? ? pa.my_account_path : pa.next_page(:basics)
+    else
+      Rails.application.routes.url_helpers.add_attendee_to_user_path(self.year, self)
+    end
   end
 
   def amount_paid
@@ -128,14 +126,6 @@ private
   # -Jared 2010.12.27
   def send_welcome_email
     UserMailer.welcome_email(self).deliver
-  end
-
-  def set_protected_attrs
-    # The primary_attendee attribute is_primary must be attr_protected. However,
-    # the devise registration controller will (of course) not know to set
-    # is_primary. So, we must set it manually.  Note that mass assignment of
-    # is_primary will still be attempted, causing a warning. -Jared 2011.1.30
-    primary_attendee.is_primary = true
   end
 
   def apply_user_email_to_primary_attendee

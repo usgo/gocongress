@@ -1,14 +1,4 @@
--# FIXME: For new registrations, we need to set the user's year
--# (and pri. att. year) before validation, but because we are using
--# Devise::RegistrationsController we can't exactly add a before_filter.
--# If we do not specify a year before validation, then validations like the
--# uniqueness check on email will use a null year, thus making the
--# validation pointless.
-= hidden_field_tag "user[year]", @year
-= hidden_field_tag "user[primary_attendee_attributes[year]]", @year
-
 %fieldset
-  %legend Personal Information
   .field
     = f.label :given_name, 'Given (First) Name'
     = f.text_field :given_name
@@ -29,13 +19,12 @@
   .field
     = f.label :birth_date, 'Birth date'
     = f.date_select :birth_date, :start_year => Time.now.year, :end_year => 1900, :include_blank => true
-    %div.smalltext.aligned-with-input
-      Because we need to know if you are a minor.
+    %span.smalltext (to identify minors)
   .field
     = f.label :understand_minor, 'Liability Release for Minors'
     = f.check_box :understand_minor, class: "valign-middle"
     %div#liability-release-instructions.smalltext
-      I understand that if this attendee will not be at least 18 years old on 
+      I understand that if this attendee will not be at least 18 years old on
       = CONGRESS_START_DATE[@year].to_formatted_s(:long)
       then I must submit the #{link_to_liability_release} to the
       = link_to 'registrar.', contact_path, :target => '_blank'

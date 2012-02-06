@@ -1,15 +1,13 @@
-- show_email_field ||= false
-
 %fieldset
-  %legend Contact Information
   .field
     = f.label :phone
     = f.text_field :phone
 
-  /
-    During new registrations, we do not collect an email address for the primary
-    attendee. See apply_user_email_to_primary_attendee() -Jared 12/31/10
-  - if show_email_field
+  -# For the primary attendee, the email has already been entered.
+  -# No need to ask for it twice.
+  - if @attendee.is_primary
+    = f.hidden_field :email
+  - else
     .field
       = f.label :email
       = f.text_field :email

@@ -2,7 +2,7 @@ class AttendeesController < ApplicationController
 
   load_and_authorize_resource
   skip_load_resource :only => [:index, :vip]
-  skip_authorize_resource :only => [:create, :index, :new, :vip]
+  skip_authorize_resource :only => [:create, :index, :vip]
 
   def show
     @plan_categories = PlanCategory.reg_form(@year, @attendee.age_in_years)
@@ -102,6 +102,7 @@ class AttendeesController < ApplicationController
 
     # Which user are we adding this new attendee to?
     target_user_id = params[:id].present? ? params[:id].to_i : current_user.id
+    target_user = User.find(target_user_id)
 
     # Only admins can add attendees to other users
     if !current_user.is_admin? && target_user_id != current_user.id then
@@ -110,13 +111,21 @@ class AttendeesController < ApplicationController
     end
 
     # Instantiate a blank attendee for the target user
-    @attendee.user_id = target_user_id
+    @attendee.user_id = target_user.id
+
+    # Will this be the primary attendee?
+    @attendee.is_primary = (target_user.attendees.count == 0)
+
+    # The default email always comes from the target user
+    @attendee.email = target_user.email
 
     # Copy certain fields from the target user's primary_attendee
-    target_user = User.find(target_user_id)
-    ['phone','address_1','address_2','city','state','zip','country','phone','email'].each { |f|
-      @attendee[f] = target_user.primary_attendee[f]
-    }
+    if target_user.primary_attendee.present?
+      fields_to_copy = ['phone','address_1','address_2','city','state','zip','country','phone']
+      fields_to_copy.each do |f|
+        @attendee[f] = target_user.primary_attendee[f]
+      end
+    end
   end
 
   # POST /attendees
@@ -131,18 +140,23 @@ class AttendeesController < ApplicationController
     # For which user are we creating this attendee?
     params[:attendee][:user_id] ||= current_user.id
     target_user_id = params[:attendee][:user_id].to_i
-
-    # Delete user_id from params hash to avoid attr_accessible mass-assignment warning
-    params[:attendee].delete :user_id
+    target_user = User.find(target_user_id)
 
     # Only admins can create an attendee under a different user
-    if (target_user_id != current_user.id) && !current_user.is_admin? then
+    if (target_user.id != current_user.id) && !current_user.is_admin? then
       render_access_denied
       return
     end
 
-    @attendee.user_id = target_user_id
+    # Delete user_id from params hash to avoid attr_accessible mass-assignment warning
+    params[:attendee].delete :user_id
+
+    # Assign protected attributes
+    @attendee.user_id = target_user.id
+    @attendee.is_primary = (target_user.attendees.count == 0)
     @attendee.year = @year
+
+    # Validate and save
     if @attendee.save
       notice_msg = translate "devise.registrations.signed_up"
       redirect_to @attendee.next_page(:basics), :notice => notice_msg

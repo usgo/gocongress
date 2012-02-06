@@ -1,6 +1,4 @@
 %fieldset
-  %legend Player Information
-
   .field
     = f.label :rank, 'Rank'
     = f.select :rank, Attendee::RANKS, :include_blank => 'Select Rank'
@@ -11,9 +9,9 @@
     = f.label :aga_id, 'AGA ID'
     = f.number_field :aga_id, :size => 8, :min => 1, :step => 1
     %span.smalltext
-      If you do not have an
-      = link_to 'AGA ID', '#', :id => 'open_dialog_aga_id'
-      you may leave this blank
+      No
+      = link_to 'AGA ID?', '#', :id => 'open_dialog_aga_id'
+      &nbsp; Leave it blank.
 
   .field
     = f.label :congresses_attended, 'Congresses Attended'
@@ -26,9 +24,9 @@
     may participate in AGA tournaments.
   %p
     If you are not currently an AGA member, you may register at
-    = link_to "the AGA website", "http://www.usgo.org"
+    = link_to "the AGA website", "http://www.usgo.org", :target => '_blank'
     now, or when you check in at the 2011 US Go Congress, at which time you
-    will be assigned a provisional number.    
+    will be assigned a provisional number.
 
 .dialog#dialog_rank{:title => "What is my AGA Rank?"}
   %p
@@ -37,7 +35,7 @@
   %p
     If you are not sure of your AGA rating or
     rank, but know your rating from another system, please consult
-    = link_to "Sensei's Library", "http://senseis.xmp.net/?RankWorldwideComparison"
+    = link_to "Sensei's Library", "http://senseis.xmp.net/?RankWorldwideComparison", :target => '_blank'
     for a rough comparison.
   %p
     Please contact the Registrar at

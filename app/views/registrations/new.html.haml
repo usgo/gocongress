@@ -36,11 +36,13 @@
         = f.label :password_confirmation, 'Confirm Password'
         = f.password_field :password_confirmation, :size => 10
 
-    - resource.primary_attendee ||= Attendee.new
-    = f.fields_for :primary_attendee do |attendee_fields|
-      = render :partial => "attendees/personal_info", :locals => { :f => attendee_fields }
-      = render :partial => "attendees/player_info", :locals => { :f => attendee_fields }
-      = render :partial => "attendees/contact_info", :locals => { :f => attendee_fields, :show_email_field => false }
+    -# For new registrations, we need to set the user's year before
+    -# validation, but because we are using Devise
+    -# RegistrationsController we can't exactly add a before_filter.
+    -# If we do not specify a year before validation, then
+    -# validations like the uniqueness check on email will use a
+    -# null year, thus making the validation pointless.
+    = hidden_field_tag "user[year]", @year
 
     %fieldset
       .field
