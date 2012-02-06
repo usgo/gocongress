@@ -8,6 +8,8 @@ class PlanCategory < ActiveRecord::Base
   validates :name, :presence => true
   validates :description, :length => {maximum: 200}
 
+  scope :alphabetical, order(:name)
+
   def self.prefixed_column_list
     all_columns = %w[id created_at description name updated_at year]
     return all_columns.map{|c| "plan_categories.#{c}"}.join(",")

@@ -1,27 +1,17 @@
 class PlanCategoriesController < ApplicationController
 
   load_and_authorize_resource
+  before_filter :events_for_select, :only => [:create, :edit, :new, :update]
 
-  # GET /plan_categories
   def index
-    @plan_categories = @plan_categories.yr(@year).order :name
+    @plan_categories = @plan_categories.yr(@year).alphabetical
   end
 
-  # GET /plan_categories/1
   def show
     @plans = @plan_category.plans
     @show_availability = Plan.show_availability?(@plans)
   end
 
-  # GET /plan_categories/new
-  def new
-  end
-
-  # GET /plan_categories/1/edit
-  def edit
-  end
-
-  # POST /plan_categories
   def create
     @plan_category.year = @year
     if @plan_category.save
@@ -31,7 +21,6 @@ class PlanCategoriesController < ApplicationController
     end
   end
 
-  # PUT /plan_categories/1
   def update
     if @plan_category.update_attributes(params[:plan_category])
       redirect_to(@plan_category, :notice => 'Plan category updated.')
@@ -40,10 +29,15 @@ class PlanCategoriesController < ApplicationController
     end
   end
 
-  # DELETE /plan_categories/1
   def destroy
     @plan_category.destroy
     redirect_to plan_categories_url
+  end
+
+  private
+
+  def events_for_select
+    @events_for_select = Event.yr(@year).alphabetical.all.map {|e| [e.name, e.id]}
   end
 
 end

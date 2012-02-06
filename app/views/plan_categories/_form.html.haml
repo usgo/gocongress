@@ -6,6 +6,9 @@
       = f.label trl_attr 'plan_category', 'name'
       = f.text_field :name
     .field
+      = f.label :event_id
+      = f.select :event_id, @events_for_select
+    .field
       = render partial: "shared/md_area", locals: { :obj => :plan_category, :atr => :description }
 
   .actions
