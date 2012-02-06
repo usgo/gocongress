@@ -44,10 +44,9 @@ class PlanCategoriesControllerTest < ActionController::TestCase
     post :create, :plan_category => @pc.attributes, :year => @year
     assert_response 403
   end
-  
+
   test "admin can create" do
     sign_in @admin
-    assert @pc.valid?, "factory is not valid"
     assert_difference('PlanCategory.count', +1) do
       post :create, :plan_category => @pc.attributes, :year => @year
     end

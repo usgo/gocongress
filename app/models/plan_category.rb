@@ -1,7 +1,11 @@
 class PlanCategory < ActiveRecord::Base
   include YearlyModel
+
+  belongs_to :event
   has_many :plans
-  validates_presence_of :name
+
+  validates :event, :presence => true
+  validates :name, :presence => true
   validates :description, :length => {maximum: 200}
 
   def self.prefixed_column_list

@@ -1,15 +1,28 @@
-Factory.define :plan do |f|
-  f.sequence(:name) { |n| "Factory Plan #{n}" }
-  f.price         (rand * 1000).round(2)
-  f.age_min       1 + rand(100)
-  f.age_max       1 + rand(100)
-  f.description   %w['asdf' 'fdsa'].sample
-  f.max_quantity  1
-  f.year          Time.now.year
-  f.association   :plan_category
-end
+FactoryGirl.define do
+  factory :event do
+    sequence(:name) { |n| "Event #{n}" }
+    year            Time.now.year
+  end
 
-Factory.define :all_ages_plan, :parent => :plan do |f|
-  f.age_min 0
-  f.age_max nil
+  factory :plan_category do
+    association     :event
+    sequence(:name) { |n| "Plan Category #{n}" }
+    year            Time.now.year
+  end
+
+  factory :plan do
+    association     :plan_category
+    sequence(:name) { |n| "Plan #{n}" }
+    price           { (rand * 1000).round(2) }
+    age_min         { 1 + rand(100) }
+    age_max         { 1 + rand(100) }
+    description     %w['asdf' 'fdsa'].sample
+    max_quantity    1
+    year            Time.now.year
+  end
+
+  factory :all_ages_plan, :parent => :plan do
+    age_min   0
+    age_max   nil
+  end
 end

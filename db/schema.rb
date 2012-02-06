@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120203000522) do
+ActiveRecord::Schema.define(:version => 20120206003818) do
 
   create_table "activities", :force => true do |t|
     t.string   "name"
@@ -158,6 +158,13 @@ ActiveRecord::Schema.define(:version => 20120203000522) do
   add_index "discounts", ["id", "year"], :name => "index_discounts_on_id_and_year", :unique => true
   add_index "discounts", ["year", "is_automatic"], :name => "index_discounts_on_year_and_is_automatic"
 
+  create_table "events", :force => true do |t|
+    t.integer "year", :null => false
+    t.string  "name", :null => false
+  end
+
+  add_index "events", ["id", "year"], :name => "index_events_on_id_and_year", :unique => true
+
   create_table "jobs", :force => true do |t|
     t.string   "jobname"
     t.datetime "created_at"
@@ -177,6 +184,7 @@ ActiveRecord::Schema.define(:version => 20120203000522) do
     t.datetime "updated_at"
     t.integer  "year",        :null => false
     t.string   "description"
+    t.integer  "event_id",    :null => false
   end
 
   add_index "plan_categories", ["id", "year"], :name => "index_plan_categories_on_id_and_year", :unique => true
