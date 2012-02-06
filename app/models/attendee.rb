@@ -219,13 +219,15 @@ class Attendee < ActiveRecord::Base
     self.birth_date + 18.years > congress_start
   end
 
+  def my_account_path
+    user_path(self.year, self.user)
+  end
+
   # `next_page` returns the path to the next "page", usually in the
   # registration process.
   def next_page(current_page, plan_category = nil)
     raise ArgumentError if (current_page.nil? && plan_category.nil?)
     Attendee.assert_valid_page(current_page) if plan_category.nil?
-
-    my_account_path = user_path(self.year, self.user)
 
     # Coming from the first page (basics) go to the first
     # appropriate plan category, if there is one.

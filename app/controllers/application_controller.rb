@@ -45,16 +45,10 @@ class ApplicationController < ActionController::Base
     @tournaments_for_nav_menu = Tournament.yr(@year).nav_menu
   end
 
-  # Redirect Devise to a specific page on successful sign in  -Jared
+  # Redirect Devise to a specific page after successful sign in
   def after_sign_in_path_for(resource_or_scope)
     if resource_or_scope.is_a?(User)
-      user = resource_or_scope
-      pa = user.primary_attendee
-
-      # Go to the "My Account" page, unless the primary attendee
-      # has not filled out the registration form yet (for example,
-      # immediately after submitting the devise registration form)
-      return pa.next_page(:basics)
+      resource_or_scope.after_sign_in_path
     else
       super
     end

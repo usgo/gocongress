@@ -32,7 +32,7 @@ class User < ActiveRecord::Base
   ROLES = [['Admin','A'], ['Staff','S'], ['User','U']]
   validates_inclusion_of :role, :in => %w[A S U]
 
-  # Email must be unique within each year and may not contain commas or 
+  # Email must be unique within each year and may not contain commas or
   # single-quotes because I do not want to escape them in JS
   validates :email, \
     :presence => true, \
@@ -54,6 +54,14 @@ class User < ActiveRecord::Base
   # Nested Attributes allow us to create forms for attributes of a parent
   # object and its associations in one go with fields_for()
   accepts_nested_attributes_for :primary_attendee
+
+  # After signing in, go to the "My Account" page, unless the primary
+  # attendee has not filled out the registration form yet (for example,
+  # immediately after submitting the devise registration form)
+  def after_sign_in_path
+    pa = primary_attendee
+    pa.has_plans? ? pa.my_account_path : pa.next_page(:basics)
+  end
 
   def amount_paid
     sum = 0
