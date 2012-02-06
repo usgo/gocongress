@@ -2,9 +2,9 @@
 
 %h2= a.get_full_name
 
-/ It is helpful to administrators if there is an easy link
-/ back to the user account page.  Naturally, regular users
-/ do not need such a link.
+-# It is helpful to administrators to have an easy link back to the user
+-# account page.  Regular users do not need such a link, because they
+-# can simply click "My Account"
 - if can?(:manage, a.user) && a.user != current_user
   %p
     #{a.given_name.titleize} is an #{Attendee.model_name.human.downcase}
