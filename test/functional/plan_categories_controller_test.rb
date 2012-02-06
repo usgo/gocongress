@@ -47,8 +47,9 @@ class PlanCategoriesControllerTest < ActionController::TestCase
 
   test "admin can create" do
     sign_in @admin
+    new_category = Factory.build :plan_category
     assert_difference('PlanCategory.count', +1) do
-      post :create, :plan_category => @pc.attributes, :year => @year
+      post :create, :plan_category => new_category.attributes, :year => @year
     end
     assert_redirected_to plan_category_path(assigns(:plan_category))
   end
