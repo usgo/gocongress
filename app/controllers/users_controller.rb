@@ -53,13 +53,13 @@ class UsersController < ApplicationController
 
   def invoice
     @user = User.find(params[:id])
-    authorize! :read, @user
+    authorize! :show, @user
     @invoice_items = @user.get_invoice_items
   end
 
   def ledger
     @user = User.find(params[:id])
-    authorize! :read, @user
+    authorize! :show, @user
 
     @showing_current_user = signed_in?(nil) && (current_user.id == @user.id)
     @page_title = @showing_current_user ?

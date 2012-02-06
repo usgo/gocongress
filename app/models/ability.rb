@@ -36,7 +36,8 @@ class Ability
     end
 
     # User and Staff can manage their own resources, except for
-    # their User record, which they can only show and update
+    # their User record, which they can only show and update.
+    # Users specifically cannot :read, because that implies :index.
     if %w[S U].include?(user.role) then
       can [:show, :update], User, :id => user.id
       can :manage, Attendee, :user_id => user.id
