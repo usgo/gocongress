@@ -10,7 +10,7 @@
   %div{:style => "margin-left: 20px"}
     - activities.each do |e|
       %a{:id=>"activity_#{e.id}"}
-      %h4= e.name + " - " + e.start.to_s(:american)
+      %h4= e.name + " - " + e.leave_time.to_s(:american)
       -if e.attendees.empty?
         %p
           %em No attendees currently signed up.

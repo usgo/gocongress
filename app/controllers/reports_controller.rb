@@ -13,7 +13,7 @@ class ReportsController < ApplicationController
 
     # build csv header line
     # the order here must match attendee_to_array() in reports_helper.rb
-    cols = []    
+    cols = []
     if @attendee_count > 0 then
       cols << 'user_email'
       cols << @attendees.first.attribute_names_for_csv
@@ -23,7 +23,7 @@ class ReportsController < ApplicationController
       Tournament.yr(@year).order(:name).each { |t| cols << "Tournament: " + safe_for_csv(t.name) }
     end
     @csv_header_line = cols.join(',')
-    
+
     respond_to do |format|
       format.html do render :attendees end
       format.csv do render_csv("usgc_attendees_#{Time.now.strftime("%Y-%m-%d")}") end
@@ -61,8 +61,8 @@ class ReportsController < ApplicationController
   end
 
   def activities
-    @activities = Activity.yr(@year).order('start asc')
-    @activities_by_date = @activities.group_by {|activity| activity.start.to_date}
+    @activities = Activity.yr(@year).order :leave_time
+    @activities_by_date = @activities.group_by {|activity| activity.leave_time.to_date}
   end
 
   def outstanding_balances
@@ -75,7 +75,7 @@ class ReportsController < ApplicationController
     @sales = Transaction.yr(@year).where("trantype = ?", "S")
     @comps = Transaction.yr(@year).where("trantype = ?", "C")
     @refunds = Transaction.yr(@year).where("trantype = ?", "R")
-    
+
     @sales_sum = @sales.sum(:amount)
     @comps_sum = @comps.sum(:amount)
     @refunds_sum = @refunds.sum(:amount)
@@ -110,18 +110,18 @@ private
   def render_csv(filename = nil)
     filename ||= params[:action]
     filename += '.csv'
-  
+
     if request.env['HTTP_USER_AGENT'] =~ /msie/i
       headers['Pragma'] = 'public'
-      headers["Content-type"] = "text/plain" 
+      headers["Content-type"] = "text/plain"
       headers['Cache-Control'] = 'no-cache, must-revalidate, post-check=0, pre-check=0'
-      headers['Content-Disposition'] = "attachment; filename=\"#{filename}\"" 
-      headers['Expires'] = "0" 
+      headers['Content-Disposition'] = "attachment; filename=\"#{filename}\""
+      headers['Expires'] = "0"
     else
       headers["Content-Type"] ||= 'text/csv'
-      headers["Content-Disposition"] = "attachment; filename=\"#{filename}\"" 
+      headers["Content-Disposition"] = "attachment; filename=\"#{filename}\""
     end
-  
+
     render :layout => false
   end
 
