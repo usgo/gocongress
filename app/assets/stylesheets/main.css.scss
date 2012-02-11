@@ -10,9 +10,13 @@ blockquote {
   font-style: oblique;
   padding: 0px 10px;
 }
+
+/* fieldset deliberately has the same vertical padding as a paragraph so
+that floated paragraphs (eg. vertical-form-instructions) are aligned at the
+top of the page. */
 fieldset {
   border: none;
-  padding: 0.2em;
+  padding: 0.5em 0.2em;
   margin: 0em;
 }
 legend {
@@ -204,7 +208,7 @@ div.download-pdf a {
 div.inputform { margin: 1em; }
 div.inputform table tbody td { padding-bottom: 0.25em; }
 div.inputform table tbody th { text-align: left; padding-right: 1em; vertical-align: top; }
-.vertical-form-instructions { clear: right; float:right; margin: 0.5em; width: 300px; }
+.vertical-form-instructions { clear: right; float:right; margin-right: 20px; width: 350px; }
 
 /* Railsy forms -Jared 12/15/10 */
 /* Note the fixed width labels */

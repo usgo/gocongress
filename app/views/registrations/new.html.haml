@@ -8,18 +8,18 @@
     interest.
 
 - else
-  %p.vertical-form-instructions
-    %strong Registering more than one person?
-    %br/
-    If you already have an account, you can add more people to it.
-    You do not need to create extra accounts for everyone.
+  .vertical-form-instructions
+    %p
+      %strong Registering more than one person?
+      %br/
+      If you already have an account, you can add more people to it.
+      You do not need to create extra accounts for everyone.
 
-  %p.vertical-form-instructions
-    %strong I already registered!
-    %br/
-    In that case, please
-    = link_to "sign in", new_user_session_path
-    to see your account.
+    %p
+      %strong I already registered!
+      %br/
+      In that case, please
+      = link_to "sign in.", new_user_session_path
 
   = form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f|
 
