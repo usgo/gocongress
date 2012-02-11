@@ -26,7 +26,7 @@ CONGRESS_START_DATE = {
 # but I'm not sure if there have been gaps.
 CONGRESS_ORDINALITY = { 2011 => 27, 2012 => 28 }
 
-# DAY_OFF_DATE - The go congress traditionally has one "day off". 
+# DAY_OFF_DATE - The go congress traditionally has one "day off".
 # Currently, this only affects the display of this particular day
 # on the activity and tournament calendars.
 DAY_OFF_DATE = {
