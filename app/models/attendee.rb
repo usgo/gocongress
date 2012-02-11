@@ -238,7 +238,11 @@ class Attendee < ActiveRecord::Base
     # appropriate plan category, if there is one.
     if current_page.to_s == "events"
       cat = PlanCategory.first_reg_form_category(self.year, self, events_of_interest)
-      return edit_plans_for_attendee_path(self.year, self, cat) if cat.present?
+      if cat.present?
+        return edit_plans_for_attendee_path(self.year, self, cat)
+      else
+        return edit_attendee_path(self.year, self, :wishes)
+      end
     end
 
     # Coming from the final page, we always go to the "My Account" page next
