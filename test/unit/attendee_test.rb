@@ -22,11 +22,11 @@ class AttendeeTest < ActiveSupport::TestCase
   end
 
   test "#minor?" do
-    
+
     # The 2012 congress starts on 8/4, and John Doe will be 18
     john = Factory.build(:attendee, birth_date: Date.new(1994, 7, 5), year: 2012)
     assert !john.minor?
-    
+
     # Jane Doe will be 17
     jane = Factory.build(:attendee, birth_date: Date.new(1994, 10, 1), year: 2012)
     assert jane.minor?
@@ -79,19 +79,19 @@ class AttendeeTest < ActiveSupport::TestCase
     # double check
     assert_equal 0, AttendeePlan.where(:attendee_id => destroyed_attendee_id).count
   end
-  
+
   test "early bird discount" do
     a = Factory(:attendee, {:created_at => Time.new(2011,1,2)})
     d = Factory(:discount, {:is_automatic => true, :min_reg_date => Time.new(2011,1,3)})
     assert attendee_has_discount(a,d), "min_reg_date should be satisfied with future date"
-    
+
     d.update_attribute :min_reg_date, Time.new(2011,1,2)
     assert attendee_has_discount(a,d), "min_reg_date should be satisfied with matching date"
-    
+
     d.update_attribute :min_reg_date, Time.new(2011,1,1)
     assert_equal false, attendee_has_discount(a,d), "min_reg_date should not be satisfied with past date"
   end
-  
+
   def attendee_has_discount(a,d)
     invoice_item_names = a.invoice_items.map{|i| i.description}
     return invoice_item_names.index(d.get_invoice_item_name).present?
