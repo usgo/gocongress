@@ -39,10 +39,10 @@
       - arEvt.each do |e|
         %tr
           %td= link_to e.name, e
-          %td= e.leave.to_formatted_s(:american)
+          %td= e.leave_time.to_formatted_s(:american)
           %td
-            - if e.return.present?
-              = e.return.to_formatted_s(:american)
+            - if e.return_time.present?
+              = e.return_time.to_formatted_s(:american)
           %td.numeric= format_price(e.price)
 
           - if can? :edit, e

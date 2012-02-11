@@ -11,15 +11,15 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120211210538) do
+ActiveRecord::Schema.define(:version => 20120211222131) do
 
   create_table "activities", :force => true do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.datetime "leave"
+    t.datetime "leave_time"
     t.string   "notes",                :limit => 250
-    t.time     "return"
+    t.time     "return_time"
     t.integer  "year",                                                               :null => false
     t.string   "location",             :limit => 50
     t.integer  "activity_category_id",                                               :null => false
@@ -28,7 +28,7 @@ ActiveRecord::Schema.define(:version => 20120211210538) do
 
   add_index "activities", ["activity_category_id"], :name => "index_activities_on_activity_category_id"
   add_index "activities", ["id", "year"], :name => "uniq_activities_on_id_and_year", :unique => true
-  add_index "activities", ["year", "leave"], :name => "index_activities_on_year_and_start"
+  add_index "activities", ["year", "leave_time"], :name => "index_activities_on_year_and_start"
 
   create_table "activity_categories", :force => true do |t|
     t.string  "name", :limit => 25, :null => false

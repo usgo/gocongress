@@ -16,8 +16,8 @@
       %td= @activity.notes
     %tr
       %th Date
-      %td= @activity.leave.to_date
-    - %w[leave return].each do |a|
+      %td= @activity.leave_time.to_date
+    - %w[leave_time return_time].each do |a|
       %tr
         %th= trl_attr 'activity', a
         %td

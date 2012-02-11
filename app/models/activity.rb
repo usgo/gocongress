@@ -1,8 +1,8 @@
 class Activity < ActiveRecord::Base
   include YearlyModel
 
-  attr_accessible :activity_category_id, :leave, :name, :notes,
-    :price, :return, :location
+  attr_accessible :activity_category_id, :leave_time, :name, :notes,
+    :price, :return_time, :location
 
   # FIXME: in the controller, somehow year needs to get set
   # before authorize! runs.  until then, year needs to be accessible.
@@ -13,7 +13,7 @@ class Activity < ActiveRecord::Base
   has_many :attendees, :through => :attendee_activities
 
   validates :activity_category, :presence => true
-  validates_presence_of :leave, :name, :return
+  validates_presence_of :leave_time, :name, :return_time
   validates_length_of :notes, :maximum => 250
 
   validates :location, :length => {:maximum => 50}
