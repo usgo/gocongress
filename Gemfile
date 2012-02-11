@@ -32,6 +32,12 @@ gem 'thin'
 # instead of the full country names.
 gem 'country-select', :git => 'git://github.com/jaredbeck/country-select.git'
 
+# rspec-rails wants to be in the :development group
+# to "expose generators and rake tasks"
+group :test, :development do
+  gem 'rspec-rails'
+end
+
 # Testing
 group :test do
 	gem 'factory_girl'
