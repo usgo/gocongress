@@ -231,18 +231,14 @@ class Attendee < ActiveRecord::Base
 
     # Coming from the first page (basics) go to the events page
     if current_page.to_s == "basics"
-      return edit_attendee_path(self.year, self, :events)
+      return page_path :events
     end
 
     # Coming from the second page (events) go to the first
     # appropriate plan category, if there is one.
     if current_page.to_s == "events"
       cat = PlanCategory.first_reg_form_category(self.year, self, events_of_interest)
-      if cat.present?
-        return edit_plans_for_attendee_path(self.year, self, cat)
-      else
-        return edit_attendee_path(self.year, self, :wishes)
-      end
+      return cat.present? ? plan_category_path(cat) : page_path(:wishes)
     end
 
     # Coming from the final page, we always go to the "My Account" page next
@@ -254,15 +250,19 @@ class Attendee < ActiveRecord::Base
     # If this is the last category, go to :wishes.
     if plan_category.present?
       cat = plan_category.next_reg_form_category(self, events_of_interest)
-      if cat.present?
-        return edit_plans_for_attendee_path(self.year, self, cat)
-      else
-        return edit_attendee_path(self.year, self, :wishes)
-      end
+      return cat.present? ? plan_category_path(cat) : page_path(:wishes)
     end
 
     # By default, return to the "My Account" page
     return my_account_path
+  end
+
+  def page_path(page)
+    edit_attendee_path(self.year, self, page.to_sym)
+  end
+
+  def plan_category_path(plan_category)
+    edit_plans_for_attendee_path(self.year, self, plan_category)
   end
 
   def get_full_name(respect_anonymity = false)
