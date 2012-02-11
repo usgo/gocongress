@@ -6,12 +6,12 @@
   - if @plans.count == 0
     There are no #{mnh.pluralize} in this category, so feel free to skip it!
   - else
-    Select 
+    Select
     = (@plans.count == 1) ? "the " + mnh : mnh.pluralize
     by clicking on the check box (
     %input{ :type => 'checkbox', :disabled => 'disabled' }
     ) or entering a quantity.
-    If you have any questions, please contact the 
+    If you have any questions, please contact the
     = link_to 'registrar.', contact_path
 
 - form_action = update_plans_for_attendee_path(@attendee, @plan_category)
@@ -54,4 +54,4 @@
 
   .actions
     %br
-    = f.submit "Save Changes"
+    = f.submit "Continue"
