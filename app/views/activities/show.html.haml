@@ -4,7 +4,7 @@
   %tbody
     %tr
       %th= trl_attr 'activity', 'activity_category_id'
-      %td= @activity.activity_category.name
+      %td= link_to @activity.activity_category.name, @activity.activity_category
     %tr
       %th= trl_attr 'activity', 'price'
       %td= format_price @activity.price
@@ -16,20 +16,15 @@
       %td= @activity.notes
     %tr
       %th Date
-      %td= @activity.start.to_date
-
-%br
-%h3 Schedule
-%table.lightweight
-  %tbody
-    %tr
-    - %w[depart_time start return_depart_time return_arrive_time].each do |a|
+      %td= @activity.leave.to_date
+    - %w[leave return].each do |a|
       %tr
         %th= trl_attr 'activity', a
         %td
           - if @activity[a].present?
-            = @activity[a].to_time.to_formatted_s(:american)
+            = @activity[a].to_formatted_s(:american)
 
 %br
 
-= link_to 'Edit', edit_activity_path(@activity)
+- if can? :edit, @activity
+  = link_to 'Edit', edit_activity_path(@activity)

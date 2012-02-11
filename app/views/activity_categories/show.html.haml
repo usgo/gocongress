@@ -22,7 +22,7 @@
 
 %p.notice All #{emhp.downcase}, prices, and times subject to change.
 
-%table.semantic.fullwidth.zebra
+%table.semantic.fullwidth
   %tbody
     - @activities_by_date.each do |d,arEvt|
       %tr.greater-header
@@ -30,32 +30,19 @@
           = d.to_formatted_s(:long_with_day)
           = " - Day Off!" if d === DAY_OFF_DATE[@year]
       %tr.lesser-header
-        %th
-        %th.align-center{:colspan => 2} Leaving
-        %th.align-center{:colspan => 2} Returning
-        %th{:colspan => current_user_is_admin? ? 4 : 2}
-      %tr.lesser-header
         %th= emh
-        %th Depart
-        %th Arrive / Start
-        %th Depart
-        %th Arrive
+        %th Leave
+        %th Return
         %th.numeric Price
         - if can?(:edit, Activity) && can?(:delete, Activity)
           %th{:colspan => "2"}
       - arEvt.each do |e|
         %tr
           %td= link_to e.name, e
+          %td= e.leave.to_formatted_s(:american)
           %td
-            - if e.depart_time.present?
-              = e.depart_time.to_formatted_s(:american)
-          %td= e.start.to_time.to_formatted_s(:american)
-          %td
-            - if e.return_depart_time.present?
-              = e.return_depart_time.to_formatted_s(:american)
-          %td
-            - if e.return_arrive_time.present?
-              = e.return_arrive_time.to_formatted_s(:american)
+            - if e.return.present?
+              = e.return.to_formatted_s(:american)
           %td.numeric= format_price(e.price)
 
           - if can? :edit, e

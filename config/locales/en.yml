@@ -31,13 +31,11 @@ en:
       activity:
         activity_category_id: "Category"
         name: "Activity"
-        depart_time: "Departure Time"
         price: "Price"
         location: "Location"
         notes: "Notes"
-        return_depart_time: "Return Departure Time"
-        return_arrive_time: "Return Arrival Time"
-        start: "Start"
+        leave: "Leave"
+        return: "Return"
       job:
         jobname: "Position"
       plan:

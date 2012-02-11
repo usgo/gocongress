@@ -17,8 +17,8 @@ class ActivityCategoriesController < ApplicationController
   end
 
   def show
-    activities = @activity_category.activities.order "start asc"
-    @activities_by_date = activities.group_by {|activity| activity.start.to_date}
+    activities = @activity_category.activities.order :leave
+    @activities_by_date = activities.group_by {|activity| activity.leave.to_date}
   end
 
   def update
