@@ -155,9 +155,6 @@ class AttendeesControllerTest < ActionController::TestCase
 
     target_attendee = Attendee.find(target_attendee.id)
     assert_not_equal state_before, target_attendee.state
-
-    assert_redirected_to user_path(@user)
-    assert_equal 'Attendee updated', flash[:notice]
   end
 
   %w[basics wishes].each do |page|

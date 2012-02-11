@@ -15,6 +15,9 @@ class PlanCategory < ActiveRecord::Base
 
   scope :alphabetical, order(:name)
 
+  # Class methods
+  # ----------------
+
   def self.prefixed_column_list
     all_columns = %w[id created_at description name updated_at year]
     return all_columns.map{|c| "plan_categories.#{c}"}.join(",")
@@ -32,23 +35,26 @@ class PlanCategory < ActiveRecord::Base
       .having("count(*) > 0")
   end
 
-  def self.reg_form(year, age)
-    yr(year)
+  def self.reg_form(year, age, events = nil)
+    r = yr(year)
       .nonempty
       .where("(age_min is null or age_min <= ?) and (age_max is null or age_max >= ?)", age, age)
       .order(:name)
+    r = r.where(event_id: events) unless events.blank?
+    return r
   end
 
   # `first_reg_form_category` returns nil if there are no appropriate categories
-  def self.first_reg_form_category(year, attendee)
-    reg_form(year, attendee.age_in_years).first
+  def self.first_reg_form_category(year, attendee, events)
+    reg_form(year, attendee.age_in_years, events).first
   end
 
-  # Instance methods
+  # Instance methods, public
+  # ------------------------
 
-  def next_reg_form_category(attendee)
-    PlanCategory.reg_form(self.year, attendee.age_in_years) \
-      .where("plan_categories.name > ?", self.name) \
+  def next_reg_form_category(attendee, events)
+    PlanCategory.reg_form(self.year, attendee.age_in_years, events)
+      .where("plan_categories.name > ?", self.name)
       .first
   end
 end

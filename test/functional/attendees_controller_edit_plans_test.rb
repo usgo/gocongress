@@ -67,17 +67,18 @@ class AttendeesControllerEditPlansTest < ActionController::TestCase
     assert_response :forbidden
   end
 
-  test "after basics page redirect to plan category in correct year" do
+  test "after events page redirect to plan category in correct year" do
     u = Factory :user, year: 2012
     a = u.attendees.sample
-    c1 = Factory :plan_category, {name: "aaaaaa", year: 2011}
+    e = Factory :event
+    c1 = Factory :plan_category, {name: "aaaaaa", year: 2011, event: e}
     p1 = Factory :all_ages_plan, plan_category_id: c1.id
-    c2 = Factory :plan_category, {name: "bbbbbb", year: 2012}
+    c2 = Factory :plan_category, {name: "bbbbbb", year: 2012, event: e}
     p2 = Factory :all_ages_plan, plan_category_id: c2.id
 
     sign_in(u)
-    put :update, :page => 'basics', :id => a.id, :year => 2012
-    assert_response :redirect
+    put :update, :page => 'events', :id => a.id, :year => 2012, :event_ids => [e.id]
+    # assert_response :redirect
 
     # expect to be redirected to a 2012 plan category
     plan_category_id = @response.location.split('/').last.to_i

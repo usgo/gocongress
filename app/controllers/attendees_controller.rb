@@ -34,7 +34,7 @@ class AttendeesController < ApplicationController
 
     # if valid, go to next category or return to account
     if vldn_errs.length == 0 && @attendee.save
-      redirect_to @attendee.next_page(nil, @plan_category), :notice => "Changes saved"
+      redirect_to @attendee.next_page(nil, @plan_category, session[:events_of_interest])
     else
       @attendee.errors[:base].concat vldn_errs
       render :edit_plans
@@ -158,8 +158,7 @@ class AttendeesController < ApplicationController
 
     # Validate and save
     if @attendee.save
-      notice_msg = translate "devise.registrations.signed_up"
-      redirect_to @attendee.next_page(:basics), :notice => notice_msg
+      redirect_to @attendee.next_page(:basics, nil, [])
     else
       render :action => "new"
     end
@@ -218,6 +217,15 @@ class AttendeesController < ApplicationController
       end
       params[:attendee].delete :tournament_id_list
 
+    elsif (@page == 'events')
+      params[:event_ids] ||= []
+      if params[:event_ids].empty?
+        extra_errors << "Please pick at least one event"
+      else
+        session[:events_of_interest] = params[:event_ids]
+        raise ArgumentError unless session[:events_of_interest].respond_to? :each
+      end
+
     elsif (@page == 'wishes')
 
       # claimed discounts
@@ -271,12 +279,12 @@ class AttendeesController < ApplicationController
     @attendee.attributes = params[:attendee]
 
     # validate
-    if @attendee.valid? and extra_errors.length == 0
+    if @attendee.valid? && extra_errors.empty?
       @attendee.save(:validate => false)
-      redirect_to @attendee.next_page(@page), :notice => "Attendee updated"
+      redirect_to @attendee.next_page(@page, nil, session[:events_of_interest]), :notice => update_success_notice(@page)
     else
       init_multipage(@page)
-      extra_errors.each { |e| @attendee.errors[:base] << e }
+      @attendee.errors[:base].concat extra_errors
       render get_view_name_from_page(@page)
     end
   end
@@ -356,10 +364,8 @@ protected
       view_name = page.to_s
     elsif page == "basics"
       view_name = "edit"
-    elsif page == "tournaments"
-      view_name = "edit_tournaments"
-    elsif page == "activities"
-      view_name = "edit_activities"
+    elsif %w[events tournaments activities].include? page
+      view_name = "edit_#{page}"
     else
       raise "No view for page: #{page}"
     end
@@ -374,6 +380,13 @@ protected
       allow = is_my_attendee || current_user.is_admin?
     end
     render_access_denied unless allow
+  end
+
+private
+
+  # We do not want flash notices during initial registration
+  def update_success_notice(page)
+    %w[activities tournaments].include?(page) ? "Attendee updated" : nil
   end
 
 end
