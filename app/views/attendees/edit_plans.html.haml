@@ -1,6 +1,7 @@
 - mnh = Plan.model_name.human.downcase
 
-%h2= @plan_category.name.titleize
+%h2= @attendee.full_name
+%h3= @plan_category.name.titleize
 
 %p
   - if @plans.count == 0

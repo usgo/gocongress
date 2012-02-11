@@ -1,4 +1,5 @@
-%h2= @attendee.get_full_name
+%h2= @attendee.full_name
+%h3 Special Concerns or Requests
 
 = form_for( @attendee ) do |f|
 
@@ -25,8 +26,7 @@
           - cbx_checked = @attendee_discount_ids.index(d.id).present?
           = check_box_tag "attendee[discount_ids][]", d.id, cbx_checked, :id => cbx_id
 
-  %fieldset.wordy-questions
-    %legend Special Concerns or Requests
+  %fieldset
     .field
       = f.label :roomate_request
       = f.text_area :roomate_request, :rows => 2
@@ -34,7 +34,7 @@
       = f.label :special_request
       = f.text_area :special_request, :rows => 2
 
-  %fieldset.wordy-questions
+  %fieldset
     .field
       = label '', ''
       = f.submit "Continue"

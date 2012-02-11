@@ -265,8 +265,13 @@ class Attendee < ActiveRecord::Base
     edit_plans_for_attendee_path(self.year, self, plan_category)
   end
 
-  def get_full_name(respect_anonymity = false)
+  def full_name(respect_anonymity = false)
     (anonymous? && respect_anonymity) ? 'Anonymous' : given_name.titleize + " " + family_name.titleize
+  end
+
+  # `get_full_name` is deprecated.  Please use full_name() instead.
+  def get_full_name(respect_anonymity = false)
+    full_name(respect_anonymity)
   end
 
   def full_name_possessive

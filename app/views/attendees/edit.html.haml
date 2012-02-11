@@ -1,2 +1,2 @@
-%h2 Edit Attendee
+%h2= @attendee.given_name.present? ? @attendee.full_name : "Edit Attendee"
 = render 'form'
