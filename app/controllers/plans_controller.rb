@@ -5,16 +5,16 @@ class PlansController < ApplicationController
   end
 
   def new
-    @plan_categories = get_plan_categories_for_select
+    @plan_categories = categories_for_select
   end
 
   def edit
-    @plan_categories = get_plan_categories_for_select
+    @plan_categories = categories_for_select
   end
 
   def create
     @plan.year = @year
-    @plan_categories = get_plan_categories_for_select
+    @plan_categories = categories_for_select
     if @plan.save
       redirect_to plan_category_path(@plan.plan_category), :notice => 'Plan created.'
     else
@@ -23,7 +23,7 @@ class PlansController < ApplicationController
   end
 
   def update
-    @plan_categories = get_plan_categories_for_select
+    @plan_categories = categories_for_select
     if @plan.update_attributes(params[:plan])
       redirect_to plan_category_path(@plan.plan_category), :notice => 'Plan updated.'
     else
@@ -38,8 +38,8 @@ class PlansController < ApplicationController
 
 private
 
-  def get_plan_categories_for_select
-    PlanCategory.yr(@year).all.map {|c| [c.name, c.id]}
+  def categories_for_select
+    PlanCategory.yr(@year).order(:name).all.map {|c| [c.name, c.id]}
   end
 
 end
