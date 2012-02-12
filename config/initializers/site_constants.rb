@@ -41,3 +41,9 @@ PRIORITY_COUNTRIES = {
   "Japan" => "JP",
   "Korea, Republic of" => "KR"
 }
+
+# Reply-to for system emails, like the registration welcome email
+MAILER_REPLY_TO = {
+  2011 => "registrar@gocongress.org",
+  2012 => "arlene@usgocongress12.org"
+}
