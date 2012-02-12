@@ -18,20 +18,17 @@ class PlanCategory < ActiveRecord::Base
   # Class methods
   # ----------------
 
-  def self.prefixed_column_list
-    all_columns = %w[id created_at description name updated_at year]
-    return all_columns.map{|c| "plan_categories.#{c}"}.join(",")
+  def self.columns_with_table_prefix
+    column_names.map{|c| "plan_categories.#{c}"}.join(",")
   end
 
   def self.nonempty
     # postgres 8.3 seems to require that the select clause match the group
-    # clause.  this is unfortunate, because now i have to enumerate the
-    # columns and if they ever change i have to update prefixed_column_list().
-    # in local development on postgres 9.1 i can select * and group by id
-    # with no problem.
-    return joins(:plans) \
-      .select(prefixed_column_list)
-      .group(prefixed_column_list) \
+    # clause.  this is unfortunate, because in local development on
+    # postgres 9.1 i can select * and group by id with no problem.
+    return joins(:plans)
+      .select(columns_with_table_prefix)
+      .group(columns_with_table_prefix)
       .having("count(*) > 0")
   end
 
