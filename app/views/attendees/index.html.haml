@@ -1,39 +1,43 @@
 %h2 Who is Coming?
 
-%p
-  There are #{ @attendees.size } people registered,
-  including #{@kyu_count} kyu-level players, #{@dan_count} dan-level players,
-  #{pluralize(@pro_count, 'pro')}, and #{pluralize(@np_count, 'person')} with no rank.
+- if (ENV['RAILS_ENV'] == 'production' && @year == 2012)
+  %p Registration for the 2012 Go Congress will open soon.
 
-  - if (@youngest_attendee.present? and @oldest_attendee.present?)
-    The youngest attendee is
-    = distance_of_time_in_words @youngest_attendee.birth_date.to_date, Time.now.to_date
-    old and the oldest is
-    = distance_of_time_in_words @oldest_attendee.birth_date.to_date, Time.now.to_date
-    old.
-
-  - if @avg_age.present?
-    The average age is #{@avg_age}.
-  
-  There are #{@male_count} men and #{@female_count} women.
-
-- unless anyone_signed_in?
+- else
   %p
-    Are you coming?  Please #{link_to 'register', '/users/sign_up'}!
+    There are #{ @attendees.size } people registered,
+    including #{@kyu_count} kyu-level players, #{@dan_count} dan-level players,
+    #{pluralize(@pro_count, 'pro')}, and #{pluralize(@np_count, 'person')} with no rank.
 
-%table.semantic.fullwidth.zebra
-  %thead
-    %tr
-      %th
-      - %w[given_name family_name rank country created_at].each do |c|
-        - drn = (c == params[:sort]) ? @opposite_direction : :asc
-        %th= link_to trl_attr(:attendee, c), :sort => c, :direction => drn
-  %tbody
-    - @attendees.each_with_index do |a,i|
-      %tr{:class => if a.anonymous then "understated" end }
-        %td= i + 1
-        %td= if a.anonymous then "Anonymous" else a.given_name end
-        %td= if a.anonymous then "Anonymous" else a.family_name end
-        %td= a.get_rank_name
-        %td= a.country
-        %td= a.created_at.to_date.to_formatted_s(:rfc822)
+    - if (@youngest_attendee.present? and @oldest_attendee.present?)
+      The youngest attendee is
+      = distance_of_time_in_words @youngest_attendee.birth_date.to_date, Time.now.to_date
+      old and the oldest is
+      = distance_of_time_in_words @oldest_attendee.birth_date.to_date, Time.now.to_date
+      old.
+
+    - if @avg_age.present?
+      The average age is #{@avg_age}.
+
+    There are #{@male_count} men and #{@female_count} women.
+
+  - unless anyone_signed_in?
+    %p
+      Are you coming?  Please #{link_to 'register', '/users/sign_up'}!
+
+  %table.semantic.fullwidth.zebra
+    %thead
+      %tr
+        %th
+        - %w[given_name family_name rank country created_at].each do |c|
+          - drn = (c == params[:sort]) ? @opposite_direction : :asc
+          %th= link_to trl_attr(:attendee, c), :sort => c, :direction => drn
+    %tbody
+      - @attendees.each_with_index do |a,i|
+        %tr{:class => if a.anonymous then "understated" end }
+          %td= i + 1
+          %td= if a.anonymous then "Anonymous" else a.given_name end
+          %td= if a.anonymous then "Anonymous" else a.family_name end
+          %td= a.get_rank_name
+          %td= a.country
+          %td= a.created_at.to_date.to_formatted_s(:rfc822)
