@@ -20,20 +20,32 @@ class AttendeesController < ApplicationController
     # Replace attendee_plan records in this category with plans specified
     # on the form, unless the maximum quantity is exceeded.
     @attendee.clear_plan_category!(@plan_category.id)
+
+    nascent_attendee_plans = []
     @plans.each do |p|
       qty = params[:attendee]["plan_#{p.id}_qty"].to_i # if nil, to_i returns 0
       if qty > 0 then
         ap = AttendeePlan.new(:attendee_id => @attendee.id, :plan_id => p.id, :quantity => qty)
         if ap.valid?
-          @attendee.attendee_plans << ap
+          nascent_attendee_plans << ap
         else
           vldn_errs.concat ap.errors.map {|k,v| k.to_s + " " + v.to_s}
         end
       end
     end
 
+    unless nascent_attendee_plans.empty?
+      @attendee.attendee_plans << nascent_attendee_plans
+    end
+
+    # Mandatory plan categories require at least one plan
+    if @plan_category.mandatory? && nascent_attendee_plans.empty?
+      vldn_errs << "This is a mandatory category, so please select at
+        least one #{Plan.model_name.human.downcase}."
+    end
+
     # if valid, go to next category or return to account
-    if vldn_errs.length == 0 && @attendee.save
+    if vldn_errs.empty? && @attendee.save
       redirect_to @attendee.next_page(nil, @plan_category, session[:events_of_interest])
     else
       @attendee.errors[:base].concat vldn_errs

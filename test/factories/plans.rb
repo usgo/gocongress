@@ -6,6 +6,7 @@ FactoryGirl.define do
 
   factory :plan_category do
     association     :event
+    mandatory       false
     sequence(:name) { |n| "Plan Category #{n}" }
     year            Time.now.year
   end
