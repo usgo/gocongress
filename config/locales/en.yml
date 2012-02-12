@@ -48,6 +48,7 @@ en:
         price: "Price"
       plan_category:
         name: "Category"
+        mandatory: "Mandatory"
       tournament:
         directors: "Director(s)"
         eligible: "Eligibility"

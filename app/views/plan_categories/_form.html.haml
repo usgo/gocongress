@@ -1,7 +1,7 @@
 = form_for @plan_category do |f|
   = render :partial => "shared/error_messages", :locals => { :resource => @plan_category }
 
-  %fieldset.wider-labels
+  %fieldset
     .field
       = f.label trl_attr 'plan_category', 'name'
       = f.text_field :name
@@ -10,6 +10,15 @@
       = f.select :event_id, @events_for_select
     .field
       = render partial: "shared/md_area", locals: { :obj => :plan_category, :atr => :description }
+    .field
+      = f.label trl_attr 'plan_category', 'mandatory'
+      = f.check_box :mandatory
+      %span.smalltext
+        = Attendee.model_name.human.pluralize
+        must select at least one
+        = Plan.model_name.human + '.'
 
-  .actions
-    = f.submit 'Save'
+  %fieldset
+    .field
+      = label '', ''
+      = f.submit 'Save'
