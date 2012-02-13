@@ -38,6 +38,7 @@ validates :inventory,
 # ------
 
 scope :appropriate_for_age, lambda {|age| where("(age_min is null or age_min <= ?) and (age_max is null or age_max >= ?)", age, age)}
+scope :alphabetical, order(:name)
 
 # Public Instance Methods
 # -----------------------

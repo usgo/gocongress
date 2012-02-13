@@ -360,7 +360,7 @@ protected
   def init_plans
     @plan_category = PlanCategory.reg_form(@year, @attendee.age_in_years).find(params[:plan_category_id])
     age = @attendee.age_in_years
-    @plans = @plan_category.plans.appropriate_for_age(age).order("price desc")
+    @plans = @plan_category.plans.appropriate_for_age(age).alphabetical
     @show_availability = Plan.show_availability?(@plans)
   end
 

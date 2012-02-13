@@ -11,7 +11,7 @@ class PlanCategoriesController < ApplicationController
   end
 
   def show
-    @plans = @plan_category.plans
+    @plans = @plan_category.plans.alphabetical
     @show_availability = Plan.show_availability?(@plans)
   end
 
