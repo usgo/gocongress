@@ -43,6 +43,7 @@ class Attendee < ActiveRecord::Base
   # tshirt sizes
   TSHIRT_CHOICES = []
   TSHIRT_CHOICES << ["None",            "NO"]
+  TSHIRT_CHOICES << ["Youth Small",     "YS"]
   TSHIRT_CHOICES << ["Youth Medium",    "YM"]
   TSHIRT_CHOICES << ["Youth Large",     "YL"]
   TSHIRT_CHOICES << ["Adult Small",     "AS"]
