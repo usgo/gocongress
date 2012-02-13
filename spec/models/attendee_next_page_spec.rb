@@ -1,7 +1,8 @@
 require "spec_helper"
-include Rails.application.routes.url_helpers
 
 describe "Attendee#next_page" do
+  include Rails.application.routes.url_helpers
+
   subject { Factory :attendee }
   let(:event) { Factory :event }
   let(:events_of_interest) { [event.id] }
