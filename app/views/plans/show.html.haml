@@ -7,7 +7,7 @@
     %td= link_to @plan.plan_category.name, @plan.plan_category
   %tr
     %th= trl_attr 'plan', 'price'
-    %td= format_price @plan.price
+    %td= @plan.price_for_display
   %tr
     %th= trl_attr 'plan', 'inventory'
     %td= @plan.describe_inventory_available

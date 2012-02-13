@@ -5,11 +5,6 @@ module ApplicationHelper
     signed_in?(nil)
   end
 
-  def format_price(price)
-    return price unless floatable?(price)
-    price.to_f == 0.0 ? "Free" : number_to_currency(price, :precision => 2)
-  end
-
 	def trl_attr ( modelname, attributename )
 		# see config/locales/en.yaml
 		# TODO: replace this with Model.human_attribute_name("attr")
@@ -40,10 +35,6 @@ module ApplicationHelper
 
   def markdown_if_present(s)
     s.blank? ? '' : Markdown.new(s).to_html.html_safe
-  end
-
-  def floatable?(object)
-    true if Float(object) rescue false
   end
 
 end

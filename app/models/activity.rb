@@ -1,5 +1,6 @@
 class Activity < ActiveRecord::Base
   include YearlyModel
+  include Purchasable
 
   attr_accessible :activity_category_id, :leave_time, :name, :notes,
     :price, :return_time, :location
@@ -17,5 +18,4 @@ class Activity < ActiveRecord::Base
   validates_length_of :notes, :maximum => 250
 
   validates :location, :length => {:maximum => 50}
-  validates :price, :numericality => { greater_than_or_equal_to: 0, allow_nil: true }
 end

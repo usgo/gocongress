@@ -1,5 +1,6 @@
 class Plan < ActiveRecord::Base
   include YearlyModel
+  include Purchasable
 
 attr_accessible :name, :price, :age_min, :age_max, :description, \
   :inventory, :max_quantity, :plan_category_id

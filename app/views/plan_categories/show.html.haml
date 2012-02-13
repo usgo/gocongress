@@ -21,7 +21,7 @@
           %td= Markdown.new( p.description ).to_html.html_safe
           - if @show_availability
             %td= p.describe_inventory_available
-          %td.numeric= format_price p.price
+          %td.numeric= p.price_for_display
 
 - if @show_availability
   - pcnpd = @plan_category.name.pluralize.downcase

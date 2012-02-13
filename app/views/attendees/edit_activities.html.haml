@@ -36,7 +36,7 @@
           %td
             - if e.return_time.present?
               = e.return_time.to_formatted_s(:american)
-          %td.numeric= format_price(e.price)
+          %td.numeric= e.price_for_display
 
   %br
   = f.submit "Submit"

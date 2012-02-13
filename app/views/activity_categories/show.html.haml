@@ -43,7 +43,7 @@
           %td
             - if e.return_time.present?
               = e.return_time.to_formatted_s(:american)
-          %td.numeric= format_price(e.price)
+          %td.numeric= e.price_for_display
 
           - if can? :edit, e
             %td= link_to 'Edit', edit_activity_path(e)

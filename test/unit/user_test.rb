@@ -64,7 +64,7 @@ class UserTest < ActiveSupport::TestCase
     dc = Factory(:discount, :name => "Child", :amount => 150, :age_min => 0, :age_max => 12, :is_automatic => true, :year => y)
     dy = Factory(:discount, :name => "Youth", :amount => 100, :age_min => 13, :age_max => 18, :is_automatic => true, :year => y)
     congress_start = CONGRESS_START_DATE[y]
-    
+
     # If 12 years old on the first day of congress, then attendee
     # should get child discount and NOT youth discount
     a = Factory(:attendee, :birth_date => congress_start - 12.years, :user_id => @user.id, :understand_minor => true, :year => y)
@@ -107,7 +107,7 @@ class UserTest < ActiveSupport::TestCase
     ap.quantity += 1
     assert_in_delta expected, @user.get_invoice_total, 0.001, "increase qty should increase price"
   end
-  
+
   test "attendee cannot provide qty greater than plan max_qty" do
     a = Factory :attendee, :user_id => @user.id
     p = Factory :plan, :max_quantity => 1
@@ -122,15 +122,8 @@ class UserTest < ActiveSupport::TestCase
     end
   end
 
-  test "activity with nil price does not increase the invoice total" do
-    e = Factory :activity, price: nil
-    assert_no_difference('@user.get_invoice_total') do
-      @user.attendees.first.activities << e
-    end
-  end
-
 private
-  
+
   def user_has_discount? (user, discount)
     user.get_invoice_items.map(&:description).include?(discount.get_invoice_item_name)
   end
