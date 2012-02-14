@@ -43,4 +43,15 @@ class AttendeePlan < ActiveRecord::Base
     end
   end
 
+  # Public instance methods
+  # -----------------------
+
+  def show_on_invoice?
+    ! plan.needs_staff_approval?
+  end
+
+  def to_invoice_item
+    InvoiceItem.new('Plan: ' + plan.name, attendee.full_name, plan.price, quantity)
+  end
+
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120213062444) do
+ActiveRecord::Schema.define(:version => 20120214030844) do
 
   create_table "activities", :force => true do |t|
     t.string   "name"
@@ -189,17 +189,18 @@ ActiveRecord::Schema.define(:version => 20120213062444) do
   add_index "plan_categories", ["id", "year"], :name => "index_plan_categories_on_id_and_year", :unique => true
 
   create_table "plans", :force => true do |t|
-    t.string   "name",             :limit => 50,                                               :null => false
-    t.decimal  "price",                          :precision => 10, :scale => 2,                :null => false
-    t.integer  "age_min",                                                                      :null => false
+    t.string   "name",                 :limit => 50,                                                   :null => false
+    t.decimal  "price",                              :precision => 10, :scale => 2,                    :null => false
+    t.integer  "age_min",                                                                              :null => false
     t.integer  "age_max"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "description"
-    t.integer  "plan_category_id",                                                             :null => false
-    t.integer  "max_quantity",                                                  :default => 1, :null => false
-    t.integer  "year",                                                                         :null => false
+    t.integer  "plan_category_id",                                                                     :null => false
+    t.integer  "max_quantity",                                                      :default => 1,     :null => false
+    t.integer  "year",                                                                                 :null => false
     t.integer  "inventory"
+    t.boolean  "needs_staff_approval",                                              :default => false, :null => false
   end
 
   add_index "plans", ["id", "year"], :name => "index_plans_on_id_and_year", :unique => true

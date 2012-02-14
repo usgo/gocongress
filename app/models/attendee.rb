@@ -171,7 +171,7 @@ class Attendee < ActiveRecord::Base
   end
 
   def invoice_items
-    invoice_items = []
+    items = []
 
     # How old will the attendee be on the first day of congress?
     atnd_age = self.age_in_years
@@ -185,30 +185,28 @@ class Attendee < ActiveRecord::Base
       satisfy_min_reg_date = d.min_reg_date.blank? || self.created_at.to_date <= d.min_reg_date.to_date
 
       if (satisfy_age_min && satisfy_age_max && satisfy_min_reg_date) then
-        invoice_items << InvoiceItem.new(d.get_invoice_item_name, self.get_full_name, -1 * d.amount, 1)
+        items << InvoiceItem.new(d.get_invoice_item_name, self.get_full_name, -1 * d.amount, 1)
       end
 
     end
 
     # Did this attendee claim any non-automatic discounts?
     self.discounts.where("is_automatic = ?", false).each do |d|
-      invoice_items << InvoiceItem.new(d.get_invoice_item_name, self.get_full_name, -1 * d.amount, 1)
+      items << InvoiceItem.new(d.get_invoice_item_name, self.get_full_name, -1 * d.amount, 1)
     end
 
-    # room and board invoice items
-    self.attendee_plans.each do |ap|
-      p = ap.plan
-      invoice_items << InvoiceItem.new('Plan: ' + p.name, self.get_full_name, p.price, ap.quantity)
-    end
+    # Plans
+    plans_to_invoice = attendee_plans.select{|ap| ap.show_on_invoice?}
+    items.concat plans_to_invoice.map{|ap| ap.to_invoice_item}
 
     # Activities
     self.activities.each do |e|
       if (e.price.present? && e.price > 0.0)
-        invoice_items << InvoiceItem.new('Activity: ' + e.name, self.get_full_name, e.price, 1)
+        items << InvoiceItem.new('Activity: ' + e.name, self.get_full_name, e.price, 1)
       end
     end
 
-    return invoice_items
+    return items
   end
 
   def invoice_total

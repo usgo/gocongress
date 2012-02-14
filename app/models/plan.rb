@@ -2,8 +2,8 @@ class Plan < ActiveRecord::Base
   include YearlyModel
   include Purchasable
 
-attr_accessible :name, :price, :age_min, :age_max, :description, \
-  :inventory, :max_quantity, :plan_category_id
+attr_accessible :name, :price, :age_min, :age_max, :description,
+  :inventory, :max_quantity, :needs_staff_approval, :plan_category_id
 
 # FIXME: in the controller, somehow year needs to get set
 # before authorize! runs.  until then, year needs to be accessible.
@@ -21,7 +21,6 @@ has_many :attendees, :through => :attendee_plans
 
 validates_presence_of :name, :description, :price, :age_min, :plan_category_id
 validates_length_of :name, :maximum => 50
-validates_numericality_of :price, :greater_than_or_equal_to => 0
 validates_numericality_of :age_min, :only_integer => true, :greater_than_or_equal_to => 0
 validates_numericality_of :age_max, :only_integer => true, :allow_nil => true
 
@@ -34,6 +33,14 @@ validates :inventory,
     :only_integer => true, :greater_than => 0, :allow_nil => true,
     :message => " should be greater than 0 or left blank if unlimited"
     }
+
+validates :needs_staff_approval, :inclusion => { :in => [true, false] }
+
+validates_each :price do |record, attr, value|
+  if record.needs_staff_approval? && record.price != 0.0
+    record.errors.add(attr, ' must be zero for plans that need staff approval (see instructions).')
+  end
+end
 
 # Scopes
 # ------

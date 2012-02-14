@@ -11,9 +11,6 @@
     .field
       = render partial: "shared/md_area", locals: { :obj => :plan, :atr => :description }
     .field
-      = f.label :price
-      = f.text_field :price
-    .field
       = f.label :inventory
       = f.text_field :inventory, :size => 3
       %span.smalltext
@@ -26,6 +23,21 @@
         How many should each
         %strong attendee
         be allowed to purchase?
+
+  %fieldset
+    %legend Price
+    .field
+      = f.label :price
+      = f.text_field :price, :size => 5
+    .field
+      = f.label :needs_staff_approval
+      = f.check_box :needs_staff_approval, :style => "vertical-align: top; margin-top: 2px;"
+      %span.smalltext{:style => "display: inline-block; padding: 2px 0px 0px 15px; width: 400px;"}
+        For plans that are not purchaseable through the website.
+        "Contact the Registrar" will be shown instead of the price.
+        The plan will remain selectable.  The price must be zero
+        so that it does not show up on the user's cost summary.
+
 
   %fieldset
     %legend Attendee Age Requirements

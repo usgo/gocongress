@@ -8,11 +8,17 @@ module Purchasable
   end
 
   def price_for_display
-    if price.to_f == 0.0
+    if contact_msg_instead_of_price?
+      "Contact the Registrar"
+    elsif price.to_f == 0.0
       "Free"
     else
       ActionController::Base.helpers.number_to_currency(price, :precision => 2)
     end
+  end
+
+  def contact_msg_instead_of_price?
+    self.respond_to?(:needs_staff_approval) && needs_staff_approval?
   end
 
 end
