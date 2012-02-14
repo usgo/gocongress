@@ -26,4 +26,9 @@ FactoryGirl.define do
     age_min   0
     age_max   nil
   end
+
+  factory :plan_which_needs_staff_approval, :parent => :all_ages_plan do
+    price                 0
+    needs_staff_approval  true
+  end
 end
