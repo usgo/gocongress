@@ -33,7 +33,7 @@ class PlansController < ApplicationController
 
   def destroy
     @plan.destroy
-    redirect_to plans_url
+    redirect_to plan_category_path(@plan.plan_category)
   end
 
 private
