@@ -48,6 +48,13 @@ end
 scope :appropriate_for_age, lambda {|age| where("(age_min is null or age_min <= ?) and (age_max is null or age_max >= ?)", age, age)}
 scope :alphabetical, order(:name)
 
+# Class Methods
+# -------------
+
+def self.show_availability?(plans)
+  plans.map{|p| p.inventory.present?}.reduce{|disj, n| disj || n}
+end
+
 # Public Instance Methods
 # -----------------------
 
@@ -73,10 +80,6 @@ def inventory_available(excluded_attendee=nil)
   return nil if inventory.nil?
   c = inventory_consumed(excluded_attendee)
   c > inventory ? 0 : inventory - c
-end
-
-def self.show_availability?(plans)
-  plans.map{|p| p.inventory.present?}.reduce{|disj, n| disj || n}
 end
 
 end
