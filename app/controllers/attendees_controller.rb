@@ -56,38 +56,7 @@ class AttendeesController < ApplicationController
   def index
     params[:direction] ||= "asc"
     @opposite_direction = (params[:direction] == 'asc') ? 'desc' : 'asc'
-
-    # If a sort order was specified, make sure it is not a SQL injection
-    # attack.  By default, sort by rank (0 is non-player).
-    valid_sortable_columns = %w[given_name family_name rank created_at country]
-    unless (valid_sortable_columns.include?(params[:sort]))
-      order_clause = "rank = 0, rank desc"
-
-    else
-      order_clause = params[:sort]
-
-      # sort order should be case insensitive, so we downcase certain fields
-      downcased_fields = %w[given_name family_name]
-      if downcased_fields.include? params[:sort]
-        order_clause = "lower(#{params[:sort]})"
-      end
-
-      # some sort orders could reveal clues about anonymous people,
-      # so we must first order by anonymity to protect against that.
-      unsafe_for_anon = %w[given_name family_name]
-      if unsafe_for_anon.include? params[:sort]
-        order_clause = 'anonymous, ' + order_clause
-      end
-
-      # sort direction
-      valid_directions = %w[asc desc]
-      if valid_directions.include? params[:direction]
-        order_clause += " " + params[:direction]
-      end
-    end
-
-    # get all attendees
-    @attendees = Attendee.yr(@year).order(order_clause)
+    @attendees = Attendee.yr(@year).order parse_order_clause_params
 
     # get some fun statistics
     @pro_count = @attendees.where(:rank => 101..109).count
@@ -405,6 +374,37 @@ private
   # We do not want flash notices during initial registration
   def update_success_notice(page)
     %w[activities tournaments].include?(page) ? "Attendee updated" : nil
+  end
+
+  # `parse_order_clause_params` validates the supplied sort field and
+  # direction, and returns an sql order clause string.  If no valid
+  # sort field is supplied, the default is to sort by rank (0 is non-player).
+  def parse_order_clause_params
+    valid_sortable_columns = %w[given_name family_name rank created_at country]
+    unless (valid_sortable_columns.include?(params[:sort]))
+      order_clause = "rank = 0, rank desc"
+    else
+      order_clause = params[:sort]
+
+      # sort order should be case insensitive, so we downcase certain fields
+      downcased_fields = %w[given_name family_name]
+      if downcased_fields.include? params[:sort]
+        order_clause = "lower(#{params[:sort]})"
+      end
+
+      # some sort orders could reveal clues about anonymous people,
+      # so we must first order by anonymity to protect against that.
+      unsafe_for_anon = %w[given_name family_name]
+      if unsafe_for_anon.include? params[:sort]
+        order_clause = 'anonymous, ' + order_clause
+      end
+
+      # sort direction
+      valid_directions = %w[asc desc]
+      if valid_directions.include? params[:direction]
+        order_clause += " " + params[:direction]
+      end
+    end
   end
 
 end
