@@ -47,10 +47,9 @@
             %td.numeric= plan.price_for_display
 
   - if @show_availability
-    - pcnpd = @plan_category.name.pluralize.downcase
     %p.smalltext
-      * Some #{pcnpd} have limited availability. To reserve these #{pcnpd},
-      please pay your full cost immediately after registration.
+      * Some plans in this category have limited availability. To reserve
+      these, please pay your full cost immediately after registration.
 
   .actions
     %br
