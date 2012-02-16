@@ -7,11 +7,10 @@
   - if @plans.count == 0
     There are no #{mnh.pluralize} in this category, so feel free to skip it!
   - else
-    Select
-    = (@plans.count == 1) ? "the " + mnh : mnh.pluralize
-    by clicking on the check box (
-    %input{ :type => 'checkbox', :disabled => 'disabled' }
-    ) or entering a quantity.
+    Select #{noun_with_article(mnh, @plans)} by clicking on the check
+    box ( #{disabled_checkbox}
+    )#{ " or entering a quantity" if @show_quantity_instructions }.
+
     If you have any questions, please contact the
     = link_to 'registrar.', contact_path
 

@@ -362,6 +362,7 @@ protected
     age = @attendee.age_in_years
     @plans = @plan_category.plans.appropriate_for_age(age).alphabetical
     @show_availability = Plan.show_availability?(@plans)
+    @show_quantity_instructions = Plan.show_quantity_instructions?(@plans)
   end
 
   def get_valid_page_from_params

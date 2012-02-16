@@ -5,6 +5,10 @@ module ApplicationHelper
     signed_in?(nil)
   end
 
+  def disabled_checkbox
+    '<input type="checkbox" disabled="disabled" />'.html_safe
+  end
+
 	def trl_attr ( modelname, attributename )
 		# see config/locales/en.yaml
 		# TODO: replace this with Model.human_attribute_name("attr")
@@ -35,6 +39,10 @@ module ApplicationHelper
 
   def markdown_if_present(s)
     s.blank? ? '' : Markdown.new(s).to_html.html_safe
+  end
+
+  def noun_with_article(singular, collection)
+    (collection.count == 1) ? "the " + singular : singular.pluralize
   end
 
 end

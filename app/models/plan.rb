@@ -55,6 +55,10 @@ def self.show_availability?(plans)
   plans.map{|p| p.inventory.present?}.reduce{|disj, n| disj || n}
 end
 
+def self.show_quantity_instructions?(plans)
+  plans.map{|p| p.max_quantity > 1}.reduce{|disj, n| disj || n}
+end
+
 # Public Instance Methods
 # -----------------------
 
