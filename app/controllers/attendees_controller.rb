@@ -57,28 +57,33 @@ class AttendeesController < ApplicationController
     params[:direction] ||= "asc"
     @opposite_direction = (params[:direction] == 'asc') ? 'desc' : 'asc'
 
-    # if a sort order was specified, make sure it is not a SQL injection attack
+    # If a sort order was specified, make sure it is not a SQL injection
+    # attack.  By default, sort by rank (0 is non-player).
     valid_sortable_columns = %w[given_name family_name rank created_at country]
-    if (valid_sortable_columns.include?(params[:sort])) then
+    unless (valid_sortable_columns.include?(params[:sort]))
+      order_clause = "rank = 0, rank desc"
+
+    else
       order_clause = params[:sort]
 
+      # sort order should be case insensitive, so we downcase certain fields
+      downcased_fields = %w[given_name family_name]
+      if downcased_fields.include? params[:sort]
+        order_clause = "lower(#{params[:sort]})"
+      end
+
       # some sort orders could reveal clues about anonymous people,
-      # so we must first order by anonymity to protect against that -Jared
+      # so we must first order by anonymity to protect against that.
       unsafe_for_anon = %w[given_name family_name]
-      if (unsafe_for_anon.include?(order_clause)) then
+      if unsafe_for_anon.include? params[:sort]
         order_clause = 'anonymous, ' + order_clause
       end
 
       # sort direction
       valid_directions = %w[asc desc]
-      if valid_directions.include?(params[:direction]) then
+      if valid_directions.include? params[:direction]
         order_clause += " " + params[:direction]
       end
-
-    else
-
-      # by default, sort by rank (0 is non-player)
-      order_clause = "rank = 0, rank desc"
     end
 
     # get all attendees
