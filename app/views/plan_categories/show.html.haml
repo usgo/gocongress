@@ -1,36 +1,47 @@
 %h2= @plan_category.name
 = markdown_if_present(@plan_category.description)
 
-- if @plans.empty?
-  %p This category has no plans yet.
-- else
-  %table.semantic.fullwidth
-    %thead
-      %tr
-        %th Plan
-        %th Attendee Age
-        %th Description
-        - if @show_availability
-          %th # Available*
-        %th.numeric Price
-    %tbody
-      - @plans.each do |p|
+= form_for @plan_category do |f|
+  = render :partial => "shared/error_messages", :locals => { :resource => @plan_category }
+
+  - if @plans.empty?
+    %p This category has no plans yet.
+  - else
+    %table.semantic.fullwidth
+      %thead
         %tr
-          %td= link_to p.name, p
-          %td= p.age_range_in_words
-          %td= Markdown.new( p.description ).to_html.html_safe
+          - if can? :update, Plan
+            %th Order
+          %th Plan
+          %th Attendee Age
+          %th Description
           - if @show_availability
-            %td= p.describe_inventory_available
-          %td.numeric= p.price_for_display
+            %th # Available*
+          %th.numeric Price
+      %tbody
+        - @plans.each_with_index do |p, ix|
+          %tr
+            - if can? :update, Plan
+              %td= number_field_tag "plan_order[]", ix + 1, min: 1, step: 1, size: 3
+            %td= link_to p.name, p
+            %td= p.age_range_in_words
+            %td= Markdown.new( p.description ).to_html.html_safe
+            - if @show_availability
+              %td= p.describe_inventory_available
+            %td.numeric= p.price_for_display
 
-- if @show_availability
-  - pcnpd = @plan_category.name.pluralize.downcase
-  %p.smalltext
-    * Some #{pcnpd} have limited availability. To reserve these #{pcnpd},
-    please pay your full cost immediately after registration.
+  - if @show_availability
+    - pcnpd = @plan_category.name.pluralize.downcase
+    %p.smalltext
+      * Some #{pcnpd} have limited availability. To reserve these #{pcnpd},
+      please pay your full cost immediately after registration.
 
-%br
+  %br
 
+  - if can? :manage, PlanCategory
+    = f.submit 'Update Order'
+
+-# These three buttons are not part of the above form
 - if can? :manage, PlanCategory
   .inline-children
     = button_to 'New Plan', new_plan_path, :method => :get

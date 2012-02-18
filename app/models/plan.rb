@@ -1,6 +1,7 @@
 class Plan < ActiveRecord::Base
   include YearlyModel
   include Purchasable
+  include RankedModel
 
 attr_accessible :name, :price, :age_min, :age_max, :description,
   :inventory, :max_quantity, :needs_staff_approval, :plan_category_id
@@ -47,6 +48,12 @@ end
 
 scope :appropriate_for_age, lambda {|age| where("(age_min is null or age_min <= ?) and (age_max is null or age_max >= ?)", age, age)}
 scope :alphabetical, order(:name)
+
+# Sort Order
+# see https://github.com/harvesthq/ranked-model
+# ----------
+
+ranks :cat_order, :with_same => :plan_category_id
 
 # Class Methods
 # -------------

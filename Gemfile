@@ -24,6 +24,9 @@ gem 'kaminari' # pagination
 gem 'devise', "~> 1.5" # not ready for devise 2.0 yet
 gem 'cancan'
 
+# Model layer only
+gem 'ranked-model'
+
 # After migrating to Cedar, Heroku recommends thin over webrick
 gem 'thin'
 

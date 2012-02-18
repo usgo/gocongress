@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120214030844) do
+ActiveRecord::Schema.define(:version => 20120218015016) do
 
   create_table "activities", :force => true do |t|
     t.string   "name"
@@ -201,6 +201,7 @@ ActiveRecord::Schema.define(:version => 20120214030844) do
     t.integer  "year",                                                                                 :null => false
     t.integer  "inventory"
     t.boolean  "needs_staff_approval",                                              :default => false, :null => false
+    t.integer  "cat_order",                                                         :default => 0,     :null => false
   end
 
   add_index "plans", ["id", "year"], :name => "index_plans_on_id_and_year", :unique => true
