@@ -25,27 +25,8 @@ class PlanCategoriesController < ApplicationController
   end
 
   def update
-    ordering = params[:plan_order] || []
-
-    # coerce the position numbers into integers
-    ordering = ordering.map{|x| x.to_i}
-
-    # Only accept orderings that are sequential, start at one, and
-    # have a step of one
-    sorted_ordering = ordering.sort
-    ordering_errors = []
-    if sorted_ordering.first != 1
-      ordering_errors << "Order must begin with the number one"
-    end
-
-    prev = nil
-    until sorted_ordering.empty?
-      x = sorted_ordering.shift
-      if prev.present? && (x - prev != 1)
-        ordering_errors << "Order numbers must be sequential"
-      end
-      prev = x
-    end
+    ordering = ordering_from_params
+    ordering_errors = validate_ordering(ordering)
 
     if ordering_errors.empty?
 
@@ -88,6 +69,30 @@ class PlanCategoriesController < ApplicationController
   def expose_plans
     @plans = @plan_category.plans.rank :cat_order
     @show_order_fields = can?(:update, Plan) && @plans.count > 1
+  end
+
+  def ordering_from_params
+    (params[:plan_order] || []).map{|x| x.to_i}
+  end
+
+  def validate_ordering ordering
+    ordering_errors = []
+
+    sorted_ordering = ordering.sort
+    if sorted_ordering.first != 1
+      ordering_errors << "Order must begin with the number one"
+    end
+
+    prev = nil
+    until sorted_ordering.empty?
+      x = sorted_ordering.shift
+      if prev.present? && (x - prev != 1)
+        ordering_errors << "Order numbers must be sequential"
+      end
+      prev = x
+    end
+
+    ordering_errors
   end
 
 end
