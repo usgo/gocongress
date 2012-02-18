@@ -4,7 +4,7 @@ Factory.define :attendee do |f|
   f.city "aaaaaa"
   f.congresses_attended 0
   f.country 'JP'
-  f.email "thisgetsoverwrittenanyways@j.singlebrook.com"
+  f.email "example@example.com"
   f.family_name 'Vespucci'
   f.gender 'm'
   f.given_name 'Amerigo'
