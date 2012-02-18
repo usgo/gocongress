@@ -13,7 +13,7 @@ FactoryGirl.define do
     # conditions.
     association :primary_attendee,
       :factory => :attendee,
-      :method => :build,
+      :strategy => :build,
       :is_primary => true
 
     factory :admin do
