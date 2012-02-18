@@ -14,6 +14,20 @@ class RegistrationsControllerTest < ActionController::TestCase
     assert_response :success
   end
 
+  test "visitor can create a user with valid email and password" do
+    user_attrs = { email: 'example@example.com',
+      password: 'asdf',
+      password_confirmation: 'asdf',
+      year: @year }
+    assert_difference ["User.count"], +1 do
+      post :create, :user => user_attrs, :year => @year
+    end
+    created_user = User.yr(@year).order(:created_at).last
+    assert_redirected_to add_attendee_to_user_path(@year, created_user.id)
+  end
+
+  # TODO: This test is defunct.  When we drop accepts_nested_attributes_for
+  # from the User model, this test will be removed (or rewritten).
   test "visitor can create a user with valid registration data" do
     assert_difference ["User.count", "Attendee.count"], +1 do
       post :create, :user => @u, :year => @year
