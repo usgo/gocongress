@@ -25,34 +25,40 @@ class PlanCategoriesController < ApplicationController
   end
 
   def update
-    ordering = ordering_from_params
-    ordering_errors = validate_ordering(ordering)
 
-    if ordering_errors.empty?
+    # Re-ordering plans
+    if params[:plan_order].present? && params[:plan_order].respond_to?(:each)
+      ordering = ordering_from_params
+      ordering_errors = validate_ordering(ordering)
 
-      # ranked-model position numbers are zero-indexed,
-      # so we subtract one from each
-      ordering = ordering.map{|x| x - 1}
-
-      # Save new sort order by going through the plans in the same order
-      # they appeared before on the show page.
-      if ordering.count == @plans.count
-        @plans.each_with_index do |p, ix|
-          p.update_attribute :cat_order_position, ordering[ix]
-        end
-      end
-    end
-
-    if ordering_errors.empty? && @plan_category.update_attributes(params[:plan_category])
-      redirect_to(@plan_category, :notice => 'Plan category updated.')
-    else
       if ordering_errors.empty?
-        render :action => "edit"
+
+        # ranked-model position numbers are zero-indexed,
+        # so we subtract one from each
+        ordering = ordering.map{|x| x - 1}
+
+        # Save new sort order by going through the plans in the same order
+        # they appeared before on the show page.
+        if ordering.count == @plans.count
+          @plans.each_with_index do |p, ix|
+            p.update_attribute :cat_order_position, ordering[ix]
+          end
+        end
       else
         @plan_category.errors[:base].concat ordering_errors
         render :action => "show"
+        return
+      end
+
+    else # Updating normal attributes of the plan category
+      unless @plan_category.update_attributes(params[:plan_category])
+        render :action => "edit"
+        return
       end
     end
+
+    # We were successful, regardless of what we did :-)
+    redirect_to(@plan_category, :notice => 'Plan category updated.')
   end
 
   def destroy
