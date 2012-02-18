@@ -87,6 +87,7 @@ class PlanCategoriesController < ApplicationController
 
   def expose_plans
     @plans = @plan_category.plans.rank :cat_order
+    @show_order_fields = can?(:update, Plan) && @plans.count > 1
   end
 
 end
