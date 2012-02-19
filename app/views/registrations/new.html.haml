@@ -1,10 +1,15 @@
 %h2 Register for the #{@year} US Go Congress!
 
-- if (ENV['RAILS_ENV'] == 'production' && @year == 2012)
+- if production? && REGISTRATION_PHASE[@year] == :closed
   %p
-    Registration for the 2012 Go Congress will open soon! We are finalizing
+    Registration for the #{@year} Go Congress will open soon! We are finalizing
     the prices and other information and then we'll be ready to accept your
     registration. Thanks for your interest.
+
+- elsif production? && REGISTRATION_PHASE[@year] == :complete
+  %p
+    Registration for the #{@year} Go Congress is complete.
+    Thanks for coming!
 
 - else
   .vertical-form-instructions

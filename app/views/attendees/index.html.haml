@@ -1,7 +1,7 @@
 %h2 Who is Coming?
 
-- if (ENV['RAILS_ENV'] == 'production' && @year == 2012)
-  %p Registration for the 2012 Go Congress will open soon.
+- if production? && REGISTRATION_PHASE[@year] == :closed
+  %p Registration for the #{@year} Go Congress has not yet begun.
 
 - else
   %p

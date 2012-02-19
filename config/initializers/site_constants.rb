@@ -47,3 +47,10 @@ MAILER_REPLY_TO = {
   2011 => "registrar@gocongress.org",
   2012 => "arlene@usgocongress12.org"
 }
+
+# Valid REGISTRATION_PHASE values, in chronological order,
+# are :closed, :open, and :complete
+REGISTRATION_PHASE = {
+  2011 => :complete,
+  2012 => :open
+}

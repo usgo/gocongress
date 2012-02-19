@@ -45,4 +45,8 @@ module ApplicationHelper
     (collection.count == 1) ? "the " + singular : singular.pluralize
   end
 
+  def production?
+    ENV['RAILS_ENV'] == 'production'
+  end
+
 end
