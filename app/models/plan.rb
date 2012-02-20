@@ -14,7 +14,7 @@ attr_accessible :year
 # ------------
 
 belongs_to :plan_category
-has_many :attendee_plans, :dependent => :destroy
+has_many :attendee_plans, :dependent => :restrict
 has_many :attendees, :through => :attendee_plans
 
 # Validations
