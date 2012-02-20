@@ -10,6 +10,7 @@ describe PlansController do
         delete :destroy, year: plan.year, id: plan.id
       }.to_not change{ Plan.count }
       flash[:alert].should == "Cannot delete plan because attendees have already selected it"
+      response.should redirect_to(plan_path(plan))
     end
   end
 end
