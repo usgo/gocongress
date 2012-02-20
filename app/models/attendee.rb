@@ -127,6 +127,10 @@ class Attendee < ActiveRecord::Base
     birthday_after_congress ? year_delta - 1 : year_delta
   end
 
+  def anonymize(name)
+    anonymous? ? 'Anonymous' : name
+  end
+
   def attribute_names_for_csv
 
     # Lisa wants the name and email in the first few columns
@@ -149,6 +153,16 @@ class Attendee < ActiveRecord::Base
   def birthday_after_congress
     bday = Date.new(congress_start.year, birth_date.month, birth_date.day)
     (bday <=> congress_start) == 1
+  end
+
+  def get_family_name(respect_anonymity = false)
+    name = NameInflector.capitalize_name(family_name)
+    respect_anonymity ? anonymize(name) : name
+  end
+
+  def get_given_name(respect_anonymity = false)
+    name = NameInflector.capitalize_name(given_name)
+    respect_anonymity ? anonymize(name) : name
   end
 
   def clear_plan_category!(pc_id)
@@ -267,7 +281,8 @@ class Attendee < ActiveRecord::Base
   end
 
   def full_name(respect_anonymity = false)
-    (anonymous? && respect_anonymity) ? 'Anonymous' : given_name.titleize + " " + family_name.titleize
+    name = NameInflector.capitalize_name(given_name) + " " + NameInflector.capitalize_name(family_name)
+    respect_anonymity ? anonymize(name) : name
   end
 
   # `get_full_name` is deprecated.  Please use full_name() instead.
