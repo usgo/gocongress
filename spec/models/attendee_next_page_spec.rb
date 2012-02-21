@@ -3,9 +3,11 @@ require "spec_helper"
 describe "Attendee#next_page" do
   include Rails.application.routes.url_helpers
 
-  subject { Factory :attendee }
+  let(:user) { Factory :user }
   let(:event) { Factory :event }
   let(:events_of_interest) { [event.id] }
+
+  subject { user.primary_attendee }
 
   context "after finishing the basics page" do
     it "returns the path to the events page" do
@@ -36,7 +38,7 @@ describe "Attendee#next_page" do
   context "after finishing the wishes page" do
     it "returns the path to my account" do
       subject.next_page(:wishes, nil, nil).should ==
-        users_path(subject.year, subject.user)
+        user_path(subject.year, subject.user)
     end
   end
 
@@ -65,7 +67,7 @@ describe "Attendee#next_page" do
   context "after finishing the edit_tournaments page" do
     it "returns the path to my accounts" do
       subject.next_page(:tournaments, nil, nil).should ==
-        users_path(subject.year, subject.user)
+        user_path(subject.year, subject.user)
     end
   end
 end
