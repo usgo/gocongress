@@ -26,6 +26,9 @@ gem 'cancan'
 gem 'ranked-model'
 gem 'validates_timeliness'
 
+# uncaught exception notification
+gem 'airbrake'
+
 # After migrating to Cedar, Heroku recommends thin over webrick
 gem 'thin'
 
@@ -44,11 +47,6 @@ end
 group :test do
 	gem 'factory_girl'
 	gem 'factory_girl_rails'
-end
-
-# Production only
-group :production do
-  gem 'airbrake' # uncaught exception notification
 end
 
 # To keep your heroku slug size down, try this
