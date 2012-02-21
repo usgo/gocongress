@@ -32,11 +32,6 @@ class UsersController < ApplicationController
 
   def show
     @attendees = @user.attendees.order "is_primary desc"
-    @showing_current_user = signed_in?(nil) && (current_user.id == @user.id)
-    @page_title = @showing_current_user ?
-      'My Account' :
-      @user.primary_attendee.full_name_possessive + ' Account'
-
     @has_minor_attendee = @user.attendees.map(&:minor?).include?(true)
   end
 
@@ -60,11 +55,6 @@ class UsersController < ApplicationController
   def ledger
     @user = User.find(params[:id])
     authorize! :show, @user
-
-    @showing_current_user = signed_in?(nil) && (current_user.id == @user.id)
-    @page_title = @showing_current_user ?
-      'My Payment History' :
-      @user.primary_attendee.full_name_possessive + ' Payment History'
   end
 
   def edit

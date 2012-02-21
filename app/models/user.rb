@@ -74,6 +74,10 @@ class User < ActiveRecord::Base
     get_invoice_total - amount_paid
   end
 
+  def full_name_possessive
+    primary_attendee.present? ? primary_attendee.full_name_possessive : nil
+  end
+
   def get_invoice_items
     invoice_items = []
     self.attendees.each do |a|
