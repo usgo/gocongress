@@ -11,12 +11,10 @@ gem 'uglifier'
 # export PATH=/path/to/postgres/bin:${PATH}
 gem 'pg'
 
-# Asset template engines
+# View Layer
 gem "jquery-rails" # jquery and jquery-ui
-gem 'validates_timeliness'
 gem 'haml'
 gem 'haml-rails', :group => :development
-gem 'airbrake' # uncaught exception notification
 gem 'bluecloth' # markdown
 gem 'kaminari' # pagination
 
@@ -24,8 +22,9 @@ gem 'kaminari' # pagination
 gem 'devise', "~> 1.5" # not ready for devise 2.0 yet
 gem 'cancan'
 
-# Model layer only
+# Model Layer
 gem 'ranked-model'
+gem 'validates_timeliness'
 
 # After migrating to Cedar, Heroku recommends thin over webrick
 gem 'thin'
@@ -41,10 +40,15 @@ group :test, :development do
   gem 'rspec-rails'
 end
 
-# Testing
+# Testing only
 group :test do
 	gem 'factory_girl'
 	gem 'factory_girl_rails'
+end
+
+# Production only
+group :production do
+  gem 'airbrake' # uncaught exception notification
 end
 
 # To keep your heroku slug size down, try this
