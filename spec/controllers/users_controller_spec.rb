@@ -2,6 +2,12 @@ require "spec_helper"
 
 describe UsersController do
   context "even when the user has zero attendees" do
+
+    # Nomrally, rspec-rails controller specs do not render views
+    # but the following examples were written to reproduce a bug
+    # that happened in the views, so we enable rendering.
+    render_views
+
     let(:admin) { Factory :admin }
     let(:user) { Factory :user, primary_attendee: nil }
 
@@ -25,6 +31,13 @@ describe UsersController do
     describe "GET ledger" do
       it "succeeds" do
         get :ledger, year: user.year, id: user.id
+        response.should be_success
+      end
+    end
+
+    describe "GET invoice" do
+      it "succeeds" do
+        get :invoice, year: user.year, id: user.id
         response.should be_success
       end
     end
