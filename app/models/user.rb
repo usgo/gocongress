@@ -74,6 +74,9 @@ class User < ActiveRecord::Base
     get_invoice_total - amount_paid
   end
 
+  # As with all public instance methods, `full_name_possessive` must
+  # gracefully handle the absence of the primary_attendee, now that
+  # the presence of said association is no longer validated.
   def full_name_possessive
     primary_attendee.present? ? primary_attendee.full_name_possessive : nil
   end
