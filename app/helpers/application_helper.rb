@@ -15,6 +15,14 @@ module ApplicationHelper
 		translate "activerecord.attributes." + modelname.to_s + "." + attributename.to_s
 	end
 
+  # An English list is comma delimited, and the final element
+  # is prepended with a word like 'and'.
+  def join_english_list list, word = "and"
+    raise ArgumentError, "Expected enumerable" unless list.respond_to? :each
+    return list.first.to_s if list.count == 1
+    return list.slice(0, list.count - 1).join(", ") + ", " + word + " " + list.last.to_s
+  end
+
   def link_to_liability_release()
     link_to "Liability Release",
       "/docs/liability_release/USGC#{@year}-Liability-Release.pdf",

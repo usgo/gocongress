@@ -24,6 +24,13 @@ class RegistrationsController < Devise::RegistrationsController
     end
   end
 
+  def events_beside_congress
+    Event.yr(@year).order(:name)
+      .select{|e| !e.name.downcase.include? "congress"}
+      .map(&:name)
+  end
+  helper_method :events_beside_congress
+
   private
 
   def params_contains_user_attr(attribute)

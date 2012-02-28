@@ -13,6 +13,16 @@
 
 - else
   .vertical-form-instructions
+
+    - events = events_beside_congress
+    - unless events.empty?
+      - event_list = join_english_list events
+      %p
+        %strong= event_list
+        %br
+        In addition to the US Go Congress, you may also register
+        for the #{event_list}.
+
     %p
       %strong Registering more than one person?
       %br/
