@@ -1,5 +1,12 @@
 require "spec_helper"
 
+shared_examples "successful get" do |action|
+  it "succeeds" do
+    get action, year: user.year, id: user.id
+    response.should be_success
+  end
+end
+
 describe UsersController do
   context "even when the user has zero attendees" do
 
@@ -22,24 +29,19 @@ describe UsersController do
     end
 
     describe "GET show" do
-      it "succeeds" do
-        get :show, year: user.year, id: user.id
-        response.should be_success
-      end
+      it_behaves_like "successful get", :show
     end
 
     describe "GET ledger" do
-      it "succeeds" do
-        get :ledger, year: user.year, id: user.id
-        response.should be_success
-      end
+      it_behaves_like "successful get", :ledger
     end
 
     describe "GET invoice" do
-      it "succeeds" do
-        get :invoice, year: user.year, id: user.id
-        response.should be_success
-      end
+      it_behaves_like "successful get", :invoice
+    end
+
+    describe "GET edit" do
+      it_behaves_like "successful get", :edit
     end
 
   end
