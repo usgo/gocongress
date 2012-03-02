@@ -39,7 +39,7 @@
           %td= t.get_instrument_name
           %td.numeric= number_to_currency t.amount, :unit => ""
           %td
-            - link_text = t.user.primary_attendee.get_full_name
+            - link_text = t.user.coalesce_full_name_then_email
             - link_path = ledger_user_path(t.user)
             = link_to link_text, link_path, :title => t.user.email
           %td.numeric= t.gwtranid

@@ -46,8 +46,8 @@
     %th Modified By Whom
     %td
       - if @transaction.updated_by_user.present?
-        = @transaction.updated_by_user.primary_attendee.get_full_name
+        = @transaction.updated_by_user.coalesce_full_name_then_email
     %td.smalltext The admin who last modified this transaction
 
-%p  
-  = link_to 'Edit', edit_transaction_path(@transaction) 
+%p
+  = link_to 'Edit', edit_transaction_path(@transaction)

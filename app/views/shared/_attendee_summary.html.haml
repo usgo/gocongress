@@ -13,8 +13,7 @@
         One of
         = attendee.user.attendees.count
         attendees on the user account of
-        = attendee.user.primary_attendee.get_full_name
-        = "(#{attendee.user.email})"
+        = attendee.user.coalesce_full_name_then_email
 
     %table
       %tbody
