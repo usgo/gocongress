@@ -23,7 +23,7 @@ describe UsersController do
     end
 
     # protect against factory changing
-    it "the context is correct and it truely has zero attendees" do
+    it "the context is correct and it truly has zero attendees" do
       user.attendees.should be_empty
       user.primary_attendee.should be_nil
     end
@@ -42,6 +42,14 @@ describe UsersController do
 
     describe "GET edit" do
       it_behaves_like "successful get", :edit
+    end
+
+    describe "GET edit_email" do
+      it_behaves_like "successful get", :edit_email
+    end
+
+    describe "GET edit_password" do
+      it_behaves_like "successful get", :edit_password
     end
 
   end

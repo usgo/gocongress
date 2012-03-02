@@ -74,6 +74,10 @@ class User < ActiveRecord::Base
     get_invoice_total - amount_paid
   end
 
+  def coalesce_full_name_then_email
+    full_name || email
+  end
+
   # As with all public instance methods, `full_name` must
   # gracefully handle the absence of the primary_attendee, now that
   # the presence of said association is no longer validated.
