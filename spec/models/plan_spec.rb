@@ -1,7 +1,7 @@
 require "spec_helper"
 
 describe Plan do
-  subject { Factory :all_ages_plan }
+  subject { Factory :plan }
   describe "#destroy" do
     it "raises an error if attendees have selected it" do
       subject.attendees << Factory(:attendee)

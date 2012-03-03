@@ -9,7 +9,7 @@ describe AttendeesController do
 
     context "when the category is mandatory" do
       let(:cat) { Factory :plan_category, mandatory: true }
-      let!(:plan) { Factory :all_ages_plan, plan_category: cat }
+      let!(:plan) { Factory :plan, plan_category: cat }
 
       context "when the attendee selects zero plans" do
         it "stays on the same page" do

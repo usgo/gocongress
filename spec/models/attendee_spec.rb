@@ -18,7 +18,7 @@ describe Attendee do
 
     it "includes applicable plans" do
       a = Factory :attendee
-      p = Factory :all_ages_plan
+      p = Factory :plan
       expect { a.plans << p }.to change{a.invoice_items.count}.by(1)
     end
   end

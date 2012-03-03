@@ -19,7 +19,7 @@ describe "Attendee#next_page" do
   context "after finishing the events page" do
     context "given an age-appropriate non-empty plan category" do
       let(:plan_category) { Factory :plan_category, event: event }
-      let!(:plan) { Factory :all_ages_plan, plan_category: plan_category }
+      let!(:plan) { Factory :plan, plan_category: plan_category }
 
       it "returns the path to the edit_plans page for the first category" do
         subject.next_page(:events, nil, events_of_interest).should ==
@@ -44,7 +44,7 @@ describe "Attendee#next_page" do
 
   context "after finishing the edit_plans page" do
     let(:plan_category_a) { Factory :plan_category, event: event, name: "aaa" }
-    let!(:plan_a1) { Factory :all_ages_plan, plan_category: plan_category_a }
+    let!(:plan_a1) { Factory :plan, plan_category: plan_category_a }
 
     context "without an appropriate next plan category" do
       it "returns the path to the wishes page" do
@@ -55,7 +55,7 @@ describe "Attendee#next_page" do
 
     context "given an appropriate next plan category" do
       let(:plan_category_b) { Factory :plan_category, event: event, name: "bbb" }
-      let!(:plan_b1) { Factory :all_ages_plan, plan_category: plan_category_b }
+      let!(:plan_b1) { Factory :plan, plan_category: plan_category_b }
 
       it "returns the path to the edit_plans page for the next category" do
         subject.next_page(nil, plan_category_a, events_of_interest).should ==

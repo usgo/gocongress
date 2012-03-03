@@ -5,7 +5,7 @@ class AttendeesControllerEditPlansTest < ActionController::TestCase
     @controller = AttendeesController.new
     @admin = Factory :admin
     @plan_category = Factory :plan_category
-    @plan = Factory :all_ages_plan, plan_category_id: @plan_category.id
+    @plan = Factory :plan, plan_category_id: @plan_category.id
     @user = Factory :user
     @user_two = Factory :user
     @year = Time.now.year
@@ -72,9 +72,9 @@ class AttendeesControllerEditPlansTest < ActionController::TestCase
     a = u.attendees.sample
     e = Factory :event
     c1 = Factory :plan_category, {name: "aaaaaa", year: 2011, event: e}
-    p1 = Factory :all_ages_plan, plan_category_id: c1.id
+    p1 = Factory :plan, plan_category_id: c1.id
     c2 = Factory :plan_category, {name: "bbbbbb", year: 2012, event: e}
-    p2 = Factory :all_ages_plan, plan_category_id: c2.id
+    p2 = Factory :plan, plan_category_id: c2.id
 
     sign_in(u)
     put :update, :page => 'events', :id => a.id, :year => 2012, :event_ids => [e.id]

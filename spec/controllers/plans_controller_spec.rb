@@ -3,7 +3,7 @@ require "spec_helper"
 describe PlansController do
   describe "DELETE destroy" do
     it "fails when attendees have selected the plan" do
-      plan = Factory :all_ages_plan
+      plan = Factory :plan
       plan.attendees << Factory(:attendee)
       sign_in Factory :admin
       expect {

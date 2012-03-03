@@ -15,19 +15,14 @@ FactoryGirl.define do
     association     :plan_category
     sequence(:name) { |n| "Plan #{n}" }
     price           { (rand * 1000).round(2) }
-    age_min         { 1 + rand(100) }
-    age_max         { 1 + rand(100) }
+    age_min         0
+    age_max         nil
     description     %w['asdf' 'fdsa'].sample
     max_quantity    1
     year            Time.now.year
   end
 
-  factory :all_ages_plan, :parent => :plan do
-    age_min   0
-    age_max   nil
-  end
-
-  factory :plan_which_needs_staff_approval, :parent => :all_ages_plan do
+  factory :plan_which_needs_staff_approval, :parent => :plan do
     price                 0
     needs_staff_approval  true
   end
