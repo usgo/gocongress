@@ -1,13 +1,31 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
   helper_method :current_user_is_admin?, :page_title
+
+  # set_year_from_params() should run first because it
+  # defines @year which other methods depend on.
+  before_filter :set_year_from_params
   before_filter :set_yearly_vars
+  before_filter :set_display_timezone
 
   def default_url_options(options={})
     { :year => @year }
   end
 
-  def set_yearly_vars
+  def set_display_timezone
+    if @year == 2011
+      Time.zone = "Pacific Time (US & Canada)"
+    elsif @year = 2012
+      Time.zone = "Eastern Time (US & Canada)"
+    else
+      # If display timezone has not been defined, the default
+      # in environment.rb will be used (currently UTC)
+      Rails.logger.warn "WARNING: No display timezone set for #{@year}"
+    end
+  end
+
+  def set_year_from_params
+
     # In 2011 we used the constant CONGRESS_YEAR to determine the
     # current year, but going forward we will use params[:year] in most
     # places. Hopefully, when this transition is complete we will be
@@ -21,6 +39,9 @@ class ApplicationController < ActionController::Base
     # Validate year to protect against sql injection, or benign
     # programmer error.
     raise "Invalid year" unless (2011..2100).include?(@year)
+  end
+
+  def set_yearly_vars
 
     # Define a range of all expected years
     # Currently just used for year navigation in footer
