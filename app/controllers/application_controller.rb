@@ -15,7 +15,7 @@ class ApplicationController < ActionController::Base
   def set_display_timezone
     if @year == 2011
       Time.zone = "Pacific Time (US & Canada)"
-    elsif @year = 2012
+    elsif @year == 2012
       Time.zone = "Eastern Time (US & Canada)"
     else
       # If display timezone has not been defined, the default
