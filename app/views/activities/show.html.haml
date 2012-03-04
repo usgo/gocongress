@@ -23,6 +23,9 @@
         %td
           - if @activity[a].present?
             = @activity[a].to_formatted_s(:american)
+    %tr
+      %th= Attendee.model_name.human.pluralize
+      %td= @activity.attendees.count
 
 %br
 

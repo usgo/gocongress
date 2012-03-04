@@ -34,8 +34,8 @@ en:
         price: "Price"
         location: "Location"
         notes: "Notes"
-        leave: "Leave"
-        return: "Return"
+        leave_time: "Leave"
+        return_time: "Return"
       job:
         jobname: "Position"
       plan:
