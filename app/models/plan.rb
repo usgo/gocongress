@@ -68,13 +68,11 @@ ranks :cat_order, :with_same => :plan_category_id
 # -------------
 
 def self.show_availability?(plans)
-  # TODO: use include? true instead of reducing with disjunction
-  plans.map{|p| p.inventory.present?}.reduce{|disj, n| disj || n}
+  plans.map{|p| p.inventory.present?}.include? true
 end
 
 def self.show_quantity_instructions?(plans)
-  # TODO: use include? true instead of reducing with disjunction
-  plans.map{|p| p.max_quantity > 1}.reduce{|disj, n| disj || n}
+  plans.map{|p| p.max_quantity > 1}.include? true
 end
 
 # Public Instance Methods
