@@ -12,23 +12,14 @@
         %tr
           - if @show_order_fields
             %th Order
-          %th Plan
-          %th Attendee Age
-          %th Description
-          - if @show_availability
-            %th # Available*
-          %th.numeric Price
+          = render :partial => "plan_table_common_headers"
       %tbody
         - @plans.each_with_index do |p, ix|
           %tr
             - if @show_order_fields
               %td= number_field_tag "plan_order[]", ix + 1, min: 1, step: 1, size: 3
             %td= link_to p.name, p
-            %td= p.age_range_in_words
-            %td= Markdown.new( p.description ).to_html.html_safe
-            - if @show_availability
-              %td= p.describe_inventory_available
-            %td.numeric= p.price_for_display
+            = render :partial => "plan_table_common_cells", :locals => { :plan => p }
 
   = render :partial => "explain_availability"
 

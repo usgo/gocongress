@@ -1,0 +1,6 @@
+%th= trl_attr 'plan', 'name'
+%th Attendee Age
+%th= trl_attr 'plan', 'description'
+- if @show_availability
+  %th # Available*
+%th.numeric= trl_attr 'plan', 'price'
