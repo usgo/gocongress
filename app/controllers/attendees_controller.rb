@@ -335,8 +335,8 @@ protected
     @plan_category = PlanCategory.reg_form(@year, @attendee.age_in_years).find(params[:plan_category_id])
     age = @attendee.age_in_years
     @plans = @plan_category.plans.appropriate_for_age(age).rank :cat_order
-    @show_availability = Plan.show_availability?(@plans)
-    @show_quantity_instructions = Plan.show_quantity_instructions?(@plans)
+    @show_availability = Plan.inventoried_plan_in? @plans
+    @show_quantity_instructions = Plan.quantifiable_plan_in? @plans
   end
 
   def get_valid_page_from_params

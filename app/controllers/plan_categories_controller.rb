@@ -12,7 +12,7 @@ class PlanCategoriesController < ApplicationController
   end
 
   def show
-    @show_availability = Plan.show_availability?(@plans)
+    @show_availability = Plan.inventoried_plan_in? @plans
   end
 
   def create
