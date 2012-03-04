@@ -34,6 +34,14 @@ validates :inventory,
     :only_integer => true, :greater_than => 0, :allow_nil => true,
     :message => " should be greater than 0 or left blank if unlimited"
     }
+validates_each :inventory do |record, attr, value|
+  cnt = record.attendees.count
+  if value < cnt
+    record.errors.add(attr, " cannot be decreased to #{value} because
+      #{cnt} #{Attendee.model_name.human.pluralize.downcase} have
+      already selected this #{Plan.model_name.human.downcase}.")
+  end
+end
 
 validates :needs_staff_approval, :inclusion => { :in => [true, false] }
 
