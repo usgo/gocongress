@@ -39,7 +39,8 @@ validates :needs_staff_approval, :inclusion => { :in => [true, false] }
 
 validates_each :price do |record, attr, value|
   if record.needs_staff_approval? && record.price != 0.0
-    record.errors.add(attr, ' must be zero for plans that need staff approval (see instructions).')
+    record.errors.add(attr, " must be zero for plans that need
+      staff approval (see instructions).")
   end
 end
 
