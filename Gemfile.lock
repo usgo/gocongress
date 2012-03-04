@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/jaredbeck/country-select.git
-  revision: 5d3fb45f5e4a262904646caa006f0c6347bf8724
+  revision: f576bc71e6313a3fe711969a93f9a7987a6bd7e6
   specs:
     country-select (1.1.0)
 
