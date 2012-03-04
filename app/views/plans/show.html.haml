@@ -17,6 +17,9 @@
   %tr
     %th Attendee Age
     %td= @plan.age_range_in_words
+  %tr
+    %th= Attendee.model_name.human.pluralize
+    %td= @plan.attendees.count
 
 %br
 
