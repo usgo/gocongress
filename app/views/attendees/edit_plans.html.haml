@@ -46,10 +46,7 @@
               %td= plan.describe_inventory_available
             %td.numeric= plan.price_for_display
 
-  - if @show_availability
-    %p.smalltext
-      * Some plans in this category have limited availability. To reserve
-      these, please pay your full cost immediately after registration.
+  = render :partial => "plan_categories/explain_availability"
 
   .actions
     %br
