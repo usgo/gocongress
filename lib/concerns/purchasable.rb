@@ -1,3 +1,5 @@
+# A model is `purchasable` if it has a `price` and attendees
+# can select it and pay for it.
 module Purchasable
 
   # http://api.rubyonrails.org/classes/ActiveSupport/Concern.html
@@ -5,6 +7,15 @@ module Purchasable
 
   included do
     validates :price, :numericality => { greater_than_or_equal_to: 0, allow_nil: false }
+
+    # Admin cannot change the price if attendees have already selected it
+    validates_each :price do |record, attr, value|
+      if record.price_changed? && !record.attendees.empty?
+        record.errors.add(attr, " may not change, because at least one
+          #{Attendee.model_name.human.downcase} has already selected
+          this #{record.class.model_name.human.downcase}")
+      end
+    end
   end
 
   def price_for_display
