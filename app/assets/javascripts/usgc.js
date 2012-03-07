@@ -10,6 +10,7 @@ $(document).ready(function(){
       autoplay: 5000
       , image_crop: true
       , show_info: true
+      , thumbnails: false
       , transition: 'fade'
       , transition_speed: 1000
     });
