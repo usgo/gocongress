@@ -11,4 +11,4 @@
 
 /* TODO: We only need the galleria stuff on the homepage Hiding this on other
 pages could improve page load by 80ms or more -Jared 2011.2.3 */
-//= require ../../../vendor/assets/javascripts/galleria/galleria-1.2.4.min.js
+//= require galleria/galleria-1.2.6.min.js

@@ -56,6 +56,10 @@ module Gocongress
     # Enable the asset pipeline
     config.assets.enabled = true
 
+    # Some libraries have JS, CSS, and images.  It's a hassle
+    # to split these libs up, so we keep them whole in a libs dir.
+    config.assets.paths << "#{Rails.root}/vendor/assets/libs"
+
     # We don't want Heroku to try to initialize our models during assets:precompile
     # because on Heroku Cedar, the database is not available during slug compilation.
     # http://stackoverflow.com/questions/8622297/heroku-cedar-assetsprecompile-has-beef-with-attr-protected
