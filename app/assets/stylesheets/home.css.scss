@@ -1,7 +1,7 @@
 .homepage {
-  .content { 
-  
-    /* homepage overrides default padding so that the gallery will 
+  .content {
+
+    /* homepage overrides default padding so that the gallery will
     float snugly in the top right */
     padding: 0px 0px 20px 0px;
     width: 900px;
@@ -12,16 +12,28 @@
     .curvy-text-container #usgc-logo { position: absolute; left: -140px; top: 10px; width: 300px; }
     .curvy-text-container .curvy-spacer { clear: left; float: left; height: 19px; }
     .curvy-text-container p { padding: 0.5em; text-align: justify; }
-    
+
     /* Misc. */
     p#venue-address { text-align: right; }
     &.past-years { padding: 3px 0px 0px 0px; }
   }
 }
 
-/* Image gallery */
+/* Slideshow */
 #gallery-column { float:right; padding-left: 20px; padding-bottom: 20px; }
 #gallery { width: 480px; height: 360px; }
 .galleria-stage { bottom:0px; left:0px; right:0px; top:0px; }
+
+/* Slideshow captions */
+.galleria-info {
+  bottom: 0px;
+  left: 0px;
+  position: absolute;
+  right: auto;
+  top: auto;
+  width: 100%;
+}
 .galleria-info-text { display: block; }
+.galleria-info-title, .galleria-info-description { display: inline; }
+.galleria-info-description { padding-left: 2em; }
 .galleria-info-link { display: none; }
