@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
-  helper_method :current_user_is_admin?, :page_title
+  helper_method :current_user_is_admin?, :page_title,
+    :can_see_admin_menu?
 
   # set_year_from_params() should run first because it
   # defines @year which other methods depend on.
@@ -151,6 +152,10 @@ private
 
     # Alf says: render or redirect and the filter chain stops there
     render 'home/access_denied', :status => :forbidden
+  end
+
+  def can_see_admin_menu?
+    can?(:see_admin_menu, :layout) && current_user.year == @year
   end
 
 end

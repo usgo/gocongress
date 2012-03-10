@@ -61,7 +61,7 @@
             %li= link_to c.name, c
           %li= link_to "Contact / Volunteer", contact_path
 
-    - if can? :see_admin_menu, :layout
+    - if can_see_admin_menu?
       .nav-container-admin
         .nav
           %ul
