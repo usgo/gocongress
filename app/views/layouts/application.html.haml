@@ -41,7 +41,7 @@
             - if current_user.nil?
               = link_to "Sign In", new_user_session_path
             - else
-              = link_to "Sign Out", destroy_user_session_path
+              = link_to "Sign Out", destroy_user_session_path, :method => :delete
 
           -# Tournaments
           - @tournaments_for_nav_menu.each do |t|
