@@ -19,7 +19,7 @@ gem 'bluecloth' # markdown
 gem 'kaminari' # pagination
 
 # AAA - Authentication, Authorization, and Access Control
-gem 'devise', "~> 1.5" # not ready for devise 2.0 yet
+gem 'devise'
 gem 'cancan'
 
 # Model Layer
