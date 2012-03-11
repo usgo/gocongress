@@ -23,7 +23,8 @@
 
   - unless anyone_signed_in?
     %p
-      Are you coming?  Please #{link_to 'register', '/users/sign_up'}!
+      Are you coming?  Please
+      = link_to 'register!', new_user_registration_path
 
   %table.semantic.fullwidth.zebra
     %thead
