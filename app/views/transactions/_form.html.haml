@@ -6,14 +6,14 @@
       = f.label :user_id, "User email address"
       %input#user_email_picker{:type => "text", :name => "user_email", :size => 40, :value => @email_picker_value}
       %br
-      %span.smalltext.aligned-with-input 
+      %span.smalltext.aligned-with-input
         Each user account has a unique email address.
         Make sure you choose the right one.
     .field
       = f.label :trantype
       = f.select :trantype, Transaction::TRANTYPES
       %br
-      %span.smalltext.aligned-with-input 
+      %span.smalltext.aligned-with-input
         Select
         %strong sale
         for user payments.
@@ -33,7 +33,7 @@
     .field
       = f.label :check_number
       = f.text_field :check_number, :size => 10
-      
+
   %fieldset.wider-labels
     %legend Gateway Transactions (Credit Card "Sale")
     .field
@@ -50,5 +50,5 @@
 
 :javascript
   $("#user_email_picker").autocomplete({
-      source: '#{@email_list}'.split(',')
+      source: '#{user_email_list}'.split(',')
     });

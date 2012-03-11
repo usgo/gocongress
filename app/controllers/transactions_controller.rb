@@ -2,6 +2,8 @@ class TransactionsController < ApplicationController
 
   load_and_authorize_resource
 
+  helper_method :user_email_list
+
   # Pagination
   PER_PAGE = 20
 
@@ -22,13 +24,11 @@ class TransactionsController < ApplicationController
   # GET /transactions/new
   def new
     @transaction.trantype = 'S' # most trns are sales
-    @email_list = get_list_of_user_emails
     @email_picker_value = ''
   end
 
   # GET /transactions/1/edit
   def edit
-    @email_list = get_list_of_user_emails
     @email_picker_value = @transaction.user.email
   end
 
@@ -40,7 +40,6 @@ class TransactionsController < ApplicationController
     @transaction.updated_by_user = current_user
     @transaction.user = User.yr(@year).find_by_email(params[:user_email])
 
-    @email_list = get_list_of_user_emails
     @email_picker_value = params[:user_email]
 
     if @transaction.save
@@ -57,7 +56,6 @@ class TransactionsController < ApplicationController
     @transaction.updated_by_user = current_user
     @transaction.user = User.yr(@year).find_by_email(params[:user_email])
 
-    @email_list = get_list_of_user_emails
     @email_picker_value = params[:user_email]
 
     if @transaction.update_attributes(params[:transaction])
@@ -73,9 +71,9 @@ class TransactionsController < ApplicationController
     redirect_to(transactions_url)
   end
 
-protected
+private
 
-  def get_list_of_user_emails
+  def user_email_list
     email_array = User.yr(@year).order('lower(email)').collect {|u| [u.email] }
     email_array.join(',')
   end
