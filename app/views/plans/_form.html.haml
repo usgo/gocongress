@@ -28,7 +28,7 @@
       = f.check_box :disabled
       %span.smalltext
         = Attendee.model_name.human.pluralize
-        will no longer be able to select this
+        cannot select this
         = Plan.model_name.human.downcase
 
   %fieldset
@@ -51,10 +51,10 @@
     %p Certain plans are intended for youth, for teens, or for adults.
     .field
       = f.label :age_min
-      = f.text_field :age_min
+      = f.number_field :age_min, size: 3
     .field
       = f.label :age_max
-      = f.text_field :age_max
+      = f.number_field :age_max, size: 3
       %span.smalltext (optional)
 
   %fieldset
