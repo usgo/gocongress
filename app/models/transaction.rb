@@ -1,7 +1,10 @@
 class Transaction < ActiveRecord::Base
   include YearlyModel
 
-  attr_accessible :instrument, :user_id, :trantype, :amount, :gwtranid, :gwdate, :check_number, :comment
+  # On the form, admins enter an email, not a user_id,
+  # so user_id is not accessible.
+  attr_accessible :instrument, :trantype, :amount, :gwtranid, :gwdate,
+    :check_number, :comment
 
   # FIXME: in the controller, somehow year needs to get set
   # before authorize! runs.  until then, year needs to be accessible.
