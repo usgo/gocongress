@@ -15,10 +15,13 @@
           = render :partial => "plan_table_common_headers"
       %tbody
         - @plans.each_with_index do |p, ix|
-          %tr
+          - row_classes = p.disabled? ? "disabled" : ""
+          %tr{ class: row_classes }
             - if @show_order_fields
               %td= number_field_tag "plan_order[]", ix + 1, min: 1, step: 1, size: 3
-            %td= link_to p.name, p
+            %td
+              = link_to p.name, p
+              = "(disabled)" if p.disabled?
             = render :partial => "plan_table_common_cells", :locals => { :plan => p }
 
   = render :partial => "explain_availability"

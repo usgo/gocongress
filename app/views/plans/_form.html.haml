@@ -23,6 +23,13 @@
         How many should each
         %strong attendee
         be allowed to purchase?
+    .field
+      = f.label :disabled
+      = f.check_box :disabled
+      %span.smalltext
+        = Attendee.model_name.human.pluralize
+        will no longer be able to select this
+        = Plan.model_name.human.downcase
 
   %fieldset
     %legend Price

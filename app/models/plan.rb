@@ -3,7 +3,7 @@ class Plan < ActiveRecord::Base
   include Purchasable
   include RankedModel
 
-attr_accessible :name, :price, :age_min, :age_max, :description,
+attr_accessible :name, :price, :age_min, :age_max, :description, :disabled,
   :inventory, :max_quantity, :needs_staff_approval, :plan_category_id
 
 # FIXME: in the controller, somehow year needs to get set
@@ -20,6 +20,7 @@ has_many :attendees, :through => :attendee_plans
 # Validations
 # -----------
 
+validates :disabled, :inclusion => { :in => [true, false] }
 validates_presence_of :name, :description, :price, :age_min, :plan_category_id
 validates_length_of :name, :maximum => 50
 validates_numericality_of :age_min, :only_integer => true, :greater_than_or_equal_to => 0
@@ -34,6 +35,7 @@ validates :inventory,
     :only_integer => true, :greater_than => 0, :allow_nil => true,
     :message => " should be greater than 0 or left blank if unlimited"
     }
+
 validates_each :inventory do |record, attr, value|
   cnt = record.attendees.count
   if value.present? && value < cnt
