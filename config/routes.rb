@@ -8,7 +8,7 @@ Gocongress::Application.routes.draw do
 
     get "home/access_denied"
 
-    # kaboom is an intentional error to test airbrake
+    # kaboom is an intentional error to test runtime exception notification
     get "home/kaboom"
 
     # these routes support multiple years with a year scope

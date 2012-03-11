@@ -25,7 +25,7 @@ class HomeController < ApplicationController
   end
 
   def kaboom
-    raise "Intentional error to test error handling"
+    raise "Intentional error to test runtime exception notification"
   end
 
   def pricing

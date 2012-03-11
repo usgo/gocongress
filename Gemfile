@@ -27,7 +27,7 @@ gem 'ranked-model'
 gem 'validates_timeliness'
 
 # uncaught exception notification
-gem 'airbrake'
+gem 'exception_notification'
 
 # After migrating to Cedar, Heroku recommends thin over webrick
 gem 'thin'
