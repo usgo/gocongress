@@ -45,6 +45,9 @@ class Ability
 
     # Guests can read public resources, but cannot write anything
     can :read, [Content, ContentCategory, Activity, Job, Tournament, PlanCategory]
-    can :show, [Plan, ActivityCategory]
+
+    # Guests can show (but not index) the following:
+    can :show, ActivityCategory
+    can :show, Plan, :disabled => false
   end
 end

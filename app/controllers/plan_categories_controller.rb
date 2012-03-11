@@ -52,7 +52,8 @@ class PlanCategoriesController < ApplicationController
   end
 
   def expose_plans
-    @plans = @plan_category.plans.rank :cat_order
+    visible_plans = @plan_category.plans.accessible_by(current_ability, :show)
+    @plans = visible_plans.rank :cat_order
     @show_order_fields = can?(:update, Plan) && @plans.count > 1
   end
 
