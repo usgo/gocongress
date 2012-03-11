@@ -12,10 +12,6 @@ Gocongress::Application.configure do
   # Show full error reports and disable caching
   config.consider_all_requests_local       = true
   config.action_controller.perform_caching = false
-  
-  # config.action_view.debug_rjs will be removed in 3.1
-  # but we don't use RJS, so we just comment it out
-  # config.action_view.debug_rjs             = true
 
   # Don't care if the mailer can't send
   config.action_mailer.raise_delivery_errors = true
@@ -25,7 +21,7 @@ Gocongress::Application.configure do
 
   # Only use best-standards-support built into browsers
   config.action_dispatch.best_standards_support = :builtin
-  
+
   # Override mailer host in application.rb -Jared 2010.12.27
   config.action_mailer.default_url_options = { :host => "0.0.0.0", :port => "3000" }
 
