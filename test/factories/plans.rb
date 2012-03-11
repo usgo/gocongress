@@ -18,6 +18,7 @@ FactoryGirl.define do
     age_min         0
     age_max         nil
     description     %w['asdf' 'fdsa'].sample
+    disabled        false
     max_quantity    1
     year            Time.now.year
   end

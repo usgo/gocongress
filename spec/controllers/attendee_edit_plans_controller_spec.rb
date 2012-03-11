@@ -7,6 +7,18 @@ describe AttendeesController do
       sign_in user
     end
 
+    it "updates the user's plans in the specified category" do
+      plan = Factory :plan
+      put_to_update_plans plan
+      user.primary_attendee.plans.should include(plan)
+    end
+
+    it "does not add disabled plans" do
+      plan = Factory :plan, disabled: true
+      put_to_update_plans plan
+      user.primary_attendee.plans.should_not include(plan)
+    end
+
     context "when the category is mandatory" do
       let(:cat) { Factory :plan_category, mandatory: true }
       let!(:plan) { Factory :plan, plan_category: cat }
@@ -27,17 +39,23 @@ describe AttendeesController do
 
       context "when the attendee selects one plan" do
         it "saves an AttendeePlan record" do
-          expect {
-            put :update_plans,
-              year: 2012,
-              id: user.primary_attendee.id,
-              plan_category_id: cat.id,
-              attendee: {:"plan_#{plan.id}_qty" => 1}
-          }.to change{user.primary_attendee.plans.count}.from(0).to(1)
+          expect { put_to_update_plans plan }.to
+            change{user.primary_attendee.plans.count}.from(0).to(1)
         end
       end
 
     end
   end
 
+end
+
+# Spec Helpers
+# ------------
+
+def put_to_update_plans plan
+  put :update_plans,
+    year: 2012,
+    id: user.primary_attendee.id,
+    plan_category_id: plan.plan_category.id,
+    attendee: {:"plan_#{plan.id}_qty" => 1}
 end

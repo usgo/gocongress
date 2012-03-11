@@ -334,7 +334,7 @@ protected
   def init_plans
     @plan_category = PlanCategory.reg_form(@year, @attendee.age_in_years).find(params[:plan_category_id])
     age = @attendee.age_in_years
-    @plans = @plan_category.plans.appropriate_for_age(age).rank :cat_order
+    @plans = @plan_category.plans.enabled.appropriate_for_age(age).rank :cat_order
     @show_availability = Plan.inventoried_plan_in? @plans
     @show_quantity_instructions = Plan.quantifiable_plan_in? @plans
   end
