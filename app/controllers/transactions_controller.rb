@@ -36,7 +36,7 @@ class TransactionsController < ApplicationController
   def create
     @transaction.year = @year
     @transaction.updated_by_user = current_user
-    @transaction.user_id = User.yr(@year).find_by_email(params[:user_email]).id
+    @transaction.user = User.yr(@year).find_by_email(params[:user_email])
 
     @email_list = get_list_of_user_emails
     @email_picker_value = params[:user_email]

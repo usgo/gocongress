@@ -1,9 +1,9 @@
 class Transaction < ActiveRecord::Base
   include YearlyModel
-  
+
   attr_accessible :instrument, :user_id, :trantype, :amount, :gwtranid, :gwdate, :check_number, :comment
 
-  # FIXME: in the controller, somehow year needs to get set 
+  # FIXME: in the controller, somehow year needs to get set
   # before authorize! runs.  until then, year needs to be accessible.
   attr_accessible :year
 
@@ -12,21 +12,21 @@ class Transaction < ActiveRecord::Base
 
   # The admin who last updated this transaction
   belongs_to :updated_by_user, :class_name => "User"
-	
+
 	# Transaction Types:
 	# Comp - Admin reduces total cost for a User (eg. a VIP)
 	# Refund - Admin has sent a refund check to a User who overpaid
 	# Sale - User makes a payment
 	TRANTYPES = [['Comp','C'], ['Refund','R'], ['Sale','S']]
-	
+
 	# Instruments
 	INSTRUMENTS = [['Card','C'], ['Cash','S'], ['Check','K']]
 
   # Scopes, and class methods that act like scopes
   scope :for_payment_history, where(:trantype => ['S','R'])
 
-	validates_presence_of :user_id, :trantype, :amount, :updated_by_user
-	
+	validates_presence_of :trantype, :amount, :updated_by_user
+
   validates_presence_of :instrument, :if => :requires_instrument?
   validates_inclusion_of :instrument, :in => [nil, ''], :if => :forbids_instrument?, \
     :message => "must be blank.  (Not applicable for selected transaction type)"
@@ -52,13 +52,19 @@ class Transaction < ActiveRecord::Base
     o.validates_inclusion_of :gwdate
     o.validates_inclusion_of :gwtranid
   end
-  
+
 	validates_numericality_of :check_number, :greater_than => 0, :if => :requires_check_number?
 
   # Only refunds may have a check number
   validates_inclusion_of :check_number, :unless => :requires_check_number?, \
     :allow_nil => false, :allow_blank => false, :in => [nil, ''], \
     :message => "must be blank.  (Only applicable for Refunds)"
+
+  # The user presence validation message refers to email address because
+  # the transaction form has an email field to select the user.
+  validates :user, :presence => { :message => " email address is blank
+    or incorrect.  Please make sure to enter the email address of the
+    correct user account."}
 
   def requires_instrument?() trantype != 'C' end
   def forbids_instrument?() trantype == 'C' end
