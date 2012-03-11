@@ -25,7 +25,7 @@ class TransactionsControllerTest < ActionController::TestCase
     sign_in @admin_user
 
     # Build (do not save) a transaction with no user.  The user will
-    # be specified via user_email.  This is a new required param, 
+    # be specified via user_email.  This is a new required param,
     # since I added the autocomplete.
     t = Factory.build :tr_sale, {:user => nil}
     assert_difference("Transaction.yr(#{@year}).count", +1) do
@@ -94,7 +94,11 @@ private
   def put_to_update(delta_amount, expected_diff)
     amount_before = Transaction.find(@transaction.id).amount
     trn_atr_hash = @transaction.attributes.merge( 'amount' => @transaction.amount + delta_amount )
-    put :update, :id => @transaction.id, :transaction => trn_atr_hash, :year => @year
+    put :update,
+      :id => @transaction.id,
+      :user_email => @transaction.user.email,
+      :year => @year,
+      :transaction => trn_atr_hash
     amount_after = Transaction.find(@transaction.id).amount
     actual_diff = amount_after - amount_before
     assert (actual_diff - expected_diff).abs < 0.0001, "unexpected change in amount"
