@@ -66,7 +66,6 @@ class Attendee < ActiveRecord::Base
   # -----------
 
   validates :country, :format => {:with => /^[A-Z]{2}$/}, :presence => true
-  validates_format_of :zip, :allow_blank => true, :with => /^\d{5}(-\d{4})?$/, :if => :country_is_america?, :message => "is not valid for the selected country"
   validates_presence_of :gender
   validates_inclusion_of :gender, :in => ["m","f"], :message => "is not valid"
   validates_inclusion_of :is_primary, :in => [true, false]
@@ -78,6 +77,22 @@ class Attendee < ActiveRecord::Base
   validates_length_of :roomate_request, :maximum => 250
   validates_date :birth_date, :after => Date.civil(1900,1,1), :allow_blank => false
   validates :congresses_attended, :numericality => {:greater_than_or_equal_to => 0, :only_integer => true, :allow_nil => true}
+
+  validates :state,
+    :presence => true,
+    :format => {
+      :with => /^[A-Z]{2}$/,
+      :if => :country_is_america?,
+      :message => " - Please use two-letter abbreviations for American states"
+    }
+
+  validates :zip,
+    :format => {
+      :allow_blank => true,
+      :with => /^\d{5}(-\d{4})?$/,
+      :if => :country_is_america?,
+      :message => "is not a valid American zip code"
+    }
 
   # AGA ID must be unique within each year
   validates :aga_id,
