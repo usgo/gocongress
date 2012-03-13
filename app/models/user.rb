@@ -49,6 +49,10 @@ class User < ActiveRecord::Base
   # object and its associations in one go with fields_for()
   accepts_nested_attributes_for :primary_attendee
 
+  def admin?
+    role == 'A'
+  end
+
   # After signing in, go to the "My Account" page, unless the primary
   # attendee has not filled out the registration form yet (for example,
   # immediately after submitting the devise registration form)
@@ -112,8 +116,13 @@ class User < ActiveRecord::Base
     subtotals.empty? ? 0 : subtotals.reduce(:+)
   end
 
+  # `is_admin?` is deprecated.  Please use `admin?`
   def is_admin?
-    role == 'A'
+    admin?
+  end
+
+  def staff?
+    role == 'S'
   end
 
   def role_name

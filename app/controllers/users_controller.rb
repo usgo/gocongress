@@ -27,7 +27,7 @@ class UsersController < ApplicationController
   end
 
   def index
-    @users = @users.yr(@year).order("role = 'A' desc")
+    @users = @users.yr(@year).order("role = 'A' desc, role = 'S' desc")
   end
 
   def show

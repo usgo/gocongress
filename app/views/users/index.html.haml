@@ -5,9 +5,12 @@
   %strong user
   has a unique email address.  Each user can have multiple
   = link_to "attendees.", :attendees
-  Some users are
-  %strong admins,
-  and they can do anything. Do not promote too many admins.
+%p
+  %strong Admins
+  can do anything.
+  %strong Staff
+  can see anything.
+  Do not promote too many of either.
 
 %table.semantic.fullwidth.zebra
   %thead
@@ -21,8 +24,7 @@
   %tbody
     - @users.each do |user|
       %tr
-        %td{ :class => user.is_admin? ? "emphasized" : "no-emphasis" }
-          = user.role
+        %td{ :class => role_emphasis_class(user) }= user.role_name
         %td= user.email
         %td
           - user.attendees.each do |atn|
