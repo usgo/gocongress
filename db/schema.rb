@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120311033045) do
+ActiveRecord::Schema.define(:version => 20120313024852) do
 
   create_table "activities", :force => true do |t|
     t.string   "name"
@@ -83,13 +83,13 @@ ActiveRecord::Schema.define(:version => 20120311033045) do
   add_index "attendee_tournaments", ["tournament_id"], :name => "index_attendee_tournaments_on_tournament_id"
 
   create_table "attendees", :force => true do |t|
-    t.string   "given_name",                                               :null => false
-    t.string   "family_name",                                              :null => false
+    t.string   "given_name",                                                 :null => false
+    t.string   "family_name",                                                :null => false
     t.string   "gender",                   :limit => 1
     t.boolean  "anonymous"
-    t.integer  "rank",                                                     :null => false
+    t.integer  "rank",                                                       :null => false
     t.integer  "aga_id"
-    t.string   "address_1",                                                :null => false
+    t.string   "address_1",                                                  :null => false
     t.string   "address_2"
     t.string   "city"
     t.string   "state"
@@ -102,8 +102,8 @@ ActiveRecord::Schema.define(:version => 20120311033045) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "user_id"
-    t.boolean  "is_primary",                            :default => false, :null => false
-    t.boolean  "minor_agreement_received",              :default => false, :null => false
+    t.boolean  "is_primary",                              :default => false, :null => false
+    t.boolean  "minor_agreement_received",                :default => false, :null => false
     t.integer  "congresses_attended"
     t.string   "tshirt_size",              :limit => 2
     t.text     "special_request"
@@ -111,7 +111,8 @@ ActiveRecord::Schema.define(:version => 20120311033045) do
     t.string   "comment"
     t.boolean  "confirmed"
     t.string   "guardian_full_name"
-    t.integer  "year",                                                     :null => false
+    t.integer  "year",                                                       :null => false
+    t.string   "transportation_request",   :limit => 500
   end
 
   add_index "attendees", ["aga_id", "year"], :name => "index_attendees_on_aga_id_and_year", :unique => true

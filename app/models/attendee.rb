@@ -21,8 +21,8 @@ class Attendee < ActiveRecord::Base
   # Mass assignment config
   attr_accessible :given_name, :family_name, :gender, :anonymous, :rank, :aga_id,
     :address_1, :address_2, :city, :state, :zip, :country, :phone, :email, :birth_date,
-    :understand_minor, :congresses_attended,
-    :tshirt_size, :special_request, :roomate_request
+    :understand_minor, :congresses_attended, :tshirt_size,
+    :special_request, :roomate_request, :transportation_request
 
   # FIXME: in the controller, somehow year needs to get set
   # before authorize! runs.  until then, year needs to be accessible.
@@ -106,6 +106,8 @@ class Attendee < ActiveRecord::Base
       :allow_nil => true,
       :message => "id is not a number"
     }
+
+  validates :transportation_request, :length => { :maximum => 500 }
 
   # Attendees must belong to a user (except when they are first being created,
   # because in a nested form there might not be a user_id yet.  I think that is what
