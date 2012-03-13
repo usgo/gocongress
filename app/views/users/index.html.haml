@@ -19,9 +19,10 @@
       %th Email
       %th Attendees
       %th # Attendees
-      %th
-        - drn = (params[:drn] == "asc") ? :desc : :asc
-        = link_to "Created", :sort => :created_at, :drn => drn
+      - [:created_at, :last_sign_in_at].each do |a|
+        %th
+          - drn = (params[:sort] == a.to_s && params[:drn] == "asc") ? :desc : :asc
+          = link_to trl_attr("user", a), :sort => a, :drn => drn
       %th{:colspan => "2"}
   %tbody
     - @users.each do |user|
@@ -35,6 +36,7 @@
             %br
         %td= user.attendees.count
         %td= user.created_at.to_date.to_formatted_s(:rfc822)
+        %td= user.last_sign_in_at.to_date.to_formatted_s(:rfc822)
         %td= link_to 'Account', user
         %td
           = link_to 'Delete', user, :confirm => 'Are you sure?', :method => :delete

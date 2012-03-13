@@ -27,9 +27,9 @@ class UsersController < ApplicationController
   end
 
   def index
-    if params[:sort] == "created_at"
+    if %w[created_at last_sign_in_at].include? params[:sort]
       drn = (params[:drn] == "asc") ? :asc : :desc
-      sort_order = "created_at #{drn}"
+      sort_order = "#{params[:sort]} #{drn}"
     else
       sort_order = "role = 'A' desc, role = 'S' desc"
     end

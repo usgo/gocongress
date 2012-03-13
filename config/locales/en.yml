@@ -71,6 +71,7 @@ en:
         min_reg_date: "Registered On or Before Date"
       user:
         created_at: "Created"
+        last_sign_in_at: "Last Sign In"
     models:
       job: "Position"
       activity: "Activity"
