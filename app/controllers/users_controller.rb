@@ -27,7 +27,13 @@ class UsersController < ApplicationController
   end
 
   def index
-    @users = @users.yr(@year).order("role = 'A' desc, role = 'S' desc")
+    if params[:sort] == "created_at"
+      drn = (params[:drn] == "asc") ? :asc : :desc
+      sort_order = "created_at #{drn}"
+    else
+      sort_order = "role = 'A' desc, role = 'S' desc"
+    end
+    @users = @users.yr(@year).order(sort_order)
   end
 
   def show

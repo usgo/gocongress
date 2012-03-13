@@ -15,11 +15,13 @@
 %table.semantic.fullwidth.zebra
   %thead
     %tr
-      %th Type
+      %th= link_to "Role", :sort => :role
       %th Email
       %th Attendees
       %th # Attendees
-      %th Created
+      %th
+        - drn = (params[:drn] == "asc") ? :desc : :asc
+        = link_to "Created", :sort => :created_at, :drn => drn
       %th{:colspan => "2"}
   %tbody
     - @users.each do |user|
