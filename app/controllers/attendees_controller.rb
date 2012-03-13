@@ -380,7 +380,7 @@ private
   # direction, and returns an sql order clause string.  If no valid
   # sort field is supplied, the default is to sort by rank (0 is non-player).
   def parse_order_clause_params
-    valid_sortable_columns = %w[given_name family_name rank created_at country]
+    valid_sortable_columns = %w[given_name family_name rank created_at country state]
     unless (valid_sortable_columns.include?(params[:sort]))
       order_clause = "rank = 0, rank desc"
     else
@@ -394,7 +394,7 @@ private
 
       # some sort orders could reveal clues about anonymous people,
       # so we must first order by anonymity to protect against that.
-      unsafe_for_anon = %w[given_name family_name]
+      unsafe_for_anon = %w[given_name family_name country state]
       if unsafe_for_anon.include? params[:sort]
         order_clause = 'anonymous, ' + order_clause
       end

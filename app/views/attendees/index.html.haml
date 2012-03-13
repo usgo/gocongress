@@ -30,7 +30,7 @@
     %thead
       %tr
         %th
-        - %w[given_name family_name rank country created_at].each do |c|
+        - %w[given_name family_name rank country state created_at].each do |c|
           - drn = (c == params[:sort]) ? @opposite_direction : :asc
           %th= link_to trl_attr(:attendee, c), :sort => c, :direction => drn
     %tbody
@@ -40,5 +40,6 @@
           %td= a.get_given_name(true)
           %td= a.get_family_name(true)
           %td= a.get_rank_name
-          %td= a.country
+          %td= a.anonymize_attribute :country
+          %td= a.anonymize_attribute :state
           %td= a.created_at.to_date.to_formatted_s(:rfc822)

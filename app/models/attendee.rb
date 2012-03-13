@@ -142,8 +142,8 @@ class Attendee < ActiveRecord::Base
     birthday_after_congress ? year_delta - 1 : year_delta
   end
 
-  def anonymize(name)
-    anonymous? ? 'Anonymous' : name
+  def anonymize string
+    anonymous? ? 'Anonymous' : string
   end
 
   def attribute_names_for_csv
@@ -186,6 +186,10 @@ class Attendee < ActiveRecord::Base
 
   def congress_start
     CONGRESS_START_DATE[self.year]
+  end
+
+  def anonymize_attribute atr
+    anonymize self.send atr
   end
 
   def country_is_america?
