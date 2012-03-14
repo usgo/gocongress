@@ -1,4 +1,4 @@
-/ Parameters: 
+/ Parameters:
 / obj - a symbol naming an activerecord model
 / atr - a symbol naming an attribute of said model
 
@@ -7,6 +7,5 @@
   %br
   %span.smalltext
     You can format the text (bold, etc.) with
-    %a{ :href => 'http://en.wikipedia.org/wiki/Markdown', :target => '_blank' } Markdown
-    syntax.
+    %a{ :href => 'http://en.wikipedia.org/wiki/Markdown', :target => '_blank' } Markdown.
 = text_area obj, atr, { :class => 'wide', :rows => 5 }
