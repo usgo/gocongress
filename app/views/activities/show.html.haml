@@ -12,9 +12,6 @@
       %th= trl_attr 'activity', 'location'
       %td= @activity.location
     %tr
-      %th= trl_attr 'activity', 'notes'
-      %td= @activity.notes
-    %tr
       %th Date
       %td= @activity.leave_time.to_date
     - %w[leave_time return_time].each do |a|
@@ -27,7 +24,11 @@
       %th= Attendee.model_name.human.pluralize
       %td= @activity.attendees.count
 
+%div= Markdown.new(@activity.notes).to_html.html_safe
+
 %br
 
-- if can? :edit, @activity
-  = link_to 'Edit', edit_activity_path(@activity)
+- if can? :manage, @activity
+  .inline-children
+    = button_to 'Edit', edit_activity_path(@activity), :method => :get
+    = button_to 'Delete', @activity, :method => :delete, :confirm => 'Are you sure?'

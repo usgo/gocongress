@@ -15,7 +15,9 @@ class Activity < ActiveRecord::Base
 
   validates :activity_category, :presence => true
   validates_presence_of :leave_time, :name, :return_time
-  validates_length_of :notes, :maximum => 250
-
   validates :location, :length => {:maximum => 50}
+  validates :notes, :length => {
+    :maximum => 2000,
+    :message => "are too long (maximum is 2000 characters)"
+  }
 end

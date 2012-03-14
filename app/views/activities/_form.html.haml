@@ -19,8 +19,7 @@
       %p.smalltext.aligned-with-input
         Include room number, if applicable
     .field
-      = f.label :notes, "Notes"
-      = f.text_area :notes, {:rows => 2, :cols => 60}
+      = render partial: "shared/md_area", locals: { :obj => :activity, :atr => :notes}
 
   %h3 Schedule
   %fieldset
@@ -35,7 +34,7 @@
       %br
       %span.smalltext.aligned-with-input 24-hour time
 
-  %br
-
-  .actions
-    = f.submit
+  %fieldset
+    .field
+      %label
+      = f.submit 'Save'
