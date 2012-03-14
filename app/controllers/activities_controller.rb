@@ -36,7 +36,7 @@ class ActivitiesController < ApplicationController
   # DELETE /activities/1
   def destroy
     @activity.destroy
-    redirect_to activities_url
+    redirect_to activity_category_url @activity.activity_category
   end
 
   def activity_category_options
