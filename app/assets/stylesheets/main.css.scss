@@ -46,6 +46,10 @@ th.row { vertical-align: top; }
 table .numeric { text-align: right; }
 img.thin-border { border: 1px solid black; }
 .initially_hidden { display: none; }
+.hardwrap {
+  overflow-wrap: break-word; // css 3, but not supported yet
+  word-wrap: break-word; // non-conforming, but works
+}
 
 /* Basic shortcuts: alignment */
 .align-center { text-align: center; }

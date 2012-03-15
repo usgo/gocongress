@@ -28,7 +28,8 @@
     - @users.each do |user|
       %tr
         %td{ :class => role_emphasis_class(user) }= user.role_name
-        %td= user.email
+        %td
+          .hardwrap{:style => "max-width:200px;"}= user.email
         %td
           - user.attendees.each do |atn|
             = atn.get_full_name
