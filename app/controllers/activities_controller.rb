@@ -16,7 +16,7 @@ class ActivitiesController < ApplicationController
 
   # POST /activities
   def create
-    @activity.year = @year
+    @activity.year = @year.year
     if @activity.save
       redirect_to @activity, :notice => "#{Activity.model_name.human} created"
     else
@@ -40,7 +40,7 @@ class ActivitiesController < ApplicationController
   end
 
   def activity_category_options
-    ActivityCategory.yr(@year).all.map {|c| [ c.name, c.id ] }
+    ActivityCategory.yr(@year.year).all.map {|c| [ c.name, c.id ] }
   end
   helper_method :activity_category_options
 

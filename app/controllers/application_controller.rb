@@ -10,11 +10,11 @@ class ApplicationController < ActionController::Base
   before_filter :set_display_timezone
 
   def default_url_options(options={})
-    { :year => @year }
+    { :year => @year.year }
   end
 
   def set_display_timezone
-    Time.zone = @year_object.timezone
+    Time.zone = @year.timezone
   end
 
   def set_year_from_params
@@ -24,19 +24,18 @@ class ApplicationController < ActionController::Base
     # places. Hopefully, when this transition is complete we will be
     # able to drop the constant.
     if params[:year].present?
-      @year = params[:year].to_i
+      year = params[:year].to_i
     else
-      @year = CONGRESS_YEAR.to_i
+      year = CONGRESS_YEAR.to_i
     end
 
     # Validate year to protect against sql injection, or benign
     # programmer error.
-    raise "Invalid year" unless (2011..2100).include?(@year)
+    raise "Invalid year" unless (2011..2100).include?(year)
 
     # Load year object
-    # TODO: this should be named simply "@year"
-    @year_object = Year.find_by_year @year
-    raise "Year #{@year} not found" unless @year_object.present?
+    @year = Year.find_by_year(year)
+    raise "Year #{year} not found" unless @year.present?
   end
 
   def set_yearly_vars
@@ -46,14 +45,14 @@ class ApplicationController < ActionController::Base
     @years = 2011..LATEST_YEAR
 
     # Location and date range
-    @congress_city = @year_object.city
-    @congress_state = @year_object.state
-    @congress_date_range = @year_object.date_range
+    @congress_city = @year.city
+    @congress_state = @year.state
+    @congress_date_range = @year.date_range
 
     # The layout needs a list of content and activity categories
-    @content_categories_for_menu = ContentCategory.yr(@year).order(:name)
-    @activity_categories_for_menu = ActivityCategory.yr(@year).order(:name)
-    @tournaments_for_nav_menu = Tournament.yr(@year).nav_menu
+    @content_categories_for_menu = ContentCategory.yr(@year.year).order(:name)
+    @activity_categories_for_menu = ActivityCategory.yr(@year.year).order(:name)
+    @tournaments_for_nav_menu = Tournament.yr(@year.year).nav_menu
   end
 
   # Redirect Devise to a specific page after successful sign in
@@ -126,7 +125,7 @@ protected
   end
 
   def deny_users_from_wrong_year
-    render_access_denied unless current_user && current_user.year == @year
+    render_access_denied unless current_user && current_user.year == @year.year
   end
 
 private
@@ -144,7 +143,7 @@ private
   end
 
   def can_see_admin_menu?
-    can?(:see_admin_menu, :layout) && current_user.year == @year
+    can?(:see_admin_menu, :layout) && current_user.year == @year.year
   end
 
 end

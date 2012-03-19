@@ -1,4 +1,4 @@
 .field.tournament-round
   = f.label :round_start
-  = f.datetime_select :round_start, minute_step: 5, start_year: @year, end_year: @year
+  = f.datetime_select :round_start, minute_step: 5, start_year: @year.year, end_year: @year.year
   = link_to_remove_fields "Remove", f

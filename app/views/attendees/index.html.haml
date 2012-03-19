@@ -1,7 +1,7 @@
 %h2 Who is Coming?
 
-- if production? && REGISTRATION_PHASE[@year] == :closed
-  %p Registration for the #{@year} Go Congress has not yet begun.
+- if production? && REGISTRATION_PHASE[@year.year] == :closed
+  %p Registration for the #{@year.year} Go Congress has not yet begun.
 
 - else
   %p

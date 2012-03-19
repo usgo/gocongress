@@ -3,7 +3,7 @@ class ActivityCategoriesController < ApplicationController
   load_and_authorize_resource
 
   def create
-    @activity_category.year = @year
+    @activity_category.year = @year.year
     if @activity_category.save
       redirect_to(@activity_category, :notice => 'Category created.')
     else

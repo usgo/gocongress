@@ -33,7 +33,7 @@ class UsersController < ApplicationController
     else
       sort_order = "role = 'A' desc, role = 'S' desc"
     end
-    @users = @users.yr(@year).order(sort_order)
+    @users = @users.yr(@year.year).order(sort_order)
   end
 
   def show
@@ -45,9 +45,9 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     authorize! :update, @user
     @formAction = "https://secure.merchantonegateway.com/cart/cart.php"
-    if @year == 2011
+    if @year.year == 2011
       @merchantone_username = "lscott60637"
-    elsif @year == 2012
+    elsif @year.year == 2012
       @merchantone_username = "abridges27278"
     end
   end
@@ -139,7 +139,7 @@ private
     # whether the user we're editing has that particular job
     # Is this a railsy way to do things, or is it too much SQL?
     # -Jared 12/3/2010
-    Job.yr(@year).all :select => "jobs.id, jobname, coalesce(user_jobs.user_id, 0) as has_job" \
+    Job.yr(@year.year).all :select => "jobs.id, jobname, coalesce(user_jobs.user_id, 0) as has_job" \
       , :joins => "left join user_jobs on user_jobs.job_id = jobs.id and user_jobs.user_id = " + @user.id.to_s \
       , :order => :jobname
   end

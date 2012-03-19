@@ -62,7 +62,7 @@
               =link_to 'Delete', a, :confirm => "Are you sure you want to delete this attendee?", :method => :delete
 
   %p.smalltext
-    * Age on #{CONGRESS_START_DATE[@year].to_formatted_s(:long)}
+    * Age on #{CONGRESS_START_DATE[@year.year].to_formatted_s(:long)}
     %br
     ** Confirmed when payment is received, all forms are filled out, association membership verified, etc.
 

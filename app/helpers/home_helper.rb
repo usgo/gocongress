@@ -6,7 +6,7 @@ module HomeHelper
     slide_title = @slides[i-1][0]
     slide_author = @slides[i-1][1]
     slide_filename = ("%02d" % i) + ".jpg"
-    slide_path = File.join("slideshow", @year.to_s, slide_filename)
+    slide_path = File.join("slideshow", @year.year.to_s, slide_filename)
     return image_tag slide_path, :title => slide_title, :alt => slide_author
   end
   

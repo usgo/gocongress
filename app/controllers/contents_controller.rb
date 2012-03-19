@@ -4,7 +4,7 @@ class ContentsController < ApplicationController
 
   # GET /contents
   def index
-    @contents = @contents.yr(@year)
+    @contents = @contents.yr(@year.year)
   end
 
   # GET /contents/1
@@ -21,7 +21,7 @@ class ContentsController < ApplicationController
 
   # POST /contents
   def create
-    @content.year = @year
+    @content.year = @year.year
     if @content.save
       redirect_to(@content, :notice => 'Content created.')
     else
@@ -45,7 +45,7 @@ class ContentsController < ApplicationController
   end
   
   def content_category_options
-    ContentCategory.yr(@year).all.map {|c| [ c.name, c.id ] }
+    ContentCategory.yr(@year.year).all.map {|c| [ c.name, c.id ] }
   end
   helper_method :content_category_options
 

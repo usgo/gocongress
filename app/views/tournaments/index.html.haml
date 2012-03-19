@@ -23,7 +23,7 @@
       %tr.greater-header
         %th.align-left{ :colspan => current_user_is_admin? ? 5 : 3 }
           = d.to_formatted_s(:month_day_dow)
-          = " - Day Off!" if d === DAY_OFF_DATE[@year]
+          = " - Day Off!" if d === DAY_OFF_DATE[@year.year]
       - rounds_this_date.each do |r|
         %tr
           %td= r.round_start.strftime '%l:%M %p'

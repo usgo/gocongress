@@ -13,13 +13,13 @@
   - else throw "unexpected rank " + attendee.rank.to_s
 
 %div{:class => badge_class_list}
-  .badge-logo= image_tag "logo/usgc/144px/#{@year}.png"
+  .badge-logo= image_tag "logo/usgc/144px/#{@year.year}.png"
   %h1.badge-attendee= attendee.get_full_name
   %h1{:class => rank_classes.join(" ")}= attendee.rank_name_for_badge
   %h1.badge-player-status 
     -# column attendee.is_player was dropped
     -#= attendee.is_player? ? "Player" : "Non-Player"
-  %h2.badge-year USGC #{@year}
+  %h2.badge-year USGC #{@year.year}
   %p.badge-misc
     AGA#
     = attendee.aga_id.present? ? attendee.aga_id : "______"

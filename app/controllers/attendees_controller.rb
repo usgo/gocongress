@@ -5,7 +5,7 @@ class AttendeesController < ApplicationController
   skip_authorize_resource :only => [:create, :index, :vip]
 
   def show
-    @plan_categories = PlanCategory.reg_form(@year, @attendee.age_in_years)
+    @plan_categories = PlanCategory.reg_form(@year.year, @attendee.age_in_years)
   end
 
   def edit_plans
@@ -56,7 +56,7 @@ class AttendeesController < ApplicationController
   def index
     params[:direction] ||= "asc"
     @opposite_direction = (params[:direction] == 'asc') ? 'desc' : 'asc'
-    @attendees = Attendee.yr(@year).order parse_order_clause_params
+    @attendees = Attendee.yr(@year.year).order parse_order_clause_params
 
     # get some fun statistics
     @pro_count = @attendees.where(:rank => 101..109).count
@@ -67,7 +67,7 @@ class AttendeesController < ApplicationController
     @female_count = @attendees.where(:gender => 'f').count
 
     # for the age statistics, our query will use a different order clause
-    age_before_beauty = Attendee.yr(@year).reasonable_birth_date.order('birth_date')
+    age_before_beauty = Attendee.yr(@year.year).reasonable_birth_date.order('birth_date')
     @oldest_attendee = age_before_beauty.first
     @youngest_attendee = age_before_beauty.last
 
@@ -140,7 +140,7 @@ class AttendeesController < ApplicationController
     # Assign protected attributes
     @attendee.user_id = target_user.id
     @attendee.is_primary = (target_user.attendees.count == 0)
-    @attendee.year = @year
+    @attendee.year = @year.year
 
     # Validate and save
     if @attendee.save
@@ -296,7 +296,7 @@ class AttendeesController < ApplicationController
     @attendee = Attendee.find params[:id]
     authorize! :read, @attendee
     @attendee_attr_names = %w[aga_id birth_date comment confirmed email gender phone special_request roomate_request].sort
-    tmt_names = AttendeeTournament.tmt_names_by_attendee(@year)
+    tmt_names = AttendeeTournament.tmt_names_by_attendee(@year.year)
     @tmt_names_atn = tmt_names[@attendee.id].present? ? tmt_names[@attendee.id] : Array.new
     render :layout => "print"
   end
@@ -310,29 +310,29 @@ class AttendeesController < ApplicationController
 
   # GET /attendees/vip
   def vip
-    @attendees = Attendee.yr(@year).where('rank >= 101')
+    @attendees = Attendee.yr(@year.year).where('rank >= 101')
   end
 
 protected
 
   def init_multipage( page )
     if page == "wishes"
-      @discounts = Discount.yr(@year).automatic(false)
+      @discounts = Discount.yr(@year.year).automatic(false)
       @attendee_discount_ids = @attendee.discounts.automatic(false).map { |d| d.id }
     elsif page == "admin"
-      @invitational_tournaments = Tournament.yr(@year).openness('I')
+      @invitational_tournaments = Tournament.yr(@year.year).openness('I')
       @atnd_inv_trn_ids = @attendee.tournaments.openness('I').map {|t| t.id}
     elsif page == "tournaments"
-      @open_tournaments = Tournament.yr(@year).openness('O').order(:name)
+      @open_tournaments = Tournament.yr(@year.year).openness('O').order(:name)
       @atnd_open_trn_ids = @attendee.tournaments.openness('O').map {|t| t.id}
     elsif page == "activities"
-      @activities = Activity.yr(@year).order(:leave_time, :name)
+      @activities = Activity.yr(@year.year).order(:leave_time, :name)
       @atnd_activity_ids = @attendee.activities.map {|e| e.id}
     end
   end
 
   def init_plans
-    @plan_category = PlanCategory.reg_form(@year, @attendee.age_in_years).find(params[:plan_category_id])
+    @plan_category = PlanCategory.reg_form(@year.year, @attendee.age_in_years).find(params[:plan_category_id])
     age = @attendee.age_in_years
     @plans = @plan_category.plans.enabled.appropriate_for_age(age).rank :cat_order
     @show_availability = Plan.inventoried_plan_in? @plans

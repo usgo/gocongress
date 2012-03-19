@@ -19,13 +19,13 @@ class RegistrationsController < Devise::RegistrationsController
   # `assert_year_matches_route` should prevent visitors from, for example,
   # using the 2012 registration form to create a 2011 user.
   def assert_year_matches_route
-    if params_contains_user_attr(:year) && params[:user][:year].to_i != @year.to_i
-      raise "Invalid year in params: Expected #{@year}, found #{params[:user][:year]}"
+    if params_contains_user_attr(:year) && params[:user][:year].to_i != @year.year
+      raise "Invalid year in params: Expected #{@year.year}, found #{params[:user][:year]}"
     end
   end
 
   def events_beside_congress
-    Event.yr(@year).order(:name)
+    Event.yr(@year.year).order(:name)
       .select{|e| !e.name.downcase.include? "congress"}
       .map(&:name)
   end

@@ -25,7 +25,7 @@
   %fieldset
     .field
       = f.label :leave_time
-      = f.datetime_select :leave_time, start_year: @year.to_i, end_year: @year.to_i, minute_step: 5
+      = f.datetime_select :leave_time, start_year: @year.year.to_i, end_year: @year.year.to_i, minute_step: 5
       %br
       %span.smalltext.aligned-with-input 24-hour time, please
     .field

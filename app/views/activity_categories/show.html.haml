@@ -28,7 +28,7 @@
       %tr.greater-header
         %th{ :colspan => current_user_is_admin? ? 9 : 7 }
           = d.to_formatted_s(:long_with_day)
-          = " - Day Off!" if d === DAY_OFF_DATE[@year]
+          = " - Day Off!" if d === DAY_OFF_DATE[@year.year]
       %tr.lesser-header
         %th= emh
         %th Leave

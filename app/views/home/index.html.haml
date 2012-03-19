@@ -16,7 +16,7 @@
     = @venue_city_state_zip
 
 .curvy-text-container
-  = image_tag "logo/usgc/#{@year}.png", :id => 'usgc-logo'
+  = image_tag "logo/usgc/#{@year.year}.png", :id => 'usgc-logo'
   .curvy-spacer{:style => "width: 85px;"} &nbsp;
   .curvy-spacer{:style => "width: 110px;"} &nbsp;
   .curvy-spacer{:style => "width: 130px;"} &nbsp;
@@ -36,7 +36,7 @@
 
   %h2
     Join us for the
-    = CONGRESS_ORDINALITY[@year].ordinalize
+    = CONGRESS_ORDINALITY[@year.year].ordinalize
     Annual US Go Congress
   %p
     The US Go Congress is the largest Go activity in the United States. It

@@ -6,18 +6,18 @@ class TransactionsControllerTest < ActionController::TestCase
     @staff = Factory.create :staff
     @admin_user = Factory.create :admin
     @transaction = Factory.create :tr_sale
-    @year = Time.now.year
+    @year.year = Time.now.year
   end
 
   test "admin can index transactions" do
     sign_in @admin_user
-    get :index, :year => @year
+    get :index, :year => @year.year
     assert_response :success
   end
 
   test "admin user can get edit form" do
     sign_in @admin_user
-    get :edit, :id => @transaction.to_param, :year => @year
+    get :edit, :id => @transaction.to_param, :year => @year.year
     assert_response :success
   end
 
@@ -28,15 +28,15 @@ class TransactionsControllerTest < ActionController::TestCase
     # be specified via user_email.  This is a new required param,
     # since I added the autocomplete.
     t = Factory.build :tr_sale, {:user => nil}
-    assert_difference("Transaction.yr(#{@year}).count", +1) do
-      post :create, :transaction => t.attributes, :user_email => @user.email, :year => @year
+    assert_difference("Transaction.yr(#{@year.year}).count", +1) do
+      post :create, :transaction => t.attributes, :user_email => @user.email, :year => @year.year
     end
     assert_redirected_to transaction_path(assigns(:transaction))
   end
 
   test "staff can index transactions" do
     sign_in @staff
-    get :index, :year => @year
+    get :index, :year => @year.year
     assert_response :success
   end
 
@@ -69,7 +69,7 @@ class TransactionsControllerTest < ActionController::TestCase
   test "admin can destroy transaction" do
     sign_in @admin_user
     assert_difference('Transaction.count', -1) do
-      delete :destroy, :id => @transaction.id, :year => @year
+      delete :destroy, :id => @transaction.id, :year => @year.year
     end
     assert_redirected_to transactions_path
   end
@@ -86,7 +86,7 @@ private
 
   def post_to_create_should_be_denied
     assert_no_difference('Transaction.count') do
-      post :create, :transaction => @transaction.attributes, :year => @year
+      post :create, :transaction => @transaction.attributes, :year => @year.year
     end
     assert_response 403
   end
@@ -97,7 +97,7 @@ private
     put :update,
       :id => @transaction.id,
       :user_email => @transaction.user.email,
-      :year => @year,
+      :year => @year.year,
       :transaction => trn_atr_hash
     amount_after = Transaction.find(@transaction.id).amount
     actual_diff = amount_after - amount_before
@@ -106,7 +106,7 @@ private
 
   def delete_transaction_should_be_denied
     assert_no_difference('Transaction.count') do
-      delete :destroy, :id => @transaction.id, :year => @year
+      delete :destroy, :id => @transaction.id, :year => @year.year
     end
     assert_response 403
   end

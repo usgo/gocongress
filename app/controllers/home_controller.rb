@@ -2,9 +2,9 @@ class HomeController < ApplicationController
 
   def index
     @bodyClassList = "homepage"
-    @slides = SlideSet.new(@year).slides_as_arrays
+    @slides = SlideSet.new(@year.year).slides_as_arrays
 
-    if @year == 2011
+    if @year.year == 2011
       @venue_url = 'http://www.ucsb.edu'
       @venue_name = 'University of California, Santa Barbara'
       @venue_address = '552 University Road'
@@ -18,7 +18,7 @@ class HomeController < ApplicationController
 
     # Get announcements for the homepage
     contents_where_clause = "year = ? and show_on_homepage = ? and (expires_at is null or expires_at > ?)"
-    @contents = Content.where(contents_where_clause, @year, true, Time.now).order("created_at desc")
+    @contents = Content.where(contents_where_clause, @year.year, true, Time.now).order("created_at desc")
   end
 
   def access_denied

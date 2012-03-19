@@ -4,7 +4,7 @@ class DiscountsController < ApplicationController
 
   # GET /discounts
   def index
-    @discounts = @discounts.yr(@year)
+    @discounts = @discounts.yr(@year.year)
   end
 
   # GET /discounts/1
@@ -21,7 +21,7 @@ class DiscountsController < ApplicationController
 
   # POST /discounts
   def create
-    @discount.year = @year
+    @discount.year = @year.year
     if @discount.save
       redirect_to @discount, :notice => 'Discount created.'
     else

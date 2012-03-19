@@ -4,7 +4,7 @@ class TournamentsController < ApplicationController
 
   # GET /tournaments
   def index
-    @tournaments = @tournaments.where(:year => @year).order('lower(name)').all
+    @tournaments = @tournaments.where(:year => @year.year).order('lower(name)').all
     rounds = Round.where(:tournament_id => @tournaments).order 'round_start'
     @rounds_by_date = rounds.group_by {|r| r.round_start.to_date}
   end
@@ -25,7 +25,7 @@ class TournamentsController < ApplicationController
 
   # POST /tournaments
   def create
-    @tournament.year = @year
+    @tournament.year = @year.year
     if @tournament.save
       redirect_to tournament_path(@tournament), :notice => 'Tournament created.'
     else

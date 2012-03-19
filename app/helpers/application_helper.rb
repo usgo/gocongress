@@ -25,7 +25,7 @@ module ApplicationHelper
 
   def link_to_liability_release()
     link_to "Liability Release",
-      "/docs/liability_release/USGC#{@year}-Liability-Release.pdf",
+      "/docs/liability_release/USGC#{@year.year}-Liability-Release.pdf",
       :target => '_blank'
   end
 

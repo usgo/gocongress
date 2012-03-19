@@ -13,7 +13,7 @@ class PlansController < ApplicationController
   end
 
   def create
-    @plan.year = @year
+    @plan.year = @year.year
     @plan_categories = categories_for_select
     if @plan.save
       redirect_to plan_category_path(@plan.plan_category), :notice => 'Plan created.'
@@ -46,7 +46,7 @@ class PlansController < ApplicationController
 private
 
   def categories_for_select
-    PlanCategory.yr(@year).order(:name).all.map {|c| [c.name, c.id]}
+    PlanCategory.yr(@year.year).order(:name).all.map {|c| [c.name, c.id]}
   end
 
 end

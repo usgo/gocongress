@@ -3,7 +3,7 @@ class ContentCategoriesController < ApplicationController
   load_and_authorize_resource
 
   def create
-    @content_category.year = @year
+    @content_category.year = @year.year
     if @content_category.save
       redirect_to(@content_category, :notice => 'Category created.')
     else
@@ -17,7 +17,7 @@ class ContentCategoriesController < ApplicationController
   end
 
   def index
-    @content_categories = @content_categories.yr(@year)
+    @content_categories = @content_categories.yr(@year.year)
   end
 
   def show

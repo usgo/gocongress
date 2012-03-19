@@ -7,7 +7,7 @@ class PlanCategoriesController < ApplicationController
   def index
     categories = @plan_categories \
       .select("plan_categories.*, events.name as event_name") \
-      .yr(@year).joins(:event).order("events.name, plan_categories.name")
+      .yr(@year.year).joins(:event).order("events.name, plan_categories.name")
     @plan_categories_by_event = categories.group_by {|c| c.event_name}
   end
 
@@ -16,7 +16,7 @@ class PlanCategoriesController < ApplicationController
   end
 
   def create
-    @plan_category.year = @year
+    @plan_category.year = @year.year
     if @plan_category.save
       redirect_to(@plan_category, :notice => 'Plan category created.')
     else
@@ -48,7 +48,7 @@ class PlanCategoriesController < ApplicationController
   private
 
   def events_for_select
-    @events_for_select = Event.yr(@year).alphabetical.all.map {|e| [e.name, e.id]}
+    @events_for_select = Event.yr(@year.year).alphabetical.all.map {|e| [e.name, e.id]}
   end
 
   def expose_plans

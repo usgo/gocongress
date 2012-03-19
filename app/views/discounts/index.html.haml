@@ -3,7 +3,7 @@
 .flow-padding= button_to "Create New Discount", new_discount_path, :method => "get"
 
 - if @discounts.empty?
-  %p There are no discounts for #{@year}.
+  %p There are no discounts for #{@year.year}.
 - else
   %table.semantic.zebra.fullwidth
     %tr

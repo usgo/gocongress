@@ -2,10 +2,10 @@
 %html
   %head
     %meta{:content => "text/html", "http-equiv" => "Content-Type"}/
-    = favicon_link_tag "favicon/#{@year}.ico"
+    = favicon_link_tag "favicon/#{@year.year}.ico"
     %title
       US Go Congress
-      = @year
+      = @year.year
       - unless controller_name == "home" and action_name == "index"
         = "- #{page_title}"
 
@@ -14,7 +14,7 @@
     = stylesheet_link_tag :application
     = stylesheet_link_tag 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.17/themes/ui-lightness/jquery-ui.css'
 
-  %body{:class => "#{@bodyClassList} year#{@year}"}
+  %body{:class => "#{@bodyClassList} year#{@year.year}"}
 
     %noscript
       #noscript-warning
@@ -23,11 +23,11 @@
     #header-container
       #header
         #usgc-title-container
-          %h1= link_to "#{@year} US Go Congress", year_path
+          %h1= link_to "#{@year.year} US Go Congress", year_path
         #usgc-when-where-container
           = @congress_city + ', ' + @congress_state
           = @congress_date_range + ','
-          = @year
+          = @year.year
         %div{:style => "clear:both;"}
     .nav-container
       .nav
@@ -93,7 +93,7 @@
       #sponsors
         %a{:href => "http://www.usgo.org"}
           = image_tag "sponsors/aga.jpg"
-        - if @year == 2011
+        - if @year.year == 2011
           %a{:href => "http://www.kbaduk.or.kr/eng/"}
             = image_tag "sponsors/kaba.jpg"
           %a{:href => "http://www.gokgs.com"}
@@ -101,7 +101,7 @@
       #site-credit
         All times are #{Time.zone}
         %br
-        Content &copy; #{@year} US Go Congress
+        Content &copy; #{@year.year} US Go Congress
         %br/
         Web Programming by
         %a{:href => "http://www.jaredbeck.com", :target => "_blank"} Jared Beck

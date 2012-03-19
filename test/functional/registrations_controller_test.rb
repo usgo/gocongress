@@ -4,13 +4,13 @@ class RegistrationsControllerTest < ActionController::TestCase
   tests RegistrationsController
 
   setup do
-    @year = Time.now.year
+    @year.year = Time.now.year
     @u = Factory.attributes_for(:user)
     @u.merge!({ :primary_attendee_attributes => Factory.attributes_for(:attendee) })
   end
 
   test "visitor can get sign up page" do
-    get :new, :year => @year
+    get :new, :year => @year.year
     assert_response :success
   end
 
@@ -18,19 +18,19 @@ class RegistrationsControllerTest < ActionController::TestCase
     user_attrs = { email: 'example@example.com',
       password: 'asdf',
       password_confirmation: 'asdf',
-      year: @year }
+      year: @year.year }
     assert_difference ["User.count"], +1 do
-      post :create, :user => user_attrs, :year => @year
+      post :create, :user => user_attrs, :year => @year.year
     end
-    created_user = User.yr(@year).order(:created_at).last
-    assert_redirected_to add_attendee_to_user_path(@year, created_user.id)
+    created_user = User.yr(@year.year).order(:created_at).last
+    assert_redirected_to add_attendee_to_user_path(@year.year, created_user.id)
   end
 
   # TODO: This test is defunct.  When we drop accepts_nested_attributes_for
   # from the User model, this test will be removed (or rewritten).
   test "visitor can create a user with valid registration data" do
     assert_difference ["User.count", "Attendee.count"], +1 do
-      post :create, :user => @u, :year => @year
+      post :create, :user => @u, :year => @year.year
     end
     assert assigns(:user).primary_attendee.user_id.present?
     assert assigns(:user).primary_attendee.is_primary?
@@ -39,14 +39,14 @@ class RegistrationsControllerTest < ActionController::TestCase
 
   test "visitor cannot create a user with invalid registration data" do
     assert_no_difference ["User.count", "Attendee.count"] do
-      post :create, :user => {}, :year => @year
+      post :create, :user => {}, :year => @year.year
     end
     assert_template "new"
   end
 
   test "visitor cannot specify role" do
     @u[:role] = 'A' # A for admin
-    post :create, :user => @u, :year => @year
+    post :create, :user => @u, :year => @year.year
 
     # we expect the user to be created, but the specified role to be ignored
     assert_response :redirect
@@ -60,7 +60,7 @@ class RegistrationsControllerTest < ActionController::TestCase
     @u[:primary_attendee_attributes][:understand_minor] = 0
 
     assert_no_difference ["User.count", "Attendee.count"] do
-      post :create, :user => @u, :year => @year
+      post :create, :user => @u, :year => @year.year
     end
     assert_template "new"
     assert_equal false, assigns(:user).errors.empty?

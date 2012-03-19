@@ -7,9 +7,9 @@ class ReportsController < ApplicationController
   def authorize_read_report() authorize! :read, :report end
 
   def attendees
-    @attendees = Attendee.yr(@year).all
+    @attendees = Attendee.yr(@year.year).all
     @attendee_count = @attendees.count
-    @user_count = User.yr(@year).count
+    @user_count = User.yr(@year.year).count
 
     # build csv header line
     # the order here must match attendee_to_array() in reports_helper.rb
@@ -17,10 +17,10 @@ class ReportsController < ApplicationController
     if @attendee_count > 0 then
       cols << 'user_email'
       cols << @attendees.first.attribute_names_for_csv
-      Plan.yr(@year).order(:name).each { |p| cols << "Plan: " + safe_for_csv(p.name) }
-      claimable_discounts = Discount.yr(@year).where('is_automatic = ?', false).order(:name)
+      Plan.yr(@year.year).order(:name).each { |p| cols << "Plan: " + safe_for_csv(p.name) }
+      claimable_discounts = Discount.yr(@year.year).where('is_automatic = ?', false).order(:name)
       claimable_discounts.each { |d| cols << "Discount: " + safe_for_csv(d.name) }
-      Tournament.yr(@year).order(:name).each { |t| cols << "Tournament: " + safe_for_csv(t.name) }
+      Tournament.yr(@year.year).order(:name).each { |t| cols << "Tournament: " + safe_for_csv(t.name) }
     end
     @csv_header_line = cols.join(',')
 
@@ -31,16 +31,16 @@ class ReportsController < ApplicationController
   end
 
   def atn_badges_all
-    @attendees = Attendee.yr(@year).where('lower(substr(family_name,1,1)) between ? and ?', params[:min], params[:max])
+    @attendees = Attendee.yr(@year.year).where('lower(substr(family_name,1,1)) between ? and ?', params[:min], params[:max])
     @attendees.order('family_name, given_name')
     render :layout => "print"
   end
 
   def atn_reg_sheets
     @attendee_attr_names = %w[aga_id birth_date comment confirmed email gender phone special_request roomate_request].sort
-    @attendees = Attendee.yr(@year).where('lower(substr(family_name,1,1)) between ? and ?', params[:min], params[:max])
+    @attendees = Attendee.yr(@year.year).where('lower(substr(family_name,1,1)) between ? and ?', params[:min], params[:max])
     @attendees.order('user_id, family_name, given_name')
-    @tmt_names = AttendeeTournament.tmt_names_by_attendee(@year)
+    @tmt_names = AttendeeTournament.tmt_names_by_attendee(@year.year)
     render :layout => "print"
   end
 
@@ -48,33 +48,33 @@ class ReportsController < ApplicationController
   end
 
   def invoices
-    users = User.yr(@year).all
+    users = User.yr(@year.year).all
     @user_count = users.count
     @invoice_total_across_all_users = users.map(&:get_invoice_total).reduce(:+)
   end
 
   def emails
     @atnd_email_list = ""
-    Attendee.yr(@year).each { |a|
+    Attendee.yr(@year.year).each { |a|
       @atnd_email_list += "\"#{a.get_full_name}\" <#{a.email}>, "
       }
   end
 
   def activities
-    @activities = Activity.yr(@year).order :leave_time
+    @activities = Activity.yr(@year.year).order :leave_time
     @activities_by_date = @activities.group_by {|activity| activity.leave_time.to_date}
   end
 
   def outstanding_balances
-    @users = User.yr(@year).joins(:primary_attendee).order :family_name, :given_name
+    @users = User.yr(@year.year).joins(:primary_attendee).order :family_name, :given_name
     @users.keep_if { |u| u.balance >= 0.01 }
   end
 
   def transactions
-    @transactions = Transaction.yr(@year).all
-    @sales = Transaction.yr(@year).where("trantype = ?", "S")
-    @comps = Transaction.yr(@year).where("trantype = ?", "C")
-    @refunds = Transaction.yr(@year).where("trantype = ?", "R")
+    @transactions = Transaction.yr(@year.year).all
+    @sales = Transaction.yr(@year.year).where("trantype = ?", "S")
+    @comps = Transaction.yr(@year.year).where("trantype = ?", "C")
+    @refunds = Transaction.yr(@year.year).where("trantype = ?", "R")
 
     @sales_sum = @sales.sum(:amount)
     @comps_sum = @comps.sum(:amount)
@@ -89,11 +89,11 @@ class ReportsController < ApplicationController
 
   def tournaments
     # Lisa wants "the US Open at the bottom, since it will be by far the longest"
-    @tournaments = Tournament.yr(@year).order("name <> 'US Open' desc, name asc")
+    @tournaments = Tournament.yr(@year.year).order("name <> 'US Open' desc, name asc")
   end
 
   def user_invoices
-    @users = User.yr(@year).joins(:primary_attendee)
+    @users = User.yr(@year.year).joins(:primary_attendee)
     @users.where('lower(substr(family_name,1,1)) between ? and ?', params[:min], params[:max])
     @users.order('family_name, given_name')
     render :layout => "print"
