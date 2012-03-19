@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120314012958) do
+ActiveRecord::Schema.define(:version => 20120318224832) do
 
   create_table "activities", :force => true do |t|
     t.string   "name"
@@ -285,5 +285,21 @@ ActiveRecord::Schema.define(:version => 20120314012958) do
   add_index "users", ["id", "year"], :name => "index_users_on_id_and_year", :unique => true
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
   add_index "users", ["year"], :name => "index_users_on_year"
+
+  create_table "years", :force => true do |t|
+    t.string  "city",               :null => false
+    t.string  "date_range",         :null => false
+    t.date    "day_off_date",       :null => false
+    t.integer "ordinal_number",     :null => false
+    t.string  "registration_phase", :null => false
+    t.string  "reply_to_email",     :null => false
+    t.date    "start_date",         :null => false
+    t.string  "state",              :null => false
+    t.string  "timezone",           :null => false
+    t.string  "twitter_url"
+    t.integer "year",               :null => false
+  end
+
+  add_index "years", ["year"], :name => "index_years_on_year", :unique => true
 
 end

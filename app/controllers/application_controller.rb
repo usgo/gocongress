@@ -14,15 +14,7 @@ class ApplicationController < ActionController::Base
   end
 
   def set_display_timezone
-    if @year == 2011
-      Time.zone = "Pacific Time (US & Canada)"
-    elsif @year == 2012
-      Time.zone = "Eastern Time (US & Canada)"
-    else
-      # If display timezone has not been defined, the default
-      # in environment.rb will be used (currently UTC)
-      Rails.logger.warn "WARNING: No display timezone set for #{@year}"
-    end
+    Time.zone = @year_object.timezone
   end
 
   def set_year_from_params
@@ -40,6 +32,11 @@ class ApplicationController < ActionController::Base
     # Validate year to protect against sql injection, or benign
     # programmer error.
     raise "Invalid year" unless (2011..2100).include?(@year)
+
+    # Load year object
+    # TODO: this should be named simply "@year"
+    @year_object = Year.find_by_year @year
+    raise "Year #{@year} not found" unless @year_object.present?
   end
 
   def set_yearly_vars
@@ -48,18 +45,10 @@ class ApplicationController < ActionController::Base
     # Currently just used for year navigation in footer
     @years = 2011..LATEST_YEAR
 
-    # Location and date also used to be constants
-    # For now, an if-else is fine, but in the future, when there are
-    # more years, we may want some other way to store these.
-    if @year == 2011
-      @congress_city = "Santa Barbara"
-      @congress_state = "CA"
-      @congress_date_range = "Jul 30 - Aug 7"
-    elsif @year == 2012
-      @congress_city = "Black Mountain"
-      @congress_state = "North Carolina" # Peter wants the state spelled out
-      @congress_date_range = "August 4 - 12"
-    end
+    # Location and date range
+    @congress_city = @year_object.city
+    @congress_state = @year_object.state
+    @congress_date_range = @year_object.date_range
 
     # The layout needs a list of content and activity categories
     @content_categories_for_menu = ContentCategory.yr(@year).order(:name)

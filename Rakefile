@@ -7,6 +7,15 @@ require 'rake'
 
 Gocongress::Application.load_tasks
 
+# Invoke db:seed after db:prepare
+namespace :db do
+  namespace :test do
+    task :prepare => :environment do
+      Rake::Task["db:seed"].invoke
+    end
+  end
+end
+
 # I'm not sure how it happened, but I ran into a disturbing problem where
 # my postgres sequences started over at one.  Naturally, this caused
 # inserts to fail.  This shotgun-approach solution fixed my sequences.
