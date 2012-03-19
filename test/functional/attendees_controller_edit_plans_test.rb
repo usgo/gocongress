@@ -8,7 +8,7 @@ class AttendeesControllerEditPlansTest < ActionController::TestCase
     @plan = Factory :plan, plan_category_id: @plan_category.id
     @user = Factory :user
     @user_two = Factory :user
-    @year.year = Time.now.year
+    @year = Time.now.year
   end
 
   test "user can get edit_plans form" do
@@ -91,7 +91,7 @@ class AttendeesControllerEditPlansTest < ActionController::TestCase
     get :edit_plans,
       :id => @user.attendees.sample.id,
       :plan_category_id => @plan_category.id,
-      :year => @year.year
+      :year => @year
   end
 
   def submit_plans_form(attendee, attendee_params_hash)
@@ -99,7 +99,7 @@ class AttendeesControllerEditPlansTest < ActionController::TestCase
       :id => attendee.id,
       :plan_category_id => @plan_category.id,
       :attendee => attendee_params_hash,
-      :year => @year.year
+      :year => @year
   end
 
   def params_for_plan(qty)
