@@ -7,7 +7,7 @@
 
   %fieldset
     %legend Which events are you interested in?
-    - Event.yr(@year.year).each do |e|
+    - Event.yr(@year).each do |e|
       .field
         .cbx-list
           - cbx_id = 'event_id_' + e.id.to_s

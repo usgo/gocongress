@@ -4,7 +4,7 @@ class JobsController < ApplicationController
 
   # GET /jobs
   def index
-    @jobs = @jobs.yr(@year.year).order :jobname
+    @jobs = @jobs.yr(@year).order :jobname
   end
 
   # GET /jobs/1

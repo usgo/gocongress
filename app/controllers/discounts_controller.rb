@@ -4,7 +4,7 @@ class DiscountsController < ApplicationController
 
   # GET /discounts
   def index
-    @discounts = @discounts.yr(@year.year)
+    @discounts = @discounts.yr(@year)
   end
 
   # GET /discounts/1

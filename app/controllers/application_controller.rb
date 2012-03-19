@@ -10,6 +10,13 @@ class ApplicationController < ActionController::Base
   before_filter :set_display_timezone
 
   def default_url_options(options={})
+
+    # TODO: When running functional tests or controller specs, default_url_options()
+    # is called before callbacks.  This may be a regression of issue 2031.
+    # https://github.com/rails/rails/issues/2031
+    # The ugly workaround is to manually invoke the required callback.
+    set_year_from_params unless @year.present?
+
     { :year => @year.year }
   end
 
@@ -50,9 +57,9 @@ class ApplicationController < ActionController::Base
     @congress_date_range = @year.date_range
 
     # The layout needs a list of content and activity categories
-    @content_categories_for_menu = ContentCategory.yr(@year.year).order(:name)
-    @activity_categories_for_menu = ActivityCategory.yr(@year.year).order(:name)
-    @tournaments_for_nav_menu = Tournament.yr(@year.year).nav_menu
+    @content_categories_for_menu = ContentCategory.yr(@year).order(:name)
+    @activity_categories_for_menu = ActivityCategory.yr(@year).order(:name)
+    @tournaments_for_nav_menu = Tournament.yr(@year).nav_menu
   end
 
   # Redirect Devise to a specific page after successful sign in

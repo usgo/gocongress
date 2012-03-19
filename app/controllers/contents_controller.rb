@@ -4,7 +4,7 @@ class ContentsController < ApplicationController
 
   # GET /contents
   def index
-    @contents = @contents.yr(@year.year)
+    @contents = @contents.yr(@year)
   end
 
   # GET /contents/1
@@ -45,7 +45,7 @@ class ContentsController < ApplicationController
   end
   
   def content_category_options
-    ContentCategory.yr(@year.year).all.map {|c| [ c.name, c.id ] }
+    ContentCategory.yr(@year).all.map {|c| [ c.name, c.id ] }
   end
   helper_method :content_category_options
 

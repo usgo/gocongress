@@ -17,7 +17,7 @@ class ContentCategoriesController < ApplicationController
   end
 
   def index
-    @content_categories = @content_categories.yr(@year.year)
+    @content_categories = @content_categories.yr(@year)
   end
 
   def show

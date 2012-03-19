@@ -9,7 +9,7 @@ class TransactionsController < ApplicationController
 
   # GET /transactions
   def index
-    @transactions = @transactions.yr(@year.year)
+    @transactions = @transactions.yr(@year)
     if params[:email].present? then
       search_expression = '%' + params[:email] + '%'
       @transactions = @transactions.joins(:user).where("email like ?", search_expression)
@@ -38,7 +38,7 @@ class TransactionsController < ApplicationController
 
     @transaction.year = @year.year
     @transaction.updated_by_user = current_user
-    @transaction.user = User.yr(@year.year).find_by_email(params[:user_email])
+    @transaction.user = User.yr(@year).find_by_email(params[:user_email])
 
     @email_picker_value = params[:user_email]
 
@@ -54,7 +54,7 @@ class TransactionsController < ApplicationController
     %w[user_id year].each{|atr| params.delete(atr)}
 
     @transaction.updated_by_user = current_user
-    @transaction.user = User.yr(@year.year).find_by_email(params[:user_email])
+    @transaction.user = User.yr(@year).find_by_email(params[:user_email])
 
     @email_picker_value = params[:user_email]
 
@@ -74,7 +74,7 @@ class TransactionsController < ApplicationController
 private
 
   def user_email_list
-    email_array = User.yr(@year.year).order('lower(email)').collect {|u| [u.email] }
+    email_array = User.yr(@year).order('lower(email)').collect {|u| [u.email] }
     email_array.join(',')
   end
 
