@@ -3,16 +3,10 @@ class UserMailer < ActionMailer::Base
 
   def welcome_email(user)
     @user = user
+    @year = Year.find_by_year(user.year)
     mail(:to => user.email,
-      :reply_to => reply_to(user.year),
+      :reply_to => @year.reply_to_email,
       :subject => "Welcome to the #{user.year} US Go Congress")
-  end
-
-private
-
-  def reply_to(year)
-    raise "reply-to undefined" if MAILER_REPLY_TO[year].blank?
-    return MAILER_REPLY_TO[year]
   end
 
 end
