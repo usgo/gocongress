@@ -9,15 +9,12 @@ class ApplicationController < ActionController::Base
   before_filter :set_yearly_vars
   before_filter :set_display_timezone
 
-  def default_url_options(options={})
-
-    # TODO: When running functional tests or controller specs, default_url_options()
-    # is called before callbacks.  This may be a regression of issue 2031.
-    # https://github.com/rails/rails/issues/2031
-    # The ugly workaround is to manually invoke the required callback.
-    set_year_from_params unless @year.present?
-
-    { :year => @year.year }
+  # When running functional tests or controller specs,
+  # default_url_options() is called before callbacks, so we do not
+  # depend on @year being defined yet, and we extract the year
+  # directly from the params hash.
+  def default_url_options options={}
+    { :year => extract_year_from_params }
   end
 
   def set_display_timezone
@@ -25,23 +22,7 @@ class ApplicationController < ActionController::Base
   end
 
   def set_year_from_params
-
-    # In 2011 we used the constant CONGRESS_YEAR to determine the
-    # current year, but going forward we will use params[:year] in most
-    # places. Hopefully, when this transition is complete we will be
-    # able to drop the constant.
-    if params[:year].present?
-      year = params[:year].to_i
-    else
-      year = CONGRESS_YEAR.to_i
-    end
-
-    # Validate year to protect against sql injection, or benign
-    # programmer error.
-    raise "Invalid year" unless (2011..2100).include?(year)
-
-    # Load year object
-    @year = Year.find_by_year(year)
+    @year = Year.find_by_year(extract_year_from_params)
     raise "Year #{year} not found" unless @year.present?
   end
 
@@ -136,6 +117,17 @@ protected
   end
 
 private
+
+  # `extract_year_from_params` returns an integer year, obtained either
+  # from the params hash or the deprecated CONGRESS_YEAR constant.
+  # If obtained from the params hash, the year is validated to protect
+  # against sql injection, or benign programmer error.
+  def extract_year_from_params
+    year = params[:year].present? ? params[:year] : CONGRESS_YEAR
+    year = year.to_i
+    raise "Invalid year" unless (2011..2100).include?(year)
+    return year
+  end
 
   def render_access_denied
     # A friendlier "access denied" message -Jared 2010.1.2
