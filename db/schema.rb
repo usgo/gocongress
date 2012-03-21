@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120318224832) do
+ActiveRecord::Schema.define(:version => 20120321005722) do
 
   create_table "activities", :force => true do |t|
     t.string   "name"
@@ -31,8 +31,9 @@ ActiveRecord::Schema.define(:version => 20120318224832) do
   add_index "activities", ["year", "leave_time"], :name => "index_activities_on_year_and_start"
 
   create_table "activity_categories", :force => true do |t|
-    t.string  "name", :limit => 25, :null => false
-    t.integer "year",               :null => false
+    t.string  "name",        :limit => 25,  :null => false
+    t.integer "year",                       :null => false
+    t.string  "description", :limit => 500
   end
 
   add_index "activity_categories", ["id", "year"], :name => "uniq_activity_categories_on_id_and_year", :unique => true

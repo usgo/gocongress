@@ -5,6 +5,8 @@
     .field
       = f.label :name, "Category Name"
       = f.text_field :name
+    .field
+      = render partial: "shared/md_area", locals: { :obj => :activity_category, :atr => :description}
 
   %br
 
