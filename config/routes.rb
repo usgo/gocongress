@@ -1,5 +1,8 @@
 Gocongress::Application.routes.draw do
 
+  # Put the root route at the top so that it is matched quickly
+  root :to => "home#index", :via => :get
+
   # It's time to get strict about format.  If someone requests a .php,
   # that's a 404!  I'd like to add :format => false to all my routes,
   # but it makes my routes file way too ugly, even if I use
@@ -77,11 +80,11 @@ Gocongress::Application.routes.draw do
           end
         end
 
+        # defunct?
         root :to => 'home#index', :as => :year, :via => :get
 
       end # end constraint
     end # end scope
   end # end constraint
 
-  root :to => "home#index", :via => :get
 end
