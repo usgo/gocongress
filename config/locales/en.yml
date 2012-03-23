@@ -73,6 +73,9 @@ en:
       user:
         created_at: "Created"
         last_sign_in_at: "Last Sign In"
+      year:
+        reply_to_email: "Reply-To Email"
+        twitter_url: "Twitter URL"
     models:
       job: "Position"
       activity: "Activity"

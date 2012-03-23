@@ -20,6 +20,9 @@ Gocongress::Application.routes.draw do
       # :year must be numeric
       constraints :year => /\d+/ do
 
+        get 'edit' => 'years#edit', :as => :edit_year
+        put '' => 'years#update', :as => :update_year
+
         get 'contact' => 'user_jobs#index'
         get 'costs' => 'plan_categories#index'
         get 'pricing' => 'home#pricing'

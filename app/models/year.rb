@@ -3,7 +3,8 @@ class Year < ActiveRecord::Base
   # Mass Assignment Security
   # ------------------------
 
-  attr_accessible :twitter_url
+  attr_accessible :city, :date_range, :day_off_date, :ordinal_number,
+    :reply_to_email, :start_date, :state, :timezone, :twitter_url
 
   # Validations
   # -----------

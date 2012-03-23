@@ -20,12 +20,6 @@ CONGRESS_START_DATE = {
   2012 => Date.civil(2012, 8, 4)
 }
 
-# CONGRESS_ORDINALITY
-# eg. 2012 is the 28th US Go Congress
-# I would just subtract some constant from the current year,
-# but I'm not sure if there have been gaps.
-CONGRESS_ORDINALITY = { 2011 => 27, 2012 => 28 }
-
 # DAY_OFF_DATE - The go congress traditionally has one "day off".
 # Currently, this only affects the display of this particular day
 # on the activity and tournament calendars.

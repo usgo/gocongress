@@ -1,0 +1,53 @@
+-# The following form_for() needs a few options.  If it weren't
+-# for the :as option, params[:year] would be overwritten by
+-# the routing segment named :year.  Also, the form action url
+-# is non-standard.
+= form_for(@year, :as => :year_record, :url => update_year_path) do |f|
+  = render :partial => "shared/error_messages", :locals => { :resource => @year }
+
+  %h3 Location
+  %fieldset
+    .field
+      = f.label :city
+      = f.text_field :city
+    .field
+      = f.label :state
+      = f.text_field :state
+    .field
+      = f.label :timezone
+      = f.time_zone_select :timezone
+
+  %h3 Dates
+  %fieldset
+    .field
+      = f.label :start_date
+      = f.date_select :start_date
+    .field
+      = f.label :day_off_date
+      = f.date_select :day_off_date
+    .field
+      = f.label :date_range
+      = f.text_field :date_range
+      %span.smalltext eg. August 4 - 12
+
+  %h3 Miscelaneous
+  %fieldset
+    .field
+      = f.label :ordinal_number
+      = f.number_field :ordinal_number, :size => 3
+      %span.smalltext eg. enter 28 for the 28th congress
+    .field
+      = f.label :reply_to_email
+      = f.text_field :reply_to_email
+      %span.smalltext for automatic email sent by the website
+    .field
+      = f.label :twitter_url
+      = f.text_field :twitter_url
+    .field
+      = f.label :registration_phase
+      = @year.registration_phase.capitalize
+
+  %fieldset
+    .field
+      = label '', ''
+      = f.submit "Submit"
