@@ -28,10 +28,11 @@ FactoryGirl.define do
       check_number 101
     end
   end
-end
 
-Factory.sequence :gwdate do |n|
-  month = rand(11) + 1
-  day = rand(27) + 1
-  Time.utc(Time.now.year, month, day)
+  sequence :gwdate do |n|
+    month = rand(11) + 1
+    day = rand(27) + 1
+    Time.utc(Time.now.year, month, day)
+  end
+
 end
