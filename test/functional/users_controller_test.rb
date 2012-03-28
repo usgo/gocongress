@@ -2,22 +2,22 @@ require 'test_helper'
 
 class UsersControllerTest < ActionController::TestCase
   setup do
-    @user = Factory :user
-    @staff = Factory :staff
-    @admin_user = Factory :admin
+    @user = FactoryGirl.create :user
+    @staff = FactoryGirl.create :staff
+    @admin_user = FactoryGirl.create :admin
   end
 
   test "admin cannot read user from different year" do
-    a = Factory :admin, year: 2011
-    u = Factory :user, year: 2012
+    a = FactoryGirl.create :admin, year: 2011
+    u = FactoryGirl.create :user, year: 2012
     sign_in a
     get :show, :id => u.id, :year => a.year
     assert_response 403
   end
 
   test "staff cannot read user from different year" do
-    s = Factory :staff, year: 2011
-    u = Factory :user, year: 2012
+    s = FactoryGirl.create :staff, year: 2011
+    u = FactoryGirl.create :user, year: 2012
     sign_in s
     get :show, :id => u.id, :year => s.year
     assert_response 403
@@ -95,7 +95,7 @@ class UsersControllerTest < ActionController::TestCase
 
   test "user cannot show a different user" do
     sign_in @user
-    get :show, :id => Factory.create(:user).id, :year => Time.now.year
+    get :show, :id => FactoryGirl.create(:user).id, :year => Time.now.year
     assert_response 403
   end
 
@@ -112,7 +112,7 @@ class UsersControllerTest < ActionController::TestCase
 
   test "user cannot edit other user" do
     sign_in @user
-    user_two = Factory.create(:user)
+    user_two = FactoryGirl.create(:user)
     get :edit, :id => user_two.id, :year => Time.now.year
     assert_response 403
   end
@@ -227,7 +227,7 @@ class UsersControllerTest < ActionController::TestCase
 
   test "admin can assign jobs to any user" do
     sign_in @admin_user
-    job = Factory.create(:job)
+    job = FactoryGirl.create(:job)
     u = @user.attributes.merge({ 'job_ids' => [job.id] })
     put :update, :id => @user.to_param, :user => u, :year => Time.now.year
     @user = User.find(@user.id)
@@ -236,7 +236,7 @@ class UsersControllerTest < ActionController::TestCase
 
   test "user cannot assign jobs even to themself" do
     sign_in @user
-    job = Factory.create(:job)
+    job = FactoryGirl.create(:job)
 
     # starting with zero jobs assigned ..
     assert_equal 0, @user.jobs.size

@@ -10,7 +10,7 @@ FactoryGirl.define do
     # Typical tournament has three to six rounds
     after_build do |t|
       3.upto(6) do
-        t.rounds.build Factory.attributes_for(:round)
+        t.rounds.build FactoryGirl.attributes_for(:round)
       end
     end
   end

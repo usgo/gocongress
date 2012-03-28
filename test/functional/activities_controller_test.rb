@@ -2,9 +2,9 @@ require 'test_helper'
 
 class ActivitiesControllerTest < ActionController::TestCase
   setup do
-    @activity = Factory(:activity)
-    @user = Factory.create(:user)
-    @admin_user = Factory.create(:admin)
+    @activity = FactoryGirl.create(:activity)
+    @user = FactoryGirl.create(:user)
+    @admin_user = FactoryGirl.create(:admin)
   end
 
   test "user cannot get new" do

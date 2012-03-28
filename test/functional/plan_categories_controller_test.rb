@@ -2,9 +2,9 @@ require 'test_helper'
 
 class PlanCategoriesControllerTest < ActionController::TestCase
   setup do
-    @pc = Factory.create(:plan_category)
-    @user = Factory.create(:user)
-    @admin = Factory.create(:admin)
+    @pc = FactoryGirl.create(:plan_category)
+    @user = FactoryGirl.create(:user)
+    @admin = FactoryGirl.create(:admin)
     @year = Time.now.year
   end
 
@@ -47,7 +47,7 @@ class PlanCategoriesControllerTest < ActionController::TestCase
 
   test "admin can create" do
     sign_in @admin
-    new_category = Factory.build :plan_category
+    new_category = FactoryGirl.build :plan_category
     assert_difference('PlanCategory.count', +1) do
       post :create, :plan_category => new_category.attributes, :year => @year
     end

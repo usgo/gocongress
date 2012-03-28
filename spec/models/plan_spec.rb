@@ -3,11 +3,11 @@ require "spec_helper"
 describe Plan do
 
   context "when it has an inventory of three" do
-    subject { Factory :plan, inventory: 3 }
+    subject { FactoryGirl.create :plan, inventory: 3 }
 
     context "when two attendees have selected it" do
       before do
-        1.upto(2) { subject.attendees << Factory(:attendee) }
+        1.upto(2) { subject.attendees << FactoryGirl.create(:attendee) }
       end
 
       describe "#valid?" do

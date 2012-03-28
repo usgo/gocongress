@@ -2,7 +2,7 @@ require 'test_helper'
 
 class ActivityCategoriesControllerTest < ActionController::TestCase
   setup do
-    @ec = Factory(:activity_category)
+    @ec = FactoryGirl.create(:activity_category)
   end
 
   test "anyone can show" do

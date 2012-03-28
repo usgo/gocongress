@@ -3,9 +3,9 @@ require 'test_helper'
 class AttendeePlanTest < ActiveSupport::TestCase
 
   setup do
-    user = Factory :user
+    user = FactoryGirl.create :user
     @atnd = user.primary_attendee
-    @plan = Factory :plan, inventory: 42, max_quantity: 999
+    @plan = FactoryGirl.create :plan, inventory: 42, max_quantity: 999
   end
 
   test "invalid without attendee" do

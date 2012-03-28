@@ -3,11 +3,11 @@ require 'test_helper'
 class AttendeesControllerEditPlansTest < ActionController::TestCase
   setup do
     @controller = AttendeesController.new
-    @admin = Factory :admin
-    @plan_category = Factory :plan_category
-    @plan = Factory :plan, plan_category_id: @plan_category.id
-    @user = Factory :user
-    @user_two = Factory :user
+    @admin = FactoryGirl.create :admin
+    @plan_category = FactoryGirl.create :plan_category
+    @plan = FactoryGirl.create :plan, plan_category_id: @plan_category.id
+    @user = FactoryGirl.create :user
+    @user_two = FactoryGirl.create :user
     @year = Time.now.year
   end
 
@@ -68,13 +68,13 @@ class AttendeesControllerEditPlansTest < ActionController::TestCase
   end
 
   test "after events page redirect to plan category in correct year" do
-    u = Factory :user, year: 2012
+    u = FactoryGirl.create :user, year: 2012
     a = u.attendees.sample
-    e = Factory :event
-    c1 = Factory :plan_category, {name: "aaaaaa", year: 2011, event: e}
-    p1 = Factory :plan, plan_category_id: c1.id
-    c2 = Factory :plan_category, {name: "bbbbbb", year: 2012, event: e}
-    p2 = Factory :plan, plan_category_id: c2.id
+    e = FactoryGirl.create :event
+    c1 = FactoryGirl.create :plan_category, {name: "aaaaaa", year: 2011, event: e}
+    p1 = FactoryGirl.create :plan, plan_category_id: c1.id
+    c2 = FactoryGirl.create :plan_category, {name: "bbbbbb", year: 2012, event: e}
+    p2 = FactoryGirl.create :plan, plan_category_id: c2.id
 
     sign_in(u)
     put :update, :page => 'events', :id => a.id, :year => 2012, :event_ids => [e.id]

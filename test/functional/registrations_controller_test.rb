@@ -5,8 +5,8 @@ class RegistrationsControllerTest < ActionController::TestCase
 
   setup do
     @year = Time.now.year
-    @u = Factory.attributes_for(:user)
-    @u.merge!({ :primary_attendee_attributes => Factory.attributes_for(:attendee) })
+    @u = FactoryGirl.attributes_for(:user)
+    @u.merge!({ :primary_attendee_attributes => FactoryGirl.attributes_for(:attendee) })
   end
 
   test "visitor can get sign up page" do

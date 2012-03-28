@@ -2,9 +2,9 @@ require 'test_helper'
 
 class ReportsControllerTest < ActionController::TestCase
   setup do
-    @user = Factory :user
-    @staff = Factory :staff
-    @admin = Factory :admin
+    @user = FactoryGirl.create :user
+    @staff = FactoryGirl.create :staff
+    @admin = FactoryGirl.create :admin
   end
 
   test "admin can get all reports" do
@@ -50,9 +50,9 @@ class ReportsControllerTest < ActionController::TestCase
     sign_in @admin
     
     # create transactions in different years
-    1.upto(3) { Factory(:tr_sale, year: Time.now.year + 1) }
+    1.upto(3) { FactoryGirl.create(:tr_sale, year: Time.now.year + 1) }
     this_year_sales = []
-    1.upto(3) { this_year_sales << Factory(:tr_sale) }
+    1.upto(3) { this_year_sales << FactoryGirl.create(:tr_sale) }
     expected_sum = this_year_sales.map(&:amount).reduce(:+)
     
     # expect to only see this year's sales on report
@@ -66,7 +66,7 @@ class ReportsControllerTest < ActionController::TestCase
 
   test "outstanding balances" do
     sign_in @admin
-    Factory :tr_sale, amount: 10000, user_id: @user.id
+    FactoryGirl.create :tr_sale, amount: 10000, user_id: @user.id
     get :outstanding_balances, :year => Time.now.year
     assert_not_nil assigns["users"]
     assert !assigns["users"].map(&:id).include?(@user.id)

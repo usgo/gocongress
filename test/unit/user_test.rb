@@ -2,16 +2,16 @@ require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
   setup do
-    @user = Factory :user
+    @user = FactoryGirl.create :user
   end
 
   test "factory is valid" do
-    assert Factory.build(:user).valid?
+    assert FactoryGirl.build(:user).valid?
   end
 
   test "comp transaction" do
-    @user.transactions << Factory(:tr_comp, :user_id => @user.id, :amount => 33)
-    @user.transactions << Factory(:tr_comp, :user_id => @user.id, :amount => 40)
+    @user.transactions << FactoryGirl.create(:tr_comp, :user_id => @user.id, :amount => 33)
+    @user.transactions << FactoryGirl.create(:tr_comp, :user_id => @user.id, :amount => 40)
     assert_equal -73, @user.get_invoice_total
   end
 
@@ -19,7 +19,7 @@ class UserTest < ActiveSupport::TestCase
     num_transactions = 10
     expected_sum = 0
     1.upto(num_transactions) { |n|
-      t = Factory(:tr_sale, :user_id => @user.id)
+      t = FactoryGirl.create(:tr_sale, :user_id => @user.id)
       expected_sum += t.amount
       @user.transactions << t
       }
@@ -28,14 +28,14 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test "balance" do
-    1.upto(1+rand(3)) { |a| @user.attendees << Factory(:attendee, :user_id => @user.id) }
-    1.upto(1+rand(10)) { |n| @user.transactions << Factory(:tr_sale, :user_id => @user.id) }
-    1.upto(1+rand(5)) { |n| @user.transactions << Factory(:tr_comp, :user_id => @user.id) }
+    1.upto(1+rand(3)) { |a| @user.attendees << FactoryGirl.create(:attendee, :user_id => @user.id) }
+    1.upto(1+rand(10)) { |n| @user.transactions << FactoryGirl.create(:tr_sale, :user_id => @user.id) }
+    1.upto(1+rand(5)) { |n| @user.transactions << FactoryGirl.create(:tr_comp, :user_id => @user.id) }
     assert_equal @user.get_invoice_total - @user.amount_paid, @user.balance
   end
 
   test "sum of invoice equals invoice total" do
-    1.upto(1+rand(3)) { |a| @user.attendees << Factory(:attendee, :user_id => @user.id) }
+    1.upto(1+rand(3)) { |a| @user.attendees << FactoryGirl.create(:attendee, :user_id => @user.id) }
     expected_sum = 0
     @user.get_invoice_items.each { |ii| expected_sum += ii.price }
     assert_equal expected_sum, @user.get_invoice_total
@@ -44,7 +44,7 @@ class UserTest < ActiveSupport::TestCase
   test "destroying a user also destroys dependent attendees" do
     num_extra_attendees = 1 + rand(3)
     1.upto(num_extra_attendees) { |a|
-      @user.attendees << Factory(:attendee, :user_id => @user.id)
+      @user.attendees << FactoryGirl.create(:attendee, :user_id => @user.id)
     }
 
     # when we destroy the user, we expect all dependent attendees
@@ -61,13 +61,13 @@ class UserTest < ActiveSupport::TestCase
 
   test "age-based discounts" do
     y = Time.now.year
-    dc = Factory(:discount, :name => "Child", :amount => 150, :age_min => 0, :age_max => 12, :is_automatic => true, :year => y)
-    dy = Factory(:discount, :name => "Youth", :amount => 100, :age_min => 13, :age_max => 18, :is_automatic => true, :year => y)
+    dc = FactoryGirl.create(:discount, :name => "Child", :amount => 150, :age_min => 0, :age_max => 12, :is_automatic => true, :year => y)
+    dy = FactoryGirl.create(:discount, :name => "Youth", :amount => 100, :age_min => 13, :age_max => 18, :is_automatic => true, :year => y)
     congress_start = CONGRESS_START_DATE[y]
 
     # If 12 years old on the first day of congress, then attendee
     # should get child discount and NOT youth discount
-    a = Factory(:attendee, :birth_date => congress_start - 12.years, :user_id => @user.id, :understand_minor => true, :year => y)
+    a = FactoryGirl.create(:attendee, :birth_date => congress_start - 12.years, :user_id => @user.id, :understand_minor => true, :year => y)
     assert_equal 12, a.age_in_years
     assert_equal true, user_has_discount?(@user, dc)
     assert_equal false, user_has_discount?(@user, dy)
@@ -88,11 +88,11 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test "plan with qty increases invoice total" do
-    @user.attendees << Factory(:attendee, :user_id => @user.id)
+    @user.attendees << FactoryGirl.create(:attendee, :user_id => @user.id)
     total_before = @user.get_invoice_total
 
     # add a plan with qty > 1 to attendee
-    p = Factory :plan, :max_quantity => 10 + rand(10)
+    p = FactoryGirl.create :plan, :max_quantity => 10 + rand(10)
     qty = 1 + rand(p.max_quantity)
     ap = AttendeePlan.new :plan_id => p.id, :quantity => qty
     @user.attendees.first.attendee_plans << ap
@@ -109,14 +109,14 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test "attendee cannot provide qty greater than plan max_qty" do
-    a = Factory :attendee, :user_id => @user.id
-    p = Factory :plan, :max_quantity => 1
+    a = FactoryGirl.create :attendee, :user_id => @user.id
+    p = FactoryGirl.create :plan, :max_quantity => 1
     ap = AttendeePlan.new :plan_id => p.id, :quantity => p.max_quantity + 1, :attendee_id => a.id
     assert_equal false, ap.valid?
   end
 
   test "activity increases invoice total" do
-    e = Factory :activity
+    e = FactoryGirl.create :activity
     assert_difference('@user.get_invoice_total', e.price) do
       @user.attendees.first.activities << e
     end

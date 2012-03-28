@@ -1,7 +1,7 @@
 require "spec_helper"
 
 describe Purchasable do
-  subject { Factory :plan }
+  subject { FactoryGirl.create :plan }
 
   describe "#contact_msg_instead_of_price?" do
     it "returns true if needs_staff_approval?" do
@@ -19,7 +19,7 @@ describe Purchasable do
 
   context "when at least one attendee has selected it" do
     before do
-      subject.attendees << Factory(:attendee)
+      subject.attendees << FactoryGirl.create(:attendee)
     end
 
     describe "#destroy" do

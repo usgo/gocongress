@@ -3,9 +3,9 @@ require "spec_helper"
 describe PlansController do
   describe "DELETE destroy" do
     it "fails when attendees have selected the plan" do
-      plan = Factory :plan
-      plan.attendees << Factory(:attendee)
-      sign_in Factory :admin
+      plan = FactoryGirl.create :plan
+      plan.attendees << FactoryGirl.create(:attendee)
+      sign_in FactoryGirl.create :admin
       expect {
         delete :destroy, year: plan.year, id: plan.id
       }.to_not change{ Plan.count }

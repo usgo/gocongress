@@ -15,8 +15,8 @@ describe UsersController do
     # that happened in the views, so we enable rendering.
     render_views
 
-    let(:admin) { Factory :admin }
-    let(:user) { Factory :user, primary_attendee: nil }
+    let(:admin) { FactoryGirl.create :admin }
+    let(:user) { FactoryGirl.create :user, primary_attendee: nil }
 
     before(:each) do
       sign_in admin

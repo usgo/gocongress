@@ -11,14 +11,14 @@ describe Attendee do
 
   describe "#invoice_items" do
     it "does not include plans that need staff approval" do
-      a = Factory :attendee
-      p = Factory :plan_which_needs_staff_approval
+      a = FactoryGirl.create :attendee
+      p = FactoryGirl.create :plan_which_needs_staff_approval
       expect { a.plans << p }.to_not change{a.invoice_items.count}
     end
 
     it "includes applicable plans" do
-      a = Factory :attendee
-      p = Factory :plan
+      a = FactoryGirl.create :attendee
+      p = FactoryGirl.create :plan
       expect { a.plans << p }.to change{a.invoice_items.count}.by(1)
     end
   end

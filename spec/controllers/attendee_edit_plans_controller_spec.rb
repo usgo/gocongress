@@ -2,26 +2,26 @@ require "spec_helper"
 
 describe AttendeesController do
   describe "PUT update_plans" do
-    let(:user) { Factory :user }
+    let(:user) { FactoryGirl.create :user }
     before(:each) do
       sign_in user
     end
 
     it "updates the user's plans in the specified category" do
-      plan = Factory :plan
+      plan = FactoryGirl.create :plan
       put_to_update_plans plan
       user.primary_attendee.plans.should include(plan)
     end
 
     it "does not add disabled plans" do
-      plan = Factory :plan, disabled: true
+      plan = FactoryGirl.create :plan, disabled: true
       put_to_update_plans plan
       user.primary_attendee.plans.should_not include(plan)
     end
 
     context "when the category is mandatory" do
-      let(:cat) { Factory :plan_category, mandatory: true }
-      let!(:plan) { Factory :plan, plan_category: cat }
+      let(:cat) { FactoryGirl.create :plan_category, mandatory: true }
+      let!(:plan) { FactoryGirl.create :plan, plan_category: cat }
 
       context "when the attendee selects zero plans" do
         it "stays on the same page" do

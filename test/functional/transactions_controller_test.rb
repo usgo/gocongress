@@ -2,10 +2,10 @@ require 'test_helper'
 
 class TransactionsControllerTest < ActionController::TestCase
   setup do
-    @user = Factory.create :user
-    @staff = Factory.create :staff
-    @admin_user = Factory.create :admin
-    @transaction = Factory.create :tr_sale
+    @user = FactoryGirl.create :user
+    @staff = FactoryGirl.create :staff
+    @admin_user = FactoryGirl.create :admin
+    @transaction = FactoryGirl.create :tr_sale
     @year = Time.now.year
   end
 
@@ -27,7 +27,7 @@ class TransactionsControllerTest < ActionController::TestCase
     # Build (do not save) a transaction with no user.  The user will
     # be specified via user_email.  This is a new required param,
     # since I added the autocomplete.
-    t = Factory.build :tr_sale, {:user => nil}
+    t = FactoryGirl.build :tr_sale, {:user => nil}
     assert_difference("Transaction.where(:year => #{@year}).count", +1) do
       post :create, :transaction => t.attributes, :user_email => @user.email, :year => @year
     end

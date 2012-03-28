@@ -6,13 +6,13 @@ class DevisePasswordsControllerTest < ActionController::TestCase
   end
 
   test "user can create reset password token" do
-    u = Factory :user
+    u = FactoryGirl.create :user
     post :create, :user => {:email => u.email, :year => u.year}, :year => u.year
     assert_redirected_to new_user_session_path
   end
 
   test "pw reset form has both year and email" do
-    u = Factory :user
+    u = FactoryGirl.create :user
     get :new, :year => u.year
     assert_response :success
     assert_select "input[name*=email]"
@@ -25,8 +25,8 @@ class DevisePasswordsControllerTest < ActionController::TestCase
     # Do not deliver the usual "welcome emails" because they would make
     # it difficult for us to use assert_select_email() later in this test.
     ActionMailer::Base.perform_deliveries = false
-    user2011 = Factory :user, :email => "jared@jaredbeck.com", :year => 2011
-    user2012 = Factory :user, :email => "jared@jaredbeck.com", :year => 2012
+    user2011 = FactoryGirl.create :user, :email => "jared@jaredbeck.com", :year => 2011
+    user2012 = FactoryGirl.create :user, :email => "jared@jaredbeck.com", :year => 2012
 
     # Turn mail delivery back on and create a reset password token
     ActionMailer::Base.perform_deliveries = true

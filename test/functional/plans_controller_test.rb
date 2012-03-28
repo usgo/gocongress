@@ -2,24 +2,24 @@ require 'test_helper'
 
 class PlansControllerTest < ActionController::TestCase
   setup do
-    @plan = Factory :plan
+    @plan = FactoryGirl.create :plan
     @year = Time.now.year
   end
 
   test "non-admin cannot get new" do
-    sign_in Factory :user
+    sign_in FactoryGirl.create :user
     get :new, :year => @year
     assert_response 403
   end
 
   test "non-admin cannot create plan" do
-    sign_in Factory :user
+    sign_in FactoryGirl.create :user
     post :create, :plan => @plan.attributes, :year => @year
     assert_response 403
   end
   
   test "admin can create plan" do
-    sign_in Factory :admin
+    sign_in FactoryGirl.create :admin
     assert_difference('Plan.count') do
       post :create, :plan => @plan.attributes, :year => @year
     end
@@ -32,7 +32,7 @@ class PlansControllerTest < ActionController::TestCase
   end
 
   test "admin can set max quantity" do
-    sign_in Factory :admin
+    sign_in FactoryGirl.create :admin
     new_max_quantity = 100+rand(10)
     assert_not_equal @plan.max_quantity, new_max_quantity
     @plan.max_quantity = new_max_quantity

@@ -2,15 +2,15 @@ require 'test_helper'
 
 class AttendeesControllerTest < ActionController::TestCase
   setup do
-    @attendee = Factory.create(:attendee)
-    @user = Factory.create(:user)
-    @user_two = Factory.create(:user)
-    @admin = Factory.create(:admin)
-    @discount_automatic = Factory.create(:automatic_discount)
-    @discount_nonautomatic = Factory.create(:nonautomatic_discount)
-    @discount_nonautomatic2 = Factory.create(:nonautomatic_discount)
-    @inv_trn = Factory.create(:tournament, :openness => 'I')
-    @open_trn = Factory.create(:tournament, :openness => 'O')
+    @attendee = FactoryGirl.create(:attendee)
+    @user = FactoryGirl.create(:user)
+    @user_two = FactoryGirl.create(:user)
+    @admin = FactoryGirl.create(:admin)
+    @discount_automatic = FactoryGirl.create(:automatic_discount)
+    @discount_nonautomatic = FactoryGirl.create(:nonautomatic_discount)
+    @discount_nonautomatic2 = FactoryGirl.create(:nonautomatic_discount)
+    @inv_trn = FactoryGirl.create(:tournament, :openness => 'I')
+    @open_trn = FactoryGirl.create(:tournament, :openness => 'O')
     @year = Time.now.year
   end
 
@@ -25,7 +25,7 @@ class AttendeesControllerTest < ActionController::TestCase
   end
 
   test "visitor cannot create attendee" do
-    a = Factory.attributes_for(:attendee)
+    a = FactoryGirl.attributes_for(:attendee)
     assert_no_difference('Attendee.count', 0) do
       post :create, :attendee => a, :year => @year
     end
@@ -34,7 +34,7 @@ class AttendeesControllerTest < ActionController::TestCase
 
   test "user cannot create attendee under a different user" do
     sign_in @user
-    a = Factory.attributes_for(:attendee)
+    a = FactoryGirl.attributes_for(:attendee)
     a['user_id'] = @user_two.id
     assert_no_difference('Attendee.count', 0) do
       post :create, :attendee => a, :year => @year
@@ -44,7 +44,7 @@ class AttendeesControllerTest < ActionController::TestCase
 
   test "admin can create attendee under a different user" do
     sign_in @admin
-    a = Factory.attributes_for(:attendee)
+    a = FactoryGirl.attributes_for(:attendee)
     a['user_id'] = @user.id
     assert_difference('@user.attendees.count', +1) do
       post :create, :attendee => a, :year => @year
@@ -53,7 +53,7 @@ class AttendeesControllerTest < ActionController::TestCase
 
   test "user can create attendee under own account" do
     sign_in @user
-    a = Factory.attributes_for(:attendee)
+    a = FactoryGirl.attributes_for(:attendee)
     a['user_id'] = @user.id
     assert_difference('Attendee.where(:user_id => @user.id).count', +1) do
       post :create, :attendee => a, :year => @year
@@ -62,7 +62,7 @@ class AttendeesControllerTest < ActionController::TestCase
 
   test "non-admin can destroy own non-primary attendee" do
     sign_in @user
-    a = Factory(:attendee, :user_id => @user.id)
+    a = FactoryGirl.create(:attendee, :user_id => @user.id)
     @user.save
     assert_equal 1, @user.attendees.where(:is_primary => false).count
     assert_difference('Attendee.count', -1) do
@@ -82,7 +82,7 @@ class AttendeesControllerTest < ActionController::TestCase
 
   test "non-admin cannot destroy attendee from other user" do
     sign_in @user
-    a = Factory(:attendee)
+    a = FactoryGirl.create(:attendee)
     @user_two.attendees << a
     @user_two.save
     assert_equal 1, @user_two.attendees.where(:is_primary => false).count
@@ -219,8 +219,8 @@ class AttendeesControllerTest < ActionController::TestCase
     sign_in @user
     a = @user.attendees.first
     a.activities.clear
-    e = Factory :activity
-    e2 = Factory :activity
+    e = FactoryGirl.create :activity
+    e2 = FactoryGirl.create :activity
     atn_attrs = {:activity_id_list => [e.id, e2.id]}
     assert_difference('a.activities.count', +2) do
       put :update, :id => a.id, :attendee => atn_attrs, :page => 'activities', :year => @year
@@ -232,7 +232,7 @@ class AttendeesControllerTest < ActionController::TestCase
     sign_in @user
     a = @user_two.attendees.first
     a.activities.clear
-    e = Factory :activity
+    e = FactoryGirl.create :activity
     atn_attrs = {:activity_id_list => [e.id]}
     assert_no_difference('AttendeeActivity.count') do
       put :update, :id => a.id, :attendee => atn_attrs, :page => 'activities', :year => @year
@@ -244,7 +244,7 @@ class AttendeesControllerTest < ActionController::TestCase
     sign_in @admin
     a = @user_two.attendees.first
     a.activities.clear
-    e = Factory :activity
+    e = FactoryGirl.create :activity
     atn_attrs = {:activity_id_list => [e.id]}
     assert_difference('a.activities.count', +1) do
       put :update, :id => a.id, :attendee => atn_attrs, :page => 'activities', :year => @year

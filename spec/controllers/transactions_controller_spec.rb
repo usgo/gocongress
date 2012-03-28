@@ -1,8 +1,8 @@
 require "spec_helper"
 
 describe TransactionsController do
-  let(:admin) { Factory :admin }
-  let(:user) { Factory :user }
+  let(:admin) { FactoryGirl.create :admin }
+  let(:user) { FactoryGirl.create :user }
   before(:each) do
     sign_in admin
   end
@@ -14,13 +14,13 @@ describe TransactionsController do
         post :create,
           :year => user.year,
           :user_email => bad_email,
-          :transaction => Factory.attributes_for(:tr_sale)
+          :transaction => FactoryGirl.attributes_for(:tr_sale)
       }.to_not change{ Transaction.count }
       response.should render_template :new
     end
 
     it "will not update the transaction" do
-      t = Factory :tr_sale
+      t = FactoryGirl.create :tr_sale
       expect {
         put :update,
           :year => user.year,
