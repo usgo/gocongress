@@ -22,7 +22,7 @@ FactoryGirl.define do
     instrument ins
     case ins
     when 'C'
-      gwdate { Factory.next(:gwdate) }
+      gwdate { FactoryGirl.generate(:gwdate) }
       sequence(:gwtranid) { |n| n }
     when 'K'
       check_number 101
