@@ -7,4 +7,9 @@ FactoryGirl.define do
     year                Time.now.year
     association         :activity_category
   end
+
+  factory :activity_category do
+    name   "Activities"
+    year    Time.now.year
+  end
 end

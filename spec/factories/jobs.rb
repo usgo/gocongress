@@ -1,4 +1,6 @@
-Factory.define :job do |f|
-  f.jobname "Cleaning ashtrays"
-  f.year Time.now.year
+FactoryGirl.define do
+  factory :job do
+    jobname "Cleaning ashtrays"
+    year Time.now.year
+  end
 end
