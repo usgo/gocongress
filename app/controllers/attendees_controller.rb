@@ -174,7 +174,7 @@ class AttendeesController < ApplicationController
   # PUT /attendees/1
   def update
     @page = get_valid_page_from_params
-    params[:attendee] ||= Hash.new
+    params[:attendee] ||= {}
 
     # some extra validation errors may come up, especially with associated models, and
     # we want to save these and add them to @attendee.errors[:base] later.  This
@@ -262,6 +262,7 @@ class AttendeesController < ApplicationController
     end
 
     # update attributes but do not save yet
+    # TODO: isn't this defunct now that we use load_and_authorize_resource()?
     @attendee.attributes = params[:attendee]
 
     # validate
@@ -340,7 +341,7 @@ protected
   end
 
   def get_valid_page_from_params
-    params[:page].to_s.blank? ? page = 'basics' : page = params[:page].to_s
+    page = params[:page].to_s.blank? ? 'basics' : params[:page].to_s
     Attendee.assert_valid_page(page)
     return page
   end
