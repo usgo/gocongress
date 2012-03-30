@@ -23,8 +23,8 @@ class Attendee < ActiveRecord::Base
     :airport_arrival, :airport_arrival_flight, :airport_departure,
     :birth_date, :city, :congresses_attended, :country, :email,
     :family_name, :given_name, :gender, :phone, :special_request,
-    :state, :rank, :roomate_request, :transportation_request,
-    :tshirt_size, :understand_minor, :zip
+    :state, :rank, :roomate_request, :tshirt_size,
+    :understand_minor, :zip
 
   # FIXME: in the controller, somehow year needs to get set
   # before authorize! runs.  until then, year needs to be accessible.
