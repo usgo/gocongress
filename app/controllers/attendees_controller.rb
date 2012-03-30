@@ -181,8 +181,6 @@ class AttendeesController < ApplicationController
     # produces better-looking, more meaningful validation error display -Jared
     extra_errors = []
 
-    # certain fields may only be set by admins
-    # most of those fields are shown on the 'admin' page
     if @page == 'basics'
       begin
         @attendee.airport_arrival = parse_split_datetime_params :airport_arrival
@@ -190,7 +188,11 @@ class AttendeesController < ApplicationController
       rescue
         extra_errors << $!.to_s
       end
+
     elsif (@page == 'admin')
+
+      # certain fields may only be set by admins
+      # most of those fields are shown on the 'admin' page
       render_access_denied and return unless current_user.is_admin?
 
       # admin-only fields
