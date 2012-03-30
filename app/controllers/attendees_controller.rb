@@ -1,4 +1,5 @@
 class AttendeesController < ApplicationController
+  include SplitDatetimeParser
 
   load_and_authorize_resource
   skip_load_resource :only => [:index, :vip]
@@ -145,8 +146,8 @@ class AttendeesController < ApplicationController
     # airport travel plans
     extra_errors = []
     begin
-      @attendee.airport_arrival = parse_split_datetime_params :airport_arrival
-      @attendee.airport_departure = parse_split_datetime_params :airport_departure
+      @attendee.airport_arrival = parse_split_datetime(params[:attendee], :airport_arrival)
+      @attendee.airport_departure = parse_split_datetime(params[:attendee], :airport_departure)
     rescue
       extra_errors << $!.to_s
     end
@@ -195,8 +196,8 @@ class AttendeesController < ApplicationController
 
     if @page == 'basics'
       begin
-        @attendee.airport_arrival = parse_split_datetime_params :airport_arrival
-        @attendee.airport_departure = parse_split_datetime_params :airport_departure
+        @attendee.airport_arrival = parse_split_datetime(params[:attendee], :airport_arrival)
+        @attendee.airport_departure = parse_split_datetime(params[:attendee], :airport_departure)
       rescue
         extra_errors << $!.to_s
       end
@@ -401,15 +402,6 @@ protected
   end
 
 private
-
-  def parse_split_datetime_params prefix
-    prefix_for_msg = prefix.to_s.humanize.downcase
-    d = params[:attendee][:"#{prefix}_date"]
-    raise "Invalid #{prefix_for_msg} date" unless d.blank? || d.match(/^\d{4}(-\d{2}){2}$/)
-    t = params[:attendee][:"#{prefix}_time"]
-    raise "Invalid #{prefix_for_msg} time" unless t.blank? || t.match(/^\d{1,2}:\d{2}[ ][AP]M$/)
-    return Time.zone.parse("#{d} #{t}")
-  end
 
   # We do not want flash notices during initial registration
   def update_success_notice(page)
