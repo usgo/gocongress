@@ -142,10 +142,22 @@ class AttendeesController < ApplicationController
     @attendee.is_primary = (target_user.attendees.count == 0)
     @attendee.year = @year.year
 
+    # airport travel plans
+    extra_errors = []
+    begin
+      @attendee.airport_arrival = parse_split_datetime_params :airport_arrival
+      @attendee.airport_departure = parse_split_datetime_params :airport_departure
+    rescue
+      extra_errors << $!.to_s
+    end
+
     # Validate and save
-    if @attendee.save
+    if @attendee.valid? && extra_errors.empty?
+      @attendee.save!
       redirect_to @attendee.next_page(:basics, nil, [])
     else
+      init_multipage("basics")
+      @attendee.errors[:base].concat extra_errors
       render :action => "new"
     end
   end
@@ -396,7 +408,7 @@ private
     raise "Invalid #{prefix_for_msg} date" unless d.blank? || d.match(/^\d{4}(-\d{2}){2}$/)
     t = params[:attendee][:"#{prefix}_time"]
     raise "Invalid #{prefix_for_msg} time" unless t.blank? || t.match(/^\d{1,2}:\d{2}[ ][AP]M$/)
-    return Time.zone.parse(d + " " + t)
+    return Time.zone.parse("#{d} #{t}")
   end
 
   # We do not want flash notices during initial registration
