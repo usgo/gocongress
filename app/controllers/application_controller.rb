@@ -53,7 +53,6 @@ class ApplicationController < ActionController::Base
   end
 
   rescue_from CanCan::AccessDenied do |exception|
-    # Rails.logger.debug exception.subject.inspect
     render_access_denied
   end
 
