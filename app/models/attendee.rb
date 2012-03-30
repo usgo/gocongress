@@ -109,8 +109,6 @@ class Attendee < ActiveRecord::Base
       :message => "id is not a number"
     }
 
-  validates :transportation_request, :length => { :maximum => 500 }
-
   # Attendees must belong to a user (except when they are first being created,
   # because in a nested form there might not be a user_id yet.  I think that is what
   # is going on, anyway) I'm surprised this is necessary at all, and I'm unsettled
