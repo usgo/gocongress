@@ -1,7 +1,8 @@
 %h3 Travel Plans
 %p
   Flying to #{@year.city}?  Please tell us when and we will help
-  you connect with the airport shuttle.
+  you connect with the airport shuttle.  Use local time in #{@year.city}.
+  The time zone is #{@year.timezone}.
 
 %fieldset
   .field
@@ -13,7 +14,7 @@
       .datetime-field
         %label Time
         = text_field_tag "attendee[airport_arrival_time]", @airport_arrival_time, :class => 'time-field', :size => 10
-        %span.smalltext= @year.timezone
+        %span.smalltext eg. 8:00 AM
       .datetime-field
         %label Flight #
         = f.text_field :airport_arrival_flight, :size => 10
@@ -27,7 +28,7 @@
       .datetime-field
         %label Time
         = text_field_tag "attendee[airport_departure_time]", @airport_departure_time, :class => 'time-field', :size => 10
-        %span.smalltext= @year.timezone
+        %span.smalltext eg. 8:00 AM
 
 :javascript
   $(function(){
