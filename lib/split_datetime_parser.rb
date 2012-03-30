@@ -7,11 +7,23 @@ module SplitDatetimeParser
   # format is found, exceptions are raised.
   def parse_split_datetime hash, prefix
     prefix_for_msg = prefix.to_s.humanize.downcase
+
     d = hash[:"#{prefix}_date"]
-    raise "Invalid #{prefix_for_msg} date" unless d.blank? || d.match(/^\d{4}(-\d{2}){2}$/)
+    unless d.blank? || d.match(/^\d{4}(-\d{2}){2}$/)
+      raise SplitDatetimeParserException,
+        "Invalid #{prefix_for_msg} date.  Please use year-month-day format."
+    end
+
     t = hash[:"#{prefix}_time"]
-    raise "Invalid #{prefix_for_msg} time" unless t.blank? || t.match(/^\d{1,2}:\d{2}[ ][AP]M$/)
+    unless t.blank? || t.match(/^\d{1,2}:\d{2}[ ][AP]M$/)
+      raise SplitDatetimeParserException,
+        "Invalid #{prefix_for_msg} time.  Please use hour:minute am/pm format."
+    end
+
     return Time.zone.parse("#{d} #{t}")
+  end
+
+  class SplitDatetimeParserException < RuntimeError
   end
 
 end

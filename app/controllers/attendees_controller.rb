@@ -399,8 +399,8 @@ private
     begin
       @attendee.airport_arrival = parse_split_datetime(params[:attendee], :airport_arrival)
       @attendee.airport_departure = parse_split_datetime(params[:attendee], :airport_departure)
-    rescue
-      parse_errors << $!.to_s
+    rescue SplitDatetimeParserException => e
+      parse_errors << e.to_s
     end
     return parse_errors
   end
