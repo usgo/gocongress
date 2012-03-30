@@ -188,9 +188,9 @@ class AttendeesController < ApplicationController
     @page = get_valid_page_from_params
     params[:attendee] ||= {}
 
-    # some extra validation errors may come up, especially with associated models, and
-    # we want to save these and add them to @attendee.errors[:base] later.  This
-    # produces better-looking, more meaningful validation error display -Jared
+    # some extra validation errors may come up, especially with
+    # associated models, and we want to save these and add them
+    # to @attendee.errors[:base] later.
     extra_errors = []
 
     if @page == 'basics'
