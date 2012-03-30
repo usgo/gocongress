@@ -143,14 +143,8 @@ class AttendeesController < ApplicationController
     @attendee.is_primary = (target_user.attendees.count == 0)
     @attendee.year = @year.year
 
-    # airport travel plans
-    extra_errors = []
-    begin
-      @attendee.airport_arrival = parse_split_datetime(params[:attendee], :airport_arrival)
-      @attendee.airport_departure = parse_split_datetime(params[:attendee], :airport_departure)
-    rescue
-      extra_errors << $!.to_s
-    end
+    # assign airport_arrival and airport_departure attributes, if possible
+    extra_errors = parse_airport_datetimes
 
     # Validate and save
     if @attendee.valid? && extra_errors.empty?
@@ -195,12 +189,9 @@ class AttendeesController < ApplicationController
     extra_errors = []
 
     if @page == 'basics'
-      begin
-        @attendee.airport_arrival = parse_split_datetime(params[:attendee], :airport_arrival)
-        @attendee.airport_departure = parse_split_datetime(params[:attendee], :airport_departure)
-      rescue
-        extra_errors << $!.to_s
-      end
+
+      # assign airport_arrival and airport_departure attributes, if possible
+      extra_errors.concat parse_airport_datetimes
 
     elsif (@page == 'admin')
 
@@ -402,6 +393,17 @@ protected
   end
 
 private
+
+  def parse_airport_datetimes
+    parse_errors = []
+    begin
+      @attendee.airport_arrival = parse_split_datetime(params[:attendee], :airport_arrival)
+      @attendee.airport_departure = parse_split_datetime(params[:attendee], :airport_departure)
+    rescue
+      parse_errors << $!.to_s
+    end
+    return parse_errors
+  end
 
   # We do not want flash notices during initial registration
   def update_success_notice(page)
