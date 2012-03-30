@@ -31,6 +31,7 @@ h1, h2, h3, h4, h5, h6, legend, th { font-family: Helvetica, sans-serif; }
 body, td, p, span, div, li, hr, blockquote { font-family: Times, serif; }
 
 /* Basic font sizing */
+body { font-size: 10px; } // jquery ui theme (in EMs) based off of this
 h1 { font-size: 32px; }
 h2 { font-size: 24px; }
 h3 { font-size: 18px; }
@@ -229,9 +230,20 @@ div.field label.wide, div.field_with_errors label.wide { width: auto; }
 div.field textarea.wide { width: 650px; }
 div.field label.inline-label { width: auto; }
 
-/* Checkbox Lists */
-div.field .cbx-list { display: inline-block; }
-div.field .cbx-list label { padding-left: 1em; width: auto; vertical-align: baseline; }
+
+div.field {
+
+  /* Checkbox Lists */
+  .cbx-list { display: inline-block; }
+  .cbx-list label { padding-left: 1em; width: auto; vertical-align: baseline; }
+
+  /* Date and time inputs */
+  .datetime-fields {
+    display: inline-block;
+    .datetime-field { margin-bottom: 5px; }
+    label { width: 60px; }
+  }
+}
 
 /* Horizontally aligning stuff with inputs */
 fieldset .aligned-with-input { margin-left: 155px; }

@@ -1,0 +1,41 @@
+%fieldset
+  .field
+    = f.label :airport_arrival
+    .datetime-fields
+      .datetime-field
+        %label Date
+        = text_field_tag "attendee[airport_arrival_date]", @airport_arrival_date, :class => 'date-field', :size => 10
+      .datetime-field
+        %label Time
+        = text_field_tag "attendee[airport_arrival_time]", @airport_arrival_time, :class => 'time-field', :size => 10
+        %span.smalltext= @year.timezone
+      .datetime-field
+        %label Flight #
+        = f.text_field :airport_arrival_flight, :size => 10
+
+  .field
+    = f.label :airport_departure
+    .datetime-fields
+      .datetime-field
+        %label Date
+        = text_field_tag "attendee[airport_departure_date]", @airport_departure_date, :class => 'date-field', :size => 10
+      .datetime-field
+        %label Time
+        = text_field_tag "attendee[airport_departure_time]", @airport_departure_time, :class => 'time-field', :size => 10
+        %span.smalltext= @year.timezone
+
+:javascript
+  $(function(){
+    arrival = new Date("#{ @airport_arrival_date_rfc822 }");
+    installDatePicker('#attendee_airport_arrival_date', arrival);
+
+    departure = new Date("#{ @airport_departure_date_rfc822 }");
+    installDatePicker('#attendee_airport_departure_date', departure);
+  });
+
+  function installDatePicker(selector, defaultDate) {
+    $(selector).datepicker({
+      dateFormat: 'yy-mm-dd',
+      defaultDate: defaultDate
+    });
+  }

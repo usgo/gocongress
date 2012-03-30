@@ -183,7 +183,14 @@ class AttendeesController < ApplicationController
 
     # certain fields may only be set by admins
     # most of those fields are shown on the 'admin' page
-    if (@page == 'admin')
+    if @page == 'basics'
+      begin
+        @attendee.airport_arrival = parse_split_datetime_params :airport_arrival
+        @attendee.airport_departure = parse_split_datetime_params :airport_departure
+      rescue
+        extra_errors << $!.to_s
+      end
+    elsif (@page == 'admin')
       render_access_denied and return unless current_user.is_admin?
 
       # admin-only fields
@@ -317,7 +324,16 @@ class AttendeesController < ApplicationController
 protected
 
   def init_multipage( page )
-    if page == "wishes"
+    if page == "basics"
+      arrival = @attendee.airport_arrival
+      @airport_arrival_date = arrival.present? ? arrival.to_date : nil
+      @airport_arrival_time = arrival.present? ? arrival.to_s(:american).strip : nil
+      @airport_arrival_date_rfc822 = arrival.present? ? arrival.to_date.to_s(:rfc822) : @year.start_date.to_s(:rfc822)
+      departure = @attendee.airport_departure
+      @airport_departure_date = departure.present? ? departure.to_date : nil
+      @airport_departure_time = departure.present? ? departure.to_s(:american).strip : nil
+      @airport_departure_date_rfc822 = departure.present? ? departure.to_date.to_s(:rfc822) : @year.start_date.to_s(:rfc822)
+    elsif page == "wishes"
       @discounts = Discount.yr(@year).automatic(false)
       @attendee_discount_ids = @attendee.discounts.automatic(false).map { |d| d.id }
     elsif page == "admin"
@@ -371,6 +387,15 @@ protected
   end
 
 private
+
+  def parse_split_datetime_params prefix
+    prefix_for_msg = prefix.to_s.humanize.downcase
+    d = params[:attendee][:"#{prefix}_date"]
+    raise "Invalid #{prefix_for_msg} date" unless d.blank? || d.match(/^\d{4}(-\d{2}){2}$/)
+    t = params[:attendee][:"#{prefix}_time"]
+    raise "Invalid #{prefix_for_msg} time" unless t.blank? || t.match(/^\d{1,2}:\d{2}[ ][AP]M$/)
+    return Time.zone.parse(d + " " + t)
+  end
 
   # We do not want flash notices during initial registration
   def update_success_notice(page)

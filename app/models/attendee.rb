@@ -19,10 +19,12 @@ class Attendee < ActiveRecord::Base
   has_many :activities, :through => :attendee_activities
 
   # Mass assignment config
-  attr_accessible :given_name, :family_name, :gender, :anonymous, :rank, :aga_id,
-    :address_1, :address_2, :city, :state, :zip, :country, :phone, :email, :birth_date,
-    :understand_minor, :congresses_attended, :tshirt_size,
-    :special_request, :roomate_request, :transportation_request
+  attr_accessible :address_1, :address_2, :aga_id, :anonymous,
+    :airport_arrival, :airport_arrival_flight, :airport_departure,
+    :birth_date, :city, :congresses_attended, :country, :email,
+    :family_name, :given_name, :gender, :phone, :special_request,
+    :state, :rank, :roomate_request, :transportation_request,
+    :tshirt_size, :understand_minor, :zip
 
   # FIXME: in the controller, somehow year needs to get set
   # before authorize! runs.  until then, year needs to be accessible.

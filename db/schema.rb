@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120321005722) do
+ActiveRecord::Schema.define(:version => 20120329040112) do
 
   create_table "activities", :force => true do |t|
     t.string   "name"
@@ -114,6 +114,9 @@ ActiveRecord::Schema.define(:version => 20120321005722) do
     t.string   "guardian_full_name"
     t.integer  "year",                                                       :null => false
     t.string   "transportation_request",   :limit => 500
+    t.datetime "airport_arrival"
+    t.string   "airport_arrival_flight"
+    t.datetime "airport_departure"
   end
 
   add_index "attendees", ["aga_id", "year"], :name => "index_attendees_on_aga_id_and_year", :unique => true
