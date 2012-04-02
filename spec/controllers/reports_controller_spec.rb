@@ -3,7 +3,7 @@ require "spec_helper"
 describe ReportsController do
   describe "#user_invoices" do
 
-    it "limits the range of users alphabeticaly by name" do
+    it "filters users alphabeticaly by name" do
 
       # Sign in as an admin whose primary attendee's name starts
       # with Z, ie. not in the range we'll be testing below.
