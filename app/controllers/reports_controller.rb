@@ -93,10 +93,11 @@ class ReportsController < ApplicationController
   end
 
   def user_invoices
-    users = User.yr(@year).joins(:primary_attendee) \
-      .where('lower(substr(family_name,1,1)) between ? and ?', params[:min], params[:max]) \
-      .order('family_name, given_name')
-    @users = users.all
+    min = params[:min].downcase
+    max = params[:max].downcase
+    [min, max].each{ |m| raise "Invalid param" unless ("a".."z").cover?(m) }
+    @users = User.yr(@year).pri_att_fam_name_range(min, max) \
+      .order('family_name, given_name').all
     render :layout => "print"
   end
 

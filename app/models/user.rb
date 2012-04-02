@@ -50,6 +50,17 @@ class User < ActiveRecord::Base
   # FIXME: Isn't this defunct now?
   accepts_nested_attributes_for :primary_attendee
 
+  # Scopes
+  # ------
+
+  def self.pri_att_fam_name_range min, max
+    joins(:primary_attendee) \
+      .where('lower(substr(family_name,1,1)) between ? and ?', min, max)
+  end
+
+  # Instance Methods
+  # ----------------
+
   def admin?
     role == 'A'
   end
