@@ -59,6 +59,9 @@ class Attendee < ActiveRecord::Base
   TSHIRT_SIZE_LIST = []
   Attendee::TSHIRT_CHOICES.each { |t| TSHIRT_SIZE_LIST << t[1] }
 
+  # Scopes
+  # ------
+
   # Some "blank" birth_date values have made it into production. The following
   # scope is a useful way to filter out those records when querying birth_date
   # (eg. finding youngest attendee) -Jared 2011-02-07

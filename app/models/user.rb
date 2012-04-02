@@ -47,6 +47,7 @@ class User < ActiveRecord::Base
 
   # Nested Attributes allow us to create forms for attributes of a parent
   # object and its associations in one go with fields_for()
+  # FIXME: Isn't this defunct now?
   accepts_nested_attributes_for :primary_attendee
 
   def admin?
