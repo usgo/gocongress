@@ -93,9 +93,10 @@ class ReportsController < ApplicationController
   end
 
   def user_invoices
-    @users = User.yr(@year).joins(:primary_attendee)
-    @users.where('lower(substr(family_name,1,1)) between ? and ?', params[:min], params[:max])
-    @users.order('family_name, given_name')
+    users = User.yr(@year).joins(:primary_attendee) \
+      .where('lower(substr(family_name,1,1)) between ? and ?', params[:min], params[:max]) \
+      .order('family_name, given_name')
+    @users = users.all
     render :layout => "print"
   end
 
