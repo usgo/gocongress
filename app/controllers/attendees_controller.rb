@@ -275,7 +275,6 @@ class AttendeesController < ApplicationController
     end
 
     # update attributes but do not save yet
-    # TODO: isn't this defunct now that we use load_and_authorize_resource()?
     @attendee.attributes = params[:attendee]
 
     # validate
