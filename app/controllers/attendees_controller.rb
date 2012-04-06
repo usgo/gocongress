@@ -77,8 +77,6 @@ class AttendeesController < ApplicationController
     @avg_age = ages.empty? ? nil : ages.reduce(:+) / ages.count
   end
 
-  # GET /attendees/new
-  # GET /users/:id/attendees/new
   def new
 
     # visitors cannot get the new attendee form
@@ -115,7 +113,6 @@ class AttendeesController < ApplicationController
     end
   end
 
-  # POST /attendees
   def create
 
     # visitors cannot create attendees
@@ -157,9 +154,6 @@ class AttendeesController < ApplicationController
     end
   end
 
-  # GET /attendees/1/edit/basics
-  # GET /attendees/1/edit/wishes
-  # GET /attendees/1/edit/tournaments
   def edit
 
     # there are too many attendee attributes to fit them all on
@@ -178,7 +172,6 @@ class AttendeesController < ApplicationController
     render get_view_name_from_page(@page)
   end
 
-  # PUT /attendees/1
   def update
     @page = get_valid_page_from_params
     params[:attendee] ||= {}
@@ -288,7 +281,6 @@ class AttendeesController < ApplicationController
     end
   end
 
-  # DELETE /attendees/1
   def destroy
     belonged_to_current_user = (current_user.id == @attendee.user_id)
 
@@ -304,7 +296,6 @@ class AttendeesController < ApplicationController
     redirect_to user_path(target_attendee_user_id)
   end
 
-  # GET /attendees/1/print_summary
   def print_summary
     @attendee = Attendee.find params[:id]
     authorize! :read, @attendee
@@ -314,14 +305,12 @@ class AttendeesController < ApplicationController
     render :layout => "print"
   end
 
-  # GET /attendees/1/print_badge
   def print_badge
     @attendee = Attendee.find params[:id]
     authorize! :read, @attendee
     render :layout=> 'print'
   end
 
-  # GET /attendees/vip
   def vip
     @attendees = Attendee.yr(@year).where('rank >= 101')
   end
