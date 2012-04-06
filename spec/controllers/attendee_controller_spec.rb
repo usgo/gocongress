@@ -31,6 +31,15 @@ describe AttendeesController do
     end
   end
 
+  describe "#destroy" do
+    it "destroys the attendee" do
+      expect {
+        delete :destroy, :id => user.attendees.first.id, :year => user.year
+      }.to change{ user.attendees.count }.by(-1)
+      response.should redirect_to user_path(user)
+    end
+  end
+
   describe "#update" do
     let(:attendee) { FactoryGirl.create :attendee, :user => user }
 

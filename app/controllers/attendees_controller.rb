@@ -282,13 +282,6 @@ class AttendeesController < ApplicationController
   end
 
   def destroy
-
-    # only admins can destroy primary attendees
-    if @attendee.is_primary? and !current_user_is_admin? then
-      render_access_denied
-      return
-    end
-
     @attendee.destroy
     redirect_to user_path(@attendee.user_id), :notice => "Attendee deleted"
   end

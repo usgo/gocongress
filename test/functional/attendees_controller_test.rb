@@ -60,29 +60,9 @@ class AttendeesControllerTest < ActionController::TestCase
     end
   end
 
-  test "non-admin can destroy own non-primary attendee" do
-    sign_in @user
-    a = FactoryGirl.create(:attendee, :user_id => @user.id)
-    @user.save
-    assert_equal 1, @user.attendees.where(:is_primary => false).count
-    assert_difference('Attendee.count', -1) do
-      delete :destroy, :id => a.id, :year => @year
-    end
-    assert_equal 0, @user.attendees.where(:is_primary => false).count
-    assert_redirected_to user_path(@user)
-  end
-
-  test "non-admin cannot destroy any primary attendee" do
-    sign_in @user
-    assert_no_difference('Attendee.count') do
-      delete :destroy, :id => @user.primary_attendee.id, :year => @year
-    end
-    assert_response 403
-  end
-
   test "non-admin cannot destroy attendee from other user" do
     sign_in @user
-    a = FactoryGirl.create(:attendee)
+    a = FactoryGirl.create :attendee
     @user_two.attendees << a
     @user_two.save
     assert_equal 1, @user_two.attendees.where(:is_primary => false).count
