@@ -282,7 +282,6 @@ class AttendeesController < ApplicationController
   end
 
   def destroy
-    belonged_to_current_user = (current_user.id == @attendee.user_id)
 
     # only admins can destroy primary attendees
     if @attendee.is_primary? and !current_user_is_admin? then
@@ -290,10 +289,8 @@ class AttendeesController < ApplicationController
       return
     end
 
-    target_attendee_user_id = @attendee.user_id
     @attendee.destroy
-    flash[:notice] = "Attendee deleted"
-    redirect_to user_path(target_attendee_user_id)
+    redirect_to user_path(@attendee.user_id), :notice => "Attendee deleted"
   end
 
   def print_summary
