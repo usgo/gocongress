@@ -15,6 +15,7 @@ en:
         gender: "Gender"
         given_name: "Given Name"
         family_name: "Family Name"
+        flying: "Flying?"
         minor_agreement_received: "Minor Agreement Received"
         phone: "Phone"
         state: "State/Province"

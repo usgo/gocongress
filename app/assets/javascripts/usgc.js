@@ -1,5 +1,13 @@
-/* Fire up the slideshow -Jared 11/30/10 */
 $(document).ready(function(){
+
+  // Initialize any dialogs present
+  $( ".dialog" ).dialog({
+    autoOpen: false,
+    modal: true,
+    width: 450
+  });
+
+  /* Fire up the slideshow -Jared 11/30/10 */
   $('#gallery-container').show();
 
   // After struggling to get galleria into the vendor dir, I have settled

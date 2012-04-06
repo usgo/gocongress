@@ -22,7 +22,7 @@ class Attendee < ActiveRecord::Base
   attr_accessible :address_1, :address_2, :aga_id, :anonymous,
     :airport_arrival, :airport_arrival_flight, :airport_departure,
     :birth_date, :city, :congresses_attended, :country, :email,
-    :family_name, :given_name, :gender, :phone, :special_request,
+    :family_name, :flying, :given_name, :gender, :phone, :special_request,
     :state, :rank, :roomate_request, :tshirt_size,
     :understand_minor, :zip
 
@@ -71,6 +71,17 @@ class Attendee < ActiveRecord::Base
   # -----------
 
   validates :country, :format => {:with => /^[A-Z]{2}$/}, :presence => true
+
+  validates :flying, :inclusion => { :in => [true, false] }
+  validates_each :flying do |model, attr, value|
+    no_arrival = model.airport_arrival.blank?
+    no_departure = model.airport_departure.blank?
+    if value && no_arrival && no_departure then
+      model.errors.add("If you want help with the airport shuttle",
+        " please tell us when you'll be arriving or departing")
+    end
+  end
+
   validates_presence_of :gender
   validates_inclusion_of :gender, :in => ["m","f"], :message => "is not valid"
   validates_inclusion_of :is_primary, :in => [true, false]
