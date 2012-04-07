@@ -47,6 +47,8 @@ end
 group :test do
 	gem 'factory_girl'
 	gem 'factory_girl_rails'
+	gem 'spork', '1.0.0rc2'
+	gem 'spork-rails'
 end
 
 # To keep your heroku slug size down, try this
