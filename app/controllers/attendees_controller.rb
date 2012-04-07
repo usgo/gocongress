@@ -47,7 +47,8 @@ class AttendeesController < ApplicationController
 
     # if valid, go to next category or return to account
     if vldn_errs.empty? && @attendee.save
-      redirect_to @attendee.next_page(nil, @plan_category, session[:events_of_interest])
+      reg_proc = RegistrationProcess.new @attendee
+      redirect_to reg_proc.next_page(nil, @plan_category, session[:events_of_interest])
     else
       @attendee.errors[:base].concat vldn_errs
       render :edit_plans
@@ -146,7 +147,8 @@ class AttendeesController < ApplicationController
     # Validate and save
     if @attendee.valid? && extra_errors.empty?
       @attendee.save!
-      redirect_to @attendee.next_page(:basics, nil, [])
+      reg_proc = RegistrationProcess.new @attendee
+      redirect_to reg_proc.next_page(:basics, nil, [])
     else
       init_multipage("basics")
       @attendee.errors[:base].concat extra_errors
@@ -273,7 +275,8 @@ class AttendeesController < ApplicationController
     # validate
     if @attendee.valid? && extra_errors.empty?
       @attendee.save(:validate => false)
-      redirect_to @attendee.next_page(@page, nil, session[:events_of_interest]), :notice => update_success_notice(@page)
+      reg_proc = RegistrationProcess.new @attendee
+      redirect_to reg_proc.next_page(@page, nil, session[:events_of_interest]), :notice => update_success_notice(@page)
     else
       init_multipage(@page)
       @attendee.errors[:base].concat extra_errors

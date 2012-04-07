@@ -70,8 +70,8 @@ class User < ActiveRecord::Base
   # immediately after submitting the devise registration form)
   def after_sign_in_path
     if primary_attendee.present?
-      pa = primary_attendee
-      pa.has_plans? ? pa.my_account_path : pa.next_page(:basics, nil, [])
+      rp = RegistrationProcess.new primary_attendee
+      primary_attendee.has_plans? ? rp.my_account_path : rp.next_page(:basics, nil, [])
     else
       Rails.application.routes.url_helpers.add_attendee_to_user_path(self.year, self)
     end

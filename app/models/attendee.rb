@@ -2,7 +2,6 @@ require "invoice_item"
 
 class Attendee < ActiveRecord::Base
   include YearlyModel
-  include Rails.application.routes.url_helpers
 
   belongs_to :user
 
@@ -267,52 +266,6 @@ class Attendee < ActiveRecord::Base
 
   def minor?
     self.birth_date + 18.years > congress_start
-  end
-
-  def my_account_path
-    user_path(self.year, self.user)
-  end
-
-  # `next_page` returns the path to the next "page", usually in the
-  # registration process.
-  def next_page(current_page, plan_category, events_of_interest)
-    raise ArgumentError if (current_page.nil? && plan_category.nil?)
-    Attendee.assert_valid_page(current_page) if plan_category.nil?
-
-    # Coming from the first page (basics) go to the events page
-    if current_page.to_s == "basics"
-      return page_path :events
-    end
-
-    # Coming from the second page (events) go to the first
-    # appropriate plan category, if there is one.
-    if current_page.to_s == "events"
-      cat = PlanCategory.first_reg_form_category(self.year, self, events_of_interest)
-      return cat.present? ? plan_category_path(cat) : page_path(:wishes)
-    end
-
-    # Coming from the final page, we always go to the "My Account" page next
-    if current_page.to_s == "wishes"
-      return my_account_path
-    end
-
-    # If we're coming from one plan category, go to the next.
-    # If this is the last category, go to :wishes.
-    if plan_category.present?
-      cat = plan_category.next_reg_form_category(self, events_of_interest)
-      return cat.present? ? plan_category_path(cat) : page_path(:wishes)
-    end
-
-    # By default, return to the "My Account" page
-    return my_account_path
-  end
-
-  def page_path(page)
-    edit_attendee_path(self.year, self, page.to_sym)
-  end
-
-  def plan_category_path(plan_category)
-    edit_plans_for_attendee_path(self.year, self, plan_category)
   end
 
   def full_name(respect_anonymity = false)

@@ -1,18 +1,19 @@
 require "spec_helper"
 
-describe "Attendee#next_page" do
+describe "RegistrationProcess#next_page" do
   include Rails.application.routes.url_helpers
 
   let(:user) { FactoryGirl.create :user }
   let(:event) { FactoryGirl.create :event }
   let(:events_of_interest) { [event.id] }
+  let(:attendee) { user.primary_attendee }
 
-  subject { user.primary_attendee }
+  subject { RegistrationProcess.new attendee }
 
   context "after finishing the basics page" do
     it "returns the path to the events page" do
       subject.next_page(:basics, nil, nil).should ==
-        edit_attendee_path(subject.year, subject, :events)
+        edit_attendee_path(attendee.year, attendee, :events)
     end
   end
 
@@ -23,14 +24,14 @@ describe "Attendee#next_page" do
 
       it "returns the path to the edit_plans page for the first category" do
         subject.next_page(:events, nil, events_of_interest).should ==
-          edit_plans_for_attendee_path(subject.year, subject, plan_category)
+          edit_plans_for_attendee_path(attendee.year, attendee, plan_category)
       end
     end
 
     context "without an appropriate plan category" do
       it "returns the path to the wishes page" do
         subject.next_page(:events, nil, events_of_interest).should ==
-          edit_attendee_path(subject.year, subject, :wishes)
+          edit_attendee_path(attendee.year, attendee, :wishes)
       end
     end
   end
@@ -38,7 +39,7 @@ describe "Attendee#next_page" do
   context "after finishing the wishes page" do
     it "returns the path to my account" do
       subject.next_page(:wishes, nil, nil).should ==
-        user_path(subject.year, subject.user)
+        user_path(attendee.year, user)
     end
   end
 
@@ -49,7 +50,7 @@ describe "Attendee#next_page" do
     context "without an appropriate next plan category" do
       it "returns the path to the wishes page" do
         subject.next_page(nil, plan_category_a, events_of_interest).should ==
-          edit_attendee_path(subject.year, subject, :wishes)
+          edit_attendee_path(attendee.year, attendee, :wishes)
       end
     end
 
@@ -59,7 +60,7 @@ describe "Attendee#next_page" do
 
       it "returns the path to the edit_plans page for the next category" do
         subject.next_page(nil, plan_category_a, events_of_interest).should ==
-          edit_plans_for_attendee_path(subject.year, subject, plan_category_b)
+          edit_plans_for_attendee_path(attendee.year, attendee, plan_category_b)
       end
     end
   end
@@ -67,7 +68,7 @@ describe "Attendee#next_page" do
   context "after finishing the edit_tournaments page" do
     it "returns the path to my accounts" do
       subject.next_page(:tournaments, nil, nil).should ==
-        user_path(subject.year, subject.user)
+        user_path(attendee.year, user)
     end
   end
 end
