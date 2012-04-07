@@ -1,2 +1,0 @@
-module PlanCategoriesHelper
-end
