@@ -9,10 +9,6 @@ class RegistrationProcess
     @attendee.has_plans? ? my_account_path : next_page(:basics, nil, [])
   end
 
-  def my_account_path
-    user_path(@attendee.year, @attendee.user)
-  end
-
   # `next_page` returns the path to the next "page", usually in the
   # registration process.
   def next_page(current_page, plan_category, events_of_interest)
@@ -45,6 +41,12 @@ class RegistrationProcess
 
     # By default, return to the "My Account" page
     return my_account_path
+  end
+
+private
+
+  def my_account_path
+    user_path(@attendee.year, @attendee.user)
   end
 
   def page_path(page)
