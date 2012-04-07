@@ -18,6 +18,9 @@
   %p
     You can always change your mind later.
 
+  %h3 Are you flying to / from #{@year.nearby_airport_city}?
+  = render :partial => "travel_plans", :locals => { :f => f }
+
   %fieldset
     .field
       = f.submit "Continue"

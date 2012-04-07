@@ -1,9 +1,8 @@
 %fieldset
   .field
-    = f.label :flying
-    = f.check_box :flying
-    %span.smalltext
-      I'm flying, and I want help connecting with the airport shuttle.
+    .cbx-list
+      = f.check_box :flying
+      = f.label :flying, "Yes, and I want help connecting with the airport shuttle.", :class => 'wide'
 
 #travel_plans
   - if @year.year == 2012
@@ -55,8 +54,8 @@
 
 :javascript
   $(function(){
-    hideOrShowTravelPlans();
-    $('#attendee_flying').click(function(){ hideOrShowTravelPlans(); });
+    hideOrShowTravelPlans(false);
+    $('#attendee_flying').click(function(){ hideOrShowTravelPlans(true); });
 
     $( "#open_dialog_airport_shuttle" ).click(function() {
       $( "#dialog_airport_shuttle_2012" ).dialog( "open" );
@@ -70,12 +69,17 @@
     installDatePicker('#attendee_airport_departure_date', departure);
   });
 
-  function hideOrShowTravelPlans() {
-    if ($('#attendee_flying').prop("checked")) {
-      $("#travel_plans").show('blind', {}, 400);
+  function hideOrShowTravelPlans(animate) {
+    var show = $('#attendee_flying').prop("checked");
+    var tp = $("#travel_plans");
+    if (animate) {
+      var eff = 'blind';
+      var opt = {};
+      var speed = 400;
+      show ? tp.show(eff, opt, speed) : tp.hide(eff, opt, speed);
     }
     else {
-      $("#travel_plans").hide();
+      show ? tp.show() : tp.hide();
     }
   }
 

@@ -311,7 +311,7 @@ class AttendeesController < ApplicationController
 protected
 
   def init_multipage( page )
-    if page == "basics"
+    if page == "events"
       arrival = @attendee.airport_arrival
       @airport_arrival_date = arrival.present? ? arrival.to_date : nil
       @airport_arrival_time = arrival.present? ? arrival.to_s(:american).strip : nil
@@ -319,7 +319,7 @@ protected
       departure = @attendee.airport_departure
       @airport_departure_date = departure.present? ? departure.to_date : nil
       @airport_departure_time = departure.present? ? departure.to_s(:american).strip : nil
-      @airport_departure_date_rfc822 = departure.present? ? departure.to_date.to_s(:rfc822) : @year.start_date.to_s(:rfc822)
+      @airport_departure_date_rfc822 = departure.present? ? departure.to_date.to_s(:rfc822) : @year.peak_departure_date.to_s(:rfc822)
     elsif page == "wishes"
       @discounts = Discount.yr(@year).automatic(false)
       @attendee_discount_ids = @attendee.discounts.automatic(false).map { |d| d.id }

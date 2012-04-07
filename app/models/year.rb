@@ -23,4 +23,12 @@ class Year < ActiveRecord::Base
   end
 
   validates :twitter_url, :format => { :allow_nil => true, :with => /^https:\/{2}twitter.com/ }
+
+  def nearby_airport_city
+    year == 2012 ? "Asheville" : city
+  end
+
+  def peak_departure_date
+    year == 2012 ? Date.civil(2012, 8, 12) : start_date + 8.days
+  end
 end
