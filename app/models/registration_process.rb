@@ -5,6 +5,10 @@ class RegistrationProcess
     @attendee = attendee
   end
 
+  def after_sign_in_path
+    @attendee.has_plans? ? my_account_path : next_page(:basics, nil, [])
+  end
+
   def my_account_path
     user_path(@attendee.year, @attendee.user)
   end
