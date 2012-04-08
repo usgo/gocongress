@@ -47,6 +47,14 @@ describe AttendeesController do
         attendee.airport_arrival.should be_nil
         assigns(:attendee).errors[:base].should_not be_empty
       end
+
+      it "does not update invalid airport time" do
+        valid_date = "#{attendee.year}-01-01"
+        submit_events_page valid_date, "7:77 PM"
+        attendee.reload
+        attendee.airport_arrival.should be_nil
+        assigns(:attendee).errors[:base].should_not be_empty
+      end
     end
   end
 end

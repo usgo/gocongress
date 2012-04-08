@@ -20,7 +20,17 @@ module SplitDatetimeParser
         "Invalid #{prefix_for_msg} time.  Please use hour:minute am/pm format."
     end
 
-    return Time.zone.parse("#{d} #{t}")
+    # The input matches the strict regexes above, so ask parse()
+    # to make a Time instance.  The regexes above don't cover
+    # all stupidity (eg. a time like 7:77), so we must rescue
+    # from ArgumentError.
+    begin
+      dt = Time.zone.parse("#{d} #{t}")
+    rescue ArgumentError => e
+      raise SplitDatetimeParserException, e.to_s
+    end
+
+    return dt
   end
 
   class SplitDatetimeParserException < RuntimeError
