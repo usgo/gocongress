@@ -141,11 +141,8 @@ class AttendeesController < ApplicationController
     @attendee.is_primary = (target_user.attendees.count == 0)
     @attendee.year = @year.year
 
-    # assign airport_arrival and airport_departure attributes, if possible
-    extra_errors = parse_airport_datetimes
-
     # Validate and save
-    if @attendee.valid? && extra_errors.empty?
+    if @attendee.valid?
       @attendee.save!
       reg_proc = RegistrationProcess.new @attendee
       redirect_to reg_proc.next_page(:basics, nil, [])
@@ -183,12 +180,7 @@ class AttendeesController < ApplicationController
     # to @attendee.errors[:base] later.
     extra_errors = []
 
-    if @page == 'basics'
-
-      # assign airport_arrival and airport_departure attributes, if possible
-      extra_errors.concat parse_airport_datetimes
-
-    elsif (@page == 'admin')
+    if @page == 'admin'
 
       # certain fields may only be set by admins
       # most of those fields are shown on the 'admin' page
@@ -211,7 +203,9 @@ class AttendeesController < ApplicationController
       end
       params[:attendee].delete :tournament_id_list
 
-    elsif (@page == 'events')
+    elsif @page == 'events'
+
+      # Persist the selected events in the session
       params[:event_ids] ||= []
       if params[:event_ids].empty?
         extra_errors << "Please pick at least one event"
@@ -219,6 +213,9 @@ class AttendeesController < ApplicationController
         session[:events_of_interest] = params[:event_ids]
         raise ArgumentError unless session[:events_of_interest].respond_to? :each
       end
+
+      # Assign airport_arrival and airport_departure attributes, if possible
+      extra_errors.concat parse_airport_datetimes
 
     elsif (@page == 'wishes')
 
