@@ -35,7 +35,7 @@ module PostgresMigrationHelpers
   # To preserve compatability with postgres 8.3, `drop_constraint`
   # does not use the 'if exists' clause.
   def drop_constraint table, cns_name
-    execute %{alter table #{from_table}
+    execute %{alter table #{table}
       drop constraint #{cns_name} restrict}
   end
 
