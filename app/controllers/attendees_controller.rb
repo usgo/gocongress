@@ -148,7 +148,6 @@ class AttendeesController < ApplicationController
       redirect_to reg_proc.next_page(:basics, nil, [])
     else
       init_multipage("basics")
-      @attendee.errors[:base].concat extra_errors
       render :action => "new"
     end
   end

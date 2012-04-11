@@ -6,6 +6,17 @@ describe AttendeesController do
     sign_in user
   end
 
+  describe "#create" do
+    it "given invalid attributes it does not create attendee" do
+      attrs = FactoryGirl.attributes_for :attendee
+      attrs[:gender] = "zzzz" # invalid, obviously
+      expect {
+        post :create, attendee: attrs, year: attrs[:year]
+      }.to_not change{ Attendee.count }
+      assigns(:attendee).errors.should_not be_empty
+    end
+  end
+
   describe "#destroy" do
     it "destroys the attendee" do
       expect {
