@@ -133,7 +133,7 @@ class AttendeesController < ApplicationController
       return
     end
 
-    # Delete user_id from params hash to avoid attr_accessible mass-assignment warning
+    # Delete user_id from params hash to avoid mass-assignment warning
     params[:attendee].delete :user_id
 
     # Assign protected attributes
