@@ -23,7 +23,7 @@ class ApplicationController < ActionController::Base
 
   def set_year_from_params
     @year = Year.find_by_year(extract_year_from_params)
-    raise "Year #{year} not found" unless @year.present?
+    raise_routing_error("Year not found") unless @year.present?
   end
 
   def set_yearly_vars
@@ -122,9 +122,8 @@ private
   # If obtained from the params hash, the year is validated to protect
   # against sql injection, or benign programmer error.
   def extract_year_from_params
-    year = params[:year].present? ? params[:year] : CONGRESS_YEAR
-    year = year.to_i
-    raise "Invalid year" unless (2011..2100).include?(year)
+    year = params[:year].present? ? params[:year].to_i : CONGRESS_YEAR
+    raise_routing_error("Invalid year") unless (2011..LATEST_YEAR).include?(year)
     return year
   end
 
@@ -138,6 +137,10 @@ private
 
     # Alf says: render or redirect and the filter chain stops there
     render 'home/access_denied', :status => :forbidden
+  end
+
+  def raise_routing_error message='Not Found'
+    raise ActionController::RoutingError.new message
   end
 
   def can_see_admin_menu?
