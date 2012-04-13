@@ -13,6 +13,8 @@
     = javascript_include_tag :application
     = stylesheet_link_tag :application
     = stylesheet_link_tag 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.17/themes/ui-lightness/jquery-ui.css'
+    - if Rails.env.production?
+      = render 'shared/google_analytics'
 
   %body{:class => "#{@bodyClassList} year#{@year.year}"}
 
