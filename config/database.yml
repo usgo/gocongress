@@ -1,14 +1,7 @@
-stage:
-  adapter: postgresql
-  database: usgc_stage
-  username: usgc
-  password: shusaku
-  pool: 5
-  timeout: 5000
-
 development:
   adapter: postgresql
   database: usgc_dev
+  host: localhost
   username: usgc
   password: shusaku
   pool: 5
@@ -20,6 +13,7 @@ development:
 test:
   adapter: postgresql
   database: usgc_test
+  host: localhost
   username: usgc
   password: shusaku
   min_messages: WARNING
