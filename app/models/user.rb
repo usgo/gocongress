@@ -32,12 +32,13 @@ class User < ActiveRecord::Base
   ROLES = [['Admin','A'], ['Staff','S'], ['User','U']]
   validates_inclusion_of :role, :in => %w[A S U]
 
-  # Email must be unique within each year and may not contain commas or
-  # single-quotes because I do not want to escape them in JS
+  # Validate email address according to html5 spec (http://bit.ly/nOR1B6)
+  # but slightly stricter (no single quotes, backticks, slashes, or dollar signs)
+  EMAIL_REGEX = /^[a-zA-Z0-9.!#%&*+=?^_{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
   validates :email, \
     :presence => true, \
     :uniqueness => { :scope => :year, :case_sensitive => false }, \
-    :format => { :with => /^[^',]*$/, :message => "may not contain commas or quotes" }
+    :format => { :with => EMAIL_REGEX }
 
   after_create :send_welcome_email
 
