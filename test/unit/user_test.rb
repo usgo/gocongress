@@ -5,10 +5,6 @@ class UserTest < ActiveSupport::TestCase
     @user = FactoryGirl.create :user
   end
 
-  test "factory is valid" do
-    assert FactoryGirl.build(:user).valid?
-  end
-
   test "comp transaction" do
     @user.transactions << FactoryGirl.create(:tr_comp, :user_id => @user.id, :amount => 33)
     @user.transactions << FactoryGirl.create(:tr_comp, :user_id => @user.id, :amount => 40)
