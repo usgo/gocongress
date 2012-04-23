@@ -41,6 +41,7 @@ gem 'country-select', :git => 'git://github.com/jaredbeck/country-select.git'
 # to "expose generators and rake tasks"
 group :test, :development do
   gem 'rspec-rails'
+  gem 'rspec-mocks'
 end
 
 # Testing only

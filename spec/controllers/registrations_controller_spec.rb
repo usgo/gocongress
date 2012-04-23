@@ -9,16 +9,25 @@ describe RegistrationsController do
   end
 
   describe "#create" do
-    context "given invalid user attributes" do
-      let(:user) { FactoryGirl.attributes_for :user, :email => "herpderp" }
+    context "given an invalid user" do
+      let(:user) { FactoryGirl.attributes_for :user }
 
-      it "does not create or sign in a user" do
-        expect {
-          post :create, {:user => user, :year => user[:year]}
-        }.not_to change{ User.count }
+      # Using before(:each) because any_instance.stub() is not
+      # supported in before(:all)
+      # https://github.com/rspec/rspec-mocks/issues/60
+      before(:each) do
+        @user_count_before = User.count
+        User.any_instance.stub(:valid?).and_return(false)
+        post :create, {:user => user, :year => user[:year]}
+      end
+
+      it "does not create a user" do
+        User.count.should == @user_count_before
+      end
+
+      it "does not sign in a user" do
         warden.authenticated?(:user).should == false
       end
     end
   end
-
 end

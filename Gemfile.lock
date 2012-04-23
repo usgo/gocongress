@@ -181,6 +181,7 @@ DEPENDENCIES
   pg
   rails
   ranked-model
+  rspec-mocks
   rspec-rails
   sass-rails
   spork (= 1.0.0rc2)
