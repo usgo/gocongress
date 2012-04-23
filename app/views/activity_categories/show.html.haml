@@ -6,7 +6,6 @@
 
 -if @activity_category.has_description?
   %div= Markdown.new(@activity_category.description).to_html.html_safe
-  %br
 
 - if current_user.present?
   .inline-children
