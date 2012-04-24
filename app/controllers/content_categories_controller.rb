@@ -21,7 +21,7 @@ class ContentCategoriesController < ApplicationController
   end
 
   def show
-    @contents = @content_category.contents
+    @contents = @content_category.contents_chronological
   end
 
   def update
