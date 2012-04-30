@@ -143,7 +143,7 @@ class Attendee < ActiveRecord::Base
   end
 
   def self.average_congresses year
-    yr(year).average(:congresses_attended).round(1)
+    yr(year).average(:congresses_attended).try(:round, 1)
   end
 
   # `pages` returns an array of page names, in no particular order.
