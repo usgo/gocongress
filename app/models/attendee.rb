@@ -142,6 +142,10 @@ class Attendee < ActiveRecord::Base
     raise "Invalid page: #{p}" unless Attendee.pages.include?(p.to_s)
   end
 
+  def self.average_congresses year
+    yr(year).average(:congresses_attended).round(1)
+  end
+
   # `pages` returns an array of page names, in no particular order.
   # Not all pages are part of the registration process.
   def self.pages
