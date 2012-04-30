@@ -5,9 +5,10 @@
 
 - else
   %p
-    There are #{ @attendees.size } people registered,
-    including #{@kyu_count} kyu-level players, #{@dan_count} dan-level players,
-    #{pluralize(@pro_count, 'pro')}, and #{pluralize(@np_count, 'person')} with no rank.
+    There are #{ @attendees.size } people registered, including
+    #{@kyu_count} kyu-level players, #{@dan_count} dan-level
+    players, #{pluralize(@pro_count, 'pro')}, and
+    #{pluralize(@np_count, 'person')} with no rating.
     The average person has been to #{@avg_congresses} congresses.
 
     - if (@youngest_attendee.present? and @oldest_attendee.present?)

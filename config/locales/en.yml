@@ -21,7 +21,7 @@ en:
         state: "State/Province"
         tshirt_size: "T-Shirt Size"
         zip: "Zip/Postal Code"
-        rank: "Rank"
+        rank: "Rating"
         email: "Email Address"
         birth_date: "Birth Date"
         congresses_attended: "Number of Congresses Attended"
