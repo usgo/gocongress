@@ -268,6 +268,11 @@ class Attendee < ActiveRecord::Base
     self.birth_date + 18.years > congress_start
   end
 
+  def replace_all_activities activity_id_array
+    activities.clear
+    activities << Activity.yr(self.year).where(:id => activity_id_array)
+  end
+
   def full_name(respect_anonymity = false)
     name = NameInflector.capitalize_name(given_name) + " " + NameInflector.capitalize_name(family_name)
     respect_anonymity ? anonymize(name) : name

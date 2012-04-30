@@ -256,12 +256,8 @@ class AttendeesController < ApplicationController
       params[:attendee].delete :tournament_id_list
 
     elsif (@page == 'activities')
-      @attendee.activities.clear
-      params[:attendee][:activity_id_list] ||= Array.new
-      params[:attendee][:activity_id_list].each do |eid|
-        e = Activity.find(eid)
-        @attendee.activities << e if e.present?
-      end
+      activity_id_array = params[:attendee][:activity_id_list] || []
+      @attendee.replace_all_activities(activity_id_array)
       params[:attendee].delete :activity_id_list
     end
 
