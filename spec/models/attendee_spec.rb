@@ -9,6 +9,16 @@ describe Attendee do
     end
   end
 
+  describe "#valid?" do
+    it "requires minors to provide the name of a guardian" do
+      a = FactoryGirl.build :attendee
+      a.stub(:minor?) { true }
+      a.guardian_full_name = nil
+      a.should_not be_valid
+      a.errors.keys.should include(:guardian_full_name)
+    end
+  end
+
   describe "#invoice_items" do
     it "does not include plans that need staff approval" do
       a = FactoryGirl.create :attendee

@@ -15,12 +15,16 @@ FactoryGirl.define do
     year Time.now.year
   end
 
-  factory :attendee_minor, :parent => :attendee do
+  factory :minor, :parent => :attendee do
+    birth_date CONGRESS_START_DATE[Time.now.year] - 10.years
+    guardian_full_name "Mother Dearest"
     understand_minor true
   end
 
-  factory :ten_year_old, :parent => :attendee do
-    birth_date 10.years.ago
-    understand_minor true
+  # A child is less than 12 yrs old, according to
+  # the factory :discount_for_child
+  factory :child, :parent => :minor do
+    birth_date CONGRESS_START_DATE[Time.now.year] - 10.years
   end
+
 end

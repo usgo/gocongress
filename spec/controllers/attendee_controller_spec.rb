@@ -15,6 +15,14 @@ describe AttendeesController do
       }.to_not change{ Attendee.count }
       assigns(:attendee).errors.should_not be_empty
     end
+
+    it "minors can specify the name of their guardian" do
+      attrs = FactoryGirl.attributes_for :minor
+      attrs[:guardian_full_name] = "Mommy Moo"
+      expect {
+        post :create, attendee: attrs, year: attrs[:year]
+      }.to change{ Attendee.count }.by(+1)
+    end
   end
 
   describe "#destroy" do

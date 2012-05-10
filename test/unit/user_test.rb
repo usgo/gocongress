@@ -63,7 +63,7 @@ class UserTest < ActiveSupport::TestCase
 
     # If 12 years old on the first day of congress, then attendee
     # should get child discount and NOT youth discount
-    a = FactoryGirl.create(:attendee, :birth_date => congress_start - 12.years, :user_id => @user.id, :understand_minor => true, :year => y)
+    a = FactoryGirl.create(:minor, :birth_date => congress_start - 12.years, :user_id => @user.id, :year => y)
     assert_equal 12, a.age_in_years
     assert_equal true, user_has_discount?(@user, dc)
     assert_equal false, user_has_discount?(@user, dy)

@@ -21,7 +21,8 @@ class Attendee < ActiveRecord::Base
   attr_accessible :address_1, :address_2, :aga_id, :anonymous,
     :airport_arrival, :airport_arrival_flight, :airport_departure,
     :birth_date, :city, :congresses_attended, :country, :email,
-    :family_name, :flying, :given_name, :gender, :phone, :special_request,
+    :family_name, :flying, :given_name, :gender,
+    :guardian_full_name, :phone, :special_request,
     :state, :rank, :roomate_request, :tshirt_size,
     :understand_minor, :zip
 
@@ -83,6 +84,7 @@ class Attendee < ActiveRecord::Base
 
   validates_presence_of :gender
   validates_inclusion_of :gender, :in => ["m","f"], :message => "is not valid"
+  validates :guardian_full_name, :presence => { :if => :minor? }
   validates_inclusion_of :is_primary, :in => [true, false]
   validates_inclusion_of :minor_agreement_received, :in => [true, false]
   validates_presence_of :address_1, :birth_date, :city, :email, :family_name, :given_name, :rank

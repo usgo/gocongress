@@ -39,7 +39,7 @@
       = f.check_box :minor_agreement_received
     .field
       = f.label :guardian_full_name
-      = f.text_field :guardian_full_name
+      %span= @attendee.guardian_full_name
 
   %br
   %fieldset.wider-labels

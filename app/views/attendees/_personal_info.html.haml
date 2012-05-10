@@ -29,5 +29,9 @@
       then I must submit the #{link_to_liability_release} to the
       = link_to 'registrar.', contact_path, :target => '_blank'
   .field
+    = f.label :guardian_full_name
+    = f.text_field :guardian_full_name
+    %span.smalltext Required for minors
+  .field
     = f.label :tshirt_size
     = f.select :tshirt_size, Attendee::TSHIRT_CHOICES, :include_blank => ''

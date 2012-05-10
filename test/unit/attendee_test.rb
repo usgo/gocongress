@@ -14,8 +14,7 @@ class AttendeeTest < ActiveSupport::TestCase
     # only discounts from the attendee's year should be included
     dc_2011 = FactoryGirl.create :discount_for_child, :year => 2011
     dc_now = FactoryGirl.create :discount_for_child
-    birth_date = CONGRESS_START_DATE[Time.now.year] - 11.years
-    a = FactoryGirl.create(:attendee_minor, :birth_date => birth_date, :user_id => @user.id)
+    a = FactoryGirl.create(:child, :user_id => @user.id)
     item_descriptions = a.invoice_items.map{|i| i.description}
     assert_equal true, item_descriptions.include?(dc_now.get_invoice_item_name)
     assert_equal false, item_descriptions.include?(dc_2011.get_invoice_item_name)
