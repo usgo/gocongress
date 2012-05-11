@@ -1,6 +1,22 @@
 require "spec_helper"
 
 describe ReportsController do
+
+  describe "#outstanding_balances" do
+    it "shows users with non-zero balances" do
+      sign_in FactoryGirl.create :admin
+
+      paid_too_little = FactoryGirl.create(:user)
+      paid_too_much = FactoryGirl.create(:user)
+      paid_exactly = FactoryGirl.create(:user)
+      paid_too_little.primary_attendee.plans << FactoryGirl.create(:plan)
+      paid_too_much.transactions << FactoryGirl.create(:tr_sale)
+
+      get :outstanding_balances, :year => Time.now.year
+      assigns(:users).map(&:id).should =~ [paid_too_little.id, paid_too_much.id]
+    end
+  end
+
   describe "#user_invoices" do
 
     it "filters users alphabeticaly by name" do

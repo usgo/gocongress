@@ -60,12 +60,4 @@ class ReportsControllerTest < ActionController::TestCase
     assert_in_delta expected_sum.to_f, assigns["sales_sum"].to_f
   end
 
-  test "outstanding balances" do
-    sign_in @admin
-    FactoryGirl.create :tr_sale, amount: 10000, user_id: @user.id
-    get :outstanding_balances, :year => Time.now.year
-    assert_not_nil assigns["users"]
-    assert !assigns["users"].map(&:id).include?(@user.id)
-  end
-
 end
