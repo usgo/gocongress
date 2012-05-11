@@ -31,7 +31,7 @@
   .field
     = f.label :guardian_full_name
     = f.text_field :guardian_full_name
-    %span.smalltext Required for minors
+    %span.smalltext Attending adult responsible for minor
   .field
     = f.label :tshirt_size
     = f.select :tshirt_size, Attendee::TSHIRT_CHOICES, :include_blank => ''
