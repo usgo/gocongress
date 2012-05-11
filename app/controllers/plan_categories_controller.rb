@@ -41,7 +41,12 @@ class PlanCategoriesController < ApplicationController
   end
 
   def destroy
-    @plan_category.destroy
+    begin
+      @plan_category.destroy
+    rescue ActiveRecord::DeleteRestrictionError
+      flash[:alert] = "Cannot delete the '#{@plan_category.name}' category
+        because its plans have already been selected by attendees"
+    end
     redirect_to plan_categories_url
   end
 

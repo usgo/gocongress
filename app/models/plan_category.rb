@@ -49,6 +49,18 @@ class PlanCategory < ActiveRecord::Base
   # Instance methods, public
   # ------------------------
 
+  def attendee_count
+    plans.joins(:attendees).count
+  end
+
+  def destroy
+    if attendee_count > 0
+      raise ActiveRecord::DeleteRestrictionError, \
+        "Cannot delete, has attendees"
+    end
+    super
+  end
+
   def next_reg_form_category(attendee, events)
     PlanCategory.reg_form(self.year, attendee.age_in_years, events)
       .where("plan_categories.name > ?", self.name)
@@ -81,6 +93,8 @@ class PlanCategory < ActiveRecord::Base
 
   # Private methods
   # ---------------
+
+  private
 
   def validate_ordering ordering
     ordering_errors = []
