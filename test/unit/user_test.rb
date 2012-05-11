@@ -11,18 +11,6 @@ class UserTest < ActiveSupport::TestCase
     assert_equal -73, @user.get_invoice_total
   end
 
-  test "amount paid is sum of sale transactions" do
-    num_transactions = 10
-    expected_sum = 0
-    1.upto(num_transactions) { |n|
-      t = FactoryGirl.create(:tr_sale, :user_id => @user.id)
-      expected_sum += t.amount
-      @user.transactions << t
-      }
-    assert_equal num_transactions, @user.transactions.where(:trantype => 'S').length
-    assert_equal expected_sum, @user.amount_paid
-  end
-
   test "balance" do
     1.upto(1+rand(3)) { |a| @user.attendees << FactoryGirl.create(:attendee, :user_id => @user.id) }
     1.upto(1+rand(10)) { |n| @user.transactions << FactoryGirl.create(:tr_sale, :user_id => @user.id) }

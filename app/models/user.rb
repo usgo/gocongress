@@ -78,12 +78,9 @@ class User < ActiveRecord::Base
   end
 
   def amount_paid
-    sum = 0
-    sales = transactions.where(:trantype => 'S')
-    sales.each { |s| sum += s.amount }
-    refunds = transactions.where(:trantype => 'R')
-    refunds.each { |r| sum -= r.amount }
-    return sum
+    sales_total = transactions.where(:trantype => 'S').sum(:amount)
+    refund_total = transactions.where(:trantype => 'R').sum(:amount)
+    return sales_total - refund_total
   end
 
   def balance

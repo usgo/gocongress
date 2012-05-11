@@ -13,7 +13,9 @@ FactoryGirl.define do
 
   factory :tr_refund, :parent => :transaction do
     trantype 'R'
-    instrument %w[K S].sample
+    i = %w[K S].sample
+    instrument i
+    check_number(101) if (i == 'K')
   end
 
   factory :tr_sale, :parent => :transaction do
