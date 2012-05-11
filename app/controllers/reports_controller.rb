@@ -66,8 +66,13 @@ class ReportsController < ApplicationController
   end
 
   def outstanding_balances
-    @users = User.yr(@year).joins(:primary_attendee).order :family_name, :given_name
+    @users = User.yr(@year).includes(User::EAGER_LOAD_CONFIG_FOR_INVOICES)
     @users.keep_if { |u| u.balance >= 0.01 }
+
+    # Sort by family_name.  Normally we would do this in the query,
+    # but joining on primary_attendee would conflict with our eager
+    # loading configuration.
+    @users.sort!{|a,b| a.primary_attendee.family_name <=> b.primary_attendee.family_name}
   end
 
   def transactions

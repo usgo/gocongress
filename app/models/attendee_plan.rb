@@ -50,8 +50,10 @@ class AttendeePlan < ActiveRecord::Base
     ! plan.needs_staff_approval?
   end
 
-  def to_invoice_item
-    InvoiceItem.new('Plan: ' + plan.name, attendee.full_name, plan.price, quantity)
+  # Optimization: Avoid a query by passing
+  # `attendee_full_name` as an argument
+  def to_invoice_item attendee_full_name
+    InvoiceItem.new('Plan: ' + plan.name, attendee_full_name, plan.price, quantity)
   end
 
 end

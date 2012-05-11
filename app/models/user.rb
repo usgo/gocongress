@@ -51,6 +51,22 @@ class User < ActiveRecord::Base
   # FIXME: Isn't this defunct now?
   accepts_nested_attributes_for :primary_attendee
 
+  # Constants
+  # ---------
+
+  # When generating invoices for multiple users, passing this
+  # constant into includes() can really speed things up.
+  EAGER_LOAD_CONFIG_FOR_INVOICES = [
+    :primary_attendee,
+    {
+      :attendees => [
+        {:attendee_activities => :activity},
+        {:attendee_discounts => :discount},
+        {:attendee_plans => :plan}
+      ]
+    }
+  ]
+
   # Scopes
   # ------
 

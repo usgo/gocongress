@@ -247,13 +247,15 @@ class Attendee < ActiveRecord::Base
     end
 
     # Did this attendee claim any non-automatic discounts?
-    self.discounts.where("is_automatic = ?", false).each do |d|
+    # Optimization: Assuming discounts were eager-loaded, we can
+    # avoid a query by using `select{}` instead of `where()`
+    self.discounts.select{|d| !d.is_automatic?}.each do |d|
       items << InvoiceItem.new(d.get_invoice_item_name, self.get_full_name, -1 * d.amount, 1)
     end
 
     # Plans
-    plans_to_invoice = attendee_plans.select{|ap| ap.show_on_invoice?}
-    items.concat plans_to_invoice.map{|ap| ap.to_invoice_item}
+    plans_to_invoice = attendee_plans.select{ |ap| ap.show_on_invoice? }
+    items.concat plans_to_invoice.map{ |ap| ap.to_invoice_item(self.full_name) }
 
     # Activities
     self.activities.each do |e|
