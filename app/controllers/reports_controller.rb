@@ -67,7 +67,11 @@ class ReportsController < ApplicationController
 
   def outstanding_balances
     @users = User.yr(@year).includes(User::EAGER_LOAD_CONFIG_FOR_INVOICES)
-    @users.keep_if { |u| u.balance >= 0.01 }
+
+    # Keep users with non-zero balances.  Obviously, we want to see
+    # users who owe us money, but it is also useful for the registrar
+    # to see people who deserve refunds.
+    @users.keep_if { |u| u.balance >= 0.01 || u.balance <= -0.01 }
 
     # Sort by family_name.  Normally we would do this in the query,
     # but joining on primary_attendee would conflict with our eager
