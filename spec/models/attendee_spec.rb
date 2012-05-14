@@ -17,6 +17,12 @@ describe Attendee do
       a.should_not be_valid
       a.errors.keys.should include(:guardian_full_name)
     end
+
+    it "requires a birth date" do
+      a = FactoryGirl.build :attendee, {:birth_date => nil}
+      a.should_not be_valid
+      a.errors.keys.should include(:birth_date)
+    end
   end
 
   describe "#invoice_items" do

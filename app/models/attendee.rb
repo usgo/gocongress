@@ -84,7 +84,7 @@ class Attendee < ActiveRecord::Base
 
   validates_presence_of :gender
   validates_inclusion_of :gender, :in => ["m","f"], :message => "is not valid"
-  validates :guardian_full_name, :presence => { :if => :minor? }
+  validates :guardian_full_name, :presence => { :if => :require_guardian_full_name? }
   validates_inclusion_of :is_primary, :in => [true, false]
   validates_inclusion_of :minor_agreement_received, :in => [true, false]
   validates_presence_of :address_1, :birth_date, :city, :email, :family_name, :given_name, :rank
@@ -345,4 +345,13 @@ class Attendee < ActiveRecord::Base
     at = self.attendee_tournaments.find_by_tournament_id(tid)
     at.present? ? at.notes : ''
   end
+
+private
+
+  # Minors are required to have a guardian.  To safely invoke
+  # minor?(), we must first check that birth_date is present.
+  def require_guardian_full_name?
+    birth_date.present? && minor?
+  end
+
 end
