@@ -34,6 +34,16 @@ describe AttendeesController do
     end
   end
 
+  describe "#index" do
+    it "excludes attendees with zero plans" do
+      a1 = FactoryGirl.create :attendee
+      a2 = FactoryGirl.create :attendee
+      a1.plans << FactoryGirl.create(:plan)
+      get :index, year: a1.year
+      assigns(:attendees).should_not include(a2)
+    end
+  end
+
   describe "#update" do
     let(:attendee) { FactoryGirl.create :attendee, :user => user }
 

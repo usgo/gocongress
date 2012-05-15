@@ -67,6 +67,10 @@ class Attendee < ActiveRecord::Base
   # (eg. finding youngest attendee) -Jared 2011-02-07
   scope :reasonable_birth_date, where("birth_date > ? AND birth_date < ?", '1880-01-01', Time.now())
 
+  # Using a subquery in the where clause is performant up to about
+  # one thousand records.  -Jared 2012-05-13
+  scope :with_at_least_one_plan, where("(select count(*) from attendee_plans ap where ap.attendee_id = attendees.id) > 0")
+
   # Validations
   # -----------
 
