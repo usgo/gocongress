@@ -46,7 +46,6 @@
         %th Name
         %th Rank
         %th Age *
-        %th Confirmed **
         %th
     %tbody
       - for a in @attendees
@@ -54,7 +53,6 @@
           %td.attendee_name_column= link_to a.get_full_name, a
           %td= a.get_rank_name
           %td= a.age_in_years.floor
-          %td= a.confirmed.present? ? "Yes" : "No"
           %td
             - if a.is_primary
               Primary&nbsp;Attendee
@@ -63,8 +61,6 @@
 
   %p.smalltext
     * Age on #{CONGRESS_START_DATE[@year.year].to_formatted_s(:long)}
-    %br
-    ** Confirmed when payment is received, all forms are filled out, association membership verified, etc.
 
 %br
 

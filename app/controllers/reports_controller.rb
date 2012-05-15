@@ -37,7 +37,7 @@ class ReportsController < ApplicationController
   end
 
   def atn_reg_sheets
-    @attendee_attr_names = %w[aga_id birth_date comment confirmed email gender phone special_request roomate_request].sort
+    @attendee_attr_names = %w[aga_id birth_date comment email gender phone special_request roomate_request].sort
     @attendees = Attendee.yr(@year).where('lower(substr(family_name,1,1)) between ? and ?', params[:min], params[:max])
     @attendees.order('user_id, family_name, given_name')
     @tmt_names = AttendeeTournament.tmt_names_by_attendee(@year.year)

@@ -28,7 +28,6 @@ en:
         special_request: "Special Request"
         roomate_request: "Roomate Request"
         comment: "Comments"
-        confirmed: "Registration Confirmed?"
         guardian_full_name: "Attending Guardian"
       content:
         show_on_homepage: "Show on Homepage?"

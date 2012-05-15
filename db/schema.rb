@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120406011327) do
+ActiveRecord::Schema.define(:version => 20120515023908) do
 
   create_table "activities", :force => true do |t|
     t.string   "name"
@@ -110,7 +110,6 @@ ActiveRecord::Schema.define(:version => 20120406011327) do
     t.text     "special_request"
     t.text     "roomate_request"
     t.string   "comment"
-    t.boolean  "confirmed"
     t.string   "guardian_full_name"
     t.integer  "year",                                                     :null => false
     t.datetime "airport_arrival"

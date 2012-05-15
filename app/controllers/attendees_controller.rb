@@ -188,7 +188,7 @@ class AttendeesController < ApplicationController
       render_access_denied and return unless current_user.is_admin?
 
       # admin-only fields
-      [:comment, :confirmed, :minor_agreement_received].each do |p|
+      [:comment, :minor_agreement_received].each do |p|
         if (!params[:attendee][p].nil?)
           @attendee[p] = params[:attendee][p]
           params[:attendee].delete p
@@ -286,7 +286,7 @@ class AttendeesController < ApplicationController
   def print_summary
     @attendee = Attendee.find params[:id]
     authorize! :read, @attendee
-    @attendee_attr_names = %w[aga_id birth_date comment confirmed email gender phone special_request roomate_request].sort
+    @attendee_attr_names = %w[aga_id birth_date comment email gender phone special_request roomate_request].sort
     tmt_names = AttendeeTournament.tmt_names_by_attendee(@year.year)
     @tmt_names_atn = tmt_names[@attendee.id].present? ? tmt_names[@attendee.id] : Array.new
     render :layout => "print"
