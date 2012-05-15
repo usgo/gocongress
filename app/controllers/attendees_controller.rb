@@ -59,7 +59,7 @@ class AttendeesController < ApplicationController
     params[:direction] ||= "asc"
     @opposite_direction = (params[:direction] == 'asc') ? 'desc' : 'asc'
     @attendees = Attendee.yr(@year).with_at_least_one_plan
-    @attendees.order parse_order_clause_params
+    @attendees = @attendees.order parse_order_clause_params
 
     # get some fun statistics
     @pro_count = @attendees.where(:rank => 101..109).count
