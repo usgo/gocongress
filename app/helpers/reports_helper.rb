@@ -29,20 +29,8 @@ module ReportsHelper
     end
 
     # basic attendee attributes
-    a.attribute_names_for_csv.each do |attr|
-      if a[attr].blank?
-        ar << nil
-      else
-        if attr == 'rank'
-          ar << a.get_rank_name
-        elsif attr == 'tshirt_size'
-          ar << a.get_tshirt_size_name
-        else
-          # entity encode things like angle brackets, or else
-          # excel may fail to open the csv correctly
-          ar << html_escape(a[attr])
-        end
-      end
+    a.attribute_names_for_csv.each do |atr|
+      ar << a.attribute_value_for_csv(atr)
     end
 
     # lisa says: plans should come right after attendee attrs
