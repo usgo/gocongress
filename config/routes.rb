@@ -69,7 +69,7 @@ Gocongress::Application.routes.draw do
           end
         end
 
-        # reports (not a restful resource, but this is a nice compact syntax)
+        # The reports_controller is deprecated.  Use the rpt namespace below.
         resource :reports, :only => [] do
 
           get :atn_badges_all, :atn_badges_ind, :atn_reg_sheets,
@@ -81,6 +81,12 @@ Gocongress::Application.routes.draw do
           constraints :format => /(csv)?/ do
             get :attendees, :transactions
           end
+        end
+
+        # The "rpt" namespace can be renamed to "reports" once the
+        # deprecated reports_controller is gone.
+        namespace :rpt do
+          resources :attendeeless_users, :only => :index
         end
 
         # defunct?

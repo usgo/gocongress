@@ -70,6 +70,8 @@ class User < ActiveRecord::Base
   # Scopes
   # ------
 
+  scope :attendeeless, where("(select count(*) from attendees a where a.user_id = users.id) = 0")
+
   def self.pri_att_fam_name_range min, max
     joins(:primary_attendee) \
       .where('lower(substr(family_name,1,1)) between ? and ?', min, max)

@@ -1,0 +1,7 @@
+%h2 Users with No Attendees
+%p
+  The following people started to register, then quit before finishing the
+  first real page of the registration form. As a result, we don't know
+  anything about them other than their email address.
+%p Copy and paste from the box below.
+%textarea.fullwidth{ :rows => 20 }= @email_list
