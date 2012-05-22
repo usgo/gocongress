@@ -1,33 +1,39 @@
 %h2 Admin Reports
+
+.vertical-form-instructions
+  %h3 Tips
+  %ul
+    %li CSV exports can be opened in Excel
+    %li In Excel, you can filter and sort the data to your heart's content.
+    %li If there is no CSV export, you can still copy a table (use command-drag) and paste into Excel.
+
+%h3 General
 %ul
   %li= link_to "Attendee Email Addresses", "reports/emails"
   %li= link_to "Attendees", attendees_reports_path
-  %li= link_to Activity.model_name.human.pluralize, activities_reports_path
+
+%h3 Money
+%ul
   %li= link_to "Invoices", invoices_reports_path
   %li= link_to "Outstanding Balances", outstanding_balances_reports_path
-  %li= link_to "Tournaments", tournaments_reports_path
   %li= link_to "Transactions", transactions_reports_path
 
-%h3 Report Tips
+%h3 Activities and Tournaments
 %ul
-  %li CSV exports can be opened in Excel
-  %li In Excel, you can filter and sort the data to your heart&#39;s content.
-  %li If there is no CSV export, you can still copy a table (use command-drag) and paste into Excel.
+  %li= link_to Activity.model_name.human.pluralize, activities_reports_path
+  %li= link_to "Tournaments", tournaments_reports_path
 
 %h3 Printable Documents
 %ul
   %li
-    Attendee Registration Sheets
-    %ul
-      %li= link_to "A-L", atn_reg_sheets_reports_path(:min=>'a', :max=>'l')
-      %li= link_to "M-Z", atn_reg_sheets_reports_path(:min=>'m', :max=>'z')
+    Attendee Registration Sheets:
+    #{link_to "A-L", atn_reg_sheets_reports_path(:min=>'a', :max=>'l')},
+    = link_to "M-Z", atn_reg_sheets_reports_path(:min=>'m', :max=>'z')
   %li
-    Attendee Badges
-    %ul
-      %li= link_to "A-L", atn_badges_all_reports_path(:min=>'a', :max=>'l')
-      %li= link_to "M-Z", atn_badges_all_reports_path(:min=>'m', :max=>'z')
+    Attendee Badges:
+    #{link_to "A-L", atn_badges_all_reports_path(:min=>'a', :max=>'l')},
+    = link_to "M-Z", atn_badges_all_reports_path(:min=>'m', :max=>'z')
   %li
     User Cost Summaries
-    %ul
-      %li= link_to "A-L", user_invoices_reports_path(:min=>'a', :max=>'l')
-      %li= link_to "M-Z", user_invoices_reports_path(:min=>'m', :max=>'z')
+    #{link_to "A-L", user_invoices_reports_path(:min=>'a', :max=>'l')},
+    = link_to "M-Z", user_invoices_reports_path(:min=>'m', :max=>'z')
