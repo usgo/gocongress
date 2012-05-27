@@ -20,9 +20,6 @@ class ReportsController < ApplicationController
     render :layout => "print"
   end
 
-  def index
-  end
-
   def invoices
     users = User.yr(@year).all
     @user_count = users.count
