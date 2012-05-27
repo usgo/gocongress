@@ -16,11 +16,9 @@ class ReportsControllerTest < ActionController::TestCase
       assert_response :success
     end
 
-    # These reports also respond to csv
-    %w[attendees transactions].each do |r|
-      %w[html csv].each do |f|
-        get r, :format => f, :year => @admin.year
-      end
+    # The transactions report also responds to csv
+    %w[html csv].each do |f|
+      get :transactions, :format => f, :year => @admin.year
     end
 
     # Finally, these reports take a min and max parameter
@@ -28,18 +26,6 @@ class ReportsControllerTest < ActionController::TestCase
       get r, :year => @admin.year, :min => 'a', :max => 'z'
       assert_response :success
     end
-  end
-
-  test "staff can get attendees report" do
-    sign_in @staff
-    get :attendees, :format => 'csv', :year => Time.now.year
-    assert_response :success
-  end
-
-  test "user cannot get attendees report" do
-    sign_in @user
-    get :attendees, :format => 'csv', :year => Time.now.year
-    assert_response 403
   end
 
   test "transaction report limited to current year" do

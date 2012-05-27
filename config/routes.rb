@@ -76,10 +76,9 @@ Gocongress::Application.routes.draw do
             :emails, :activities, :index, :invoices, :outstanding_balances,
             :tournaments, :user_invoices
 
-          # these two reports are the only routes in the entire app
-          # that allow the :format dynamic segment.
+          # These reports support CSV format
           constraints :format => /(csv)?/ do
-            get :attendees, :transactions
+            get :transactions
           end
         end
 
@@ -87,6 +86,11 @@ Gocongress::Application.routes.draw do
         # deprecated reports_controller is gone.
         namespace :rpt do
           resources :attendeeless_users, :only => :index
+
+          # These reports support CSV format
+          constraints :format => /(csv)?/ do
+            resource :attendee_report, :only => :show
+          end
         end
 
         # defunct?
