@@ -1,6 +1,6 @@
-class Rpt::AttendeelessUsersController < Rpt::AbstractReportController
+class Rpt::AttendeelessUserReportsController < Rpt::AbstractReportController
 
-def index
+def show
   users = User.yr(@year).attendeeless.select(:email)
   @email_list = users.map(&:email).join(', ')
 end

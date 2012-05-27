@@ -85,7 +85,7 @@ Gocongress::Application.routes.draw do
         # The "rpt" namespace can be renamed to "reports" once the
         # deprecated reports_controller is gone.
         namespace :rpt do
-          resources :attendeeless_users, :only => :index
+          resource :attendeeless_user_report, :only => :show
 
           # These reports support CSV format
           constraints :format => /(csv)?/ do
