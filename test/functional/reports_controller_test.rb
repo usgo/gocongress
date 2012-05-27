@@ -16,34 +16,11 @@ class ReportsControllerTest < ActionController::TestCase
       assert_response :success
     end
 
-    # The transactions report also responds to csv
-    %w[html csv].each do |f|
-      get :transactions, :format => f, :year => @admin.year
-    end
-
-    # Finally, these reports take a min and max parameter
+    # These reports take a min and max parameter
     %w[atn_badges_all atn_reg_sheets user_invoices].each do |r|
       get r, :year => @admin.year, :min => 'a', :max => 'z'
       assert_response :success
     end
-  end
-
-  test "transaction report limited to current year" do
-    sign_in @admin
-
-    # create transactions in different years
-    1.upto(3) { FactoryGirl.create(:tr_sale, year: Time.now.year + 1) }
-    this_year_sales = []
-    1.upto(3) { this_year_sales << FactoryGirl.create(:tr_sale) }
-    expected_sum = this_year_sales.map(&:amount).reduce(:+)
-
-    # expect to only see this year's sales on report
-    get :transactions, :year => Time.now.year
-    assert_response :success
-    assert_not_nil assigns["sales"]
-    assert_not_nil assigns["sales_sum"]
-    assert_equal this_year_sales.count, assigns["sales"].count
-    assert_in_delta expected_sum.to_f, assigns["sales_sum"].to_f
   end
 
 end

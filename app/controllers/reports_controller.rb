@@ -55,23 +55,6 @@ class ReportsController < ApplicationController
     @users.sort!{|a,b| a.primary_attendee.family_name <=> b.primary_attendee.family_name}
   end
 
-  def transactions
-    @transactions = Transaction.yr(@year).all
-    @sales = Transaction.yr(@year).where("trantype = ?", "S")
-    @comps = Transaction.yr(@year).where("trantype = ?", "C")
-    @refunds = Transaction.yr(@year).where("trantype = ?", "R")
-
-    @sales_sum = @sales.sum(:amount)
-    @comps_sum = @comps.sum(:amount)
-    @refunds_sum = @refunds.sum(:amount)
-    @total_sum = @sales_sum - @comps_sum - @refunds_sum
-
-    respond_to do |format|
-      format.html do render :transactions end
-      format.csv do render_csv("usgc_transactions_#{Time.now.strftime("%Y-%m-%d")}") end
-    end
-  end
-
   def tournaments
     # Lisa wants "the US Open at the bottom, since it will be by far the longest"
     @tournaments = Tournament.yr(@year).order("name <> 'US Open' desc, name asc")
@@ -90,30 +73,6 @@ protected
 
   def page_title
     human_action_name.singularize + ' ' + human_controller_name
-  end
-
-private
-
-  def render_csv(filename = nil)
-    filename ||= params[:action]
-    filename += '.csv'
-
-    if request.env['HTTP_USER_AGENT'] =~ /msie/i
-      headers['Pragma'] = 'public'
-      headers["Content-type"] = "text/plain"
-      headers['Cache-Control'] = 'no-cache, must-revalidate, post-check=0, pre-check=0'
-      headers['Content-Disposition'] = "attachment; filename=\"#{filename}\""
-      headers['Expires'] = "0"
-    else
-      headers["Content-Type"] ||= 'text/csv'
-      headers["Content-Disposition"] = "attachment; filename=\"#{filename}\""
-    end
-
-    render :layout => false
-  end
-
-  def safe_for_csv(str)
-    str.tr(',"', '')
   end
 
 end

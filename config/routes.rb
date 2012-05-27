@@ -69,27 +69,25 @@ Gocongress::Application.routes.draw do
           end
         end
 
-        # The reports_controller is deprecated.  Use the rpt namespace below.
-        resource :reports, :only => [] do
-
-          get :atn_badges_all, :atn_badges_ind, :atn_reg_sheets,
-            :emails, :activities, :index, :invoices, :outstanding_balances,
-            :tournaments, :user_invoices
-
-          # These reports support CSV format
-          constraints :format => /(csv)?/ do
-            get :transactions
+        # The reports_controller is deprecated, except for the index
+        # action.  Use the rpt namespace below.
+        resources :reports, :only => :index do
+          collection do
+            get :atn_badges_all, :atn_badges_ind, :atn_reg_sheets,
+              :emails, :activities, :invoices, :outstanding_balances,
+              :tournaments, :user_invoices
           end
         end
 
-        # The "rpt" namespace can be renamed to "reports" once the
-        # deprecated reports_controller is gone.
+        # The "rpt" namespace has one controller for each report.
+        # This replaces the deprecated reports_controller.
         namespace :rpt do
           resource :attendeeless_user_report, :only => :show
 
           # These reports support CSV format
           constraints :format => /(csv)?/ do
             resource :attendee_report, :only => :show
+            resource :transaction_report, :only => :show
           end
         end
 
