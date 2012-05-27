@@ -1,11 +1,17 @@
 shared_examples "a report" do |format_array|
 
-  it "is accessible to admins" do
-    admin = FactoryGirl.create :admin
-    sign_in admin
-    format_array.each do |f|
-      get :show, :format => f, :year => admin.year
-      response.should be_success
+  # We want to test our views, but for spec performance we
+  # only render_views once
+  context "with render_views" do
+    render_views
+
+    it "is accessible to admins" do
+      admin = FactoryGirl.create :admin
+      sign_in admin
+      format_array.each do |f|
+        get :show, :format => f, :year => admin.year
+        response.should be_success
+      end
     end
   end
 
