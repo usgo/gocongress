@@ -12,20 +12,24 @@ def show
       render :show
     end
     format.csv do
-      # Build csv header line.  The order must match
-      # attendee_to_array() in reports_helper.rb
-      cols = ['user_email'].concat Attendee.attribute_names_for_csv
-      Plan.yr(@year).order(:name).each { |p| cols << "Plan: " + safe_for_csv(p.name) }
-      claimable_discounts = Discount.yr(@year).where('is_automatic = ?', false).order(:name)
-      claimable_discounts.each { |d| cols << "Discount: " + safe_for_csv(d.name) }
-      Tournament.yr(@year).order(:name).each { |t| cols << "Tournament: " + safe_for_csv(t.name) }
-      @csv_header_line = cols.join(',')
+      @csv_header_line = csv_header_line
       render_csv("usgc_attendees_#{Time.now.strftime("%Y-%m-%d")}")
     end
   end
 end
 
 private
+
+# The order of `csv_header_line` must match
+# `attendee_to_array` in `reports_helper.rb`
+def csv_header_line
+  cols = ['user_email'].concat Attendee.attribute_names_for_csv
+  Plan.yr(@year).order(:name).each { |p| cols << "Plan: " + safe_for_csv(p.name) }
+  claimable_discounts = Discount.yr(@year).where('is_automatic = ?', false).order(:name)
+  claimable_discounts.each { |d| cols << "Discount: " + safe_for_csv(d.name) }
+  Tournament.yr(@year).order(:name).each { |t| cols << "Tournament: " + safe_for_csv(t.name) }
+  cols.join(',')
+end
 
 def planlessness
   p = params[:planlessness]
