@@ -1,3 +1,5 @@
+require 'csv'
+
 class Rpt::AbstractReportController < ApplicationController
 
 # Access Control
