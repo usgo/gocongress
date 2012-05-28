@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  include YearlyController
 
   before_filter :deny_users_from_wrong_year, :only => [:index]
   before_filter :remove_year_from_params

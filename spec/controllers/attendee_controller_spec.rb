@@ -44,6 +44,16 @@ describe AttendeesController do
     end
   end
 
+  describe "#show" do
+    it "will not show attendees from the wrong year" do
+      atnd = FactoryGirl.create :attendee, :year => 2012
+      admin = FactoryGirl.create :admin, :year => 2012
+      sign_in admin
+      expect { get :show, :id => atnd.id, :year => 2011
+        }.to raise_error ActiveRecord::RecordNotFound
+    end
+  end
+
   describe "#update" do
     let(:attendee) { FactoryGirl.create :attendee, :user => user }
 

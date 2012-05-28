@@ -1,5 +1,6 @@
 class DiscountsController < ApplicationController
-  
+  include YearlyController
+
   load_and_authorize_resource
 
   # GET /discounts

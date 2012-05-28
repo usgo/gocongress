@@ -1,4 +1,5 @@
 class ContentsController < ApplicationController
+  include YearlyController
 
   load_and_authorize_resource
 
@@ -43,7 +44,7 @@ class ContentsController < ApplicationController
     @content.destroy
     redirect_to(content_categories_url, :notice => 'Content deleted')
   end
-  
+
   def content_category_options
     ContentCategory.yr(@year).all.map {|c| [ c.name, c.id ] }
   end

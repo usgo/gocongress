@@ -1,4 +1,5 @@
 class PlanCategoriesController < ApplicationController
+  include YearlyController
 
   load_and_authorize_resource
   before_filter :events_for_select, :only => [:create, :edit, :new, :update]

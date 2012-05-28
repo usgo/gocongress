@@ -1,4 +1,5 @@
 class YearsController < ApplicationController
+  include YearlyController
 
   before_filter :deny_users_from_wrong_year
 

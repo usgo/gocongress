@@ -1,4 +1,5 @@
 class UserJobsController < ApplicationController
+  include YearlyController
 
   # Access Control
   before_filter :allow_only_admin, :except => [:index]

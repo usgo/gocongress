@@ -11,16 +11,18 @@ class UsersControllerTest < ActionController::TestCase
     a = FactoryGirl.create :admin, year: 2011
     u = FactoryGirl.create :user, year: 2012
     sign_in a
-    get :show, :id => u.id, :year => a.year
-    assert_response 403
+    assert_raise(ActiveRecord::RecordNotFound) {
+      get :show, :id => u.id, :year => a.year
+    }
   end
 
   test "staff cannot read user from different year" do
     s = FactoryGirl.create :staff, year: 2011
     u = FactoryGirl.create :user, year: 2012
     sign_in s
-    get :show, :id => u.id, :year => s.year
-    assert_response 403
+    assert_raise(ActiveRecord::RecordNotFound) {
+      get :show, :id => u.id, :year => s.year
+    }
   end
 
   test "admin can get index" do

@@ -1,4 +1,5 @@
 class TransactionsController < ApplicationController
+  include YearlyController
 
   load_and_authorize_resource
 

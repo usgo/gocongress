@@ -1,5 +1,6 @@
 class AttendeesController < ApplicationController
   include SplitDatetimeParser
+  include YearlyController
 
   load_and_authorize_resource
   skip_load_resource :only => [:index, :vip]
