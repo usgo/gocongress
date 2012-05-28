@@ -2,10 +2,9 @@ class Rpt::AttendeeReportsController < Rpt::AbstractReportController
 
 def show
   @attendees = Attendee.yr(@year).with_planlessness(planlessness)
-  @attendee_count = @attendees.count
-
   respond_to do |format|
     format.html do
+      @attendee_count = @attendees.count
       @user_count = User.yr(@year).count
       @planless_attendee_count = Attendee.yr(@year).planless.count
       @planful_attendee_count = Attendee.yr(@year).count - @planless_attendee_count
