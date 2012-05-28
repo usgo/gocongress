@@ -11,6 +11,6 @@
   = pluralize(@attendees.count, amnh.downcase) + '.'
 
 %h3 Export to CSV
-= form_tag(csv_path) do
+= form_tag(csv_path, :method => :get) do
   %p= render "select_planlessness"
   %p= submit_tag "Export"
