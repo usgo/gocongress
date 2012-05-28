@@ -149,8 +149,32 @@ class Attendee < ActiveRecord::Base
     raise "Invalid page: #{p}" unless Attendee.pages.include?(p.to_s)
   end
 
+  def self.attribute_names_for_csv
+
+    # Lisa wants the name and email in the first few columns
+    # group together address, city, state, etc.
+    first_attrs = %w[aga_id family_name given_name address_1 address_2 city state zip country phone]
+
+    # we should move roommate request next to the plans
+    last_attrs = %w[special_request roomate_request]
+
+    attrs = self.attribute_names.delete_if { |x|
+      first_attrs.index(x) ||
+      last_attrs.index(x) ||
+      internal_attributes.index(x)
+    }
+
+    # note: the order must match attendee_to_array() in reports_helper.rb
+    return first_attrs.concat(attrs.concat(last_attrs))
+  end
+
   def self.average_congresses year
     yr(year).average(:congresses_attended).try(:round, 1)
+  end
+
+  def self.internal_attributes
+    # attrs rarely useful for display
+    %w[id user_id understand_minor]
   end
 
   # `pages` returns an array of page names, in no particular order.
@@ -179,25 +203,6 @@ class Attendee < ActiveRecord::Base
 
   def anonymize string
     anonymous? ? 'Anonymous' : string
-  end
-
-  def attribute_names_for_csv
-
-    # Lisa wants the name and email in the first few columns
-    # group together address, city, state, etc.
-    first_attrs = %w[aga_id family_name given_name address_1 address_2 city state zip country phone]
-
-    # we should move roommate request next to the plans
-    last_attrs = %w[special_request roomate_request]
-
-    attrs = self.attribute_names.delete_if { |x|
-      first_attrs.index(x) ||
-      last_attrs.index(x) ||
-      internal_attributes.index(x)
-    }
-
-    # note: the order must match attendee_to_array() in reports_helper.rb
-    return first_attrs.concat(attrs.concat(last_attrs))
   end
 
   def attribute_value_for_csv atr
@@ -248,11 +253,6 @@ class Attendee < ActiveRecord::Base
 
   def has_plans?
     plan_count > 0
-  end
-
-  def internal_attributes
-    # attrs rarely useful for display
-    %w[id user_id understand_minor]
   end
 
   def invoice_items
