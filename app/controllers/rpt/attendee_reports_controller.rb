@@ -1,14 +1,7 @@
 class Rpt::AttendeeReportsController < Rpt::AbstractReportController
 
 def show
-  @attendees = Attendee.yr(@year)
-  @attendees = case planlessness
-    when :planful then @attendees.with_at_least_one_plan
-    when :planless then @attendees.with_no_plans
-    else @attendees
-    end
-  @attendees = @attendees.all
-
+  @attendees = Attendee.yr(@year).with_planlessness(planlessness)
   @attendee_count = @attendees.count
   @user_count = User.yr(@year).count
 

@@ -9,6 +9,28 @@ describe Attendee do
     end
   end
 
+  describe ".with_planlessness" do
+    let!(:plan) { FactoryGirl.create :plan }
+    let!(:a1) { FactoryGirl.create :attendee }
+    let!(:a2) { FactoryGirl.create :attendee }
+
+    before(:each) do
+      a2.plans << plan
+    end
+
+    it "can return all attendees" do
+      Attendee.with_planlessness(:all).should =~ [a1, a2]
+    end
+
+    it "can return only attendees with plans" do
+      Attendee.with_planlessness(:planful).should =~ [a2]
+    end
+
+    it "can return only attendees without plans" do
+      Attendee.with_planlessness(:planless).should =~ [a1]
+    end
+  end
+
   describe "#invoice_items" do
     it "does not include plans that need staff approval" do
       a = FactoryGirl.create :attendee

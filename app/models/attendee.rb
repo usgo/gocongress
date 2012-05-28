@@ -70,7 +70,7 @@ class Attendee < ActiveRecord::Base
   # Using a subquery in the where clause is performant up to about
   # one thousand records.  -Jared 2012-05-13
   scope :with_at_least_one_plan, where("0 < (select count(*) from attendee_plans ap where ap.attendee_id = attendees.id)")
-  scope :with_no_plans, where("0 = (select count(*) from attendee_plans ap where ap.attendee_id = attendees.id)")
+  scope :planless, where("0 = (select count(*) from attendee_plans ap where ap.attendee_id = attendees.id)")
 
   # Validations
   # -----------
@@ -157,6 +157,15 @@ class Attendee < ActiveRecord::Base
   # Not all pages are part of the registration process.
   def self.pages
     %w[admin basics events tournaments activities wishes]
+  end
+
+  def self.with_planlessness planlessness
+    case planlessness
+    when :all then all
+    when :planful then with_at_least_one_plan
+    when :planless then planless
+    else raise ArgumentError
+    end
   end
 
   # Public Instance Methods
