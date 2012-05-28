@@ -1,7 +1,14 @@
 class Rpt::AttendeeReportsController < Rpt::AbstractReportController
 
 def show
-  @attendees = Attendee.yr(@year).all
+  @attendees = Attendee.yr(@year)
+  @attendees = case planlessness
+    when :planful then @attendees.with_at_least_one_plan
+    when :planless then @attendees.with_no_plans
+    else @attendees
+    end
+  @attendees = @attendees.all
+
   @attendee_count = @attendees.count
   @user_count = User.yr(@year).count
 
@@ -22,6 +29,13 @@ def show
     format.html do render :show end
     format.csv do render_csv("usgc_attendees_#{Time.now.strftime("%Y-%m-%d")}") end
   end
+end
+
+private
+
+def planlessness
+  p = params[:planlessness]
+  %w[all planful planless].include?(p) ? p.to_sym : :all
 end
 
 end

@@ -10,4 +10,7 @@
   and
   = pluralize(@attendees.count, amnh.downcase) + '.'
 
-%p= button_to "Export #{amnh.pluralize} To CSV", csv_path, :method => "get"
+%h3 Export to CSV
+= form_tag(csv_path) do
+  %p= render "select_planlessness"
+  %p= submit_tag "Export"

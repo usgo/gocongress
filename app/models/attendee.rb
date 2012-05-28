@@ -69,7 +69,8 @@ class Attendee < ActiveRecord::Base
 
   # Using a subquery in the where clause is performant up to about
   # one thousand records.  -Jared 2012-05-13
-  scope :with_at_least_one_plan, where("(select count(*) from attendee_plans ap where ap.attendee_id = attendees.id) > 0")
+  scope :with_at_least_one_plan, where("0 < (select count(*) from attendee_plans ap where ap.attendee_id = attendees.id)")
+  scope :with_no_plans, where("0 = (select count(*) from attendee_plans ap where ap.attendee_id = attendees.id)")
 
   # Validations
   # -----------

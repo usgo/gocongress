@@ -1,0 +1,13 @@
+= radio_button_tag :planlessness, :all, true
+%label{:for => 'planlessness_all'} All attendees
+%br
+
+= radio_button_tag :planlessness, :planful
+%label{:for => 'planlessness_planful'}
+  Attendees that have selected <strong>at least one</strong> plan
+%br
+
+= radio_button_tag :planlessness, :planless
+%label{:for => 'planlessness_planless'}
+  Attendees that have <strong>not</strong> selected any plans
+%br
