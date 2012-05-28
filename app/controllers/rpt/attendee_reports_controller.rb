@@ -22,12 +22,11 @@ private
 # The order of `csv_header_line` must match
 # `attendee_to_array` in `reports_helper.rb`
 def csv_header_line
-  cols = ['user_email'].concat Attendee.attribute_names_for_csv
-  Plan.yr(@year).order(:name).each { |p| cols << "Plan: " + safe_for_csv(p.name) }
-  claimable_discounts = Discount.yr(@year).where('is_automatic = ?', false).order(:name)
-  claimable_discounts.each { |d| cols << "Discount: " + safe_for_csv(d.name) }
-  Tournament.yr(@year).order(:name).each { |t| cols << "Tournament: " + safe_for_csv(t.name) }
-  cols.join(',')
+  atrs = Attendee.attribute_names_for_csv
+  plans = Plan.yr(@year).order(:name).map{ |p| "Plan: " + safe_for_csv(p.name)}
+  discs = Discount.yr(@year).where('is_automatic = ?', false).order(:name).map{ |d| "Discount: " + safe_for_csv(d.name) }
+  tourns = Tournament.yr(@year).order(:name).map{ |t| "Tournament: " + safe_for_csv(t.name) }
+  (['user_email'] + atrs + plans + discs + tourns).join(',')
 end
 
 def planlessness
