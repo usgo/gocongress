@@ -16,6 +16,8 @@ module ReportsHelper
     return a
   end
 
+  # The order of columns in `attendee_to_array` must match the order
+  # of `csv_header_line` in the `attendee_reports_controller`
   def attendee_to_array(a)
     ar = []
 
@@ -42,12 +44,12 @@ module ReportsHelper
 
     # claimed discounts
     claimed_discount_ids = a.discounts.automatic(false).map { |d| d.id }
-    claimable_discounts = Discount.yr(a.year).automatic(false).order(:name)
+    claimable_discounts = Discount.for_report(a.year)
     claimable_discounts.each do |d|
       ar << claimed_discount_ids.index(d.id).present? ? 'yes' : 'no'
     end
 
-    # tournament participation. order must match reports_controller.attendees()
+    # tournament participation
     tournament_ids = a.tournaments.map { |t| t.id }
     Tournament.yr(a.year).order(:name).each do |t|
       ar << tournament_ids.index(t.id).present? ? 'yes' : 'no'

@@ -14,8 +14,17 @@ class Discount < ActiveRecord::Base
   validates_numericality_of :age_max, :only_integer => true, :allow_nil => true
   validates_inclusion_of :is_automatic, :in => [true, false]
 
-  # Scopes, and class methods that act like scopes
+  # Class methods
+  # --------
+
   def self.automatic(a) where(:is_automatic => a) end
+
+  def self.for_report year
+    yr(year).automatic(false).order(:name)
+  end
+
+  # Instance Methods
+  # ---------
 
   def get_age_range_in_words
     returned_words = ""
