@@ -9,6 +9,20 @@ describe Attendee do
     end
   end
 
+  describe "#invoice_items" do
+    it "does not include plans that need staff approval" do
+      a = FactoryGirl.create :attendee
+      p = FactoryGirl.create :plan_which_needs_staff_approval
+      expect { a.plans << p }.to_not change{a.invoice_items.count}
+    end
+
+    it "includes applicable plans" do
+      a = FactoryGirl.create :attendee
+      p = FactoryGirl.create :plan
+      expect { a.plans << p }.to change{a.invoice_items.count}.by(1)
+    end
+  end
+
   describe "#valid?" do
     it "requires minors to provide the name of a guardian" do
       a = FactoryGirl.build :attendee
@@ -22,20 +36,6 @@ describe Attendee do
       a = FactoryGirl.build :attendee, {:birth_date => nil}
       a.should_not be_valid
       a.errors.keys.should include(:birth_date)
-    end
-  end
-
-  describe "#invoice_items" do
-    it "does not include plans that need staff approval" do
-      a = FactoryGirl.create :attendee
-      p = FactoryGirl.create :plan_which_needs_staff_approval
-      expect { a.plans << p }.to_not change{a.invoice_items.count}
-    end
-
-    it "includes applicable plans" do
-      a = FactoryGirl.create :attendee
-      p = FactoryGirl.create :plan
-      expect { a.plans << p }.to change{a.invoice_items.count}.by(1)
     end
   end
 end
