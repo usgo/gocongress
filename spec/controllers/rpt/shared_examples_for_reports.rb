@@ -33,4 +33,11 @@ shared_examples "a report" do |format_array|
     end
   end
 
+  it "only lets you see your own year" do
+    admin = FactoryGirl.create :admin, :year => 2012
+    sign_in admin
+    get :show, :year => 2011
+    response.status.should == 403
+  end
+
 end
