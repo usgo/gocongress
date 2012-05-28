@@ -14,14 +14,17 @@
       %td Sales
       %td.numeric= @sales.count
       %td.numeric= number_to_currency(@sales_sum, :unit => '')
+
+    -# Display refunds and comps as negative numbers because they
+    -# are subtracted from sales to get the total.
     %tr
       %td Refunds
       %td.numeric= @refunds.count
-      %td.numeric= number_to_currency(@refunds_sum, :unit => '')
+      %td.numeric= number_to_currency(@refunds_sum * -1, :unit => '', :negative_format => "(%n)")
     %tr
       %td Comps
       %td.numeric= @comps.count
-      %td.numeric= number_to_currency(@comps_sum, :unit => '')
+      %td.numeric= number_to_currency(@comps_sum * -1, :unit => '', :negative_format => "(%n)")
     %tr
       %td Total
       %td.numeric= @transactions.length
