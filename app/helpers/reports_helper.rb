@@ -41,8 +41,8 @@ module ReportsHelper
     end
 
     # claimed discounts
-    claimed_discount_ids = a.discounts.where('is_automatic = ?', false).map { |d| d.id }
-    claimable_discounts = Discount.yr(a.year).where('is_automatic = ?', false).order(:name)
+    claimed_discount_ids = a.discounts.automatic(false).map { |d| d.id }
+    claimable_discounts = Discount.yr(a.year).automatic(false).order(:name)
     claimable_discounts.each do |d|
       ar << claimed_discount_ids.index(d.id).present? ? 'yes' : 'no'
     end
