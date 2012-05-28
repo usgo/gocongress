@@ -5,6 +5,9 @@ def show
   @attendee_count = @attendees.count
   @user_count = User.yr(@year).count
 
+  @planless_attendee_count = Attendee.yr(@year).planless.count
+  @planful_attendee_count = Attendee.yr(@year).count - @planless_attendee_count
+
   # build csv header line
   # the order here must match attendee_to_array() in reports_helper.rb
   cols = []
