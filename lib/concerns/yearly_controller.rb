@@ -13,7 +13,12 @@ module YearlyController
   # On an unrelated note, access control across years (always
   # forbidden) is handled separately by cancan.
   def ensure_resource_year_matches_year_in_route
-    return if params[:id].blank?
+
+    # If there's no :id parameter, or the action does not apply to
+    # particular record, then skip this validation.
+    no_id = params[:id].blank?
+    not_applicable_action = %w[create index new].include?(action_name)
+    return if (no_id || not_applicable_action)
 
     # Hopefully the @year has already been set by `set_year_from_params`
     raise "undefined year" if @year.nil?
