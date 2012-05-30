@@ -300,7 +300,7 @@ class AttendeesController < ApplicationController
   end
 
   def vip
-    @attendees = Attendee.yr(@year).where('rank >= 101')
+    @attendees = Attendee.yr(@year).where('rank >= 101').order('rank desc')
   end
 
 protected
