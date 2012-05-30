@@ -37,9 +37,9 @@ describe "RegistrationProcess#next_page" do
   end
 
   context "after finishing the wishes page" do
-    it "returns the path to my account" do
+    it "returns the path to the terminus page" do
       subject.next_page(:wishes, nil, nil).should ==
-        user_path(attendee.year, user)
+        edit_attendee_path(attendee.year, attendee, :terminus)
     end
   end
 

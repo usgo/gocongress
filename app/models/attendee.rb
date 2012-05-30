@@ -145,6 +145,8 @@ class Attendee < ActiveRecord::Base
   # Class Methods
   # =============
 
+  # TODO: This doesn't belong in the ORM model.  It belongs in the
+  # registration_process model.
   def self.assert_valid_page(p)
     raise "Invalid page: #{p}" unless Attendee.pages.include?(p.to_s)
   end
@@ -180,7 +182,7 @@ class Attendee < ActiveRecord::Base
   # `pages` returns an array of page names, in no particular order.
   # Not all pages are part of the registration process.
   def self.pages
-    %w[admin basics events tournaments activities wishes]
+    %w[admin basics events tournaments activities terminus wishes]
   end
 
   def self.with_planlessness planlessness

@@ -68,6 +68,10 @@ img.thin-border { border: 1px solid black; }
 .asymetrical-columns .left-column { display: inline-block; padding-right: 32px; width: 60%; vertical-align: top; }
 .asymetrical-columns .right-column { display: inline-block; width: 30%; vertical-align: top; }
 
+/* A horizontal line of stuff, each one floated left with
+some padding between each -Jared 2012-05-30 */
+.floating-padded-line-item { float: left; padding: 1em 2em 1em 0em; }
+
 /* Remove the default border on anchored images */
 /* I hope this works as well as the img.border attribute -Jared 11/29/10 */
 a img { border: none; }

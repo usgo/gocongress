@@ -27,9 +27,10 @@ class RegistrationProcess
       return cat.present? ? plan_category_path(cat) : page_path(:wishes)
     end
 
-    # Coming from the final page, we always go to the "My Account" page next
+    # Coming from the wishes page (special request, roomate request,
+    # and discounts) go to the final page, aka. terminus
     if current_page.to_s == "wishes"
-      return my_account_path
+      return page_path(:terminus)
     end
 
     # If we're coming from one plan category, go to the next.

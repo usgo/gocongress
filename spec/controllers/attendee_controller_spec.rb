@@ -34,6 +34,16 @@ describe AttendeesController do
     end
   end
 
+  describe "#edit" do
+    context "terminus page" do
+      it "is successful" do
+        atnd = user.attendees.first
+        get :edit, year: atnd.year, id: atnd.id, page: :terminus
+        response.should be_success
+      end
+    end
+  end
+
   describe "#index" do
     it "excludes attendees with zero plans" do
       a1 = FactoryGirl.create :attendee
