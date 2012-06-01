@@ -133,6 +133,9 @@ class Attendee < ActiveRecord::Base
   # because in a nested form there might not be a user_id yet.  I think that is what
   # is going on, anyway) I'm surprised this is necessary at all, and I'm unsettled
   # by the lack of a foreign key constraint. -Jared 2011.1.2
+  #
+  # TODO: Now that a user is always created first, we can drop
+  # the `:on => :update` option here -Jared 2012-06-01
   validates_presence_of :user_id, :on => :update
 
   # Use MinorAgreementValidator (found in lib/) to require that understand_minor
