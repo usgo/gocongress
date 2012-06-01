@@ -20,20 +20,47 @@
 }
 
 /* Slideshow */
-#gallery-column { float:right; padding-left: 20px; padding-bottom: 20px; }
-#gallery { width: 480px; height: 360px; }
-.galleria-stage { bottom:0px; left:0px; right:0px; top:0px; }
+#gallery-column {
+  float:right;
+  padding-left: 20px;
+  padding-bottom: 20px;
+}
+#gallery {
+  width: 480px;
+  height: 360px;
+}
+
+/* Begin overriding styles for some of galleria's internal elements.
+We must use !important here because otherwise they are ignored in
+IE. This may be due to how IE applies styles when a <link> element
+referencing the galleria theme is added at runtime by JS, but I am
+not certain. -Jared 2012-05-31 */
+.galleria-stage {
+  bottom:0px !important;
+  left:0px !important;
+  right:0px !important;
+  top:0px !important;
+}
 
 /* Slideshow captions */
 .galleria-info {
-  bottom: 0px;
-  left: 0px;
-  position: absolute;
-  right: auto;
-  top: auto;
-  width: 100%;
+  bottom: 0px !important;
+  left: 0px !important;
+  position: absolute !important;
+  right: auto !important;
+  top: auto !important;
+  width: 100% !important;
 }
-.galleria-info-text { background-color: rgba(0, 0, 0, 0.5); display: block; }
-.galleria-info-title, .galleria-info-description { display: inline; }
-.galleria-info-description { padding-left: 2em; }
-.galleria-info-link { display: none; }
+.galleria-info-text {
+  background-color: rgba(0, 0, 0, 0.5) !important;
+  display: block !important;
+}
+.galleria-info-title, .galleria-info-description {
+  display: inline !important;
+}
+.galleria-info-description {
+  padding-left: 2em !important;
+}
+.galleria-info-link {
+  display: none !important;
+}
