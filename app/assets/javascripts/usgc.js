@@ -9,9 +9,6 @@ $(document).ready(function(){
 
   /* Fire up the slideshow -Jared 11/30/10 */
   $('#gallery-container').show();
-
-  // After struggling to get galleria into the vendor dir, I have settled
-  // with the public dir.  Galleria really wants to live at the webroot.
   if ($('#gallery').length == 1) {
     Galleria.loadTheme('assets/galleria/themes/classic/galleria.classic.min.js');
     $('#gallery').galleria({
