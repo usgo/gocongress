@@ -73,11 +73,14 @@ class AttendeesControllerTest < ActionController::TestCase
   end
 
   test "admin can destroy attendee" do
+    attendee = FactoryGirl.create(:attendee)
+    user = FactoryGirl.create(:user)
+    user.attendees << attendee
     sign_in @admin
     assert_difference('Attendee.count', -1) do
-      delete :destroy, :id => @attendee.id, :year => @year
+      delete :destroy, :id => attendee.id, :year => attendee.year
     end
-    assert_redirected_to user_path(@attendee.user)
+    assert_redirected_to user_path(user)
     assert_equal 'Attendee deleted', flash[:notice]
   end
 
