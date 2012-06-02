@@ -26,6 +26,7 @@ class User < ActiveRecord::Base
 
   # A user may register multiple people, eg. their family
   # The primary attendee corresponds with the user themselves
+  # (Assuming everyone registers themselves first)
   has_one  :primary_attendee, :class_name => 'Attendee', :conditions => { :is_primary => true }
   has_many :attendees, :dependent => :destroy
 
