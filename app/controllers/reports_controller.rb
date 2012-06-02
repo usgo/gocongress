@@ -43,8 +43,7 @@ class ReportsController < ApplicationController
     # Keep users with non-zero balances.  Obviously, we want to see
     # users who owe us money, but it is also useful for the registrar
     # to see people who deserve refunds.
-    # TODO: Optimization: If we call balance only once, is it faster?
-    @users.keep_if { |u| u.balance >= 0.01 || u.balance <= -0.01 }
+    @users.delete_if { |u| (-0.01..0.01).cover?(u.balance) }
 
     # Sort by family_name.  Normally we would do this in the query,
     # but joining on primary_attendee would conflict with our eager
