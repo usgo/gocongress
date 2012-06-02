@@ -2,44 +2,29 @@ require 'test_helper'
 
 class TransactionsControllerTest < ActionController::TestCase
   setup do
-
-    # TODO: Now that the user factory no longer creates a primary
-    # attendee, this setup method has exploded in complexity.
-    # Try to simplify it.
-    pa_user = FactoryGirl.create :attendee, is_primary: true
-    @user = pa_user.user
-
-    pa_staff = FactoryGirl.create :attendee, is_primary: true
-    @staff = pa_staff.user
-    @staff.role = 'S'
-    @staff.save
-
-    pa_admin = FactoryGirl.create :attendee, is_primary: true
-    @admin_user = pa_admin.user
-    @admin_user.role = 'A'
-    @admin_user.save
-
-    @transaction = FactoryGirl.create :tr_sale
-    @transaction.updated_by_user = @admin_user
-    @transaction.save
-
+    @staff = FactoryGirl.create :staff
+    @user = FactoryGirl.create :user
+    FactoryGirl.create :primary_attendee, user: @user
+    @admin = FactoryGirl.create :admin
+    FactoryGirl.create :primary_attendee, user: @admin
+    @transaction = FactoryGirl.create :tr_sale, updated_by_user: @admin
     @year = Time.now.year
   end
 
   test "admin can index transactions" do
-    sign_in @admin_user
+    sign_in @admin
     get :index, :year => @year
     assert_response :success
   end
 
   test "admin user can get edit form" do
-    sign_in @admin_user
+    sign_in @admin
     get :edit, :id => @transaction.to_param, :year => @year
     assert_response :success
   end
 
   test "admin can create transaction" do
-    sign_in @admin_user
+    sign_in @admin
 
     # Build (do not save) a transaction with no user.  The user will
     # be specified via user_email.  This is a new required param,
@@ -66,7 +51,7 @@ class TransactionsControllerTest < ActionController::TestCase
   end
 
   test "admin can update transaction" do
-    sign_in @admin_user
+    sign_in @admin
     delta_amount = (rand() * 100).round(2)
     put_to_update(delta_amount, delta_amount)
     assert_redirected_to transaction_path(assigns(:transaction))
@@ -84,7 +69,7 @@ class TransactionsControllerTest < ActionController::TestCase
   end
 
   test "admin can destroy transaction" do
-    sign_in @admin_user
+    sign_in @admin
     assert_difference('Transaction.count', -1) do
       delete :destroy, :id => @transaction.id, :year => @year
     end

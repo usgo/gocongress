@@ -129,8 +129,11 @@ class Attendee < ActiveRecord::Base
       :message => "id is not a number"
     }
 
-  # TODO: Should we validate the presence of the user_id or the user?
-  validates_presence_of :user_id
+  # Attendee must always have a user.  We validate the presence of
+  # the user, rather than the user_id, so that models can be
+  # instantiated in any order.  When the models are saved, the
+  # user should be saved first.
+  validates_presence_of :user
 
   # Use MinorAgreementValidator (found in lib/) to require that understand_minor
   # be checked if the attendee will not be 18 before the first day of the Congress.

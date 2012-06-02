@@ -2,25 +2,12 @@ require 'test_helper'
 
 class AttendeesControllerTest < ActionController::TestCase
   setup do
-    @attendee = FactoryGirl.create(:attendee)
-
-    # TODO: Now that the user factory no longer creates a primary
-    # attendee, this setup method has exploded in complexity.
-    # Try to simplify it.
-    pa_user = FactoryGirl.create :attendee, :is_primary => true
-    @user = pa_user.user
-    @user.reload
-
-    pa_user_two = FactoryGirl.create :attendee, :is_primary => true
-    @user_two = pa_user_two.user
-    @user_two.reload
-
-    pa_admin = FactoryGirl.create :attendee, :is_primary => true
-    @admin = pa_admin.user
-    @admin.role = 'A'
-    @admin.save
-    @admin.reload
-
+    @user = FactoryGirl.create :user
+    FactoryGirl.create :primary_attendee, user: @user
+    @user_two = FactoryGirl.create :user
+    FactoryGirl.create :primary_attendee, user: @user_two
+    @admin = FactoryGirl.create :admin
+    FactoryGirl.create :primary_attendee, user: @admin
     @discount_automatic = FactoryGirl.create(:automatic_discount)
     @discount_nonautomatic = FactoryGirl.create(:nonautomatic_discount)
     @discount_nonautomatic2 = FactoryGirl.create(:nonautomatic_discount)
@@ -70,7 +57,7 @@ class AttendeesControllerTest < ActionController::TestCase
     sign_in @user
     a = FactoryGirl.attributes_for(:attendee)
     a['user_id'] = @user.id
-    assert_difference('Attendee.where(:user_id => @user.id).count', +1) do
+    assert_difference('@user.attendees.count', +1) do
       post :create, :attendee => a, :year => @year
     end
   end
@@ -98,38 +85,38 @@ class AttendeesControllerTest < ActionController::TestCase
   end
 
   test "admin can destroy primary attendee" do
+    prim = FactoryGirl.create :primary_attendee
     sign_in @admin
-    assert_equal 1, @user.attendees.where(:is_primary => true).count
     assert_difference('Attendee.count', -1) do
-      delete :destroy, :id => @user.primary_attendee.id, :year => @year
+      delete :destroy, :id => prim.id, :year => prim.year
     end
-    assert_redirected_to user_path(@user)
+    assert_redirected_to user_path(prim.user)
   end
 
   test "visitor cannot get edit" do
-    get :edit, :id => @attendee.id, :year => @year, :page => :basics
+    get :edit, :id => @user.attendees.sample.id, :year => @year, :page => :basics
     assert_response 403
   end
 
   test "user cannot edit another user's attendee" do
     sign_in @user
-    get :edit, :id => @attendee.id, :year => @year, :page => :basics
+    get :edit, :id => @user_two.attendees.sample.id, :year => @year, :page => :basics
     assert_response 403
   end
 
   test "user can edit their own attendees" do
     sign_in @user
-    get :edit, :id => @user.attendees.first.id, :year => @year, :page => :basics
+    get :edit, :id => @user.attendees.sample.id, :year => @year, :page => :basics
     assert_response :success
   end
 
   test "admin can edit any attendee" do
     sign_in @admin
-    get :edit, :id => @attendee.id, :year => @year, :page => :basics
+    get :edit, :id => @user.attendees.sample.id, :year => @year, :page => :basics
     assert_response :success
-    get :edit, :id => @user.attendees.last.id, :year => @year, :page => :basics
+    get :edit, :id => @user_two.attendees.sample.id, :year => @year, :page => :basics
     assert_response :success
-    get :edit, :id => @admin.attendees.first.id, :year => @year, :page => :basics
+    get :edit, :id => @admin.attendees.sample.id, :year => @year, :page => :basics
     assert_response :success
   end
 

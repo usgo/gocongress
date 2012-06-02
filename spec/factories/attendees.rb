@@ -1,4 +1,5 @@
 FactoryGirl.define do
+
   factory :attendee do
     address_1 "askldfj"
     birth_date "1981-09-10"
@@ -16,7 +17,11 @@ FactoryGirl.define do
 
     # New validation: Attendees must always have
     # a user -Jared 2012-06-02
-    association :user, :factory => :user
+    association :user, :factory => :user, :strategy => :build
+
+    factory :primary_attendee do
+      is_primary true
+    end
   end
 
   factory :minor, :parent => :attendee do
