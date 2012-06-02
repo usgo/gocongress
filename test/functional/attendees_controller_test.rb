@@ -226,22 +226,4 @@ class AttendeesControllerTest < ActionController::TestCase
       put :update, :page => 'wishes', :id => a.id, :attendee => atn_attrs, :year => @year
     end
   end
-
-
-  test "minor agreement validator" do
-    sign_in @user
-
-    # Our visitor is a minor, but did not click the "understand" checkbox
-    a = FactoryGirl.attributes_for :attendee
-    a[:birth_date] = 5.years.ago
-    a[:understand_minor] = 0
-
-    assert_no_difference('Attendee.count') do
-      post :create, :attendee => a, :year => @year
-    end
-    assert_template "new"
-    assert_equal false, assigns(:attendee).errors.empty?
-    assert assigns(:attendee).errors.include?(:"liability_release")
-  end
-
 end
