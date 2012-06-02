@@ -37,13 +37,6 @@ class RegistrationsControllerTest < ActionController::TestCase
     assert_response :redirect
   end
 
-  test "visitor cannot create a user with invalid registration data" do
-    assert_no_difference ["User.count", "Attendee.count"] do
-      post :create, :user => {}, :year => @year
-    end
-    assert_template "new"
-  end
-
   test "visitor cannot specify role" do
     @u[:role] = 'A' # A for admin
     post :create, :user => @u, :year => @year

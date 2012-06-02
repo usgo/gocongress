@@ -2,6 +2,12 @@ require "spec_helper"
 
 describe User do
 
+  context "when initialized" do
+    it "is not yet valid" do
+      User.new.should_not be_valid
+    end
+  end
+
   describe "#amount_paid" do
     it "equals the total of sales minus the total of refunds" do
       user = FactoryGirl.create :user
