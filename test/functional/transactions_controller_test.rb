@@ -2,10 +2,27 @@ require 'test_helper'
 
 class TransactionsControllerTest < ActionController::TestCase
   setup do
-    @user = FactoryGirl.create :user
-    @staff = FactoryGirl.create :staff
-    @admin_user = FactoryGirl.create :admin
+
+    # TODO: Now that the user factory no longer creates a primary
+    # attendee, this setup method has exploded in complexity.
+    # Try to simplify it.
+    pa_user = FactoryGirl.create :attendee, is_primary: true
+    @user = pa_user.user
+
+    pa_staff = FactoryGirl.create :attendee, is_primary: true
+    @staff = pa_staff.user
+    @staff.role = 'S'
+    @staff.save
+
+    pa_admin = FactoryGirl.create :attendee, is_primary: true
+    @admin_user = pa_admin.user
+    @admin_user.role = 'A'
+    @admin_user.save
+
     @transaction = FactoryGirl.create :tr_sale
+    @transaction.updated_by_user = @admin_user
+    @transaction.save
+
     @year = Time.now.year
   end
 

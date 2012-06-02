@@ -3,9 +3,24 @@ require 'test_helper'
 class AttendeesControllerTest < ActionController::TestCase
   setup do
     @attendee = FactoryGirl.create(:attendee)
-    @user = FactoryGirl.create(:user)
-    @user_two = FactoryGirl.create(:user)
-    @admin = FactoryGirl.create(:admin)
+
+    # TODO: Now that the user factory no longer creates a primary
+    # attendee, this setup method has exploded in complexity.
+    # Try to simplify it.
+    pa_user = FactoryGirl.create :attendee, :is_primary => true
+    @user = pa_user.user
+    @user.reload
+
+    pa_user_two = FactoryGirl.create :attendee, :is_primary => true
+    @user_two = pa_user_two.user
+    @user_two.reload
+
+    pa_admin = FactoryGirl.create :attendee, :is_primary => true
+    @admin = pa_admin.user
+    @admin.role = 'A'
+    @admin.save
+    @admin.reload
+
     @discount_automatic = FactoryGirl.create(:automatic_discount)
     @discount_nonautomatic = FactoryGirl.create(:nonautomatic_discount)
     @discount_nonautomatic2 = FactoryGirl.create(:nonautomatic_discount)
@@ -62,9 +77,9 @@ class AttendeesControllerTest < ActionController::TestCase
 
   test "non-admin cannot destroy attendee from other user" do
     sign_in @user
-    a = FactoryGirl.create :attendee
-    @user_two.attendees << a
-    @user_two.save
+    a = FactoryGirl.create :attendee, :is_primary => false
+    a.user = @user_two
+    a.save!
     assert_equal 1, @user_two.attendees.where(:is_primary => false).count
     assert_no_difference('Attendee.count') do
       delete :destroy, :id => a.id, :year => @year
@@ -74,13 +89,11 @@ class AttendeesControllerTest < ActionController::TestCase
 
   test "admin can destroy attendee" do
     attendee = FactoryGirl.create(:attendee)
-    user = FactoryGirl.create(:user)
-    user.attendees << attendee
     sign_in @admin
     assert_difference('Attendee.count', -1) do
       delete :destroy, :id => attendee.id, :year => attendee.year
     end
-    assert_redirected_to user_path(user)
+    assert_redirected_to user_path(attendee.user)
     assert_equal 'Attendee deleted', flash[:notice]
   end
 
@@ -149,7 +162,7 @@ class AttendeesControllerTest < ActionController::TestCase
       assert_template view_name
     end
 
-    define_method "test_vistor_can_not_get_#{page}" do
+    define_method "test_vistor_cannot_get_#{page}" do
       get :edit, :id => @admin.attendees.sample.id, :page => page, :year => @year
       view_name = @controller.send( :get_view_name_from_page, page )
       assert_response 403

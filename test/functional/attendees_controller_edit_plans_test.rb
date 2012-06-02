@@ -6,8 +6,10 @@ class AttendeesControllerEditPlansTest < ActionController::TestCase
     @admin = FactoryGirl.create :admin
     @plan_category = FactoryGirl.create :plan_category
     @plan = FactoryGirl.create :plan, plan_category_id: @plan_category.id
-    @user = FactoryGirl.create :user
-    @user_two = FactoryGirl.create :user
+
+    pa_user = FactoryGirl.create :attendee, is_primary: true
+    @user = pa_user.user
+
     @year = Time.now.year
   end
 
@@ -60,7 +62,7 @@ class AttendeesControllerEditPlansTest < ActionController::TestCase
 
   test "user cannot select plan for attendee belonging to someone else" do
     sign_in @user
-    a = @user_two.attendees.sample
+    a = FactoryGirl.create :attendee
     assert_no_difference('a.plans.count') do
       submit_plans_form a, params_for_plan(1)
     end
@@ -68,8 +70,10 @@ class AttendeesControllerEditPlansTest < ActionController::TestCase
   end
 
   test "after events page redirect to plan category in correct year" do
-    u = FactoryGirl.create :user, year: 2012
-    a = u.attendees.sample
+    a = FactoryGirl.create :attendee, year: 2012
+    u = a.user
+    assert_equal 2012, u.year
+
     e = FactoryGirl.create :event
     c1 = FactoryGirl.create :plan_category, {name: "aaaaaa", year: 2011, event: e}
     p1 = FactoryGirl.create :plan, plan_category_id: c1.id

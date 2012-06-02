@@ -1,8 +1,8 @@
 require "spec_helper"
 
 describe AttendeesController do
-  let(:user) { FactoryGirl.create :user }
-  let(:attendee) { user.attendees.first }
+  let(:attendee) { FactoryGirl.create :attendee }
+  let(:user) { attendee.user }
   let(:admin) { FactoryGirl.create :admin }
   let(:activities) { 1.upto(3).map{ FactoryGirl.create :activity } }
 

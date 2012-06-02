@@ -2,12 +2,13 @@ require 'test_helper'
 
 class AttendeeTest < ActiveSupport::TestCase
   setup do
-    @user = FactoryGirl.create :user
+    @attendee = FactoryGirl.create :attendee
+    @user = @attendee.user
   end
 
   test "#invoice_total" do
     # a user with no plans, discounts, activities, etc. should have a $0 total
-    assert_equal 0, @user.primary_attendee.invoice_total
+    assert_equal 0, @attendee.invoice_total
   end
 
   test "#invoice_items" do
@@ -60,8 +61,8 @@ class AttendeeTest < ActiveSupport::TestCase
   end
 
   test "country must be two capital lettters" do
-    assert_match( /^[A-Z]{2}$/, @user.primary_attendee.country )
-    update_success = @user.primary_attendee.update_attributes( { :country => 'United States' } )
+    assert_match( /^[A-Z]{2}$/, @attendee.country )
+    update_success = @attendee.update_attributes( { :country => 'United States' } )
     assert !update_success
   end
 

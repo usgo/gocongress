@@ -3,10 +3,9 @@ require "spec_helper"
 describe "RegistrationProcess#next_page" do
   include Rails.application.routes.url_helpers
 
-  let(:user) { FactoryGirl.create :user }
   let(:event) { FactoryGirl.create :event }
   let(:events_of_interest) { [event.id] }
-  let(:attendee) { user.primary_attendee }
+  let(:attendee) { FactoryGirl.create :attendee }
 
   subject { RegistrationProcess.new attendee }
 
@@ -68,7 +67,7 @@ describe "RegistrationProcess#next_page" do
   context "after finishing the edit_tournaments page" do
     it "returns the path to my accounts" do
       subject.next_page(:tournaments, nil, nil).should ==
-        user_path(attendee.year, user)
+        user_path(attendee.year, attendee.user)
     end
   end
 end

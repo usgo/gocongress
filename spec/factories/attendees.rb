@@ -13,6 +13,10 @@ FactoryGirl.define do
     tshirt_size 'AL'
     rank 3
     year Time.now.year
+
+    # New validation: Attendees must always have
+    # a user -Jared 2012-06-02
+    association :user, :factory => :user
   end
 
   factory :minor, :parent => :attendee do

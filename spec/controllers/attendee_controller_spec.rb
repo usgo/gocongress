@@ -1,7 +1,8 @@
 require "spec_helper"
 
 describe AttendeesController do
-  let(:user) { FactoryGirl.create :user }
+  let!(:attendee) { FactoryGirl.create :attendee }
+  let!(:user) { attendee.user }
   before do
     sign_in user
   end
@@ -28,7 +29,7 @@ describe AttendeesController do
   describe "#destroy" do
     it "destroys the attendee" do
       expect {
-        delete :destroy, :id => user.attendees.first.id, :year => user.year
+        delete :destroy, :id => attendee.id, :year => attendee.year
       }.to change{ user.attendees.count }.by(-1)
       response.should redirect_to user_path(user)
     end
@@ -37,8 +38,7 @@ describe AttendeesController do
   describe "#edit" do
     context "terminus page" do
       it "is successful" do
-        atnd = user.attendees.first
-        get :edit, year: atnd.year, id: atnd.id, page: :terminus
+        get :edit, year: attendee.year, id: attendee.id, page: :terminus
         response.should be_success
       end
     end
@@ -65,7 +65,6 @@ describe AttendeesController do
   end
 
   describe "#update" do
-    let(:attendee) { FactoryGirl.create :attendee, :user => user }
 
     describe "events page" do
       let(:event) { FactoryGirl.create :event }

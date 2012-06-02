@@ -3,8 +3,7 @@ require 'test_helper'
 class AttendeePlanTest < ActiveSupport::TestCase
 
   setup do
-    user = FactoryGirl.create :user
-    @atnd = user.primary_attendee
+    @atnd = FactoryGirl.create :attendee
     @plan = FactoryGirl.create :plan, inventory: 42, max_quantity: 999
   end
 

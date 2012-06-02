@@ -2,7 +2,8 @@ require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
   setup do
-    @user = FactoryGirl.create :user
+    attendee = FactoryGirl.create :attendee
+    @user = attendee.user
   end
 
   test "comp transaction" do

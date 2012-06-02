@@ -129,14 +129,8 @@ class Attendee < ActiveRecord::Base
       :message => "id is not a number"
     }
 
-  # Attendees must belong to a user (except when they are first being created,
-  # because in a nested form there might not be a user_id yet.  I think that is what
-  # is going on, anyway) I'm surprised this is necessary at all, and I'm unsettled
-  # by the lack of a foreign key constraint. -Jared 2011.1.2
-  #
-  # TODO: Now that a user is always created first, we can drop
-  # the `:on => :update` option here -Jared 2012-06-01
-  validates_presence_of :user_id, :on => :update
+  # TODO: Should we validate the presence of the user_id or the user?
+  validates_presence_of :user_id
 
   # Use MinorAgreementValidator (found in lib/) to require that understand_minor
   # be checked if the attendee will not be 18 before the first day of the Congress.

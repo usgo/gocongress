@@ -2,7 +2,8 @@ require 'test_helper'
 
 class UsersControllerTest < ActionController::TestCase
   setup do
-    @user = FactoryGirl.create :user
+    pa = FactoryGirl.create :attendee, is_primary: true
+    @user = pa.user
     @staff = FactoryGirl.create :staff
     @admin_user = FactoryGirl.create :admin
   end
