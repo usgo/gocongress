@@ -5,7 +5,6 @@ class RegistrationsControllerTest < ActionController::TestCase
 
   setup do
     @year = Time.now.year
-    @u = FactoryGirl.attributes_for(:user)
   end
 
   test "visitor can get sign up page" do
@@ -23,14 +22,5 @@ class RegistrationsControllerTest < ActionController::TestCase
     end
     created_user = User.yr(@year).order(:created_at).last
     assert_redirected_to add_attendee_to_user_path(@year, created_user.id)
-  end
-
-  test "visitor cannot specify role" do
-    @u[:role] = 'A' # A for admin
-    post :create, :user => @u, :year => @year
-
-    # we expect the user to be created, but the specified role to be ignored
-    assert_response :redirect
-    assert assigns(:user).role == 'U'
   end
 end
