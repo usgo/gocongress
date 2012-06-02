@@ -46,11 +46,6 @@ class User < ActiveRecord::Base
   # enduser to enter the same email twice when signing up -Jared 2010.12.31
   before_validation :apply_user_email_to_primary_attendee, :on => :create
 
-  # Nested Attributes allow us to create forms for attributes of a parent
-  # object and its associations in one go with fields_for()
-  # FIXME: Isn't this defunct now?
-  accepts_nested_attributes_for :primary_attendee
-
   # Constants
   # ---------
 
