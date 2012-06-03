@@ -30,7 +30,7 @@ class PlanCategory < ActiveRecord::Base
     r = yr(year)
       .nonempty
       .age_appropriate(age)
-      .order(:name)
+      .alphabetical
     r = r.where(event_id: events) unless events.blank?
     return r
   end
