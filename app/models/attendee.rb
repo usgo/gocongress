@@ -62,6 +62,10 @@ class Attendee < ActiveRecord::Base
   # Scopes
   # ------
 
+  scope :pro, where(:rank => 101..109)
+  scope :dan, where(:rank => 1..9)
+  scope :kyu, where(:rank => -30..-1)
+
   # Some "blank" birth_date values have made it into production. The following
   # scope is a useful way to filter out those records when querying birth_date
   # (eg. finding youngest attendee) -Jared 2011-02-07

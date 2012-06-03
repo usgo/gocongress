@@ -13,9 +13,9 @@ def index
   }
 
   # get some fun statistics
-  @pro_count = @attendees.where(:rank => 101..109).count
-  @dan_count = @attendees.where(:rank => 1..9).count
-  @kyu_count = @attendees.where(:rank => -30..-1).count
+  @pro_count = @attendees.pro.count
+  @dan_count = @attendees.dan.count
+  @kyu_count = @attendees.kyu.count
   @np_count = @attendees.where(:rank => 0).count
   @male_count = @attendees.where(:gender => 'm').count
   @female_count = @attendees.where(:gender => 'f').count

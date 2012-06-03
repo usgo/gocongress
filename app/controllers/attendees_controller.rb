@@ -61,12 +61,9 @@ class AttendeesController < ApplicationController
     @opposite_direction = (params[:direction] == 'asc') ? 'desc' : 'asc'
     @attendees = Attendee.yr(@year).with_at_least_one_plan
     @attendees = @attendees.order parse_order_clause_params
-
-    # TODO: copied from AttendeeStatisticsController#index
-    # DRY this up!
-    @pro_count = @attendees.where(:rank => 101..109).count
-    @dan_count = @attendees.where(:rank => 1..9).count
-    @kyu_count = @attendees.where(:rank => -30..-1).count
+    @pro_count = @attendees.pro.count
+    @dan_count = @attendees.dan.count
+    @kyu_count = @attendees.kyu.count
   end
 
   def new
