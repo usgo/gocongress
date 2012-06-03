@@ -13,28 +13,20 @@ class PlanCategory < ActiveRecord::Base
     }
   validates :description, :length => {maximum: 200}
 
+  # Scopes
+  # ----------------
+
   scope :alphabetical, order(:name)
+  scope :nonempty, where("exists (select * from plans p
+    where p.plan_category_id = plan_categories.id)")
 
   # Class methods
   # ----------------
 
-  def self.columns_with_table_prefix
-    column_names.map{|c| "plan_categories.#{c}"}.join(",")
-  end
-
-  def self.nonempty
-    # postgres 8.3 seems to require that the select clause match the group
-    # clause.  this is unfortunate, because in local development on
-    # postgres 9.1 i can select * and group by id with no problem.
-    return joins(:plans)
-      .select(columns_with_table_prefix)
-      .group(columns_with_table_prefix)
-      .having("count(*) > 0")
-  end
-
   def self.reg_form(year, age, events = nil)
     r = yr(year)
       .nonempty
+      .joins(:plans)
       .where("(age_min is null or age_min <= ?) and (age_max is null or age_max >= ?)", age, age)
       .order(:name)
     r = r.where(event_id: events) unless events.blank?

@@ -24,4 +24,14 @@ describe PlanCategory do
       expect { cat.destroy }.to raise_error(ActiveRecord::DeleteRestrictionError)
     end
   end
+
+  describe ".nonempty" do
+    it "returns categories with at least one plan" do
+      cat_with_plan = FactoryGirl.create :plan_category
+      FactoryGirl.create :plan, plan_category: cat_with_plan
+      empty_cat = FactoryGirl.create :plan_category
+      PlanCategory.nonempty.should include(cat_with_plan)
+      PlanCategory.nonempty.should_not include(empty_cat)
+    end
+  end
 end
