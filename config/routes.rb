@@ -33,6 +33,7 @@ Gocongress::Application.routes.draw do
         resources :jobs, :plan_categories, :tournaments, :transactions
         resources :activities, :except => [:index]
         resources :plans, :except => [:index]
+        resources :attendee_statistics, :only => :index
 
         resources :attendees, :except => :edit do
           collection do

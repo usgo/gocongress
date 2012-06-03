@@ -62,23 +62,11 @@ class AttendeesController < ApplicationController
     @attendees = Attendee.yr(@year).with_at_least_one_plan
     @attendees = @attendees.order parse_order_clause_params
 
-    # get some fun statistics
+    # TODO: copied from AttendeeStatisticsController#index
+    # DRY this up!
     @pro_count = @attendees.where(:rank => 101..109).count
     @dan_count = @attendees.where(:rank => 1..9).count
     @kyu_count = @attendees.where(:rank => -30..-1).count
-    @np_count = @attendees.where(:rank => 0).count
-    @male_count = @attendees.where(:gender => 'm').count
-    @female_count = @attendees.where(:gender => 'f').count
-    @avg_congresses = Attendee.average_congresses(@year)
-
-    # for the age statistics, our query will use a different order clause
-    age_before_beauty = Attendee.yr(@year).reasonable_birth_date.order('birth_date')
-    @oldest_attendee = age_before_beauty.first
-    @youngest_attendee = age_before_beauty.last
-
-    # calculate average age, being careful not to call reduce on an empty array
-    ages = @attendees.reasonable_birth_date.all.map(&:age_in_years)
-    @avg_age = ages.empty? ? nil : ages.reduce(:+) / ages.count
   end
 
   def new

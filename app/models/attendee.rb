@@ -72,6 +72,19 @@ class Attendee < ActiveRecord::Base
   scope :with_at_least_one_plan, where("0 < (select count(*) from attendee_plans ap where ap.attendee_id = attendees.id)")
   scope :planless, where("0 = (select count(*) from attendee_plans ap where ap.attendee_id = attendees.id)")
 
+  scope :has_plan_in_event, lambda { |event|
+    where("
+      exists (
+        select *
+        from attendee_plans ap
+        inner join plans p on p.id = ap.plan_id
+        inner join plan_categories pc on pc.id = p.plan_category_id
+        where ap.attendee_id = attendees.id
+          and pc.event_id = ?
+      )",
+    event.id)
+  }
+
   # Validations
   # -----------
 
