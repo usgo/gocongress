@@ -17,6 +17,9 @@ class PlanCategory < ActiveRecord::Base
   # ----------------
 
   scope :alphabetical, order(:name)
+  scope :age_appropriate, lambda { |age|
+    joins(:plans).merge(Plan.appropriate_for_age(age))
+  }
   scope :nonempty, where("exists (select * from plans p
     where p.plan_category_id = plan_categories.id)")
 
@@ -26,8 +29,7 @@ class PlanCategory < ActiveRecord::Base
   def self.reg_form(year, age, events = nil)
     r = yr(year)
       .nonempty
-      .joins(:plans)
-      .where("(age_min is null or age_min <= ?) and (age_max is null or age_max >= ?)", age, age)
+      .age_appropriate(age)
       .order(:name)
     r = r.where(event_id: events) unless events.blank?
     return r
