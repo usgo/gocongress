@@ -3,20 +3,20 @@
 %table.lightweight
   %tbody
     %tr
-      %th= trl_attr 'activity', 'activity_category_id'
+      %th= trl_attr :activity, :activity_category_id
       %td= link_to @activity.activity_category.name, @activity.activity_category
     %tr
-      %th= trl_attr 'activity', 'price'
+      %th= trl_attr :activity, :price
       %td= @activity.price_for_display
     %tr
-      %th= trl_attr 'activity', 'location'
+      %th= trl_attr :activity, :location
       %td= @activity.location
     %tr
       %th Date
       %td= @activity.leave_time.to_date
     - %w[leave_time return_time].each do |a|
       %tr
-        %th= trl_attr 'activity', a
+        %th= trl_attr :activity, a
         %td
           - if @activity[a].present?
             = @activity[a].to_formatted_s(:american)
