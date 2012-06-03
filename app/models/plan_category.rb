@@ -26,11 +26,11 @@ class PlanCategory < ActiveRecord::Base
   # Class methods
   # ----------------
 
+  # `reg_form` defines which categories will appear on the
+  # registration form, depending on the year, the age of the
+  # attendee, and their events of interest
   def self.reg_form(year, age, events = nil)
-    r = yr(year)
-      .nonempty
-      .age_appropriate(age)
-      .alphabetical
+    r = yr(year).nonempty.age_appropriate(age).alphabetical
     r = r.where(event_id: events) unless events.blank?
     return r
   end
