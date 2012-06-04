@@ -15,6 +15,11 @@ describe Purchasable do
       subject.stub(:contact_msg_instead_of_price?) { true }
       subject.price_for_display.should == "Contact the Registrar"
     end
+
+    it "obeys price_varies?" do
+      subject.stub(:price_varies?) { true }
+      subject.price_for_display.should == "Varies"
+    end
   end
 
   context "when at least one attendee has selected it" do

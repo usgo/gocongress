@@ -11,8 +11,12 @@
       = f.label :activity_category_id
       = f.select :activity_category_id, activity_category_options
     .field
-      = f.label :price, "Price"
+      = f.label :price
       = f.text_field :price, :size => 5
+    .field
+      = f.label :price_varies
+      = f.check_box :price_varies
+      %span.smalltext Show "Varies" instead of price
     .field
       = f.label :location, "Location"
       = f.text_field :location

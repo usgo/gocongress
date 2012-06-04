@@ -17,7 +17,9 @@ module Purchasable
   end
 
   def price_for_display
-    if contact_msg_instead_of_price?
+    if self.respond_to?(:price_varies?) && price_varies?
+      "Varies"
+    elsif contact_msg_instead_of_price?
       "Contact the Registrar"
     elsif price.to_f == 0.0
       "Free"

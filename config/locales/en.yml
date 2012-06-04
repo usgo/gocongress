@@ -35,6 +35,7 @@ en:
         activity_category_id: "Category"
         name: "Activity"
         price: "Price"
+        price_varies: "Price Varies?"
         location: "Location"
         notes: "Notes"
         leave_time: "Leave"

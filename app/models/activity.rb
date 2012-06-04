@@ -3,7 +3,7 @@ class Activity < ActiveRecord::Base
   include Purchasable
 
   attr_accessible :activity_category_id, :leave_time, :name, :notes,
-    :price, :return_time, :location
+    :price, :price_varies, :return_time, :location
 
   # FIXME: in the controller, somehow year needs to get set
   # before authorize! runs.  until then, year needs to be accessible.
@@ -19,5 +19,13 @@ class Activity < ActiveRecord::Base
   validates :notes, :length => {
     :maximum => 2000,
     :message => "are too long (maximum is 2000 characters)"
+  }
+
+  validates :price, :numericality => {
+    :equal_to => 0,
+    :if => :price_varies?,
+    :message => " - You have indicated that the price varies. Please
+      set the price to 0, so that this #{model_name.human.downcase}
+      will not show up on invoices."
   }
 end
