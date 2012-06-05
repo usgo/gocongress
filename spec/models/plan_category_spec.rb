@@ -14,7 +14,7 @@ describe PlanCategory do
   end
 
   describe "#attendee_count" do
-    it "returnes the number of attendees in all plans" do
+    it "returns the number of attendees in all plans" do
       cat.attendee_count.should == 1
     end
   end
