@@ -23,22 +23,7 @@
       %th Position
       %th Name
       %th Email
-      %th Phone
   %tbody
-
-    -# For some reason, in 2011, co-director was never an actual job.  Odd.
-    - if @year.year == 2011
-      %tr
-        %td Co-Director
-        %td Lisa Scott
-        %td	lisa.scott@gocongress.org
-        %td 805-769-USGO (805-769-8746)
-      %tr
-        %td Co-Director
-        %td Andrew Jackson
-        %td	andrew.jackson@gocongress.org
-        %td 805-769-USGO (805-769-8746)
-
     - @user_jobs.each do |uj|
       %tr
         %td= uj.job.jobname
@@ -47,4 +32,3 @@
         -# Note how we display the public job.email
         -# instead of the private user.email
         %td= mail_to uj.job.email
-        %td
