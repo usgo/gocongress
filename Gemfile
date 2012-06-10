@@ -48,7 +48,7 @@ end
 group :test do
 	gem 'factory_girl'
 	gem 'factory_girl_rails'
-	gem 'spork', '1.0.0rc2'
+	gem 'spork', '1.0.0rc3'
 	gem 'spork-rails'
 end
 
