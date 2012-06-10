@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120604001519) do
+ActiveRecord::Schema.define(:version => 20120610075943) do
 
   create_table "activities", :force => true do |t|
     t.string   "name"
@@ -124,10 +124,11 @@ ActiveRecord::Schema.define(:version => 20120604001519) do
   add_index "attendees", ["user_id"], :name => "index_attendees_on_user_id"
 
   create_table "content_categories", :force => true do |t|
-    t.integer  "year",                     :null => false
-    t.string   "name",       :limit => 50
+    t.integer  "year",                                               :null => false
+    t.string   "name",              :limit => 50
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "travel_plans_link",               :default => false, :null => false
   end
 
   add_index "content_categories", ["id", "year"], :name => "index_content_categories_on_id_and_year", :unique => true
