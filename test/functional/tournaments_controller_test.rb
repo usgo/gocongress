@@ -10,8 +10,15 @@ class TournamentsControllerTest < ActionController::TestCase
   test "index has expected tournaments and rounds" do
     t = FactoryGirl.create(:tournament, :year => Time.now.year)
     x = FactoryGirl.create(:tournament, :year => 1.year.from_now.year)
+
+    [t,x].each do |i|
+      1.upto(3) do
+        i.rounds.create FactoryGirl.attributes_for(:round)
+      end
+    end
+
     get :index, :year => Time.now.year
-    
+
     # we expect to see only this year's tournament and rounds
     assert_equal 1, assigns(:tournaments).length
     assert assigns(:rounds_by_date).present?
