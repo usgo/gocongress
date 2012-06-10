@@ -178,8 +178,7 @@ body.year2012 .nav-container { background-color: #8D7AC9; }
 /* Basic styling for elements in the main content area.
 Also applies to contents of dialogs. */
 .content, .dialog {
-  p, dl { padding: 0.5em 0em 0.5em 0em; }
-  h1, h2, h3, h4, h5, h6 { padding: 0.5em 0em; }
+  p, dl, h1, h2, h3, h4, h5, h6 { padding: 0.5em 0em; }
   ul { margin-left: 20px; padding: 0.5em 0em 0.5em 0em; }
   li { margin-left: 10px; }
   table.semantic li { margin-left: 25px; }
