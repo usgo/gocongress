@@ -9,13 +9,13 @@
   If you have questions please contact the
   = link_to "registrar.", contact_path
 
-%p.notice All #{mnhp}, prices, and times subject to change.
+%p.notice-small
+  All #{mnhp.downcase}, prices, and times subject to change.
 
 = form_for( @attendee ) do |f|
   = hidden_field_tag :page, @page
   = render :partial => "shared/error_messages", :locals => { :resource => @attendee }
 
-  %br
   %table.semantic.lightly-spaced-rows.zebra.fullwidth
     %thead
       %th
@@ -38,6 +38,4 @@
               = e.return_time.to_formatted_s(:american)
           %td.numeric= e.price_for_display
 
-  %br
-  = f.submit "Submit"
-  = link_to "cancel", user_path(@attendee.user)
+  .flow-padding= f.submit "Sign Up"

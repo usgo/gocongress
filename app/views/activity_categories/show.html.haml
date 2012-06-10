@@ -8,10 +8,16 @@
   %div= Markdown.new(@activity_category.description).to_html.html_safe
 
 - if current_user.present?
-  .inline-children
+  .row-of-buttons
     = form_tag choose_attendee_user_path(current_user), :method => "get" do
       = hidden_field_tag :destination_page, :activities
       = submit_tag "Sign Up for #{emhp}"
+    - if can? :create, Activity
+      .inline-children= button_to "New #{emh}", new_activity_path, :method => "get"
+    - if can? :edit, @activity_category
+      .inline-children= button_to_edit @activity_category
+    - if can? :delete, @activity_category
+      .inline-children= button_to_delete @activity_category
 - else
   %p
     These #{emhp.downcase} are available to all
@@ -20,14 +26,7 @@
     = link_to "sign in", new_user_session_path
     and select the activities you want to participate in.
 
-- if can? :create, Activity
-  .inline-children= button_to "New #{emh}", new_activity_path, :method => "get"
-- if can? :edit, @activity_category
-  .inline-children= button_to_edit @activity_category
-- if can? :delete, @activity_category
-  .inline-children= button_to_delete @activity_category
-
-%p.notice All #{emhp.downcase}, prices, and times subject to change.
+%p.notice-small All #{emhp.downcase}, prices, and times subject to change.
 
 %table.semantic.fullwidth
   %tbody

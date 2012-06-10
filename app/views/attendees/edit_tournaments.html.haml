@@ -12,7 +12,7 @@
   = hidden_field_tag :page, @page
   = render :partial => "shared/error_messages", :locals => { :resource => @attendee }
 
-  %table.semantic.fullwidth
+  %table.semantic
     %thead
       %th
       %th Tournament
@@ -24,13 +24,12 @@
         - is_checked = @atnd_open_trn_ids.index(t.id).present?
         - cbx_id = 'tournament_id_' + t.id.to_s
         %tr
-          %td.align-center= check_box_tag "attendee[tournament_id_list][]", t.id, is_checked, :id => cbx_id
+          %td.align-center
+            = check_box_tag "attendee[tournament_id_list][]", t.id, is_checked, :id => cbx_id
           %td= label_tag cbx_id, t.name
-          %td
+          %td.align-center
             - if t.show_attendee_notes_field
               - notes_value = @attendee.get_notes_for_tournament(t.id)
-              = text_field_tag "attendee[trn_#{t.id}_notes]", notes_value
+              = text_field_tag "attendee[trn_#{t.id}_notes]", notes_value, :style => 'width: 95%;'
 
-  %br
-  = f.submit "Submit"
-  = link_to "cancel", user_path(@attendee.user)
+  .flow-padding= f.submit "Sign Up"
