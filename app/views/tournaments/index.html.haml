@@ -1,19 +1,19 @@
 %h2 Tournaments
 
 - if current_user.present?
-  .flow-padding= button_to_sign_up(current_user)
+  .row-of-buttons
+    = button_to_sign_up(current_user)
+    - if can? :create, Tournament
+      = button_to 'Create a New Tournament', new_tournament_path, :method => "get"
 - else
   %p
     If you'd like to participate in these tournaments, please
     = link_to "register", new_user_registration_path
     as a player. &nbsp; Non-players are not allowed to participate.
 
-- if can? :create, Tournament
-  .flow-padding= button_to 'Create a New Tournament', new_tournament_path, :method => "get"
-
 %a{ :name => "tournament_schedule" }
 
-%h3 Tournament Schedule
+%h3 Schedule
 
 - if @rounds_by_date.size == 0
   %p There are no tournament rounds on the schedule yet.
