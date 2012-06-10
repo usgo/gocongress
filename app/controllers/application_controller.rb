@@ -86,11 +86,11 @@ protected
     when "index"
       return human_controller_name.pluralize.titleize
     when "new", "edit"
-      return human_action_name + ' ' + human_controller_name
+      return human_action_name + ' ' + human_controller_name.titleize
     when "show"
-      return human_controller_name + ' Details'
+      return human_controller_name.titleize + ' Details'
     else
-      return human_controller_name + ' ' + human_action_name
+      return human_controller_name.titleize + ' ' + human_action_name
     end
   end
 

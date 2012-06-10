@@ -32,4 +32,11 @@ class ContentCategoriesController < ApplicationController
       render :action => "edit"
     end
   end
+
+protected
+
+  def page_title
+    action_name == "show" ? @content_category.name : super
+  end
+
 end
