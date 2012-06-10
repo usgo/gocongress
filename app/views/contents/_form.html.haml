@@ -8,7 +8,7 @@
     = f.label :content_category_id
     = f.select :content_category_id, content_category_options
   .field
-    = render partial: "shared/md_area", locals: { :obj => :content, :atr => :body }
+    = render partial: "shared/md_area", locals: { :obj => :content, :atr => :body, :rows => 20 }
   .field
     = f.label :expires_at
     = f.datetime_select :expires_at, :include_blank => true

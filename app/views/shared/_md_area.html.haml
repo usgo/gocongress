@@ -1,6 +1,9 @@
 / Parameters:
 / obj - a symbol naming an activerecord model
 / atr - a symbol naming an attribute of said model
+/ rows - number of rows for textarea
+
+- rows ||= 5
 
 %label{ :for => obj.to_s + '_' + atr.to_s}
   = atr.to_s.titleize
@@ -8,4 +11,4 @@
   %span.smalltext
     You can format the text (bold, etc.) with
     %a{ :href => 'http://en.wikipedia.org/wiki/Markdown', :target => '_blank' } Markdown.
-= text_area obj, atr, { :class => 'wide', :rows => 5 }
+= text_area obj, atr, { :class => 'wide', :rows => rows }
