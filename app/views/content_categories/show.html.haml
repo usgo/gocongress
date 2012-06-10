@@ -1,11 +1,15 @@
 %h2= @content_category.name
 
-- if can? :create, ContentCategory
-  .flow-padding= button_to "New Content", new_content_path, :method => :get
+.row-of-buttons
+  - if can? :create, Content
+    = button_to "New Content", new_content_path, :method => :get
+  - if can? :edit, ContentCategory
+    = button_to "Edit This Category", edit_content_category_path(@content_category), :method => :get
 
 - @contents.each do |c|
   %h3= c.subject
   = Markdown.new(c.body).to_html.html_safe
   - if can? :manage, c
-    .inline-children= button_to "Edit", edit_content_path(c), :method => :get
-    .inline-children= button_to "Delete", c, :method => :delete, :confirm => 'Are you sure?'
+    .row-of-buttons
+      = button_to "Edit", edit_content_path(c), :method => :get
+      = button_to "Delete", c, :method => :delete, :confirm => 'Are you sure?'
