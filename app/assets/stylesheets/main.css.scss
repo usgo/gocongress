@@ -161,6 +161,14 @@ body.year2012 .nav-container { background-color: #8D7AC9; }
     padding-right: 10px;
   }
 
+  .notice-small {
+    background-image: url("/assets/icons/warning.png");
+    background-repeat: no-repeat;
+    background-position: 0 8px;
+    font-style: italic;
+    padding-left: 24px;
+  }
+
   .button-emphasis {
     color: #0071BC;
     font-size: 20px;
