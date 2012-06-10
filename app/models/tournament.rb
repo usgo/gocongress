@@ -29,4 +29,8 @@ class Tournament < ActiveRecord::Base
     if openness_name.empty? then raise "assertion failed: invalid openness type" end
     return openness_name
   end
+
+  def has_rounds?
+    rounds.count > 0
+  end
 end
