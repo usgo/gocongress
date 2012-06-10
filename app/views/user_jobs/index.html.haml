@@ -32,3 +32,9 @@
         -# Note how we display the public job.email
         -# instead of the private user.email
         %td= mail_to uj.job.email
+
+    - @tournaments.each do |t|
+      %tr
+        %td TD: #{t.name}
+        %td= t.directors
+        %td
