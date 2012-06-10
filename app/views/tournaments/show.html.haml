@@ -25,6 +25,7 @@
             %tr
               %th= i+1
               %td= r.round_start.to_formatted_s(:dow_month_day_time_meridian)
+      %br
     - elsif can? :manage, @tournament
       %p.notice-small
         This tournament has no rounds. Unless it's self-paired,
