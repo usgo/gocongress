@@ -1,9 +1,12 @@
 %h2 Choose an Attendee
+- amnhd = Attendee.model_name.human.downcase
 
 %p
-  Which
-  = Attendee.model_name.human.downcase
-  would you like to #{@destination_page_description}?
+  Which #{amnhd} would you like to
+  - if @destination_page == 'events'
+    edit travel plans for?
+  - else
+    #{@destination_page_description}?
 
 %p{:style=>"padding-left:20px;"}
   - @user.attendees.each do |a|
@@ -11,6 +14,11 @@
     %br
 
 %p
-  You can also #{@destination_page_description} from the
+  You can also
+  - if @destination_page == 'events'
+    edit travel plans
+  - else
+    #{@destination_page_description}
+  from the
   = link_to "My Account", user_path(@user)
   page.

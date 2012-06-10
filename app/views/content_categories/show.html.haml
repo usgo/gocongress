@@ -6,6 +6,19 @@
   - if can? :edit, ContentCategory
     = button_to "Edit This Category", edit_content_category_path(@content_category), :method => :get
 
+- if @content_category.travel_plans_link?
+  .callout
+    %h3 Airport Shuttle
+    %p
+      Are you flying to / from #{@year.nearby_airport_city}?  Do you
+      want help connecting with the airport shuttle?  If so, please
+      - if can?(:edit, current_user)
+        tell us about your
+        = link_to "travel plans.", choose_attendee_user_path(current_user, :destination_page => :events)
+      - else
+        = link_to "sign in", new_user_session_path
+        and tell us about your travel plans.
+
 - @contents.each do |c|
   %h3= c.subject
   = Markdown.new(c.body).to_html.html_safe
