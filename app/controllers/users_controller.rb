@@ -4,10 +4,10 @@ class UsersController < ApplicationController
   before_filter :deny_users_from_wrong_year, :only => [:index]
   before_filter :remove_year_from_params
 
-  load_and_authorize_resource :only => [:destroy, :index, :show, :update]
+  load_resource
+  authorize_resource :only => [:destroy, :index, :show, :update]
 
   def choose_attendee
-    @user = User.find(params[:id])
     authorize! :update, @user
 
     @destination_page = params[:destination_page] || "tournaments"
@@ -23,12 +23,10 @@ class UsersController < ApplicationController
   end
 
   def edit_email
-    @user = User.find(params[:id])
     authorize! :update, @user
   end
 
   def edit_password
-    @user = User.find(params[:id])
     authorize! :update, @user
   end
 
@@ -48,7 +46,6 @@ class UsersController < ApplicationController
   end
 
   def pay
-    @user = User.find(params[:id])
     authorize! :update, @user
     @formAction = "https://secure.merchantonegateway.com/cart/cart.php"
     if @year.year == 2011
@@ -59,22 +56,17 @@ class UsersController < ApplicationController
   end
 
   def invoice
-    @user = User.find(params[:id])
     authorize! :show, @user
     @invoice_items = @user.get_invoice_items
   end
 
   def ledger
-    @user = User.find(params[:id])
     authorize! :show, @user
   end
 
+  # edit form is meant for admins only, hence the custom cancan action name
   def edit
-    @user = User.find(params[:id])
-
-    # edit form is meant for admins only, hence the custom cancan action name
     authorize! :admin_edit, @user
-
     @jobs = get_jobs_for_cbx_list
   end
 
@@ -121,7 +113,6 @@ class UsersController < ApplicationController
   end
 
   def print_cost_summary
-    @user = User.find(params[:id])
     authorize! :print_official_docs, @user
     render :layout => 'print'
   end
