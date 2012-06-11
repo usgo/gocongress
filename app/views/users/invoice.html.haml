@@ -23,5 +23,10 @@
       %th{ :colspan => 4, :style => 'text-align:right;' } Grand Total
       %td.numeric= number_to_currency @user.get_invoice_total
 
-- if can? :manage, @user
-  %p= link_to "Return to #{@user.full_name_possessive} Account", user_path(@user)
+.row-of-buttons
+  - if can? :manage, @user
+    - user_fnp = @user.full_name_possessive
+    = button_to "Return to #{user_fnp} Account", user_path(@user), :method => :get
+  - if current_user.is_admin?
+    - pcsfu_path = print_cost_summary_for_user_path(@user)
+    = button_to 'Print Cost Summary', pcsfu_path, :method => :get

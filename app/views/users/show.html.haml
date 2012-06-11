@@ -11,23 +11,19 @@
         %td
           .hardwrap{:style => "max-width:250px;"}= @user.email
         %td.smalltext= link_to 'Edit', edit_email_for_user_path(@user)
-      %tr
-        %th Created
-        %td= @user.created_at.to_formatted_s(:long)
+
   %p
     = link_to 'Change Password', edit_password_for_user_path(@user)
     %br
     - if current_user.is_admin?
       = link_to 'User Administration', edit_user_path(@user)
-      %br
-      = link_to 'Print Cost Summary', print_cost_summary_for_user_path(@user)
 
 .right-column
   %h2 Balance
   = render :partial => 'shared/balance', :locals => {:user => @user, :show_detail_links => true}
   %p= button_to "Make a Payment", pay_user_path(@user), :method => "get", :class => 'button-emphasis'
 
-%br/
+%br
 
 %h2 My Attendees
 
