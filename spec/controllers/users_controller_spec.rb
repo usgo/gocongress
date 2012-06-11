@@ -8,6 +8,41 @@ shared_examples "successful get" do |action|
 end
 
 describe UsersController do
+
+  describe "#choose_attendee" do
+    let(:user) { FactoryGirl.create :user }
+    let(:page) { :events }
+
+    before do
+      sign_in user
+    end
+
+    def get_choose_attendee user, page
+      get :choose_attendee, year: user.year, id: user.id, destination_page: page
+    end
+
+    it "is succesful when there are no attendees" do
+      get_choose_attendee user, page
+      response.should be_success
+    end
+
+    it "redirects to the destination page when there is only one attendee" do
+      attendee = FactoryGirl.create :attendee, user: user
+      get_choose_attendee user, page
+      response.should redirect_to edit_attendee_path(attendee, page)
+    end
+
+    it "is succesful when there are two or more attendees" do
+      1.upto(2) { FactoryGirl.create :attendee, user: user }
+      get_choose_attendee user, page
+      response.should be_success
+    end
+
+    it "is raises an error if given an invalid page" do
+      expect { get_choose_attendee user, "foobar" }.to raise_error
+    end
+  end
+
   context "even when the user has zero attendees" do
 
     # Nomrally, rspec-rails controller specs do not render views
