@@ -8,10 +8,11 @@
 
 - if @content_category.travel_plans_link?
   .callout
-    %h3 Airport Shuttle
+    %h3 Airport Shuttle Bus
     %p
-      Are you flying to / from #{@year.nearby_airport_city}?  Do you
-      want help connecting with the airport shuttle?  If so, please
+      Are you flying to / from #{@year.nearby_airport_city}?
+      Do you want help connecting with the airport shuttle bus?
+      If so, please
       - if can?(:edit, current_user)
         tell us about your
         = link_to "travel plans.", choose_attendee_user_path(current_user, :destination_page => :events)

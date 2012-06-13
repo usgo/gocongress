@@ -1,40 +1,39 @@
+%h3 Are you flying to / from #{@year.nearby_airport_city}?
+
+%p
+  If you want help connecting with the airport shuttle bus, please
+
+  - if @year.year == 2012
+    read the
+    = link_to 'airport shuttle instructions', '#', :id => 'open_dialog_airport_shuttle'
+
+  and fill out the fields below:
+
 %fieldset
   .field
-    .cbx-list
-      = f.check_box :flying
-      = f.label :flying, "Yes, and I want help connecting with the airport shuttle.", :class => 'wide'
+    = f.label :airport_arrival
+    .datetime-fields
+      .datetime-field
+        %label Date
+        = text_field_tag "attendee[airport_arrival_date]", @airport_arrival_date, :class => 'date-field', :size => 10
+      .datetime-field
+        %label Time
+        = text_field_tag "attendee[airport_arrival_time]", @airport_arrival_time, :class => 'time-field', :size => 10
+        %span.smalltext eg. 8:00 AM
+      .datetime-field
+        %label Flight #
+        = f.text_field :airport_arrival_flight, :size => 10
 
-#travel_plans
-  - if @year.year == 2012
-    %p
-      Please read the
-      = link_to 'airport shuttle instructions', '#', :id => 'open_dialog_airport_shuttle'
-      and fill out the fields below:
-  %fieldset
-    .field
-      = f.label :airport_arrival
-      .datetime-fields
-        .datetime-field
-          %label Date
-          = text_field_tag "attendee[airport_arrival_date]", @airport_arrival_date, :class => 'date-field', :size => 10
-        .datetime-field
-          %label Time
-          = text_field_tag "attendee[airport_arrival_time]", @airport_arrival_time, :class => 'time-field', :size => 10
-          %span.smalltext eg. 8:00 AM
-        .datetime-field
-          %label Flight #
-          = f.text_field :airport_arrival_flight, :size => 10
-
-    .field
-      = f.label :airport_departure
-      .datetime-fields
-        .datetime-field
-          %label Date
-          = text_field_tag "attendee[airport_departure_date]", @airport_departure_date, :class => 'date-field', :size => 10
-        .datetime-field
-          %label Time
-          = text_field_tag "attendee[airport_departure_time]", @airport_departure_time, :class => 'time-field', :size => 10
-          %span.smalltext eg. 8:00 AM
+  .field
+    = f.label :airport_departure
+    .datetime-fields
+      .datetime-field
+        %label Date
+        = text_field_tag "attendee[airport_departure_date]", @airport_departure_date, :class => 'date-field', :size => 10
+      .datetime-field
+        %label Time
+        = text_field_tag "attendee[airport_departure_time]", @airport_departure_time, :class => 'time-field', :size => 10
+        %span.smalltext eg. 8:00 AM
 
 .dialog#dialog_airport_shuttle_2012{:title => "Airport Shuttle"}
   %p
@@ -54,9 +53,6 @@
 
 :javascript
   $(function(){
-    hideOrShowTravelPlans(false);
-    $('#attendee_flying').click(function(){ hideOrShowTravelPlans(true); });
-
     $( "#open_dialog_airport_shuttle" ).click(function() {
       $( "#dialog_airport_shuttle_2012" ).dialog( "open" );
       return false;
@@ -68,20 +64,6 @@
     departure = new Date("#{ @airport_departure_date_rfc822 }");
     installDatePicker('#attendee_airport_departure_date', departure);
   });
-
-  function hideOrShowTravelPlans(animate) {
-    var show = $('#attendee_flying').prop("checked");
-    var tp = $("#travel_plans");
-    if (animate) {
-      var eff = 'blind';
-      var opt = {};
-      var speed = 400;
-      show ? tp.show(eff, opt, speed) : tp.hide(eff, opt, speed);
-    }
-    else {
-      show ? tp.show() : tp.hide();
-    }
-  }
 
   function installDatePicker(selector, defaultDate) {
     $(selector).datepicker({
