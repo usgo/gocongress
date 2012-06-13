@@ -21,7 +21,7 @@ class Attendee < ActiveRecord::Base
   attr_accessible :address_1, :address_2, :aga_id, :anonymous,
     :airport_arrival, :airport_arrival_flight, :airport_departure,
     :birth_date, :city, :congresses_attended, :country, :email,
-    :family_name, :flying, :given_name, :gender,
+    :family_name, :given_name, :gender,
     :guardian_full_name, :phone, :special_request,
     :state, :rank, :roomate_request, :tshirt_size,
     :understand_minor, :zip
