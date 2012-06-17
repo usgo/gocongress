@@ -74,45 +74,47 @@ describe User do
     user.errors.should include(:email)
   end
 
+  describe "#get_invoice_total" do
+
+    it "equals the sum of invoice items" do
+      user = FactoryGirl.build :user
+      user.stub(:get_invoice_items) {[
+        InvoiceItem.new("Baubles", "John", 1.5, 2),
+        InvoiceItem.new("Trinkets", "Jane", -0.75, 1)
+      ]}
+      user.get_invoice_total.should == 2.25
+    end
+
+    it "increases when plan with qty is added" do
+      attendee = FactoryGirl.create :attendee
+      user = attendee.user
+      total_before = user.get_invoice_total
+
+      # add a plan with qty > 1 to attendee
+      p = FactoryGirl.create :plan, :max_quantity => 10 + rand(10)
+      qty = 1 + rand(p.max_quantity)
+      ap = AttendeePlan.new :plan_id => p.id, :quantity => qty
+      user.attendees.first.attendee_plans << ap
+
+      # assert that user's inv. item total increases by price * qty
+      expected = (total_before + qty * p.price).to_f
+      actual = user.get_invoice_total.to_f
+      actual.should be_within(0.001).of(expected)
+
+      # change plan qty by 1, assert that invoice total changes by price
+      expected = user.get_invoice_total + p.price
+      ap.quantity += 1
+      user.get_invoice_total.should be_within(0.001).of(expected)
+    end
+
+  end
+
   # In the interest of quickly migrating testunit tests into this
   # spec, the following context reproduces the testunit setup()
   context "testunit setup" do
     before(:each) do
       attendee = FactoryGirl.create :attendee
       @user = attendee.user
-    end
-
-    describe "#get_invoice_total" do
-
-      it "equals the sum of invoice items" do
-        @user.stub(:get_invoice_items) {[
-          InvoiceItem.new("Baubles", "John", 1.5, 2),
-          InvoiceItem.new("Trinkets", "Jane", -0.75, 1)
-        ]}
-        @user.get_invoice_total.should == 2.25
-      end
-
-      it "increases when plan with qty is added" do
-        @user.attendees << FactoryGirl.create(:attendee, :user => @user)
-        total_before = @user.get_invoice_total
-
-        # add a plan with qty > 1 to attendee
-        p = FactoryGirl.create :plan, :max_quantity => 10 + rand(10)
-        qty = 1 + rand(p.max_quantity)
-        ap = AttendeePlan.new :plan_id => p.id, :quantity => qty
-        @user.attendees.first.attendee_plans << ap
-
-        # assert that user's inv. item total increases by price * qty
-        expected = (total_before + qty * p.price).to_f
-        actual = @user.get_invoice_total.to_f
-        actual.should be_within(0.001).of(expected)
-
-        # change plan qty by 1, assert that invoice total changes by price
-        expected = @user.get_invoice_total + p.price
-        ap.quantity += 1
-        @user.get_invoice_total.should be_within(0.001).of(expected)
-      end
-
     end
 
     it "destroying a user also destroys dependent attendees" do
