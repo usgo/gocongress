@@ -34,7 +34,7 @@ describe RegistrationsController do
 
     it "ignores role parameter" do
       u = FactoryGirl.attributes_for(:user, role: 'A') # A for admin
-      expect { post :create, :user => u, :year => @year
+      expect { post :create, :user => u, :year => u[:year]
         }.to change{ User.count }.by(+1)
       response.should be_redirect
       assigns(:user).role.should == 'U'
