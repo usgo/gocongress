@@ -32,17 +32,23 @@ describe Attendee do
   end
 
   describe "#invoice_items" do
+    let(:a) { FactoryGirl.create :attendee }
+
     it "does not include plans that need staff approval" do
-      a = FactoryGirl.create :attendee
       p = FactoryGirl.create :plan_which_needs_staff_approval
       expect { a.plans << p }.to_not change{a.invoice_items.count}
     end
 
     it "includes applicable plans" do
-      a = FactoryGirl.create :attendee
       p = FactoryGirl.create :plan
       expect { a.plans << p }.to change{a.invoice_items.count}.by(1)
     end
+
+    it "includes activities" do
+      v = FactoryGirl.create :activity
+      expect { a.activities << v }.to change{a.invoice_items.count}.by(1)
+    end
+
   end
 
   describe "#valid?" do

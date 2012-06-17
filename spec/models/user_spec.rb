@@ -42,23 +42,11 @@ describe User do
     let(:attendee) { FactoryGirl.create :attendee }
     let(:user) { attendee.user }
 
-    # TODO: These examples ("includes activities" and "includes
-    # plans") belong in the attendee_spec, under invoice_items()
-    it "includes activities" do
-      activity = FactoryGirl.create :activity
-      attendee.activities << activity
-      items = user.get_invoice_items
-      items.should have(1).item
-      items.first.description.should == 'Activity: ' + activity.name
-    end
-
-    it "includes plans" do
-      plan = FactoryGirl.create :plan, :price => 40
-      attendee.plans << plan
-      FactoryGirl.create :attendee, :user => user, :plans => [plan]
-      items = user.get_invoice_items
-      items.should have(2).items
-      items.map(&:price).reduce(:+).should == 80
+    it "includes invoice items from all attendees" do
+      FactoryGirl.create :attendee, :user => user
+      items = [:foo, :bar]
+      Attendee.any_instance.stub(:invoice_items) { items }
+      user.get_invoice_items.should =~ items * 2
     end
 
     it "includes comp transactions" do
