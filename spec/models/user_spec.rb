@@ -29,6 +29,15 @@ describe User do
     end
   end
 
+  describe "#balance" do
+    it "equals invoice total minus amount paid" do
+      u = FactoryGirl.build :user
+      u.stub(:get_invoice_total) { 7 }
+      u.stub(:amount_paid) { 9 }
+      u.balance.should == -2
+    end
+  end
+
   it "has a valid factory" do
     FactoryGirl.build(:user).should be_valid
   end
@@ -94,15 +103,6 @@ describe User do
         expect {
           @user.attendees.first.activities << e
         }.to change{ @user.get_invoice_total }.by(e.price)
-      end
-    end
-
-    describe "#balance" do
-      it "equals invoice total minus amount paid" do
-        1.upto(1+rand(3)) { |a| @user.attendees << FactoryGirl.create(:attendee, :user_id => @user.id) }
-        1.upto(1+rand(10)) { |n| @user.transactions << FactoryGirl.create(:tr_sale, :user_id => @user.id) }
-        1.upto(1+rand(5)) { |n| @user.transactions << FactoryGirl.create(:tr_comp, :user_id => @user.id) }
-        @user.balance.should == (@user.get_invoice_total - @user.amount_paid)
       end
     end
 
