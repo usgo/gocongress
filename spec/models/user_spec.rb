@@ -38,6 +38,37 @@ describe User do
     end
   end
 
+  describe "#get_invoice_items" do
+    let(:attendee) { FactoryGirl.create :attendee }
+    let(:user) { attendee.user }
+
+    # TODO: These examples ("includes activities" and "includes
+    # plans") belong in the attendee_spec, under invoice_items()
+    it "includes activities" do
+      activity = FactoryGirl.create :activity
+      attendee.activities << activity
+      items = user.get_invoice_items
+      items.should have(1).item
+      items.first.description.should == 'Activity: ' + activity.name
+    end
+
+    it "includes plans" do
+      plan = FactoryGirl.create :plan, :price => 40
+      attendee.plans << plan
+      FactoryGirl.create :attendee, :user => user, :plans => [plan]
+      items = user.get_invoice_items
+      items.should have(2).items
+      items.map(&:price).reduce(:+).should == 80
+    end
+
+    it "includes comp transactions" do
+      comp = FactoryGirl.create(:tr_comp, :user => user, :amount => 777)
+      items = user.get_invoice_items
+      items.should have(1).item
+      items.first.price.should == comp.amount * -1
+    end
+  end
+
   it "has a valid factory" do
     FactoryGirl.build(:user).should be_valid
   end
@@ -64,17 +95,13 @@ describe User do
     end
 
     describe "#get_invoice_total" do
-      it "includes comp transactions" do
-        @user.transactions << FactoryGirl.create(:tr_comp, :user => @user, :amount => 33)
-        @user.transactions << FactoryGirl.create(:tr_comp, :user => @user, :amount => 40)
-        @user.get_invoice_total.should == -73
-      end
 
       it "equals the sum of invoice items" do
-        1.upto(1+rand(3)) { |a| @user.attendees << FactoryGirl.create(:attendee, :user => @user) }
-        expected_sum = 0
-        @user.get_invoice_items.each { |ii| expected_sum += ii.price }
-        @user.get_invoice_total.should == expected_sum
+        @user.stub(:get_invoice_items) {[
+          InvoiceItem.new("Baubles", "John", 1.5, 2),
+          InvoiceItem.new("Trinkets", "Jane", -0.75, 1)
+        ]}
+        @user.get_invoice_total.should == 2.25
       end
 
       it "increases when plan with qty is added" do
@@ -98,12 +125,6 @@ describe User do
         @user.get_invoice_total.should be_within(0.001).of(expected)
       end
 
-      it "increases when an activity is added" do
-        e = FactoryGirl.create :activity
-        expect {
-          @user.attendees.first.activities << e
-        }.to change{ @user.get_invoice_total }.by(e.price)
-      end
     end
 
     it "destroying a user also destroys dependent attendees" do
