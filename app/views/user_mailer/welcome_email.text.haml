@@ -10,6 +10,7 @@ us at any time.
 
 = year_url(@user.year)
 
-Get the latest Congress news on Twitter:
+- if @year.twitter_url.present?
+  Get the latest Congress news on Twitter:
 
-= @year.twitter_url
+  = @year.twitter_url
