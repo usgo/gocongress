@@ -54,4 +54,4 @@
           - if can? :edit, e
             %td= link_to 'Edit', edit_activity_path(e)
           - if can? :delete, e
-            %td= link_to 'Delete', e, :confirm => "Delete #{emh}?  If any attendees are signed up, those signups will be lost too.", :method => :delete
+            %td= link_to 'Delete', e, :data => {:confirm => "Delete #{emh}?  If any attendees are signed up, those signups will be lost too."}, :method => :delete

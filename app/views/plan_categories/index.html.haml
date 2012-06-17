@@ -14,6 +14,6 @@
           %td= markdown_if_present(c.description)
           - if can?(:manage, c)
             %td= link_to 'Edit', edit_plan_category_path(c)
-            %td= link_to 'Delete', c, :confirm => "Delete #{c.name}?", :method => :delete
+            %td= link_to 'Delete', c, :data => {:confirm => "Delete #{c.name}?"}, :method => :delete
 
 %br

@@ -14,7 +14,7 @@
       %th Category
       %th
       %th
-  
+
     - @activity_categories.each do |c|
       %tr
         %td= link_to c.name, c
@@ -23,6 +23,6 @@
             = link_to 'Edit', edit_activity_category_path(c)
         %td
           -if can? :delete, c
-            = link_to 'Delete', c, :confirm => 'Are you sure?', :method => :delete
+            = link_to 'Delete', c, :data => {:confirm => 'Are you sure?'}, :method => :delete
 
 %br

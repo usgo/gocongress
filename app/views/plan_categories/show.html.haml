@@ -37,4 +37,4 @@
   .inline-children
     = button_to 'New Plan', new_plan_path, :method => :get
     = button_to 'Edit this Category', edit_plan_category_path(@plan_category), :method => :get
-    = button_to 'Delete this Category', @plan_category, :method => :delete, :confirm => 'Really delete this category? Are you sure?'
+    = button_to 'Delete this Category', @plan_category, :method => :delete, :data => {:confirm => 'Really delete this category? Are you sure?'}

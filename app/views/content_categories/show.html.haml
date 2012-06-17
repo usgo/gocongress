@@ -26,4 +26,4 @@
   - if can? :manage, c
     .row-of-buttons
       = button_to "Edit", edit_content_path(c), :method => :get
-      = button_to "Delete", c, :method => :delete, :confirm => 'Are you sure?'
+      = button_to "Delete", c, :method => :delete, :data => {:confirm => 'Are you sure?'}

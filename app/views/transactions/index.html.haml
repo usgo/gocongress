@@ -49,4 +49,4 @@
               = t.updated_by_user.primary_attendee.given_name
           %td= link_to 'Details', t
           %td= link_to 'Edit', edit_transaction_path(t)
-          %td= link_to 'Delete', t, :confirm => 'Are you sure?', :method => :delete
+          %td= link_to 'Delete', t, :data => {:confirm => 'Are you sure?'}, :method => :delete

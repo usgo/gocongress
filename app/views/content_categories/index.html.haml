@@ -11,11 +11,11 @@
       %th Category
       %th
       %th
-  
+
     - @content_categories.each do |c|
       %tr
         %td= link_to c.name, c
         %td= link_to 'Edit', edit_content_category_path(c)
-        %td= link_to 'Delete', c, :confirm => 'Are you sure?', :method => :delete
+        %td= link_to 'Delete', c, :data => {:confirm => 'Are you sure?'}, :method => :delete
 
 %br

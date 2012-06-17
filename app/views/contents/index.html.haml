@@ -16,7 +16,7 @@
       %th
       %th
       %th
-  
+
     - @contents.each do |content|
       %tr
         %td= content.created_at.to_date
@@ -26,6 +26,6 @@
         %td= content.show_on_homepage ? "Yes" : "No"
         %td= link_to 'Details', content
         %td= link_to 'Edit', edit_content_path(content)
-        %td= link_to 'Delete', content, :confirm => 'Are you sure?', :method => :delete
+        %td= link_to 'Delete', content, :data => {:confirm => 'Are you sure?'}, :method => :delete
 
 %br

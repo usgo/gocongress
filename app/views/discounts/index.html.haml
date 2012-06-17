@@ -23,6 +23,6 @@
         %td= discount.age_max
         %td= link_to 'Details', discount
         %td= link_to 'Edit', edit_discount_path(discount)
-        %td= link_to 'Delete', discount, :confirm => 'Are you sure?', :method => :delete
+        %td= link_to 'Delete', discount, :data => {:confirm => 'Are you sure?'}, :method => :delete
 
 %br
