@@ -45,4 +45,114 @@ describe User do
     user.should_not be_valid
     user.errors.should include(:email)
   end
+
+  # In the interest of quickly migrating testunit tests into this
+  # spec, the following context reproduces the testunit setup()
+  context "testunit setup" do
+    before(:each) do
+      attendee = FactoryGirl.create :attendee
+      @user = attendee.user
+    end
+
+    describe "#get_invoice_total" do
+      it "includes comp transactions" do
+        @user.transactions << FactoryGirl.create(:tr_comp, :user_id => @user.id, :amount => 33)
+        @user.transactions << FactoryGirl.create(:tr_comp, :user_id => @user.id, :amount => 40)
+        @user.get_invoice_total.should == -73
+      end
+
+      it "equals the sum of invoice items" do
+        1.upto(1+rand(3)) { |a| @user.attendees << FactoryGirl.create(:attendee, :user_id => @user.id) }
+        expected_sum = 0
+        @user.get_invoice_items.each { |ii| expected_sum += ii.price }
+        @user.get_invoice_total.should == expected_sum
+      end
+
+      it "increases when plan with qty is added" do
+        @user.attendees << FactoryGirl.create(:attendee, :user_id => @user.id)
+        total_before = @user.get_invoice_total
+
+        # add a plan with qty > 1 to attendee
+        p = FactoryGirl.create :plan, :max_quantity => 10 + rand(10)
+        qty = 1 + rand(p.max_quantity)
+        ap = AttendeePlan.new :plan_id => p.id, :quantity => qty
+        @user.attendees.first.attendee_plans << ap
+
+        # assert that user's inv. item total increases by price * qty
+        expected = (total_before + qty * p.price).to_f
+        actual = @user.get_invoice_total.to_f
+        actual.should be_within(0.001).of(expected)
+
+        # change plan qty by 1, assert that invoice total changes by price
+        expected = @user.get_invoice_total + p.price
+        ap.quantity += 1
+        @user.get_invoice_total.should be_within(0.001).of(expected)
+      end
+
+      it "increases when an activity is added" do
+        e = FactoryGirl.create :activity
+        expect {
+          @user.attendees.first.activities << e
+        }.to change{ @user.get_invoice_total }.by(e.price)
+      end
+    end
+
+    describe "#balance" do
+      it "equals invoice total minus amount paid" do
+        1.upto(1+rand(3)) { |a| @user.attendees << FactoryGirl.create(:attendee, :user_id => @user.id) }
+        1.upto(1+rand(10)) { |n| @user.transactions << FactoryGirl.create(:tr_sale, :user_id => @user.id) }
+        1.upto(1+rand(5)) { |n| @user.transactions << FactoryGirl.create(:tr_comp, :user_id => @user.id) }
+        @user.balance.should == (@user.get_invoice_total - @user.amount_paid)
+      end
+    end
+
+    it "destroying a user also destroys dependent attendees" do
+      num_extra_attendees = 1 + rand(3)
+      1.upto(num_extra_attendees) { |a|
+        @user.attendees << FactoryGirl.create(:attendee, :user_id => @user.id)
+      }
+
+      # when we destroy the user, we expect all dependent attendees
+      # to be destroyed, including the primary_attendee
+      expected_difference = -1 * (num_extra_attendees + 1)
+      destroyed_user_id = @user.id
+      expect { @user.destroy }.to change{ Attendee.count }.by(expected_difference)
+
+      # double check
+      Attendee.where(:user_id => destroyed_user_id).count.should == 0
+    end
+
+    it "age-based discounts" do
+      y = Time.now.year
+      dc = FactoryGirl.create(:discount, :name => "Child", :amount => 150, :age_min => 0, :age_max => 12, :is_automatic => true, :year => y)
+      dy = FactoryGirl.create(:discount, :name => "Youth", :amount => 100, :age_min => 13, :age_max => 18, :is_automatic => true, :year => y)
+      congress_start = CONGRESS_START_DATE[y]
+
+      # If 12 years old on the first day of congress, then attendee
+      # should get child discount and NOT youth discount
+      a = FactoryGirl.create(:minor, :birth_date => congress_start - 12.years, :user_id => @user.id, :year => y)
+      a.age_in_years.should == 12
+      user_has_discount?(@user, dc).should == true
+      user_has_discount?(@user, dy).should == false
+
+      # 11 year old should get child discount and NOT youth discount
+      a.update_attribute :birth_date, congress_start - 11.years
+      a.age_in_years.truncate.should == 11
+      @user.reload
+      user_has_discount?(@user, dc).should == true
+      user_has_discount?(@user, dy).should == false
+
+      # 13 year old should get YOUTH discount, not child discount
+      a.update_attribute :birth_date, congress_start - 13.years
+      a.age_in_years.truncate.should == 13
+      @user.reload
+      user_has_discount?(@user, dc).should == false
+      user_has_discount?(@user, dy).should == true
+    end
+
+    def user_has_discount? (user, discount)
+      user.get_invoice_items.map(&:description).include?(discount.get_invoice_item_name)
+    end
+
+  end
 end
