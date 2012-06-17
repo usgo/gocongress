@@ -65,20 +65,20 @@ describe User do
 
     describe "#get_invoice_total" do
       it "includes comp transactions" do
-        @user.transactions << FactoryGirl.create(:tr_comp, :user_id => @user.id, :amount => 33)
-        @user.transactions << FactoryGirl.create(:tr_comp, :user_id => @user.id, :amount => 40)
+        @user.transactions << FactoryGirl.create(:tr_comp, :user => @user, :amount => 33)
+        @user.transactions << FactoryGirl.create(:tr_comp, :user => @user, :amount => 40)
         @user.get_invoice_total.should == -73
       end
 
       it "equals the sum of invoice items" do
-        1.upto(1+rand(3)) { |a| @user.attendees << FactoryGirl.create(:attendee, :user_id => @user.id) }
+        1.upto(1+rand(3)) { |a| @user.attendees << FactoryGirl.create(:attendee, :user => @user) }
         expected_sum = 0
         @user.get_invoice_items.each { |ii| expected_sum += ii.price }
         @user.get_invoice_total.should == expected_sum
       end
 
       it "increases when plan with qty is added" do
-        @user.attendees << FactoryGirl.create(:attendee, :user_id => @user.id)
+        @user.attendees << FactoryGirl.create(:attendee, :user => @user)
         total_before = @user.get_invoice_total
 
         # add a plan with qty > 1 to attendee
@@ -109,7 +109,7 @@ describe User do
     it "destroying a user also destroys dependent attendees" do
       num_extra_attendees = 1 + rand(3)
       1.upto(num_extra_attendees) { |a|
-        @user.attendees << FactoryGirl.create(:attendee, :user_id => @user.id)
+        @user.attendees << FactoryGirl.create(:attendee, :user => @user)
       }
 
       # when we destroy the user, we expect all dependent attendees
@@ -130,7 +130,7 @@ describe User do
 
       # If 12 years old on the first day of congress, then attendee
       # should get child discount and NOT youth discount
-      a = FactoryGirl.create(:minor, :birth_date => congress_start - 12.years, :user_id => @user.id, :year => y)
+      a = FactoryGirl.create(:minor, :birth_date => congress_start - 12.years, :user => @user, :year => y)
       a.age_in_years.should == 12
       user_has_discount?(@user, dc).should == true
       user_has_discount?(@user, dy).should == false
