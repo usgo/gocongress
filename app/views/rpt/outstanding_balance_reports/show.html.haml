@@ -4,17 +4,23 @@
 
 - if @users.size == 0
   %p
-    Good news! There are no
-    = mnh.pluralize.downcase
+    Good news! There are no #{mnh.pluralize.downcase}
     with outstanding balances.
 - else
   %p
     There are
     %strong= pluralize @users.size, mnh.downcase
-    with outstanding balances.  The
-    = mnh.pluralize.downcase
-    are sorted by the
-    family name of their
+    with outstanding balances.
+
+  %h3 Emails
+  %p Select all, then copy from the box below.
+  .flow-padding
+    %textarea.fullwidth{ :rows => 10 }= @email_list
+
+  %h3 Details
+  %p
+    The #{mnh.pluralize.downcase} below are
+    sorted by the family name of their
     %strong primary attendee.
 
   %table.semantic.fullwidth.zebra

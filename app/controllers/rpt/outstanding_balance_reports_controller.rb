@@ -12,6 +12,8 @@ def show
   # but joining on primary_attendee would conflict with our eager
   # loading configuration.
   @users.sort!{|a,b| a.primary_attendee.family_name <=> b.primary_attendee.family_name}
+
+  @email_list = @users.map(&:email).join(', ')
 end
 
 end
