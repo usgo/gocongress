@@ -11,7 +11,7 @@ class ReportsControllerTest < ActionController::TestCase
     sign_in @admin
 
     # The following reports take no paramters, and only respond to html
-    %w[index invoices emails activities outstanding_balances tournaments].each do |r|
+    %w[index invoices emails activities tournaments].each do |r|
       get r, :year => @admin.year
       assert_response :success
     end
