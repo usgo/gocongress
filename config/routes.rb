@@ -75,7 +75,7 @@ Gocongress::Application.routes.draw do
         resources :reports, :only => :index do
           collection do
             get :atn_badges_all, :atn_badges_ind, :atn_reg_sheets,
-              :emails, :activities, :invoices, :outstanding_balances,
+              :emails, :activities, :invoices,
               :tournaments, :user_invoices
           end
         end
@@ -84,6 +84,7 @@ Gocongress::Application.routes.draw do
         # This replaces the deprecated reports_controller.
         namespace :rpt do
           resource :attendeeless_user_report, :only => :show
+          resource :outstanding_balance_report, :only => :show
 
           # These reports support CSV format
           constraints :format => /(csv)?/ do
