@@ -27,7 +27,7 @@
           = render :partial => "plan_categories/plan_table_common_headers"
       %tbody
         - @plans.each do |plan|
-          %tr
+          %tr{:class => if plan.disabled? then "disabled" end }
             %td.align-center
               - qty = @attendee.get_plan_qty plan.id
               - qty_field_name = "attendee[plan_#{plan.id}_qty]"

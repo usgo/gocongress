@@ -14,27 +14,50 @@ class AttendeesController < ApplicationController
     init_plans
   end
 
+  # `update_plans` replaces attendee_plan records in this category
+  # with plans specified on the form, unless the maximum quantity
+  # is exceeded.
   def update_plans
     init_plans
     params[:attendee] ||= {}
     vldn_errs = []
 
-    # Replace attendee_plan records in this category with plans specified
-    # on the form, unless the maximum quantity is exceeded.
-    @attendee.clear_plan_category!(@plan_category.id)
-
+    # Build a new set of plans from the user's selections
     nascent_attendee_plans = []
     @plans.each do |p|
       qty = params[:attendee]["plan_#{p.id}_qty"].to_i # if nil, to_i returns 0
-      if qty > 0 then
+      if qty == 0
+
+        # Only admins can remove previously selected disabled plans
+        if p.disabled? && @attendee.has_plan?(p) && !current_user.admin?
+          vldn_errs << "It looks like you're trying to remove a
+            disabled plan (#{p.name}).  Please contact the registrar
+            for help"
+          ap_copy = @attendee.attendee_plans.where(plan_id: p.id).first.dup
+          nascent_attendee_plans << ap_copy
+        end
+
+      elsif qty > 0
         ap = AttendeePlan.new(:attendee_id => @attendee.id, :plan_id => p.id, :quantity => qty)
         if ap.valid?
-          nascent_attendee_plans << ap
+
+          # Only admins can add new disabled plans that weren't
+          # previously selected
+          if p.disabled? && !@attendee.has_plan?(p) && !current_user.admin?
+            vldn_errs << "One of the plans you selected (#{ap.plan.name})
+              is disabled. You cannot selected disabled plans.  In fact,
+              you shouldn't have even been able to see it.  Please contact
+              the registrar for help."
+          else
+            nascent_attendee_plans << ap
+          end
         else
           vldn_errs.concat ap.errors.map {|k,v| k.to_s + " " + v.to_s}
         end
       end
     end
+
+    @attendee.clear_plan_category!(@plan_category.id)
 
     unless nascent_attendee_plans.empty?
       @attendee.attendee_plans << nascent_attendee_plans
@@ -318,7 +341,17 @@ protected
   def init_plans
     @plan_category = PlanCategory.reg_form(@year, @attendee.age_in_years).find(params[:plan_category_id])
     age = @attendee.age_in_years
-    @plans = @plan_category.plans.enabled.appropriate_for_age(age).rank :cat_order
+
+    # Which plans to show?  Admins can always see disabled plans,
+    # but users only see disabled plans if they had already
+    # selected such a plan, eg. back when it was enabled. Regardless
+    # of user level, only plans appropriate to the attendee's age
+    # are shown.
+    @plans = @plan_category.plans.appropriate_for_age(age).rank :cat_order
+    unless current_user.admin?
+      @plans.delete_if {|p| p.disabled? && !@attendee.has_plan?(p)}
+    end
+
     @show_availability = Plan.inventoried_plan_in? @plans
     @show_quantity_instructions = Plan.quantifiable_plan_in? @plans
   end

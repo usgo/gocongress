@@ -266,6 +266,10 @@ class Attendee < ActiveRecord::Base
     plan_count > 0
   end
 
+  def has_plan? plan
+    plans.include?(plan)
+  end
+
   def invoice_items
     items = []
 
