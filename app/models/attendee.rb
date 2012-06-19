@@ -244,7 +244,10 @@ class Attendee < ActiveRecord::Base
   end
 
   def clear_plan_category!(pc_id)
-    attendee_plans.joins(:plan).where('plans.plan_category_id = ?', pc_id).destroy_all
+    attendee_plans
+      .joins(:plan)
+      .where('plans.plan_category_id = ?', pc_id)
+      .destroy_all
   end
 
   def congress_start
