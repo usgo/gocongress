@@ -14,8 +14,10 @@ Spork.prefork do
   require File.expand_path("../../config/environment", __FILE__)
   require 'rspec/rails'
   require 'rspec/autorun'
-  RSpec.configure do |config|
-    config.use_transactional_fixtures = true
+  RSpec.configure do |conf|
+    conf.use_transactional_fixtures = true
+    conf.filter_run :focus => true
+    conf.run_all_when_everything_filtered = true
   end
 end
 
