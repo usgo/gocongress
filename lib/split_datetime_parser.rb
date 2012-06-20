@@ -17,7 +17,7 @@ module SplitDatetimeParser
     t = hash[:"#{prefix}_time"]
     unless t.blank? || t.match(/^\d{1,2}:\d{2}[ ][AP]M$/)
       raise SplitDatetimeParserException,
-        "Invalid #{prefix_for_msg} time.  Please use hour:minute am/pm format."
+        "Invalid #{prefix_for_msg} time.  Please use hour:minute AM/PM format."
     end
 
     # The input matches the strict regexes above, so ask parse()
