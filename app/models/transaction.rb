@@ -42,11 +42,13 @@ class Transaction < ActiveRecord::Base
 	validates_numericality_of :amount, :greater_than => 0
 
   # Certain attributes apply only to gateway transaction types (eg. Sale)
-  validates_presence_of :gwdate, :if => :is_gateway_transaction?
-  validates_date :gwdate, :if => :is_gateway_transaction?
-	validates_presence_of :gwtranid, :if => :is_gateway_transaction?
-	validates_numericality_of :gwtranid, :if => :is_gateway_transaction?
-	validates_uniqueness_of :gwtranid, :if => :is_gateway_transaction?
+  with_options :if => :is_gateway_transaction? do |gwt|
+    gwt.validates_presence_of :gwdate
+    gwt.validates_date :gwdate
+    gwt.validates_presence_of :gwtranid
+    gwt.validates_numericality_of :gwtranid
+    gwt.validates_uniqueness_of :gwtranid
+  end
 
   # gwdate and gwtranid are only allowed for gateway tranactions, eg. sales
   # unfortunately, validating the absence of something is ugly in rails
