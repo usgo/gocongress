@@ -43,11 +43,12 @@ class Transaction < ActiveRecord::Base
 
   # Certain attributes apply only to gateway transaction types (eg. Sale)
   with_options :if => :is_gateway_transaction? do |gwt|
-    gwt.validates_presence_of :gwdate
+    gwt.validates :gwdate, :presence => true
     gwt.validates_date :gwdate
-    gwt.validates_presence_of :gwtranid
-    gwt.validates_numericality_of :gwtranid
-    gwt.validates_uniqueness_of :gwtranid
+    gwt.validates :gwtranid, \
+      :presence => true, \
+      :numericality => true, \
+      :uniqueness => true
   end
 
   # gwdate and gwtranid are only allowed for gateway tranactions, eg. sales
