@@ -10,10 +10,10 @@
   #below-gallery
     - if @year.twitter_url.present?
       %a.float-left{:href => @year.twitter_url}
-        = image_tag "icons/social/twitter.png"
+        = image_tag "logo/social/twitter.jpg"
     - if @year.facebook_url.present?
       %a.float-left{:href => @year.facebook_url}
-        = image_tag "icons/social/facebook.png"
+        = image_tag "logo/social/facebook.jpg"
     #venue-address
       = link_to @venue_name, @venue_url
       - if @venue_address.present?
