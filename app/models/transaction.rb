@@ -47,7 +47,7 @@ class Transaction < ActiveRecord::Base
     gwt.validates_date :gwdate
     gwt.validates :gwtranid, \
       :presence => true, \
-      :numericality => true, \
+      :numericality => { :less_than => 2147483648 }, \
       :uniqueness => true
   end
 
