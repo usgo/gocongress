@@ -46,17 +46,19 @@
     activities from morning to midnight. Come for the Go, come for the
     camaraderie of old friends, come for the relaxing mountain air. Whatever
     your reason, we are looking forward to seeing you there.
-  %p
-    Attending the US Go Congress or any of the AGA sponsored activities at the Blue
-    Ridge Assembly is as easy as:
-    %ul
-      %li
-        = link_to "Start Here", new_user_registration_path
-        to create an account
-      %li
-        = link_to "Sign In", new_user_session_path
-        to manage your account
-      %li Check back regularly for updates
+
+  - if @year.year == 2012
+    %p
+      Attending the US Go Congress or any of the AGA sponsored
+      activities at the Blue Ridge Assembly is as easy as:
+      %ul
+        %li
+          = link_to "Start Here", new_user_registration_path
+          to create an account
+        %li
+          = link_to "Sign In", new_user_session_path
+          to manage your account
+        %li Check back regularly for updates
 
 
   %div{:style => "clear:left;"}
