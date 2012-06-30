@@ -14,7 +14,6 @@
     .curvy-text-container p { padding: 0.5em; text-align: justify; }
 
     /* Misc. */
-    p#venue-address { text-align: right; }
     &.past-years { padding: 3px 0px 0px 0px; }
   }
 }
@@ -24,6 +23,15 @@
   float:right;
   padding-left: 20px;
   padding-bottom: 20px;
+  position: relative;
+  z-index: 1; // everything else will be on 0
+  #below-gallery {
+    padding: 0px;
+    text-align: right;
+    #venue-address {
+      padding: 10px 10px 0px 0px;
+    }
+  }
 }
 #gallery {
   width: 480px;

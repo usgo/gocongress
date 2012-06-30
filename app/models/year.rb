@@ -24,6 +24,14 @@ class Year < ActiveRecord::Base
 
   validates :twitter_url, :format => { :allow_nil => true, :with => /^https:\/{2}twitter.com/ }
 
+  def facebook_url
+    if year == 2012
+      "https://www.facebook.com/pages/2012-US-Go-Congress/278646688879639"
+    elsif year == 2011
+      "https://www.facebook.com/pages/2011-US-Go-Congress/191063107571864"
+    end
+  end
+
   def nearby_airport_city
     year == 2012 ? "Asheville" : city
   end

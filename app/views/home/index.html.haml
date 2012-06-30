@@ -7,13 +7,22 @@
       - 1.upto(@slides.length) do |i|
         = slideshow_image_tag(i)
 
-  %p#venue-address
-    = link_to @venue_name, @venue_url
-    - if @venue_address.present?
+  #below-gallery
+    - if @year.twitter_url.present?
+      %a.float-left{:href => @year.twitter_url}
+        = image_tag "icons/social/twitter.png"
+    - if @year.facebook_url.present?
+      %a.float-left{:href => @year.facebook_url}
+        = image_tag "icons/social/facebook.png"
+    #venue-address
+      = link_to @venue_name, @venue_url
+      - if @venue_address.present?
+        %br
+        = @venue_address
       %br
-      = @venue_address
-    %br
-    = @venue_city_state_zip
+      = @venue_city_state_zip
+
+
 
 .curvy-text-container
   = image_tag "logo/usgc/#{@year.year}.png", :id => 'usgc-logo'

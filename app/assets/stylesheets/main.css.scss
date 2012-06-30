@@ -56,6 +56,8 @@ img.thin-border { border: 1px solid black; }
 /* Basic shortcuts: alignment */
 .align-center { text-align: center; }
 .align-right { text-align: right; }
+.float-left { float: left; }
+.float-right { float: right; }
 .valign-middle { vertical-align: middle; }
 
 /* Use this class to pad flow elements (eg. div, form) -Jared 4/9/11 */
