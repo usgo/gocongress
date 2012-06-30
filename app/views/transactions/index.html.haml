@@ -1,23 +1,24 @@
 %h2 Transactions
 
-%div{:style=>"float:right;"}= button_to 'New Transaction', new_transaction_path, :method => "get"
+.txn-tools
 
-.trn-search-form{:style=>"float:left;"}
-  %form{ :href => transactions_path, :method => :get, :style => "display:inline-block" }
-    = text_field_tag 'email', params['email'], :placeholder => "Enter part of email"
-    %button{ :type => :submit } Search
-  - if params['email'].present?
-    = link_to "reset", transactions_path
+  - unless @transactions.empty?
+    .pagination-controls= paginate @transactions
 
-%br.clear
+  .txn-button
+    = button_to 'New Transaction', new_transaction_path, :method => "get"
+
+  .trn-search-form
+    %form{ :href => transactions_path, :method => :get, :style => "display:inline-block" }
+      = text_field_tag 'email', params['email'], :placeholder => "Enter part of email"
+      %button{ :type => :submit } Search
+    - if params['email'].present?
+      = link_to "reset", transactions_path
 
 - if @transactions.empty?
   %p No transactions found.
 
 - else
-  .pagination-controls
-    = paginate @transactions
-
   %table.semantic.zebra.fullwidth
     %thead
       %tr

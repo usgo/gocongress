@@ -38,6 +38,7 @@ h3 { font-size: 18px; }
 p, span, div { font-size: 16px; }
 
 /* Truly basic classes that could apply anywhere -Jared 12/30/10 */
+.clear { clear: both; }
 .fullwidth { width: 100%; }
 .inline { display: inline; }
 .inline-children { display: inline; * { display: inline;} }
@@ -296,6 +297,12 @@ fieldset.wordy-questions .aligned-with-input { margin-left: 355px !important; }
 
 /* User attendee list */
 .attendee_name_column { width: 400px; }
+
+/* Transaction List */
+.txn-button {
+  float: right;
+  padding-right: 0.5em;
+}
 
 /* Footer */
 #footer {
