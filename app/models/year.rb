@@ -39,4 +39,32 @@ class Year < ActiveRecord::Base
   def peak_departure_date
     year == 2012 ? Date.civil(2012, 8, 12) : start_date + 8.days
   end
+
+  def sponsors
+    s = sponsors_by_year[self.year]
+    all_sponsors.reject{|k,v| !s.include?(k)}
+  end
+
+private
+
+  def all_sponsors
+    {
+      :aga => "http://www.usgo.org",
+      :agf => "http://agfgo.org",
+      :jpga => "http://www.pairgo.or.jp",
+      :kaba => "http://www.kbaduk.or.kr/eng/",
+      :kgs => "http://www.gokgs.com",
+      :pandanet => "http://www.pandanet-igs.com",
+      :slate_and_shell => "http://www.slateandshell.com",
+      :tygem => "http://www.tygembaduk.com"
+    }
+  end
+
+  def sponsors_by_year
+    {
+      2011 => [:aga, :kaba, :kgs],
+      2012 => [:aga, :agf, :jpga, :kaba, :pandanet, :slate_and_shell, :tygem]
+    }
+  end
+
 end

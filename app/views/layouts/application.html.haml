@@ -94,13 +94,8 @@
 
     #footer
       #sponsors
-        %a{:href => "http://www.usgo.org"}
-          = image_tag "sponsors/aga.jpg"
-        - if @year.year == 2011
-          %a{:href => "http://www.kbaduk.or.kr/eng/"}
-            = image_tag "sponsors/kaba.jpg"
-          %a{:href => "http://www.gokgs.com"}
-            = image_tag "sponsors/kgs.jpg"
+        - @year.sponsors.each do |name,url|
+          %a{:href => url}= image_tag "sponsors/#{name}.jpg"
       #site-credit
         All times are #{Time.zone}
         %br
