@@ -13,14 +13,14 @@ Gocongress::Application.configure do
   # Disable Rails's static asset server (Apache or nginx will already do this)
   config.serve_static_assets = false
 
-  # Action Mailer
-  # Disable delivery errors, bad email addresses will be ignored
-  config.action_mailer.raise_delivery_errors = true
 
   # Specifies the header that your server uses for sending files.
   config.action_dispatch.x_sendfile_header = "X-Sendfile" # for apache
   # config.action_dispatch.x_sendfile_header = 'X-Accel-Redirect' # for nginx
 
+
+  # Disable delivery errors, bad email addresses will be ignored.
+  config.action_mailer.raise_delivery_errors = false
   config.action_mailer.default_url_options = { :host => "www.gocongress.org" }
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
