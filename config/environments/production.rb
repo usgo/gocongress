@@ -1,6 +1,8 @@
 Gocongress::Application.configure do
 
-  # The production environment is meant for finished, "live" apps.
+  # Settings specified here will take precedence over those in
+  # config/application.rb.
+
   # Code is not reloaded between requests
   config.cache_classes = true
 
@@ -11,8 +13,7 @@ Gocongress::Application.configure do
   # Specifies the header that your server uses for sending files
   config.action_dispatch.x_sendfile_header = "X-Sendfile"
 
-  # Disable Rails's static asset server
-  # In production, Apache or nginx will already do this
+  # Disable Rails's static asset server (Apache or nginx will already do this)
   config.serve_static_assets = false
 
   # Action Mailer
