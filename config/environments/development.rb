@@ -22,6 +22,12 @@ Gocongress::Application.configure do
   # Raise exception on mass assignment protection for Active Record models.
   config.active_record.mass_assignment_sanitizer = :strict
 
+  # Do not compress assets.
+  config.assets.compress = false
+
+  # Turn debug mode off to concatenate and preprocess assets.
+  config.assets.debug = true
+
   # Log error messages when you accidentally call methods on nil.
   config.whiny_nils = true
 
