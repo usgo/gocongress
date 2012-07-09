@@ -2,47 +2,31 @@ slides:
   - n:        1
     title:    Lee Hall
     subtitle: Bob Felice
-            
+
   - n:        2
-    title:    Blue Ridge Center
-    subtitle: Bob Felice
-            
-  - n:        3
-    title:    On the Steps of Lee Hall
-    subtitle: Peter Armenia
-            
-  - n:        4
-    title:    Redmond, Xianxian, and Nakayama Sensei
-    subtitle: Bob Felice
-            
-  - n:        5
     title:    US Open
     subtitle: Bob Felice
-            
-  - n:        6
-    title:    Chuck Plays a Simul
-    subtitle: Peter Armenia
-            
-  - n:        7
-    title:    Yoshi Translating for Nakayama Sensei
-    subtitle: Peter Armenia
-            
-  - n:        8
-    title:    North Carolina Goban by Frank Salantrie
-    subtitle: Jared Beck
-            
-  - n:        9
-    title:    Go Books!
-    subtitle: Peter Armenia
-            
-  - n:        10
-    title:    On the Porch of Lee Hall
-    subtitle: Peter Armenia
-            
-  - n:        11
+
+  - n:        3
     title:    Trying Out a Rocker
     subtitle: Bob Felice
-            
-  - n:        12
-    title:    Evening comes to the US Go Congress
-    subtitle: Roy Laird
+
+  - n:        4
+    title:    On the Steps of Lee Hall
+    subtitle: Peter Armenia
+
+  - n:        5
+    title:    Yoshi Translating for Nakayama Sensei
+    subtitle: Peter Armenia
+
+  - n:        6
+    title:    Redmond, Xianxian, and Nakayama Sensei
+    subtitle: Bob Felice
+
+  - n:        7
+    title:    North Carolina Goban by Frank Salantrie
+    subtitle: Jared Beck
+
+  - n:        8
+    title:    Chuck Plays a Simul
+    subtitle: Peter Armenia
