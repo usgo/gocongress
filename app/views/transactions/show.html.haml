@@ -35,15 +35,15 @@
         = @transaction.gwdate.to_formatted_s(:long)
     %td.smalltext When the payment gateway received the transaction
   %tr
-    %th Creation Date
+    %th= trl_attr 'transaction', 'created_at'
     %td= @transaction.created_at.to_formatted_s(:long)
     %td.smalltext When the transaction was entered on this website
   %tr
-    %th Modification Date
+    %th= trl_attr 'transaction', 'updated_at'
     %td= @transaction.updated_at.to_formatted_s(:long)
     %td.smalltext When the transaction was last edited on this website
   %tr
-    %th Modified By Whom
+    %th= trl_attr 'transaction', 'updated_by_user_id'
     %td
       - if @transaction.updated_by_user.present?
         = @transaction.updated_by_user.coalesce_full_name_then_email

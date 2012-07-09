@@ -64,10 +64,13 @@ en:
       transaction:
         amount: "Amount"
         check_number: "Check Number"
+        created_at: "Date Entered"
         gwtranid: "Gateway Trns. ID"
         gwdate: "Gateway Date"
         instrument: "Instrument"
         trantype: "Type"
+        updated_at: "Last Edited On"
+        updated_by_user_id: "Last Edited By"
       discount:
         age_min: "Minimum Age"
         age_max: "Maximum Age"

@@ -22,14 +22,14 @@
   %table.semantic.zebra.fullwidth
     %thead
       %tr
-        %th Creation Date
+        %th= trl_attr 'transaction', 'created_at'
         %th= trl_attr 'transaction', 'trantype'
         %th= trl_attr 'transaction', 'instrument'
         %th Amount
         %th Primary Attendee
         %th= trl_attr 'transaction', 'gwtranid'
         %th= trl_attr 'transaction', 'check_number'
-        %th Last Edit
+        %th= trl_attr 'transaction', 'updated_by_user_id'
         %th{ :colspan => 3 }
 
     %tbody
