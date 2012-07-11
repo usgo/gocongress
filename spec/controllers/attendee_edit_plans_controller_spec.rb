@@ -96,7 +96,7 @@ describe AttendeesController do
 
       context "when the attendee selects one plan" do
         it "saves an AttendeePlan record" do
-          expect { put_to_update_plans plan }.to
+          expect { put_to_update_plans plan }.to \
             change{ attendee.plans.count }.from(0).to(1)
         end
       end

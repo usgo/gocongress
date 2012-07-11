@@ -29,7 +29,7 @@ describe Purchasable do
 
     describe "#destroy" do
       it "raises an error" do
-        expect { subject.destroy }.to
+        expect { subject.destroy }.to \
           raise_error(ActiveRecord::DeleteRestrictionError)
       end
     end
