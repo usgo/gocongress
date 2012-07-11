@@ -228,33 +228,6 @@ class UsersControllerTest < ActionController::TestCase
     assert_equal 0, Attendee.where(:user_id => destroyed_user_id).count
   end
 
-  test "admin can assign jobs to any user" do
-    sign_in @admin_user
-    job = FactoryGirl.create(:job)
-    u = @user.attributes.merge({ 'job_ids' => [job.id] })
-    put :update, :id => @user.to_param, :user => u, :year => Time.now.year
-    @user = User.find(@user.id)
-    assert_equal job.id, @user.jobs.first.id
-  end
-
-  test "user cannot assign jobs even to themself" do
-    sign_in @user
-    job = FactoryGirl.create(:job)
-
-    # starting with zero jobs assigned ..
-    assert_equal 0, @user.jobs.size
-
-    # mass assignment should NOT change job count
-    u = @user.attributes.merge({ 'job_ids' => [job.id] })
-    assert_no_difference('@user.jobs.size') do
-      put :update, :id => @user.id, :user => u, :year => Time.now.year
-    end
-
-    # reload user and double check that they have zero jobs
-    @user = User.find(@user.id)
-    assert_equal 0, @user.jobs.size
-  end
-
   test "admin can change a user password" do
     sign_in @admin_user
     enc_pw_before = @user.encrypted_password

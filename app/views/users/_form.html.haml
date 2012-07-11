@@ -17,15 +17,6 @@
       = "- can view anything" if r[1] == 'S'
       %br
 
-  %h3 Volunteer Positions
-  .field
-    - @jobs.each do |j|
-      - cbxid = "job_id_" + j.id.to_s
-      - ischecked = j.has_job.to_i > 0
-      = check_box_tag "user[job_ids][]", j.id, ischecked, :id => cbxid
-      = label_tag cbxid, j.jobname, :class => 'wide'
-      %br
-
   %br
 
   .actions

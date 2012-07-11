@@ -12,7 +12,7 @@
     )#{ " or entering a quantity" if @show_quantity_instructions }.
 
     If you have any questions, please contact the
-    = link_to 'registrar.', contact_path
+    = link_to 'registrar.', contacts_path
 
 - form_action = update_plans_for_attendee_path(@attendee, @plan_category)
 = form_for(@attendee, url: form_action) do |f|

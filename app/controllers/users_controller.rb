@@ -67,7 +67,6 @@ class UsersController < ApplicationController
   # edit form is meant for admins only, hence the custom cancan action name
   def edit
     authorize! :admin_edit, @user
-    @jobs = get_jobs_for_cbx_list
   end
 
   def update
@@ -81,15 +80,9 @@ class UsersController < ApplicationController
       @user.save
     end
 
-    # Only admins can assign jobs -Jared 2011.1.29
-    if current_user_is_admin? && params[:user][:job_ids].present?
-      @user.job_ids = params[:user][:job_ids]
-      @user.save
-    end
-
     # Now that we have handled the protected attributes, remove them
     # from the params hash to avoid a warning. -Jared 2011.1.30
-    mass_assignable_attrs = params[:user].except(:role, :job_ids)
+    mass_assignable_attrs = params[:user].except(:role)
 
     # Update mass-assignable attributes. update_with_password() performs
     # some extra validation before calling update_attributes
@@ -102,7 +95,6 @@ class UsersController < ApplicationController
 
       redirect_to user_path(@user), :notice => "User updated"
     else
-      @jobs = get_jobs_for_cbx_list
       render :action => params[:page]
     end
   end
@@ -130,16 +122,6 @@ protected
   end
 
 private
-
-  def get_jobs_for_cbx_list
-    # Get all jobs, but also select a column "has_job" that indicates
-    # whether the user we're editing has that particular job
-    # Is this a railsy way to do things, or is it too much SQL?
-    # -Jared 12/3/2010
-    Job.yr(@year).all :select => "jobs.id, jobname, coalesce(user_jobs.user_id, 0) as has_job" \
-      , :joins => "left join user_jobs on user_jobs.job_id = jobs.id and user_jobs.user_id = " + @user.id.to_s \
-      , :order => :jobname
-  end
 
   def params_contains_user_attr(attribute)
     params.key?(:user) && params[:user].key?(attribute)

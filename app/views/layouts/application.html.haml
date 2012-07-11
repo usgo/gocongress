@@ -61,7 +61,7 @@
           %li= link_to "Costs", costs_path
           - @content_categories_for_menu.each do |c|
             %li= link_to c.name, c
-          %li= link_to "Contact / Volunteer", contact_path
+          %li= link_to "Contact / Volunteer", contacts_path
 
     - if can_see_admin_menu?
       .nav-container-admin

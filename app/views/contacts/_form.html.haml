@@ -1,0 +1,26 @@
+= form_for @contact do |f|
+  = render :partial => "shared/error_messages", :locals => { :resource => @contact }
+
+  .field
+    = f.label :title
+    = f.text_field :title
+  .field
+    = f.label :given_name
+    = f.text_field :given_name
+  .field
+    = f.label :family_name
+    = f.text_field :family_name
+  .field
+    = f.label :email
+    = f.text_field :email
+  .field
+    = f.label :phone
+    = f.text_field :phone
+  .field
+    = f.label :list_order
+    = f.number_field :list_order, :size => 4
+    %span.smalltext Position in list
+
+  .field
+    %label
+    = f.submit 'Save'

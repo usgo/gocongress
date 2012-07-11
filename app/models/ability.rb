@@ -4,9 +4,10 @@ class Ability
   # Define an array of all resource classes, to be used
   # when the cancan syntax does not allow the symbol :all
   # For example, when applying conditions, eg. :year
-  ALL_RESOURCES = [Activity, ActivityCategory, Attendee, Content,
-    ContentCategory, Discount, Event, Job, PlanCategory, Plan,
-    Transaction, Tournament, User, Year]
+  ALL_RESOURCES = [Activity, ActivityCategory, Attendee,
+    Contact, Content, ContentCategory, Discount, Event,
+    PlanCategory, Plan, Transaction, Tournament,
+    User, Year]
 
   def initialize(user)
 
@@ -44,7 +45,8 @@ class Ability
     end
 
     # Guests can read public resources, but cannot write anything
-    can :read, [Content, ContentCategory, Activity, Job, Tournament, PlanCategory]
+    can :read, [Contact, Content, ContentCategory, Activity,
+      Tournament, PlanCategory]
 
     # Guests can show (but not index) the following:
     can :show, ActivityCategory

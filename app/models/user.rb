@@ -21,8 +21,6 @@ class User < ActiveRecord::Base
   attr_accessible :year
 
   has_many :transactions, :dependent => :destroy
-  has_many :user_jobs, :dependent => :destroy
-  has_many :jobs, :through => :user_jobs
 
   # A user may register multiple people, eg. their family
   # The primary attendee corresponds with the user themselves
@@ -35,7 +33,6 @@ class User < ActiveRecord::Base
 
   # Validate email address according to html5 spec (http://bit.ly/nOR1B6)
   # but slightly stricter (no single quotes, backticks, slashes, or dollar signs)
-  EMAIL_REGEX = /^[a-zA-Z0-9.!#%&*+=?^_{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
   validates :email, \
     :presence => true, \
     :uniqueness => { :scope => :year, :case_sensitive => false }, \

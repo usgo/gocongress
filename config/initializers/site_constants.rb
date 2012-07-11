@@ -5,6 +5,9 @@
 # not necessarily the same as the current calendar year.
 CONGRESS_YEAR = 2012
 
+# EMAIL_REGEX used to validate all email addresses
+EMAIL_REGEX = /^[a-zA-Z0-9.!#%&*+=?^_{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+
 # LATEST_YEAR is usually the same as CONGRESS_YEAR,
 # or if we are planning a year ahead but haven't rolled
 # it out yet, then LATEST_YEAR may == CONGRESS_YEAR + 1

@@ -1,0 +1,33 @@
+%h2 Volunteers
+:markdown
+  From **tournament directors** to the people who volunteer
+  **only a few hours at the front desk**, we need your help.
+  The Go Congress would not be possible without the
+  dedication of dozens of volunteers.  Please email the congress
+  directors to volunteer at this year’s congress.  Thanks!
+
+%h2 Contact Us
+
+- if can? :manage, Contact
+  .row-of-buttons
+    = button_to 'Add Contact', new_contact_path, :method => "get"
+
+%table.semantic.fullwidth.zebra
+  %thead
+    %tr
+      %th= trl_attr "contacts", "title"
+      %th Name
+      %th= trl_attr "contacts", "email"
+      %th= trl_attr "contacts", "phone"
+      - if can? :manage, Contact
+        %th{:colspan => 2}
+  %tbody
+    - @contacts.each do |c|
+      %tr
+        %td= c.title
+        %td= c.full_name
+        %td= mail_to c.email
+        %td= c.phone
+        - if can? :manage, c
+          %td.align-center= link_to "edit", edit_contact_path(c)
+          %td.align-center= link_to "delete", contact_path(c), :method => :delete

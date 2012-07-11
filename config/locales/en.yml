@@ -41,8 +41,6 @@ en:
         notes: "Notes"
         leave_time: "Leave"
         return_time: "Return"
-      job:
-        jobname: "Position"
       plan:
         age_min: "Minimum Age"
         age_max: "Maximum Age"
@@ -84,7 +82,6 @@ en:
         reply_to_email: "Reply-To Email"
         twitter_url: "Twitter URL"
     models:
-      job: "Position"
       activity: "Activity"
       activity_category: "Activity Category"
   crud:
