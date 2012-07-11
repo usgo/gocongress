@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120711021355) do
+ActiveRecord::Schema.define(:version => 20120711033946) do
 
   create_table "activities", :force => true do |t|
     t.string   "name"
@@ -180,19 +180,6 @@ ActiveRecord::Schema.define(:version => 20120711021355) do
 
   add_index "events", ["id", "year"], :name => "index_events_on_id_and_year", :unique => true
 
-  create_table "jobs", :force => true do |t|
-    t.string   "jobname"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "email"
-    t.integer  "total_needed"
-    t.integer  "vacancies"
-    t.text     "description"
-    t.integer  "year",         :null => false
-  end
-
-  add_index "jobs", ["id", "year"], :name => "index_jobs_on_id_and_year", :unique => true
-
   create_table "plan_categories", :force => true do |t|
     t.string   "name",                           :null => false
     t.datetime "created_at"
@@ -268,17 +255,6 @@ ActiveRecord::Schema.define(:version => 20120711021355) do
   add_index "transactions", ["gwtranid"], :name => "index_transactions_on_gwtranid", :unique => true
   add_index "transactions", ["user_id"], :name => "index_transactions_on_user_id"
   add_index "transactions", ["year", "created_at"], :name => "index_transactions_on_year_and_created_at"
-
-  create_table "user_jobs", :force => true do |t|
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "user_id"
-    t.integer  "job_id"
-    t.integer  "year",       :null => false
-  end
-
-  add_index "user_jobs", ["job_id"], :name => "index_user_jobs_on_job_id"
-  add_index "user_jobs", ["user_id", "job_id"], :name => "uniq_user_job", :unique => true
 
   create_table "users", :force => true do |t|
     t.string   "email",                                 :default => "",  :null => false
