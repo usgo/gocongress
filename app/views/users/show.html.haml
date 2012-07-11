@@ -6,6 +6,8 @@
         %tr
           %th Type
           %td= @user.role_name
+          - if can? :edit, @user
+            %td.smalltext= link_to 'Edit', edit_user_path(@user)
       %tr
         %th Email
         %td
@@ -14,9 +16,6 @@
 
   %p
     = link_to 'Change Password', edit_password_for_user_path(@user)
-    %br
-    - if current_user.is_admin?
-      = link_to 'User Administration', edit_user_path(@user)
 
 .right-column
   %h2 Balance
