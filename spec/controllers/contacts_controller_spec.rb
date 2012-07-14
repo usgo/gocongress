@@ -68,6 +68,14 @@ describe ContactsController do
         }.to change{ Contact.yr(year).count }.by(+1)
         response.should redirect_to(contacts_path)
       end
+      it "forbids creating in a different year" do
+        different_year = year - 1
+        contact_attrs.delete :year
+        expect {
+          post :create, year: different_year, contact: contact_attrs
+        }.to_not change{ Contact.count }
+        response.status.should == 403
+      end
     end
     describe "edit" do
       it "succeeds" do
