@@ -59,7 +59,10 @@ class ApplicationController < ActionController::Base
 protected
 
   def human_action_name
-    (action_name == "index") ? 'List' : action_name.titleize
+    a = action_name.to_sym
+    h = {:index => 'list', :new => 'create'}
+    n = h.has_key?(a) ? h[a] : action_name
+    n.titleize
   end
 
   # `model_class` returns the constant that refers to the model associated
@@ -131,8 +134,7 @@ private
     # A friendlier "access denied" message -Jared 2010.1.2
     @deny_message = user_signed_in? ? 'You are signed in, but' : 'You are not signed in, so of course'
     @deny_message += ' you do not have permission to '
-    @deny_message += (action_name == "index") ? 'list all' : action_name
-    @deny_message += ' ' + controller_name
+    @deny_message += human_action_name.downcase + ' ' + controller_name
     @deny_message += ' (or perhaps just this particular ' + controller_name.singularize + ').'
 
     # Alf says: render or redirect and the filter chain stops there
