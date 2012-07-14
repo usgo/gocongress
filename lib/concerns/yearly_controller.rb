@@ -14,6 +14,13 @@ module YearlyController
 
   end
 
+  # Public Instance Methods
+  # -----------------------
+
+  def deny_users_from_wrong_year
+    render_access_denied unless current_user && current_user.year == @year.year
+  end
+
   # When our before filters run, we need @year to have been set
   # by `set_year_from_params`, so we `check_that_year_is_present`.
   def check_that_year_is_present

@@ -1,6 +1,7 @@
 require 'csv'
 
 class Rpt::AbstractReportController < ApplicationController
+include YearlyController
 
 # Access Control
 before_filter :deny_users_from_wrong_year

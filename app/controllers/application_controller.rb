@@ -114,10 +114,6 @@ protected
     end
   end
 
-  def deny_users_from_wrong_year
-    render_access_denied unless current_user && current_user.year == @year.year
-  end
-
 private
 
   # `extract_year_from_params` returns an integer year, obtained either
