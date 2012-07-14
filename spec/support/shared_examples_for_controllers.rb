@@ -15,7 +15,7 @@ shared_examples "an admin controller" do |model_name|
   let(:resource_attrs) { FactoryGirl.attributes_for model_name }
   let(:year) { Time.now.year }
   let(:resource_class) { model_name.to_s.classify.constantize }
-  let(:index_path) { send (model_name.pluralize + "_path").to_sym }
+  let(:index_path) { send (model_name.to_s.pluralize + "_path").to_sym }
 
   context "as a staffperson" do
     let(:staff) { FactoryGirl.create :staff }
@@ -78,7 +78,7 @@ shared_examples "an admin controller" do |model_name|
         expect {
           post :create, :year => year, model_name => resource_attrs
         }.to change{ resource_class.yr(year).count }.by(+1)
-        response.should redirect_to(contacts_path)
+        response.should redirect_to(index_path)
       end
       it "forbids creating in a different year" do
         different_year = year - 1
@@ -101,13 +101,13 @@ shared_examples "an admin controller" do |model_name|
         expect {
           delete :destroy, year: resource.year, id: resource.id
         }.to change{ resource_class.yr(year).count }.by(-1)
-        response.should redirect_to(contacts_path)
+        response.should redirect_to(index_path)
       end
     end
     describe "update" do
       it "succeeds" do
         put :update, :year => resource.year, :id => resource.id, model_name => resource_attrs
-        response.should redirect_to(contacts_path)
+        response.should redirect_to(index_path)
       end
     end
   end
