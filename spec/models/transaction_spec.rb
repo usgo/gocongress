@@ -1,6 +1,10 @@
 require "spec_helper"
 
 describe Transaction do
+  it "has a valid factory" do
+    FactoryGirl.create(:transaction).should be_valid
+  end
+
   describe "#valid" do
     context "gateway transaction" do
       let(:txn) { FactoryGirl.create :tr_sale }
