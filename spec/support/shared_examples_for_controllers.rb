@@ -33,7 +33,7 @@ shared_examples "an admin controller" do |model_name|
     describe "create" do
       it "is forbidden" do
         expect {
-          post :create, :year => year, model_name => resource_attrs
+          post :create, params_for_create(model_name)
         }.to_not change{ resource_class.count }
         response.status.should == 403
       end
@@ -55,7 +55,7 @@ shared_examples "an admin controller" do |model_name|
     end
     describe "update" do
       it "is forbidden" do
-        put :update, :year => resource.year, :id => resource.id, model_name => resource_attrs
+        put :update, params_for_update(model_name)
         response.status.should == 403
       end
     end
@@ -76,16 +76,17 @@ shared_examples "an admin controller" do |model_name|
     describe "create" do
       it "succeeds" do
         expect {
-          post :create, :year => year, model_name => resource_attrs
+          post :create, params_for_create(model_name)
         }.to change{ resource_class.yr(year).count }.by(+1)
-        response.should redirect_to(index_path)
+
+        # not all controllers redirect to the index, some go to the show
+        response.should be_redirect
       end
       it "forbids creating in a different year" do
-        different_year = year - 1
-        resource_attrs.delete :year
-        expect {
-          post :create, :year => different_year, model_name => resource_attrs
-        }.to_not change{ resource_class.count }
+        params = params_for_create(model_name)
+        params[:year] = year - 1
+        params[model_name].delete :year
+        expect { post :create, params }.to_not change{ resource_class.count }
         response.status.should == 403
       end
     end
@@ -106,9 +107,27 @@ shared_examples "an admin controller" do |model_name|
     end
     describe "update" do
       it "succeeds" do
-        put :update, :year => resource.year, :id => resource.id, model_name => resource_attrs
-        response.should redirect_to(index_path)
+        put :update, params_for_update(model_name)
+
+        # not all controllers redirect to the index, some go to the show
+        response.should be_redirect
       end
     end
   end
+
+  def params_for_create model_name
+    params = {:year => year, model_name => resource_attrs}
+
+    # the `transaction_controller` takes an extra param, user_email
+    if respond_to? :extra_params_for_create
+      params.merge!(extra_params_for_create)
+    end
+
+    params
+  end
+
+  def params_for_update model_name
+    params_for_create(model_name).merge(:id => resource.id)
+  end
+
 end

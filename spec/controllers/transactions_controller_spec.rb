@@ -1,6 +1,11 @@
 require "spec_helper"
 
 describe TransactionsController do
+  it_behaves_like "an admin controller", :transaction do
+    let(:user) { FactoryGirl.create :user }
+    let(:extra_params_for_create) { {:user_email => user.email} }
+  end
+
   let(:admin) { FactoryGirl.create :admin }
   let(:user) { FactoryGirl.create :user }
   before(:each) do
