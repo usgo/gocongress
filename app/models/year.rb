@@ -51,6 +51,7 @@ private
     {
       :aga => "http://www.usgo.org",
       :agf => "http://agfgo.org",
+      :confucius => "http://oia.ncsu.edu/confucius",
       :jpga => "http://www.pairgo.or.jp",
       :kaba => "http://www.kbaduk.or.kr/eng/",
       :kgs => "http://www.gokgs.com",
@@ -63,7 +64,7 @@ private
   def sponsors_by_year
     {
       2011 => [:aga, :kaba, :kgs],
-      2012 => [:aga, :agf, :jpga, :kaba, :pandanet, :slate_and_shell, :tygem]
+      2012 => [:aga, :agf, :confucius, :jpga, :kaba, :pandanet, :slate_and_shell, :tygem]
     }
   end
 
