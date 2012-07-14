@@ -2,10 +2,14 @@ class AttendeesController < ApplicationController
   include SplitDatetimeParser
   include YearlyController
 
+  # Callbacks
   load_and_authorize_resource
   skip_load_resource :only => [:index, :vip]
   skip_authorize_resource :only => [:create, :index, :vip]
+  add_yearly_controller_callbacks
+  skip_before_filter :set_year_from_route_and_authorize, :only => [:create]
 
+  # Actions
   def show
     @plan_categories = PlanCategory.reg_form(@year, @attendee.age_in_years)
   end

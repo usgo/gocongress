@@ -1,7 +1,9 @@
 class ActivitiesController < ApplicationController
   include YearlyController
 
+  # Callbacks
   load_and_authorize_resource
+  add_yearly_controller_callbacks
 
   # GET /activities/1
   def show

@@ -1,9 +1,10 @@
 class YearsController < ApplicationController
   include YearlyController
 
+  # Callbacks
   before_filter :deny_users_from_wrong_year
-
   authorize_resource
+  add_yearly_controller_callbacks
 
   def edit
   end

@@ -1,8 +1,11 @@
 class ContentCategoriesController < ApplicationController
   include YearlyController
 
+  # Callbacks
   load_and_authorize_resource
+  add_yearly_controller_callbacks
 
+  # Actions
   def create
     @content_category.year = @year.year
     if @content_category.save

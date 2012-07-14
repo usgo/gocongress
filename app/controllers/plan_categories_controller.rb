@@ -1,7 +1,9 @@
 class PlanCategoriesController < ApplicationController
   include YearlyController
 
+  # Callbacks
   load_and_authorize_resource
+  add_yearly_controller_callbacks
   before_filter :events_for_select, :only => [:create, :edit, :new, :update]
   before_filter :expose_plans, :only => [:show, :update]
 

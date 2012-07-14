@@ -1,7 +1,9 @@
 class TransactionsController < ApplicationController
   include YearlyController
 
+  # Callbacks
   load_and_authorize_resource
+  add_yearly_controller_callbacks
 
   helper_method :user_email_list
 

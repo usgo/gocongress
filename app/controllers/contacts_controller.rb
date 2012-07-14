@@ -1,7 +1,11 @@
 class ContactsController < ApplicationController
   include YearlyController
-  load_and_authorize_resource
 
+  # Callbacks
+  load_and_authorize_resource
+  add_yearly_controller_callbacks
+
+  # Actions
   def index
     @contacts = @contacts.yr(@year).order(:list_order)
   end

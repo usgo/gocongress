@@ -1,12 +1,15 @@
 class UsersController < ApplicationController
   include YearlyController
 
+  # Callbacks
+  add_yearly_controller_callbacks
+  skip_before_filter :set_year_from_route_and_authorize
   before_filter :deny_users_from_wrong_year, :only => [:index]
   before_filter :remove_year_from_params
-
   load_resource
   authorize_resource :only => [:destroy, :index, :show, :update]
 
+  # Actions
   def choose_attendee
     authorize! :update, @user
 
@@ -119,6 +122,8 @@ protected
       Rails.logger.warn "WARNING: Removing protected attribute: year"
       params[:user].delete :year
     end
+
+    Rails.logger.debug "****** exiting remove_year_from_params"
   end
 
 private
