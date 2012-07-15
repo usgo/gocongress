@@ -4,6 +4,8 @@ class PlanCategory < ActiveRecord::Base
   belongs_to :event
   has_many :plans
 
+  attr_accessible :description, :event_id, :mandatory, :name
+
   validates :event, :presence => true
   validates :name, :presence => true,
     :uniqueness => {
