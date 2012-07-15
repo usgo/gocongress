@@ -107,7 +107,10 @@ shared_examples "an admin controller" do |model_name|
     end
     describe "update" do
       it "succeeds" do
-        put :update, params_for_update(model_name)
+        expect {
+          put :update, params_for_update(model_name)
+          resource.reload
+        }.to change { resource.send updateable_attribute }
 
         # not all controllers redirect to the index, some go to the show
         response.should be_redirect
@@ -127,7 +130,9 @@ shared_examples "an admin controller" do |model_name|
   end
 
   def params_for_update model_name
-    params_for_create(model_name).merge(:id => resource.id)
+    p = params_for_create(model_name)
+    p[model_name][updateable_attribute] = rand
+    p.merge(:id => resource.id)
   end
 
 end

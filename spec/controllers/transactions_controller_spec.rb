@@ -4,6 +4,7 @@ describe TransactionsController do
   it_behaves_like "an admin controller", :transaction do
     let(:user) { FactoryGirl.create :user }
     let(:extra_params_for_create) { {:user_email => user.email} }
+    let(:updateable_attribute) { :comment }
   end
 
   let(:admin) { FactoryGirl.create :admin }
