@@ -2,11 +2,11 @@ class UsersController < ApplicationController
   include YearlyController
 
   # Callbacks, in order
+  add_filter_restricting_resources_to_year_in_route
   before_filter :deny_users_from_wrong_year, :only => [:index]
   before_filter :remove_year_from_params
   load_resource
   authorize_resource :only => [:destroy, :index, :show, :update]
-  add_filter_restricting_resources_to_year_in_route
 
   # Actions
   def choose_attendee
