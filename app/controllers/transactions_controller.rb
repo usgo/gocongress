@@ -7,12 +7,10 @@ class TransactionsController < ApplicationController
   authorize_resource
   add_filter_restricting_resources_to_year_in_route
 
-  helper_method :user_email_list
-
   # Pagination
   PER_PAGE = 20
 
-  # GET /transactions
+  # Actions
   def index
     @transactions = @transactions.yr(@year)
     if params[:email].present? then
@@ -22,22 +20,15 @@ class TransactionsController < ApplicationController
     @transactions = @transactions.order('created_at desc').page(params[:page]).per(PER_PAGE)
   end
 
-  # GET /transactions/1
-  def show
-  end
-
-  # GET /transactions/new
   def new
     @transaction.trantype = 'S' # most trns are sales
     @email_picker_value = ''
   end
 
-  # GET /transactions/1/edit
   def edit
     @email_picker_value = @transaction.user.email
   end
 
-  # POST /transactions
   def create
     %w[user_id year].each{|atr| params.delete(atr)}
 
@@ -54,7 +45,6 @@ class TransactionsController < ApplicationController
     end
   end
 
-  # PUT /transactions/1
   def update
     %w[user_id year].each{|atr| params.delete(atr)}
 
@@ -70,7 +60,6 @@ class TransactionsController < ApplicationController
     end
   end
 
-  # DELETE /transactions/1
   def destroy
     @transaction.destroy
     redirect_to(transactions_url)
@@ -78,9 +67,11 @@ class TransactionsController < ApplicationController
 
 private
 
+  # Helpers
   def user_email_list
     email_array = User.yr(@year).order('lower(email)').collect {|u| [u.email] }
     email_array.join(',')
   end
+  helper_method :user_email_list
 
 end

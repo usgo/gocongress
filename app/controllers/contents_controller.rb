@@ -7,24 +7,11 @@ class ContentsController < ApplicationController
   authorize_resource
   add_filter_restricting_resources_to_year_in_route
 
-  # GET /contents
+  # Actions
   def index
     @contents = @contents.yr(@year)
   end
 
-  # GET /contents/1
-  def show
-  end
-
-  # GET /contents/new
-  def new
-  end
-
-  # GET /contents/1/edit
-  def edit
-  end
-
-  # POST /contents
   def create
     @content.year = @year.year
     if @content.save
@@ -34,7 +21,6 @@ class ContentsController < ApplicationController
     end
   end
 
-  # PUT /contents/1
   def update
     if @content.update_attributes(params[:content])
       redirect_to(@content, :notice => 'Content updated.')
@@ -43,12 +29,12 @@ class ContentsController < ApplicationController
     end
   end
 
-  # DELETE /contents/1
   def destroy
     @content.destroy
     redirect_to(content_categories_url, :notice => 'Content deleted')
   end
 
+  # Helpers
   def content_category_options
     ContentCategory.yr(@year).all.map {|c| [ c.name, c.id ] }
   end

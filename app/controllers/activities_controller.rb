@@ -7,19 +7,7 @@ class ActivitiesController < ApplicationController
   authorize_resource
   add_filter_restricting_resources_to_year_in_route
 
-  # GET /activities/1
-  def show
-  end
-
-  # GET /activities/new
-  def new
-  end
-
-  # GET /activities/1/edit
-  def edit
-  end
-
-  # POST /activities
+  # Actions
   def create
     @activity.year = @year.year
     if @activity.save
@@ -29,7 +17,6 @@ class ActivitiesController < ApplicationController
     end
   end
 
-  # PUT /activities/1
   def update
     if @activity.update_attributes(params[:activity])
       redirect_to @activity, :notice => "#{Activity.model_name.human} updated"
@@ -38,12 +25,12 @@ class ActivitiesController < ApplicationController
     end
   end
 
-  # DELETE /activities/1
   def destroy
     @activity.destroy
     redirect_to activity_category_url @activity.activity_category
   end
 
+  # Helpers
   def activity_category_options
     ActivityCategory.yr(@year).all.map {|c| [ c.name, c.id ] }
   end

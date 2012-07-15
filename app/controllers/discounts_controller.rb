@@ -7,24 +7,11 @@ class DiscountsController < ApplicationController
   authorize_resource
   add_filter_restricting_resources_to_year_in_route
 
-  # GET /discounts
+  # Actions
   def index
     @discounts = @discounts.yr(@year)
   end
 
-  # GET /discounts/1
-  def show
-  end
-
-  # GET /discounts/new
-  def new
-  end
-
-  # GET /discounts/1/edit
-  def edit
-  end
-
-  # POST /discounts
   def create
     @discount.year = @year.year
     if @discount.save
@@ -34,7 +21,6 @@ class DiscountsController < ApplicationController
     end
   end
 
-  # PUT /discounts/1
   def update
     if @discount.update_attributes(params[:discount])
       redirect_to @discount, :notice => 'Discount updated.'
@@ -43,7 +29,6 @@ class DiscountsController < ApplicationController
     end
   end
 
-  # DELETE /discounts/1
   def destroy
     @discount.destroy
     redirect_to discounts_url
