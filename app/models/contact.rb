@@ -1,7 +1,7 @@
 class Contact < ActiveRecord::Base
   include YearlyModel
   attr_accessible :email, :family_name, :given_name, :list_order,
-    :phone, :title, :year
+    :phone, :title
   validates :email,
     :uniqueness => { :scope => :year, :case_sensitive => false },
     :format => { :with => EMAIL_REGEX },

@@ -2,12 +2,13 @@ class AttendeesController < ApplicationController
   include SplitDatetimeParser
   include YearlyController
 
-  # Callbacks
-  load_and_authorize_resource
+  # Callbacks, in order
+  load_resource
   skip_load_resource :only => [:index, :vip]
+  add_filter_to_set_resource_year
+  authorize_resource
   skip_authorize_resource :only => [:create, :index, :vip]
-  add_yearly_controller_callbacks
-  skip_before_filter :set_year_from_route_and_authorize, :only => [:create]
+  add_filter_restricting_resources_to_year_in_route
 
   # Actions
   def show

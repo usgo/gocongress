@@ -1,6 +1,10 @@
 require "spec_helper"
 
 describe ActivityCategoriesController do
+  it_behaves_like "an admin controller", :activity_category do
+    let(:updateable_attribute) { :description }
+  end
+
   let(:cat){ FactoryGirl.create :activity_category }
 
   it "admin can delete" do

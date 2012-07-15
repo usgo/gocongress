@@ -1,9 +1,11 @@
 class ActivityCategoriesController < ApplicationController
   include YearlyController
 
-  # Callbacks
-  load_and_authorize_resource
-  add_yearly_controller_callbacks
+  # Callbacks, in order
+  load_resource
+  add_filter_to_set_resource_year
+  authorize_resource
+  add_filter_restricting_resources_to_year_in_route
 
   def create
     @activity_category.year = @year.year

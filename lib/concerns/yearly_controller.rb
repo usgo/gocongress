@@ -7,9 +7,12 @@ module YearlyController
     # controller class explicitly add them.  This is less mysterious
     # and helps the controller class to adjust the order of callbacks,
     # while keeping all includes at the top. -Jared 2012-07-14
-    def add_yearly_controller_callbacks
-      before_filter :set_year_from_route_and_authorize, :only => [:create, :new]
+    def add_filter_restricting_resources_to_year_in_route
       before_filter :ensure_rsrc_year_matches_route_year, :except => [:create, :index, :new]
+    end
+
+    def add_filter_to_set_resource_year
+      before_filter :set_resource_year_from_route, :only => [:create, :new]
     end
 
   end
@@ -58,17 +61,19 @@ module YearlyController
   # on `create` and `new` cancan will initialize the resource using
   # the ability conditions, which could be a different year than
   # the route year.  Eg. a 2012 admin could try to use a 2011 form.
-  def set_year_from_route_and_authorize
+  # `set_year_from_route` should run after `load_resource`, but
+  # before `authorize_resource` -Jared 2012-07-15
+  def set_resource_year_from_route
     check_that_year_is_present
 
-    # Hopefully cancan's `load_resource` has already run
+    # Get the instance variable initialized by cancan's `load_resource`
     ivar_name = "@" + controller_name.singularize.downcase
     ivar = self.instance_variable_get ivar_name
     raise "expected cancan to have initialized #{ivar_name} by now" if ivar.nil?
 
-    # Finally, set year from route and authorize!
+    # Set year from route.  Year should never be mass-assignable;
+    # it should always come from the route.
     ivar.year = @year.year
-    authorize! :create, ivar
   end
 
 end

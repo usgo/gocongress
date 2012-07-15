@@ -4,7 +4,7 @@ class YearsController < ApplicationController
   # Callbacks
   before_filter :deny_users_from_wrong_year
   authorize_resource
-  add_yearly_controller_callbacks
+  add_filter_restricting_resources_to_year_in_route
 
   def edit
   end
