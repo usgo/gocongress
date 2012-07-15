@@ -1,6 +1,12 @@
 require "spec_helper"
 
 describe PlanCategoriesController do
+  it_behaves_like "an admin controller", :plan_category do
+    let(:event) { FactoryGirl.create :event }
+    let(:extra_params_for_create) { {:plan_category => {:event_id => event.id}} }
+    let(:updateable_attribute) { :description }
+  end
+
   let(:cat) { FactoryGirl.create :plan_category }
   let!(:plan) { FactoryGirl.create :plan, disabled: true, plan_category: cat }
 

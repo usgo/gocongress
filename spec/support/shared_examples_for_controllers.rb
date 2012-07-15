@@ -123,9 +123,13 @@ shared_examples "an admin controller" do |model_name|
   def params_for_create model_name
     params = {:year => year, model_name => resource_attrs}
 
-    # the `transaction_controller` takes an extra param, user_email
+    # Some controllers require extra params for create, eg.
+    # `transaction_controller` takes an extra top-level param
+    # `user_email`, and `plan_categories_controller` takes an
+    # `event_id` as part of the `plan_category` hash. Recursively
+    # merge the extra params using `deep_merge` gem.
     if respond_to? :extra_params_for_create
-      params.merge!(extra_params_for_create)
+      params = params.deep_merge extra_params_for_create
     end
 
     params
