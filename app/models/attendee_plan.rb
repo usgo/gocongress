@@ -3,8 +3,13 @@ class AttendeePlan < ActiveRecord::Base
   belongs_to :attendee
   belongs_to :plan
 
-  # attr_accessible is not necessary, because
-  # there is no AttendeePlan controller
+  # As with other attendee linking tables, mass-assignment security
+  # is not necessary yet, but may be in the future.  See the more
+  # detailed discussion in `attendee_activity.rb` -Jared 2012-07-15
+  attr_accessible :attendee_id, :plan_id, :quantity
+
+  # Validations
+  # -----------
 
   validates_presence_of :attendee, :plan
 

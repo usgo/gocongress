@@ -6,10 +6,6 @@ class Plan < ActiveRecord::Base
 attr_accessible :name, :price, :age_min, :age_max, :description, :disabled,
   :inventory, :max_quantity, :needs_staff_approval, :plan_category_id
 
-# FIXME: in the controller, somehow year needs to get set
-# before authorize! runs.  until then, year needs to be accessible.
-attr_accessible :year
-
 # Associations
 # ------------
 

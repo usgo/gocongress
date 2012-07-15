@@ -26,10 +26,6 @@ class Attendee < ActiveRecord::Base
     :state, :rank, :roomate_request, :tshirt_size,
     :understand_minor, :zip
 
-  # FIXME: in the controller, somehow year needs to get set
-  # before authorize! runs.  until then, year needs to be accessible.
-  attr_accessible :year
-
   # Define constant array of integer ranks and corresponding rank names
   # The highest official amateur dan rank in the AGA is 7 dan
   RANKS = []
