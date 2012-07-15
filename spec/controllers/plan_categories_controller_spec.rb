@@ -24,7 +24,21 @@ describe PlanCategoriesController do
     end
   end
 
-  describe "GET show" do
+  describe "#index" do
+    it "allows visitors" do
+      get :index, year: cat.year
+      response.should be_success
+      assigns(:plan_categories).should_not be_empty
+    end
+  end
+
+  describe "#show" do
+    it "allows visitors" do
+      get :show, id: cat.id, year: cat.year
+      response.should be_success
+      assigns(:plan_category).should_not be_nil
+    end
+
     it "user cannot see disabled plans" do
       user = FactoryGirl.create :user
       sign_in user
