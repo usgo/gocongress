@@ -54,6 +54,13 @@ shared_examples "an admin controller" do |model_name|
         response.status.should == 403
       end
     end
+    describe "show" do
+      it "succeeds" do
+        get :show, year: resource.year, id: resource.id
+        response.should be_success
+        assigns(model_name).should == resource
+      end
+    end
     describe "update" do
       it "is forbidden" do
         put :update, params_for_update(model_name)
@@ -105,6 +112,13 @@ shared_examples "an admin controller" do |model_name|
         }.to change{ resource_class.yr(year).count }.by(-1)
         resource_class.all.should_not include(resource)
         response.should redirect_to(index_path)
+      end
+    end
+    describe "show" do
+      it "succeeds" do
+        get :show, year: resource.year, id: resource.id
+        response.should be_success
+        assigns(model_name).should == resource
       end
     end
     describe "update" do
