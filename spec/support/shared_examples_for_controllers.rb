@@ -50,6 +50,7 @@ shared_examples "an admin controller" do |model_name|
         expect {
           delete :destroy, year: resource.year, id: resource.id
         }.to_not change{ resource_class.count }
+        resource_class.all.should include(resource)
         response.status.should == 403
       end
     end
@@ -102,6 +103,7 @@ shared_examples "an admin controller" do |model_name|
         expect {
           delete :destroy, year: resource.year, id: resource.id
         }.to change{ resource_class.yr(year).count }.by(-1)
+        resource_class.all.should_not include(resource)
         response.should redirect_to(index_path)
       end
     end

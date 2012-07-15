@@ -5,17 +5,12 @@ describe ActivityCategoriesController do
     let(:updateable_attribute) { :description }
   end
 
-  let(:cat){ FactoryGirl.create :activity_category }
-
-  it "admin can delete" do
-    sign_in FactoryGirl.create :admin
-    delete :destroy, {:id => cat.id, :year => cat.year}
-    ActivityCategory.all.should_not include(cat)
-  end
-
-  it "user cannot delete" do
-    sign_in FactoryGirl.create :user
-    delete :destroy, {:id => cat.id, :year => cat.year}
-    ActivityCategory.all.should include(cat)
+  describe "#show" do
+    it "is successful for visitors" do
+      c = FactoryGirl.create :activity_category
+      get :show, :year => Time.now.year, :id => c.id
+      response.should be_successful
+      assigns[:activities_by_date].should_not be_nil
+    end
   end
 end
