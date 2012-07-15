@@ -21,7 +21,6 @@ class PlanCategoriesController < ApplicationController
   end
 
   def create
-    @plan_category.year = @year.year
     if @plan_category.save
       redirect_to(@plan_category, :notice => 'Plan category created.')
     else
