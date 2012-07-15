@@ -11,12 +11,16 @@ describe PlanCategoriesController do
   let!(:plan) { FactoryGirl.create :plan, disabled: true, plan_category: cat }
 
   describe "#destroy" do
-    it "Admin should get a friendly warning when they try to delete a Plan Category that is in use" do
-      sign_in FactoryGirl.create(:admin)
-      plan.attendees << FactoryGirl.build(:attendee)
-      expect { delete :destroy, id: cat.id, year: cat.year
-        }.to_not change{ PlanCategory.count }
-      flash[:alert].should include "Cannot delete the '#{cat.name}' category"
+    context "when the Plan Category is in use" do
+      before(:each) do
+        plan.attendees << FactoryGirl.build(:attendee)
+      end
+      it "admin should get a friendly warning" do
+        sign_in FactoryGirl.create(:admin)
+        expect { delete :destroy, id: cat.id, year: cat.year
+          }.to_not change{ PlanCategory.count }
+        flash[:alert].should include "Cannot delete the '#{cat.name}' category"
+      end
     end
   end
 
