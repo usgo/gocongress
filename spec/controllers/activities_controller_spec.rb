@@ -6,4 +6,34 @@ describe ActivitiesController do
     let(:extra_params_for_create) { {:activity => {:activity_category_id => cat.id}} }
     let(:updateable_attribute) { :notes }
   end
+
+  context "as a visitor" do
+    describe "#show" do
+      it "succeeds" do
+        activity = FactoryGirl.create(:activity)
+        get :show, :year => Time.now.year, :id => activity.id
+        response.should be_successful
+      end
+    end
+  end
+
+  context "as a user" do
+    let(:user) { FactoryGirl.create(:user) }
+    before(:each) do
+      sign_in user
+    end
+    describe "#create" do
+      it "is forbidden" do
+        a = FactoryGirl.build :activity
+        post :create, :year => Time.now.year, :activity => a.attributes
+        response.status.should == 403
+      end
+    end
+    describe "#new" do
+      it "is forbidden" do
+        get :new, :year => Time.now.year
+        response.status.should == 403
+      end
+    end
+  end
 end
