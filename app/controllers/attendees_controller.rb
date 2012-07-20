@@ -135,26 +135,15 @@ class AttendeesController < ApplicationController
 
     # For which user are we creating this attendee?
     params[:attendee][:user_id] ||= current_user.id
-    target_user_id = params[:attendee][:user_id].to_i
-    target_user = User.find(target_user_id)
+    target_user = User.find(params[:attendee][:user_id])
 
-    # Only admins can create an attendee under a different user
-    if (target_user.id != current_user.id) && !current_user.is_admin? then
-      render_access_denied
-      return
-    end
-
-    # Delete user_id from params hash to avoid mass-assignment warning
-    params[:attendee].delete :user_id
-
-    # Assign protected attributes
+    # Assign protected attributes then authorize
     @attendee.user_id = target_user.id
     @attendee.is_primary = (target_user.attendees.count == 0)
-    @attendee.year = @year.year
+    authorize! :create, @attendee
+    params[:attendee].delete :user_id # avoid mass-assign. warning
 
-    # Validate and save
-    if @attendee.valid?
-      @attendee.save!
+    if @attendee.save
       reg_proc = RegistrationProcess.new @attendee
       redirect_to reg_proc.next_page(:basics, nil, [])
     else
