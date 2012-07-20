@@ -121,8 +121,6 @@ protected
       Rails.logger.warn "WARNING: Removing protected attribute: year"
       params[:user].delete :year
     end
-
-    Rails.logger.debug "****** exiting remove_year_from_params"
   end
 
 private
