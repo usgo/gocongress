@@ -3,6 +3,7 @@ class AttendeesController < ApplicationController
   include YearlyController
 
   # Callbacks, in order
+  before_filter :require_authentication, :except => [:index, :vip]
   load_resource
   skip_load_resource :only => [:index, :vip]
   add_filter_to_set_resource_year
@@ -131,12 +132,6 @@ class AttendeesController < ApplicationController
   end
 
   def create
-
-    # visitors cannot create attendees
-    unless current_user.present? then
-      render_access_denied
-      return
-    end
 
     # For which user are we creating this attendee?
     params[:attendee][:user_id] ||= current_user.id

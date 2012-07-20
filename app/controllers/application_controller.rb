@@ -73,6 +73,10 @@ protected
     controller_name.classify.constantize rescue nil
   end
 
+  def require_authentication
+    render_access_denied if current_user.nil?
+  end
+
   # `human_controller_name` is a bit of a misnomer, since it actually
   # returns the associated model name if it can, otherwise it just chops
   # off the string "Controller" from itself and returns the remainder.
