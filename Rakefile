@@ -43,6 +43,5 @@ end
 
 # The default task used to be test, but I have no idea why. Now we're
 # explictly defining the default task; we'll run both rspec and minitest.
-# Eventually, I may transition away from minitest entirely, but for now
-# that's where the majority of tests are.
+# Eventually, we'll transition to only rspec.
 task :default => [:spec, :test]
