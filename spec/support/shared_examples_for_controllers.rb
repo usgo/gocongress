@@ -111,7 +111,9 @@ shared_examples "an admin controller" do |model_name|
           delete :destroy, year: resource.year, id: resource.id
         }.to change{ resource_class.yr(year).count }.by(-1)
         resource_class.all.should_not include(resource)
-        response.should redirect_to(index_path)
+
+        # not all controllers redirect to the index after delete
+        response.should be_redirect
       end
     end
     describe "show" do
