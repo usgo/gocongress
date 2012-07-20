@@ -41,6 +41,13 @@ namespace :db do
   end
 end
 
+# Turn off rspec verbosity, so that the command is not echoed to
+# stdout. http://bit.ly/MoOoB3  -Jared 2012-07-19
+task(:spec).clear
+RSpec::Core::RakeTask.new(:spec) do |t|
+  t.verbose = false
+end
+
 # The default task used to be test, but I have no idea why. Now we're
 # explictly defining the default task; we'll run both rspec and minitest.
 # Eventually, we'll transition to only rspec.
