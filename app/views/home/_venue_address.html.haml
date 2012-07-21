@@ -1,0 +1,12 @@
+#venue-address
+  = link_to @year.venue_name, @year.venue_url
+  - if @year.venue_address.present?
+    %br
+    = @year.venue_address
+  %br
+  = @year.venue_city + ","
+  = @year.venue_state
+  = @year.venue_zip
+  - if @year.venue_phone.present?
+    %br
+    = @year.venue_phone

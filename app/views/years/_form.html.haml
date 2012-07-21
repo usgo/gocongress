@@ -30,6 +30,30 @@
       = f.text_field :date_range
       %span.smalltext eg. August 4 - 12
 
+  %h3 Venue
+  %fieldset
+    .field
+      = f.label :venue_name
+      = f.text_field :venue_name
+    .field
+      = f.label :venue_address
+      = f.text_field :venue_address
+    .field
+      = f.label :venue_city
+      = f.text_field :venue_city
+    .field
+      = f.label :venue_state
+      = f.text_field :venue_state, :size => 2
+    .field
+      = f.label :venue_zip
+      = f.text_field :venue_zip, :size => 10
+    .field
+      = f.label :venue_url
+      = f.text_field :venue_url
+    .field
+      = f.label :venue_phone
+      = f.text_field :venue_phone, :size => 20
+
   %h3 Miscelaneous
   %fieldset
     .field

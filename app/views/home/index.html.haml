@@ -14,15 +14,7 @@
     - if @year.facebook_url.present?
       %a.float-left{:href => @year.facebook_url}
         = image_tag "logo/social/facebook.jpg"
-    #venue-address
-      = link_to @venue_name, @venue_url
-      - if @venue_address.present?
-        %br
-        = @venue_address
-      %br
-      = @venue_city_state_zip
-
-
+    = render 'venue_address'
 
 .curvy-text-container
   = image_tag "logo/usgc/#{@year.year}.png", :id => 'usgc-logo'

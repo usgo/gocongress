@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120711033946) do
+ActiveRecord::Schema.define(:version => 20120721020502) do
 
   create_table "activities", :force => true do |t|
     t.string   "name"
@@ -279,17 +279,24 @@ ActiveRecord::Schema.define(:version => 20120711033946) do
   add_index "users", ["year"], :name => "index_users_on_year"
 
   create_table "years", :force => true do |t|
-    t.string  "city",               :null => false
-    t.string  "date_range",         :null => false
-    t.date    "day_off_date",       :null => false
-    t.integer "ordinal_number",     :null => false
-    t.string  "registration_phase", :null => false
-    t.string  "reply_to_email",     :null => false
-    t.date    "start_date",         :null => false
-    t.string  "state",              :null => false
-    t.string  "timezone",           :null => false
+    t.string  "city",                             :null => false
+    t.string  "date_range",                       :null => false
+    t.date    "day_off_date",                     :null => false
+    t.integer "ordinal_number",                   :null => false
+    t.string  "registration_phase",               :null => false
+    t.string  "reply_to_email",                   :null => false
+    t.date    "start_date",                       :null => false
+    t.string  "state",                            :null => false
+    t.string  "timezone",                         :null => false
     t.string  "twitter_url"
-    t.integer "year",               :null => false
+    t.integer "year",                             :null => false
+    t.string  "venue_url"
+    t.string  "venue_name"
+    t.string  "venue_address"
+    t.string  "venue_city"
+    t.string  "venue_state",        :limit => 2
+    t.string  "venue_zip",          :limit => 10
+    t.string  "venue_phone",        :limit => 20
   end
 
   add_index "years", ["year"], :name => "index_years_on_year", :unique => true
