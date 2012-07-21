@@ -24,7 +24,7 @@ class Year < ActiveRecord::Base
     wo.validates :year, :numericality => { :only_integer => true, :minimum => 2011, :maximum => 2100 }
   end
 
-  validates :twitter_url, :format => { :allow_nil => true, :with => /^https:\/{2}twitter.com/ }
+  validates :twitter_url, :format => { :allow_blank => true, :with => /^https:\/{2}twitter.com/ }
 
   def facebook_url
     if year == 2012
