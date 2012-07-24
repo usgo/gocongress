@@ -2,7 +2,8 @@ class Tournament < ActiveRecord::Base
   include YearlyModel
 
   attr_accessible :description, :directors, :eligible, :location,
-    :name, :openness, :show_attendee_notes_field, :show_in_nav_menu
+    :name, :openness, :rounds_attributes,
+    :show_attendee_notes_field, :show_in_nav_menu
 
   has_many :rounds, :dependent => :destroy
   has_many :attendee_tournaments, :dependent => :destroy
