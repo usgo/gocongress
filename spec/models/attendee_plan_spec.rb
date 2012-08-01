@@ -3,6 +3,12 @@ require "spec_helper"
 describe AttendeePlan do
   describe "#valid?" do
 
+    it "requires attendee" do
+      ap = FactoryGirl.build :attendee_plan, :attendee => nil
+      ap.should_not be_valid
+      ap.errors.should include :attendee
+    end
+
     it "has minimum quantity of one" do
       ap = FactoryGirl.build :attendee_plan, :quantity => 0
       ap.should_not be_valid
