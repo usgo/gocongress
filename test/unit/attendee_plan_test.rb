@@ -12,15 +12,6 @@ class AttendeePlanTest < ActiveSupport::TestCase
     assert !ap.valid?
   end
 
-  test "qty less than 1 is invalid" do
-    ap = AttendeePlan.new attendee_id: @atnd.id, plan_id: @plan.id, quantity: 0
-    assert !ap.valid?
-    ap.quantity = -1
-    assert !ap.valid?
-    ap.quantity = 1
-    assert ap.valid?
-  end
-
   test "quantity cannot exceed available inventory" do
     @atnd.attendee_plans.build plan_id: @plan.id, quantity: 43
     assert_equal false, @atnd.valid?

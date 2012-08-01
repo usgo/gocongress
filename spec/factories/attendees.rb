@@ -36,4 +36,8 @@ FactoryGirl.define do
     birth_date CONGRESS_START_DATE[Time.now.year] - 10.years
   end
 
+  factory :attendee_plan do
+    association :attendee, :factory => :attendee, :strategy => :build
+    association :plan, :factory => :plan, :strategy => :build
+  end
 end

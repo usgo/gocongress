@@ -3,6 +3,15 @@ require "spec_helper"
 describe AttendeePlan do
   describe "#valid?" do
 
+    it "has minimum quantity of one" do
+      ap = FactoryGirl.build :attendee_plan, :quantity => 0
+      ap.should_not be_valid
+      ap.errors.should include :quantity
+      ap.quantity = -1
+      ap.should_not be_valid
+      ap.quantity = 1
+      ap.should be_valid
+    end
 
     it "is invalid when quantity exceeds plan max_quantity" do
       a = FactoryGirl.create :attendee
