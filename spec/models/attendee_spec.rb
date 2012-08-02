@@ -52,6 +52,20 @@ describe Attendee do
   end
 
   describe "#valid?" do
+    let(:plan) { FactoryGirl.create :plan, inventory: 42, max_quantity: 999 }
+
+    it "plan quantity cannot exceed available inventory" do
+      a = FactoryGirl.create :attendee
+      a.attendee_plans.build plan_id: plan.id, quantity: 43
+      a.should_not be_valid
+    end
+
+    it "plan quantity can equal available inventory" do
+      a = FactoryGirl.create :attendee
+      a.attendee_plans.build plan_id: plan.id, quantity: 42
+      a.should be_valid
+    end
+
     it "requires minors to provide the name of a guardian" do
       a = FactoryGirl.build :attendee
       a.stub(:minor?) { true }
