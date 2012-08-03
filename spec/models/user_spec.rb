@@ -147,14 +147,14 @@ describe User do
       user_has_discount?(@user, dy).should == false
 
       # 11 year old should get child discount and NOT youth discount
-      a.update_attribute :birth_date, congress_start - 11.years
+      a.update_column :birth_date, congress_start - 11.years
       a.age_in_years.truncate.should == 11
       @user.reload
       user_has_discount?(@user, dc).should == true
       user_has_discount?(@user, dy).should == false
 
       # 13 year old should get YOUTH discount, not child discount
-      a.update_attribute :birth_date, congress_start - 13.years
+      a.update_column :birth_date, congress_start - 13.years
       a.age_in_years.truncate.should == 13
       @user.reload
       user_has_discount?(@user, dc).should == false

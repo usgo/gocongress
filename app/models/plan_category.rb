@@ -83,7 +83,7 @@ class PlanCategory < ActiveRecord::Base
       # they appeared before on the show page.
       if ordering.count == plans.count
         plans.each_with_index do |p, ix|
-          p.update_attribute :cat_order_position, ordering[ix]
+          p.update_column :cat_order_position, ordering[ix]
         end
       end
     else
