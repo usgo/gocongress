@@ -7,15 +7,17 @@ class ReportsController < ApplicationController
   def authorize_read_report() authorize! :read, :report end
 
   def atn_badges_all
-    @attendees = Attendee.yr(@year).where('lower(substr(family_name,1,1)) between ? and ?', params[:min], params[:max])
-    @attendees.order('family_name, given_name')
+    @attendees = Attendee.yr(@year) \
+      .where('lower(substr(family_name,1,1)) between ? and ?', params[:min], params[:max]) \
+      .order('family_name, given_name')
     render :layout => "print"
   end
 
   def atn_reg_sheets
     @attendee_attr_names = %w[aga_id birth_date comment email gender phone special_request roomate_request].sort
-    @attendees = Attendee.yr(@year).where('lower(substr(family_name,1,1)) between ? and ?', params[:min], params[:max])
-    @attendees.order('user_id, family_name, given_name')
+    @attendees = Attendee.yr(@year) \
+      .where('lower(substr(family_name,1,1)) between ? and ?', params[:min], params[:max]) \
+      .order('family_name, given_name')
     @tmt_names = AttendeeTournament.tmt_names_by_attendee(@year.year)
     render :layout => "print"
   end
