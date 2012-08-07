@@ -28,7 +28,7 @@
       - @activities.each do |e|
         - is_checked = @atnd_activity_ids.index(e.id).present?
         - cbx_id = 'activity_id_' + e.id.to_s
-        %tr
+        %tr{:class => (e.disabled? ? 'disabled' : nil)}
           %td.align-center= check_box_tag "attendee[activity_id_list][]", e.id, is_checked, :id => cbx_id
           %td= e.leave_time.to_date.to_formatted_s(:dow_month_day)
           %td= label_tag cbx_id, e.name
