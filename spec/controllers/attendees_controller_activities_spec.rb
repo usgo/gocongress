@@ -7,27 +7,30 @@ describe AttendeesController do
   let(:activities) { 1.upto(3).map{ FactoryGirl.create :activity } }
 
   describe "#update" do
+    context "as a user" do
+      before(:each) { sign_in user }
 
-    it "allows a user to add activities to their own attendee" do
-      sign_in user
-      expect { update_activities(attendee) }.to \
-        change { attendee.activities.count }.by(activities.length)
-      response.should redirect_to user_path(user)
+      it "can add activities to their own attendee" do
+        expect { update_activities(attendee) }.to \
+          change { attendee.activities.count }.by(activities.length)
+        response.should redirect_to user_path(user)
+      end
+
+      it "cannot add activities to attendee belonging to someone else" do
+        attendee2 = FactoryGirl.create :attendee
+        expect { update_activities(attendee2) }.to_not \
+          change { attendee2.activities.count }
+        response.status.should == 403
+      end
     end
 
-    it "does not allow a user to add activities to an attendee belonging to someone else" do
-      sign_in user
-      attendee2 = FactoryGirl.create :attendee
-      expect { update_activities(attendee2) }.to_not \
-        change { attendee2.activities.count }
-      response.status.should == 403
-    end
-
-    it "allows an admin to add activities to any attendee" do
-      sign_in admin
-      expect { update_activities(attendee) }.to \
-        change { attendee.activities.count }.by(activities.length)
-      response.should redirect_to user_path(user)
+    context "as an admin" do
+      it "allows an admin to add activities to any attendee" do
+        sign_in admin
+        expect { update_activities(attendee) }.to \
+          change { attendee.activities.count }.by(activities.length)
+        response.should redirect_to user_path(user)
+      end
     end
 
     def update_activities attendee
