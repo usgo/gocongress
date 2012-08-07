@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120721020502) do
+ActiveRecord::Schema.define(:version => 20120807042621) do
 
   create_table "activities", :force => true do |t|
     t.string   "name"
@@ -25,6 +25,7 @@ ActiveRecord::Schema.define(:version => 20120721020502) do
     t.integer  "activity_category_id",                                                                   :null => false
     t.decimal  "price",                                :precision => 10, :scale => 2,                    :null => false
     t.boolean  "price_varies",                                                        :default => false, :null => false
+    t.boolean  "disabled",                                                            :default => false, :null => false
   end
 
   add_index "activities", ["activity_category_id"], :name => "index_activities_on_activity_category_id"
