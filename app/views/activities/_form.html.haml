@@ -24,6 +24,12 @@
         Include room number, if applicable
     .field
       = render partial: "shared/md_area", locals: { :obj => :activity, :atr => :notes}
+    .field
+      = f.label :disabled
+      = f.check_box :disabled
+      %span.smalltext
+        Attendees cannot add or remove disabled
+        = mnh.pluralize.downcase
 
   %h3 Schedule
   %fieldset
