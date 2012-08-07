@@ -257,7 +257,11 @@ class AttendeesController < ApplicationController
 
     elsif (@page == 'activities')
       activity_id_array = params[:attendee][:activity_id_list] || []
-      @attendee.replace_all_activities(activity_id_array)
+      begin
+        @attendee.replace_all_activities(activity_id_array)
+      rescue DisabledActivityException
+        extra_errors << "Please do not add or remove disabled activities"
+      end
       params[:attendee].delete :activity_id_list
     end
 

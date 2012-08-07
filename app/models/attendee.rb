@@ -317,8 +317,14 @@ class Attendee < ActiveRecord::Base
   end
 
   def replace_all_activities activity_id_array
+    acts = Activity.yr(self.year).where(:id => activity_id_array)
+    additions = acts - activities
+    subtractions = activities - acts
+    unless additions.concat(subtractions).select{|a| a.disabled?}.empty?
+      raise DisabledActivityException
+    end
     activities.clear
-    activities << Activity.yr(self.year).where(:id => activity_id_array)
+    activities << acts
   end
 
   def full_name(respect_anonymity = false)
@@ -395,3 +401,7 @@ private
   end
 
 end
+
+class DisabledActivityException < StandardError
+end
+
