@@ -38,10 +38,3 @@ PRIORITY_COUNTRIES = {
   "Japan" => "JP",
   "Korea, Republic of" => "KR"
 }
-
-# Valid REGISTRATION_PHASE values, in chronological order,
-# are :closed, :open, and :complete
-REGISTRATION_PHASE = {
-  2011 => :complete,
-  2012 => :open
-}

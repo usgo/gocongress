@@ -34,11 +34,12 @@
     .nav-container
       .nav
         %ul#nav-list-main
-          %li#nav-registration
-            - if current_user.nil?
-              = link_to "Start Here", new_user_registration_path
-            - else
-              = link_to "My Account", user_path(current_user.id)
+          - if current_user.present? || @year.registration_phase == "open"
+            %li#nav-registration
+              - if current_user.present?
+                = link_to "My Account", user_path(current_user.id)
+              - elsif @year.registration_phase == "open"
+                = link_to "Start Here", new_user_registration_path
           %li
             - if current_user.nil?
               = link_to "Sign In", new_user_session_path

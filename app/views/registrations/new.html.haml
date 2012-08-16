@@ -1,12 +1,12 @@
 %h2 Register for the #{@year.year} US Go Congress!
 
-- if production? && REGISTRATION_PHASE[@year.year] == :closed
+- if production? && @year.registration_phase == "closed"
   %p
     Registration for the #{@year.year} Go Congress will open soon! We are finalizing
     the prices and other information and then we'll be ready to accept your
     registration. Thanks for your interest.
 
-- elsif production? && REGISTRATION_PHASE[@year.year] == :complete
+- elsif production? && @year.registration_phase == "complete"
   %p
     Registration for the #{@year.year} Go Congress is complete.
     Thanks for coming!
