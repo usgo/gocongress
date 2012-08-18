@@ -14,4 +14,4 @@ only has autocomplete, datepicker, and dialog. -Jared 2012-07-09 */
 
 /* TODO: We only need the galleria stuff on the homepage. Hiding
 this on other pages could improve page speed -Jared 2011.2.3 */
-//= require galleria/galleria-1.2.7.min.js
+//= require galleria/galleria-1.2.8.min.js
