@@ -389,7 +389,16 @@ private
     rescue SplitDatetimeParserException => e
       parse_errors << e.to_s
     end
+    clear_airport_datetime_params
     return parse_errors
+  end
+
+  def clear_airport_datetime_params
+    %w(airport_arrival airport_departure).each do |prefix|
+      %w(date time).each do |suffix|
+        params["attendee"].delete prefix + '_' + suffix
+      end
+    end
   end
 
   # We do not want flash notices during initial registration
