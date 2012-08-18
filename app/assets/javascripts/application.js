@@ -7,7 +7,7 @@
 
 /* To speed up page load, we are using a custom jquery-ui, which
 only has autocomplete, datepicker, and dialog. -Jared 2012-07-09 */
-//= require jquery-ui-1.8.21.custom.min.js
+//= require jquery-ui-1.8.23.custom.min.js
 
 // The order is less importent for the other files:
 //= require usgc.js
