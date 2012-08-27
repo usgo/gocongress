@@ -6,7 +6,7 @@ class TransactionsController < ApplicationController
   add_filter_to_set_resource_year
   authorize_resource
   add_filter_restricting_resources_to_year_in_route
-  before_filter :sanitize_params, :only => [:create, :update]
+  before_filter :set_attrs_from_params, :only => [:create, :update]
 
   # Pagination
   PER_PAGE = 20
@@ -32,9 +32,6 @@ class TransactionsController < ApplicationController
 
   def create
     @transaction.year = @year.year
-    @transaction.updated_by_user = current_user
-    @transaction.user = User.yr(@year).find_by_email(params[:user_email])
-
     @email_picker_value = params[:user_email]
 
     if @transaction.save
@@ -45,9 +42,6 @@ class TransactionsController < ApplicationController
   end
 
   def update
-    @transaction.updated_by_user = current_user
-    @transaction.user = User.yr(@year).find_by_email(params[:user_email])
-
     @email_picker_value = params[:user_email]
 
     if @transaction.update_attributes(params[:transaction])
@@ -63,6 +57,13 @@ class TransactionsController < ApplicationController
   end
 
 private
+
+  # `set_attrs_from_params` sets inaccessible transaction attributes
+  def set_attrs_from_params
+    sanitize_params
+    @transaction.updated_by_user = current_user
+    @transaction.user = User.yr(@year).find_by_email(params[:user_email])
+  end
 
   # `sanitize_params` deletes a few inaccessible transaction
   # attributes from the params hash
