@@ -7,14 +7,14 @@ describe TransactionsController do
     let(:updateable_attribute) { :comment }
   end
 
-  let(:admin) { FactoryGirl.create :admin }
-  let(:user) { FactoryGirl.create :user }
-  before(:each) do
-    sign_in admin
-  end
-
   context "given a nonexistent email" do
     let(:bad_email) { "nonexistent@example.com" }
+    let(:admin) { FactoryGirl.create :admin }
+    let(:user) { FactoryGirl.create :user }
+    before(:each) do
+      sign_in admin
+    end
+
     it "will not create the transaction" do
       expect {
         post :create,
@@ -29,6 +29,22 @@ describe TransactionsController do
       t = FactoryGirl.create :tr_sale
       expect { put_update(t, bad_email) }.to_not change{ t.user.email }
       response.should render_template :edit
+    end
+  end
+
+  describe "#update" do
+    context "as an admin not from the latest year" do
+      let(:admin) { FactoryGirl.create :admin, { year: 2011 } }
+      let(:user) { FactoryGirl.create :user, { year: 2011 } }
+      before(:each) do
+        sign_in admin
+      end
+
+      it "redirects to the correct year" do
+        t = FactoryGirl.create :tr_sale, { user: user, year: 2011 }
+        put_update(t, t.user.email)
+        response.should redirect_to transaction_path(id: t.id, year: t.year)
+      end
     end
   end
 

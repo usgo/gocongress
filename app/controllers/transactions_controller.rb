@@ -6,6 +6,7 @@ class TransactionsController < ApplicationController
   add_filter_to_set_resource_year
   authorize_resource
   add_filter_restricting_resources_to_year_in_route
+  before_filter :sanitize_params, :only => [:create, :update]
 
   # Pagination
   PER_PAGE = 20
@@ -30,8 +31,6 @@ class TransactionsController < ApplicationController
   end
 
   def create
-    %w[user_id year].each{|atr| params.delete(atr)}
-
     @transaction.year = @year.year
     @transaction.updated_by_user = current_user
     @transaction.user = User.yr(@year).find_by_email(params[:user_email])
@@ -46,8 +45,6 @@ class TransactionsController < ApplicationController
   end
 
   def update
-    %w[user_id year].each{|atr| params.delete(atr)}
-
     @transaction.updated_by_user = current_user
     @transaction.user = User.yr(@year).find_by_email(params[:user_email])
 
@@ -67,7 +64,16 @@ class TransactionsController < ApplicationController
 
 private
 
-  # Helpers
+  # `sanitize_params` deletes a few inaccessible transaction
+  # attributes from the params hash
+  def sanitize_params
+    if params[:transaction].present?
+      %w[user_id year].each{ |atr| params[:transaction].delete(atr) }
+    end
+  end
+
+  # View Helpers
+
   def user_email_list
     email_array = User.yr(@year).order('lower(email)').collect {|u| [u.email] }
     email_array.join(',')
