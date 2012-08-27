@@ -44,7 +44,7 @@ class TransactionTest < ActiveSupport::TestCase
     tr_comp.gwtranid = 12897
     assert_equal false, tr_comp.valid?
   end
-  
+
   test "comp with gwdate is not valid" do
     tr_comp = FactoryGirl.build(:tr_comp)
     tr_comp.gwdate = Time.now.to_date
@@ -72,19 +72,6 @@ class TransactionTest < ActiveSupport::TestCase
     end
   end
 
-  test "unreasonable years are invalid" do
-    t = FactoryGirl.build(:tr_sale)
-    assert t.valid?
-    t.year = nil
-    assert_equal false, t.valid?
-    t.year = 2100
-    assert_equal false, t.valid?
-    t.year = 2010
-    assert_equal false, t.valid?
-    t.year = 2011
-    assert t.valid?
-  end
-  
   test "yr" do
     assert Transaction.respond_to?(:yr)
     (rand(4)+1).times { FactoryGirl.create(:tr_sale, :year => 2011) }

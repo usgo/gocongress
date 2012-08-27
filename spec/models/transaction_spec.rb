@@ -6,6 +6,17 @@ describe Transaction do
   end
 
   describe "#valid" do
+    it "validates year" do
+      t = FactoryGirl.build(:tr_sale)
+      t.should be_valid
+      [nil, 2100, 2010].each do |y|
+        t.year = y
+        t.should_not be_valid
+      end
+      t.year = 2011
+      t.should be_valid
+    end
+
     context "gateway transaction" do
       let(:txn) { FactoryGirl.create :tr_sale }
       before do
