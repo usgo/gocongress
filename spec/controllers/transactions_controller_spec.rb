@@ -27,14 +27,16 @@ describe TransactionsController do
 
     it "will not update the transaction" do
       t = FactoryGirl.create :tr_sale
-      expect {
-        put :update,
-          :year => user.year,
-          :user_email => bad_email,
-          :id => t.id,
-          :transaction => t.attributes
-      }.to_not change{ t.user.email }
+      expect { put_update(t, bad_email) }.to_not change{ t.user.email }
       response.should render_template :edit
     end
+  end
+
+  def put_update t, email
+    put :update,
+      :year => t.year,
+      :user_email => email,
+      :id => t.id,
+      :transaction => t.attributes
   end
 end
