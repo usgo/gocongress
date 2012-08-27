@@ -72,12 +72,4 @@ class TransactionTest < ActiveSupport::TestCase
     end
   end
 
-  test "yr" do
-    assert Transaction.respond_to?(:yr)
-    (rand(4)+1).times { FactoryGirl.create(:tr_sale, :year => 2011) }
-    (rand(4)+1).times { FactoryGirl.create(:tr_sale, :year => 2012) }
-    assert_equal Transaction.where(:year => 2011).count, Transaction.yr(2011).count
-    assert_equal Transaction.where(:year => 2012).count, Transaction.yr(2012).count
-  end
-
 end
