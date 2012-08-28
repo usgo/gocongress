@@ -1,8 +1,10 @@
 require "spec_helper"
 
 describe Transaction do
-  it "has a valid factory" do
-    FactoryGirl.create(:transaction).should be_valid
+  it "has valid factories" do
+    %w[transaction tr_comp tr_refund tr_sale].each do |f|
+      FactoryGirl.build(f.to_sym).should be_valid
+    end
   end
 
   describe "#valid" do

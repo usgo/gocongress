@@ -1,14 +1,8 @@
 require 'test_helper'
 
 class TransactionTest < ActiveSupport::TestCase
-  setup do
-  end
 
-  # Begin tests for Sales
-  test "sales factory is valid" do
-    assert FactoryGirl.build(:tr_sale).valid?
-  end
-
+  # sales
   test "sale with card requires gwdate and gwtranid" do
     s = FactoryGirl.build(:tr_sale, :instrument => 'C', :gwdate => nil)
     assert_equal false, s.valid?
@@ -26,12 +20,7 @@ class TransactionTest < ActiveSupport::TestCase
     assert tr_sale.valid?
   end
 
-  # Begin tests for comps
-  test "comps factory is valid" do
-    t = FactoryGirl.build(:tr_comp)
-    assert t.valid?, t.errors.full_messages.join(',')
-  end
-
+  # comps
   test "#description" do
     t = FactoryGirl.build(:tr_comp, :comment => "foobar")
     assert_equal "Comp: foobar", t.description
