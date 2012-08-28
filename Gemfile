@@ -40,6 +40,8 @@ gem 'country-select', :git => 'git://github.com/jaredbeck/country-select.git'
 # rspec-rails wants to be in the :development group
 # to "expose generators and rake tasks"
 group :test, :development do
+  gem 'guard-rspec'
+  gem 'guard-spork'
   gem 'rspec-rails'
   gem 'rspec-mocks'
 end
