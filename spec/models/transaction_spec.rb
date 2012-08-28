@@ -33,7 +33,7 @@ describe Transaction do
     end
 
     context "sale" do
-      let(:txn) { FactoryGirl.create :tr_sale }
+      let(:txn) { FactoryGirl.build :tr_sale }
 
       it "requires positive sales amount" do
         txn.amount = -34
