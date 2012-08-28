@@ -7,6 +7,18 @@ describe Transaction do
     end
   end
 
+  describe "#is_gateway_transaction?" do
+    it "is true for sales with card" do
+      t = FactoryGirl.build(:tr_sale, :instrument => 'C')
+      t.is_gateway_transaction?.should be_true
+    end
+
+    it "is false for sales with instrument other than card" do
+      t = FactoryGirl.build(:tr_sale, :instrument => 'S')
+      t.is_gateway_transaction?.should be_false
+    end
+  end
+
   describe "#valid" do
     it "validates year" do
       t = FactoryGirl.build(:tr_sale)
