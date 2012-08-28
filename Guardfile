@@ -5,7 +5,8 @@ guard 'spork', {
     :cucumber => false,
     :rspec => true,
     :rspec_env => { 'RAILS_ENV' => 'test' },
-    :test_unit => false
+    :test_unit => false,
+    :quiet => true
     } do
   watch('config/application.rb')
   watch('config/environment.rb')

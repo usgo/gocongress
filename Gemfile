@@ -51,8 +51,12 @@ group :test do
 	gem 'deep_merge' # recursively merge hashes
 	gem 'factory_girl'
 	gem 'factory_girl_rails'
-	gem 'spork', '1.0.0rc3'
 	gem 'spork-rails'
+
+	# Using edge spork solely to get the -q (quiet) option so that
+	# we can pass :quiet => true to guard 'spork'.  Before this,
+	# I had been using spork 1.0.0rc3
+	gem 'spork', :git => 'https://github.com/sporkrb/spork.git'
 end
 
 group :development do
