@@ -21,11 +21,6 @@ describe Transaction do
 
   describe "#valid" do
 
-    it "requires positive sales amount" do
-      t = FactoryGirl.build :tr_sale, :amount => -34
-      t.should_not be_valid
-    end
-
     it "validates year" do
       t = FactoryGirl.build(:tr_sale)
       t.should be_valid
@@ -37,37 +32,46 @@ describe Transaction do
       t.should be_valid
     end
 
-    context "gateway transaction" do
+    context "sale" do
       let(:txn) { FactoryGirl.create :tr_sale }
-      before do
-        txn.stub(:is_gateway_transaction?) { true }
+
+      it "requires positive sales amount" do
+        txn.amount = -34
+        txn.should_not be_valid
       end
 
-      it "requires gwdate" do
-        txn.gwdate = nil
-        txn.should_not be_valid
-        txn.errors.should include(:gwdate)
-      end
+      context "gateway transaction" do
 
-      it "requires gwtranid" do
-        txn.gwtranid = nil
-        txn.should_not be_valid
-        txn.errors.should include(:gwtranid)
-        txn.errors[:gwtranid].should include("can't be blank")
-      end
+        before do
+          txn.stub(:is_gateway_transaction?) { true }
+        end
 
-      it "validates gwtranid numericality" do
-        txn.gwtranid = "lOOOO"
-        txn.should_not be_valid
-        txn.errors.should include(:gwtranid)
-        txn.errors[:gwtranid].should include("is not a number")
-      end
+        it "requires gwdate" do
+          txn.gwdate = nil
+          txn.should_not be_valid
+          txn.errors.should include(:gwdate)
+        end
 
-      it "validates gwtranid numeric range maximum" do
-        txn.gwtranid = 16404817810
-        txn.should_not be_valid
-        txn.errors.should include(:gwtranid)
-        txn.errors[:gwtranid].should include("must be less than 2147483648")
+        it "requires gwtranid" do
+          txn.gwtranid = nil
+          txn.should_not be_valid
+          txn.errors.should include(:gwtranid)
+          txn.errors[:gwtranid].should include("can't be blank")
+        end
+
+        it "validates gwtranid numericality" do
+          txn.gwtranid = "lOOOO"
+          txn.should_not be_valid
+          txn.errors.should include(:gwtranid)
+          txn.errors[:gwtranid].should include("is not a number")
+        end
+
+        it "validates gwtranid numeric range maximum" do
+          txn.gwtranid = 16404817810
+          txn.should_not be_valid
+          txn.errors.should include(:gwtranid)
+          txn.errors[:gwtranid].should include("must be less than 2147483648")
+        end
       end
     end
   end
