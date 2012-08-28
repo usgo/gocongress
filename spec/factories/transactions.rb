@@ -6,8 +6,8 @@ FactoryGirl.define do
   # it directly in any tests.
   factory :base_transaction, :class => :transaction do
     year Time.now.year
-    association :user, :factory => :user
-    association :updated_by_user, :factory => :user
+    association :user, factory: :user, strategy: :build
+    association :updated_by_user, factory: :user, strategy: :build
     sequence(:amount) { |n| n * 3 }
   end
 
