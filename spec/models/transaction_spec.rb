@@ -20,6 +20,7 @@ describe Transaction do
   end
 
   describe "#valid" do
+
     it "validates year" do
       t = FactoryGirl.build(:tr_sale)
       t.should be_valid
@@ -37,7 +38,13 @@ describe Transaction do
         txn.stub(:is_gateway_transaction?) { true }
       end
 
-      it "validates gwtranid presence" do
+      it "requires gwdate" do
+        txn.gwdate = nil
+        txn.should_not be_valid
+        txn.errors.should include(:gwdate)
+      end
+
+      it "requires gwtranid" do
         txn.gwtranid = nil
         txn.should_not be_valid
         txn.errors.should include(:gwtranid)

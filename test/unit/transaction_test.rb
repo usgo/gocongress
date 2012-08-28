@@ -3,13 +3,6 @@ require 'test_helper'
 class TransactionTest < ActiveSupport::TestCase
 
   # sales
-  test "sale with card requires gwdate and gwtranid" do
-    s = FactoryGirl.build(:tr_sale, :instrument => 'C', :gwdate => nil)
-    assert_equal false, s.valid?
-    s = FactoryGirl.build(:tr_sale, :instrument => 'C', :gwtranid => nil)
-    assert_equal false, s.valid?
-  end
-
   test "sales amount cannot be negative" do
     tr_sale = FactoryGirl.create(:tr_sale)
     assert_equal 'S', tr_sale.trantype
