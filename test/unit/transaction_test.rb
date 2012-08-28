@@ -2,17 +2,6 @@ require 'test_helper'
 
 class TransactionTest < ActiveSupport::TestCase
 
-  # sales
-  test "sales amount cannot be negative" do
-    tr_sale = FactoryGirl.create(:tr_sale)
-    assert_equal 'S', tr_sale.trantype
-    assert tr_sale.valid?
-    tr_sale.amount = -34
-    assert_equal false, tr_sale.valid?
-    tr_sale.amount = +34
-    assert tr_sale.valid?
-  end
-
   # comps
   test "#description" do
     t = FactoryGirl.build(:tr_comp, :comment => "foobar")

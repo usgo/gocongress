@@ -21,6 +21,11 @@ describe Transaction do
 
   describe "#valid" do
 
+    it "requires positive sales amount" do
+      t = FactoryGirl.build :tr_sale, :amount => -34
+      t.should_not be_valid
+    end
+
     it "validates year" do
       t = FactoryGirl.build(:tr_sale)
       t.should be_valid
