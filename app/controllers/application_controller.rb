@@ -27,12 +27,6 @@ class ApplicationController < ActionController::Base
   end
 
   def set_yearly_vars
-
-    # Define a range of all expected years
-    # Currently just used for year navigation in footer
-    @years = 2011..LATEST_YEAR
-
-    # Location and date range
     @congress_city = @year.city
     @congress_state = @year.state
     @congress_date_range = @year.date_range
