@@ -1,5 +1,6 @@
 #venue-address
-  = link_to @year.venue_name, @year.venue_url
+  - if @year.venue_name.present?
+    = link_to @year.venue_name, @year.venue_url
   - if @year.venue_address.present?
     %br
     = @year.venue_address
