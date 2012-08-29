@@ -1,10 +1,7 @@
 FactoryGirl.define do
 
   factory :attendee do
-    address_1 "askldfj"
     birth_date "1981-09-10"
-    city "Nagano"
-    state "Nagano"
     country 'JP'
     congresses_attended 0
     email "example@example.com"

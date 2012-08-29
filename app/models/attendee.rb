@@ -18,13 +18,13 @@ class Attendee < ActiveRecord::Base
   has_many :activities, :through => :attendee_activities
 
   # Mass assignment config
-  attr_accessible :address_1, :address_2, :aga_id, :anonymous,
+  attr_accessible :aga_id, :anonymous,
     :airport_arrival, :airport_arrival_flight, :airport_departure,
-    :birth_date, :city, :congresses_attended, :country, :email,
+    :birth_date, :congresses_attended, :country, :email,
     :family_name, :given_name, :gender,
     :guardian_full_name, :phone, :special_request,
-    :state, :rank, :roomate_request, :tshirt_size,
-    :understand_minor, :zip
+    :rank, :roomate_request, :tshirt_size,
+    :understand_minor
 
   # Define constant array of integer ranks and corresponding rank names
   # The highest official amateur dan rank in the AGA is 7 dan
@@ -94,29 +94,13 @@ class Attendee < ActiveRecord::Base
   validates :guardian_full_name, :presence => { :if => :require_guardian_full_name? }
   validates_inclusion_of :is_primary, :in => [true, false]
   validates_inclusion_of :minor_agreement_received, :in => [true, false]
-  validates_presence_of :address_1, :birth_date, :city, :email, :family_name, :given_name, :rank
+  validates_presence_of :birth_date, :email, :family_name, :given_name, :rank
   validates_inclusion_of :rank, :in => NUMERIC_RANK_LIST, :message => "is not a valid rank"
   validates_inclusion_of :tshirt_size, :in => TSHIRT_SIZE_LIST, :message => " - Please select a size"
   validates_length_of :special_request, :maximum => 250
   validates_length_of :roomate_request, :maximum => 250
   validates_date :birth_date, :after => Date.civil(1900,1,1), :allow_blank => false
   validates :congresses_attended, :numericality => {:greater_than_or_equal_to => 0, :only_integer => true, :allow_nil => true}
-
-  validates :state,
-    :presence => true,
-    :format => {
-      :with => /^[A-Z]{2}$/,
-      :if => :country_is_america?,
-      :message => " - Please use two-letter abbreviations for American states"
-    }
-
-  validates :zip,
-    :format => {
-      :allow_blank => true,
-      :with => /^\d{5}(-\d{4})?$/,
-      :if => :country_is_america?,
-      :message => "is not a valid American zip code"
-    }
 
   # AGA ID must be unique within each year
   validates :aga_id,
@@ -156,8 +140,7 @@ class Attendee < ActiveRecord::Base
   def self.attribute_names_for_csv
 
     # Lisa wants the name and email in the first few columns
-    # group together address, city, state, etc.
-    first_attrs = %w[aga_id family_name given_name address_1 address_2 city state zip country phone]
+    first_attrs = %w[aga_id family_name given_name country phone]
 
     # we should move roommate request next to the plans
     last_attrs = %w[special_request roomate_request]
@@ -252,10 +235,6 @@ class Attendee < ActiveRecord::Base
 
   def anonymize_attribute atr
     anonymize self.send atr
-  end
-
-  def country_is_america?
-    self.country == 'US'
   end
 
   def has_plans?

@@ -123,21 +123,25 @@ class AttendeesControllerTest < ActionController::TestCase
   test "user cannot update another user's attendee" do
     sign_in @user
     target_attendee = @user_two.attendees.first
-    target_attendee.state = 'NY'
-    put :update, :id => target_attendee.id, :attendee => target_attendee.attributes, :year => @year
+    target_attendee.family_name = 'Bumbleplotz'
+    put :update,
+      :id => target_attendee.id,
+      :attendee => target_attendee.attributes,
+      :year => @year
     assert_response 403
   end
 
   test "admin can update attendee of any user" do
     sign_in @admin
-
     target_attendee = @user.attendees.last
-    state_before = target_attendee.state
-    target_attendee.state = 'MI'
-    put :update, :id => target_attendee.id, :attendee => target_attendee.attributes, :year => @year
-
-    target_attendee = Attendee.find(target_attendee.id)
-    assert_not_equal state_before, target_attendee.state
+    name_before = target_attendee.family_name
+    target_attendee.family_name = 'Bumbleplotz'
+    put :update,
+      :id => target_attendee.id,
+      :attendee => target_attendee.attributes,
+      :year => @year
+    target_attendee.reload
+    assert_not_equal name_before, target_attendee.family_name
   end
 
   %w[basics wishes].each do |page|
