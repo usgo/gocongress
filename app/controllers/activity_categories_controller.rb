@@ -6,6 +6,7 @@ class ActivityCategoriesController < ApplicationController
   add_filter_to_set_resource_year
   authorize_resource
   add_filter_restricting_resources_to_year_in_route
+  before_filter :deny_users_from_wrong_year
 
   def create
     @activity_category.year = @year.year
@@ -19,6 +20,15 @@ class ActivityCategoriesController < ApplicationController
   def destroy
     @activity_category.destroy
     redirect_to activity_categories_path
+  end
+
+  def index
+    # The following filter on year is redundant because, unlike
+    # content categories, guests cannot currently index activity
+    # categories.  (see ability.rb)  That's the sort of thing that
+    # could easily change in the future though, so it makes sense
+    # to have a redundant filter here. -Jared 2012-08-29
+    @activity_categories = @activity_categories.yr(@year)
   end
 
   def show
