@@ -25,7 +25,7 @@
     = f.check_box :understand_minor, class: "valign-middle"
     %div#liability-release-instructions.smalltext
       I understand that if this attendee will not be at least 18 years old on
-      = CONGRESS_START_DATE[@year.year].to_formatted_s(:long)
+      = @year.start_date.to_formatted_s(:long)
       then I must submit the #{link_to_liability_release} to the
       = link_to 'registrar.', contacts_path, :target => '_blank'
   .field
