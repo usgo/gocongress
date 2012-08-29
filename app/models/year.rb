@@ -47,6 +47,10 @@ class Year < ActiveRecord::Base
     all_sponsors.reject{|k,v| !s.include?(k)}
   end
 
+  def to_s
+    self.year.to_s
+  end
+
 private
 
   def all_sponsors
