@@ -32,3 +32,20 @@ Year.create!(
   },
   :without_protection => true
 )
+
+Year.create!(
+  {
+    city:                  'Seattle',
+    date_range:            'TBD',
+    day_off_date:          Date.new(2013, 8, 8),
+    ordinal_number:        29,
+    registration_phase:    'closed',
+    reply_to_email:        'szimmerman@ctipc.com',
+    start_date:            Date.new(2013, 8, 4),
+    state:                 'Washington',
+    timezone:              'Pacific Time (US & Canada)',
+    twitter_url:           'https://twitter.com/#!/GoCongress13',
+    year:                  2013
+  },
+  :without_protection => true
+)

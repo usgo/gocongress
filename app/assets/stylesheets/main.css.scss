@@ -84,8 +84,11 @@ dt { clear: left; float: left; padding-right: 1em; font-weight: bold; }
 dd { float: left; }
 
 /* Header */
-body.year2011 #header-container { background-color: #FF9B05; }
-body.year2012 #header-container { background-color: #453775; }
+body {
+  &.year2011 #header-container { background-color: #FF9B05; }
+  &.year2012 #header-container { background-color: #453775; }
+  &.year2013 #header-container { background-color: #333; }
+}
 #header { margin: 0 auto; padding: 8px 0px 5px 0px; width: 900px; }
 
 #usgc-title-container { float: left; }
@@ -109,9 +112,15 @@ body.year2012 #header-container { background-color: #453775; }
 }
 
 /* Nav menu */
-body.year2011 .nav-container { background-color: #0071BC; }
-body.year2012 .nav-container { background-color: #8D7AC9; }
 .nav-container-admin { background-color: #64AEDE; }
+body {
+  &.year2011 .nav-container { background-color: #0071BC; }
+  &.year2012 .nav-container { background-color: #8D7AC9; }
+  &.year2013 {
+    .nav-container { background-color: #555; }
+    .nav-container-admin { background-color: #777; }
+  }
+}
 
 .nav {
   margin: 0px;

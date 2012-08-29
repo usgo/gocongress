@@ -11,7 +11,7 @@ EMAIL_REGEX = /^[a-zA-Z0-9.!#%&*+=?^_{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
 # LATEST_YEAR is usually the same as CONGRESS_YEAR,
 # or if we are planning a year ahead but haven't rolled
 # it out yet, then LATEST_YEAR may == CONGRESS_YEAR + 1
-LATEST_YEAR = 2012
+LATEST_YEAR = 2013
 
 # CONGRESS_START_DATE is the first day of the congress
 # For now, keep this a constant so that the attendee model
@@ -20,7 +20,8 @@ LATEST_YEAR = 2012
 # unable to access it.
 CONGRESS_START_DATE = {
   2011 => Date.civil(2011, 7, 30),
-  2012 => Date.civil(2012, 8, 4)
+  2012 => Date.civil(2012, 8, 4),
+  2013 => Date.civil(2013, 8, 4)
 }
 
 # DAY_OFF_DATE - The go congress traditionally has one "day off".
@@ -28,7 +29,8 @@ CONGRESS_START_DATE = {
 # on the activity and tournament calendars.
 DAY_OFF_DATE = {
   2011 => Date.civil(2011, 8, 3),
-  2012 => Date.civil(2012, 8, 8)
+  2012 => Date.civil(2012, 8, 8),
+  2013 => Date.civil(2013, 8, 8)
 }
 
 # PRIORITY_COUNTRIES will appear at the top of the country_select dropdown menu
