@@ -18,7 +18,7 @@
     %span.smalltext Hide name on the "Who&#39;s Coming" list
   .field
     = f.label :birth_date, 'Birth date'
-    = f.date_select :birth_date, :start_year => Time.now.year, :end_year => 1900, :include_blank => true
+    = f.date_select :birth_date, :start_year => @year.year, :end_year => 1900, :include_blank => true
     %span.smalltext (to identify minors)
   .field
     = f.label :understand_minor, 'Liability Release for Minors'
