@@ -265,6 +265,8 @@ class AttendeesController < ApplicationController
       params[:attendee].delete :activity_id_list
     end
 
+    params[:attendee].delete :user_id # avoid mass-assign. warning
+
     # update attributes but do not save yet
     @attendee.attributes = params[:attendee]
 
