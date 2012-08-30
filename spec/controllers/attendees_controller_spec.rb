@@ -11,6 +11,20 @@ describe AttendeesController do
         response.status.should == 403
       end
     end
+
+    describe "#index" do
+      render_views
+
+      it "lists attendees with at least one plan" do
+        p = FactoryGirl.create :plan
+        a = FactoryGirl.create :attendee, {plans: [p]}
+        a2 = FactoryGirl.create :attendee, {plans: []}
+        get :index, year: a.year
+        response.should be_successful
+        assigns(:attendees).should include(a)
+        assigns(:attendees).should_not include(a2)
+      end
+    end
   end
 
   context "as a user" do
