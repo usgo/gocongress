@@ -10,7 +10,7 @@ describe Plan do
   context "when two attendees have selected it" do
     let(:plan) { FactoryGirl.create :plan }
     before do
-      1.upto(2) { plan.attendees << FactoryGirl.create(:attendee) }
+      plan.stub attendees: ["alice", "bob"]
     end
 
     describe "#valid?" do
@@ -25,7 +25,7 @@ describe Plan do
       end
 
       it "returns true when inventory exceeds attendee count" do
-        plan.inventory = 10
+        plan.inventory = 3
         plan.valid?.should be_true
       end
     end
