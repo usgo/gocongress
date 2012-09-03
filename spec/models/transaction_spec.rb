@@ -7,6 +7,15 @@ describe Transaction do
     end
   end
 
+  describe "#description" do
+    it "includes comment, if present" do
+      t = FactoryGirl.build(:tr_comp, :comment => "foobar")
+      t.description.should == "Comp: foobar"
+      t.comment = nil
+      t.description.should == "Comp"
+    end
+  end
+
   describe "#is_gateway_transaction?" do
     it "is true for sales with card" do
       t = FactoryGirl.build(:tr_sale, :instrument => 'C')
@@ -30,6 +39,38 @@ describe Transaction do
       end
       t.year = 2011
       t.should be_valid
+    end
+
+    context "comp" do
+      it "must not have a gwtranid" do
+        t = FactoryGirl.build :tr_comp, {gwtranid: 12897}
+        t.should_not be_valid
+      end
+
+      it "must not have a gwdate" do
+        t = FactoryGirl.build :tr_comp, {gwdate: Time.now.to_date}
+        t.should_not be_valid
+      end
+
+      it "amount cannot be negative" do
+        t = FactoryGirl.build :tr_comp, {amount: -42}
+        t.should_not be_valid
+        t.amount = +42
+        t.should be_valid
+      end
+
+      it "instrument must be blank" do
+        t = FactoryGirl.build :tr_comp
+        [nil, ''].each do |i|
+          t.instrument = i
+          t.should be_valid
+        end
+        %w[C S K].each do |i|
+          t.instrument = i
+          t.should_not be_valid
+        end
+      end
+
     end
 
     context "sale" do
