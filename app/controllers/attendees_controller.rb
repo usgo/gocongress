@@ -297,12 +297,6 @@ protected
     elsif page == "wishes"
       @discounts = Discount.yr(@year).automatic(false)
       @attendee_discount_ids = @attendee.discounts.automatic(false).map { |d| d.id }
-    elsif page == "admin"
-      @invitational_tournaments = Tournament.yr(@year).openness('I')
-      @atnd_inv_trn_ids = @attendee.tournaments.openness('I').map {|t| t.id}
-    elsif page == "tournaments"
-      @open_tournaments = Tournament.yr(@year).openness('O').order(:name)
-      @atnd_open_trn_ids = @attendee.tournaments.openness('O').map {|t| t.id}
     elsif page == "activities"
       @activities = Activity.yr(@year).order(:leave_time, :name)
       @atnd_activity_ids = @attendee.activities.map {|e| e.id}

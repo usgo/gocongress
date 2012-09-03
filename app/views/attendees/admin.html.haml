@@ -18,17 +18,6 @@
       = f.label :comment
       = f.text_area :comment, {:class => "inline", :rows => 3 }
 
-  %fieldset.wider-labels
-    .field
-      %label Invitational Tournaments
-      .cbx-list
-        - @invitational_tournaments.each do |t|
-          - is_checked = @atnd_inv_trn_ids.index(t.id).present?
-          - cbx_id = 'tournament_id_' + t.id.to_s
-          = check_box_tag "attendee[tournament_id_list][]", t.id, is_checked, :id => cbx_id
-          = label_tag cbx_id, t.name, :class => 'smalltext'
-          %br
-
   %br
   %fieldset.wider-labels
     .aligned-with-input
