@@ -11,9 +11,6 @@ class Attendee < ActiveRecord::Base
   has_many :attendee_discounts, :dependent => :destroy
   has_many :discounts, :through => :attendee_discounts
 
-  has_many :attendee_tournaments, :dependent => :destroy
-  has_many :tournaments, :through => :attendee_tournaments
-
   has_many :attendee_activities, :dependent => :destroy
   has_many :activities, :through => :attendee_activities
 
@@ -167,7 +164,7 @@ class Attendee < ActiveRecord::Base
   # `pages` returns an array of page names, in no particular order.
   # Not all pages are part of the registration process.
   def self.pages
-    %w[admin basics events tournaments activities terminus wishes]
+    %w[admin basics events activities terminus wishes]
   end
 
   def self.with_planlessness planlessness

@@ -25,8 +25,7 @@ def csv_header_line
   atrs = Attendee.attribute_names_for_csv
   plans = Plan.yr(@year).order(:name).map{ |p| "Plan: " + safe_for_csv(p.name)}
   discs = Discount.for_report(@year).map{ |d| "Discount: " + safe_for_csv(d.name) }
-  tourns = Tournament.yr(@year).order(:name).map{ |t| "Tournament: " + safe_for_csv(t.name) }
-  (['user_email'] + atrs + plans + discs + tourns).join(',')
+  (['user_email'] + atrs + plans + discs).join(',')
 end
 
 def planlessness

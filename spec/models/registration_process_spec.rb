@@ -63,11 +63,4 @@ describe "RegistrationProcess#next_page" do
       end
     end
   end
-
-  context "after finishing the edit_tournaments page" do
-    it "returns the path to my accounts" do
-      subject.next_page(:tournaments, nil, nil).should ==
-        user_path(attendee.year, attendee.user)
-    end
-  end
 end

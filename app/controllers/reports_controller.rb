@@ -18,7 +18,6 @@ class ReportsController < ApplicationController
     @attendees = Attendee.yr(@year) \
       .where('lower(substr(family_name,1,1)) between ? and ?', params[:min], params[:max]) \
       .order('family_name, given_name')
-    @tmt_names = AttendeeTournament.tmt_names_by_attendee(@year.year)
     render :layout => "print"
   end
 
@@ -38,11 +37,6 @@ class ReportsController < ApplicationController
   def activities
     @activities = Activity.yr(@year).order :leave_time
     @activities_by_date = @activities.group_by {|activity| activity.leave_time.to_date}
-  end
-
-  def tournaments
-    # Lisa wants "the US Open at the bottom, since it will be by far the longest"
-    @tournaments = Tournament.yr(@year).order("name <> 'US Open' desc, name asc")
   end
 
   def user_invoices

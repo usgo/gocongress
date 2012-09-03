@@ -233,28 +233,6 @@ class AttendeesController < ApplicationController
       # delete param to avoid attr_accessible warning
       params[:attendee].delete :discount_ids
 
-    elsif (@page == 'tournaments')
-      @attendee.tournaments.delete( @attendee.tournaments.where(:openness=>'O') )
-      params[:attendee][:tournament_id_list] ||= Array.new
-      params[:attendee][:tournament_id_list].each do |tid|
-        t = Tournament.where("openness = ?", 'O').find(tid)
-        if t.present? then
-          at = AttendeeTournament.new(:attendee_id => @attendee.id, :tournament_id => t.id)
-          if t.show_attendee_notes_field then
-            if params[:attendee]["trn_#{t.id}_notes"].present? then
-              at.notes = params[:attendee]["trn_#{t.id}_notes"]
-              params[:attendee].delete "trn_#{t.id}_notes"
-            end
-          end
-          if at.valid?
-            at.save!
-          else
-            at.errors.each { |k,v| extra_errors << k.to_s + " " + v.to_s }
-          end
-        end
-      end
-      params[:attendee].delete :tournament_id_list
-
     elsif (@page == 'activities')
       activity_id_array = params[:attendee][:activity_id_list] || []
       begin
@@ -291,8 +269,6 @@ class AttendeesController < ApplicationController
     @attendee = Attendee.find params[:id]
     authorize! :read, @attendee
     @attendee_attr_names = %w[aga_id birth_date comment email gender phone special_request roomate_request].sort
-    tmt_names = AttendeeTournament.tmt_names_by_attendee(@year.year)
-    @tmt_names_atn = tmt_names[@attendee.id].present? ? tmt_names[@attendee.id] : Array.new
     render :layout => "print"
   end
 
@@ -363,7 +339,7 @@ protected
       view_name = page.to_s
     elsif page == "basics"
       view_name = "edit"
-    elsif %w[events tournaments activities].include? page
+    elsif %w[events activities].include? page
       view_name = "edit_#{page}"
     else
       raise "No view for page: #{page}"

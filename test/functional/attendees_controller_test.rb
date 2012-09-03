@@ -173,35 +173,6 @@ class AttendeesControllerTest < ActionController::TestCase
     assert_response 403
   end
 
-  test "admin can update invitational tournaments" do
-    sign_in @admin
-    a = @user.attendees.first
-    a.tournaments.clear
-    assert_equal(0, AttendeeTournament.where('attendee_id = ?', a.id).count)
-    atn_attrs = {:tournament_id_list => [@inv_trn.id]}
-    assert_difference('AttendeeTournament.count', +1) do
-      put :update, :id => a.id, :attendee => atn_attrs, :page => 'admin', :year => @year
-    end
-    a.tournaments.reload
-    assert a.tournaments.first.present?
-    assert_equal(@inv_trn.id, a.tournaments.first.id)
-    assert_redirected_to user_path(@user)
-  end
-
-  test "user can sign up for open tournaments" do
-    sign_in @user
-    a = @user.attendees.first
-    a.tournaments.clear
-    atn_attrs = {:tournament_id_list => [@open_trn.id]}
-    assert_difference('AttendeeTournament.count', +1) do
-      put :update, :id => a.id, :attendee => atn_attrs, :page => 'tournaments', :year => @year
-    end
-    a.tournaments.reload
-    assert a.tournaments.first.present?
-    assert_equal(@open_trn.id, a.tournaments.first.id)
-    assert_redirected_to user_path(@user)
-  end
-
   test "non-admin can claim non-automatic discounts" do
     sign_in @user
     a = @user.attendees.sample

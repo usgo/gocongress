@@ -6,8 +6,6 @@ class Tournament < ActiveRecord::Base
     :show_attendee_notes_field, :show_in_nav_menu
 
   has_many :rounds, :dependent => :destroy
-  has_many :attendee_tournaments, :dependent => :destroy
-  has_many :attendees, :through => :attendee_tournaments
 
   accepts_nested_attributes_for :rounds, :allow_destroy => true
 

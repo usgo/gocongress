@@ -1,53 +1,36 @@
-.asymetrical-columns
-  .left-column
-    %h2= @tournament.name
-    %table.lightweight
-      %tr
-        %th= trl_attr 'tournament', 'location'
-        %td= @tournament.location
-      %tr
-        %th= trl_attr 'tournament', 'directors'
-        %td= @tournament.directors
-      %tr
-        %th= trl_attr 'tournament', 'eligible'
-        %td= @tournament.eligible
-      %tr
-        %th= trl_attr 'tournament', 'openness'
-        %td= @tournament.get_openness_type_name
+%h2= @tournament.name
+%table.lightweight
+  %tr
+    %th= trl_attr 'tournament', 'location'
+    %td= @tournament.location
+  %tr
+    %th= trl_attr 'tournament', 'directors'
+    %td= @tournament.directors
+  %tr
+    %th= trl_attr 'tournament', 'eligible'
+    %td= @tournament.eligible
+  %tr
+    %th= trl_attr 'tournament', 'openness'
+    %td= @tournament.get_openness_type_name
 
-    %br
+%br
 
-    - if @tournament.has_rounds?
-      %h3 Rounds
-      %table.lightweight
-        %tbody
-          - @tournament.rounds.order('round_start asc').each_with_index do |r,i|
-            %tr
-              %th= i+1
-              %td= r.round_start.to_formatted_s(:dow_month_day_time_meridian)
-      %br
-    - elsif can? :manage, @tournament
-      %p.notice-small
-        This tournament has no rounds. Unless it's self-paired,
-        please add some rounds.  (Only admins see this warning)
+- if @tournament.has_rounds?
+  %h3 Rounds
+  %table.lightweight
+    %tbody
+      - @tournament.rounds.order('round_start asc').each_with_index do |r,i|
+        %tr
+          %th= i+1
+          %td= r.round_start.to_formatted_s(:dow_month_day_time_meridian)
+  %br
+- elsif can? :manage, @tournament
+  %p.notice-small
+    This tournament has no rounds. Unless it's self-paired,
+    please add some rounds.  (Only admins see this warning)
 
-    = Markdown.new( @tournament.description ).to_html.html_safe
-    %br
+= Markdown.new( @tournament.description ).to_html.html_safe
+%br
 
-  .right-column
-    %h2 Attendees
-    - if @attendees.size == 0
-      No attendees yet
-    - else
-      %table.lightweight.top-headed
-        %thead
-          %th Attendee
-          %th Rank
-        %tbody
-          - @attendees.each do |a|
-            %tr
-              %td= a.get_full_name(true)
-              %td.nowrap= a.get_rank_name
-
-- if current_user_is_admin?
+- if can? :update, @tournament
   %p= button_to 'Edit this Tournament', edit_tournament_path(@tournament), :method => :get
