@@ -20,7 +20,6 @@
       - @plan_categories.each do |c|
         %li= link_to c.name, edit_plans_for_attendee_path(a, c)
   %li= link_to 'Special Requests', edit_attendee_path(a, :wishes)
-  %li= link_to 'Tournaments', edit_attendee_path(a, :tournaments)
   %li= link_to Activity.model_name.human.pluralize, edit_attendee_path(a, :activities)
 
 - if current_user.is_admin?
