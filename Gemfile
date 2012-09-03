@@ -1,5 +1,10 @@
 source 'http://rubygems.org'
 
+# Specify a ruby version
+# http://gembundler.com/v1.2/whats_new.html
+# https://devcenter.heroku.com/articles/ruby-versions
+ruby '1.9.3'
+
 # Core rails stuff
 gem 'rails'
 gem 'sass-rails'
