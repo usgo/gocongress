@@ -3,6 +3,10 @@ require "spec_helper"
 describe Plan do
   it_behaves_like "a yearly model"
 
+  it "has a valid factory" do
+    FactoryGirl.build(:plan).should be_valid
+  end
+
   context "when two attendees have selected it" do
     let(:plan) { FactoryGirl.create :plan }
     before do

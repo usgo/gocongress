@@ -8,10 +8,6 @@ class PlanTest < ActiveSupport::TestCase
     assert_equal 3, p.inventory_consumed
   end
 
-  test "factory is valid" do
-    assert FactoryGirl.build(:plan).valid?
-  end
-
   test "an inventory of zero is invalid" do
     assert !FactoryGirl.build(:plan, inventory: 0).valid?
   end
