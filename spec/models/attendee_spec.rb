@@ -1,6 +1,8 @@
 require "spec_helper"
 
 describe Attendee do
+  it_behaves_like "a yearly model"
+
   context "when first created" do
     describe "#has_plans?" do
       it "does not have plans" do

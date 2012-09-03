@@ -1,6 +1,8 @@
 require "spec_helper"
 
 describe PlanCategory do
+  it_behaves_like "a yearly model"
+
   let(:cat) { FactoryGirl.create :plan_category }
   let(:plan) { FactoryGirl.create :plan, plan_category: cat }
   let(:attendee) { FactoryGirl.create :attendee }

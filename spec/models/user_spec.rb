@@ -1,6 +1,7 @@
 require "spec_helper"
 
 describe User do
+  it_behaves_like "a yearly model"
 
   context "when initialized" do
     it "is not yet valid" do

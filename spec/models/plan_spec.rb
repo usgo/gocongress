@@ -1,6 +1,7 @@
 require "spec_helper"
 
 describe Plan do
+  it_behaves_like "a yearly model"
 
   context "when it has an inventory of three" do
     subject { FactoryGirl.create :plan, inventory: 3 }

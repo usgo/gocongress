@@ -1,5 +1,7 @@
 require "spec_helper"
 
+# This spec describes a module included by Plan and Activity, so
+# it should probably be rewritten as shared examples
 describe Purchasable do
   subject { FactoryGirl.create :plan }
 

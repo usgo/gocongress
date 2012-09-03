@@ -1,6 +1,8 @@
 require "spec_helper"
 
 describe Activity do
+  it_behaves_like "a yearly model"
+
   it "has a valid factory" do
     FactoryGirl.build(:activity).should be_valid
   end

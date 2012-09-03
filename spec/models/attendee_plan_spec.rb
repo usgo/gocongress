@@ -1,6 +1,8 @@
 require "spec_helper"
 
 describe AttendeePlan do
+  it_behaves_like "a yearly model"
+
   describe "#valid?" do
 
     it "requires attendee" do

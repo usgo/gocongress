@@ -1,6 +1,8 @@
 require "spec_helper"
 
 describe Transaction do
+  it_behaves_like "a yearly model"
+
   it "has valid factories" do
     %w[transaction tr_comp tr_refund tr_sale].each do |f|
       FactoryGirl.build(f.to_sym).should be_valid
@@ -113,18 +115,6 @@ describe Transaction do
           txn.errors.should include(:gwtranid)
           txn.errors[:gwtranid].should include("must be less than 2147483648")
         end
-      end
-    end
-  end
-
-  # The `yr` method is defined in YearlyModel, but it's convenient
-  # to test it on an actual persisted model
-  describe "#yr" do
-    it "returns transactions from that year" do
-      Transaction.should respond_to :yr
-      [2011, 2012].each do |y|
-        (rand(4)+1).times { FactoryGirl.create(:tr_sale, :year => y) }
-        Transaction.yr(y).should =~ Transaction.where(year: y)
       end
     end
   end
