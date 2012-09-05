@@ -15,7 +15,6 @@ class TournamentsController < ApplicationController
   end
 
   def show
-    @attendees = @tournament.attendees.order('rank desc')
   end
 
   def new

@@ -1,9 +1,19 @@
 require "spec_helper"
 
 describe TournamentsController do
+  let(:tnm) { FactoryGirl.create :tournament }
+
+  describe "#show" do
+    render_views
+
+    it "succeeds" do
+      get :show, id: tnm.id, year: tnm.year
+      response.should be_successful
+    end
+  end
+
   describe "#update" do
     let(:admin) { FactoryGirl.create :admin }
-    let(:tnm) { FactoryGirl.create :tournament }
 
     it "updates rounds" do
       sign_in admin
