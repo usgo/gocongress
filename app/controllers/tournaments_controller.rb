@@ -14,9 +14,6 @@ class TournamentsController < ApplicationController
     @rounds_by_date = rounds.group_by {|r| r.round_start.to_date}
   end
 
-  def show
-  end
-
   def new
     @tournament.rounds.build # Start with one round
   end
