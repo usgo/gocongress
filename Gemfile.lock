@@ -143,6 +143,7 @@ GEM
     rake (0.9.2.2)
     ranked-model (0.1.0)
       activerecord (>= 3.0.3)
+    rb-fsevent (0.9.1)
     rdoc (3.12)
       json (~> 1.4)
     rest-client (1.6.7)
@@ -215,6 +216,7 @@ DEPENDENCIES
   pg
   rails
   ranked-model
+  rb-fsevent
   rspec-mocks
   rspec-rails
   sass-rails

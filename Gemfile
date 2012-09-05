@@ -57,6 +57,7 @@ group :test do
 	gem 'factory_girl'
 	gem 'factory_girl_rails'
 	gem 'spork-rails'
+	gem 'rb-fsevent'
 
 	# Using edge spork solely to get the -q (quiet) option so that
 	# we can pass :quiet => true to guard 'spork'.  Before this,
