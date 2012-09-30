@@ -6,7 +6,7 @@ module ApplicationHelper
   end
 
   def link_to_my_account_or_to_register
-    if current_user.present?
+    if show_my_account_anchor?
       path = user_path id: current_user.id, year: current_user.year
       link_to "My Account", path
     elsif @year.registration_phase == "open"

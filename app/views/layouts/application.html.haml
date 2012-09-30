@@ -34,7 +34,7 @@
     .nav-container
       .nav
         %ul#nav-list-main
-          - if current_user.present? || @year.registration_phase == "open"
+          - if show_my_account_anchor? || @year.registration_phase == "open"
             %li#nav-registration= link_to_my_account_or_to_register
           %li
             - if current_user.nil?

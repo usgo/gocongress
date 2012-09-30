@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
   helper_method :current_user_is_admin?, :page_title,
-    :can_see_admin_menu?
+    :can_see_admin_menu?, :show_my_account_anchor?
 
   # set_year_from_params() should run first because it
   # defines @year which other methods depend on.
@@ -141,6 +141,10 @@ private
 
   def can_see_admin_menu?
     can?(:see_admin_menu, :layout) && current_user.year == @year.year
+  end
+
+  def show_my_account_anchor?
+    current_user.present? && current_user.year == @year.year
   end
 
 end
