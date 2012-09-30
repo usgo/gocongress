@@ -35,11 +35,7 @@
       .nav
         %ul#nav-list-main
           - if current_user.present? || @year.registration_phase == "open"
-            %li#nav-registration
-              - if current_user.present?
-                = link_to_my_account
-              - elsif @year.registration_phase == "open"
-                = link_to "Start Here", new_user_registration_path
+            %li#nav-registration= link_to_my_account_or_to_register
           %li
             - if current_user.nil?
               = link_to "Sign In", new_user_session_path
