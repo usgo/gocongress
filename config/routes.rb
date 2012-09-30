@@ -92,7 +92,9 @@ Gocongress::Application.routes.draw do
           end
         end
 
-        # defunct?
+        # This route provides `year_path`, so it's not defunct,
+        # but perhaps it can be combined with the other `root`
+        # at the top of the file?
         root :to => 'home#index', :as => :year, :via => :get
 
       end # end constraint
