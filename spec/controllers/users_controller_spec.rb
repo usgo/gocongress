@@ -43,6 +43,58 @@ describe UsersController do
     end
   end
 
+  describe "#show" do
+    let(:user) { FactoryGirl.create :user, year: 2012 }
+
+    def show id, year
+      get :show, {id: id, year: year}
+      response
+    end
+
+    context "as a visitor" do
+      it "is forbidden" do
+        show(user.id, user.year).should be_forbidden
+      end
+    end
+
+    context "as a user" do
+      render_views # rendering in a single context is sufficient
+      it "the same user succeeds" do
+        sign_in user
+        show(user.id, user.year).should be_successful
+      end
+      it "a different user from the same year is forbidden" do
+        sign_in FactoryGirl.create :user, year: user.year
+        show(user.id, user.year).should be_forbidden
+      end
+    end
+
+    context "as someone from the same year" do
+      it "admin succeeds" do
+        sign_in FactoryGirl.create :admin, year: user.year
+        show(user.id, user.year).should be_successful
+      end
+      it "staff succeeds" do
+        sign_in FactoryGirl.create :staff, year: user.year
+        show(user.id, user.year).should be_successful
+      end
+    end
+
+    context "as someone from the wrong year" do
+      let(:wrong_year) { user.year - 1 }
+      it "admin raises RecordNotFound" do
+        sign_in FactoryGirl.create :admin, year: wrong_year
+        expect { show(user.id, wrong_year)
+          }.to raise_error(ActiveRecord::RecordNotFound)
+      end
+      it "staff raises RecordNotFound" do
+        sign_in FactoryGirl.create :staff, year: wrong_year
+        expect { show(user.id, wrong_year)
+          }.to raise_error(ActiveRecord::RecordNotFound)
+      end
+    end
+  end
+
   context "even when the user has zero attendees" do
 
     # Nomrally, rspec-rails controller specs do not render views

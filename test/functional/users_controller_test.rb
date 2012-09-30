@@ -8,24 +8,6 @@ class UsersControllerTest < ActionController::TestCase
     @admin_user = FactoryGirl.create :admin
   end
 
-  test "admin cannot read user from different year" do
-    a = FactoryGirl.create :admin, year: 2011
-    u = FactoryGirl.create :user, year: 2012
-    sign_in a
-    assert_raise(ActiveRecord::RecordNotFound) {
-      get :show, :id => u.id, :year => a.year
-    }
-  end
-
-  test "staff cannot read user from different year" do
-    s = FactoryGirl.create :staff, year: 2011
-    u = FactoryGirl.create :user, year: 2012
-    sign_in s
-    assert_raise(ActiveRecord::RecordNotFound) {
-      get :show, :id => u.id, :year => s.year
-    }
-  end
-
   test "admin can get index" do
     sign_in @admin_user
     get :index, :year => Time.now.year
@@ -64,41 +46,6 @@ class UsersControllerTest < ActionController::TestCase
 
   test "guest cannot get index" do
     get :index, :year => Time.now.year
-    assert_response 403
-  end
-
-  test "admin can show user from same year" do
-    sign_in @admin_user
-    get :show, :id => @user.to_param, :year => Time.now.year
-    assert_response :success
-  end
-
-  test "staff can show user from same year" do
-    sign_in @staff
-    get :show, :id => @user.to_param, :year => Time.now.year
-    assert_response :success
-  end
-
-  test "guest cannot show user" do
-    get :show, :id => @user.to_param, :year => Time.now.year
-    assert_response 403
-  end
-
-  test "user can show self" do
-    sign_in @user
-    get :show, :id => @user.id, :year => Time.now.year
-    assert_response :success
-  end
-
-  test "staff can show self" do
-    sign_in @staff
-    get :show, :id => @staff.id, :year => Time.now.year
-    assert_response :success
-  end
-
-  test "user cannot show a different user" do
-    sign_in @user
-    get :show, :id => FactoryGirl.create(:user).id, :year => Time.now.year
     assert_response 403
   end
 
