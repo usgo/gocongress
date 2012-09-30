@@ -1,6 +1,12 @@
 %div{:style => "text-align:center"}
   %h2 Illegal Move
-  %p= @deny_message
+  %p
+    = @deny_message
+    - if @wrong_year && current_user.present?
+      %br
+      You're using a
+      = link_to current_user.year, year_path(current_user.year)
+      account but you're looking at the #{@year.year} site.
   = image_tag "illegal_move.gif"
   %p
     If you think this is a mistake, please

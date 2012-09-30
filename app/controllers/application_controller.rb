@@ -125,6 +125,7 @@ private
   end
 
   def render_access_denied
+    @wrong_year = current_user.present? && current_user.year != @year.year
     @deny_message = Ability.explain_denial(user_signed_in?, \
       action_name.to_sym, controller_name)
     render 'home/access_denied', :status => :forbidden
