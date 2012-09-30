@@ -5,6 +5,11 @@ module ApplicationHelper
     signed_in?(nil)
   end
 
+  def link_to_my_account
+    path = user_path id: current_user.id, year: current_user.year
+    link_to "My Account", path
+  end
+
   def disabled_checkbox
     '<input type="checkbox" disabled="disabled" />'.html_safe
   end
