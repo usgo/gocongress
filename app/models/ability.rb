@@ -52,4 +52,14 @@ class Ability
     can :show, ActivityCategory
     can :show, Plan, :disabled => false
   end
+
+  # `explain_denial` provides a friendly "access denied" message
+  def self.explain_denial authenticated, human_action_name, controller_name
+    msg = authenticated ? 'You are signed in, but' : 'You are not signed in, so of course'
+    msg += ' you do not have permission to '
+    msg += human_action_name.downcase + ' ' + controller_name
+    msg += ' (or perhaps just this particular ' + controller_name.singularize + ').'
+    return msg
+  end
+
 end
