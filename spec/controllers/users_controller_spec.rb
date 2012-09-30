@@ -45,19 +45,20 @@ describe UsersController do
 
   describe "#show" do
     let(:user) { FactoryGirl.create :user, year: 2012 }
+    let(:wrong_year) { user.year - 1 }
 
     def show id, year
       get :show, {id: id, year: year}
       response
     end
 
-    context "as a visitor" do
+    context "as visitor" do
       it "is forbidden" do
         show(user.id, user.year).should be_forbidden
       end
     end
 
-    context "as a user" do
+    context "as user" do
       render_views # rendering in a single context is sufficient
       it "the same user succeeds" do
         sign_in user
@@ -69,26 +70,25 @@ describe UsersController do
       end
     end
 
-    context "as someone from the same year" do
-      it "admin succeeds" do
-        sign_in FactoryGirl.create :admin, year: user.year
-        show(user.id, user.year).should be_successful
-      end
-      it "staff succeeds" do
+    context "as staff" do
+      it "succeeds" do
         sign_in FactoryGirl.create :staff, year: user.year
         show(user.id, user.year).should be_successful
       end
-    end
-
-    context "as someone from the wrong year" do
-      let(:wrong_year) { user.year - 1 }
-      it "admin raises RecordNotFound" do
-        sign_in FactoryGirl.create :admin, year: wrong_year
+      it "from wrong year raises RecordNotFound" do
+        sign_in FactoryGirl.create :staff, year: wrong_year
         expect { show(user.id, wrong_year)
           }.to raise_error(ActiveRecord::RecordNotFound)
       end
-      it "staff raises RecordNotFound" do
-        sign_in FactoryGirl.create :staff, year: wrong_year
+    end
+
+    context "as admin" do
+      it "succeeds" do
+        sign_in FactoryGirl.create :admin, year: user.year
+        show(user.id, user.year).should be_successful
+      end
+      it "from wrong year raises RecordNotFound" do
+        sign_in FactoryGirl.create :admin, year: wrong_year
         expect { show(user.id, wrong_year)
           }.to raise_error(ActiveRecord::RecordNotFound)
       end
