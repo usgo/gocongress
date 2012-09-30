@@ -64,6 +64,11 @@ describe UsersController do
         sign_in user
         show(user.id, user.year).should be_successful
       end
+      it "the same user in the wrong year raises RecordNotFound" do
+        sign_in user
+        expect { show(user.id, wrong_year)
+          }.to raise_error(ActiveRecord::RecordNotFound)
+      end
       it "a different user from the same year is forbidden" do
         sign_in FactoryGirl.create :user, year: user.year
         show(user.id, user.year).should be_forbidden
