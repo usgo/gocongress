@@ -54,12 +54,21 @@ class Ability
   end
 
   # `explain_denial` provides a friendly "access denied" message
-  def self.explain_denial authenticated, human_action_name, controller_name
-    msg = authenticated ? 'You are signed in, but' : 'You are not signed in, so of course'
-    msg += ' you do not have permission to '
-    msg += human_action_name.downcase + ' ' + controller_name
-    msg += ' (or perhaps just this particular ' + controller_name.singularize + ').'
-    return msg
+  def self.explain_denial authenticated, action, plural_model
+    (authenticated ? 'You are signed in, but' : 'You are not signed in, so of course') +
+    ' you do not have permission to ' + explain_action(action) + ' ' +
+    singularize_if(plural_model, [:destroy, :show].include?(action)) + '.'
+  end
+
+  private
+
+  def self.explain_action act
+    explanations = {destroy: 'delete this', index: 'list', show: 'see this'}
+    return explanations[act.to_sym] || act.to_s
+  end
+
+  def self.singularize_if plural, bool
+    bool ? plural.singularize : plural
   end
 
 end

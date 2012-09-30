@@ -126,7 +126,7 @@ private
 
   def render_access_denied
     @deny_message = Ability.explain_denial(user_signed_in?, \
-      human_action_name, controller_name)
+      action_name.to_sym, controller_name)
     render 'home/access_denied', :status => :forbidden
   end
 
