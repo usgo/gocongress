@@ -24,6 +24,12 @@ Contribute
 1. `bundle exec rake` will run all specs and tests.  if they
    all pass, you're good to go
 
+Email
+------
+
+Email is managed through google apps.  jared.beck@usgo.org has
+access to manage accounts.
+
 Thanks
 ------
 
