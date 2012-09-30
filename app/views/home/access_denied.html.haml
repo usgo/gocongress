@@ -1,9 +1,7 @@
 %div{:style => "text-align:center"}
   %h2 Illegal Move
-  %p
-    = @deny_message
-    %br
-    If you think this is a mistake, we want to know!  Please
-    = link_to 'contact us', contacts_path
-    and we will correct it.
+  %p= @deny_message
   = image_tag "illegal_move.gif"
+  %p
+    If you think this is a mistake, please
+    = link_to 'contact us.', contacts_path
