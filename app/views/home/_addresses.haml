@@ -1,0 +1,9 @@
+/ Virtual and physical addresses
+#below-gallery
+  - if @year.twitter_url.present?
+    %a.float-left{:href => @year.twitter_url}
+      = image_tag "logo/social/twitter.jpg"
+  - if @year.facebook_url.present?
+    %a.float-left{:href => @year.facebook_url}
+      = image_tag "logo/social/facebook.jpg"
+  = render 'venue_address'

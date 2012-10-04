@@ -1,0 +1,35 @@
+.curvy-text-container
+  - logo_class = @year.circular_logo? ? 'circular-logo' : 'rectangular-logo'
+  = image_tag "logo/usgc/#{@year.year}.png", :id => 'usgc-logo', :class => logo_class
+  - if @year.circular_logo?
+    .curvy-spacer{:style => "width: 115px;"} &nbsp;
+    .curvy-spacer{:style => "width: 125px;"} &nbsp;
+    .curvy-spacer{:style => "width: 140px;"} &nbsp;
+    .curvy-spacer{:style => "width: 150px;"} &nbsp;
+    .curvy-spacer{:style => "width: 160px;"} &nbsp;
+    .curvy-spacer{:style => "width: 165px;"} &nbsp;
+    .curvy-spacer{:style => "width: 170px;"} &nbsp;
+    .curvy-spacer{:style => "width: 170px;"} &nbsp;
+    .curvy-spacer{:style => "width: 170px;"} &nbsp;
+    .curvy-spacer{:style => "width: 170px;"} &nbsp;
+    .curvy-spacer{:style => "width: 165px;"} &nbsp;
+    .curvy-spacer{:style => "width: 155px;"} &nbsp;
+    .curvy-spacer{:style => "width: 150px;"} &nbsp;
+    .curvy-spacer{:style => "width: 125px;"} &nbsp;
+    .curvy-spacer{:style => "width: 105px;"} &nbsp;
+    .curvy-spacer{:style => "width: 70px;"} &nbsp;
+
+  %h2
+    Join us for the
+    = @year.ordinal_number.ordinalize
+    Annual US Go Congress
+  %p
+    The US Go Congress is the largest Go activity in the United States. It
+    happens once a year and spans one week. Events include the US Open, the
+    largest annual Go tournament in the US, professional lectures and game
+    analysis, continuous self paired games, and all kinds of Go related
+    activities from morning to midnight. Come for the Go, come for the
+    camaraderie of old friends, come for the relaxing mountain air. Whatever
+    your reason, we are looking forward to seeing you there.
+
+  %div{:style => "clear:left;"}
