@@ -9,7 +9,22 @@
 
     /* Curving the text around the logo */
     .curvy-text-container { padding-top: 10px; position: relative; }
-    .curvy-text-container #usgc-logo { position: absolute; left: -140px; top: 10px; width: 300px; }
+    .curvy-text-container #usgc-logo {
+      &.circular-logo {
+        position: absolute;
+        left: -140px;
+        top: 10px;
+        width: 300px;
+      }
+      &.rectangular-logo {
+        float: left;
+        left: auto;
+        padding: 8px 21px;
+        position: static;
+        top: auto;
+        width: auto;
+      }
+    }
     .curvy-text-container .curvy-spacer { clear: left; float: left; height: 19px; }
     .curvy-text-container p { padding: 0.5em; text-align: justify; }
 

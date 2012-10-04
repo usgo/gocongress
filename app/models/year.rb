@@ -26,6 +26,10 @@ class Year < ActiveRecord::Base
 
   validates :twitter_url, :format => { :allow_blank => true, :with => /^https:\/{2}twitter.com/ }
 
+  def circular_logo?
+    year != 2013 # they have a rectangular logo
+  end
+
   def facebook_url
     if year == 2012
       "https://www.facebook.com/pages/2012-US-Go-Congress/278646688879639"
