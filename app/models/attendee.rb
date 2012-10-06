@@ -26,7 +26,7 @@ class Attendee < ActiveRecord::Base
     :family_name, :given_name, :gender,
     :guardian_full_name, :phone, :special_request,
     :rank, :roomate_request, :tshirt_size,
-    :understand_minor
+    :understand_minor, :user_id
 
   # Constants
   # ---------

@@ -132,16 +132,9 @@ class AttendeesController < ApplicationController
   end
 
   def create
-
-    # For which user are we creating this attendee?
-    params[:attendee][:user_id] ||= current_user.id
-    target_user = User.find(params[:attendee][:user_id])
-
-    # Assign protected attributes then authorize
-    @attendee.user_id = target_user.id
-    @attendee.is_primary = (target_user.attendees.count == 0)
+    @attendee.user_id ||= current_user.id
+    @attendee.is_primary = @attendee.user.attendees.count == 0
     authorize! :create, @attendee
-    params[:attendee].delete :user_id # avoid mass-assign. warning
 
     if @attendee.save
       reg_proc = RegistrationProcess.new @attendee
