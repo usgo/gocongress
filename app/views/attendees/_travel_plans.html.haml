@@ -1,4 +1,4 @@
-%h3 Are you flying to / from #{@year.nearby_airport_city}?
+%h3 Flying to / from #{@year.nearby_airport_city}?
 
 %p
   If you want help connecting with the airport shuttle bus, please
@@ -6,8 +6,9 @@
   - if @year.year == 2012
     read the
     = link_to 'airport shuttle instructions', '#', :id => 'open_dialog_airport_shuttle'
+    and
 
-  and fill out the fields below:
+  fill out the fields below:
 
 %fieldset
   .field
