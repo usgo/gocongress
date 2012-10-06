@@ -144,20 +144,16 @@ class AttendeesControllerTest < ActionController::TestCase
     assert_not_equal name_before, target_attendee.family_name
   end
 
-  %w[basics].each do |page|
-    define_method "test_user_can_get_#{page}" do
-      sign_in @user
-      get :edit, :id => @user.attendees.sample.id, :page => page, :year => @year
-      view_name = @controller.send( :get_view_name_from_page, page )
-      assert_response :success
-      assert_template view_name
-    end
+  test "user can edit own attendees" do
+    sign_in @user
+    get :edit, :id => @user.attendees.sample.id, :page => 'basics', :year => @year
+    assert_response :success
+    assert_template 'edit'
+  end
 
-    define_method "test_vistor_cannot_get_#{page}" do
-      get :edit, :id => @admin.attendees.sample.id, :page => page, :year => @year
-      view_name = @controller.send( :get_view_name_from_page, page )
-      assert_response 403
-    end
+  test "visitor cannot edit attendee" do
+    get :edit, :id => @admin.attendees.sample.id, :page => 'basics', :year => @year
+    assert_response 403
   end
 
   test "non-admin can claim non-automatic discounts" do
