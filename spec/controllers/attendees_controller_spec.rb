@@ -116,23 +116,20 @@ describe AttendeesController do
       it "updates valid airport datetimes" do
         d = "#{attendee.year}-01-01"
         put_update datetime_attrs(d, "8:00 PM")
-        attendee.reload
-        attendee.airport_arrival.should be_present
+        attendee.reload.airport_arrival.should be_present
         attendee.airport_arrival.strftime("%Y-%m-%d %H:%M").should == "#{d} 20:00"
       end
 
       it "does not update invalid airport date" do
         put_update datetime_attrs("1/1/#{attendee.year}", "8:00 PM")
-        attendee.reload
-        attendee.airport_arrival.should be_nil
+        attendee.reload.airport_arrival.should be_nil
         assigns(:attendee).errors[:base].should_not be_empty
       end
 
       it "does not update invalid airport time" do
         valid_date = "#{attendee.year}-01-01"
         put_update datetime_attrs(valid_date, "7:77 PM")
-        attendee.reload
-        attendee.airport_arrival.should be_nil
+        attendee.reload.airport_arrival.should be_nil
         assigns(:attendee).errors[:base].should_not be_empty
       end
 
