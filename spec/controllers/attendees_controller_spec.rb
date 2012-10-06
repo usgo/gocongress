@@ -104,6 +104,14 @@ describe AttendeesController do
           year: attendee.year
       end
 
+      it "updates a trivial field" do
+        expect {
+          put :update, :attendee => {given_name: 'banana'},
+            :id => attendee.id, :page => 'basics',
+            :year => attendee.year
+        }.to change { attendee.reload.given_name }
+      end
+
       it "updates valid airport datetimes" do
         d = "#{attendee.year}-01-01"
         put_update d, "8:00 PM"
@@ -126,6 +134,13 @@ describe AttendeesController do
         attendee.airport_arrival.should be_nil
         assigns(:attendee).errors[:base].should_not be_empty
       end
+
+      it "does not update admin fields" do
+        put :update, :attendee => {comment: 'banana'},
+          :id => attendee.id, :page => 'basics', :year => attendee.year
+        response.should be_forbidden
+      end
+
     end
   end
 end

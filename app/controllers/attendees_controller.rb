@@ -180,15 +180,10 @@ class AttendeesController < ApplicationController
       # Assign airport_arrival and airport_departure attributes, if possible
       extra_errors.concat parse_airport_datetimes
 
-    elsif @page == 'admin'
-
-      # certain fields may only be set by admins
-      # most of those fields are shown on the 'admin' page
-      render_access_denied and return unless current_user.is_admin?
-
-      # admin-only fields
+      # Admin fields
       [:comment, :minor_agreement_received].each do |p|
         if (!params[:attendee][p].nil?)
+          render_access_denied and return unless current_user.is_admin?
           @attendee[p] = params[:attendee][p]
           params[:attendee].delete p
         end

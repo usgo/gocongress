@@ -160,19 +160,6 @@ class AttendeesControllerTest < ActionController::TestCase
     end
   end
 
-  test "non-admin cannot get admin page of edit form" do
-    sign_in @user
-    get :edit, :page => :admin, :id => @user.attendees.sample.id, :year => @year
-    assert_response 403
-  end
-
-  test "non-admin cannot update the admin page" do
-    sign_in @user
-    a = @user.attendees.first
-    put :update, :id => a.id, :attendee => a.attributes, :page => 'admin', :year => @year
-    assert_response 403
-  end
-
   test "non-admin can claim non-automatic discounts" do
     sign_in @user
     a = @user.attendees.sample
