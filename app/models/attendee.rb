@@ -3,6 +3,9 @@ require "invoice_item"
 class Attendee < ActiveRecord::Base
   include YearlyModel
 
+  # Associations
+  # ------------
+
   belongs_to :user
 
   has_many :attendee_plans, :dependent => :destroy
@@ -15,6 +18,8 @@ class Attendee < ActiveRecord::Base
   has_many :activities, :through => :attendee_activities
 
   # Mass assignment config
+  # ----------------------
+
   attr_accessible :aga_id, :anonymous,
     :airport_arrival, :airport_arrival_flight, :airport_departure,
     :birth_date, :congresses_attended, :country, :email,
@@ -22,6 +27,9 @@ class Attendee < ActiveRecord::Base
     :guardian_full_name, :phone, :special_request,
     :rank, :roomate_request, :tshirt_size,
     :understand_minor
+
+  # Constants
+  # ---------
 
   # Define constant array of integer ranks and corresponding rank names
   # The highest official amateur dan rank in the AGA is 7 dan
