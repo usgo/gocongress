@@ -194,15 +194,6 @@ class AttendeesController < ApplicationController
         end
       end
 
-      # Invitational tournaments
-      @attendee.tournaments.delete( @attendee.tournaments.where(:openness=>'I') )
-      params[:attendee][:tournament_id_list] ||= Array.new
-      params[:attendee][:tournament_id_list].each do |tid|
-        t = Tournament.where("openness = ?", 'I').find(tid)
-        @attendee.tournaments << t if t.present?
-      end
-      params[:attendee].delete :tournament_id_list
-
     elsif @page == 'events'
 
       # Persist the selected events in the session
