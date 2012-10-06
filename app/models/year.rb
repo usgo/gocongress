@@ -1,12 +1,15 @@
 class Year < ActiveRecord::Base
 
+  REG_PHASES = %w[closed open complete]
+
   # Mass Assignment Security
   # ------------------------
 
   attr_accessible :city, :date_range, :day_off_date,
-    :ordinal_number, :reply_to_email, :start_date, :state,
-    :timezone, :twitter_url, :venue_name, :venue_address,
-    :venue_city, :venue_state, :venue_zip, :venue_url, :venue_phone
+    :ordinal_number, :registration_phase, :reply_to_email,
+    :start_date, :state, :timezone, :twitter_url, :venue_name,
+    :venue_address, :venue_city, :venue_state, :venue_zip,
+    :venue_url, :venue_phone
 
   # Validations
   # -----------

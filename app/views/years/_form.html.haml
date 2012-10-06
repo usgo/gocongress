@@ -69,7 +69,7 @@
       = f.text_field :twitter_url
     .field
       = f.label :registration_phase
-      = @year.registration_phase.capitalize
+      = f.select :registration_phase, @reg_phase_opts
 
   %fieldset
     .field
