@@ -93,43 +93,38 @@ describe AttendeesController do
 
     describe "#update" do
 
-      describe "events page" do
-        let(:event) { FactoryGirl.create :event }
+      def put_update arpt_date, arpt_time
+        put :update,
+          attendee: {
+            :airport_arrival_date => arpt_date,
+            :airport_arrival_time => arpt_time
+          },
+          id: attendee.id,
+          page: 'basics',
+          year: attendee.year
+      end
 
-        def submit_events_page arpt_date, arpt_time
-          put :update,
-            attendee: {
-              :airport_arrival_date => arpt_date,
-              :airport_arrival_time => arpt_time
-            },
-            event_ids: [event.id],
-            id: attendee.id,
-            page: 'events',
-            year: attendee.year
-        end
+      it "updates valid airport datetimes" do
+        d = "#{attendee.year}-01-01"
+        put_update d, "8:00 PM"
+        attendee.reload
+        attendee.airport_arrival.should be_present
+        attendee.airport_arrival.strftime("%Y-%m-%d %H:%M").should == "#{d} 20:00"
+      end
 
-        it "updates valid airport datetimes" do
-          d = "#{attendee.year}-01-01"
-          submit_events_page d, "8:00 PM"
-          attendee.reload
-          attendee.airport_arrival.should be_present
-          attendee.airport_arrival.strftime("%Y-%m-%d %H:%M").should == "#{d} 20:00"
-        end
+      it "does not update invalid airport date" do
+        put_update "1/1/#{attendee.year}", "8:00 PM"
+        attendee.reload
+        attendee.airport_arrival.should be_nil
+        assigns(:attendee).errors[:base].should_not be_empty
+      end
 
-        it "does not update invalid airport date" do
-          submit_events_page "1/1/#{attendee.year}", "8:00 PM"
-          attendee.reload
-          attendee.airport_arrival.should be_nil
-          assigns(:attendee).errors[:base].should_not be_empty
-        end
-
-        it "does not update invalid airport time" do
-          valid_date = "#{attendee.year}-01-01"
-          submit_events_page valid_date, "7:77 PM"
-          attendee.reload
-          attendee.airport_arrival.should be_nil
-          assigns(:attendee).errors[:base].should_not be_empty
-        end
+      it "does not update invalid airport time" do
+        valid_date = "#{attendee.year}-01-01"
+        put_update valid_date, "7:77 PM"
+        attendee.reload
+        attendee.airport_arrival.should be_nil
+        assigns(:attendee).errors[:base].should_not be_empty
       end
     end
   end

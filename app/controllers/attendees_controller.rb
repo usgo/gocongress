@@ -175,7 +175,12 @@ class AttendeesController < ApplicationController
     # to @attendee.errors[:base] later.
     extra_errors = []
 
-    if @page == 'admin'
+    if @page == 'basics'
+
+      # Assign airport_arrival and airport_departure attributes, if possible
+      extra_errors.concat parse_airport_datetimes
+
+    elsif @page == 'admin'
 
       # certain fields may only be set by admins
       # most of those fields are shown on the 'admin' page
@@ -208,9 +213,6 @@ class AttendeesController < ApplicationController
         session[:events_of_interest] = params[:event_ids]
         raise ArgumentError unless session[:events_of_interest].respond_to? :each
       end
-
-      # Assign airport_arrival and airport_departure attributes, if possible
-      extra_errors.concat parse_airport_datetimes
 
     elsif (@page == 'wishes')
 
@@ -280,8 +282,8 @@ class AttendeesController < ApplicationController
 
 protected
 
-  def init_multipage( page )
-    if page == "events"
+  def init_multipage page
+    if page == "basics"
       arrival = @attendee.airport_arrival
       @airport_arrival_date = arrival.present? ? arrival.to_date : nil
       @airport_arrival_time = arrival.present? ? arrival.to_s(:american).strip : nil
