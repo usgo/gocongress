@@ -371,11 +371,6 @@ class Attendee < ActiveRecord::Base
     return tshirt_size_name
   end
 
-  def get_notes_for_tournament(tid)
-    at = self.attendee_tournaments.find_by_tournament_id(tid)
-    at.present? ? at.notes : ''
-  end
-
 private
 
   # Minors are required to have a guardian.  To safely invoke
