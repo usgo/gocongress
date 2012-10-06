@@ -24,20 +24,14 @@ class RegistrationProcess
     # appropriate plan category, if there is one.
     if current_page.to_s == "events"
       cat = PlanCategory.first_reg_form_category(@attendee.year, @attendee, events_of_interest)
-      return cat.present? ? path_to_edit_plans_in_category(cat) : page_path(:wishes)
-    end
-
-    # Coming from the wishes page (special request, roomate request,
-    # and discounts) go to the final page, aka. terminus
-    if current_page.to_s == "wishes"
-      return page_path(:terminus)
+      return cat.present? ? path_to_edit_plans_in_category(cat) : page_path(:terminus)
     end
 
     # If we're coming from one plan category, go to the next.
-    # If this is the last category, go to :wishes.
+    # If this is the last category, go to the final page, aka. terminus
     if plan_category.present?
       cat = plan_category.next_reg_form_category(@attendee, events_of_interest)
-      return cat.present? ? path_to_edit_plans_in_category(cat) : page_path(:wishes)
+      return cat.present? ? path_to_edit_plans_in_category(cat) : page_path(:terminus)
     end
 
     # By default, return to the "My Account" page

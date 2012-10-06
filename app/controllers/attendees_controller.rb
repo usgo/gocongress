@@ -265,6 +265,8 @@ protected
 
   def init_multipage page
     if page == "basics"
+
+      # for _travel_plans
       arrival = @attendee.airport_arrival
       @airport_arrival_date = arrival.present? ? arrival.to_date : nil
       @airport_arrival_time = arrival.present? ? arrival.to_s(:american).strip : nil
@@ -273,7 +275,8 @@ protected
       @airport_departure_date = departure.present? ? departure.to_date : nil
       @airport_departure_time = departure.present? ? departure.to_s(:american).strip : nil
       @airport_departure_date_rfc822 = departure.present? ? departure.to_date.to_s(:rfc822) : @year.peak_departure_date.to_s(:rfc822)
-    elsif page == "wishes"
+
+      # for _wishes
       @discounts = Discount.yr(@year).automatic(false)
       @attendee_discount_ids = @attendee.discounts.automatic(false).map { |d| d.id }
     elsif page == "activities"

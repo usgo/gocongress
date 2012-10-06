@@ -144,7 +144,7 @@ class AttendeesControllerTest < ActionController::TestCase
     assert_not_equal name_before, target_attendee.family_name
   end
 
-  %w[basics wishes].each do |page|
+  %w[basics].each do |page|
     define_method "test_user_can_get_#{page}" do
       sign_in @user
       get :edit, :id => @user.attendees.sample.id, :page => page, :year => @year

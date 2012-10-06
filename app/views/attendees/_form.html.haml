@@ -12,6 +12,7 @@
   = render :partial => "travel_plans", :locals => { :f => f }
   - if current_user.admin?
     = render :partial => "admin_info", :locals => { :f => f }
+  = render :partial => 'wishes', :locals => { :f => f }
 
   %fieldset
     .field

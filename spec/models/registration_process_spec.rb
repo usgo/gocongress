@@ -28,17 +28,10 @@ describe "RegistrationProcess#next_page" do
     end
 
     context "without an appropriate plan category" do
-      it "returns the path to the wishes page" do
+      it "returns the path to the terminus" do
         subject.next_page(:events, nil, events_of_interest).should ==
-          edit_attendee_path(attendee.year, attendee, :wishes)
+          edit_attendee_path(attendee.year, attendee, :terminus)
       end
-    end
-  end
-
-  context "after finishing the wishes page" do
-    it "returns the path to the terminus page" do
-      subject.next_page(:wishes, nil, nil).should ==
-        edit_attendee_path(attendee.year, attendee, :terminus)
     end
   end
 
@@ -47,9 +40,9 @@ describe "RegistrationProcess#next_page" do
     let!(:plan_a1) { FactoryGirl.create :plan, plan_category: plan_category_a }
 
     context "without an appropriate next plan category" do
-      it "returns the path to the wishes page" do
+      it "returns the path to the terminus" do
         subject.next_page(nil, plan_category_a, events_of_interest).should ==
-          edit_attendee_path(attendee.year, attendee, :wishes)
+          edit_attendee_path(attendee.year, attendee, :terminus)
       end
     end
 
