@@ -93,35 +93,36 @@ describe AttendeesController do
 
     describe "#update" do
 
-      def put_update arpt_date, arpt_time
+      def put_update attendee_attrs
         put :update,
-          attendee: {
-            :airport_arrival_date => arpt_date,
-            :airport_arrival_time => arpt_time
-          },
+          attendee: attendee_attrs,
           id: attendee.id,
           page: 'basics',
           year: attendee.year
       end
 
+      def datetime_attrs arpt_date, arpt_time
+        {
+          :airport_arrival_date => arpt_date,
+          :airport_arrival_time => arpt_time
+        }
+      end
+
       it "updates a trivial field" do
-        expect {
-          put :update, :attendee => {given_name: 'banana'},
-            :id => attendee.id, :page => 'basics',
-            :year => attendee.year
-        }.to change { attendee.reload.given_name }
+        expect { put_update :given_name => 'banana'
+          }.to change { attendee.reload.given_name }
       end
 
       it "updates valid airport datetimes" do
         d = "#{attendee.year}-01-01"
-        put_update d, "8:00 PM"
+        put_update datetime_attrs(d, "8:00 PM")
         attendee.reload
         attendee.airport_arrival.should be_present
         attendee.airport_arrival.strftime("%Y-%m-%d %H:%M").should == "#{d} 20:00"
       end
 
       it "does not update invalid airport date" do
-        put_update "1/1/#{attendee.year}", "8:00 PM"
+        put_update datetime_attrs("1/1/#{attendee.year}", "8:00 PM")
         attendee.reload
         attendee.airport_arrival.should be_nil
         assigns(:attendee).errors[:base].should_not be_empty
@@ -129,15 +130,14 @@ describe AttendeesController do
 
       it "does not update invalid airport time" do
         valid_date = "#{attendee.year}-01-01"
-        put_update valid_date, "7:77 PM"
+        put_update datetime_attrs(valid_date, "7:77 PM")
         attendee.reload
         attendee.airport_arrival.should be_nil
         assigns(:attendee).errors[:base].should_not be_empty
       end
 
       it "does not update admin fields" do
-        put :update, :attendee => {comment: 'banana'},
-          :id => attendee.id, :page => 'basics', :year => attendee.year
+        put_update :comment => 'banana'
         response.should be_forbidden
       end
 
