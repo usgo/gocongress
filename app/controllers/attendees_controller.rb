@@ -129,6 +129,8 @@ class AttendeesController < ApplicationController
         @attendee[f] = target_user.primary_attendee[f]
       end
     end
+
+    expose_attendee_number_for @attendee
   end
 
   def create
@@ -140,6 +142,7 @@ class AttendeesController < ApplicationController
       reg_proc = RegistrationProcess.new @attendee
       redirect_to reg_proc.next_page(:basics, nil, [])
     else
+      expose_attendee_number_for @attendee
       init_multipage("basics")
       render :action => "new"
     end
@@ -344,7 +347,11 @@ protected
     render_access_denied unless allow
   end
 
-private
+  private
+
+  def expose_attendee_number_for attendee
+    @attendee_number = attendee.user.attendees.count + 1
+  end
 
   def parse_airport_datetimes
     parse_errors = []

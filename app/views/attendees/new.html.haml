@@ -1,6 +1,5 @@
-- if current_user.primary_attendee.present?
-  %h2 Register Another Attendee
-- else
-  %h2 Registration
-
+%h2
+  Add
+  = @attendee_number.ordinalize
+  = Attendee.model_name.humanize
 = render 'form'
