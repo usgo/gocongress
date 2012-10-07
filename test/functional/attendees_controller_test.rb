@@ -16,24 +16,6 @@ class AttendeesControllerTest < ActionController::TestCase
     @year = Time.now.year
   end
 
-  test "visitor can get index" do
-    get :index, :year => @year
-    assert_response :success
-  end
-
-  test "visitor cannot get new form" do
-    get :new, :year => @year
-    assert_response 403
-  end
-
-  test "visitor cannot create attendee" do
-    a = FactoryGirl.attributes_for(:attendee)
-    assert_no_difference('Attendee.count', 0) do
-      post :create, :attendee => a, :year => @year
-    end
-    assert_response 403
-  end
-
   test "user cannot create attendee under a different user" do
     sign_in @user
     a = FactoryGirl.attributes_for(:attendee)

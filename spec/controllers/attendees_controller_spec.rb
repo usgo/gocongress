@@ -8,12 +8,17 @@ describe AttendeesController do
         attrs = FactoryGirl.attributes_for :attendee
         expect { post :create, attendee: attrs, year: attrs[:year]
           }.to_not change{ Attendee.count }
-        response.status.should == 403
+        response.should be_forbidden
       end
     end
 
     describe "#index" do
       render_views
+
+      it "succeeds" do
+        get :index, :year => Time.now.year
+        response.should be_successful
+      end
 
       it "lists attendees with at least one plan" do
         p = FactoryGirl.create :plan
@@ -23,6 +28,13 @@ describe AttendeesController do
         response.should be_successful
         assigns(:attendees).should include(a)
         assigns(:attendees).should_not include(a2)
+      end
+    end
+
+    describe "#new" do
+      it "is forbidden" do
+        get :new, :year => Time.now.year
+        response.should be_forbidden
       end
     end
   end
