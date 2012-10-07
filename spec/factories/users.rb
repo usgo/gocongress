@@ -1,7 +1,9 @@
 FactoryGirl.define do
 
+  sequence(:random_email) {|n| "test#{n}@example.com" }
+
   factory :user do
-    sequence(:email) { |n| "factorytest#{n}@j.singlebrook.com" }
+    email { generate(:random_email) }
     password "whocares"
     password_confirmation "whocares"
     role 'U'
