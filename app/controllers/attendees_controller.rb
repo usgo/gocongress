@@ -221,6 +221,7 @@ class AttendeesController < ApplicationController
 protected
 
   def expose_form_vars
+    raise "Attendee undefined" if @attendee.nil?
 
     # for _travel_plans
     arrival = @attendee.airport_arrival
