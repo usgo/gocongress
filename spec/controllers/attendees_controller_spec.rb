@@ -103,11 +103,21 @@ describe AttendeesController do
     end
 
     describe "#edit" do
+      it "cannot edit another user's attendee" do
+        a = FactoryGirl.create :attendee
+        get :edit, :id => a.id, :year => a.year
+        response.should be_forbidden
+      end
+
+      it "user can edit their own attendees" do
+        get :edit, :id => user.attendees.sample.id, :year => user.year
+        response.should be_successful
+        response.should render_template 'edit'
+      end
+
+      # todo: terminus is no longer an "edit page"
       context "terminus page" do
-        it "is successful" do
-          get :edit, year: attendee.year, id: attendee.id, page: :terminus
-          response.should be_success
-        end
+        it "is successful"
       end
     end
 
@@ -178,6 +188,12 @@ describe AttendeesController do
         response.should be_forbidden
       end
 
+      it "is forbidden to update another user's attendee" do
+        a = FactoryGirl.create :attendee
+        put :update, :id => a.id, :attendee => a.attributes, :year => a.year
+        response.should be_forbidden
+      end
+
       context "discounts" do
         let(:a) { user.attendees.sample }
 
@@ -233,7 +249,24 @@ describe AttendeesController do
           }.to change { Attendee.count }.by(-1)
         response.should redirect_to user_path(prim.user)
       end
+    end
 
+    describe '#edit' do
+      it 'admin can edit any attendee' do
+        a = FactoryGirl.create(:attendee, :year => admin.year)
+        get :edit, :id => a.id, :year => a.year
+        response.should be_successful
+      end
+    end
+
+    describe '#update' do
+      it 'admin can update attendee of any user' do
+        a = FactoryGirl.create(:attendee, :year => admin.year)
+        attrs = a.attributes.merge({:family_name => 'banana'})
+        expect { put :update, :id => a.id, :attendee => attrs, :year => a.year
+          }.to change { a.reload.family_name }
+        a.reload.family_name.should == 'banana'
+      end
     end
   end
 end
