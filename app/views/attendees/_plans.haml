@@ -1,0 +1,32 @@
+- mnh = Plan.model_name.human.downcase
+
+%h3= Plan.model_name.human.pluralize
+
+%p
+  Select #{noun_with_article(mnh, @plans)} by clicking on the check
+  box ( #{disabled_checkbox}
+  )#{ " or entering a quantity" if @show_quantity_instructions }.
+
+  If you have any questions, please contact the
+  = link_to 'registrar.', contacts_path
+
+- if @plans.count > 0
+  %table.semantic.fullwidth
+    %thead
+      %tr
+        %th
+        = render :partial => "plan_categories/plan_table_common_headers"
+    %tbody
+      - @plans.each do |plan|
+        %tr{:class => if plan.disabled? then "disabled" end }
+          %td.align-center
+            - qty = @attendee.get_plan_qty plan.id
+            - qty_field_name = "plan_#{plan.id}_qty"
+            - if plan.max_quantity == 1
+              = check_box_tag qty_field_name, 1, qty == 1, :title => "Select this " + mnh
+            - else
+              = number_field_tag qty_field_name, qty, :size => 2, :min => 0, :max => plan.max_quantity, :title => "Enter a quantity"
+          %td= plan.name
+          = render :partial => "plan_categories/plan_table_common_cells", :locals => { :plan => plan }
+
+= render :partial => "plan_categories/explain_availability"

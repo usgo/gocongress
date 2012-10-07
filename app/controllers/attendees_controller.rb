@@ -16,75 +16,6 @@ class AttendeesController < ApplicationController
     @plan_categories = PlanCategory.reg_form(@year, @attendee.age_in_years)
   end
 
-  def edit_plans
-    init_plans
-  end
-
-  # `update_plans` replaces attendee_plan records in this category
-  # with plans specified on the form, unless the maximum quantity
-  # is exceeded.
-  def update_plans
-    init_plans
-    params[:attendee] ||= {}
-    vldn_errs = []
-
-    # Build a new set of plans from the user's selections
-    nascent_attendee_plans = []
-    @plans.each do |p|
-      qty = params[:attendee]["plan_#{p.id}_qty"].to_i # if nil, to_i returns 0
-      if qty == 0
-
-        # Only admins can remove previously selected disabled plans
-        if p.disabled? && @attendee.has_plan?(p) && !current_user.admin?
-          vldn_errs << "It looks like you're trying to remove a
-            disabled plan (#{p.name}).  Please contact the registrar
-            for help"
-          ap_copy = @attendee.attendee_plans.where(plan_id: p.id).first.dup
-          nascent_attendee_plans << ap_copy
-        end
-
-      elsif qty > 0
-        ap = AttendeePlan.new(:attendee_id => @attendee.id, :plan_id => p.id, :quantity => qty)
-        if ap.valid?
-
-          # Only admins can add new disabled plans that weren't
-          # previously selected
-          if p.disabled? && !@attendee.has_plan?(p) && !current_user.admin?
-            vldn_errs << "One of the plans you selected (#{ap.plan.name})
-              is disabled. You cannot selected disabled plans.  In fact,
-              you shouldn't have even been able to see it.  Please contact
-              the registrar for help."
-          else
-            nascent_attendee_plans << ap
-          end
-        else
-          vldn_errs.concat ap.errors.map {|k,v| k.to_s + " " + v.to_s}
-        end
-      end
-    end
-
-    @attendee.clear_plan_category!(@plan_category.id)
-
-    unless nascent_attendee_plans.empty?
-      @attendee.attendee_plans << nascent_attendee_plans
-    end
-
-    # Mandatory plan categories require at least one plan
-    if @plan_category.mandatory? && nascent_attendee_plans.empty?
-      vldn_errs << "This is a mandatory category, so please select at
-        least one #{Plan.model_name.human.downcase}."
-    end
-
-    # if valid, go to next category or return to account
-    if vldn_errs.empty? && @attendee.save
-      reg_proc = RegistrationProcess.new @attendee
-      redirect_to reg_proc.next_page(nil, @plan_category, session[:events_of_interest])
-    else
-      @attendee.errors[:base].concat vldn_errs
-      render :edit_plans
-    end
-  end
-
   def index
     params[:direction] ||= "asc"
     @opposite_direction = (params[:direction] == 'asc') ? 'desc' : 'asc'
@@ -131,6 +62,7 @@ class AttendeesController < ApplicationController
     end
 
     expose_attendee_number_for @attendee
+    expose_form_vars
   end
 
   def create
@@ -139,8 +71,8 @@ class AttendeesController < ApplicationController
     authorize! :create, @attendee
 
     if @attendee.save
-      reg_proc = RegistrationProcess.new @attendee
-      redirect_to reg_proc.next_page(:basics, nil, [])
+      expose_form_vars
+      render 'edit' # fixme: go to terminus
     else
       expose_attendee_number_for @attendee
       expose_form_vars
@@ -149,19 +81,10 @@ class AttendeesController < ApplicationController
   end
 
   def edit
-
-    # there are too many attendee attributes to fit them all on
-    # one form page. so, I've added a param called page
-    @page = get_valid_page_from_params
-
     expose_form_vars
-
-    # Render the specific page
-    render get_view_name_from_page(@page)
   end
 
   def update
-    @page = get_valid_page_from_params
     params[:attendee] ||= {}
 
     # some extra validation errors may come up, especially with
@@ -169,71 +92,107 @@ class AttendeesController < ApplicationController
     # to @attendee.errors[:base] later.
     extra_errors = []
 
-    if @page == 'basics'
+    # Assign airport_arrival and airport_departure attributes, if possible
+    extra_errors.concat parse_airport_datetimes
 
-      # Assign airport_arrival and airport_departure attributes, if possible
-      extra_errors.concat parse_airport_datetimes
-
-      # Admin fields
-      [:comment, :minor_agreement_received].each do |p|
-        unless params[:attendee][p].nil?
-          render_access_denied and return unless current_user.is_admin?
-          @attendee[p] = params[:attendee][p]
-          params[:attendee].delete p
-        end
+    # Admin fields
+    [:comment, :minor_agreement_received].each do |p|
+      unless params[:attendee][p].nil?
+        render_access_denied and return unless current_user.is_admin?
+        @attendee[p] = params[:attendee][p]
+        params[:attendee].delete p
       end
-
-      # claimed discounts
-      params[:attendee][:discount_ids] ||= Array.new
-
-      # ignore non-integer discount ids (from unchecked boxes in the view)
-      valid_discount_ids = params[:attendee][:discount_ids].delete_if {|d| d.to_i == 0}
-
-      # assign discounts, provided they are non-automatic
-      # (only non-automatic discounts may be set by users)
-      discounts = Discount.where('is_automatic = ? and id in (?)', false, valid_discount_ids)
-      @attendee.discounts.clear
-      @attendee.discounts << discounts
-
-      # delete param to avoid attr_accessible warning
-      params[:attendee].delete :discount_ids
-
-      # Activities
-      activity_id_array = params[:attendee][:activity_id_list] || []
-      begin
-        @attendee.replace_all_activities(activity_id_array)
-      rescue DisabledActivityException
-        extra_errors << "Please do not add or remove disabled activities. Changes discarded."
-      end
-      params[:attendee].delete :activity_id_list
-
-    elsif @page == 'events'
-
-      # Persist the selected events in the session
-      params[:event_ids] ||= []
-      if params[:event_ids].empty?
-        extra_errors << "Please pick at least one event"
-      else
-        session[:events_of_interest] = params[:event_ids]
-        raise ArgumentError unless session[:events_of_interest].respond_to? :each
-      end
-
     end
 
-    params[:attendee].delete :user_id # avoid mass-assign. warning
+    # claimed discounts
+    params[:attendee][:discount_ids] ||= Array.new
+
+    # ignore non-integer discount ids (from unchecked boxes in the view)
+    valid_discount_ids = params[:attendee][:discount_ids].delete_if {|d| d.to_i == 0}
+
+    # assign discounts, provided they are non-automatic
+    # (only non-automatic discounts may be set by users)
+    discounts = Discount.where('is_automatic = ? and id in (?)', false, valid_discount_ids)
+    @attendee.discounts.clear
+    @attendee.discounts << discounts
+
+    # delete param to avoid attr_accessible warning
+    params[:attendee].delete :discount_ids
+
+    # Activities
+    activity_id_array = params[:attendee][:activity_id_list] || []
+    begin
+      @attendee.replace_all_activities(activity_id_array)
+    rescue DisabledActivityException
+      extra_errors << "Please do not add or remove disabled activities. Changes discarded."
+    end
+    params[:attendee].delete :activity_id_list
 
     # update attributes but do not save yet
     @attendee.attributes = params[:attendee]
 
+    expose_form_vars # can this be earlier?
+
+    # Begin code moved from former `update_plans`
+
+    # Build a new set of plans from the user's selections
+    nascent_attendee_plans = []
+    @plans.each do |p|
+      qty = params["plan_#{p.id}_qty"].to_i # if nil, to_i returns 0
+      if qty == 0
+
+        # Only admins can remove previously selected disabled plans
+        if p.disabled? && @attendee.has_plan?(p) && !current_user.admin?
+          extra_errors << "It looks like you're trying to remove a
+            disabled plan (#{p.name}).  Please contact the registrar
+            for help"
+          ap_copy = @attendee.attendee_plans.where(plan_id: p.id).first.dup
+          nascent_attendee_plans << ap_copy
+        end
+
+      elsif qty > 0
+        ap = AttendeePlan.new(:attendee_id => @attendee.id, :plan_id => p.id, :quantity => qty)
+        if ap.valid?
+
+          # Only admins can add new disabled plans that weren't
+          # previously selected
+          if p.disabled? && !@attendee.has_plan?(p) && !current_user.admin?
+            extra_errors << "One of the plans you selected (#{ap.plan.name})
+              is disabled. You cannot selected disabled plans.  In fact,
+              you shouldn't have even been able to see it.  Please contact
+              the registrar for help."
+          else
+            nascent_attendee_plans << ap
+          end
+        else
+          extra_errors.concat ap.errors.map {|k,v| k.to_s + " " + v.to_s}
+        end
+      end
+    end
+
+    @attendee.clear_plans!
+
+    unless nascent_attendee_plans.empty?
+      @attendee.attendee_plans << nascent_attendee_plans
+    end
+
+    # Mandatory plan categories require at least one plan
+    # if @plan_category.mandatory? && nascent_attendee_plans.empty?
+    #  extra_errors << "This is a mandatory category, so please select at
+    #    least one #{Plan.model_name.human.downcase}."
+    # end
+
+    # End code moved from former `update_plans`
+
+
     # validate
     if @attendee.valid? && extra_errors.empty?
       @attendee.save(:validate => false)
-      reg_proc = RegistrationProcess.new @attendee
-      redirect_to reg_proc.next_page(@page, nil, session[:events_of_interest]), :notice => update_success_notice(@page)
+      flash[:notice] = 'Changes saved'
+      render 'edit'  # fixme - should go to terminus
     else
-      expose_form_vars
       @attendee.errors[:base].concat extra_errors
-      render get_view_name_from_page(@page)
+      render 'edit'
     end
   end
 
@@ -280,44 +239,19 @@ protected
     # for activities
     @activities = Activity.yr(@year).order(:leave_time, :name)
     @atnd_activity_ids = @attendee.activities.map {|e| e.id}
-  end
-
-  def init_plans
-    @plan_category = PlanCategory.reg_form(@year, @attendee.age_in_years).find(params[:plan_category_id])
-    age = @attendee.age_in_years
 
     # Which plans to show?  Admins can always see disabled plans,
     # but users only see disabled plans if they had already
     # selected such a plan, eg. back when it was enabled. Regardless
     # of user level, only plans appropriate to the attendee's age
     # are shown.
-    @plans = @plan_category.plans.appropriate_for_age(age).rank :cat_order
+    @plans = Plan.yr(@year).appropriate_for_age(@attendee.age_in_years) # todo: order
     unless current_user.admin?
       @plans.delete_if {|p| p.disabled? && !@attendee.has_plan?(p)}
     end
 
     @show_availability = Plan.inventoried_plan_in? @plans
     @show_quantity_instructions = Plan.quantifiable_plan_in? @plans
-  end
-
-  def get_valid_page_from_params
-    page = params[:page].to_s.blank? ? 'basics' : params[:page].to_s
-    Attendee.assert_valid_page(page)
-    return page
-  end
-
-  def get_view_name_from_page( page )
-    Attendee.assert_valid_page(page)
-    if page == 'terminus'
-      view_name = 'terminus'
-    elsif page == 'basics'
-      view_name = 'edit'
-    elsif page == 'events'
-      view_name = 'edit_events'
-    else
-      raise "No view for page: #{page}"
-    end
-    return view_name
   end
 
   def allow_only_self_or_admin

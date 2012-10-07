@@ -136,11 +136,6 @@ class Attendee < ActiveRecord::Base
   # Class Methods
   # =============
 
-  # `assert_valid_page` is deprecated
-  def self.assert_valid_page(p)
-    raise "Invalid page: #{p}" unless Attendee.pages.include?(p.to_s)
-  end
-
   def self.attribute_names_for_csv
 
     # Lisa wants the name and email in the first few columns
@@ -166,11 +161,6 @@ class Attendee < ActiveRecord::Base
   def self.internal_attributes
     # attrs rarely useful for display
     %w[id user_id understand_minor]
-  end
-
-  # `pages` is deprecated
-  def self.pages
-    %w[basics events terminus]
   end
 
   def self.with_planlessness planlessness
@@ -225,11 +215,8 @@ class Attendee < ActiveRecord::Base
     respect_anonymity ? anonymize(name) : name
   end
 
-  def clear_plan_category!(pc_id)
-    attendee_plans
-      .joins(:plan)
-      .where('plans.plan_category_id = ?', pc_id)
-      .destroy_all
+  def clear_plans!
+    attendee_plans.destroy_all
   end
 
   def congress_start

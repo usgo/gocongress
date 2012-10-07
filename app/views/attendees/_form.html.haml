@@ -11,6 +11,7 @@
   = render :partial => "contact_info", :locals => { :f => f }
   = render :partial => "travel_plans", :locals => { :f => f }
   = render :partial => 'activities', :locals => { :f => f }
+  = render :partial => 'plans', :locals => { :f => f }
   = render :partial => 'wishes', :locals => { :f => f }
   - if current_user.admin?
     = render :partial => "admin_info", :locals => { :f => f }

@@ -13,12 +13,6 @@
 
 %ul
   %li= link_to 'Basics', edit_attendee_path(a, :basics)
-  %li= link_to 'Events', edit_attendee_path(a, :events)
-  %li
-    Costs
-    %ul
-      - @plan_categories.each do |c|
-        %li= link_to c.name, edit_plans_for_attendee_path(a, c)
 
 - if current_user.is_admin?
   %h3 Administration
