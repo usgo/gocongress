@@ -143,7 +143,7 @@ class AttendeesController < ApplicationController
       redirect_to reg_proc.next_page(:basics, nil, [])
     else
       expose_attendee_number_for @attendee
-      init_multipage("basics")
+      expose_form_vars
       render :action => "new"
     end
   end
@@ -154,8 +154,7 @@ class AttendeesController < ApplicationController
     # one form page. so, I've added a param called page
     @page = get_valid_page_from_params
 
-    # Page-specific queries
-    init_multipage(@page)
+    expose_form_vars
 
     # Render the specific page
     render get_view_name_from_page(@page)
@@ -184,19 +183,6 @@ class AttendeesController < ApplicationController
         end
       end
 
-    elsif @page == 'events'
-
-      # Persist the selected events in the session
-      params[:event_ids] ||= []
-      if params[:event_ids].empty?
-        extra_errors << "Please pick at least one event"
-      else
-        session[:events_of_interest] = params[:event_ids]
-        raise ArgumentError unless session[:events_of_interest].respond_to? :each
-      end
-
-    elsif (@page == 'wishes')
-
       # claimed discounts
       params[:attendee][:discount_ids] ||= Array.new
 
@@ -212,7 +198,7 @@ class AttendeesController < ApplicationController
       # delete param to avoid attr_accessible warning
       params[:attendee].delete :discount_ids
 
-    elsif (@page == 'activities')
+      # Activities
       activity_id_array = params[:attendee][:activity_id_list] || []
       begin
         @attendee.replace_all_activities(activity_id_array)
@@ -220,6 +206,18 @@ class AttendeesController < ApplicationController
         extra_errors << "Please do not add or remove disabled activities. Changes discarded."
       end
       params[:attendee].delete :activity_id_list
+
+    elsif @page == 'events'
+
+      # Persist the selected events in the session
+      params[:event_ids] ||= []
+      if params[:event_ids].empty?
+        extra_errors << "Please pick at least one event"
+      else
+        session[:events_of_interest] = params[:event_ids]
+        raise ArgumentError unless session[:events_of_interest].respond_to? :each
+      end
+
     end
 
     params[:attendee].delete :user_id # avoid mass-assign. warning
@@ -233,7 +231,7 @@ class AttendeesController < ApplicationController
       reg_proc = RegistrationProcess.new @attendee
       redirect_to reg_proc.next_page(@page, nil, session[:events_of_interest]), :notice => update_success_notice(@page)
     else
-      init_multipage(@page)
+      expose_form_vars
       @attendee.errors[:base].concat extra_errors
       render get_view_name_from_page(@page)
     end
@@ -263,26 +261,25 @@ class AttendeesController < ApplicationController
 
 protected
 
-  def init_multipage page
-    if page == "basics"
+  def expose_form_vars
 
-      # for _travel_plans
-      arrival = @attendee.airport_arrival
-      @airport_arrival_date = arrival.present? ? arrival.to_date : nil
-      @airport_arrival_time = arrival.present? ? arrival.to_s(:american).strip : nil
-      @airport_arrival_date_rfc822 = arrival.present? ? arrival.to_date.to_s(:rfc822) : @year.start_date.to_s(:rfc822)
-      departure = @attendee.airport_departure
-      @airport_departure_date = departure.present? ? departure.to_date : nil
-      @airport_departure_time = departure.present? ? departure.to_s(:american).strip : nil
-      @airport_departure_date_rfc822 = departure.present? ? departure.to_date.to_s(:rfc822) : @year.peak_departure_date.to_s(:rfc822)
+    # for _travel_plans
+    arrival = @attendee.airport_arrival
+    @airport_arrival_date = arrival.present? ? arrival.to_date : nil
+    @airport_arrival_time = arrival.present? ? arrival.to_s(:american).strip : nil
+    @airport_arrival_date_rfc822 = arrival.present? ? arrival.to_date.to_s(:rfc822) : @year.start_date.to_s(:rfc822)
+    departure = @attendee.airport_departure
+    @airport_departure_date = departure.present? ? departure.to_date : nil
+    @airport_departure_time = departure.present? ? departure.to_s(:american).strip : nil
+    @airport_departure_date_rfc822 = departure.present? ? departure.to_date.to_s(:rfc822) : @year.peak_departure_date.to_s(:rfc822)
 
-      # for _wishes
-      @discounts = Discount.yr(@year).automatic(false)
-      @attendee_discount_ids = @attendee.discounts.automatic(false).map { |d| d.id }
-    elsif page == "activities"
-      @activities = Activity.yr(@year).order(:leave_time, :name)
-      @atnd_activity_ids = @attendee.activities.map {|e| e.id}
-    end
+    # for _wishes
+    @discounts = Discount.yr(@year).automatic(false)
+    @attendee_discount_ids = @attendee.discounts.automatic(false).map { |d| d.id }
+
+    # for activities
+    @activities = Activity.yr(@year).order(:leave_time, :name)
+    @atnd_activity_ids = @attendee.activities.map {|e| e.id}
   end
 
   def init_plans
@@ -311,12 +308,12 @@ protected
 
   def get_view_name_from_page( page )
     Attendee.assert_valid_page(page)
-    if %w[terminus].include?(page.to_s)
-      view_name = page.to_s
-    elsif page == "basics"
-      view_name = "edit"
-    elsif %w[events activities].include? page
-      view_name = "edit_#{page}"
+    if page == 'terminus'
+      view_name = 'terminus'
+    elsif page == 'basics'
+      view_name = 'edit'
+    elsif page == 'events'
+      view_name = 'edit_events'
     else
       raise "No view for page: #{page}"
     end

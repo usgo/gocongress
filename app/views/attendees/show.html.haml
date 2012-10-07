@@ -13,18 +13,15 @@
 
 %ul
   %li= link_to 'Basics', edit_attendee_path(a, :basics)
-  %li= link_to 'Events and Travel Plans', edit_attendee_path(a, :events)
+  %li= link_to 'Events', edit_attendee_path(a, :events)
   %li
     Costs
     %ul
       - @plan_categories.each do |c|
         %li= link_to c.name, edit_plans_for_attendee_path(a, c)
-  %li= link_to 'Special Requests', edit_attendee_path(a, :wishes)
-  %li= link_to Activity.model_name.human.pluralize, edit_attendee_path(a, :activities)
 
 - if current_user.is_admin?
   %h3 Administration
   %ul
-    %li= link_to 'Admin', edit_attendee_path(a, :admin)
     %li= link_to 'Print Registration Sheet', print_summary_for_attendee_path(a)
     %li= link_to 'Print Badge', print_badge_for_attendee_path(a)

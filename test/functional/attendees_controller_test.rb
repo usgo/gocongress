@@ -170,7 +170,7 @@ class AttendeesControllerTest < ActionController::TestCase
     atn_attrs[:discount_ids] << ""
 
     assert_difference('a.discounts.count', +2) do
-      put :update, :page => 'wishes', :id => a.id, :attendee => atn_attrs, :year => @year
+      put :update, :page => 'basics', :id => a.id, :attendee => atn_attrs, :year => @year
     end
   end
 
@@ -181,7 +181,7 @@ class AttendeesControllerTest < ActionController::TestCase
     atn_attrs = {:discount_ids => []}
     atn_attrs[:discount_ids] << @discount_automatic.id
     assert_no_difference('a.discounts.count') do
-      put :update, :page => 'wishes', :id => a.id, :attendee => atn_attrs, :year => @year
+      put :update, :page => 'basics', :id => a.id, :attendee => atn_attrs, :year => @year
     end
   end
 end

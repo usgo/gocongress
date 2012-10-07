@@ -136,8 +136,7 @@ class Attendee < ActiveRecord::Base
   # Class Methods
   # =============
 
-  # TODO: This doesn't belong in the ORM model.  It belongs in the
-  # registration_process model.
+  # `assert_valid_page` is deprecated
   def self.assert_valid_page(p)
     raise "Invalid page: #{p}" unless Attendee.pages.include?(p.to_s)
   end
@@ -169,10 +168,9 @@ class Attendee < ActiveRecord::Base
     %w[id user_id understand_minor]
   end
 
-  # `pages` returns an array of page names, in no particular order.
-  # Not all pages are part of the registration process.
+  # `pages` is deprecated
   def self.pages
-    %w[admin basics events activities terminus wishes]
+    %w[basics events terminus]
   end
 
   def self.with_planlessness planlessness
