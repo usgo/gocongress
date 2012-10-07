@@ -311,7 +311,7 @@ protected
 
   def get_view_name_from_page( page )
     Attendee.assert_valid_page(page)
-    if %w[admin terminus wishes].include?(page.to_s)
+    if %w[terminus].include?(page.to_s)
       view_name = page.to_s
     elsif page == "basics"
       view_name = "edit"
