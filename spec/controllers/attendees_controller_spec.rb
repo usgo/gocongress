@@ -42,11 +42,17 @@ describe AttendeesController do
   context "as a user" do
     let!(:attendee) { FactoryGirl.create :attendee }
     let!(:user) { attendee.user }
-    before do
-      sign_in user
-    end
+    before { sign_in user }
 
     describe "#create" do
+      it "is forbidden to create attendee under a different user" do
+        user_two = FactoryGirl.create :user
+        a = FactoryGirl.attributes_for(:attendee, :user_id => user_two.id)
+        expect { post :create, :attendee => a, :year => a[:year]
+          }.not_to change { Attendee.count }
+        response.should be_forbidden
+      end
+
       it "given invalid attributes it does not create attendee" do
         attrs = FactoryGirl.attributes_for :attendee
         attrs[:gender] = "zzzz" # invalid, obviously
@@ -150,6 +156,20 @@ describe AttendeesController do
         response.should be_forbidden
       end
 
+    end
+  end
+
+  context "as an admin" do
+    let(:admin) { FactoryGirl.create :admin }
+    before { sign_in admin }
+
+    describe "#create" do
+      it "succeeds, creating attendee under any user" do
+        u = FactoryGirl.create :user
+        a = FactoryGirl.attributes_for(:attendee, :user_id => u.id)
+        expect { post :create, :attendee => a, :year => u.year
+          }.to change { u.attendees.count }.by(+1)
+      end
     end
   end
 end

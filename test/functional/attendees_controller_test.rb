@@ -16,25 +16,6 @@ class AttendeesControllerTest < ActionController::TestCase
     @year = Time.now.year
   end
 
-  test "user cannot create attendee under a different user" do
-    sign_in @user
-    a = FactoryGirl.attributes_for(:attendee)
-    a['user_id'] = @user_two.id
-    assert_no_difference('Attendee.count', 0) do
-      post :create, :attendee => a, :year => @year
-    end
-    assert_response 403
-  end
-
-  test "admin can create attendee under a different user" do
-    sign_in @admin
-    a = FactoryGirl.attributes_for(:attendee)
-    a['user_id'] = @user.id
-    assert_difference('@user.attendees.count', +1) do
-      post :create, :attendee => a, :year => @year
-    end
-  end
-
   test "user can create attendee under own account" do
     sign_in @user
     a = FactoryGirl.attributes_for(:attendee)
