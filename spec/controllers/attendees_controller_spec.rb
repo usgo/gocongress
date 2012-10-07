@@ -211,14 +211,43 @@ describe AttendeesController do
       end
 
       context "plans" do
+        let(:plan) { FactoryGirl.create :plan }
+
         def put_update plan
           put :update, :year => 2012, :id => attendee.id, :"plan_#{plan.id}_qty" => 1
         end
 
         it "updates the attendee's plans in the specified category" do
-          plan = FactoryGirl.create :plan
           put_update plan
           attendee.plans.should include(plan)
+        end
+
+        it "can clear own attendee plans" do
+          attendee.plans << plan
+          attendee.plans.should include(plan)
+          submit_plans_form attendee, {}
+          attendee.reload.plans.should be_empty
+        end
+
+        it "can deselect a plan" do
+          attendee.plans << plan
+          attendee.plans.should include(plan)
+          submit_plans_form attendee, params_for_plan(plan, 0)
+          attendee.reload.plans.should_not include(plan)
+        end
+
+        it "can select a plan for own attendee" do
+          attendee.plans.should be_empty
+          expect { submit_plans_form attendee, params_for_plan(plan, 1)
+            }.to change { attendee.plans.count }.by(+1)
+          attendee.reload.plans.should include(plan)
+        end
+
+        it "cannot select plan for attendee belonging to someone else" do
+          a = FactoryGirl.create :attendee
+          expect { submit_plans_form a, params_for_plan(plan, 1)
+            }.to_not change { a.plans.count }
+          response.should be_forbidden
         end
 
         context "when attendee selects a disabled plan" do
@@ -348,13 +377,31 @@ describe AttendeesController do
     end
 
     describe '#update' do
-      it 'admin can update attendee of any user' do
+      it 'can update attendee of any user' do
         a = FactoryGirl.create(:attendee, :year => admin.year)
         attrs = a.attributes.merge({:family_name => 'banana'})
         expect { put :update, :id => a.id, :attendee => attrs, :year => a.year
           }.to change { a.reload.family_name }
         a.reload.family_name.should == 'banana'
       end
+
+      it 'can select plan for attendee belonging to someone else' do
+        plan = FactoryGirl.create :plan
+        a = FactoryGirl.create(:attendee, :year => admin.year)
+        a.plans.should be_empty
+        expect { submit_plans_form a, params_for_plan(plan, 1)
+          }.to change { a.plans.count }.by(+1)
+      end
     end
   end
+
+  def submit_plans_form(attendee, params)
+    params.merge!(:id => attendee.id, :year => attendee.year)
+    put :update, params
+  end
+
+  def params_for_plan plan, qty
+    { "plan_#{plan.id}_qty" => qty }
+  end
+
 end
