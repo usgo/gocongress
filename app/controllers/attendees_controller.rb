@@ -246,7 +246,9 @@ protected
     # selected such a plan, eg. back when it was enabled. Regardless
     # of user level, only plans appropriate to the attendee's age
     # are shown.
-    @plans = Plan.yr(@year).appropriate_for_age(@attendee.age_in_years) # todo: order
+    # NOTE: we used to use .appropriate_for_age(@attendee.age_in_years)
+    # but during #new we don't know the attendee's age yet
+    @plans = Plan.yr(@year) # todo: order
     unless current_user.admin?
       @plans.delete_if {|p| p.disabled? && !@attendee.has_plan?(p)}
     end

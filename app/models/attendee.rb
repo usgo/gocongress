@@ -177,6 +177,7 @@ class Attendee < ActiveRecord::Base
 
   # `age_in_years` Returns integer age in years on the start day of congress, not now.
   def age_in_years
+    raise 'birth date undefined' if birth_date.nil?
     year_delta = congress_start.year - birth_date.year
     birthday_after_congress ? year_delta - 1 : year_delta
   end

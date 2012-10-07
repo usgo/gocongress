@@ -148,6 +148,13 @@ describe AttendeesController do
       end
     end
 
+    describe '#new' do
+      it 'succeeds' do
+        get :new, :year => user.year
+        response.should be_successful
+      end
+    end
+
     describe "#show" do
       it "will not show attendees from the wrong year" do
         atnd = FactoryGirl.create :attendee, :year => 2012
