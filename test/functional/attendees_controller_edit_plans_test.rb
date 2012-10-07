@@ -13,17 +13,6 @@ class AttendeesControllerEditPlansTest < ActionController::TestCase
     @year = Time.now.year
   end
 
-  test "user can get edit_plans form" do
-    sign_in @user
-    visit_edit_plans_form
-    assert_response :success
-  end
-
-  test "visitor cannot get edit_plans form" do
-    visit_edit_plans_form
-    assert_response :forbidden
-  end
-
   test "admin can select plan for attendee belonging to someone else" do
     sign_in @admin
     a = @user.attendees.sample
@@ -70,12 +59,6 @@ class AttendeesControllerEditPlansTest < ActionController::TestCase
   end
 
   private
-
-  def visit_edit_plans_form
-    get :edit,
-      :id => @user.attendees.sample.id,
-      :year => @year
-  end
 
   def submit_plans_form(attendee, params)
     params.merge!(:id => attendee.id, :year => @year)
