@@ -178,6 +178,30 @@ describe AttendeesController do
         response.should be_forbidden
       end
 
+      context "discounts" do
+        let(:a) { user.attendees.sample }
+
+        it "can claim non-automatic discounts" do
+          a.discounts.should be_empty
+          d = FactoryGirl.create :nonautomatic_discount
+          attrs = {:discount_ids => [d.id]}
+
+          # the checkbox list can include extra empty strings
+          attrs[:discount_ids] << ""
+
+          put :update, :id => a.id, :attendee => attrs, :year => a.year
+          a.reload.discounts.should == [d]
+        end
+
+        it "cannot claim automatic discounts" do
+          a.discounts.should be_empty
+          d = FactoryGirl.create :automatic_discount
+          attrs = {:discount_ids => [d.id]}
+          put :update, :id => a.id, :attendee => attrs, :year => a.year
+          a.reload.discounts.should_not include(d)
+        end
+      end
+
     end
   end
 
