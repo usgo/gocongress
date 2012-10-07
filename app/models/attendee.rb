@@ -93,19 +93,21 @@ class Attendee < ActiveRecord::Base
   # Validations
   # -----------
 
-  validates :country, :format => {:with => /^[A-Z]{2}$/}, :presence => true
-  validates_presence_of :gender
-  validates_inclusion_of :gender, :in => ["m","f"], :message => "is not valid"
-  validates :guardian_full_name, :presence => { :if => :require_guardian_full_name? }
-  validates_inclusion_of :is_primary, :in => [true, false]
-  validates_inclusion_of :minor_agreement_received, :in => [true, false]
-  validates_presence_of :birth_date, :email, :family_name, :given_name, :rank
-  validates_inclusion_of :rank, :in => NUMERIC_RANK_LIST, :message => "is not a valid rank"
-  validates_inclusion_of :tshirt_size, :in => TSHIRT_SIZE_LIST, :message => " - Please select a size"
-  validates_length_of :special_request, :maximum => 250
-  validates_length_of :roomate_request, :maximum => 250
+  validates :birth_date,      :presence => true
   validates_date :birth_date, :after => Date.civil(1900,1,1), :allow_blank => false
   validates :congresses_attended, :numericality => {:greater_than_or_equal_to => 0, :only_integer => true, :allow_nil => true}
+  validates :country,         :format => {:with => /^[A-Z]{2}$/}, :presence => true
+  validates :email,           :presence => true
+  validates :family_name,     :presence => true
+  validates :gender,          :inclusion => {:in => ["m","f"], :message => "is not valid"}, :presence => true
+  validates :given_name,      :presence => true
+  validates :guardian_full_name, :presence => { :if => :require_guardian_full_name? }
+  validates :is_primary,      :inclusion => {:in => [true, false]}
+  validates :minor_agreement_received, :inclusion => {:in => [true, false]}
+  validates :rank,            :inclusion => {:in => NUMERIC_RANK_LIST, :message => "is not a valid rank"}, :presence => true
+  validates :roomate_request, :length => {:maximum => 250}
+  validates :special_request, :length => {:maximum => 250}
+  validates :tshirt_size,     :inclusion => {:in => TSHIRT_SIZE_LIST, :message => " - Please select a size"}
 
   # AGA ID must be unique within each year
   validates :aga_id,
