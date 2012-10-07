@@ -11,8 +11,6 @@ class AttendeesControllerTest < ActionController::TestCase
     @discount_automatic = FactoryGirl.create(:automatic_discount)
     @discount_nonautomatic = FactoryGirl.create(:nonautomatic_discount)
     @discount_nonautomatic2 = FactoryGirl.create(:nonautomatic_discount)
-    @inv_trn = FactoryGirl.create(:tournament, :openness => 'I')
-    @open_trn = FactoryGirl.create(:tournament, :openness => 'O')
     @year = Time.now.year
   end
 
