@@ -3,6 +3,10 @@ require "spec_helper"
 describe Attendee do
   it_behaves_like "a yearly model"
 
+  it "has a valid factory" do
+    FactoryGirl.build(:attendee).should be_valid
+  end
+
   context "when first created" do
     describe "#has_plans?" do
       it "does not have plans" do
