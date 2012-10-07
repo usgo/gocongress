@@ -83,6 +83,7 @@ class AttendeesController < ApplicationController
 
   def update
     params[:attendee] ||= {}
+    registration = Registration::Registration.new @attendee, current_user.admin?
 
     # some extra validation errors may come up, especially with
     # associated models, and we want to save these and add them
@@ -130,59 +131,12 @@ class AttendeesController < ApplicationController
 
     expose_form_vars # can this be earlier?
 
-    # Begin code moved from former `update_plans`
+    # Register plans
+    plan_selections = get_plan_selections @plans
+    plan_errors = registration.register_plans plan_selections
+    extra_errors.concat plan_errors
 
-    # Build a new set of plans from the user's selections
-    nascent_attendee_plans = []
-    @plans.each do |p|
-      qty = params["plan_#{p.id}_qty"].to_i # if nil, to_i returns 0
-      if qty == 0
-
-        # Only admins can remove previously selected disabled plans
-        if p.disabled? && @attendee.has_plan?(p) && !current_user.admin?
-          extra_errors << "It looks like you're trying to remove a
-            disabled plan (#{p.name}).  Please contact the registrar
-            for help"
-          ap_copy = @attendee.attendee_plans.where(plan_id: p.id).first.dup
-          nascent_attendee_plans << ap_copy
-        end
-
-      elsif qty > 0
-        ap = AttendeePlan.new(:attendee_id => @attendee.id, :plan_id => p.id, :quantity => qty)
-        if ap.valid?
-
-          # Only admins can add new disabled plans that weren't
-          # previously selected
-          if p.disabled? && !@attendee.has_plan?(p) && !current_user.admin?
-            extra_errors << "One of the plans you selected (#{ap.plan.name})
-              is disabled. You cannot selected disabled plans.  In fact,
-              you shouldn't have even been able to see it.  Please contact
-              the registrar for help."
-          else
-            nascent_attendee_plans << ap
-          end
-        else
-          extra_errors.concat ap.errors.map {|k,v| k.to_s + " " + v.to_s}
-        end
-      end
-    end
-
-    @attendee.clear_plans!
-
-    unless nascent_attendee_plans.empty?
-      @attendee.attendee_plans << nascent_attendee_plans
-    end
-
-    # Mandatory plan categories require at least one plan
-    # if @plan_category.mandatory? && nascent_attendee_plans.empty?
-    #  extra_errors << "This is a mandatory category, so please select at
-    #    least one #{Plan.model_name.human.downcase}."
-    # end
-
-    # End code moved from former `update_plans`
-
-
-    # validate
+    # Validate
     if @attendee.valid? && extra_errors.empty?
       @attendee.save(:validate => false)
       flash[:notice] = 'Changes saved'
@@ -280,6 +234,14 @@ protected
     end
     clear_airport_datetime_params
     return parse_errors
+  end
+
+  def get_plan_selections plans
+    plans.map {|p| Registration::PlanSelection.new p, plan_qty(p.id)}
+  end
+
+  def plan_qty plan_id
+    params["plan_#{plan_id}_qty"].to_i # if nil, to_i returns 0
   end
 
   def clear_airport_datetime_params
