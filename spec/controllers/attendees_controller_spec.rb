@@ -1,6 +1,7 @@
 require "spec_helper"
 
 describe AttendeesController do
+  let(:activities) { 1.upto(3).map{ FactoryGirl.create :activity } }
 
   context "as a visitor" do
     describe "#create" do
@@ -210,6 +211,26 @@ describe AttendeesController do
         response.should be_forbidden
       end
 
+      context "activities" do
+        it "can add activities to their own attendee" do
+          expect { update_activities(attendee, activities) }.to \
+            change { attendee.activities.count }.by(activities.length)
+        end
+
+        it "cannot add activities to attendee belonging to someone else" do
+          attendee2 = FactoryGirl.create :attendee
+          expect { update_activities(attendee2, activities) }.to_not \
+            change { attendee2.activities.count }
+          response.status.should == 403
+        end
+
+        it "cannot add disabled activities" do
+          activities << FactoryGirl.create(:activity, disabled: true)
+          expect { update_activities(attendee, activities) }.to_not \
+            change { attendee.activities.count }
+        end
+      end
+
       context "plans" do
         let(:plan) { FactoryGirl.create :plan }
 
@@ -377,8 +398,9 @@ describe AttendeesController do
     end
 
     describe '#update' do
+      let(:a) { FactoryGirl.create(:attendee, :year => admin.year) }
+
       it 'can update attendee of any user' do
-        a = FactoryGirl.create(:attendee, :year => admin.year)
         attrs = a.attributes.merge({:family_name => 'banana'})
         expect { put :update, :id => a.id, :attendee => attrs, :year => a.year
           }.to change { a.reload.family_name }
@@ -387,10 +409,14 @@ describe AttendeesController do
 
       it 'can select plan for attendee belonging to someone else' do
         plan = FactoryGirl.create :plan
-        a = FactoryGirl.create(:attendee, :year => admin.year)
         a.plans.should be_empty
         expect { submit_plans_form a, params_for_plan(plan, 1)
           }.to change { a.plans.count }.by(+1)
+      end
+
+      it "allows an admin to add activities to any attendee" do
+        expect { update_activities(a, activities) }.to \
+          change { a.activities.count }.by(activities.length)
       end
     end
   end
@@ -402,6 +428,12 @@ describe AttendeesController do
 
   def params_for_plan plan, qty
     { "plan_#{plan.id}_qty" => qty }
+  end
+
+  def update_activities attendee, activities
+    put :update, :id => attendee.id, \
+      :attendee => { :activity_id_list => activities.map(&:id) }, \
+      :page => 'basics', :year => attendee.year
   end
 
 end
