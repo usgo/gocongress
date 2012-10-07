@@ -16,27 +16,6 @@ class AttendeesControllerTest < ActionController::TestCase
     @year = Time.now.year
   end
 
-  test "user can create attendee under own account" do
-    sign_in @user
-    a = FactoryGirl.attributes_for(:attendee)
-    a['user_id'] = @user.id
-    assert_difference('@user.attendees.count', +1) do
-      post :create, :attendee => a, :year => @year
-    end
-  end
-
-  test "non-admin cannot destroy attendee from other user" do
-    sign_in @user
-    a = FactoryGirl.create :attendee, :is_primary => false
-    a.user = @user_two
-    a.save!
-    assert_equal 1, @user_two.attendees.where(:is_primary => false).count
-    assert_no_difference('Attendee.count') do
-      delete :destroy, :id => a.id, :year => @year
-    end
-    assert_response 403
-  end
-
   test "admin can destroy attendee" do
     attendee = FactoryGirl.create(:attendee)
     sign_in @admin

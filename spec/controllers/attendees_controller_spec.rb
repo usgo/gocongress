@@ -45,6 +45,12 @@ describe AttendeesController do
     before { sign_in user }
 
     describe "#create" do
+      it "succeeds under own account" do
+        a = FactoryGirl.attributes_for(:attendee, :user_id => user.id)
+        expect { post :create, :attendee => a, :year => user.year
+          }.to change { user.attendees.count }.by(+1)
+      end
+
       it "is forbidden to create attendee under a different user" do
         user_two = FactoryGirl.create :user
         a = FactoryGirl.attributes_for(:attendee, :user_id => user_two.id)
@@ -77,6 +83,14 @@ describe AttendeesController do
           delete :destroy, :id => attendee.id, :year => attendee.year
         }.to change{ user.attendees.count }.by(-1)
         response.should redirect_to user_path(user)
+      end
+
+      it "is forbidden to destroy attendee from other user" do
+        a = FactoryGirl.create :attendee
+        user_two = a.user
+        expect { delete :destroy, :id => a.id, :year => a.year
+          }.to_not change { Attendee.count }
+        response.should be_forbidden
       end
     end
 
