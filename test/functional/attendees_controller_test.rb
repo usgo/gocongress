@@ -16,30 +16,6 @@ class AttendeesControllerTest < ActionController::TestCase
     @year = Time.now.year
   end
 
-  test "admin can destroy attendee" do
-    attendee = FactoryGirl.create(:attendee)
-    sign_in @admin
-    assert_difference('Attendee.count', -1) do
-      delete :destroy, :id => attendee.id, :year => attendee.year
-    end
-    assert_redirected_to user_path(attendee.user)
-    assert_equal 'Attendee deleted', flash[:notice]
-  end
-
-  test "admin can destroy primary attendee" do
-    prim = FactoryGirl.create :primary_attendee
-    sign_in @admin
-    assert_difference('Attendee.count', -1) do
-      delete :destroy, :id => prim.id, :year => prim.year
-    end
-    assert_redirected_to user_path(prim.user)
-  end
-
-  test "visitor cannot get edit" do
-    get :edit, :id => @user.attendees.sample.id, :year => @year, :page => :basics
-    assert_response 403
-  end
-
   test "user cannot edit another user's attendee" do
     sign_in @user
     get :edit, :id => @user_two.attendees.sample.id, :year => @year, :page => :basics

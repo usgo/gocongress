@@ -12,6 +12,14 @@ describe AttendeesController do
       end
     end
 
+    describe "#edit" do
+      it "is forbidden" do
+        a = FactoryGirl.create :attendee
+        get :edit, :id => a.id, :year => a.year
+        response.should be_forbidden
+      end
+    end
+
     describe "#index" do
       render_views
 
@@ -184,6 +192,24 @@ describe AttendeesController do
         expect { post :create, :attendee => a, :year => u.year
           }.to change { u.attendees.count }.by(+1)
       end
+    end
+
+    describe "#destroy" do
+      it "can destroy any attendee" do
+        a = FactoryGirl.create :attendee
+        expect { delete :destroy, :id => a.id, :year => a.year
+          }.to change { a.user.attendees.count }.by(-1)
+        response.should redirect_to user_path(a.user)
+        flash[:notice].should == 'Attendee deleted'
+      end
+
+      it "can destroy primary attendee" do
+        prim = FactoryGirl.create :primary_attendee
+        expect { delete :destroy, :id => prim.id, :year => prim.year
+          }.to change { Attendee.count }.by(-1)
+        response.should redirect_to user_path(prim.user)
+      end
+
     end
   end
 end
