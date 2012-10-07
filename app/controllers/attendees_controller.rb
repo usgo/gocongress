@@ -28,12 +28,6 @@ class AttendeesController < ApplicationController
 
   def new
 
-    # visitors cannot get the new attendee form
-    unless current_user.present? then
-      render_access_denied
-      return
-    end
-
     # Which user are we adding this new attendee to?
     target_user_id = params[:id].present? ? params[:id].to_i : current_user.id
     target_user = User.find(target_user_id)
