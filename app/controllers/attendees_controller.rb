@@ -126,7 +126,8 @@ class AttendeesController < ApplicationController
     end
     params[:attendee].delete :activity_id_list
 
-    # update attributes but do not save yet
+    # update attributes but do not save yet.
+    # hasn't this already been done by cancan?
     @attendee.attributes = params[:attendee]
 
     expose_form_vars # can this be earlier?
