@@ -1,10 +1,9 @@
-%h2 Attendee Saved
+%h2 What next?
 %p
-  You have added the following people to your account:
-  %ul
-    - @user.attendees.each do |a|
-      %li= a.full_name
-  What next?
+  You have
+  = pluralize(@user.attendees.count, 'attendee')
+  on your account.  When you're done adding attendees, make a
+  payment. Registration is not complete until paid.
 
 .floating-padded-line-item
   = button_to "Register Another Person", add_attendee_to_user_path(@user), :method => "get", :class => 'button-emphasis'

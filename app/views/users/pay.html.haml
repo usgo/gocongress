@@ -40,11 +40,14 @@
           %br
           %input{ :type => "submit", :name => "submit", :value => "Continue" }
 
-%h3 Refund Policy
-%p
-  Full refunds minus a $50 processing fee and any credit card fees will be
-  provided until July 1, 2012. After July 1st, a $75 processing fee and any
-  credit card fees will be deducted from the refund.
+- if @year.year == 2012
+  %h3 Refund Policy
+  %p
+    Full refunds minus a $50 processing fee and any credit card fees will be
+    provided until July 1, 2012. After July 1st, a $75 processing fee and any
+    credit card fees will be deducted from the refund.
+
+%br
 
 :javascript
 

@@ -82,7 +82,7 @@ class User < ActiveRecord::Base
   # immediately after submitting the devise registration form)
   def after_sign_in_path
     if primary_attendee.present?
-      RegistrationProcess.new(primary_attendee).after_sign_in_path
+      Rails.application.routes.url_helpers.user_path(self.year, self)
     else
       Rails.application.routes.url_helpers.add_attendee_to_user_path(self.year, self)
     end

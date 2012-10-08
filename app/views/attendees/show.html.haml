@@ -12,7 +12,7 @@
     = link_to a.user.email, a.user
 
 %ul
-  %li= link_to 'Basics', edit_attendee_path(a, :basics)
+  %li= link_to 'Basics', edit_attendee_path(a)
 
 - if current_user.is_admin?
   %h3 Administration
