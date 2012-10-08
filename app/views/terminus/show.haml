@@ -1,0 +1,17 @@
+%h2 Attendee Saved
+%p
+  You have added the following people to your account:
+  %ul
+    - @user.attendees.each do |a|
+      %li= a.full_name
+  What next?
+
+.floating-padded-line-item
+  = button_to "Register Another Person", add_attendee_to_user_path(@user), :method => "get", :class => 'button-emphasis'
+  %p{ style: "width: 250px;"}
+    You may register as many people as you want on the same account.
+    Bring the whole family!
+.floating-padded-line-item
+  = button_to "Make a Payment", pay_user_path(@user), :method => "get", :class => 'button-emphasis'
+  %p{ style: "width: 175px;"}
+    Review your account balance and make a payment.

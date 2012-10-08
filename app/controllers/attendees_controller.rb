@@ -68,8 +68,8 @@ class AttendeesController < ApplicationController
     authorize! :create, @attendee
 
     if @attendee.save
-      expose_form_vars
-      render 'edit' # fixme: go to terminus
+      flash[:notice] = 'Attendee added'
+      redirect_to user_terminus_path(:user_id => @attendee.user)
     else
       expose_attendee_number_for @attendee
       expose_form_vars
@@ -101,15 +101,13 @@ class AttendeesController < ApplicationController
     delete_protected_params
     @attendee.attributes = params[:attendee]
 
-    # Expose instance variables to view
-    expose_form_vars
-
     # Validate and save
     if errors.empty? && @attendee.save
       flash[:notice] = 'Changes saved'
-      render 'edit'  # fixme - should go to terminus
+      redirect_to user_terminus_path(:user_id => @attendee.user)
     else
       @attendee.errors[:base].concat(errors)
+      expose_form_vars
       render 'edit'
     end
   end

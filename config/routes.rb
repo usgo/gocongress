@@ -58,6 +58,8 @@ Gocongress::Application.routes.draw do
             # see http://guides.rubyonrails.org/routing.html#nested-resources
             get 'attendees/new' => 'attendees#new', :as => 'add_attendee_to'
           end
+
+          resource :terminus, :only => :show
         end
 
         # The reports_controller is deprecated, except for the index

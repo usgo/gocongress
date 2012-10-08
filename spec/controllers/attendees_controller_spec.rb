@@ -58,6 +58,8 @@ describe AttendeesController do
         a = FactoryGirl.attributes_for(:attendee, :user_id => user.id)
         expect { post :create, :attendee => a, :year => user.year
           }.to change { user.attendees.count }.by(+1)
+        response.should redirect_to \
+          user_terminus_path(:user_id => user.id, :year => user.year)
       end
 
       it "is forbidden to create attendee under a different user" do
@@ -131,11 +133,6 @@ describe AttendeesController do
         assigns(:plans).should include(plan)
         assigns(:plans).map(&:name).should_not include(plan2.name)
       end
-
-      # todo: terminus is no longer an "edit page"
-      context "terminus page" do
-        it "is successful"
-      end
     end
 
     describe "#index" do
@@ -167,11 +164,10 @@ describe AttendeesController do
 
     describe "#update" do
 
-      def put_update attendee_attrs
+      def put_update attendee_attrs = {}
         put :update,
           attendee: attendee_attrs,
           id: attendee.id,
-          page: 'basics',
           year: attendee.year
       end
 
@@ -185,6 +181,12 @@ describe AttendeesController do
       it "updates a trivial field" do
         expect { put_update :given_name => 'banana'
           }.to change { attendee.reload.given_name }
+      end
+
+      it "redirects to terminus if successful" do
+        put_update
+        response.should redirect_to \
+          user_terminus_path(:user_id => user.id, :year => user.year)
       end
 
       it "updates valid airport datetimes" do
