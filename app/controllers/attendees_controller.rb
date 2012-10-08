@@ -27,7 +27,6 @@ class AttendeesController < ApplicationController
     @kyu_count = @attendees.kyu.count
   end
 
-  # `#new` has two routes.  The `users/:id` route is used by admins.
   # GET    /:year/attendees/new
   # GET    /:year/users/:id/attendees/new
   def new
