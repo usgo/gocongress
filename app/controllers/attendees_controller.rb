@@ -119,14 +119,10 @@ class AttendeesController < ApplicationController
     plan_errors = registration.register_plans plan_selections
     extra_errors.concat plan_errors
 
-    # Delete protected params
-    [:activity_id_list, :comment, :discount_ids, :minor_agreement_received].each do |p|
-      params[:attendee].delete p
-    end
-
     # Update accessible attributes but do not save yet. We'll save
     # everything all at once below. Cancan does this automatically
     # before `create`, but not before `update`.
+    delete_protected_params
     @attendee.attributes = params[:attendee]
 
     # Validate and save
@@ -214,6 +210,12 @@ protected
 
   def activity_ids
     params[:attendee][:activity_id_list] || []
+  end
+
+  def delete_protected_params
+    [:activity_id_list, :comment, :discount_ids, :minor_agreement_received].each do |p|
+      params[:attendee].delete p
+    end
   end
 
   # `discount_ids` returns positive integer ids, ignoring
