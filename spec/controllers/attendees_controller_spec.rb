@@ -1,6 +1,7 @@
 require "spec_helper"
 
 describe AttendeesController do
+  render_views
   let(:activities) { 1.upto(3).map{ FactoryGirl.create :activity } }
 
   context "as a visitor" do
