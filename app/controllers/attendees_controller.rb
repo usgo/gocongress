@@ -10,6 +10,7 @@ class AttendeesController < ApplicationController
   authorize_resource
   skip_authorize_resource :only => [:create, :index, :vip]
   add_filter_restricting_resources_to_year_in_route
+  before_filter :expose_plans, :only => [:create, :edit, :new, :update]
 
   # Actions
   def show
@@ -90,19 +91,13 @@ class AttendeesController < ApplicationController
     # to @attendee.errors[:base] later.
     extra_errors = []
 
-    # Assign airport_arrival and airport_departure attributes, if possible
-    extra_errors.concat(parse_airport_datetimes)
-
-    # The way `expose_form_vars` is written right now, it has to
-    # come before `register_plans`, because it defines @plans.
-    # Also, it has to come after `parse_airport_datetimes`.
-    # So, that's kind of awkward..
-    expose_form_vars
-
     # Persist discounts, activities, and plans
     reg.register_discounts(discount_ids)
     extra_errors.concat(reg.register_activities(activity_ids))
     extra_errors.concat(reg.register_plans(get_plan_selections(@plans)))
+
+    # Assign airport_arrival and airport_departure attributes, if possible
+    extra_errors.concat(parse_airport_datetimes)
 
     # Set attributes but do not save yet. We'll save everything all
     # at once below. Cancan does this automatically before `create`,
@@ -110,6 +105,9 @@ class AttendeesController < ApplicationController
     set_admin_params
     delete_protected_params
     @attendee.attributes = params[:attendee]
+
+    # Expose instance variables to view
+    expose_form_vars
 
     # Validate and save
     if extra_errors.empty? && @attendee.save
@@ -162,24 +160,9 @@ protected
     @discounts = Discount.yr(@year).automatic(false)
     @attendee_discount_ids = @attendee.discounts.automatic(false).map { |d| d.id }
 
-    # for activities
+    # for _activities
     @activities = Activity.yr(@year).order(:leave_time, :name)
     @atnd_activity_ids = @attendee.activities.map {|e| e.id}
-
-    # Which plans to show?  Admins can always see disabled plans,
-    # but users only see disabled plans if they had already
-    # selected such a plan, eg. back when it was enabled. Regardless
-    # of user level, only plans appropriate to the attendee's age
-    # are shown.
-    # NOTE: we used to use .appropriate_for_age(@attendee.age_in_years)
-    # but during #new we don't know the attendee's age yet
-    @plans = Plan.yr(@year) # todo: order
-    unless current_user.admin?
-      @plans.delete_if {|p| p.disabled? && !@attendee.has_plan?(p)}
-    end
-
-    @show_availability = Plan.inventoried_plan_in? @plans
-    @show_quantity_instructions = Plan.quantifiable_plan_in? @plans
   end
 
   def allow_only_self_or_admin
@@ -213,6 +196,25 @@ protected
 
   def expose_attendee_number_for attendee
     @attendee_number = attendee.user.attendees.count + 1
+  end
+
+  # `expose_plans` exposes `@plans`, determining which plans will be
+  # shown on the form, and which plans are available for selection.
+  # Admins can always see disabled plans, but users only see
+  # disabled plans if they had already selected such a plan, eg.
+  # back when it was enabled. Regardless of user level, only plans
+  # appropriate to the attendee's age are shown.
+  #
+  # In the past we used `appropriate_for_age` but during #new we
+  # don't know the attendee's age yet
+  def expose_plans
+    @plans = Plan.yr(@year) # todo: order
+    unless current_user.admin?
+      @plans.delete_if {|p| p.disabled? && !@attendee.has_plan?(p)}
+    end
+
+    @show_availability = Plan.inventoried_plan_in? @plans
+    @show_quantity_instructions = Plan.quantifiable_plan_in? @plans
   end
 
   def parse_airport_datetimes
