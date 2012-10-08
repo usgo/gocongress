@@ -138,8 +138,7 @@ class AttendeesController < ApplicationController
     extra_errors.concat plan_errors
 
     # Validate
-    if @attendee.valid? && extra_errors.empty?
-      @attendee.save(:validate => false)
+    if extra_errors.empty? && @attendee.save
       flash[:notice] = 'Changes saved'
       render 'edit'  # fixme - should go to terminus
     else
