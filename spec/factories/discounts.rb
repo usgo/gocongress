@@ -1,4 +1,7 @@
 FactoryGirl.define do
+
+  # todo: this factory is not valid because it fails to
+  # specify `is_automatic`
   factory :discount do
     amount 50
     sequence(:name){|n| "Test Discount #{n}" }

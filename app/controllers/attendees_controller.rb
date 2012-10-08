@@ -101,19 +101,10 @@ class AttendeesController < ApplicationController
       end
     end
 
-    # claimed discounts
-    params[:attendee][:discount_ids] ||= Array.new
+    # Persist discounts
+    registration.register_discounts discount_ids
 
-    # ignore non-integer discount ids (from unchecked boxes in the view)
-    valid_discount_ids = params[:attendee][:discount_ids].delete_if {|d| d.to_i == 0}
-
-    # assign discounts, provided they are non-automatic
-    # (only non-automatic discounts may be set by users)
-    discounts = Discount.where('is_automatic = ? and id in (?)', false, valid_discount_ids)
-    @attendee.discounts.clear
-    @attendee.discounts << discounts
-
-    # Activities
+    # Persist activities
     activity_errors = registration.register_activities(activity_ids)
     extra_errors.concat activity_errors
 
@@ -123,7 +114,7 @@ class AttendeesController < ApplicationController
     # So, that's kind of awkward..
     expose_form_vars
 
-    # Register plans
+    # Persist plans
     plan_selections = get_plan_selections @plans
     plan_errors = registration.register_plans plan_selections
     extra_errors.concat plan_errors
@@ -223,6 +214,13 @@ protected
 
   def activity_ids
     params[:attendee][:activity_id_list] || []
+  end
+
+  # `discount_ids` returns positive integer ids, ignoring
+  # unchecked boxes in the view
+  def discount_ids
+    ids = params[:attendee][:discount_ids] || []
+    ids.delete_if {|d| d.to_i == 0}
   end
 
   def expose_attendee_number_for attendee

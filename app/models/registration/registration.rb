@@ -5,6 +5,7 @@ class Registration::Registration
     @as_admin = as_admin
   end
 
+  # `register_activities` persists the selected activities
   def register_activities activity_id_array
     activity_registration_errors = []
     begin
@@ -15,6 +16,14 @@ class Registration::Registration
     return activity_registration_errors
   end
 
+  # `register_discounts` persists claimed (non-automatic) discounts
+  def register_discounts discount_ids
+    available_discounts = Discount.yr(@attendee.year).automatic(false)
+    @attendee.discounts = available_discounts.where('id in (?)', discount_ids)
+  end
+
+  # `register_plans` persists the selected plans, replacing
+  # all existing `AttendeePlan` records.
   def register_plans plan_selections
     plan_registration_errors = []
     nascent_attendee_plans = []
