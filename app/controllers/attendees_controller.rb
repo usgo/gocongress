@@ -85,19 +85,15 @@ class AttendeesController < ApplicationController
   def update
     reg = Registration::Registration.new @attendee, current_user.admin?
     params[:attendee] ||= {}
-
-    # some extra validation errors may come up, especially with
-    # associated models, and we want to save these and add them
-    # to @attendee.errors[:base] later.
-    extra_errors = []
+    errors = []
 
     # Persist discounts, activities, and plans
     reg.register_discounts(discount_ids)
-    extra_errors.concat(reg.register_activities(activity_ids))
-    extra_errors.concat(reg.register_plans(get_plan_selections(@plans)))
+    errors.concat(reg.register_activities(activity_ids))
+    errors.concat(reg.register_plans(get_plan_selections(@plans)))
 
     # Assign airport_arrival and airport_departure attributes, if possible
-    extra_errors.concat(parse_airport_datetimes)
+    errors.concat(parse_airport_datetimes)
 
     # Set attributes but do not save yet. We'll save everything all
     # at once below. Cancan does this automatically before `create`,
@@ -110,11 +106,11 @@ class AttendeesController < ApplicationController
     expose_form_vars
 
     # Validate and save
-    if extra_errors.empty? && @attendee.save
+    if errors.empty? && @attendee.save
       flash[:notice] = 'Changes saved'
       render 'edit'  # fixme - should go to terminus
     else
-      @attendee.errors[:base].concat extra_errors
+      @attendee.errors[:base].concat(errors)
       render 'edit'
     end
   end
