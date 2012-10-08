@@ -208,8 +208,8 @@ describe AttendeesController do
       end
 
       it "does not update admin fields" do
-        put_update :comment => 'banana'
-        response.should be_forbidden
+        expect { put_update :comment => 'banana'
+          }.to_not change { attendee.reload.comment }
       end
 
       it "is forbidden to update another user's attendee" do

@@ -93,14 +93,6 @@ class AttendeesController < ApplicationController
     # Assign airport_arrival and airport_departure attributes, if possible
     extra_errors.concat parse_airport_datetimes
 
-    # Admin fields
-    [:comment, :minor_agreement_received].each do |p|
-      unless params[:attendee][p].nil?
-        render_access_denied and return unless current_user.is_admin?
-        @attendee[p] = params[:attendee][p]
-      end
-    end
-
     # Persist discounts
     registration.register_discounts discount_ids
 
@@ -119,9 +111,10 @@ class AttendeesController < ApplicationController
     plan_errors = registration.register_plans plan_selections
     extra_errors.concat plan_errors
 
-    # Update accessible attributes but do not save yet. We'll save
-    # everything all at once below. Cancan does this automatically
-    # before `create`, but not before `update`.
+    # Set attributes but do not save yet. We'll save everything all
+    # at once below. Cancan does this automatically before `create`,
+    # but not before `update`.
+    set_admin_params
     delete_protected_params
     @attendee.attributes = params[:attendee]
 
@@ -253,6 +246,16 @@ protected
     %w(airport_arrival airport_departure).each do |prefix|
       %w(date time).each do |suffix|
         params["attendee"].delete prefix + '_' + suffix
+      end
+    end
+  end
+
+  def set_admin_params
+    if current_user.is_admin?
+      [:comment, :minor_agreement_received].each do |p|
+        unless params[:attendee][p].nil?
+          @attendee[p] = params[:attendee][p]
+        end
       end
     end
   end
