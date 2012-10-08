@@ -122,9 +122,11 @@ class AttendeesController < ApplicationController
     extra_errors.concat activity_errors
     params[:attendee].delete :activity_id_list
 
-
-
-    expose_form_vars # can this be earlier?
+    # The way `expose_form_vars` is written right now, it has to
+    # come before `register_plans`, because it defines @plans.
+    # Also, it has to come after `parse_airport_datetimes`.
+    # So, that's kind of awkward..
+    expose_form_vars
 
     # Register plans
     plan_selections = get_plan_selections @plans
