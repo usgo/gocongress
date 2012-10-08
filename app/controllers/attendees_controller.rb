@@ -98,7 +98,6 @@ class AttendeesController < ApplicationController
       unless params[:attendee][p].nil?
         render_access_denied and return unless current_user.is_admin?
         @attendee[p] = params[:attendee][p]
-        params[:attendee].delete p
       end
     end
 
@@ -114,13 +113,9 @@ class AttendeesController < ApplicationController
     @attendee.discounts.clear
     @attendee.discounts << discounts
 
-    # delete param to avoid attr_accessible warning
-    params[:attendee].delete :discount_ids
-
     # Activities
     activity_errors = registration.register_activities(activity_ids)
     extra_errors.concat activity_errors
-    params[:attendee].delete :activity_id_list
 
     # The way `expose_form_vars` is written right now, it has to
     # come before `register_plans`, because it defines @plans.
@@ -132,6 +127,11 @@ class AttendeesController < ApplicationController
     plan_selections = get_plan_selections @plans
     plan_errors = registration.register_plans plan_selections
     extra_errors.concat plan_errors
+
+    # Delete protected params
+    [:activity_id_list, :comment, :discount_ids, :minor_agreement_received].each do |p|
+      params[:attendee].delete p
+    end
 
     # Update accessible attributes but do not save yet. We'll save
     # everything all at once below. Cancan does this automatically
