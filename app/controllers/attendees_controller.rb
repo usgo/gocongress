@@ -82,8 +82,8 @@ class AttendeesController < ApplicationController
   end
 
   def update
+    reg = Registration::Registration.new @attendee, current_user.admin?
     params[:attendee] ||= {}
-    registration = Registration::Registration.new @attendee, current_user.admin?
 
     # some extra validation errors may come up, especially with
     # associated models, and we want to save these and add them
@@ -91,14 +91,7 @@ class AttendeesController < ApplicationController
     extra_errors = []
 
     # Assign airport_arrival and airport_departure attributes, if possible
-    extra_errors.concat parse_airport_datetimes
-
-    # Persist discounts
-    registration.register_discounts discount_ids
-
-    # Persist activities
-    activity_errors = registration.register_activities(activity_ids)
-    extra_errors.concat activity_errors
+    extra_errors.concat(parse_airport_datetimes)
 
     # The way `expose_form_vars` is written right now, it has to
     # come before `register_plans`, because it defines @plans.
@@ -106,10 +99,10 @@ class AttendeesController < ApplicationController
     # So, that's kind of awkward..
     expose_form_vars
 
-    # Persist plans
-    plan_selections = get_plan_selections @plans
-    plan_errors = registration.register_plans plan_selections
-    extra_errors.concat plan_errors
+    # Persist discounts, activities, and plans
+    reg.register_discounts(discount_ids)
+    extra_errors.concat(reg.register_activities(activity_ids))
+    extra_errors.concat(reg.register_plans(get_plan_selections(@plans)))
 
     # Set attributes but do not save yet. We'll save everything all
     # at once below. Cancan does this automatically before `create`,
