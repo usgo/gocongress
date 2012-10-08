@@ -5,6 +5,16 @@ class Registration::Registration
     @as_admin = as_admin
   end
 
+  def register_activities activity_id_array
+    activity_registration_errors = []
+    begin
+      @attendee.replace_all_activities(activity_id_array)
+    rescue DisabledActivityException
+      activity_registration_errors << "Please do not add or remove disabled activities. Changes discarded."
+    end
+    return activity_registration_errors
+  end
+
   def register_plans plan_selections
     plan_registration_errors = []
     nascent_attendee_plans = []

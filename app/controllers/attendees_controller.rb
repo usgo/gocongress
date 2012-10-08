@@ -118,17 +118,11 @@ class AttendeesController < ApplicationController
     params[:attendee].delete :discount_ids
 
     # Activities
-    activity_id_array = params[:attendee][:activity_id_list] || []
-    begin
-      @attendee.replace_all_activities(activity_id_array)
-    rescue DisabledActivityException
-      extra_errors << "Please do not add or remove disabled activities. Changes discarded."
-    end
+    activity_errors = registration.register_activities(activity_ids)
+    extra_errors.concat activity_errors
     params[:attendee].delete :activity_id_list
 
-    # update attributes but do not save yet.
-    # hasn't this already been done by cancan?
-    @attendee.attributes = params[:attendee]
+
 
     expose_form_vars # can this be earlier?
 
@@ -137,7 +131,12 @@ class AttendeesController < ApplicationController
     plan_errors = registration.register_plans plan_selections
     extra_errors.concat plan_errors
 
-    # Validate
+    # Update accessible attributes but do not save yet. We'll save
+    # everything all at once below. Cancan does this automatically
+    # before `create`, but not before `update`.
+    @attendee.attributes = params[:attendee]
+
+    # Validate and save
     if extra_errors.empty? && @attendee.save
       flash[:notice] = 'Changes saved'
       render 'edit'  # fixme - should go to terminus
@@ -219,6 +218,10 @@ protected
   end
 
   private
+
+  def activity_ids
+    params[:attendee][:activity_id_list] || []
+  end
 
   def expose_attendee_number_for attendee
     @attendee_number = attendee.user.attendees.count + 1
