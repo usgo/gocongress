@@ -2,20 +2,20 @@
 
 -# This hidden field is a necessary workaround
 -# for the case when no discounts are selected.
-= hidden_field_tag "attendee[discount_ids][]", nil
+= hidden_field_tag 'discount_ids[]', nil
 
 - if @discounts.count > 0
   %fieldset
     %legend Discounts
     %p
-      = @attendee.is_primary? ? "Do you" : "Does this attendee"
+      = @attendee.is_primary? ? 'Do you' : 'Does this attendee'
       qualify for any of these discounts?
     - @discounts.each do |d|
       .field
         %label= d.name
         - cbx_id = 'attendee_discount_id_' + d.id.to_s
         - cbx_checked = @attendee_discount_ids.index(d.id).present?
-        = check_box_tag "attendee[discount_ids][]", d.id, cbx_checked, :id => cbx_id
+        = check_box_tag 'discount_ids[]', d.id, cbx_checked, :id => cbx_id
 
 %fieldset
   .field

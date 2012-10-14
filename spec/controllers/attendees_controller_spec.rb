@@ -71,13 +71,6 @@ describe AttendeesController do
         assigns(:attendee).errors.should_not be_empty
       end
 
-      it "note to self" do
-        pending "the discount_ids and all the airport fields cause
-          mass-assigment warnings before create, in cancan's
-          load_resource. they should probably be moved outside of
-          params[:attendee]"
-      end
-
       it "is forbidden to create attendee under a different user" do
         user_two = FactoryGirl.create :user
         a = accessible_attributes_for(:attendee).merge(:user_id => user_two.id)
