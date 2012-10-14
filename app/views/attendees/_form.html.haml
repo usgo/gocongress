@@ -5,18 +5,18 @@
   -# prevents malicious use. -Jared 2012-08-28
   = f.hidden_field :user_id
 
-  = render :partial => "shared/error_messages", :locals => { :resource => @attendee }
-  = render :partial => "personal_info", :locals => { :f => f }
-  = render :partial => "player_info", :locals => { :f => f }
-  = render :partial => "contact_info", :locals => { :f => f }
-  = render :partial => "travel_plans", :locals => { :f => f }
+  = render :partial => 'shared/error_messages', :locals => { :resource => @attendee }
+  = render :partial => 'personal_info', :locals => { :f => f }
+  = render :partial => 'player_info', :locals => { :f => f }
+  = render :partial => 'contact_info', :locals => { :f => f }
+  = render :partial => 'travel_plans', :locals => { :f => f }
   = render :partial => 'activities', :locals => { :f => f }
   = render :partial => 'plans', :locals => { :f => f }
   = render :partial => 'wishes', :locals => { :f => f }
   - if current_user.admin?
-    = render :partial => "admin_info", :locals => { :f => f }
+    = render :partial => 'admin_info', :locals => { :f => f }
 
   %fieldset
     .field
       = label '', ''
-      = f.submit "Continue"
+      = f.submit 'Continue'
