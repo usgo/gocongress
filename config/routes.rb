@@ -34,7 +34,7 @@ Gocongress::Application.routes.draw do
         resources :attendee_statistics, :only => :index
         resources :plans, :except => [:index]
 
-        resources :attendees do
+        resources :attendees, :except => [:show] do
           collection do
             get 'vip'
           end

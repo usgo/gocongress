@@ -12,11 +12,6 @@ class AttendeesController < ApplicationController
   add_filter_restricting_resources_to_year_in_route
   before_filter :expose_plans, :only => [:create, :edit, :new, :update]
 
-  # Actions
-  def show
-    @plan_categories = PlanCategory.reg_form(@year, @attendee.age_in_years)
-  end
-
   def index
     params[:direction] ||= "asc"
     @opposite_direction = (params[:direction] == 'asc') ? 'desc' : 'asc'
