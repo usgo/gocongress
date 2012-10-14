@@ -100,6 +100,17 @@ describe UsersController do
     end
   end
 
+  describe '#update' do
+    let(:user) { FactoryGirl.create :user }
+
+    it "user cannot promote themselves" do
+      sign_in user
+      attrs = accessible_attributes_for(user).merge(role: 'A')
+      expect { put :update, :id => user.id, :user => attrs, :year => user.year
+        }.to_not change { user.reload.role }
+    end
+  end
+
   context "even when the user has zero attendees" do
 
     # Nomrally, rspec-rails controller specs do not render views
