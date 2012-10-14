@@ -37,7 +37,7 @@
             %td= link_to a.get_full_name, edit_attendee_path(a)
             %td= a.get_rank_name
             %td= a.age_in_years.floor
-            %td.align-center
+            %td.smalltext
               = link_to 'delete', a, :data => {:confirm => "Are you sure you want to delete #{a.full_name}?"}, :method => :delete
 
   %p= button_to 'Add Attendee', add_attendee_to_user_path, :method => :get
