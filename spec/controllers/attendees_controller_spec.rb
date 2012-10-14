@@ -317,10 +317,10 @@ describe AttendeesController do
 
           it "does not allow them to un-select the plan" do
             put :update,
-              year: 2012,
-              id: attendee.id,
-              plan_category_id: plan.plan_category.id,
-              attendee: {:"plan_#{plan2.id}_qty" => 1}
+              :year => 2012,
+              :id => attendee.id,
+              :plan_category_id => plan.plan_category.id,
+              :"plan_#{plan2.id}_qty" => 1
             attendee.reload
             attendee.plans.map(&:name).should include(plan.name)
             response.should render_template(:edit)
