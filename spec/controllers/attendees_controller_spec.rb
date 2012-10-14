@@ -56,7 +56,7 @@ describe AttendeesController do
 
     describe "#create" do
       it "succeeds under own account" do
-        a = FactoryGirl.attributes_for(:attendee, :user_id => user.id)
+        a = accessible_attributes_for(:attendee).merge(:user_id => user.id)
         expect { post :create, :attendee => a, :year => user.year
           }.to change { user.attendees.count }.by(+1)
         response.should redirect_to \
@@ -80,26 +80,26 @@ describe AttendeesController do
 
       it "is forbidden to create attendee under a different user" do
         user_two = FactoryGirl.create :user
-        a = FactoryGirl.attributes_for(:attendee, :user_id => user_two.id)
-        expect { post :create, :attendee => a, :year => a[:year]
+        a = accessible_attributes_for(:attendee).merge(:user_id => user_two.id)
+        expect { post :create, :attendee => a, :year => user_two.year
           }.not_to change { Attendee.count }
         response.should be_forbidden
       end
 
       it "given invalid attributes it does not create attendee" do
-        attrs = FactoryGirl.attributes_for :attendee
+        attrs = accessible_attributes_for(:attendee).merge(:user_id => user.id)
         attrs[:gender] = "zzzz" # invalid, obviously
         expect {
-          post :create, attendee: attrs, year: attrs[:year]
+          post :create, attendee: attrs, year: user.year
         }.to_not change{ Attendee.count }
         assigns(:attendee).errors.should_not be_empty
       end
 
       it "minors can specify the name of their guardian" do
-        attrs = FactoryGirl.attributes_for :minor
+        attrs = accessible_attributes_for(:minor).merge(:user_id => user.id)
         attrs[:guardian_full_name] = "Mommy Moo"
         expect {
-          post :create, attendee: attrs, year: attrs[:year]
+          post :create, attendee: attrs, year: user.year
         }.to change{ Attendee.count }.by(+1)
       end
     end
@@ -381,7 +381,7 @@ describe AttendeesController do
     describe "#create" do
       it "succeeds, creating attendee under any user" do
         u = FactoryGirl.create :user
-        a = FactoryGirl.attributes_for(:attendee, :user_id => u.id)
+        a = accessible_attributes_for(:attendee).merge(:user_id => u.id)
         expect { post :create, :attendee => a, :year => u.year
           }.to change { u.attendees.count }.by(+1)
       end
@@ -416,7 +416,7 @@ describe AttendeesController do
       let(:a) { FactoryGirl.create(:attendee, :year => admin.year) }
 
       it 'can update attendee of any user' do
-        attrs = a.attributes.merge({:family_name => 'banana'})
+        attrs = accessible_attributes_for(a).merge({:family_name => 'banana'})
         expect { put :update, :id => a.id, :attendee => attrs, :year => a.year
           }.to change { a.reload.family_name }
         a.reload.family_name.should == 'banana'

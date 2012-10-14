@@ -26,3 +26,25 @@ Spork.each_run do
   require "#{ Rails.root }/config/routes"
   FactoryGirl.reload
 end
+
+# We want mass_assignment_sanitizer = :strict, but our factories
+# give include protected attributes.  This is a workaround until
+# factory_girl can come up with something official.
+# -Jared 2012-10-14
+#
+# http://www.ruby-forum.com/topic/3536091
+# http://bit.ly/V0nC20
+# https://gist.github.com/3437893
+# https://github.com/thoughtbot/factory_girl/issues/408
+#
+def accessible_attributes_for resource
+  if resource.is_a? Symbol
+    klass = FactoryGirl.build(resource).class
+    attrs = FactoryGirl.attributes_for resource
+  else
+    klass = resource.class
+    attrs = resource.attributes
+  end
+  accessibles = klass.accessible_attributes
+  attrs.symbolize_keys.keep_if { |k,v| accessibles.include?(k) }
+end

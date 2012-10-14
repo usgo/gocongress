@@ -32,12 +32,10 @@ describe RegistrationsController do
       end
     end
 
-    it "ignores role parameter" do
-      u = FactoryGirl.attributes_for(:user, role: 'A') # A for admin
+    it "raises error if role parameter is present" do
+      u = accessible_attributes_for(:user).merge(role: 'A')
       expect { post :create, :user => u, :year => u[:year]
-        }.to change{ User.count }.by(+1)
-      response.should be_redirect
-      assigns(:user).role.should == 'U'
+        }.to raise_error(ActiveModel::MassAssignmentSecurity::Error)
     end
   end
 end

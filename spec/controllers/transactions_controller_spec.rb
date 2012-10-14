@@ -20,7 +20,7 @@ describe TransactionsController do
         post :create,
           :year => user.year,
           :user_email => bad_email,
-          :transaction => FactoryGirl.attributes_for(:tr_sale)
+          :transaction => accessible_attributes_for(:tr_sale)
       }.to_not change{ Transaction.count }
       response.should render_template :new
     end
@@ -53,6 +53,6 @@ describe TransactionsController do
       :year => t.year,
       :user_email => email,
       :id => t.id,
-      :transaction => t.attributes
+      :transaction => accessible_attributes_for(t)
   end
 end

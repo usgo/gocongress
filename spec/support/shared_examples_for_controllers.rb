@@ -12,7 +12,7 @@
 #
 shared_examples "an admin controller" do |model_name|
   let(:resource) { FactoryGirl.create model_name }
-  let(:resource_attrs) { FactoryGirl.attributes_for model_name }
+  let(:resource_attrs) { accessible_attributes_for model_name }
   let(:year) { Time.now.year }
   let(:resource_class) { model_name.to_s.classify.constantize }
   let(:index_path) { send (model_name.to_s.pluralize + "_path").to_sym }

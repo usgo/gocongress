@@ -24,8 +24,8 @@ describe ActivitiesController do
     end
     describe "#create" do
       it "is forbidden" do
-        a = FactoryGirl.build :activity
-        post :create, :year => Time.now.year, :activity => a.attributes
+        post :create, :year => Time.now.year,
+          :activity => accessible_attributes_for(:activity)
         response.status.should == 403
       end
     end
