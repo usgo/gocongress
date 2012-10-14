@@ -92,7 +92,7 @@ describe AttendeesController do
         expect {
           post :create, attendee: attrs, year: user.year
         }.to_not change{ Attendee.count }
-        assigns(:attendee).errors.should_not be_empty
+        assigns(:attendee).errors.should include(:gender)
       end
 
       it "minors can specify the name of their guardian" do
