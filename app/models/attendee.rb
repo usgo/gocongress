@@ -20,13 +20,12 @@ class Attendee < ActiveRecord::Base
   # Mass assignment config
   # ----------------------
 
-  attr_accessible :aga_id, :anonymous,
-    :airport_arrival, :airport_arrival_flight, :airport_departure,
-    :birth_date, :congresses_attended, :country, :email,
-    :family_name, :given_name, :gender,
-    :guardian_full_name, :phone, :special_request,
-    :rank, :roomate_request, :tshirt_size,
-    :understand_minor, :user_id
+  attr_accessible :aga_id, :anonymous, :airport_arrival,
+    :airport_arrival_flight, :airport_departure, :birth_date,
+    :comment, :congresses_attended, :country, :email, :family_name,
+    :given_name, :gender, :guardian_full_name,
+    :minor_agreement_received, :phone, :special_request, :rank,
+    :roomate_request, :tshirt_size, :understand_minor, :user_id
 
   # Constants
   # ---------
