@@ -63,6 +63,14 @@ describe AttendeesController do
           user_terminus_path(:user_id => user.id, :year => user.year)
       end
 
+      it "fails without any attributes" do
+        attrs = {:user_id => user.id}
+        expect { post :create, :attendee => attrs, :year => user.year
+          }.to_not change { Attendee.count }
+        response.should render_template :new
+        assigns(:attendee).errors.should_not be_empty
+      end
+
       it "note to self" do
         pending "the discount_ids and all the airport fields cause
           mass-assigment warnings before create, in cancan's
