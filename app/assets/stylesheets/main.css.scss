@@ -1,3 +1,5 @@
+@import "mixins";
+
 /* Configuration: Layout */
 $content_width: 880px;
 
@@ -64,8 +66,14 @@ img.thin-border { border: 1px solid black; }
 .flow-padding { padding: 8px 0px; }
 
 /* Symetrical two column layout */
-.left-column { display: inline-block; width: 45%; vertical-align: top; }
-.right-column { display: inline-block; width: 45%; vertical-align: top; }
+.left-column, .right-column {
+  @include box-sizing(border-box);
+  display: inline-block;
+  vertical-align: top;
+  width: 438px;
+}
+.left-column { padding-right: 5px; }
+.right-column { padding-left: 5px; }
 
 /* Asymetrical two column layout (two-thirds / one-third) */
 .asymetrical-columns .left-column { display: inline-block; padding-right: 32px; width: 60%; vertical-align: top; }
@@ -190,7 +198,8 @@ body {
 /* Basic styling for elements in the main content area.
 Also applies to contents of dialogs. */
 .content, .dialog {
-  p, dl, h1, h2, h3, h4, h5, h6 { padding: 0.5em 0em; }
+  h1, h2, h3, h4, h5, h6 { padding: 1em 0em 0.5em 0em; }
+  dl, p { padding: 0.5em 0em; }
   ul { margin-left: 20px; padding: 0.5em 0em 0.5em 0em; }
   li { margin-left: 10px; }
   table.semantic li { margin-left: 25px; }
@@ -305,9 +314,6 @@ fieldset.wordy-questions .aligned-with-input { margin-left: 355px !important; }
     vertical-align: middle;
     width: 350px;
 }
-
-/* User attendee list */
-.attendee_name_column { width: 400px; }
 
 /* Transaction List */
 .txn-button {

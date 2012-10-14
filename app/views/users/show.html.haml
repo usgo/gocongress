@@ -18,51 +18,38 @@
           - if can? :edit, @user
             %td.smalltext= link_to 'Edit', edit_user_path(@user)
 
+  %h2 Attendees
+  - if @user.attendees.empty?
+    %p No attendees yet.
+  - else
+    %table.lightweight
+      %thead
+        %tr
+          %th Name
+          %th Rank
+          %th
+            Age
+            %span.smalltext (on #{@start_date})
+          %th
+      %tbody
+        - for a in @attendees
+          %tr
+            %td= link_to a.get_full_name, a
+            %td= a.get_rank_name
+            %td= a.age_in_years.floor
+            %td.align-center
+              = link_to 'delete', a, :data => {:confirm => "Are you sure you want to delete #{a.full_name}?"}, :method => :delete
+
+  %p= button_to 'Add Attendee', add_attendee_to_user_path, :method => :get
+
+  -if @has_minor_attendee
+    %h3 Regarding Minors
+    %p
+      At least one of the attendees on this account is a minor.
+      Do not forget to send the #{link_to_liability_release} to the
+      = link_to 'registrar.', contacts_path
+
 .right-column
   %h2 Balance
   = render :partial => 'shared/balance', :locals => {:user => @user, :show_detail_links => true}
-  %p= button_to "Make a Payment", pay_user_path(@user), :method => "get", :class => 'button-emphasis'
-
-%br
-
-%h2 Attendees
-
-- if @user.attendees.empty?
-  %p
-    You don't have any attendees!  Please
-    = link_to 'register', add_attendee_to_user_path
-    at least one person!
-- else
-  %p
-    = link_to 'Register another attendee', add_attendee_to_user_path
-    or click on an attendee to edit.
-  %table.semantic.fullwidth
-    %thead
-      %tr
-        %th Name
-        %th Rank
-        %th Age *
-        %th
-    %tbody
-      - for a in @attendees
-        %tr
-          %td.attendee_name_column= link_to a.get_full_name, a
-          %td= a.get_rank_name
-          %td= a.age_in_years.floor
-          %td
-            - if a.is_primary
-              Primary&nbsp;Attendee
-            - else
-              =link_to 'Delete', a, :data => {:confirm => "Are you sure you want to delete this attendee?"}, :method => :delete
-
-  %p.smalltext
-    * Age on #{CONGRESS_START_DATE[@year.year].to_formatted_s(:long)}
-
-%br
-
--if @has_minor_attendee
-  %h3 Regarding Minors
-  %p
-    At least one of the attendees on this account is a minor.
-    Do not forget to send the #{link_to_liability_release} to the
-    = link_to 'registrar.', contacts_path
+  %p= button_to "Make a Payment", pay_user_path(@user), :method => "get"

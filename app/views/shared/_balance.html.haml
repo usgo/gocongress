@@ -4,12 +4,12 @@
       %th Total cost
       %td.numeric= number_to_currency user.get_invoice_total
       - if show_detail_links
-        %td.smalltext= link_to "Cost Summary", invoice_user_path(user)
+        %td.smalltext= link_to "Summary", invoice_user_path(user)
     %tr
       %th Amount paid
       %td.numeric= number_to_currency user.amount_paid
       - if show_detail_links
-        %td.smalltext= link_to "Payment History", ledger_user_path(user)
+        %td.smalltext= link_to "History", ledger_user_path(user)
     %tr
       %th Balance
       %td.numeric= number_to_currency user.balance

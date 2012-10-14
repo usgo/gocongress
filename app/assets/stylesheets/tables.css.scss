@@ -3,17 +3,16 @@ $orange: #FFDAA3;
 $orange-dark: #FFC369;
 $zebra: darken($orange-light, 8%);
 
-/* These are the 2011 table colors.  They are a little too vibrant for 2012. */
-/*
-$orange-light: #FFDAA3;
-$orange: #FFC369;
-$orange-dark: #FF9B05;
-*/
+table {
+  &.lightweight, &.semantic {
+    border-spacing: 0;
+    border-collapse: collapse;
+    margin: 0.5em 0em;
+  }
+}
 
 /* Lightweight table: Tighter, less colors, borders, etc. -Jared 1/2/11 */
 table.lightweight {
-  border-spacing: 0;
-  border-collapse: collapse;
   td, th { border: 0px solid #666; }
   td { padding: 0em 1em; }
   th { padding: 0em 1em 0em 0em; }
@@ -28,9 +27,6 @@ td.nowrap { white-space:nowrap; }
 
 /* Semantic table: The basic table meant for data, not for layout */
 table.semantic {
-  border-spacing: 0;
-  border-collapse: collapse;
-  margin: 0.5em 0em;
   thead th { vertical-align: bottom; }
   td, th { border: 1px solid #666; padding: 0.25em; }
   td { background-color: $orange-light; }
