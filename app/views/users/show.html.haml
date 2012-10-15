@@ -27,9 +27,7 @@
         %tr
           %th Name
           %th Rank
-          %th
-            Age
-            %span.smalltext (on #{@start_date})
+          %th Age*
           %th
       %tbody
         - for a in @attendees
@@ -53,3 +51,5 @@
   %h2 Balance
   = render :partial => 'shared/balance', :locals => {:user => @user, :show_detail_links => true}
   %p= button_to "Make a Payment", pay_user_path(@user), :method => "get"
+
+%span.smalltext * Age on #{@start_date}, used to identify minors.

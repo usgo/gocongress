@@ -1,7 +1,6 @@
 # Be sure to restart your server when you modify this file.
 
 Date::DATE_FORMATS[:long_with_day] = "%A, %B %e, %Y"
-Date::DATE_FORMATS[:month_day] = "%b %e"
 Date::DATE_FORMATS[:month_day_dow] = "%B %e, %A"
 Date::DATE_FORMATS[:dow_month_day] = "%A, %B %e"
 
