@@ -85,49 +85,9 @@ class UsersControllerTest < ActionController::TestCase
     assert_response 403
   end
 
-  test "admin can update user" do
-    sign_in @admin_user
-    put :update, :id => @user.id, :user => @user.attributes, :year => Time.now.year
-    assert_redirected_to user_path(@user)
-  end
-
   test "guest cannot update user" do
     put :update, :id => @user.id, :user => @user.attributes, :year => Time.now.year
     assert_response 403
-  end
-
-  test "user can update own email address" do
-    sign_in @user
-    email_before = @user.email
-
-    # define a new email that is different from the old one
-    new_email_addy = 'freeb@narf.com'
-    assert_not_equal new_email_addy, @user.email
-
-    # put to update
-    u = @user.attributes.merge({ 'email' => new_email_addy })
-    put :update, :id => @user.id, :user => u, :year => Time.now.year
-
-    # assert that email changed
-    @user = User.find(@user.id)
-    assert_not_equal email_before, @user.email
-  end
-
-  test "staff can update own email address" do
-    sign_in @staff
-    email_before = @staff.email
-
-    # define a new email that is different from the old one
-    new_email_addy = 'freeb@narf.com'
-    assert_not_equal new_email_addy, @staff.email
-
-    # put to update
-    u = @staff.attributes.merge({ 'email' => new_email_addy })
-    put :update, :id => @staff.id, :user => u, :year => Time.now.year
-
-    # assert that email changed
-    @staff = User.find(@staff.id)
-    assert_not_equal email_before, @staff.email
   end
 
   test "staff can get edit email form" do

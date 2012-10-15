@@ -102,12 +102,28 @@ describe UsersController do
 
   describe '#update' do
     let(:user) { FactoryGirl.create :user }
+    let(:admin) { FactoryGirl.create :admin }
 
-    it "user cannot promote themselves" do
+    it 'user cannot promote themselves' do
       sign_in user
       attrs = accessible_attributes_for(user).merge(role: 'A')
       expect { put :update, :id => user.id, :user => attrs, :year => user.year
         }.to_not change { user.reload.role }
+    end
+
+    it 'user can update own email address' do
+      sign_in user
+      new_email = 'derp' + user.email
+      attrs = accessible_attributes_for(user).merge(email: new_email)
+      expect { put :update, :id => user.id, :user => attrs, :year => user.year
+        }.to change { user.reload.email }
+    end
+
+    it 'admin can update user' do
+      sign_in admin
+      attrs = accessible_attributes_for user
+      put :update, :id => user.id, :user => attrs, :year => user.year
+      response.should redirect_to user_path user
     end
   end
 
