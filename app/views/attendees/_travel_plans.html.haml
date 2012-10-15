@@ -1,14 +1,11 @@
 %h3 Flying to / from #{@year.nearby_airport_city}?
 
 %p
-  If you want help connecting with the airport shuttle bus, please
+  Do you want help connecting with the airport shuttle bus?
 
   - if @year.year == 2012
-    read the
-    = link_to 'airport shuttle instructions', '#', :id => 'open_dialog_airport_shuttle'
-    and
-
-  fill out the fields below:
+    Please read the
+    = link_to 'airport shuttle instructions.', '#', :id => 'open_dialog_airport_shuttle'
 
 %fieldset
   .field
