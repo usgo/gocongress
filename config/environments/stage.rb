@@ -26,7 +26,7 @@ Gocongress::Application.configure do
   config.action_mailer.raise_delivery_errors = true
 
   # Staging host differs from production host -Jared 2011-12-12
-  config.action_mailer.default_url_options = { :host => "gocongress-dev.heroku.com" }
+  config.action_mailer.default_url_options = { :host => "gocongress-dev.herokuapp.com" }
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation cannot be found)
