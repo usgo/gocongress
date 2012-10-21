@@ -1,7 +1,6 @@
-Gocongress::Application.configure do
+require_relative 'shared/notifier'
 
-  # Settings specified here will take precedence over those in
-  # config/application.rb.
+Gocongress::Application.configure do
 
   # Code is not reloaded between requests
   config.cache_classes = true
@@ -14,7 +13,7 @@ Gocongress::Application.configure do
   # See ActiveModel::MassAssignmentSecurity::ClassMethods
   config.active_record.mass_assignment_sanitizer = :logger
 
-  # Disable Rails's static asset server (Apache or nginx will already do this)
+  # Disable Rails's static asset server
   config.serve_static_assets = false
 
   # Compress JavaScripts and CSS.
@@ -22,8 +21,6 @@ Gocongress::Application.configure do
 
   # Specifies the header that your server uses for sending files.
   config.action_dispatch.x_sendfile_header = "X-Sendfile" # for apache
-  # config.action_dispatch.x_sendfile_header = 'X-Accel-Redirect' # for nginx
-
 
   # Disable delivery errors, bad email addresses will be ignored.
   config.action_mailer.raise_delivery_errors = false
@@ -37,8 +34,6 @@ Gocongress::Application.configure do
   config.active_support.deprecation = :notify
 
   # Runtime exception notification
-  config.middleware.use ExceptionNotifier,
-    sender_address: 'usgcwebsite@gmail.com',
-    exception_recipients: 'jared@jaredbeck.com'
+  GocongressNotifier.use_exception_notifier_middleware(config)
 
 end
