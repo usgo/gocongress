@@ -23,7 +23,7 @@ Gocongress::Application.configure do
   config.action_dispatch.x_sendfile_header = "X-Sendfile" # for apache
 
   # Disable delivery errors, bad email addresses will be ignored.
-  config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.raise_delivery_errors = true
 
   # Staging host differs from production host -Jared 2011-12-12
   config.action_mailer.default_url_options = { :host => "gocongress-dev.heroku.com" }
