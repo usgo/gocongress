@@ -6,7 +6,7 @@ GIT
 
 GIT
   remote: https://github.com/sporkrb/spork.git
-  revision: a07c59d6652d81e8863b7ae5767e943fd272b5da
+  revision: 8ac98544869c3b4c5cf1f664b2d9281bb75c7e3e
   specs:
     spork (1.0.0rc3)
 
@@ -82,7 +82,7 @@ GEM
     faraday_middleware (0.9.0)
       faraday (>= 0.7.4, < 0.9)
     ffi (1.1.5)
-    guard (1.5.1)
+    guard (1.5.2)
       listen (>= 0.4.2)
       lumberjack (>= 1.0.2)
       pry (>= 0.9.10)
@@ -217,7 +217,7 @@ GEM
       multi_json (~> 1.0)
       multipart-post (~> 1.1)
       twitter-stream (~> 0.1)
-    treetop (1.4.11)
+    treetop (1.4.12)
       polyglot
       polyglot (>= 0.3.1)
     twitter-stream (0.1.16)
