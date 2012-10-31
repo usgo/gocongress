@@ -280,6 +280,13 @@ describe AttendeesController do
           response.should be_forbidden
         end
 
+        it "stays on the same page when there is an error registering plans" do
+          Registration::Registration.any_instance.stub(:register_plans).and_return(["derp"])
+          put :update, :year => 2012, :id => attendee.id
+          response.should be_successful
+          response.should render_template(:edit)
+        end
+
         context "when attendee selects a disabled plan" do
           let(:plan) { create :plan, disabled: true }
 
@@ -319,13 +326,6 @@ describe AttendeesController do
             attendee.plans.map(&:name).should include(plan.name)
             response.should render_template(:edit)
           end
-        end
-
-        it "stays on the same page when there is an error registering plans" do
-          Registration::Registration.any_instance.stub(:register_plans).and_return(["derp"])
-          put :update, :year => 2012, :id => attendee.id
-          response.should be_successful
-          response.should render_template(:edit)
         end
       end
 
