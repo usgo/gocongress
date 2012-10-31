@@ -4,7 +4,7 @@ describe Attendee do
   it_behaves_like "a yearly model"
 
   it "has a valid factory" do
-    FactoryGirl.build(:attendee).should be_valid
+    build(:attendee).should be_valid
   end
 
   context "when first created" do
@@ -16,9 +16,9 @@ describe Attendee do
   end
 
   describe ".with_planlessness" do
-    let!(:plan) { FactoryGirl.create :plan }
-    let!(:a1) { FactoryGirl.create :attendee }
-    let!(:a2) { FactoryGirl.create :attendee }
+    let!(:plan) { create :plan }
+    let!(:a1) { create :attendee }
+    let!(:a2) { create :attendee }
 
     before(:each) do
       a2.plans << plan
@@ -38,42 +38,42 @@ describe Attendee do
   end
 
   describe "#invoice_items" do
-    let(:a) { FactoryGirl.create :attendee }
+    let(:a) { create :attendee }
 
     it "does not include plans that need staff approval" do
-      p = FactoryGirl.create :plan_which_needs_staff_approval
+      p = create :plan_which_needs_staff_approval
       expect { a.plans << p }.to_not change{a.invoice_items.count}
     end
 
     it "includes applicable plans" do
-      p = FactoryGirl.create :plan
+      p = create :plan
       expect { a.plans << p }.to change{a.invoice_items.count}.by(1)
     end
 
     it "includes activities" do
-      v = FactoryGirl.create :activity
+      v = create :activity
       expect { a.activities << v }.to change{a.invoice_items.count}.by(1)
     end
 
   end
 
   describe "#valid?" do
-    let(:plan) { FactoryGirl.create :plan, inventory: 42, max_quantity: 999 }
+    let(:plan) { create :plan, inventory: 42, max_quantity: 999 }
 
     it "plan quantity cannot exceed available inventory" do
-      a = FactoryGirl.create :attendee
+      a = create :attendee
       a.attendee_plans.build plan_id: plan.id, quantity: 43
       a.should_not be_valid
     end
 
     it "plan quantity can equal available inventory" do
-      a = FactoryGirl.create :attendee
+      a = create :attendee
       a.attendee_plans.build plan_id: plan.id, quantity: 42
       a.should be_valid
     end
 
     it "requires minors to provide the name of a guardian" do
-      a = FactoryGirl.build :attendee
+      a = build :attendee
       a.stub(:minor?) { true }
       a.guardian_full_name = nil
       a.should_not be_valid
@@ -81,13 +81,13 @@ describe Attendee do
     end
 
     it "requires a birth date" do
-      a = FactoryGirl.build :attendee, {:birth_date => nil}
+      a = build :attendee, {:birth_date => nil}
       a.should_not be_valid
       a.errors.keys.should include(:birth_date)
     end
 
     it "requires minors to agree to fill out the liability release" do
-      a = FactoryGirl.build :attendee
+      a = build :attendee
       a[:birth_date] = 5.years.ago
       a[:understand_minor] = false
       a.should_not be_valid

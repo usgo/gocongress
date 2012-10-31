@@ -2,7 +2,7 @@ require "spec_helper"
 
 describe ActivitiesController do
   it_behaves_like "an admin controller", :activity do
-    let(:cat) { FactoryGirl.create :activity_category }
+    let(:cat) { create :activity_category }
     let(:extra_params_for_create) { {:activity => {:activity_category_id => cat.id}} }
     let(:updateable_attribute) { :notes }
   end
@@ -10,7 +10,7 @@ describe ActivitiesController do
   context "as a visitor" do
     describe "#show" do
       it "succeeds" do
-        activity = FactoryGirl.create(:activity)
+        activity = create(:activity)
         get :show, :year => Time.now.year, :id => activity.id
         response.should be_successful
       end
@@ -18,7 +18,7 @@ describe ActivitiesController do
   end
 
   context "as a user" do
-    let(:user) { FactoryGirl.create(:user) }
+    let(:user) { create(:user) }
     before(:each) do
       sign_in user
     end

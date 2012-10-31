@@ -3,7 +3,7 @@ require "spec_helper"
 # This spec describes a module included by Plan and Activity, so
 # it should probably be rewritten as shared examples
 describe Purchasable do
-  subject { FactoryGirl.create :plan }
+  subject { create :plan }
 
   describe "#contact_msg_instead_of_price?" do
     it "returns true if needs_staff_approval?" do
@@ -26,7 +26,7 @@ describe Purchasable do
 
   context "when at least one attendee has selected it" do
     before do
-      subject.attendees << FactoryGirl.create(:attendee)
+      subject.attendees << create(:attendee)
     end
 
     describe "#destroy" do

@@ -18,13 +18,14 @@ Spork.prefork do
     conf.use_transactional_fixtures = true
     conf.filter_run :focus => true
     conf.run_all_when_everything_filtered = true
+    conf.include FactoryGirl::Syntax::Methods
   end
 end
 
 Spork.each_run do
-  Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
-  require "#{ Rails.root }/config/routes"
-  FactoryGirl.reload
+  Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f} # why?
+  require "#{ Rails.root }/config/routes" # why?
+  FactoryGirl.reload # why?
 end
 
 # We want mass_assignment_sanitizer = :strict, but our factories
@@ -39,8 +40,8 @@ end
 #
 def accessible_attributes_for resource
   if resource.is_a? Symbol
-    klass = FactoryGirl.build(resource).class
-    attrs = FactoryGirl.attributes_for resource
+    klass = build(resource).class
+    attrs = attributes_for resource
   else
     klass = resource.class
     attrs = resource.attributes

@@ -2,9 +2,9 @@ require 'test_helper'
 
 class ReportsControllerTest < ActionController::TestCase
   setup do
-    @user = FactoryGirl.create :user
-    @staff = FactoryGirl.create :staff
-    @admin = FactoryGirl.create :admin
+    @user = create :user
+    @staff = create :staff
+    @admin = create :admin
   end
 
   test "admin can get all reports" do

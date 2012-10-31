@@ -11,14 +11,14 @@
 # 2. a path helper exists for the index action, eg. contents_path
 #
 shared_examples "an admin controller" do |model_name|
-  let(:resource) { FactoryGirl.create model_name }
+  let(:resource) { create model_name }
   let(:resource_attrs) { accessible_attributes_for model_name }
   let(:year) { Time.now.year }
   let(:resource_class) { model_name.to_s.classify.constantize }
   let(:index_path) { send (model_name.to_s.pluralize + "_path").to_sym }
 
   context "as a staffperson" do
-    let(:staff) { FactoryGirl.create :staff }
+    let(:staff) { create :staff }
     before(:each) do
       sign_in staff
     end
@@ -70,7 +70,7 @@ shared_examples "an admin controller" do |model_name|
   end
 
   context "as an admin" do
-    let(:admin) { FactoryGirl.create :admin }
+    let(:admin) { create :admin }
     before(:each) do
       sign_in admin
     end

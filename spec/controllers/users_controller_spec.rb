@@ -10,7 +10,7 @@ end
 describe UsersController do
 
   describe "#choose_attendee" do
-    let(:user) { FactoryGirl.create :user }
+    let(:user) { create :user }
     let(:page) { :events }
 
     before do
@@ -27,13 +27,13 @@ describe UsersController do
     end
 
     it "redirects to the destination page when there is only one attendee" do
-      attendee = FactoryGirl.create :attendee, user: user
+      attendee = create :attendee, user: user
       get_choose_attendee user, page
       response.should redirect_to edit_attendee_path(attendee, page)
     end
 
     it "is succesful when there are two or more attendees" do
-      1.upto(2) { FactoryGirl.create :attendee, user: user }
+      1.upto(2) { create :attendee, user: user }
       get_choose_attendee user, page
       response.should be_success
     end
@@ -44,7 +44,7 @@ describe UsersController do
   end
 
   describe "#show" do
-    let(:user) { FactoryGirl.create :user, year: 2012 }
+    let(:user) { create :user, year: 2012 }
     let(:wrong_year) { user.year - 1 }
 
     def show id, year
@@ -70,18 +70,18 @@ describe UsersController do
           }.to raise_error(ActiveRecord::RecordNotFound)
       end
       it "a different user from the same year is forbidden" do
-        sign_in FactoryGirl.create :user, year: user.year
+        sign_in create :user, year: user.year
         show(user.id, user.year).should be_forbidden
       end
     end
 
     context "as staff" do
       it "succeeds" do
-        sign_in FactoryGirl.create :staff, year: user.year
+        sign_in create :staff, year: user.year
         show(user.id, user.year).should be_successful
       end
       it "from wrong year raises RecordNotFound" do
-        sign_in FactoryGirl.create :staff, year: wrong_year
+        sign_in create :staff, year: wrong_year
         expect { show(user.id, wrong_year)
           }.to raise_error(ActiveRecord::RecordNotFound)
       end
@@ -89,11 +89,11 @@ describe UsersController do
 
     context "as admin" do
       it "succeeds" do
-        sign_in FactoryGirl.create :admin, year: user.year
+        sign_in create :admin, year: user.year
         show(user.id, user.year).should be_successful
       end
       it "from wrong year raises RecordNotFound" do
-        sign_in FactoryGirl.create :admin, year: wrong_year
+        sign_in create :admin, year: wrong_year
         expect { show(user.id, wrong_year)
           }.to raise_error(ActiveRecord::RecordNotFound)
       end
@@ -101,8 +101,8 @@ describe UsersController do
   end
 
   describe '#update' do
-    let(:user) { FactoryGirl.create :user }
-    let(:admin) { FactoryGirl.create :admin }
+    let(:user) { create :user }
+    let(:admin) { create :admin }
 
     it 'user cannot promote themselves' do
       sign_in user
@@ -134,8 +134,8 @@ describe UsersController do
     # that happened in the views, so we enable rendering.
     render_views
 
-    let(:admin) { FactoryGirl.create :admin }
-    let(:user) { FactoryGirl.create :user, primary_attendee: nil }
+    let(:admin) { create :admin }
+    let(:user) { create :user, primary_attendee: nil }
 
     before(:each) do
       sign_in admin

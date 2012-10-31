@@ -1,7 +1,7 @@
 require "spec_helper"
 
 describe PlansController do
-  let(:plan) { FactoryGirl.create :plan }
+  let(:plan) { create :plan }
 
   context 'as a visitor' do
     it 'can show plan' do
@@ -12,13 +12,13 @@ describe PlansController do
 
   context 'as a user' do
     it 'cannot get new' do
-      sign_in FactoryGirl.create :user
+      sign_in create :user
       get :new, :year => Time.now.year
       response.should be_forbidden
     end
 
     it 'cannot create' do
-      sign_in FactoryGirl.create :user
+      sign_in create :user
       attrs = accessible_attributes_for plan
       post :create, :plan => attrs, :year => Time.now.year
       response.should be_forbidden
@@ -26,7 +26,7 @@ describe PlansController do
   end
 
   context 'as an admin' do
-    let(:admin) { FactoryGirl.create :admin }
+    let(:admin) { create :admin }
     before do sign_in admin end
 
     it 'can create' do
@@ -37,8 +37,8 @@ describe PlansController do
     end
 
     it 'cannot destroy when attendees have selected the plan' do
-      plan = FactoryGirl.create :plan
-      plan.attendees << FactoryGirl.create(:attendee)
+      plan = create :plan
+      plan.attendees << create(:attendee)
       expect {
         delete :destroy, year: plan.year, id: plan.id
       }.to_not change{ Plan.count }

@@ -5,13 +5,13 @@ describe Transaction do
 
   it "has valid factories" do
     %w[transaction tr_comp tr_refund tr_sale].each do |f|
-      FactoryGirl.build(f.to_sym).should be_valid
+      build(f.to_sym).should be_valid
     end
   end
 
   describe "#description" do
     it "includes comment, if present" do
-      t = FactoryGirl.build(:tr_comp, :comment => "foobar")
+      t = build(:tr_comp, :comment => "foobar")
       t.description.should == "Comp: foobar"
       t.comment = nil
       t.description.should == "Comp"
@@ -20,12 +20,12 @@ describe Transaction do
 
   describe "#is_gateway_transaction?" do
     it "is true for sales with card" do
-      t = FactoryGirl.build(:tr_sale, :instrument => 'C')
+      t = build(:tr_sale, :instrument => 'C')
       t.is_gateway_transaction?.should be_true
     end
 
     it "is false for sales with instrument other than card" do
-      t = FactoryGirl.build(:tr_sale, :instrument => 'S')
+      t = build(:tr_sale, :instrument => 'S')
       t.is_gateway_transaction?.should be_false
     end
   end
@@ -33,7 +33,7 @@ describe Transaction do
   describe "#valid" do
 
     it "validates year" do
-      t = FactoryGirl.build(:tr_sale)
+      t = build(:tr_sale)
       t.should be_valid
       [nil, 2100, 2010].each do |y|
         t.year = y
@@ -45,24 +45,24 @@ describe Transaction do
 
     context "comp" do
       it "must not have a gwtranid" do
-        t = FactoryGirl.build :tr_comp, {gwtranid: 12897}
+        t = build :tr_comp, {gwtranid: 12897}
         t.should_not be_valid
       end
 
       it "must not have a gwdate" do
-        t = FactoryGirl.build :tr_comp, {gwdate: Time.now.to_date}
+        t = build :tr_comp, {gwdate: Time.now.to_date}
         t.should_not be_valid
       end
 
       it "amount cannot be negative" do
-        t = FactoryGirl.build :tr_comp, {amount: -42}
+        t = build :tr_comp, {amount: -42}
         t.should_not be_valid
         t.amount = +42
         t.should be_valid
       end
 
       it "instrument must be blank" do
-        t = FactoryGirl.build :tr_comp
+        t = build :tr_comp
         [nil, ''].each do |i|
           t.instrument = i
           t.should be_valid
@@ -76,7 +76,7 @@ describe Transaction do
     end
 
     context "sale" do
-      let(:txn) { FactoryGirl.build :tr_sale }
+      let(:txn) { build :tr_sale }
 
       it "requires positive sales amount" do
         txn.amount = -34

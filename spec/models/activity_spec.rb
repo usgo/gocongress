@@ -4,7 +4,7 @@ describe Activity do
   it_behaves_like "a yearly model"
 
   it "has a valid factory" do
-    FactoryGirl.build(:activity).should be_valid
+    build(:activity).should be_valid
   end
   context "when initialized" do
     subject { Activity.new }

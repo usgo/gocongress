@@ -11,9 +11,9 @@ describe User do
 
   describe "#amount_paid" do
     it "equals the total of sales minus the total of refunds" do
-      user = FactoryGirl.create :user
-      sales = 1.upto(3).map{ FactoryGirl.create :tr_sale, user_id: user.id }
-      refunds = 1.upto(3).map{ FactoryGirl.create :tr_refund, user_id: user.id }
+      user = create :user
+      sales = 1.upto(3).map{ create :tr_sale, user_id: user.id }
+      refunds = 1.upto(3).map{ create :tr_refund, user_id: user.id }
       sale_total = sales.map(&:amount).reduce(:+)
       refund_total = refunds.map(&:amount).reduce(:+)
       user.amount_paid.should == sale_total - refund_total
@@ -22,9 +22,9 @@ describe User do
 
   describe "attendeeless scope" do
     it "returns only users with no attendees" do
-      a1 = FactoryGirl.create :attendee
+      a1 = create :attendee
       u1 = a1.user
-      u2 = FactoryGirl.create :user
+      u2 = create :user
       u2.attendees.should be_empty
       User.attendeeless.should == [u2]
     end
@@ -32,7 +32,7 @@ describe User do
 
   describe "#balance" do
     it "equals invoice total minus amount paid" do
-      u = FactoryGirl.build :user
+      u = build :user
       u.stub(:get_invoice_total) { 7 }
       u.stub(:amount_paid) { 9 }
       u.balance.should == -2
@@ -40,18 +40,18 @@ describe User do
   end
 
   describe "#get_invoice_items" do
-    let(:attendee) { FactoryGirl.create :attendee }
+    let(:attendee) { create :attendee }
     let(:user) { attendee.user }
 
     it "includes invoice items from all attendees" do
-      FactoryGirl.create :attendee, :user => user
+      create :attendee, :user => user
       items = [:foo, :bar]
       Attendee.any_instance.stub(:invoice_items) { items }
       user.get_invoice_items.should =~ items * 2
     end
 
     it "includes comp transactions" do
-      comp = FactoryGirl.create(:tr_comp, :user => user, :amount => 777)
+      comp = create(:tr_comp, :user => user, :amount => 777)
       items = user.get_invoice_items
       items.should have(1).item
       items.first.price.should == comp.amount * -1
@@ -59,18 +59,18 @@ describe User do
   end
 
   it "has a valid factory" do
-    FactoryGirl.build(:user).should be_valid
+    build(:user).should be_valid
   end
 
   it "is invalid if email is invalid" do
-    user = FactoryGirl.build :user, :email => "herpderp"
+    user = build :user, :email => "herpderp"
     user.should_not be_valid
     user.errors.should include(:email)
   end
 
   it "is invalid if email is not unique" do
-    extant = FactoryGirl.create :user, :email => "John@example.com"
-    user = FactoryGirl.build :user, {email: extant.email, year: extant.year}
+    extant = create :user, :email => "John@example.com"
+    user = build :user, {email: extant.email, year: extant.year}
     user.should_not be_valid
     user.errors.should include(:email)
   end
@@ -78,7 +78,7 @@ describe User do
   describe "#get_invoice_total" do
 
     it "equals the sum of invoice items" do
-      user = FactoryGirl.build :user
+      user = build :user
       user.stub(:get_invoice_items) {[
         InvoiceItem.new("Baubles", "John", 1.5, 2),
         InvoiceItem.new("Trinkets", "Jane", -0.75, 1)
@@ -87,12 +87,12 @@ describe User do
     end
 
     it "increases when plan with qty is added" do
-      attendee = FactoryGirl.create :attendee
+      attendee = create :attendee
       user = attendee.user
       total_before = user.get_invoice_total
 
       # add a plan with qty > 1 to attendee
-      p = FactoryGirl.create :plan, :max_quantity => 10 + rand(10)
+      p = create :plan, :max_quantity => 10 + rand(10)
       qty = 1 + rand(p.max_quantity)
       ap = AttendeePlan.new :plan_id => p.id, :quantity => qty
       user.attendees.first.attendee_plans << ap
@@ -114,14 +114,14 @@ describe User do
   # spec, the following context reproduces the testunit setup()
   context "testunit setup" do
     before(:each) do
-      attendee = FactoryGirl.create :attendee
+      attendee = create :attendee
       @user = attendee.user
     end
 
     it "destroying a user also destroys dependent attendees" do
       num_extra_attendees = 1 + rand(3)
       1.upto(num_extra_attendees) { |a|
-        @user.attendees << FactoryGirl.create(:attendee, :user => @user)
+        @user.attendees << create(:attendee, :user => @user)
       }
 
       # when we destroy the user, we expect all dependent attendees
@@ -136,13 +136,13 @@ describe User do
 
     it "age-based discounts" do
       y = Time.now.year
-      dc = FactoryGirl.create(:discount, :name => "Child", :amount => 150, :age_min => 0, :age_max => 12, :is_automatic => true, :year => y)
-      dy = FactoryGirl.create(:discount, :name => "Youth", :amount => 100, :age_min => 13, :age_max => 18, :is_automatic => true, :year => y)
+      dc = create(:discount, :name => "Child", :amount => 150, :age_min => 0, :age_max => 12, :is_automatic => true, :year => y)
+      dy = create(:discount, :name => "Youth", :amount => 100, :age_min => 13, :age_max => 18, :is_automatic => true, :year => y)
       congress_start = CONGRESS_START_DATE[y]
 
       # If 12 years old on the first day of congress, then attendee
       # should get child discount and NOT youth discount
-      a = FactoryGirl.create(:minor, :birth_date => congress_start - 12.years, :user => @user, :year => y)
+      a = create(:minor, :birth_date => congress_start - 12.years, :user => @user, :year => y)
       a.age_in_years.should == 12
       user_has_discount?(@user, dc).should == true
       user_has_discount?(@user, dy).should == false

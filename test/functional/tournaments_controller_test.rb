@@ -8,12 +8,12 @@ class TournamentsControllerTest < ActionController::TestCase
   end
 
   test "index has expected tournaments and rounds" do
-    t = FactoryGirl.create(:tournament, :year => Time.now.year)
-    x = FactoryGirl.create(:tournament, :year => 1.year.from_now.year)
+    t = create(:tournament, :year => Time.now.year)
+    x = create(:tournament, :year => 1.year.from_now.year)
 
     [t,x].each do |i|
       1.upto(3) do
-        i.rounds.create FactoryGirl.attributes_for(:round)
+        i.rounds.create attributes_for(:round)
       end
     end
 

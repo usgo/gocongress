@@ -2,12 +2,12 @@ require "spec_helper"
 
 describe AttendeesController do
   render_views
-  let(:activities) { 1.upto(3).map{ FactoryGirl.create :activity } }
+  let(:activities) { 1.upto(3).map{ create :activity } }
 
   context "as a visitor" do
     describe "#create" do
       it "is forbidden for visitors" do
-        attrs = FactoryGirl.attributes_for :attendee
+        attrs = attributes_for :attendee
         expect { post :create, attendee: attrs, year: attrs[:year]
           }.to_not change{ Attendee.count }
         response.should be_forbidden
@@ -16,7 +16,7 @@ describe AttendeesController do
 
     describe "#edit" do
       it "is forbidden" do
-        a = FactoryGirl.create :attendee
+        a = create :attendee
         get :edit, :id => a.id, :year => a.year
         response.should be_forbidden
       end
@@ -31,9 +31,9 @@ describe AttendeesController do
       end
 
       it "lists attendees with at least one plan" do
-        p = FactoryGirl.create :plan
-        a = FactoryGirl.create :attendee, {plans: [p]}
-        a2 = FactoryGirl.create :attendee, {plans: []}
+        p = create :plan
+        a = create :attendee, {plans: [p]}
+        a2 = create :attendee, {plans: []}
         get :index, year: a.year
         response.should be_successful
         assigns(:attendees).should include(a)
@@ -50,7 +50,7 @@ describe AttendeesController do
   end
 
   context "as a user" do
-    let!(:attendee) { FactoryGirl.create :attendee }
+    let!(:attendee) { create :attendee }
     let!(:user) { attendee.user }
     before { sign_in user }
 
@@ -72,7 +72,7 @@ describe AttendeesController do
       end
 
       it "is forbidden to create attendee under a different user" do
-        user_two = FactoryGirl.create :user
+        user_two = create :user
         a = accessible_attributes_for(:attendee).merge(:user_id => user_two.id)
         expect { post :create, :attendee => a, :year => user_two.year
           }.not_to change { Attendee.count }
@@ -106,7 +106,7 @@ describe AttendeesController do
       end
 
       it "is forbidden to destroy attendee from other user" do
-        a = FactoryGirl.create :attendee
+        a = create :attendee
         user_two = a.user
         expect { delete :destroy, :id => a.id, :year => a.year
           }.to_not change { Attendee.count }
@@ -116,7 +116,7 @@ describe AttendeesController do
 
     describe "#edit" do
       it "cannot edit another user's attendee" do
-        a = FactoryGirl.create :attendee
+        a = create :attendee
         get :edit, :id => a.id, :year => a.year
         response.should be_forbidden
       end
@@ -128,11 +128,11 @@ describe AttendeesController do
       end
 
       it "shows disabled plans, but only if attendee already has them" do
-        plan = FactoryGirl.create :plan, :disabled => true
+        plan = create :plan, :disabled => true
         attendee.plans << plan
         attendee.get_plan_qty(plan.id).should == 1
 
-        plan2 = FactoryGirl.create :plan, :disabled => true, \
+        plan2 = create :plan, :disabled => true, \
           :name => "Plan Deux", :plan_category => plan.plan_category
 
         get :edit,
@@ -146,9 +146,9 @@ describe AttendeesController do
 
     describe "#index" do
       it "excludes attendees with zero plans" do
-        a1 = FactoryGirl.create :attendee
-        a2 = FactoryGirl.create :attendee
-        a1.plans << FactoryGirl.create(:plan)
+        a1 = create :attendee
+        a2 = create :attendee
+        a1.plans << create(:plan)
         get :index, year: a1.year
         assigns(:attendees).should_not include(a2)
       end
@@ -214,7 +214,7 @@ describe AttendeesController do
       end
 
       it "is forbidden to update another user's attendee" do
-        a = FactoryGirl.create :attendee
+        a = create :attendee
         put :update, :id => a.id, :attendee => a.attributes, :year => a.year
         response.should be_forbidden
       end
@@ -226,21 +226,21 @@ describe AttendeesController do
         end
 
         it "cannot add activities to attendee belonging to someone else" do
-          attendee2 = FactoryGirl.create :attendee
+          attendee2 = create :attendee
           expect { update_activities(attendee2, activities) }.to_not \
             change { attendee2.activities.count }
           response.status.should == 403
         end
 
         it "cannot add disabled activities" do
-          activities << FactoryGirl.create(:activity, disabled: true)
+          activities << create(:activity, disabled: true)
           expect { update_activities(attendee, activities) }.to_not \
             change { attendee.activities.count }
         end
       end
 
       context "plans" do
-        let(:plan) { FactoryGirl.create :plan }
+        let(:plan) { create :plan }
 
         def put_update plan
           put :update, :year => 2012, :id => attendee.id, :"plan_#{plan.id}_qty" => 1
@@ -273,14 +273,14 @@ describe AttendeesController do
         end
 
         it "cannot select plan for attendee belonging to someone else" do
-          a = FactoryGirl.create :attendee
+          a = create :attendee
           expect { submit_plans_form a, params_for_plan(plan, 1)
             }.to_not change { a.plans.count }
           response.should be_forbidden
         end
 
         context "when attendee selects a disabled plan" do
-          let(:plan) { FactoryGirl.create :plan, disabled: true }
+          let(:plan) { create :plan, disabled: true }
 
           context "and attendee already has that disabled plan" do
             before do
@@ -302,8 +302,8 @@ describe AttendeesController do
         end
 
         context "when attendee un-selects a disabled plan" do
-          let(:plan) { FactoryGirl.create :plan, disabled: true, name: "Numero Uno" }
-          let(:plan2) { FactoryGirl.create :plan, name: "Deux", :plan_category => plan.plan_category }
+          let(:plan) { create :plan, disabled: true, name: "Numero Uno" }
+          let(:plan2) { create :plan, name: "Deux", :plan_category => plan.plan_category }
           before do
             attendee.plans << plan
           end
@@ -321,8 +321,8 @@ describe AttendeesController do
         end
 
         context "when the category is mandatory" do
-          let(:cat) { FactoryGirl.create :plan_category, mandatory: true }
-          let!(:plan) { FactoryGirl.create :plan, plan_category: cat }
+          let(:cat) { create :plan_category, mandatory: true }
+          let!(:plan) { create :plan, plan_category: cat }
 
           context "when the attendee selects no plans" do
             it "stays on the same page" do
@@ -353,7 +353,7 @@ describe AttendeesController do
 
         it "can claim non-automatic discounts" do
           a.discounts.should be_empty
-          d = FactoryGirl.create :nonautomatic_discount
+          d = create :nonautomatic_discount
           attrs = {:discount_ids => [d.id]}
 
           # the checkbox list can include extra empty strings
@@ -365,7 +365,7 @@ describe AttendeesController do
 
         it "cannot claim automatic discounts" do
           a.discounts.should be_empty
-          d = FactoryGirl.create :automatic_discount
+          d = create :automatic_discount
           attrs = {:discount_ids => [d.id]}
           put :update, :id => a.id, :attendee => attrs, :year => a.year
           a.reload.discounts.should_not include(d)
@@ -376,12 +376,12 @@ describe AttendeesController do
   end
 
   context "as an admin" do
-    let(:admin) { FactoryGirl.create :admin }
+    let(:admin) { create :admin }
     before { sign_in admin }
 
     describe "#create" do
       it "succeeds, creating attendee under any user" do
-        u = FactoryGirl.create :user
+        u = create :user
         a = accessible_attributes_for(:attendee).merge(:user_id => u.id)
         expect { post :create, :attendee => a, :year => u.year
           }.to change { u.attendees.count }.by(+1)
@@ -390,7 +390,7 @@ describe AttendeesController do
 
     describe "#destroy" do
       it "can destroy any attendee" do
-        a = FactoryGirl.create :attendee
+        a = create :attendee
         expect { delete :destroy, :id => a.id, :year => a.year
           }.to change { a.user.attendees.count }.by(-1)
         response.should redirect_to user_path(a.user)
@@ -398,7 +398,7 @@ describe AttendeesController do
       end
 
       it "can destroy primary attendee" do
-        prim = FactoryGirl.create :primary_attendee
+        prim = create :primary_attendee
         expect { delete :destroy, :id => prim.id, :year => prim.year
           }.to change { Attendee.count }.by(-1)
         response.should redirect_to user_path(prim.user)
@@ -407,14 +407,14 @@ describe AttendeesController do
 
     describe '#edit' do
       it 'admin can edit any attendee' do
-        a = FactoryGirl.create(:attendee, :year => admin.year)
+        a = create(:attendee, :year => admin.year)
         get :edit, :id => a.id, :year => a.year
         response.should be_successful
       end
     end
 
     describe '#update' do
-      let(:a) { FactoryGirl.create(:attendee, :year => admin.year) }
+      let(:a) { create(:attendee, :year => admin.year) }
 
       it 'can update attendee of any user' do
         attrs = accessible_attributes_for(a).merge({:family_name => 'banana'})
@@ -424,7 +424,7 @@ describe AttendeesController do
       end
 
       it 'can select plan for attendee belonging to someone else' do
-        plan = FactoryGirl.create :plan
+        plan = create :plan
         a.plans.should be_empty
         expect { submit_plans_form a, params_for_plan(plan, 1)
           }.to change { a.plans.count }.by(+1)

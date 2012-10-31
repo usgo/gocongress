@@ -7,8 +7,8 @@ describe ReportsController do
 
       # Sign in as an admin whose primary attendee's name starts
       # with Z, ie. not in the range we'll be testing below.
-      admin = FactoryGirl.create :admin,
-        :primary_attendee => FactoryGirl.build(:attendee,
+      admin = create :admin,
+        :primary_attendee => build(:attendee,
           :family_name => "Zhivago", :is_primary => true)
       sign_in admin
 
@@ -19,8 +19,8 @@ describe ReportsController do
       "a".upto("f") do |letter|
         name = (letter * 5)
         name = name.capitalize if (rand < 0.5)
-        FactoryGirl.create :user,
-          :primary_attendee => FactoryGirl.build(:attendee,
+        create :user,
+          :primary_attendee => build(:attendee,
             :family_name => name,
             :is_primary => true,
             :year => admin.year \

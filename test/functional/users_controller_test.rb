@@ -2,10 +2,10 @@ require 'test_helper'
 
 class UsersControllerTest < ActionController::TestCase
   setup do
-    pa = FactoryGirl.create :attendee, is_primary: true
+    pa = create :attendee, is_primary: true
     @user = pa.user
-    @staff = FactoryGirl.create :staff
-    @admin_user = FactoryGirl.create :admin
+    @staff = create :staff
+    @admin_user = create :admin
   end
 
   test "admin can get index" do
@@ -62,7 +62,7 @@ class UsersControllerTest < ActionController::TestCase
 
   test "user cannot edit other user" do
     sign_in @user
-    user_two = FactoryGirl.create(:user)
+    user_two = create(:user)
     get :edit, :id => user_two.id, :year => Time.now.year
     assert_response 403
   end

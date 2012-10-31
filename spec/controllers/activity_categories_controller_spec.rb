@@ -7,7 +7,7 @@ describe ActivityCategoriesController do
 
   describe "#show" do
     it "is successful for visitors" do
-      c = FactoryGirl.create :activity_category
+      c = create :activity_category
       get :show, :year => Time.now.year, :id => c.id
       response.should be_successful
       assigns[:activities_by_date].should_not be_nil

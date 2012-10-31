@@ -1,7 +1,7 @@
 require "spec_helper"
 
 describe TournamentsController do
-  let(:tnm) { FactoryGirl.create :tournament }
+  let(:tnm) { create :tournament }
 
   describe "#show" do
     render_views
@@ -13,7 +13,7 @@ describe TournamentsController do
   end
 
   describe "#update" do
-    let(:admin) { FactoryGirl.create :admin }
+    let(:admin) { create :admin }
 
     it "updates rounds" do
       sign_in admin

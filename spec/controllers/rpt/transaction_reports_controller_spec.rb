@@ -2,7 +2,7 @@ require "spec_helper"
 require "controllers/rpt/shared_examples_for_reports"
 
 describe Rpt::TransactionReportsController do
-  let(:staff) { FactoryGirl.create :staff }
+  let(:staff) { create :staff }
 
   it_behaves_like "a report", %w[html csv]
 
@@ -21,8 +21,8 @@ describe Rpt::TransactionReportsController do
     sign_in staff
 
     # create transactions in different years
-    1.upto(3) { FactoryGirl.create(:tr_sale, year: Time.now.year + 1) }
-    this_year_sales = 1.upto(3).map{ FactoryGirl.create(:tr_sale) }
+    1.upto(3) { create(:tr_sale, year: Time.now.year + 1) }
+    this_year_sales = 1.upto(3).map{ create(:tr_sale) }
     expected_sales_count = this_year_sales.count
     expected_sum = this_year_sales.map(&:amount).reduce(:+)
 

@@ -3,7 +3,7 @@ require "spec_helper"
 describe ReportsHelper do
 
   describe "#attendee_to_array" do
-    let(:atnd) { FactoryGirl.build :attendee }
+    let(:atnd) { build :attendee }
 
     it "returns an array" do
       helper.attendee_to_array(atnd).should be_instance_of(Array)
