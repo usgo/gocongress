@@ -247,7 +247,8 @@ describe AttendeesController do
         end
 
         it "updates the attendee's plans in the specified category" do
-          put_update plan
+          expect { put_update plan }.to \
+            change{ attendee.plans.count }.from(0).to(1)
           attendee.plans.should include(plan)
         end
 
@@ -325,16 +326,6 @@ describe AttendeesController do
           put :update, :year => 2012, :id => attendee.id
           response.should be_successful
           response.should render_template(:edit)
-        end
-
-        context "when the category is mandatory" do
-          let(:cat) { create :plan_category, mandatory: true }
-          let!(:plan) { create :plan, plan_category: cat }
-
-          it "a quantity of one saves an AttendeePlan record" do
-            expect { put_update plan }.to \
-              change{ attendee.plans.count }.from(0).to(1)
-          end
         end
       end
 
