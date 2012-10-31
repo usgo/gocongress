@@ -2,6 +2,7 @@ class Registration::Registration
 
   def initialize attendee, as_admin
     @attendee = attendee
+    @year = attendee.year
     @as_admin = as_admin
   end
 
@@ -27,6 +28,11 @@ class Registration::Registration
   def register_plans plan_selections
     plan_registration_errors = []
     nascent_attendee_plans = []
+
+    # Mandatory plan categories require at least one plan
+    unselected_mandatory_plan_categories(plan_selections).each do |c|
+      plan_registration_errors << mandatory_plan_category_error(c)
+    end
 
     plan_selections.each do |plan_selection|
       p = plan_selection.plan
@@ -68,12 +74,26 @@ class Registration::Registration
       @attendee.attendee_plans << nascent_attendee_plans
     end
 
-    # Mandatory plan categories require at least one plan
-    # if @plan_category.mandatory? && nascent_attendee_plans.empty?
-    #  plan_registration_errors << "This is a mandatory category, so please select at
-    #    least one #{Plan.model_name.human.downcase}."
-    # end
-
     return plan_registration_errors
   end
+
+  private
+
+  def mandatory_plan_categories
+    PlanCategory.yr(@year).mandatory
+  end
+
+  def mandatory_plan_category_error category
+    pmnhd = Plan.model_name.human.downcase
+    "Please select at least one #{pmnhd} in #{category.name}"
+  end
+
+  def selected_plan_categories plan_selections
+    plan_selections.select{|s| s.qty > 0}.map(&:plan).map(&:plan_category)
+  end
+
+  def unselected_mandatory_plan_categories plan_selections
+    mandatory_plan_categories - selected_plan_categories(plan_selections)
+  end
+
 end

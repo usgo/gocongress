@@ -324,19 +324,27 @@ describe AttendeesController do
           let(:cat) { FactoryGirl.create :plan_category, mandatory: true }
           let!(:plan) { FactoryGirl.create :plan, plan_category: cat }
 
-          context "when the attendee selects zero plans" do
+          context "when the attendee selects no plans" do
             it "stays on the same page" do
-              pending
+              put :update, :year => 2012, :id => attendee.id # no plans
+              response.should be_successful
+              response.should render_template(:edit)
             end
           end
 
           context "when the attendee selects one plan" do
-            it "saves an AttendeePlan record" do
+            it "a quantity of zero stays on same page" do
+              put :update, :year => 2012, :id => attendee.id, :"plan_#{plan.id}_qty" => 0
+              response.should be_successful
+              response.should render_template(:edit)
+            end
+
+            it "a quantity of one saves an AttendeePlan record" do
               expect { put_update plan }.to \
                 change{ attendee.plans.count }.from(0).to(1)
             end
-          end
 
+          end
         end
       end
 

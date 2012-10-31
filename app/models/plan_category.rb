@@ -19,6 +19,7 @@ class PlanCategory < ActiveRecord::Base
   # ----------------
 
   scope :alphabetical, order(:name)
+  scope :mandatory, where(:mandatory => true)
   scope :nonempty, where("exists (select * from plans p
     where p.plan_category_id = plan_categories.id)")
 
