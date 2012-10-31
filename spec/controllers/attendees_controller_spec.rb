@@ -246,7 +246,7 @@ describe AttendeesController do
           put :update, :year => 2012, :id => attendee.id, :"plan_#{plan.id}_qty" => 1
         end
 
-        it "updates the attendee's plans in the specified category" do
+        it "updates associated plans" do
           expect { put_update plan }.to \
             change{ attendee.plans.count }.from(0).to(1)
           attendee.plans.should include(plan)
