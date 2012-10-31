@@ -15,13 +15,13 @@ describe Registration::Registration do
     context "when there is a mandatory category" do
       let!(:mandatory_category) { create :plan_category, :mandatory => true }
 
-      it 'returns an error if a mandatory category has no selection' do
+      it 'returns an error if no plan is selected' do
         errs = subject.register_plans []
         errs.should_not be_empty
         errs.should include("Please select at least one plan in #{mandatory_category.name}")
       end
 
-      it 'returns an error if a mandatory category has only selection with a qty of zero' do
+      it 'returns an error if only selection has qty of zero' do
         plan = create :plan, :plan_category => mandatory_category
         selection = Registration::PlanSelection.new plan, 0
         errs = subject.register_plans [selection]
