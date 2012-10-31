@@ -281,7 +281,7 @@ describe AttendeesController do
         end
 
         it "stays on the same page when there is an error registering plans" do
-          Registration::Registration.any_instance.stub(:register_plans).and_return(["derp"])
+          Registration::Registration.any_instance.stub(:register_plans) { ["derp"] }
           put :update, :year => 2012, :id => attendee.id
           response.should be_successful
           response.should render_template(:edit)
