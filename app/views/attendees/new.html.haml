@@ -1,5 +1,4 @@
 %h2
-  Add
-  = @attendee_number.ordinalize
+  = t :"ordinals.o_#{@attendee_number}"
   = Attendee.model_name.humanize
 = render 'form'

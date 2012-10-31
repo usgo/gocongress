@@ -92,6 +92,27 @@ en:
     confirm:
       tournament:
         destroy: "Delete the entire tournament?  This will delete everything associated with this tournament too."
+  ordinals:
+    o_1: "First"
+    o_2: "Second"
+    o_3: "Third"
+    o_4: "Fourth"
+    o_5: "Fifth"
+    o_6: "Sixth"
+    o_7: "Seventh"
+    o_8: "Eighth"
+    o_9: "Ninth"
+    o_10: "Tenth"
+    o_11: "Eleventh"
+    o_12: "Twelfth"
+    o_13: "Thirteenth"
+    o_14: "Forteenth"
+    o_15: "Fifteenth"
+    o_16: "Sixteenth"
+    o_17: "Seventeenth"
+    o_18: "Eighteenth"
+    o_19: "Nineteenth"
+    o_20: "Twentieth"
   views:
     pagination:
       next: "Next"
