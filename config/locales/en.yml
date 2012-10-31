@@ -88,6 +88,7 @@ en:
     models:
       activity: "Activity"
       activity_category: "Activity Category"
+      attendee: "Attendee"
   crud:
     confirm:
       tournament:
