@@ -3,6 +3,8 @@ require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
 
 class ActiveSupport::TestCase
+  include FactoryGirl::Syntax::Methods
+
   # Setup all fixtures in test/fixtures/*.(yml|csv) for all tests in alphabetical order.
   #
   # Note: You'll currently still have to declare fixtures explicitly in integration tests
@@ -14,6 +16,7 @@ end
 
 class ActionController::TestCase
  include Devise::TestHelpers
+ include FactoryGirl::Syntax::Methods
 
  def setup
    # Tell Devise what model we're using for Auth.  Make sure only to add this
