@@ -18,7 +18,7 @@ LATEST_YEAR = 2013
 CONGRESS_START_DATE = {
   2011 => Date.civil(2011, 7, 30),
   2012 => Date.civil(2012, 8, 4),
-  2013 => Date.civil(2013, 8, 4)
+  2013 => Date.civil(2013, 8, 3)
 }
 
 # DAY_OFF_DATE - The go congress traditionally has one "day off".
@@ -27,7 +27,7 @@ CONGRESS_START_DATE = {
 DAY_OFF_DATE = {
   2011 => Date.civil(2011, 8, 3),
   2012 => Date.civil(2012, 8, 8),
-  2013 => Date.civil(2013, 8, 8)
+  2013 => Date.civil(2013, 8, 7)
 }
 
 # PRIORITY_COUNTRIES will appear at the top of the country_select dropdown menu
