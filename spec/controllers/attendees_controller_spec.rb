@@ -320,30 +320,20 @@ describe AttendeesController do
           end
         end
 
+        it "stays on the same page when there is an error registering plans" do
+          Registration::Registration.any_instance.stub(:register_plans).and_return(["derp"])
+          put :update, :year => 2012, :id => attendee.id
+          response.should be_successful
+          response.should render_template(:edit)
+        end
+
         context "when the category is mandatory" do
           let(:cat) { create :plan_category, mandatory: true }
           let!(:plan) { create :plan, plan_category: cat }
 
-          context "when the attendee selects no plans" do
-            it "stays on the same page" do
-              put :update, :year => 2012, :id => attendee.id # no plans
-              response.should be_successful
-              response.should render_template(:edit)
-            end
-          end
-
-          context "when the attendee selects one plan" do
-            it "a quantity of zero stays on same page" do
-              put :update, :year => 2012, :id => attendee.id, :"plan_#{plan.id}_qty" => 0
-              response.should be_successful
-              response.should render_template(:edit)
-            end
-
-            it "a quantity of one saves an AttendeePlan record" do
-              expect { put_update plan }.to \
-                change{ attendee.plans.count }.from(0).to(1)
-            end
-
+          it "a quantity of one saves an AttendeePlan record" do
+            expect { put_update plan }.to \
+              change{ attendee.plans.count }.from(0).to(1)
           end
         end
       end
