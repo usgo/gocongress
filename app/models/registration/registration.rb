@@ -9,14 +9,11 @@ class Registration::Registration
   # `validate_activities` checks that the `selected` activity ids
   # are not adding or removing a disabled activity
   def validate_activities selected
-    selected.map!(&:to_i)
-    before = @attendee.activities.map(&:id)
-    disabled_additions = (selected - before) & disabled_activities
-    disabled_removals = (before - selected) & disabled_activities
-    errs = []
-    errs << activity_disabled_msg('add') unless disabled_additions.empty?
-    errs << activity_disabled_msg('remove') unless disabled_removals.empty?
-    return errs
+    before = Set.new @attendee.activities.map(&:id)
+    after = Set.new selected.map(&:to_i)
+    changes = (after ^ before).to_a
+    invalids = disabled_activities & changes
+    return invalids.empty? ? [] : [activity_disabled_msg]
   end
 
   # `register_discounts` persists claimed (non-automatic) discounts
@@ -81,9 +78,9 @@ class Registration::Registration
 
   private
 
-  def activity_disabled_msg verb
-    "- One of the activities you tried to #{verb} has been disabled.
-    Please contact the registrar for help."
+  def activity_disabled_msg
+    "One of the activities you tried to add or remove has been
+    disabled.  Please contact the registrar for help."
   end
 
   def disabled_activities
