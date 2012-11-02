@@ -25,4 +25,6 @@ class Activity < ActiveRecord::Base
       set the price to 0, so that this #{model_name.human.downcase}
       will not show up on invoices."
   }
+
+  scope :disabled, where(disabled: true)
 end

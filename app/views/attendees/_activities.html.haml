@@ -21,15 +21,14 @@
     %th Return
     %th.numeric Price
   %tbody
-    - @activities.each do |e|
-      - is_checked = @atnd_activity_ids.index(e.id).present?
-      - cbx_id = 'activity_id_' + e.id.to_s
-      %tr{:class => (e.disabled? ? 'disabled' : nil)}
-        %td.align-center= check_box_tag "attendee[activity_id_list][]", e.id, is_checked, :id => cbx_id
-        %td= e.leave_time.to_date.to_formatted_s(:dow_month_day)
-        %td= label_tag cbx_id, e.name
-        %td= e.leave_time.to_formatted_s(:american)
-        %td
-          - if e.return_time.present?
-            = e.return_time.to_formatted_s(:american)
-        %td.numeric= e.price_for_display
+    - @activities.each do |a|
+      - checked = @attendee.activities.include?(a)
+      %tr{:class => (a.disabled? ? 'disabled' : nil)}
+        %td.align-center
+          = check_box_tag :activity_ids, a.id, checked,  |
+            :name => 'attendee[activity_ids][]'          |
+        %td= a.leave_time.to_date.to_formatted_s(:dow_month_day)
+        %td= a.name
+        %td= a.leave_time.to_formatted_s(:american)
+        %td= a.return_time.to_formatted_s(:american) if a.return_time.present?
+        %td.numeric= a.price_for_display

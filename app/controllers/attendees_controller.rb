@@ -57,6 +57,8 @@ class AttendeesController < ApplicationController
   end
 
   def create
+    params[:attendee][:activity_ids] ||= []
+
     @attendee.user_id ||= current_user.id
     @attendee.is_primary = @attendee.user.attendees.count == 0
     authorize! :create, @attendee
@@ -69,9 +71,11 @@ class AttendeesController < ApplicationController
       reg = Registration::Registration.new @attendee, current_user.admin?
       errors = []
 
+      # Check that no disabled activites were added or removed
+      errors.concat reg.validate_activities params[:attendee][:activity_ids]
+
       # Persist discounts, activities, and plans
       reg.register_discounts(discount_ids)
-      errors.concat(reg.register_activities(activity_ids))
       errors.concat(reg.register_plans(get_plan_selections(@plans)))
 
       # Assign airport_arrival and airport_departure attributes, if possible
@@ -92,11 +96,14 @@ class AttendeesController < ApplicationController
   def update
     reg = Registration::Registration.new @attendee, current_user.admin?
     params[:attendee] ||= {}
+    params[:attendee][:activity_ids] ||= []
     errors = []
+
+    # Check that no disabled activites were added or removed
+    errors.concat reg.validate_activities params[:attendee][:activity_ids]
 
     # Persist discounts, activities, and plans
     reg.register_discounts(discount_ids)
-    errors.concat(reg.register_activities(activity_ids))
     errors.concat(reg.register_plans(get_plan_selections(@plans)))
 
     # Assign airport_arrival and airport_departure attributes, if possible
@@ -107,10 +114,11 @@ class AttendeesController < ApplicationController
     # but not before `update`.
     set_admin_params
     delete_protected_params
-    @attendee.attributes = params[:attendee]
 
-    # Validate and save
-    if errors.empty? && @attendee.save
+    # Validate and save.  Note that assigning the `activity_ids`
+    # attribute causes the associated activities to be persisted,
+    # and that this assignment happens before validation.
+    if errors.empty? && @attendee.update_attributes(params[:attendee])
       flash[:notice] = 'Changes saved'
       redirect_to user_terminus_path(:user_id => @attendee.user)
     else
@@ -184,7 +192,7 @@ protected
   end
 
   def delete_protected_params
-    [:activity_id_list, :comment, :discount_ids, :minor_agreement_received].each do |p|
+    [:comment, :discount_ids, :minor_agreement_received].each do |p|
       params[:attendee].delete p
     end
   end

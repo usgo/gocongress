@@ -249,6 +249,12 @@ describe AttendeesController do
           expect { update_activities(attendee, activities) }.to_not \
             change { attendee.activities.count }
         end
+
+        it "cannot remove disabled activities" do
+          attendee.activities << create(:activity, disabled: true)
+          expect { update_activities(attendee, activities) }.to_not \
+            change { attendee.activities.count }
+        end
       end
 
       context "plans" do
@@ -441,8 +447,8 @@ describe AttendeesController do
 
   def update_activities attendee, activities
     put :update, :id => attendee.id, \
-      :attendee => { :activity_id_list => activities.map(&:id) }, \
-      :page => 'basics', :year => attendee.year
+      :attendee => { :activity_ids => activities.map(&:id) }, \
+      :year => attendee.year
   end
 
 end

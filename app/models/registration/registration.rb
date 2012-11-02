@@ -6,15 +6,22 @@ class Registration::Registration
     @as_admin = as_admin
   end
 
-  # `register_activities` persists the selected activities
-  def register_activities activity_id_array
-    activity_registration_errors = []
-    begin
-      @attendee.replace_all_activities(activity_id_array)
-    rescue DisabledActivityException
-      activity_registration_errors << "Please do not add or remove disabled activities. Changes discarded."
+  def validate_activities value
+    raise "Expected enumerable" unless value.respond_to?(:each)
+    selected = value.map(&:to_i)
+    raise "Found something non-numeric in value" if selected.include?(nil)
+    errors = []
+    before = AttendeeActivity.where(:attendee_id => @attendee.id).map(&:activity_id)
+    disableds = Activity.disabled.map(&:id)
+    adding = selected - before
+    unless (adding & disableds).empty?
+      errors << activity_disabled_message('add')
     end
-    return activity_registration_errors
+    removing = before - selected
+    unless (removing & disableds).empty?
+      errors << activity_disabled_message('remove')
+    end
+    return errors
   end
 
   # `register_discounts` persists claimed (non-automatic) discounts
@@ -78,6 +85,12 @@ class Registration::Registration
   end
 
   private
+
+  def activity_disabled_message verb
+    "- One of the activities you tried to #{verb} has been disabled.
+    Please contact the registrar for help."
+  end
+
 
   def mandatory_plan_categories
     PlanCategory.yr(@year).mandatory

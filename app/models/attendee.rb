@@ -20,7 +20,7 @@ class Attendee < ActiveRecord::Base
   # Mass assignment config
   # ----------------------
 
-  attr_accessible :aga_id, :anonymous, :airport_arrival,
+  attr_accessible :activity_ids, :aga_id, :anonymous, :airport_arrival,
     :airport_arrival_flight, :airport_departure, :birth_date,
     :comment, :congresses_attended, :country, :email, :family_name,
     :given_name, :gender, :guardian_full_name,
