@@ -287,17 +287,6 @@ class Attendee < ActiveRecord::Base
     self.birth_date + 18.years > congress_start
   end
 
-  def replace_all_activities activity_id_array
-    acts = Activity.yr(self.year).where(:id => activity_id_array)
-    additions = acts - activities
-    subtractions = activities - acts
-    unless additions.concat(subtractions).select{|a| a.disabled?}.empty?
-      raise DisabledActivityException
-    end
-    activities.clear
-    activities << acts
-  end
-
   def full_name(respect_anonymity = false)
     name = NameInflector.capitalize_name(given_name) + " " + NameInflector.capitalize_name(family_name)
     respect_anonymity ? anonymize(name) : name
@@ -367,7 +356,3 @@ private
   end
 
 end
-
-class DisabledActivityException < StandardError
-end
-
