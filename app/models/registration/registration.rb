@@ -1,4 +1,10 @@
+require 'action_view/helpers/translation_helper'
+
 class Registration::Registration
+
+  # Include `TranslationHelper` so that we can internationalize
+  # validation error messages
+  include ActionView::Helpers::TranslationHelper
 
   def initialize attendee, as_admin
     @attendee = attendee
@@ -13,7 +19,7 @@ class Registration::Registration
     after = Set.new selected.map(&:to_i)
     changes = (after ^ before).to_a
     invalids = disabled_activities & changes
-    return invalids.empty? ? [] : [activity_disabled_msg]
+    return invalids.empty? ? [] : [translate(:activity_disabled_msg)]
   end
 
   # `register_discounts` persists claimed (non-automatic) discounts
@@ -77,11 +83,6 @@ class Registration::Registration
   end
 
   private
-
-  def activity_disabled_msg
-    "One of the activities you tried to add or remove has been
-    disabled.  Please contact the registrar for help."
-  end
 
   def disabled_activities
     @disabled_activities ||= Activity.disabled.map(&:id)

@@ -1,4 +1,7 @@
 en:
+  activity_disabled_msg: >
+    One of the activities you tried to add or remove has been
+    disabled.  Please contact the registrar for help.
   activerecord:
     attributes:
       attendee:
