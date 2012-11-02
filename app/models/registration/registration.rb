@@ -9,7 +9,7 @@ class Registration::Registration
   # `validate_activities` checks that the `selected` activity ids
   # are not adding or removing a disabled activity
   def validate_activities selected
-    before = Set.new @attendee.activities.map(&:id)
+    before = @attendee.activities.map(&:id)
     after = Set.new selected.map(&:to_i)
     changes = (after ^ before).to_a
     invalids = disabled_activities & changes
