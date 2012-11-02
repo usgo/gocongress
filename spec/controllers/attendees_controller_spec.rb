@@ -55,12 +55,22 @@ describe AttendeesController do
     before { sign_in user }
 
     describe "#create" do
+      let(:acsbl_atrs) { accessible_attributes_for(:attendee) }
+
       it "succeeds under own account" do
-        a = accessible_attributes_for(:attendee).merge(:user_id => user.id)
+        a = acsbl_atrs.merge(:user_id => user.id)
         expect { post :create, :attendee => a, :year => user.year
           }.to change { user.attendees.count }.by(+1)
         response.should redirect_to \
           user_terminus_path(:user_id => user.id, :year => user.year)
+      end
+
+      it "saves selected plans" do
+        plan = create :plan
+        expect {
+          post :create, :attendee => acsbl_atrs,
+            :"plan_#{plan.id}_qty" => 1, :year => user.year
+        }.to change{ plan.attendees.count }.by(+1)
       end
 
       it "fails without any attributes" do
@@ -74,14 +84,14 @@ describe AttendeesController do
 
       it "is forbidden to create attendee under a different user" do
         user_two = create :user
-        a = accessible_attributes_for(:attendee).merge(:user_id => user_two.id)
+        a = acsbl_atrs.merge(:user_id => user_two.id)
         expect { post :create, :attendee => a, :year => user_two.year
           }.not_to change { Attendee.count }
         response.should be_forbidden
       end
 
       it "given invalid attributes it does not create attendee" do
-        attrs = accessible_attributes_for(:attendee).merge(:user_id => user.id)
+        attrs = acsbl_atrs.merge(:user_id => user.id)
         attrs[:gender] = "zzzz" # invalid, obviously
         expect {
           post :create, attendee: attrs, year: user.year

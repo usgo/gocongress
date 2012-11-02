@@ -62,6 +62,21 @@ class AttendeesController < ApplicationController
     authorize! :create, @attendee
 
     if @attendee.save
+
+      # TODO: Unfortunately, for legacy reasons, we can't save
+      # plans and other associated models until `@attendee` has
+      # been saved. -Jared 2012-11-01
+      reg = Registration::Registration.new @attendee, current_user.admin?
+      errors = []
+
+      # Persist discounts, activities, and plans
+      reg.register_discounts(discount_ids)
+      errors.concat(reg.register_activities(activity_ids))
+      errors.concat(reg.register_plans(get_plan_selections(@plans)))
+
+      # Assign airport_arrival and airport_departure attributes, if possible
+      errors.concat(parse_airport_datetimes)
+
       flash[:notice] = 'Attendee added'
       redirect_to user_terminus_path(:user_id => @attendee.user)
     else
