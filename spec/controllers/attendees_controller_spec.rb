@@ -69,6 +69,7 @@ describe AttendeesController do
           }.to_not change { Attendee.count }
         response.should render_template :new
         assigns(:attendee).errors.should_not be_empty
+        assigns(:attendee_number).should == 2
       end
 
       it "is forbidden to create attendee under a different user" do
@@ -158,6 +159,7 @@ describe AttendeesController do
       it 'succeeds' do
         get :new, :year => user.year
         response.should be_successful
+        assigns(:attendee_number).should == 2
       end
     end
 

@@ -53,7 +53,6 @@ class AttendeesController < ApplicationController
       end
     end
 
-    expose_attendee_number_for @attendee
     expose_form_vars
   end
 
@@ -66,7 +65,6 @@ class AttendeesController < ApplicationController
       flash[:notice] = 'Attendee added'
       redirect_to user_terminus_path(:user_id => @attendee.user)
     else
-      expose_attendee_number_for @attendee
       expose_form_vars
       render :action => "new"
     end
@@ -133,6 +131,7 @@ protected
 
   def expose_form_vars
     raise "Attendee undefined" if @attendee.nil?
+    @attendee_number = @attendee.user.attendees.count + 1
 
     # for _travel_plans
     arrival = @attendee.airport_arrival
@@ -180,10 +179,6 @@ protected
   def discount_ids
     ids = params[:attendee][:discount_ids] || []
     ids.delete_if {|d| d.to_i == 0}
-  end
-
-  def expose_attendee_number_for attendee
-    @attendee_number = attendee.user.attendees.count + 1
   end
 
   # `expose_plans` exposes `@plans`, determining which plans will be
