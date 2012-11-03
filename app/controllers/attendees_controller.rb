@@ -66,21 +66,11 @@ class AttendeesController < ApplicationController
 
     if @attendee.save
 
-      # TODO: Unfortunately, for legacy reasons, we can't save
-      # plans and other associated models until `@attendee` has
-      # been saved. -Jared 2012-11-01
-      reg = Registration::Registration.new @attendee, current_user.admin?
-      errors = []
-
-      # Check that no disabled activites were added or removed
-      errors += reg.validate_activities params[:attendee][:activity_ids]
-
-      # Persist discounts, activities, and plans
-      reg.register_discounts(discount_ids)
-      errors += reg.register_plans(get_plan_selections(@plans))
-
-      # Assign airport_arrival and airport_departure attributes, if possible
-      errors += parse_airport_datetimes
+      # Validate and save discounts, activities, plans, and flight
+      # information. TODO: Unfortunately, for legacy reasons, we
+      # can't save plans and other associated models until
+      # `@attendee` has been saved. -Jared 2012-11-01
+      errors = register_attendee!
 
       flash[:notice] = 'Attendee added'
       redirect_to user_terminus_path(:user_id => @attendee.user)
@@ -98,18 +88,8 @@ class AttendeesController < ApplicationController
     params[:attendee] ||= {}
     params[:attendee][:activity_ids] ||= []
 
-    reg = Registration::Registration.new @attendee, current_user.admin?
-    errors = []
-
-    # Check that no disabled activites were added or removed
-    errors += reg.validate_activities params[:attendee][:activity_ids]
-
-    # Persist discounts, activities, and plans
-    reg.register_discounts(discount_ids)
-    errors += reg.register_plans(get_plan_selections(@plans))
-
-    # Assign airport_arrival and airport_departure attributes, if possible
-    errors += parse_airport_datetimes
+    # Validate and save discounts, activities, plans, and flight information
+    errors = register_attendee!
 
     # Set attributes but do not save yet. We'll save everything all
     # at once below. Cancan does this automatically before `create`,
@@ -251,6 +231,23 @@ protected
         params["attendee"].delete prefix + '_' + suffix
       end
     end
+  end
+
+  def register_attendee!
+    reg = Registration::Registration.new(@attendee, current_user.admin?)
+    errors = []
+
+    # Check that no disabled activites were added or removed
+    errors += reg.validate_activities params[:attendee][:activity_ids]
+
+    # Persist discounts, activities, and plans
+    reg.register_discounts(discount_ids)
+    errors += reg.register_plans(get_plan_selections(@plans))
+
+    # Assign airport_arrival and airport_departure attributes, if possible
+    errors += parse_airport_datetimes
+
+    return errors
   end
 
   def set_admin_params
