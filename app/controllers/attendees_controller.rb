@@ -10,6 +10,7 @@ class AttendeesController < ApplicationController
   skip_authorize_resource :only => [:create, :index, :vip]
   add_filter_restricting_resources_to_year_in_route
   before_filter :expose_plans, :only => [:create, :edit, :new, :update]
+  before_filter :default_form_params, :only => [:create, :update]
 
   def index
     params[:direction] ||= "asc"
@@ -56,9 +57,6 @@ class AttendeesController < ApplicationController
   end
 
   def create
-    params[:attendee] ||= {}
-    params[:attendee][:activity_ids] ||= []
-
     @attendee.user_id ||= current_user.id
     @attendee.is_primary = @attendee.user.attendees.count == 0
     authorize! :create, @attendee
@@ -78,9 +76,6 @@ class AttendeesController < ApplicationController
   end
 
   def update
-    params[:attendee] ||= {}
-    params[:attendee][:activity_ids] ||= []
-
     errors = register_attendee
     @attendee.errors[:base].concat(errors) unless errors.empty?
 
@@ -149,6 +144,11 @@ protected
   end
 
   private
+
+  def default_form_params
+    params[:attendee] ||= {}
+    params[:attendee][:activity_ids] ||= []
+  end
 
   # `expose_plans` exposes `@plans`, determining which plans will be
   # shown on the form, and which plans are available for selection.
