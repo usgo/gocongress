@@ -7,9 +7,6 @@ describe Registration::Registration do
     let(:admin) { false }
 
     describe '#save' do
-      it "can add activities to their own attendee"
-      it "cannot add activities to attendee belonging to someone else"
-
       it "does not add disabled activity, and returns an error" do
         a = build :attendee
         p = {:activity_ids => [dsbl_act.id]}
@@ -60,8 +57,6 @@ describe Registration::Registration do
     let(:admin) { true }
 
     describe '#save' do
-      it "can add activities to any attendee"
-
       it "adds disabled activities, and returns no errors" do
         a = build :attendee
         p = {:activity_ids => [dsbl_act.id]}
