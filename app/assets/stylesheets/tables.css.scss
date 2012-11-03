@@ -17,7 +17,9 @@ table.lightweight {
   td { padding: 0em 1em; }
   th { padding: 0em 1em 0em 0em; }
   &.top-headed th, td { padding: 0em 1em 0em 0em; }
-  &.lightly-spaced-rows td { padding-top: 0.25em; padding-bottom: 0.25em; }
+  &.lightly-spaced-rows {
+    td, th { padding-top: 0.1em; padding-bottom: 0.1em; }
+  }
 }
 
 /* Table options eg. zebra striping */

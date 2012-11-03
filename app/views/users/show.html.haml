@@ -22,21 +22,21 @@
   - if @user.attendees.empty?
     %p No attendees yet.
   - else
-    %table.lightweight
+    %table.lightweight.lightly-spaced-rows
       %thead
         %tr
           %th Name
           %th Rank
-          %th Age*
+          %th.numeric Age*
           %th
       %tbody
         - for a in @attendees
           %tr
             %td= link_to a.get_full_name, edit_attendee_path(a)
             %td= a.get_rank_name
-            %td= a.age_in_years.floor
+            %td.numeric= a.age_in_years.floor
             %td.smalltext
-              = link_to 'delete', a, :data => {:confirm => "Are you sure you want to delete #{a.full_name}?"}, :method => :delete
+              = link_to 'Delete', a, :data => {:confirm => "Are you sure you want to delete #{a.full_name}?"}, :method => :delete
 
   %p= button_to 'Add Attendee', add_attendee_to_user_path, :method => :get
 
