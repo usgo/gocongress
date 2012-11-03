@@ -106,7 +106,7 @@ class Attendee < ActiveRecord::Base
   validates :guardian_full_name, :presence => { :if => :require_guardian_full_name? }
   validates :is_primary,      :inclusion => {:in => [true, false]}
   validates :minor_agreement_received, :inclusion => {:in => [true, false]}
-  validates :rank,            :inclusion => {:in => NUMERIC_RANK_LIST, :message => "is not a valid rank"}, :presence => true
+  validates :rank,            :inclusion => {:in => NUMERIC_RANK_LIST, :message => "is not valid"}, :presence => true
   validates :roomate_request, :length => {:maximum => 250}
   validates :special_request, :length => {:maximum => 250}
   validates :tshirt_size,     :inclusion => {:in => TSHIRT_SIZE_LIST, :message => " - Please select a size"}
