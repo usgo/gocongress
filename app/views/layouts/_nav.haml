@@ -1,0 +1,41 @@
+.nav-container
+  .nav
+    %ul#nav-list-main
+      - if show_my_account_anchor? || @year.registration_phase == "open"
+        %li#nav-registration= link_to_my_account_or_to_register
+      %li
+        - if current_user.nil?
+          = link_to "Sign In", new_user_session_path
+        - else
+          = link_to "Sign Out", destroy_user_session_path, :method => :delete
+
+      -# Tournaments
+      - @tournaments_for_nav_menu.each do |t|
+        %li= link_to t.name, t
+      %li
+        - tournaments_plural_phrase = @tournaments_for_nav_menu.empty? ? "Tournaments" : "All Tournaments"
+        = link_to tournaments_plural_phrase, tournaments_path
+
+      -# Activities
+      - @activity_categories_for_menu.each do |c|
+        %li= link_to c.name, c
+
+      %li= link_to "Who is Coming?", attendees_path
+      %li= link_to "Pros", vip_attendees_path
+      %li= link_to "Costs", costs_path
+      - @content_categories_for_menu.each do |c|
+        %li= link_to c.name, c
+      %li= link_to "Contact / Volunteer", contacts_path
+
+- if can_see_admin_menu?
+  .nav-container-admin
+    .nav
+      %ul
+        %li#nav-admin-title Admin Menu:
+        %li= link_to "Users", users_path
+        %li= link_to "Transactions", transactions_path
+        %li= link_to "Pricing", pricing_path
+        %li= link_to Activity.model_name.human.pluralize, activity_categories_path
+        %li= link_to "Content", content_categories_path
+        %li= link_to "Reports", reports_path
+        %li= link_to "Settings", edit_year_path
