@@ -67,11 +67,9 @@ class AttendeesController < ApplicationController
     @attendee.errors[:base].concat(errors) unless errors.empty?
 
     if @attendee.errors.empty?
-      flash[:notice] = 'Attendee added'
-      redirect_to user_terminus_path(:user_id => @attendee.user)
+      redirect_to_terminus 'Attendee added'
     else
-      expose_form_vars
-      render :new
+      render_form :new
     end
   end
 
@@ -87,11 +85,9 @@ class AttendeesController < ApplicationController
     @attendee.errors[:base].concat(errors) unless errors.empty?
 
     if @attendee.errors.empty?
-      flash[:notice] = 'Changes saved'
-      redirect_to user_terminus_path(:user_id => @attendee.user)
+      redirect_to_terminus 'Changes saved'
     else
-      expose_form_vars
-      render :edit
+      render_form :edit
     end
   end
 
@@ -181,6 +177,11 @@ protected
     params["plan_#{plan_id}_qty"].to_i # if nil, to_i returns 0
   end
 
+  def redirect_to_terminus flash_notice
+    flash[:notice] = flash_notice
+    redirect_to user_terminus_path(:user_id => @attendee.user)
+  end
+
   # `register_attendee` tries to save `@attendee` and its associated
   # records, and returns an array of extra errors.
   def register_attendee
@@ -190,6 +191,11 @@ protected
       params[:attendee],
       get_plan_selections(@plans))
     return reg.save
+  end
+
+  def render_form view
+    expose_form_vars
+    render view
   end
 
   # We do not want flash notices during initial registration
