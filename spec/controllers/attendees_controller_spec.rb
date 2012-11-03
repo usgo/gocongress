@@ -106,6 +106,22 @@ describe AttendeesController do
           post :create, attendee: attrs, year: user.year
         }.to change{ Attendee.count }.by(+1)
       end
+
+      it "can add activities" do
+        act = create :activity
+        attrs = acsbl_atrs.merge :activity_ids => [act.id]
+        expect {
+          post :create, :year => attendee.year, :attendee => attrs
+        }.to change { AttendeeActivity.count }.by(+1)
+      end
+
+      it "cannot add disabled activities" do
+        act = create(:activity, disabled: true)
+        attrs = acsbl_atrs.merge :activity_ids => [act.id]
+        expect {
+          post :create, :year => attendee.year, :attendee => attrs
+        }.to_not change { AttendeeActivity.count }
+      end
     end
 
     describe "#destroy" do

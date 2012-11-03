@@ -64,6 +64,8 @@ class AttendeesController < ApplicationController
     @attendee.is_primary = @attendee.user.attendees.count == 0
     authorize! :create, @attendee
 
+    # activities haven't been validated yet, so we unset them before `save`
+    @attendee.activities = []
     if @attendee.save
 
       # Validate and save discounts, activities, plans, and flight
@@ -72,12 +74,16 @@ class AttendeesController < ApplicationController
       # `@attendee` has been saved. -Jared 2012-11-01
       errors = register_attendee!
 
-      flash[:notice] = 'Attendee added'
-      redirect_to user_terminus_path(:user_id => @attendee.user)
-    else
-      expose_form_vars
-      render :action => "new"
+      # activities have now been validated, so persist them
+      if errors.empty? && @attendee.activity_ids = params[:attendee][:activity_ids]
+        flash[:notice] = 'Attendee added'
+        redirect_to user_terminus_path(:user_id => @attendee.user)
+        return
+      end
     end
+
+    expose_form_vars
+    render :action => "new"
   end
 
   def edit
@@ -92,8 +98,8 @@ class AttendeesController < ApplicationController
     errors = register_attendee!
 
     # Set attributes but do not save yet. We'll save everything all
-    # at once below. Cancan does this automatically before `create`,
-    # but not before `update`.
+    # at once below. Cancan sets attrs from params automatically
+    # before `create`, but not before `update`.
     set_admin_params
     delete_protected_params
 
