@@ -1,15 +1,50 @@
 require 'action_view/helpers/translation_helper'
 
 class Registration::Registration
+  include SplitDatetimeParser
 
   # Include `TranslationHelper` so that we can internationalize
   # validation error messages
   include ActionView::Helpers::TranslationHelper
 
-  def initialize attendee, as_admin
-    @attendee = attendee
-    @year = attendee.year
+  def initialize attendee, as_admin, params, plan_selections
     @as_admin = as_admin
+    @attendee = attendee
+    @params = params
+    @plan_selections = plan_selections
+    @year = attendee.year
+  end
+
+  def save
+    if @attendee.new_record?
+      # Activities haven't been validated yet, so we unset them
+      # before `save`. (they had been set by cancan)
+      @attendee.activities = []
+      @attendee.save
+    end
+
+    errors = []
+    unless @attendee.new_record?
+
+      # Check that no disabled activites were added or removed
+      errors += validate_activities @params[:activity_ids]
+
+      # Persist discounts, activities, and plans
+      register_discounts(discount_ids)
+      errors += register_plans(@plan_selections)
+
+      # Assign airport_arrival and airport_departure attributes, if possible
+      errors += parse_airport_datetimes
+
+      set_admin_params
+      delete_protected_params
+
+      if errors.empty?
+        @attendee.update_attributes(@params)
+      end
+    end
+
+    return errors
   end
 
   # `validate_activities` checks that the `selected` activity ids
@@ -23,9 +58,9 @@ class Registration::Registration
   end
 
   # `register_discounts` persists claimed (non-automatic) discounts
-  def register_discounts discount_ids
+  def register_discounts selected_discount_ids
     available_discounts = Discount.yr(@attendee.year).automatic(false)
-    @attendee.discounts = available_discounts.where('id in (?)', discount_ids)
+    @attendee.discounts = available_discounts.where('id in (?)', selected_discount_ids)
   end
 
   # `register_plans` persists the selected plans, replacing
@@ -84,8 +119,29 @@ class Registration::Registration
 
   private
 
+  def clear_airport_datetime_params
+    %w(airport_arrival airport_departure).each do |prefix|
+      %w(date time).each do |suffix|
+        @params.delete(prefix + '_' + suffix)
+      end
+    end
+  end
+
+  def delete_protected_params
+    [:comment, :discount_ids, :minor_agreement_received].each do |p|
+      @params.delete p
+    end
+  end
+
   def disabled_activities
     @disabled_activities ||= Activity.disabled.map(&:id)
+  end
+
+  # `discount_ids` returns positive integer ids, ignoring
+  # unchecked boxes in the view
+  def discount_ids
+    ids = @params[:discount_ids] || []
+    ids.delete_if {|d| d.to_i == 0}
   end
 
   def mandatory_plan_categories
@@ -97,8 +153,30 @@ class Registration::Registration
     "Please select at least one #{pmnhd} in #{category.name}"
   end
 
+  def parse_airport_datetimes
+    parse_errors = []
+    begin
+      @attendee.airport_arrival = parse_split_datetime(@params, :airport_arrival)
+      @attendee.airport_departure = parse_split_datetime(@params, :airport_departure)
+    rescue SplitDatetimeParserException => e
+      parse_errors << e.to_s
+    end
+    clear_airport_datetime_params
+    return parse_errors
+  end
+
   def selected_plan_categories plan_selections
     plan_selections.select{|s| s.qty > 0}.map(&:plan).map(&:plan_category)
+  end
+
+  def set_admin_params
+    if @as_admin
+      [:comment, :minor_agreement_received].each do |p|
+        unless @params[p].nil?
+          @attendee[p] = @params[p]
+        end
+      end
+    end
   end
 
   def unselected_mandatory_plan_categories plan_selections

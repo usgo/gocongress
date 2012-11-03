@@ -1,5 +1,4 @@
 class AttendeesController < ApplicationController
-  include SplitDatetimeParser
   include YearlyController
 
   # Callbacks, in order
@@ -64,7 +63,7 @@ class AttendeesController < ApplicationController
     @attendee.is_primary = @attendee.user.attendees.count == 0
     authorize! :create, @attendee
 
-    errors = register_attendee!
+    errors = register_attendee
 
     if errors.empty? && @attendee.errors.empty?
       flash[:notice] = 'Attendee added'
@@ -84,7 +83,7 @@ class AttendeesController < ApplicationController
     params[:attendee] ||= {}
     params[:attendee][:activity_ids] ||= []
 
-    errors = register_attendee!
+    errors = register_attendee
 
     if errors.empty? && @attendee.errors.empty?
       flash[:notice] = 'Changes saved'
@@ -155,23 +154,6 @@ protected
 
   private
 
-  def activity_ids
-    params[:attendee][:activity_id_list] || []
-  end
-
-  def delete_protected_params
-    [:comment, :discount_ids, :minor_agreement_received].each do |p|
-      params[:attendee].delete p
-    end
-  end
-
-  # `discount_ids` returns positive integer ids, ignoring
-  # unchecked boxes in the view
-  def discount_ids
-    ids = params[:attendee][:discount_ids] || []
-    ids.delete_if {|d| d.to_i == 0}
-  end
-
   # `expose_plans` exposes `@plans`, determining which plans will be
   # shown on the form, and which plans are available for selection.
   # Admins can always see disabled plans, but users only see
@@ -191,18 +173,6 @@ protected
     @show_quantity_instructions = Plan.quantifiable_plan_in? @plans
   end
 
-  def parse_airport_datetimes
-    parse_errors = []
-    begin
-      @attendee.airport_arrival = parse_split_datetime(params[:attendee], :airport_arrival)
-      @attendee.airport_departure = parse_split_datetime(params[:attendee], :airport_departure)
-    rescue SplitDatetimeParserException => e
-      parse_errors << e.to_s
-    end
-    clear_airport_datetime_params
-    return parse_errors
-  end
-
   def get_plan_selections plans
     plans.map {|p| Registration::PlanSelection.new p, plan_qty(p.id)}
   end
@@ -211,55 +181,15 @@ protected
     params["plan_#{plan_id}_qty"].to_i # if nil, to_i returns 0
   end
 
-  def clear_airport_datetime_params
-    %w(airport_arrival airport_departure).each do |prefix|
-      %w(date time).each do |suffix|
-        params["attendee"].delete prefix + '_' + suffix
-      end
-    end
-  end
-
-  def register_attendee!
-
-    if @attendee.new_record?
-      # activities haven't been validated yet, so we unset them before `save`
-      @attendee.activities = []
-      @attendee.save
-    end
-
-    errors = []
-    unless @attendee.new_record?
-      reg = Registration::Registration.new(@attendee, current_user.admin?)
-
-      # Check that no disabled activites were added or removed
-      errors += reg.validate_activities params[:attendee][:activity_ids]
-
-      # Persist discounts, activities, and plans
-      reg.register_discounts(discount_ids)
-      errors += reg.register_plans(get_plan_selections(@plans))
-
-      # Assign airport_arrival and airport_departure attributes, if possible
-      errors += parse_airport_datetimes
-
-      set_admin_params
-      delete_protected_params
-
-      if errors.empty?
-        @attendee.update_attributes(params[:attendee])
-      end
-    end
-
-    return errors
-  end
-
-  def set_admin_params
-    if current_user.is_admin?
-      [:comment, :minor_agreement_received].each do |p|
-        unless params[:attendee][p].nil?
-          @attendee[p] = params[:attendee][p]
-        end
-      end
-    end
+  # `register_attendee` tries to save `@attendee` and its associated
+  # records, and returns an array of extra errors.
+  def register_attendee
+    reg = Registration::Registration.new(
+      @attendee,
+      current_user.admin?,
+      params[:attendee],
+      get_plan_selections(@plans))
+    return reg.save
   end
 
   # We do not want flash notices during initial registration

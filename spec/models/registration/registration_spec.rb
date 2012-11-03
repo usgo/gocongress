@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Registration::Registration do
   let(:attendee) { build :attendee }
   let(:coin_toss) { [true, false].sample }
-  subject { Registration::Registration.new attendee, coin_toss }
+  subject { Registration::Registration.new attendee, coin_toss, {}, [] }
 
   describe '#register_plans' do
 
