@@ -57,6 +57,7 @@ class AttendeesController < ApplicationController
   end
 
   def create
+    params[:attendee] ||= {}
     params[:attendee][:activity_ids] ||= []
 
     @attendee.user_id ||= current_user.id
@@ -94,9 +95,10 @@ class AttendeesController < ApplicationController
   end
 
   def update
-    reg = Registration::Registration.new @attendee, current_user.admin?
     params[:attendee] ||= {}
     params[:attendee][:activity_ids] ||= []
+
+    reg = Registration::Registration.new @attendee, current_user.admin?
     errors = []
 
     # Check that no disabled activites were added or removed
