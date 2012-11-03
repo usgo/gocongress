@@ -26,7 +26,7 @@ class Registration::Registration
     errors = []
     unless @attendee.new_record?
 
-      # Check that no disabled activites were added or removed
+      # Regular users are not allowed to add or remove disabled activities.
       errors += validate_activities @params[:activity_ids]
 
       # Persist discounts, activities, and plans
@@ -48,8 +48,10 @@ class Registration::Registration
   end
 
   # `validate_activities` checks that the `selected` activity ids
-  # are not adding or removing a disabled activity
+  # are not adding or removing a disabled activity.  Admins are
+  # exempt from this validation.
   def validate_activities selected
+    return [] if @as_admin
     before = @attendee.activities.map(&:id)
     after = Set.new selected.map(&:to_i)
     changes = (after ^ before).to_a

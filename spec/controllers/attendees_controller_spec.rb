@@ -82,6 +82,12 @@ describe AttendeesController do
         assigns(:attendee_number).should == 2
       end
 
+      it "renders new view if unsuccessful" do
+        stub_register_attendee_to_fail
+        post :create, :attendee => {}, :year => user.year
+        response.should render_template 'new'
+      end
+
       it "is forbidden to create attendee under a different user" do
         user_two = create :user
         a = acsbl_atrs.merge(:user_id => user_two.id)
@@ -105,22 +111,6 @@ describe AttendeesController do
         expect {
           post :create, attendee: attrs, year: user.year
         }.to change{ Attendee.count }.by(+1)
-      end
-
-      it "can add activities" do
-        act = create :activity
-        attrs = acsbl_atrs.merge :activity_ids => [act.id]
-        expect {
-          post :create, :year => attendee.year, :attendee => attrs
-        }.to change { AttendeeActivity.count }.by(+1)
-      end
-
-      it "cannot add disabled activities" do
-        act = create(:activity, disabled: true)
-        attrs = acsbl_atrs.merge :activity_ids => [act.id]
-        expect {
-          post :create, :year => attendee.year, :attendee => attrs
-        }.to_not change { AttendeeActivity.count }
       end
     end
 
@@ -216,6 +206,12 @@ describe AttendeesController do
           user_terminus_path(:user_id => user.id, :year => user.year)
       end
 
+      it "renders edit view if unsuccessful" do
+        stub_register_attendee_to_fail
+        put_update
+        response.should render_template 'edit'
+      end
+
       it "updates valid airport datetimes" do
         d = "#{attendee.year}-01-01"
         put_update datetime_attrs(d, "8:00 PM")
@@ -258,18 +254,6 @@ describe AttendeesController do
           expect { update_activities(attendee2, activities) }.to_not \
             change { attendee2.activities.count }
           response.status.should == 403
-        end
-
-        it "cannot add disabled activities" do
-          activities << create(:activity, disabled: true)
-          expect { update_activities(attendee, activities) }.to_not \
-            change { attendee.activities.count }
-        end
-
-        it "cannot remove disabled activities" do
-          attendee.activities << create(:activity, disabled: true)
-          expect { update_activities(attendee, activities) }.to_not \
-            change { attendee.activities.count }
         end
       end
 
@@ -450,6 +434,12 @@ describe AttendeesController do
           change { a.activities.count }.by(activities.length)
       end
     end
+  end
+
+  def stub_register_attendee_to_fail
+    AttendeesController.any_instance.stub(:register_attendee) {
+      ["Woah, your registration was totally unsuccessful, man."]
+    }
   end
 
   def submit_plans_form(attendee, params)

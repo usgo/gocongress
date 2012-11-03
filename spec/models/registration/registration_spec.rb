@@ -1,32 +1,81 @@
 require 'spec_helper'
 
 describe Registration::Registration do
-  let(:attendee) { build :attendee }
-  let(:coin_toss) { [true, false].sample }
-  subject { Registration::Registration.new attendee, coin_toss, {}, [] }
+  let(:dsbl_act) { create :activity, disabled: true }
 
-  describe '#register_plans' do
+  context "not an admin" do
+    let(:admin) { false }
 
-    it 'returns something enumerable' do
-      errs = subject.register_plans []
-      errs.respond_to?(:each).should be_true
-    end
+    describe '#save' do
+      it "can add activities to their own attendee"
+      it "cannot add activities to attendee belonging to someone else"
 
-    context "when there is a mandatory category" do
-      let!(:mandatory_category) { create :plan_category, :mandatory => true }
-
-      it 'returns an error if no plan is selected' do
-        errs = subject.register_plans []
-        errs.should_not be_empty
-        errs.should include("Please select at least one plan in #{mandatory_category.name}")
+      it "does not add disabled activity, and returns an error" do
+        a = build :attendee
+        p = {:activity_ids => [dsbl_act.id]}
+        r = Registration::Registration.new a, admin, p, []
+        expect { r.save.should_not be_empty
+          }.to_not change { AttendeeActivity.count }
       end
 
-      it 'returns an error if only selection has qty of zero' do
-        plan = create :plan, :plan_category => mandatory_category
-        selection = Registration::PlanSelection.new plan, 0
-        errs = subject.register_plans [selection]
-        errs.should_not be_empty
-        errs.should include("Please select at least one plan in #{mandatory_category.name}")
+      it "does not remove disabled activity, and returns an error" do
+        a = create :attendee, :activities => [dsbl_act]
+        p = {:activity_ids => []}
+        r = Registration::Registration.new a, admin, p, []
+        expect { r.save.should_not be_empty
+          }.to_not change { AttendeeActivity.count }
+      end
+    end
+
+    describe '#register_plans' do
+      let(:attendee) { build :attendee }
+      subject { Registration::Registration.new attendee, false, {}, [] }
+
+      it 'returns something enumerable' do
+        errs = subject.register_plans []
+        errs.respond_to?(:each).should be_true
+      end
+
+      context "when there is a mandatory category" do
+        let!(:mandatory_category) { create :plan_category, :mandatory => true }
+
+        it 'returns an error if no plan is selected' do
+          errs = subject.register_plans []
+          errs.should_not be_empty
+          errs.should include("Please select at least one plan in #{mandatory_category.name}")
+        end
+
+        it 'returns an error if only selection has qty of zero' do
+          plan = create :plan, :plan_category => mandatory_category
+          selection = Registration::PlanSelection.new plan, 0
+          errs = subject.register_plans [selection]
+          errs.should_not be_empty
+          errs.should include("Please select at least one plan in #{mandatory_category.name}")
+        end
+      end
+    end
+  end
+
+  context "as an admin" do
+    let(:admin) { true }
+
+    describe '#save' do
+      it "can add activities to any attendee"
+
+      it "adds disabled activities, and returns no errors" do
+        a = build :attendee
+        p = {:activity_ids => [dsbl_act.id]}
+        r = Registration::Registration.new a, admin, p, []
+        expect { r.save.should be_empty
+          }.to change { AttendeeActivity.count }.by(+1)
+      end
+
+      it "removes disabled activities, and returns no errors" do
+        a = create :attendee, :activities => [dsbl_act]
+        p = {:activity_ids => []}
+        r = Registration::Registration.new a, admin, p, []
+        expect { r.save.should be_empty
+          }.to change { AttendeeActivity.count }.by(-1)
       end
     end
   end
