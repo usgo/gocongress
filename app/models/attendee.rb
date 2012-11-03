@@ -22,10 +22,13 @@ class Attendee < ActiveRecord::Base
 
   attr_accessible :activity_ids, :aga_id, :anonymous, :airport_arrival,
     :airport_arrival_flight, :airport_departure, :birth_date,
-    :comment, :congresses_attended, :country, :email, :family_name,
+    :congresses_attended, :country, :email, :family_name,
     :given_name, :gender, :guardian_full_name,
-    :minor_agreement_received, :phone, :special_request, :rank,
-    :roomate_request, :tshirt_size, :understand_minor, :user_id
+    :phone, :special_request, :rank,
+    :roomate_request, :tshirt_size, :understand_minor, :user_id,
+    :as => [:default, :admin]
+
+  attr_accessible :comment, :minor_agreement_received, :as => :admin
 
   # Constants
   # ---------

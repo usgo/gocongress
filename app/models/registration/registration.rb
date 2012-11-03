@@ -33,15 +33,20 @@ class Registration::Registration
       # Regular users are not allowed to add or remove disabled activities.
       errors += validate_activities @params[:activity_ids]
 
-      # Persist discounts, activities, and plans
+      # Persist discounts.  TODO: simply validate instead, as with
+      # activities. If no errors, then assignment will occur below.
       register_discounts(discount_ids)
+      @params.delete :discount_ids
+
+      # Persist plans
       errors += register_plans(@plan_selections)
 
-      set_admin_params
-      delete_protected_params
-
       if errors.empty?
-        @attendee.update_attributes(@params)
+        begin
+          @attendee.update_attributes(@params, :as => mass_assignment_role)
+        rescue ActiveModel::MassAssignmentSecurity::Error => e
+          errors << "Permission denied: #{e}"
+        end
       end
     end
 
@@ -130,12 +135,6 @@ class Registration::Registration
     end
   end
 
-  def delete_protected_params
-    [:comment, :discount_ids, :minor_agreement_received].each do |p|
-      @params.delete p
-    end
-  end
-
   def disabled_activities
     @disabled_activities ||= Activity.disabled.map(&:id)
   end
@@ -156,6 +155,10 @@ class Registration::Registration
     "Please select at least one #{pmnhd} in #{category.name}"
   end
 
+  def mass_assignment_role
+    @as_admin ? :admin : :default
+  end
+
   def parse_airport_datetimes
     parse_errors = []
     begin
@@ -170,16 +173,6 @@ class Registration::Registration
 
   def selected_plan_categories plan_selections
     plan_selections.select{|s| s.qty > 0}.map(&:plan).map(&:plan_category)
-  end
-
-  def set_admin_params
-    if @as_admin
-      [:comment, :minor_agreement_received].each do |p|
-        unless @params[p].nil?
-          @attendee[p] = @params[p]
-        end
-      end
-    end
   end
 
   def unselected_mandatory_plan_categories plan_selections
