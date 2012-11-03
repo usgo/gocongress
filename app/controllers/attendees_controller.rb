@@ -221,15 +221,14 @@ protected
 
   def register_attendee!
 
-    do_associations = true
     if @attendee.new_record?
       # activities haven't been validated yet, so we unset them before `save`
       @attendee.activities = []
-      do_associations = @attendee.save
+      @attendee.save
     end
 
     errors = []
-    if do_associations
+    unless @attendee.new_record?
       reg = Registration::Registration.new(@attendee, current_user.admin?)
 
       # Check that no disabled activites were added or removed
@@ -242,16 +241,12 @@ protected
       # Assign airport_arrival and airport_departure attributes, if possible
       errors += parse_airport_datetimes
 
-      # Activities have now been validated, so persist them
-      if errors.empty?
-        @attendee.activity_ids = params[:attendee][:activity_ids]
-      end
-    end
-
-    if errors.empty? && !@attendee.new_record?
       set_admin_params
       delete_protected_params
-      @attendee.update_attributes(params[:attendee])
+
+      if errors.empty?
+        @attendee.update_attributes(params[:attendee])
+      end
     end
 
     return errors
