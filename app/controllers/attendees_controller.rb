@@ -64,12 +64,12 @@ class AttendeesController < ApplicationController
     authorize! :create, @attendee
 
     errors = register_attendee
+    @attendee.errors[:base].concat(errors) unless errors.empty?
 
-    if errors.empty? && @attendee.errors.empty?
+    if @attendee.errors.empty?
       flash[:notice] = 'Attendee added'
       redirect_to user_terminus_path(:user_id => @attendee.user)
     else
-      @attendee.errors[:base] += errors
       expose_form_vars
       render :action => "new"
     end
@@ -84,12 +84,12 @@ class AttendeesController < ApplicationController
     params[:attendee][:activity_ids] ||= []
 
     errors = register_attendee
+    @attendee.errors[:base].concat(errors) unless errors.empty?
 
-    if errors.empty? && @attendee.errors.empty?
+    if @attendee.errors.empty?
       flash[:notice] = 'Changes saved'
       redirect_to user_terminus_path(:user_id => @attendee.user)
     else
-      @attendee.errors[:base] += errors
       expose_form_vars
       render 'edit'
     end
