@@ -17,86 +17,86 @@
       = render 'shared/google_analytics'
 
   %body{:class => "#{@bodyClassList} year#{@year.year}"}
+    .body-container
+      %noscript
+        #noscript-warning
+          %h3 GoCongress.org works best with Javascript enabled
 
-    %noscript
-      #noscript-warning
-        %h3 GoCongress.org works best with Javascript enabled
-
-    #header-container
-      #header
-        #usgc-title-container
-          %h1= link_to "#{@year.year} US Go Congress", year_path
-        #usgc-when-where-container
-          = @congress_city + ', ' + @congress_state
-          = @congress_date_range + ','
-          = @year.year
-        %div{:style => "clear:both;"}
-    .nav-container
-      .nav
-        %ul#nav-list-main
-          - if show_my_account_anchor? || @year.registration_phase == "open"
-            %li#nav-registration= link_to_my_account_or_to_register
-          %li
-            - if current_user.nil?
-              = link_to "Sign In", new_user_session_path
-            - else
-              = link_to "Sign Out", destroy_user_session_path, :method => :delete
-
-          -# Tournaments
-          - @tournaments_for_nav_menu.each do |t|
-            %li= link_to t.name, t
-          %li
-            - tournaments_plural_phrase = @tournaments_for_nav_menu.empty? ? "Tournaments" : "All Tournaments"
-            = link_to tournaments_plural_phrase, tournaments_path
-
-          -# Activities
-          - @activity_categories_for_menu.each do |c|
-            %li= link_to c.name, c
-
-          %li= link_to "Who is Coming?", attendees_path
-          %li= link_to "Pros", vip_attendees_path
-          %li= link_to "Costs", costs_path
-          - @content_categories_for_menu.each do |c|
-            %li= link_to c.name, c
-          %li= link_to "Contact / Volunteer", contacts_path
-
-    - if can_see_admin_menu?
-      .nav-container-admin
+      #header-container
+        #header
+          #usgc-title-container
+            %h1= link_to "#{@year.year} US Go Congress", year_path
+          #usgc-when-where-container
+            = @congress_city + ', ' + @congress_state
+            = @congress_date_range + ','
+            = @year.year
+          %div{:style => "clear:both;"}
+      .nav-container
         .nav
-          %ul
-            %li#nav-admin-title Admin Menu:
-            %li= link_to "Users", users_path
-            %li= link_to "Transactions", transactions_path
-            %li= link_to "Pricing", pricing_path
-            %li= link_to Activity.model_name.human.pluralize, activity_categories_path
-            %li= link_to "Content", content_categories_path
-            %li= link_to "Reports", reports_path
-            %li= link_to "Settings", edit_year_path
+          %ul#nav-list-main
+            - if show_my_account_anchor? || @year.registration_phase == "open"
+              %li#nav-registration= link_to_my_account_or_to_register
+            %li
+              - if current_user.nil?
+                = link_to "Sign In", new_user_session_path
+              - else
+                = link_to "Sign Out", destroy_user_session_path, :method => :delete
 
-    .content
+            -# Tournaments
+            - @tournaments_for_nav_menu.each do |t|
+              %li= link_to t.name, t
+            %li
+              - tournaments_plural_phrase = @tournaments_for_nav_menu.empty? ? "Tournaments" : "All Tournaments"
+              = link_to tournaments_plural_phrase, tournaments_path
 
-      / Rails flash messages
-      - if flash[:notice]
-        .flash.flash-notice= notice
-      - if flash[:alert]
-        .flash.flash-alert= alert
+            -# Activities
+            - @activity_categories_for_menu.each do |c|
+              %li= link_to c.name, c
 
-      / Yield to view
-      = yield
+            %li= link_to "Who is Coming?", attendees_path
+            %li= link_to "Pros", vip_attendees_path
+            %li= link_to "Costs", costs_path
+            - @content_categories_for_menu.each do |c|
+              %li= link_to c.name, c
+            %li= link_to "Contact / Volunteer", contacts_path
 
-      %div{:style => "clear:both;"}
+      - if can_see_admin_menu?
+        .nav-container-admin
+          .nav
+            %ul
+              %li#nav-admin-title Admin Menu:
+              %li= link_to "Users", users_path
+              %li= link_to "Transactions", transactions_path
+              %li= link_to "Pricing", pricing_path
+              %li= link_to Activity.model_name.human.pluralize, activity_categories_path
+              %li= link_to "Content", content_categories_path
+              %li= link_to "Reports", reports_path
+              %li= link_to "Settings", edit_year_path
 
-    -# The homepage (only) provides content_for this yield (a list of past years)
-    = yield :before_footer
+      .content
 
-    #footer
-      #sponsors
-        - @year.sponsors.each do |name,url|
-          %a{:href => url}= image_tag "sponsors/#{name}.jpg"
-      #site-credit
-        All times are #{Time.zone}
-        %br
-        Content &copy; #{@year.year} US Go Congress
-        %br/
-        Web Programming by
-        %a{:href => "http://www.jaredbeck.com", :target => "_blank"} Jared Beck
+        / Rails flash messages
+        - if flash[:notice]
+          .flash.flash-notice= notice
+        - if flash[:alert]
+          .flash.flash-alert= alert
+
+        / Yield to view
+        = yield
+
+        %div{:style => "clear:both;"}
+
+      -# The homepage (only) provides content_for this yield (a list of past years)
+      = yield :before_footer
+
+      #footer
+        #sponsors
+          - @year.sponsors.each do |name,url|
+            %a{:href => url}= image_tag "sponsors/#{name}.jpg"
+        #site-credit
+          All times are #{Time.zone}
+          %br
+          Content &copy; #{@year.year} US Go Congress
+          %br/
+          Web Programming by
+          %a{:href => "http://www.jaredbeck.com", :target => "_blank"} Jared Beck

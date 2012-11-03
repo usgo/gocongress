@@ -1,17 +1,4 @@
-/* Unfortunately, some of my main styles have higher precedence
-than those in the jquery ui theme stylesheet. The following
-datepicker styles repair such issues, with the goal of staying
-as close to the theme as possible. */
-#ui-datepicker-div {
-  p, span, div, a {
-    font-family: Trebuchet MS,Tahoma,Verdana,Arial,sans-serif;
-    font-size: 10px;
-  }
-  .ui-datepicker-title span { font-size: 11px; }
-}
-
-/* Unlike the above datepicker styles, these styles do not fix
-an issue, but rather override the theme on purpose. */
+/* Override the theme on purpose. */
 .ui-dialog {
   .ui-dialog-title {
     font-family: Helvetica, sans-serif !important;

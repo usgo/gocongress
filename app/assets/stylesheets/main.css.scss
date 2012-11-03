@@ -28,23 +28,36 @@ legend {
 }
 input[type="submit"], input[type="button"] { cursor: pointer; }
 
-/* Font Families */
-h1, h2, h3, h4, h5, h6, legend, th { font-family: Helvetica, sans-serif; }
-body, td, p, span, div, li, hr, blockquote { font-family: Times, serif; }
+/* Some jQuery UI widgets, like datepicker, are installed as direct
+children of the document body.  Their styles will be based off of
+the body, eg. font-size in ems. */
+body { font-size: 11px; }
 
-/* Basic font sizing */
-body { font-size: 14px; } // jquery ui theme (in EMs) based off of this
-h1 { font-size: 32px; }
-h2 { font-size: 24px; }
-h3 { font-size: 18px; }
-p, span, div { font-size: 16px; }
+/* `.body-container` is a direct child of `body`.  These styles will
+apply to just about everything except jQuery UI widgets (see note
+above).  Although there is only one `.body-container` we use a class
+because an id would have too much priority, and would override
+things like `.nav li` */
+.body-container {
+
+  /* Font Families */
+  h1, h2, h3, h4, h5, h6, legend, th { font-family: Helvetica, sans-serif; }
+  body, td, p, span, div, li, hr, blockquote { font-family: Times, serif; }
+
+  /* Basic font sizing */
+  font-size: 14px;
+  h1 { font-size: 32px; }
+  h2 { font-size: 24px; }
+  h3 { font-size: 18px; }
+  p, span, div { font-size: 16px; }
+  .smalltext { font-size: 12px; }
+}
 
 /* Truly basic classes that could apply anywhere -Jared 12/30/10 */
 .clear { clear: both; }
 .fullwidth { width: 100%; }
 .inline { display: inline; }
 .inline-children { display: inline; * { display: inline;} }
-.smalltext { font-size: 12px; }
 th { text-align: left; }
 th.row { vertical-align: top; }
 table .numeric { text-align: right; }
