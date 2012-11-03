@@ -60,10 +60,7 @@ class AttendeesController < ApplicationController
     @attendee.user_id ||= current_user.id
     @attendee.is_primary = @attendee.user.attendees.count == 0
     authorize! :create, @attendee
-
-    errors = register_attendee
-    @attendee.errors[:base].concat(errors) unless errors.empty?
-
+    register_attendee
     if @attendee.errors.empty?
       redirect_to_terminus 'Attendee added'
     else
@@ -76,9 +73,7 @@ class AttendeesController < ApplicationController
   end
 
   def update
-    errors = register_attendee
-    @attendee.errors[:base].concat(errors) unless errors.empty?
-
+    register_attendee
     if @attendee.errors.empty?
       redirect_to_terminus 'Changes saved'
     else
@@ -183,14 +178,16 @@ protected
   end
 
   # `register_attendee` tries to save `@attendee` and its associated
-  # records, and returns an array of extra errors.
+  # records.  In addition to the validations defined in the model,
+  # extra validations may add errors to `@attendee.errors[:base]`.
   def register_attendee
     reg = Registration::Registration.new(
       @attendee,
       current_user.admin?,
       params[:attendee],
       get_plan_selections(@plans))
-    return reg.save
+    errors = reg.save
+    @attendee.errors[:base].concat(errors) unless errors.empty?
   end
 
   def render_form view

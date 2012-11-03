@@ -83,7 +83,7 @@ describe AttendeesController do
       end
 
       it "renders new view if unsuccessful" do
-        stub_register_attendee_to_fail
+        stub_registration_to_fail
         post :create, :attendee => {}, :year => user.year
         response.should render_template 'new'
       end
@@ -207,7 +207,7 @@ describe AttendeesController do
       end
 
       it "renders edit view if unsuccessful" do
-        stub_register_attendee_to_fail
+        stub_registration_to_fail
         put_update
         response.should render_template 'edit'
       end
@@ -436,8 +436,8 @@ describe AttendeesController do
     end
   end
 
-  def stub_register_attendee_to_fail
-    AttendeesController.any_instance.stub(:register_attendee) {
+  def stub_registration_to_fail
+    Registration::Registration.any_instance.stub(:save) {
       ["Woah, your registration was totally unsuccessful, man."]
     }
   end
