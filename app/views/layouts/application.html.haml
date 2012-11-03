@@ -20,21 +20,12 @@
     .body-container
       = render '/layouts/header'
       = render '/layouts/nav'
-
       .content
-
-        / Rails flash messages
         - if flash[:notice]
           .flash.flash-notice= notice
         - if flash[:alert]
           .flash.flash-alert= alert
-
-        / Yield to view
         = yield
-
-        %div{:style => "clear:both;"}
-
-      -# The homepage (only) provides content_for this yield (a list of past years)
+        .clear
       = yield :before_footer
-
       = render '/layouts/footer'
