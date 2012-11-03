@@ -64,26 +64,16 @@ class AttendeesController < ApplicationController
     @attendee.is_primary = @attendee.user.attendees.count == 0
     authorize! :create, @attendee
 
-    # activities haven't been validated yet, so we unset them before `save`
-    @attendee.activities = []
-    if @attendee.save
+    errors = register_attendee!
 
-      # Validate and save discounts, activities, plans, and flight
-      # information. TODO: Unfortunately, for legacy reasons, we
-      # can't save plans and other associated models until
-      # `@attendee` has been saved. -Jared 2012-11-01
-      errors = register_attendee!
-
-      # activities have now been validated, so persist them
-      if errors.empty? && @attendee.activity_ids = params[:attendee][:activity_ids]
-        flash[:notice] = 'Attendee added'
-        redirect_to user_terminus_path(:user_id => @attendee.user)
-        return
-      end
+    if errors.empty? && @attendee.errors.empty?
+      flash[:notice] = 'Attendee added'
+      redirect_to user_terminus_path(:user_id => @attendee.user)
+    else
+      @attendee.errors[:base] += errors
+      expose_form_vars
+      render :action => "new"
     end
-
-    expose_form_vars
-    render :action => "new"
   end
 
   def edit
@@ -94,19 +84,9 @@ class AttendeesController < ApplicationController
     params[:attendee] ||= {}
     params[:attendee][:activity_ids] ||= []
 
-    # Validate and save discounts, activities, plans, and flight information
     errors = register_attendee!
 
-    # Set attributes but do not save yet. We'll save everything all
-    # at once below. Cancan sets attrs from params automatically
-    # before `create`, but not before `update`.
-    set_admin_params
-    delete_protected_params
-
-    # Validate and save.  Note that assigning the `activity_ids`
-    # attribute causes the associated activities to be persisted,
-    # and that this assignment happens before validation.
-    if errors.empty? && @attendee.update_attributes(params[:attendee])
+    if errors.empty? && @attendee.errors.empty?
       flash[:notice] = 'Changes saved'
       redirect_to user_terminus_path(:user_id => @attendee.user)
     else
@@ -240,18 +220,39 @@ protected
   end
 
   def register_attendee!
-    reg = Registration::Registration.new(@attendee, current_user.admin?)
+
+    do_associations = true
+    if @attendee.new_record?
+      # activities haven't been validated yet, so we unset them before `save`
+      @attendee.activities = []
+      do_associations = @attendee.save
+    end
+
     errors = []
+    if do_associations
+      reg = Registration::Registration.new(@attendee, current_user.admin?)
 
-    # Check that no disabled activites were added or removed
-    errors += reg.validate_activities params[:attendee][:activity_ids]
+      # Check that no disabled activites were added or removed
+      errors += reg.validate_activities params[:attendee][:activity_ids]
 
-    # Persist discounts, activities, and plans
-    reg.register_discounts(discount_ids)
-    errors += reg.register_plans(get_plan_selections(@plans))
+      # Persist discounts, activities, and plans
+      reg.register_discounts(discount_ids)
+      errors += reg.register_plans(get_plan_selections(@plans))
 
-    # Assign airport_arrival and airport_departure attributes, if possible
-    errors += parse_airport_datetimes
+      # Assign airport_arrival and airport_departure attributes, if possible
+      errors += parse_airport_datetimes
+
+      # Activities have now been validated, so persist them
+      if errors.empty?
+        @attendee.activity_ids = params[:attendee][:activity_ids]
+      end
+    end
+
+    if errors.empty? && !@attendee.new_record?
+      set_admin_params
+      delete_protected_params
+      @attendee.update_attributes(params[:attendee])
+    end
 
     return errors
   end
