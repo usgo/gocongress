@@ -71,7 +71,7 @@ class AttendeesController < ApplicationController
       redirect_to user_terminus_path(:user_id => @attendee.user)
     else
       expose_form_vars
-      render :action => "new"
+      render :new
     end
   end
 
@@ -91,7 +91,7 @@ class AttendeesController < ApplicationController
       redirect_to user_terminus_path(:user_id => @attendee.user)
     else
       expose_form_vars
-      render 'edit'
+      render :edit
     end
   end
 
