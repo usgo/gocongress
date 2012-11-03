@@ -73,14 +73,14 @@ class AttendeesController < ApplicationController
       errors = []
 
       # Check that no disabled activites were added or removed
-      errors.concat reg.validate_activities params[:attendee][:activity_ids]
+      errors += reg.validate_activities params[:attendee][:activity_ids]
 
       # Persist discounts, activities, and plans
       reg.register_discounts(discount_ids)
-      errors.concat(reg.register_plans(get_plan_selections(@plans)))
+      errors += reg.register_plans(get_plan_selections(@plans))
 
       # Assign airport_arrival and airport_departure attributes, if possible
-      errors.concat(parse_airport_datetimes)
+      errors += parse_airport_datetimes
 
       flash[:notice] = 'Attendee added'
       redirect_to user_terminus_path(:user_id => @attendee.user)
@@ -102,14 +102,14 @@ class AttendeesController < ApplicationController
     errors = []
 
     # Check that no disabled activites were added or removed
-    errors.concat reg.validate_activities params[:attendee][:activity_ids]
+    errors += reg.validate_activities params[:attendee][:activity_ids]
 
     # Persist discounts, activities, and plans
     reg.register_discounts(discount_ids)
-    errors.concat(reg.register_plans(get_plan_selections(@plans)))
+    errors += reg.register_plans(get_plan_selections(@plans))
 
     # Assign airport_arrival and airport_departure attributes, if possible
-    errors.concat(parse_airport_datetimes)
+    errors += parse_airport_datetimes
 
     # Set attributes but do not save yet. We'll save everything all
     # at once below. Cancan does this automatically before `create`,
@@ -124,7 +124,7 @@ class AttendeesController < ApplicationController
       flash[:notice] = 'Changes saved'
       redirect_to user_terminus_path(:user_id => @attendee.user)
     else
-      @attendee.errors[:base].concat(errors)
+      @attendee.errors[:base] += errors
       expose_form_vars
       render 'edit'
     end
