@@ -16,6 +16,11 @@ class Registration::Registration
   end
 
   def save
+    errors = []
+
+    # Assign airport_arrival and airport_departure attributes, if possible
+    errors += parse_airport_datetimes
+
     if @attendee.new_record?
       # Activities haven't been validated yet, so we unset them
       # before `save`. (they had been set by cancan)
@@ -23,7 +28,6 @@ class Registration::Registration
       @attendee.save
     end
 
-    errors = []
     unless @attendee.new_record?
 
       # Regular users are not allowed to add or remove disabled activities.
@@ -32,9 +36,6 @@ class Registration::Registration
       # Persist discounts, activities, and plans
       register_discounts(discount_ids)
       errors += register_plans(@plan_selections)
-
-      # Assign airport_arrival and airport_departure attributes, if possible
-      errors += parse_airport_datetimes
 
       set_admin_params
       delete_protected_params
