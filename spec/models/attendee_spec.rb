@@ -129,29 +129,16 @@ describe Attendee do
 
   describe "#valid?" do
     let(:plan) { create :plan, inventory: 42, max_quantity: 999 }
+    let(:a) { build :attendee }
 
     it 'country must be two capital lettters' do
-      a = build :attendee
       a.country.should match /^[A-Z]{2}$/
       a.country = 'United States'
       a.should_not be_valid
       a.errors.keys.should include(:country)
     end
 
-    it "plan quantity cannot exceed available inventory" do
-      a = create :attendee
-      a.attendee_plans.build plan_id: plan.id, quantity: 43
-      a.should_not be_valid
-    end
-
-    it "plan quantity can equal available inventory" do
-      a = create :attendee
-      a.attendee_plans.build plan_id: plan.id, quantity: 42
-      a.should be_valid
-    end
-
     it "requires minors to provide the name of a guardian" do
-      a = build :attendee
       a.stub(:minor?) { true }
       a.guardian_full_name = nil
       a.should_not be_valid
@@ -159,17 +146,30 @@ describe Attendee do
     end
 
     it "requires a birth date" do
-      a = build :attendee, {:birth_date => nil}
+      a.birth_date = nil
       a.should_not be_valid
       a.errors.keys.should include(:birth_date)
     end
 
     it "requires minors to agree to fill out the liability release" do
-      a = build :attendee
       a[:birth_date] = 5.years.ago
       a[:understand_minor] = false
       a.should_not be_valid
       a.errors.keys.should include(:liability_release)
+    end
+
+    context 'after being persisted' do
+      let(:a) { create :attendee }
+
+      it "plan quantity cannot exceed available inventory" do
+        a.attendee_plans.build plan_id: plan.id, quantity: 43
+        a.should_not be_valid
+      end
+
+      it "plan quantity can equal available inventory" do
+        a.attendee_plans.build plan_id: plan.id, quantity: 42
+        a.should be_valid
+      end
     end
   end
 end
