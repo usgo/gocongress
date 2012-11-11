@@ -6,22 +6,6 @@ class AttendeeTest < ActiveSupport::TestCase
     @user = @attendee.user
   end
 
-  test "#age_in_years" do
-
-    # The 2012 congress starts on 8/4, and Arlene will be 41
-    # Her birthday is after congress starts.
-    arlene = build(:attendee, birth_date: Date.new(1970, 9, 22), year: 2012)
-    assert_equal 41, arlene.age_in_years
-
-    # John Doe's birthday is before congress starts.
-    john = build(:attendee, birth_date: Date.new(1990, 7, 5), year: 2012)
-    assert_equal 22, john.age_in_years
-  end
-
-  test "factory is valid" do
-    assert build(:attendee).valid?
-  end
-
   test "country must be two capital lettters" do
     assert_match( /^[A-Z]{2}$/, @attendee.country )
     update_success = @attendee.update_attributes( { :country => 'United States' } )

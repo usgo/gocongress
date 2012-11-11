@@ -53,6 +53,18 @@ describe Attendee do
     end
   end
 
+  describe '#age_in_years' do
+    it 'returns 41 for Arlene because her birthday is after congress' do
+      arlene = build(:attendee, birth_date: Date.new(1970, 9, 22), year: 2012)
+      arlene.age_in_years.should == 41
+    end
+
+    it 'returns 22 for John Doe, because his birthday is before congress' do
+      john = build(:attendee, birth_date: Date.new(1990, 7, 5), year: 2012)
+      john.age_in_years.should == 22
+    end
+  end
+
   describe '#birthday_after_congress?' do
     let(:y) { 2012 }
     let(:sd) { Year.find_by_year(y).start_date }
