@@ -6,11 +6,6 @@ class AttendeeTest < ActiveSupport::TestCase
     @user = @attendee.user
   end
 
-  test "#invoice_total" do
-    # a user with no plans, discounts, activities, etc. should have a $0 total
-    assert_equal 0, @attendee.invoice_total
-  end
-
   test "#invoice_items" do
     # only discounts from the attendee's year should be included
     dc_2011 = create :discount_for_child, :year => 2011

@@ -7,10 +7,26 @@ describe Attendee do
     build(:attendee).should be_valid
   end
 
-  context "when first created" do
+  context "after initialize" do
+    it 'should have no activities' do
+      subject.activities.should be_empty
+    end
+
+    it 'should have no discounts' do
+      subject.discounts.should be_empty
+    end
+
     describe "#has_plans?" do
       it "does not have plans" do
         subject.has_plans?.should == false
+      end
+    end
+  end
+
+  context 'when built by factory' do
+    describe '#invoice_total' do
+      it 'should return zero' do
+        build(:attendee).invoice_total.should == 0
       end
     end
   end
