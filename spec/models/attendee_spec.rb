@@ -81,6 +81,20 @@ describe Attendee do
     end
   end
 
+  describe '#minor?' do
+    context 'The 2012 congress starts on 8/4' do
+      it 'John will be 18' do
+        john = build(:attendee, birth_date: Date.new(1994, 7, 5), year: 2012)
+        john.should_not be_minor
+      end
+
+      it 'Jane will be 17' do
+        jane = build(:attendee, birth_date: Date.new(1994, 10, 1), year: 2012)
+        jane.should be_minor
+      end
+    end
+  end
+
   describe "#valid?" do
     let(:plan) { create :plan, inventory: 42, max_quantity: 999 }
 

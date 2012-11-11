@@ -6,17 +6,6 @@ class AttendeeTest < ActiveSupport::TestCase
     @user = @attendee.user
   end
 
-  test "#minor?" do
-
-    # The 2012 congress starts on 8/4, and John Doe will be 18
-    john = build(:attendee, birth_date: Date.new(1994, 7, 5), year: 2012)
-    assert !john.minor?
-
-    # Jane Doe will be 17
-    jane = build(:attendee, birth_date: Date.new(1994, 10, 1), year: 2012)
-    assert jane.minor?
-  end
-
   test "#birthday_after_congress" do
     jared = build(:attendee, birth_date: Date.new(1981, 9, 10), year: 2012)
     assert jared.birthday_after_congress
