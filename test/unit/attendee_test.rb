@@ -6,20 +6,6 @@ class AttendeeTest < ActiveSupport::TestCase
     @user = @attendee.user
   end
 
-  test "destroying an attendee also destroys dependent AttendeePlans" do
-    a = create(:attendee, :user_id => @user.id)
-    a.plans << create(:plan)
-
-    # when we destroy the attendee, we expect all dependent AttendeePlans to be destroyed
-    destroyed_attendee_id = a.id
-    assert_difference('AttendeePlan.count', -1) do
-      a.destroy
-    end
-
-    # double check
-    assert_equal 0, AttendeePlan.where(:attendee_id => destroyed_attendee_id).count
-  end
-
   test "early bird discount" do
     a = create(:attendee, {:created_at => Time.new(2011,1,2)})
     d = create(:discount, {:is_automatic => true, :min_reg_date => Time.new(2011,1,3)})
