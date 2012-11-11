@@ -6,12 +6,6 @@ class AttendeeTest < ActiveSupport::TestCase
     @user = @attendee.user
   end
 
-  test "country must be two capital lettters" do
-    assert_match( /^[A-Z]{2}$/, @attendee.country )
-    update_success = @attendee.update_attributes( { :country => 'United States' } )
-    assert !update_success
-  end
-
   test "destroying an attendee also destroys dependent AttendeePlans" do
     a = create(:attendee, :user_id => @user.id)
     a.plans << create(:plan)

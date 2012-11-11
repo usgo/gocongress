@@ -130,6 +130,14 @@ describe Attendee do
   describe "#valid?" do
     let(:plan) { create :plan, inventory: 42, max_quantity: 999 }
 
+    it 'country must be two capital lettters' do
+      a = build :attendee
+      a.country.should match /^[A-Z]{2}$/
+      a.country = 'United States'
+      a.should_not be_valid
+      a.errors.keys.should include(:country)
+    end
+
     it "plan quantity cannot exceed available inventory" do
       a = create :attendee
       a.attendee_plans.build plan_id: plan.id, quantity: 43
