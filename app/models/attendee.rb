@@ -183,7 +183,7 @@ class Attendee < ActiveRecord::Base
   def age_in_years
     raise 'birth date undefined' if birth_date.nil?
     year_delta = congress_start.year - birth_date.year
-    birthday_after_congress ? year_delta - 1 : year_delta
+    birthday_after_congress? ? year_delta - 1 : year_delta
   end
 
   def anonymize string
@@ -205,7 +205,7 @@ class Attendee < ActiveRecord::Base
     end
   end
 
-  def birthday_after_congress
+  def birthday_after_congress?
     bday = Date.new(congress_start.year, birth_date.month, birth_date.day)
     (bday <=> congress_start) == 1
   end
