@@ -71,6 +71,14 @@ describe Attendee do
       expect { a.activities << v }.to change{a.invoice_items.count}.by(1)
     end
 
+    it "only includes discounts from the attendee's year" do
+      dc_2011 = create :discount_for_child, :year => 2011
+      dc_now = create :discount_for_child
+      a = create :child
+      item_descriptions = a.invoice_items.map{|i| i.description}
+      item_descriptions.should include(dc_now.get_invoice_item_name)
+      item_descriptions.should_not include(dc_2011.get_invoice_item_name)
+    end
   end
 
   describe "#valid?" do

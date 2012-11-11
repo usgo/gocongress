@@ -6,16 +6,6 @@ class AttendeeTest < ActiveSupport::TestCase
     @user = @attendee.user
   end
 
-  test "#invoice_items" do
-    # only discounts from the attendee's year should be included
-    dc_2011 = create :discount_for_child, :year => 2011
-    dc_now = create :discount_for_child
-    a = create(:child, :user_id => @user.id)
-    item_descriptions = a.invoice_items.map{|i| i.description}
-    assert_equal true, item_descriptions.include?(dc_now.get_invoice_item_name)
-    assert_equal false, item_descriptions.include?(dc_2011.get_invoice_item_name)
-  end
-
   test "#minor?" do
 
     # The 2012 congress starts on 8/4, and John Doe will be 18
