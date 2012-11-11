@@ -53,7 +53,28 @@ describe Attendee do
     end
   end
 
-  describe "#invoice_items" do
+  # TODO: birthday_after_congress should have a question mark
+  describe '#birthday_after_congress' do
+    let(:y) { 2012 }
+    let(:sd) { Year.find_by_year(y).start_date }
+
+    it 'returns true if birthday occurs after congress start date' do
+      jared = build(:attendee, birth_date: Date.new(1981, 9, 10), year: y)
+      jared.birthday_after_congress.should == true
+    end
+
+    it 'returns false if birthday occurs before congress start date' do
+      john = build(:attendee, birth_date: Date.new(1990, 7, 5), year: y)
+      john.birthday_after_congress.should == false
+    end
+
+    it 'returns false if birthday falls on the congress start date' do
+      jane = build(:attendee, birth_date: Date.new(2000, sd.month, sd.day), year: y)
+      jane.birthday_after_congress.should == false
+    end
+  end
+
+  describe '#invoice_items' do
     let(:a) { create :attendee }
 
     it "does not include plans that need staff approval" do

@@ -6,18 +6,6 @@ class AttendeeTest < ActiveSupport::TestCase
     @user = @attendee.user
   end
 
-  test "#birthday_after_congress" do
-    jared = build(:attendee, birth_date: Date.new(1981, 9, 10), year: 2012)
-    assert jared.birthday_after_congress
-
-    john = build(:attendee, birth_date: Date.new(1990, 7, 5), year: 2012)
-    assert !john.birthday_after_congress
-
-    jane = build(:attendee, year: 2012)
-    jane.birth_date = Date.new(2000, jane.congress_start.month, jane.congress_start.day)
-    assert !jane.birthday_after_congress
-  end
-
   test "#age_in_years" do
 
     # The 2012 congress starts on 8/4, and Arlene will be 41
