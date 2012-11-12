@@ -39,6 +39,16 @@ describe User do
     end
   end
 
+  describe 'email' do
+    let(:capital_email) { 'Asdf@example.com' }
+
+    it 'is downcased when saved, or used in a finder' do
+      create(:user, email: capital_email)
+      User.find_by_email(capital_email.downcase).should_not be_nil
+      User.find_by_email(capital_email).should_not be_nil
+    end
+  end
+
   describe "#get_invoice_items" do
     let(:attendee) { create :attendee }
     let(:user) { attendee.user }

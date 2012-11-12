@@ -1,9 +1,7 @@
 %p.vertical-form-instructions
   %strong Trouble signing in?
-  %br/
-  Please be aware that the email field is case-sensitive.
-  Or, maybe you
-  = link_to "forgot your password?", new_password_path(resource_name)
+  %br
+  = link_to "Forgot your password?", new_password_path(resource_name), :tabindex => 5
 
 %p.vertical-form-instructions
   %strong No account yet for #{@year.year}?
