@@ -84,7 +84,9 @@ en:
         min_reg_date: "Registered On or Before Date"
       user:
         created_at: "Created"
+        email: "Email"
         last_sign_in_at: "Last Sign In"
+        password: "Password"
       year:
         reply_to_email: "Reply-To Email"
         twitter_url: "Twitter URL"

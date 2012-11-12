@@ -37,19 +37,6 @@
 
   = form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f|
 
-    = render :partial => "shared/error_messages", :locals => { :resource => resource }
-
-    %fieldset
-      .field
-        = f.label :email
-        = f.text_field :email
-      .field
-        = f.label :password, 'Password'
-        = f.password_field :password, :size => 10
-      .field
-        = f.label :password_confirmation, 'Confirm Password'
-        = f.password_field :password_confirmation, :size => 10
-
     -# For new registrations, we need to set the user's year before
     -# validation, but because we are using Devise
     -# RegistrationsController we can't exactly add a before_filter.
@@ -58,7 +45,18 @@
     -# null year, thus making the validation pointless.
     = hidden_field_tag "user[year]", @year.year
 
+    = render :partial => "shared/error_messages", :locals => { :resource => resource }
+
     %fieldset
+      .field
+        = f.label :email
+        = f.text_field :email
+      .field
+        = f.label :password, 'Choose a Password'
+        = f.password_field :password, :size => 10
+      .field
+        = f.label :password_confirmation, 'Confirm Password'
+        = f.password_field :password_confirmation, :size => 10
       .field
         = label '', ''
         = f.submit "Continue"
