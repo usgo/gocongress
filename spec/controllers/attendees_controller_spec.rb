@@ -31,9 +31,9 @@ describe AttendeesController do
       end
 
       it "lists attendees with at least one plan" do
-        p = create :plan
-        a = create :attendee, {plans: [p]}
-        a2 = create :attendee, {plans: []}
+        a = create :attendee
+        a.plans << create(:plan)
+        a2 = create :attendee
         get :index, year: a.year
         response.should be_successful
         assigns(:attendees).should include(a)

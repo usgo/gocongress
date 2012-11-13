@@ -16,7 +16,8 @@ describe Registration::Registration do
       end
 
       it "does not remove disabled activity, and returns an error" do
-        a = create :attendee, :activities => [dsbl_act]
+        a = create :attendee
+        a.activities << dsbl_act
         p = {:activity_ids => []}
         r = Registration::Registration.new a, admin, p, []
         expect { r.save.should_not be_empty
@@ -66,7 +67,8 @@ describe Registration::Registration do
       end
 
       it "removes disabled activities, and returns no errors" do
-        a = create :attendee, :activities => [dsbl_act]
+        a = create :attendee
+        a.activities << dsbl_act
         p = {:activity_ids => []}
         r = Registration::Registration.new a, admin, p, []
         expect { r.save.should be_empty

@@ -87,7 +87,8 @@ describe Attendee do
 
   describe '#destroy' do
     it 'also destroys dependent AttendeePlans' do
-      a = create :attendee, plans: [create(:plan)]
+      a = create(:attendee)
+      a.plans << create(:plan)
       expect { a.destroy }.to change { AttendeePlan.count }.by(-1)
       AttendeePlan.where(:attendee_id => a.id).should be_empty
     end

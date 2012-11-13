@@ -6,7 +6,7 @@ source 'http://rubygems.org'
 ruby '1.9.3'
 
 # Core rails stuff
-gem 'rails', '3.2.8'
+gem 'rails'
 gem 'sass-rails'
 gem 'coffee-rails'
 gem 'uglifier'
