@@ -1,1 +1,1 @@
-rvm --create --install use 1.9.3@gocongress
+rvm --create use 1.9.3@gocongress
