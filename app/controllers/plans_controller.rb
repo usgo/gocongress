@@ -1,8 +1,9 @@
 class PlansController < ApplicationController
+  include DollarController
   include YearlyController
 
   # Callbacks, in order
-  before_filter :price_to_cents, only: [:create, :update]
+  add_filter_converting_param_to_cents :price
   load_resource
   add_filter_to_set_resource_year
   authorize_resource
@@ -54,12 +55,6 @@ class PlansController < ApplicationController
 
   def categories_for_select
     PlanCategory.yr(@year).order(:name).all.map {|c| [c.name, c.id]}
-  end
-
-  def price_to_cents
-    if params[:plan][:price].present?
-      params[:plan][:price] = (params[:plan][:price].to_f * 100).round
-    end
   end
 
 end

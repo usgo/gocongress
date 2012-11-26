@@ -1,8 +1,9 @@
 class DiscountsController < ApplicationController
+  include DollarController
   include YearlyController
 
   # Callbacks, in order
-  before_filter :amount_to_cents, only: [:create, :update]
+  add_filter_converting_param_to_cents :amount
   load_resource
   add_filter_to_set_resource_year
   authorize_resource
@@ -33,14 +34,6 @@ class DiscountsController < ApplicationController
   def destroy
     @discount.destroy
     redirect_to discounts_url
-  end
-
-  private
-
-  def amount_to_cents
-    if params[:discount][:amount].present?
-      params[:discount][:amount] = (params[:discount][:amount].to_f * 100).round
-    end
   end
 
 end

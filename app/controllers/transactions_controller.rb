@@ -1,8 +1,9 @@
 class TransactionsController < ApplicationController
+  include DollarController
   include YearlyController
 
   # Callbacks, in order
-  before_filter :amount_to_cents, only: [:create, :update]
+  add_filter_converting_param_to_cents :amount
   load_resource
   add_filter_to_set_resource_year
   authorize_resource
@@ -57,13 +58,7 @@ class TransactionsController < ApplicationController
     redirect_to(transactions_url)
   end
 
-private
-
-  def amount_to_cents
-    if params[:transaction][:amount].present?
-      params[:transaction][:amount] = (params[:transaction][:amount].to_f * 100).round
-    end
-  end
+  private
 
   # `set_attrs_from_params` sets inaccessible transaction attributes
   def set_attrs_from_params
