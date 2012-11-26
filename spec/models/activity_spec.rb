@@ -6,6 +6,7 @@ describe Activity do
   it "has a valid factory" do
     build(:activity).should be_valid
   end
+
   context "when initialized" do
     subject { Activity.new }
     it "is enabled" do
@@ -13,4 +14,3 @@ describe Activity do
     end
   end
 end
-

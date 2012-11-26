@@ -24,6 +24,29 @@ describe Purchasable do
     end
   end
 
+  describe '#valid?' do
+    describe 'price' do
+      def err_msg_keys price
+        p = Plan.new
+        p.price = price
+        p.valid?
+        p.errors.messages.keys
+      end
+
+      it 'complains when the price is a decimal' do
+        err_msg_keys(4.2).should include(:price)
+      end
+
+      it 'does not complain when the price is an integer' do
+        err_msg_keys(42).should_not include(:price)
+      end
+
+      it 'complains when the price is negative' do
+        err_msg_keys(-42).should include(:price)
+      end
+    end
+  end
+
   context "when at least one attendee has selected it" do
     before do
       subject.attendees << create(:attendee)

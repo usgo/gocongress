@@ -6,7 +6,11 @@ module Purchasable
   extend ActiveSupport::Concern
 
   included do
-    validates :price, :numericality => { greater_than_or_equal_to: 0, allow_nil: false }
+    validates :price, :numericality => {
+      allow_nil: false,
+      greater_than_or_equal_to: 0,
+      only_integer: true
+    }
 
     # Admin cannot change the price if attendees have already selected it
     validates_each :price do |record, attr, value|

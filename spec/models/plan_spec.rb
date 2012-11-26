@@ -7,7 +7,7 @@ describe Plan do
     build(:plan).should be_valid
   end
 
-  describe '#valid' do
+  describe '#valid?' do
     it 'requires a nonzero inventory' do
       build(:plan, inventory: 0).should_not be_valid
     end

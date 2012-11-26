@@ -14,7 +14,7 @@ FactoryGirl.define do
   factory :plan do
     association     :plan_category
     sequence(:name) { |n| "Plan #{n}" }
-    price           { (rand * 1000).round(2) }
+    price           { (rand * 10000).round }
     age_min         0
     age_max         nil
     description     %w['asdf' 'fdsa'].sample

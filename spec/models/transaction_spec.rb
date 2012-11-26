@@ -31,7 +31,6 @@ describe Transaction do
   end
 
   describe "#valid" do
-
     it "validates year" do
       t = build(:tr_sale)
       t.should be_valid
@@ -43,6 +42,27 @@ describe Transaction do
       t.should be_valid
     end
 
+    describe 'amount' do
+      def trn_err_msg_keys amnt
+        x = Transaction.new
+        x.amount = amnt
+        x.valid?
+        x.errors.messages.keys
+      end
+
+      it 'complains when amount is a decimal' do
+        trn_err_msg_keys(4.2).should include(:amount)
+      end
+
+      it 'does not complain when amount is an integer' do
+        trn_err_msg_keys(42).should_not include(:amount)
+      end
+
+      it 'complains when amount is negative' do
+        trn_err_msg_keys(-42).should include(:amount)
+      end
+    end
+
     context "comp" do
       it "must not have a gwtranid" do
         t = build :tr_comp, {gwtranid: 12897}
@@ -52,13 +72,6 @@ describe Transaction do
       it "must not have a gwdate" do
         t = build :tr_comp, {gwdate: Time.now.to_date}
         t.should_not be_valid
-      end
-
-      it "amount cannot be negative" do
-        t = build :tr_comp, {amount: -42}
-        t.should_not be_valid
-        t.amount = +42
-        t.should be_valid
       end
 
       it "instrument must be blank" do
@@ -78,13 +91,7 @@ describe Transaction do
     context "sale" do
       let(:txn) { build :tr_sale }
 
-      it "requires positive sales amount" do
-        txn.amount = -34
-        txn.should_not be_valid
-      end
-
       context "gateway transaction" do
-
         before do
           txn.stub(:is_gateway_transaction?) { true }
         end

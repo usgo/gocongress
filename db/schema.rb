@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121007035020) do
+ActiveRecord::Schema.define(:version => 20121126022039) do
 
   create_table "activities", :force => true do |t|
     t.string   "name"
@@ -20,12 +20,12 @@ ActiveRecord::Schema.define(:version => 20121007035020) do
     t.datetime "leave_time"
     t.string   "notes",                :limit => 2000
     t.time     "return_time"
-    t.integer  "year",                                                                                   :null => false
+    t.integer  "year",                                                    :null => false
     t.string   "location",             :limit => 50
-    t.integer  "activity_category_id",                                                                   :null => false
-    t.decimal  "price",                                :precision => 10, :scale => 2,                    :null => false
-    t.boolean  "price_varies",                                                        :default => false, :null => false
-    t.boolean  "disabled",                                                            :default => false, :null => false
+    t.integer  "activity_category_id",                                    :null => false
+    t.boolean  "price_varies",                         :default => false, :null => false
+    t.boolean  "disabled",                             :default => false, :null => false
+    t.integer  "price",                                                   :null => false
   end
 
   add_index "activities", ["activity_category_id"], :name => "index_activities_on_activity_category_id"
@@ -144,7 +144,6 @@ ActiveRecord::Schema.define(:version => 20121007035020) do
 
   create_table "discounts", :force => true do |t|
     t.string   "name",         :limit => 50, :null => false
-    t.decimal  "amount",                     :null => false
     t.integer  "age_min"
     t.integer  "age_max"
     t.boolean  "is_automatic",               :null => false
@@ -152,6 +151,7 @@ ActiveRecord::Schema.define(:version => 20121007035020) do
     t.datetime "updated_at"
     t.date     "min_reg_date"
     t.integer  "year",                       :null => false
+    t.integer  "amount",                     :null => false
   end
 
   add_index "discounts", ["id", "year"], :name => "index_discounts_on_id_and_year", :unique => true
@@ -177,20 +177,20 @@ ActiveRecord::Schema.define(:version => 20121007035020) do
   add_index "plan_categories", ["id", "year"], :name => "index_plan_categories_on_id_and_year", :unique => true
 
   create_table "plans", :force => true do |t|
-    t.string   "name",                 :limit => 50,                                                   :null => false
-    t.decimal  "price",                              :precision => 10, :scale => 2,                    :null => false
-    t.integer  "age_min",                                                                              :null => false
+    t.string   "name",                 :limit => 50,                    :null => false
+    t.integer  "age_min",                                               :null => false
     t.integer  "age_max"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "description"
-    t.integer  "plan_category_id",                                                                     :null => false
-    t.integer  "max_quantity",                                                      :default => 1,     :null => false
-    t.integer  "year",                                                                                 :null => false
+    t.integer  "plan_category_id",                                      :null => false
+    t.integer  "max_quantity",                       :default => 1,     :null => false
+    t.integer  "year",                                                  :null => false
     t.integer  "inventory"
-    t.boolean  "needs_staff_approval",                                              :default => false, :null => false
-    t.integer  "cat_order",                                                         :default => 0,     :null => false
-    t.boolean  "disabled",                                                          :default => false, :null => false
+    t.boolean  "needs_staff_approval",               :default => false, :null => false
+    t.integer  "cat_order",                          :default => 0,     :null => false
+    t.boolean  "disabled",                           :default => false, :null => false
+    t.integer  "price",                                                 :null => false
   end
 
   add_index "plans", ["id", "year"], :name => "index_plans_on_id_and_year", :unique => true
@@ -222,9 +222,8 @@ ActiveRecord::Schema.define(:version => 20121007035020) do
   add_index "tournaments", ["id", "year"], :name => "index_tournaments_on_id_and_year", :unique => true
 
   create_table "transactions", :force => true do |t|
-    t.integer  "user_id",                                                        :null => false
-    t.string   "trantype",           :limit => 1,                                :null => false
-    t.decimal  "amount",                          :precision => 10, :scale => 2, :null => false
+    t.integer  "user_id",                         :null => false
+    t.string   "trantype",           :limit => 1, :null => false
     t.integer  "gwtranid"
     t.date     "gwdate"
     t.datetime "created_at"
@@ -233,7 +232,8 @@ ActiveRecord::Schema.define(:version => 20121007035020) do
     t.integer  "updated_by_user_id"
     t.string   "comment"
     t.string   "instrument",         :limit => 1
-    t.integer  "year",                                                           :null => false
+    t.integer  "year",                            :null => false
+    t.integer  "amount",                          :null => false
   end
 
   add_index "transactions", ["gwtranid"], :name => "index_transactions_on_gwtranid", :unique => true
