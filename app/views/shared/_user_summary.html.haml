@@ -28,11 +28,11 @@
         %tr
           %td= truncate(strip_tags(i.attendee_full_name), :length => 30)
           %td= truncate(strip_tags(i.description), :length => 45)
-          %td.numeric= number_to_currency i.price
+          %td.numeric= cents_to_currency i.price
           %td.numeric= i.qty
-          %td.numeric= number_to_currency( i.price * i.qty )
+          %td.numeric= cents_to_currency( i.price * i.qty )
       %tr.total
         %th{:colspan=>4} Total
-        %td.numeric= number_to_currency user.get_invoice_total
+        %td.numeric= cents_to_currency user.get_invoice_total
 
   = render :partial => 'shared/ledger', :locals => {:user => user}

@@ -28,7 +28,7 @@ module Purchasable
     elsif price.to_f == 0.0
       "Free"
     else
-      ActionController::Base.helpers.number_to_currency(price, :precision => 2)
+      ApplicationController.helpers.cents_to_currency(price)
     end
   end
 

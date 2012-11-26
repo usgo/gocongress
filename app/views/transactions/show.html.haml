@@ -13,7 +13,7 @@
     %td= @transaction.get_instrument_name
   %tr
     %th Amount
-    %td= number_to_currency @transaction.amount, :unit => ''
+    %td= cents_to_currency @transaction.amount, :unit => ''
   %tr
     %th Comment
     %td{:colspan=>2}

@@ -42,5 +42,5 @@
           %td= u.email
           %td= u.primary_attendee.family_name
           %td= u.primary_attendee.given_name
-          %td.numeric= number_to_currency u.balance, :unit => '', :negative_format => "(%n)"
+          %td.numeric= cents_to_currency u.balance, :unit => '', :negative_format => "(%n)"
           %td.align-center= link_to "Account", user_path(u)

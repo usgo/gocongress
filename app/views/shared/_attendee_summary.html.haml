@@ -46,9 +46,9 @@
         - attendee.invoice_items.each do |i|
           %tr
             %td= i.description
-            %td.numeric= number_to_currency i.price
+            %td.numeric= cents_to_currency i.price
             %td.numeric= i.qty
-            %td.numeric= number_to_currency(i.price * i.qty)
+            %td.numeric= cents_to_currency(i.price * i.qty)
         %tr.total
           %th{:colspan=>3} Total
-          %td.numeric= number_to_currency attendee.invoice_total
+          %td.numeric= cents_to_currency attendee.invoice_total

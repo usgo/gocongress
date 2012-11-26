@@ -18,7 +18,7 @@
             = t.description
             - if show_detail_links and can? :read, t
               = link_to "(details)", t
-          %td.numeric= number_to_currency t.get_ledger_amount
+          %td.numeric= cents_to_currency t.get_ledger_amount
       %tr.total
         %th{ :colspan => 2 } Total
-        %td.numeric= number_to_currency user.amount_paid
+        %td.numeric= cents_to_currency user.amount_paid

@@ -3,7 +3,7 @@
 %table.lightweight
   %tr
     %th{:style => "width:150px; padding-right:20px;"} Amount
-    %td= number_to_currency @discount.amount
+    %td= cents_to_currency @discount.amount
   %tr
     %th= trl_attr 'discount', 'is_automatic'
     %td= @discount.is_automatic? ? "Yes" : "No"

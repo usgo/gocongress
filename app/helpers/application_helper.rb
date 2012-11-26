@@ -5,6 +5,10 @@ module ApplicationHelper
     signed_in?(nil)
   end
 
+  def cents_to_currency x
+    number_to_currency(x/100)
+  end
+
   def link_to_my_account_or_to_register
     if show_my_account_anchor?
       path = user_path id: current_user.id, year: current_user.year

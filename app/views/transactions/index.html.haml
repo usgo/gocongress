@@ -38,7 +38,7 @@
           %td= t.created_at.to_date
           %td= t.get_trantype_name
           %td= t.get_instrument_name
-          %td.numeric= number_to_currency t.amount, :unit => ""
+          %td.numeric= cents_to_currency t.amount, :unit => ""
           %td
             - link_text = t.user.coalesce_full_name_then_email
             - link_path = ledger_user_path(t.user)
