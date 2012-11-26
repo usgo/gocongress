@@ -9,11 +9,16 @@ module DollarController
     end
   end
 
+  # `convert_dollars_to_cents` takes the name of an element
+  # in the model params, eg. `price` in `params[:plan][:price]`.
+  # It modifies the param in place, replacing it with the equivalent
+  # integer cents.  Note how the American thousands-separator is
+  # stripped out before calling `to_f`. -Jared 2012-11-26
   def convert_dollars_to_cents atr
     cnsd = controller_name.singularize.downcase.to_sym
     if params[cnsd][atr].present?
-      undelimited = params[cnsd][atr].delete ','
-      params[cnsd][atr] = (undelimited.to_f * 100).round
+      dollars = params[cnsd][atr].delete(',').to_f
+      params[cnsd][atr] = (dollars * 100).round
     end
   end
 
