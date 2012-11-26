@@ -12,7 +12,8 @@ module DollarController
   def convert_dollars_to_cents atr
     cnsd = controller_name.singularize.downcase.to_sym
     if params[cnsd][atr].present?
-      params[cnsd][atr] = (params[cnsd][atr].to_f * 100).round
+      undelimited = params[cnsd][atr].delete ','
+      params[cnsd][atr] = (undelimited.to_f * 100).round
     end
   end
 
