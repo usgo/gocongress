@@ -7,7 +7,7 @@ module ApplicationHelper
 
   def cents_for_currency_field x
     return '' if x.blank?
-    cents_to_currency(x, :precision => 2, :unit => '')
+    cents_to_currency(x, delimiter: '', precision: 2, unit: '')
   end
 
   def cents_to_currency x, opts = {}
