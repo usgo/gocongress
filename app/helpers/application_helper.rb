@@ -5,8 +5,13 @@ module ApplicationHelper
     signed_in?(nil)
   end
 
-  def cents_to_currency x
-    number_to_currency(x/100)
+  def cents_for_currency_field x
+    return '' if x.blank?
+    cents_to_currency(x, :precision => 2, :unit => '')
+  end
+
+  def cents_to_currency x, opts = {}
+    number_to_currency(x.to_f / 100, opts)
   end
 
   def link_to_my_account_or_to_register
@@ -66,8 +71,12 @@ module ApplicationHelper
     (collection.count == 1) ? "the " + singular : singular.pluralize
   end
 
+  def number_field_for_cents builder, atr, cents
+    v = cents_for_currency_field(cents)
+    builder.number_field atr, min: 0, size: 5, step: 0.01, value: v
+  end
+
   def production?
     ENV['RAILS_ENV'] == 'production'
   end
-
 end

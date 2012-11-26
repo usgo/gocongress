@@ -12,7 +12,7 @@
       = f.select :activity_category_id, activity_category_options
     .field
       = f.label :price
-      = f.text_field :price, :size => 5
+      = number_field_for_cents f, :price, @activity.price
     .field
       = f.label :price_varies
       = f.check_box :price_varies

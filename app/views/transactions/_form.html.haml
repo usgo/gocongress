@@ -22,7 +22,7 @@
       = f.select :instrument, Transaction::INSTRUMENTS, :include_blank => true
     .field
       = f.label :amount
-      = f.text_field :amount, :size => 10
+      = number_field_for_cents f, :amount, @transaction.amount
       %span.smalltext $
     .field
       = f.label :comment

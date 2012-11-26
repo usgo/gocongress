@@ -6,7 +6,7 @@
     = f.text_field :name
   .field
     = f.label :amount
-    = f.text_field :amount, :size => 5
+    = number_field_for_cents f, :amount, @discount.amount
     %span $
 
   %fieldset
@@ -15,7 +15,7 @@
       Automatic discounts are applied immediately to all applicable attendees.
       Non-automatic discounts must be claimed. To qualify for an automatic
       discount, the attendee must satisfy all specified criteria.
-      
+
     .field
       = f.label :is_automatic
       = f.check_box :is_automatic
