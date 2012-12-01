@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe Registration::Registration do
   let(:dsbl_act) { create :activity, disabled: true }
+  let(:dsbl_plan) { create :plan, disabled: true }
 
   context "not an admin" do
     let(:admin) { false }
@@ -26,12 +27,41 @@ describe Registration::Registration do
     end
 
     describe '#register_plans' do
-      let(:attendee) { build :attendee }
+      let(:attendee) { create :attendee }
       subject { Registration::Registration.new attendee, false, {}, [] }
 
       it 'returns something enumerable' do
         errs = subject.register_plans []
         errs.respond_to?(:each).should be_true
+      end
+
+      context "disabled plans" do
+        it "keeps extant disabled plan" do
+          attendee.plans << dsbl_plan
+          errs = subject.register_plans [Registration::PlanSelection.new(dsbl_plan, 1)]
+          errs.should be_empty
+          attendee.reload.plans.should include dsbl_plan
+        end
+
+        it "does not add disabled plan" do
+          errs = subject.register_plans [Registration::PlanSelection.new(dsbl_plan, 1)]
+          errs.should have(1).error
+          attendee.reload.plans.should_not include dsbl_plan
+        end
+
+        it "does not remove disabled plan by passing qty 0" do
+          attendee.plans << dsbl_plan
+          errs = subject.register_plans [Registration::PlanSelection.new(dsbl_plan, 0)]
+          errs.should have(1).error
+          attendee.reload.plans.should include dsbl_plan
+        end
+
+        it "does not remove disabled plan by passing empty array" do
+          attendee.plans << dsbl_plan
+          errs = subject.register_plans []
+          errs.should have(1).error
+          attendee.reload.plans.should include dsbl_plan
+        end
       end
 
       context "when there is a mandatory category" do
@@ -73,6 +103,26 @@ describe Registration::Registration do
         r = Registration::Registration.new a, admin, p, []
         expect { r.save.should be_empty
           }.to change { AttendeeActivity.count }.by(-1)
+      end
+    end
+
+    describe '#register_plans' do
+      let(:attendee) { create :attendee }
+      subject { Registration::Registration.new attendee, true, {}, [] }
+
+      context "disabled plans" do
+        it "adds disabled plan" do
+          errs = subject.register_plans [Registration::PlanSelection.new(dsbl_plan, 1)]
+          errs.should be_empty
+          attendee.reload.plans.should include dsbl_plan
+        end
+
+        it "removes disabled plan" do
+          attendee.plans << dsbl_plan
+          errs = subject.register_plans []
+          errs.should be_empty
+          attendee.reload.plans.should_not include dsbl_plan
+        end
       end
     end
   end

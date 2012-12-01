@@ -71,61 +71,28 @@ class Registration::Registration
     @attendee.discounts = available_discounts.where('id in (?)', selected_discount_ids)
   end
 
-  # `register_plans` persists the selected plans, replacing
-  # all existing `AttendeePlan` records.
-  def register_plans plan_selections
-    plan_registration_errors = []
-    nascent_attendee_plans = []
-
-    # Mandatory plan categories require at least one plan
-    unselected_mandatory_plan_categories(plan_selections).each do |c|
-      plan_registration_errors << mandatory_plan_category_error(c)
-    end
-
-    plan_selections.each do |plan_selection|
-      p = plan_selection.plan
-      qty = plan_selection.qty
-      if qty == 0
-
-        # Only admins can remove previously selected disabled plans
-        if p.disabled? && @attendee.has_plan?(p) && !@as_admin
-          plan_registration_errors << "It looks like you're trying to remove a
-            disabled plan (#{p.name}).  Please contact the registrar
-            for help"
-          ap_copy = @attendee.attendee_plans.where(plan_id: p.id).first.dup
-          nascent_attendee_plans << ap_copy
-        end
-
-      elsif qty > 0
-        ap = AttendeePlan.new(:attendee_id => @attendee.id, :plan_id => p.id, :quantity => qty)
-        if ap.valid?
-
-          # Only admins can add new disabled plans that weren't
-          # previously selected
-          if p.disabled? && !@attendee.has_plan?(p) && !@as_admin
-            plan_registration_errors << "One of the plans you selected (#{ap.plan.name})
-              is disabled. You cannot selected disabled plans.  In fact,
-              you shouldn't have even been able to see it.  Please contact
-              the registrar for help."
-          else
-            nascent_attendee_plans << ap
-          end
-        else
-          plan_registration_errors.concat ap.errors.map {|k,v| k.to_s + " " + v.to_s}
-        end
-      end
-    end
-
-    @attendee.clear_plans!
-
-    unless nascent_attendee_plans.empty?
-      @attendee.attendee_plans << nascent_attendee_plans
-    end
-
-    return plan_registration_errors
+  # `register_plans` validates and persists the selected plans
+  # with positive quantities.  If any validations fail, no
+  # selections will be persisted.
+  def register_plans selections
+    ers = []
+    selections.select! {|s| s.qty > 0}
+    nascent_attendee_plans = build_attendee_plans_from(selections)
+    ers += validate_mandatory_plan_cats(selections)
+    ers += validate_disabled_plans(persisted_plan_selections, selections)
+    ers += validate_models(nascent_attendee_plans)
+    @attendee.attendee_plans = nascent_attendee_plans if ers.empty?
+    return ers
   end
 
   private
+
+  def build_attendee_plans_from plan_selections
+    plan_selections.map do |s|
+      AttendeePlan.new(:attendee_id => @attendee.id,
+        :plan_id => s.plan.id, :quantity => s.qty)
+    end
+  end
 
   def clear_airport_datetime_params
     %w(airport_arrival airport_departure).each do |prefix|
@@ -133,6 +100,10 @@ class Registration::Registration
         @params.delete(prefix + '_' + suffix)
       end
     end
+  end
+
+  def validate_models models
+    models.reject(&:valid?).map{|m| m.errors.full_messages}.flatten
   end
 
   def disabled_activities
@@ -150,7 +121,7 @@ class Registration::Registration
     PlanCategory.yr(@year).mandatory
   end
 
-  def mandatory_plan_category_error category
+  def mandatory_plan_cat_error category
     pmnhd = Plan.model_name.human.downcase
     "Please select at least one #{pmnhd} in #{category.name}"
   end
@@ -171,12 +142,37 @@ class Registration::Registration
     return parse_errors
   end
 
+  def persisted_plan_selections
+    @attendee.attendee_plans.map do |ap|
+      Registration::PlanSelection.new(ap.plan, ap.quantity)
+    end
+  end
+
   def selected_plan_categories plan_selections
     plan_selections.select{|s| s.qty > 0}.map(&:plan).map(&:plan_category)
   end
 
-  def unselected_mandatory_plan_categories plan_selections
+  def unselected_mandatory_plan_cats plan_selections
     mandatory_plan_categories - selected_plan_categories(plan_selections)
+  end
+
+  def validate_mandatory_plan_cats selections
+    unselected_mandatory_plan_cats(selections).map{|c| mandatory_plan_cat_error(c)}
+  end
+
+  # `validate_disabled_plans` determines if any disabled plans
+  # would be removed, added, or modified?  Admins are exempt from
+  # this validation.
+  def validate_disabled_plans before, after
+    errs = []
+    unless @as_admin
+      changes = Set.new(before) ^ after
+      if changes.any? {|ap| ap.plan.disabled? }
+        errs << "One of the plans you're trying to add or remove has
+          been disabled.  Please contact the registrar for help."
+      end
+    end
+    return errs
   end
 
 end
