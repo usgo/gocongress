@@ -3,7 +3,7 @@
 .sass-cache
 db/*.sqlite3
 log/*.log
-tmp/**/*
+tmp
 config/usgc_env.rb
 coverage.data
 coverage
