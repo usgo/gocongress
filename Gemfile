@@ -65,9 +65,5 @@ group :test do
 	gem 'spork', :git => 'https://github.com/sporkrb/spork.git'
 end
 
-group :development do
-  gem 'heroku'
-end
-
 # To keep your heroku slug size down, try this
 # heroku config:add BUNDLE_WITHOUT="development:test"
