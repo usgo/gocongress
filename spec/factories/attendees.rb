@@ -3,7 +3,6 @@ FactoryGirl.define do
   factory :attendee do
     birth_date "1981-09-10"
     country 'JP'
-    congresses_attended 0
     email "example@example.com"
     family_name 'Vespucci'
     gender 'm'

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121126022039) do
+ActiveRecord::Schema.define(:version => 20121216081949) do
 
   create_table "activities", :force => true do |t|
     t.string   "name"
@@ -90,7 +90,6 @@ ActiveRecord::Schema.define(:version => 20121126022039) do
     t.integer  "user_id"
     t.boolean  "is_primary",                            :default => false, :null => false
     t.boolean  "minor_agreement_received",              :default => false, :null => false
-    t.integer  "congresses_attended"
     t.string   "tshirt_size",              :limit => 2
     t.text     "special_request"
     t.text     "roomate_request"

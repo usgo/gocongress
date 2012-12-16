@@ -13,11 +13,6 @@
       = link_to 'AGA ID?', '#', :id => 'open_dialog_aga_id'
       &nbsp; Leave it blank.
 
-  .field
-    = f.label :congresses_attended, 'Congresses Attended'
-    = f.number_field :congresses_attended, :size => 8, :min => 0, :max => 99, :step => 1
-    %span.smalltext How many previous US Go Congresses attended?
-
 .dialog#dialog_aga_id{:title => "What is an AGA ID?"}
   %p
     Each AGA member is assigned an identification number.  Only AGA members

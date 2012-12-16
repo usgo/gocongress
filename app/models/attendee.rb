@@ -22,7 +22,7 @@ class Attendee < ActiveRecord::Base
 
   attr_accessible :activity_ids, :aga_id, :anonymous, :airport_arrival,
     :airport_arrival_flight, :airport_departure, :birth_date,
-    :congresses_attended, :country, :email, :family_name,
+    :country, :email, :family_name,
     :given_name, :gender, :guardian_full_name,
     :phone, :special_request, :rank,
     :roomate_request, :tshirt_size, :understand_minor, :user_id,
@@ -97,7 +97,6 @@ class Attendee < ActiveRecord::Base
 
   validates :birth_date,      :presence => true
   validates_date :birth_date, :after => Date.civil(1900,1,1), :allow_blank => false
-  validates :congresses_attended, :numericality => {:greater_than_or_equal_to => 0, :only_integer => true, :allow_nil => true}
   validates :country,         :format => {:with => /^[A-Z]{2}$/}, :presence => true
   validates :email,           :presence => true
   validates :family_name,     :presence => true
@@ -156,10 +155,6 @@ class Attendee < ActiveRecord::Base
 
     # note: the order must match attendee_to_array() in reports_helper.rb
     return first_attrs.concat(attrs.concat(last_attrs))
-  end
-
-  def self.average_congresses year
-    yr(year).average(:congresses_attended).try(:round, 1)
   end
 
   def self.internal_attributes

@@ -19,7 +19,6 @@ def index
   @np_count = @attendees.where(:rank => 0).count
   @male_count = @attendees.where(:gender => 'm').count
   @female_count = @attendees.where(:gender => 'f').count
-  @avg_congresses = Attendee.average_congresses(@year)
 
   # for the age statistics, our query will use a different order clause
   age_before_beauty = Attendee.yr(@year).reasonable_birth_date.order('birth_date')

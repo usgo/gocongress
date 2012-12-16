@@ -26,7 +26,6 @@ en:
         rank: "Rating"
         email: "Email Address"
         birth_date: "Birth Date"
-        congresses_attended: "Number of Congresses Attended"
         special_request: "Special Request"
         roomate_request: "Roomate Request"
         comment: "Comments"

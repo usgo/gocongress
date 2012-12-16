@@ -8,9 +8,6 @@
   players, #{pluralize(@pro_count, 'pro')}, and
   #{pluralize(@np_count, 'person')} with no rating.
 
-  - if @avg_congresses.present?
-    The average person has been to #{@avg_congresses} congresses.
-
   - if (@youngest_attendee.present? and @oldest_attendee.present?)
     The youngest attendee is
     = distance_of_time_in_words @youngest_attendee.birth_date.to_date, Time.now.to_date
