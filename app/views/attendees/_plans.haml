@@ -3,11 +3,11 @@
 %h3= Plan.model_name.human.pluralize
 
 %p
-  Select #{noun_with_article(mnh, @plans)} by clicking on the check
+  Select #{noun_with_article(mnh, @plans)} with check
   box ( #{disabled_checkbox}
-  )#{ " or entering a quantity" if @show_quantity_instructions }.
+  )#{ " or enter a quantity" if @show_quantity_instructions }.
 
-  If you have any questions, please contact the
+  Questions? Contact the
   = link_to 'registrar.', contacts_path
 
 - if @plans.count > 0
