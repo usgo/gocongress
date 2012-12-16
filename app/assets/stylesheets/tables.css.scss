@@ -9,6 +9,10 @@ table {
     border-collapse: collapse;
     margin: 0.5em 0em;
   }
+  &.understated-head thead th {
+    font-family: Times, serif;
+    font-weight: normal;
+  }
 }
 
 /* Lightweight table: Tighter, less colors, borders, etc. -Jared 1/2/11 */
@@ -20,6 +24,10 @@ table.lightweight {
   &.lightly-spaced-rows {
     td, th { padding-top: 0.1em; padding-bottom: 0.1em; }
   }
+}
+form table.lightweight tr td:first-child {
+  padding-right: 0px;
+  width: 150px;
 }
 
 /* Table options eg. zebra striping */
