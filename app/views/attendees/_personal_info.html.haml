@@ -1,10 +1,8 @@
 %fieldset
   .field
-    = f.label :given_name, 'Given Name'
-    = f.text_field :given_name
-  .field
-    = f.label :family_name, 'Family Name'
-    = f.text_field :family_name
+    %label Name
+    = f.text_field :given_name, :placeholder => 'Given Name'
+    = f.text_field :family_name, :placeholder => 'Family Name'
   .field
     = f.label :anonymous, "Anonymous"
     = f.check_box :anonymous
