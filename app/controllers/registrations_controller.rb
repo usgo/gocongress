@@ -1,6 +1,7 @@
 class RegistrationsController < Devise::RegistrationsController
   before_filter :remove_year_from_params, :except => [:create]
   before_filter :assert_year_matches_route
+  after_filter :send_welcome_email, :only => [:create]
 
   protected
 
@@ -35,6 +36,13 @@ class RegistrationsController < Devise::RegistrationsController
 
   def params_contains_user_attr(attribute)
     params.key?(:user) && params[:user].key?(attribute)
+  end
+
+  # If the new user was created, send a welcome email.
+  def send_welcome_email
+    return if params[:user][:email].blank?
+    user = User.yr(@year).find_by_email(params[:user][:email])
+    UserMailer.welcome_email(user).deliver if user.present?
   end
 
 end

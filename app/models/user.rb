@@ -38,8 +38,6 @@ class User < ActiveRecord::Base
     :uniqueness => { :scope => :year, :case_sensitive => false }, \
     :format => { :with => EMAIL_REGEX }
 
-  after_create :send_welcome_email
-
   # Both User and Attendee have an email column, and we don't want to ask the
   # enduser to enter the same email twice when signing up -Jared 2010.12.31
   before_validation :apply_user_email_to_primary_attendee, :on => :create
@@ -150,16 +148,6 @@ class User < ActiveRecord::Base
   end
 
 private
-
-  # make sure you:
-  # export GMAIL_SMTP_USER=username@gmail.com
-  # export GMAIL_SMTP_PASSWORD=yourpassword
-  # for heroku, use: heroku config:add GMAIL_SMTP_USER=username@gmail.com
-  # see /vendor/plugins/gmail_smtp/lib/actionmailer_gmail.rb
-  # -Jared 2010.12.27
-  def send_welcome_email
-    UserMailer.welcome_email(self).deliver
-  end
 
   def apply_user_email_to_primary_attendee
     # If primary_attendee isn't here, I don't want a NoMethodError
