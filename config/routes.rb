@@ -24,7 +24,6 @@ Gocongress::Application.routes.draw do
         put '' => 'years#update', :as => :update_year
 
         get 'costs' => 'plan_categories#index'
-        get 'pricing' => 'home#pricing'
 
         devise_for :users, :controllers => { :registrations => "registrations" }
 

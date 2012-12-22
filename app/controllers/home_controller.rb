@@ -14,10 +14,6 @@ class HomeController < ApplicationController
     raise "Intentional error to test runtime exception notification"
   end
 
-  def pricing
-    authorize! :see_admin_menu, :layout
-  end
-
 protected
 
   def page_title
