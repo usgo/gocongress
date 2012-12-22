@@ -37,13 +37,11 @@ class ApplicationController < ActionController::Base
     @tournaments_for_nav_menu = Tournament.yr(@year).nav_menu
   end
 
-  # Redirect Devise to a specific page after successful sign in
-  def after_sign_in_path_for(resource_or_scope)
-    if resource_or_scope.is_a?(User)
-      resource_or_scope.after_sign_in_path
-    else
-      super
-    end
+  # Redirect Devise after sign in (or after updating the password?)
+  # Go to the "My Account" page, unless there is no attendee yet.
+  def after_sign_in_path_for user
+    raise ArgumentError unless user.is_a?(User)
+    user.attendees.empty? ? add_attendee_to_user_path(user) : user_path(user)
   end
 
   rescue_from CanCan::AccessDenied do |exception|

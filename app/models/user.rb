@@ -77,17 +77,6 @@ class User < ActiveRecord::Base
     role == 'A'
   end
 
-  # After signing in, go to the "My Account" page, unless the primary
-  # attendee has not filled out the registration form yet (for example,
-  # immediately after submitting the devise registration form)
-  def after_sign_in_path
-    if primary_attendee.present?
-      Rails.application.routes.url_helpers.user_path(self.year, self)
-    else
-      Rails.application.routes.url_helpers.add_attendee_to_user_path(self.year, self)
-    end
-  end
-
   def amount_paid
     sales_total = transactions.where(:trantype => 'S').sum(:amount)
     refund_total = transactions.where(:trantype => 'R').sum(:amount)
