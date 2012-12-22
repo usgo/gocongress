@@ -19,12 +19,6 @@ Contribute
     1. `bundle install`
     1. if all's well, `bundle exec rake -T` should give you a nice
        list of rake tasks
-    1. optional: if you want to send email, create
-        a `config/usgc_env.rb` like this:
-
-            ENV['GMAIL_SMTP_USER'] = 'herpderp@gmail.com'
-            ENV['GMAIL_SMTP_PASSWORD'] = 'derpyderp'
-
 1. Run the tests
     1. `bundle exec rake db:setup db:test:prepare`
     1. `bundle exec rake` will run all specs and tests.  if they
@@ -36,6 +30,12 @@ Contribute
 
 Email
 ------
+
+If you want your working copy to be able to send email, create
+a `config/usgc_env.rb` like this:
+
+    ENV['GMAIL_SMTP_USER'] = 'herpderp@gmail.com'
+    ENV['GMAIL_SMTP_PASSWORD'] = 'derpyderp'
 
 Email for accounts in the gocongress.org domain is managed through
 google apps. jared.beck@usgo.org has access to manage these accounts.
