@@ -119,10 +119,6 @@ protected
     @airport_departure_time = departure.present? ? departure.to_s(:american).strip : nil
     @airport_departure_date_rfc822 = departure.present? ? departure.to_date.to_s(:rfc822) : @year.peak_departure_date.to_s(:rfc822)
 
-    # for _wishes
-    @discounts = Discount.yr(@year).automatic(false)
-    @attendee_discount_ids = @attendee.discounts.automatic(false).map { |d| d.id }
-
     # for _activities
     @activities = Activity.yr(@year).order(:leave_time, :name)
     @atnd_activity_ids = @attendee.activities.map {|e| e.id}

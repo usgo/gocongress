@@ -38,8 +38,6 @@ class RestoreAllFKC
     try_restore { add_pg_foreign_key :attendee_plans, [:plan_id, :year], :plans, [:id, :year], 'restrict' }
     try_restore { add_pg_foreign_key :attendee_tournaments, [:attendee_id, :year], :attendees, [:id, :year] }
     try_restore { add_pg_foreign_key :attendee_tournaments, [:tournament_id, :year], :tournaments, [:id, :year] }
-    try_restore { add_pg_foreign_key :attendee_discounts, [:attendee_id, :year], :attendees, [:id, :year] }
-    try_restore { add_pg_foreign_key :attendee_discounts, [:discount_id, :year], :discounts, [:id, :year] }
     try_restore { add_pg_foreign_key :plans, [:plan_category_id, :year], :plan_categories, [:id, :year] }
     try_restore { add_pg_foreign_key :rounds, [:tournament_id], :tournaments, [:id] }
     try_restore { add_pg_foreign_key :contents, [:content_category_id, :year], :content_categories, [:id, :year] }

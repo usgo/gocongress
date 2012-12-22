@@ -12,10 +12,6 @@ describe Attendee do
       subject.activities.should be_empty
     end
 
-    it 'should have no discounts' do
-      subject.discounts.should be_empty
-    end
-
     describe "#has_plans?" do
       it "does not have plans" do
         subject.has_plans?.should == false
@@ -110,30 +106,6 @@ describe Attendee do
     it "includes activities" do
       v = create :activity
       expect { a.activities << v }.to change{a.invoice_items.count}.by(1)
-    end
-
-    it "only includes discounts from the attendee's year" do
-      dc_2011 = create :discount_for_child, :year => 2011
-      dc_now = create :discount_for_child
-      a = create :child
-      descriptions_of(a.invoice_items).should include(dc_now.get_invoice_item_name)
-      descriptions_of(a.invoice_items).should_not include(dc_2011.get_invoice_item_name)
-    end
-
-    it "early bird discount" do
-      a = create(:attendee, {:created_at => Time.new(2011,1,2)})
-      d = create(:discount, {:is_automatic => true, :min_reg_date => Time.new(2011,1,3)})
-
-      # min_reg_date should be satisfied with future date
-      descriptions_of(a.invoice_items).should include(d.get_invoice_item_name)
-
-      # min_reg_date should be satisfied with matching date
-      d.update_column :min_reg_date, Time.new(2011,1,2)
-      descriptions_of(a.invoice_items).should include(d.get_invoice_item_name)
-
-      # min_reg_date should not be satisfied with past date
-      d.update_column :min_reg_date, Time.new(2011,1,1)
-      descriptions_of(a.invoice_items).should_not include(d.get_invoice_item_name)
     end
 
     def descriptions_of invoice_items

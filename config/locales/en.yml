@@ -75,12 +75,6 @@ en:
         trantype: "Type"
         updated_at: "Last Edited On"
         updated_by_user_id: "Last Edited By"
-      discount:
-        age_min: "Minimum Age"
-        age_max: "Maximum Age"
-        is_automatic: "Automatic?"
-        name: "Discount Name"
-        min_reg_date: "Registered On or Before Date"
       user:
         created_at: "Created"
         email: "Email"

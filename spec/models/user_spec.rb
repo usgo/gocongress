@@ -143,38 +143,5 @@ describe User do
       # double check
       Attendee.where(:user_id => destroyed_user_id).count.should == 0
     end
-
-    it "age-based discounts" do
-      y = Time.now.year
-      dc = create(:discount, :name => "Child", :amount => 150, :age_min => 0, :age_max => 12, :is_automatic => true, :year => y)
-      dy = create(:discount, :name => "Youth", :amount => 100, :age_min => 13, :age_max => 18, :is_automatic => true, :year => y)
-      congress_start = CONGRESS_START_DATE[y]
-
-      # If 12 years old on the first day of congress, then attendee
-      # should get child discount and NOT youth discount
-      a = create(:minor, :birth_date => congress_start - 12.years, :user => @user, :year => y)
-      a.age_in_years.should == 12
-      user_has_discount?(@user, dc).should == true
-      user_has_discount?(@user, dy).should == false
-
-      # 11 year old should get child discount and NOT youth discount
-      a.update_column :birth_date, congress_start - 11.years
-      a.age_in_years.truncate.should == 11
-      @user.reload
-      user_has_discount?(@user, dc).should == true
-      user_has_discount?(@user, dy).should == false
-
-      # 13 year old should get YOUTH discount, not child discount
-      a.update_column :birth_date, congress_start - 13.years
-      a.age_in_years.truncate.should == 13
-      @user.reload
-      user_has_discount?(@user, dc).should == false
-      user_has_discount?(@user, dy).should == true
-    end
-
-    def user_has_discount? (user, discount)
-      user.get_invoice_items.map(&:description).include?(discount.get_invoice_item_name)
-    end
-
   end
 end

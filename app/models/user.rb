@@ -52,7 +52,6 @@ class User < ActiveRecord::Base
     {
       :attendees => [
         {:attendee_activities => :activity},
-        {:attendee_discounts => :discount},
         {:attendee_plans => :plan}
       ]
     }
@@ -106,7 +105,7 @@ class User < ActiveRecord::Base
       invoice_items.concat a.invoice_items
     end
 
-    # Comp transactions, eg. VIP discounts
+    # Comp transactions, eg. VIPs, volunteers
     self.transactions.where(:trantype => 'C').each do |t|
       invoice_items << InvoiceItem.new(t.description, 'N/A', -1 * t.amount, 1)
     end

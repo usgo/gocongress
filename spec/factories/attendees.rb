@@ -26,8 +26,7 @@ FactoryGirl.define do
     understand_minor true
   end
 
-  # A child is less than 12 yrs old, according to
-  # the factory :discount_for_child
+  # A child is less than 12 yrs old
   factory :child, :parent => :minor do
     birth_date CONGRESS_START_DATE[Time.now.year] - 10.years
   end

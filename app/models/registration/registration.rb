@@ -33,11 +33,6 @@ class Registration::Registration
       # Regular users are not allowed to add or remove disabled activities.
       errors += validate_activities @params[:activity_ids]
 
-      # Persist discounts.  TODO: simply validate instead, as with
-      # activities. If no errors, then assignment will occur below.
-      register_discounts(discount_ids)
-      @params.delete :discount_ids
-
       # Persist plans
       errors += register_plans(@plan_selections)
 
@@ -63,12 +58,6 @@ class Registration::Registration
     changes = (after ^ before).to_a
     invalids = disabled_activities & changes
     return invalids.empty? ? [] : [translate(:activity_disabled_msg)]
-  end
-
-  # `register_discounts` persists claimed (non-automatic) discounts
-  def register_discounts selected_discount_ids
-    available_discounts = Discount.yr(@attendee.year).automatic(false)
-    @attendee.discounts = available_discounts.where('id in (?)', selected_discount_ids)
   end
 
   # `register_plans` validates and persists the selected plans
@@ -108,13 +97,6 @@ class Registration::Registration
 
   def disabled_activities
     @disabled_activities ||= Activity.disabled.map(&:id)
-  end
-
-  # `discount_ids` returns positive integer ids, ignoring
-  # unchecked boxes in the view
-  def discount_ids
-    ids = @params[:discount_ids] || []
-    ids.delete_if {|d| d.to_i == 0}
   end
 
   def mandatory_plan_categories

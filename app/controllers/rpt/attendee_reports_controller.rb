@@ -24,8 +24,7 @@ private
 def csv_header_line
   atrs = Attendee.attribute_names_for_csv
   plans = Plan.yr(@year).order(:name).map{ |p| "Plan: " + safe_for_csv(p.name)}
-  discs = Discount.for_report(@year).map{ |d| "Discount: " + safe_for_csv(d.name) }
-  (['user_email'] + atrs + plans + discs).join(',')
+  (['user_email'] + atrs + plans).join(',')
 end
 
 def planlessness

@@ -42,13 +42,6 @@ module ReportsHelper
       ar << plan_qty.to_i
     end
 
-    # claimed discounts
-    claimed_discount_ids = a.discounts.automatic(false).map { |d| d.id }
-    claimable_discounts = Discount.for_report(a.year)
-    claimable_discounts.each do |d|
-      ar << claimed_discount_ids.index(d.id).present? ? 'yes' : 'no'
-    end
-
     return ar
   end
 

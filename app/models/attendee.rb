@@ -11,9 +11,6 @@ class Attendee < ActiveRecord::Base
   has_many :attendee_plans, :dependent => :destroy
   has_many :plans, :through => :attendee_plans
 
-  has_many :attendee_discounts, :dependent => :destroy
-  has_many :discounts, :through => :attendee_discounts
-
   has_many :attendee_activities, :dependent => :destroy
   has_many :activities, :through => :attendee_activities
 
@@ -237,30 +234,6 @@ class Attendee < ActiveRecord::Base
 
   def invoice_items
     items = []
-
-    # How old will the attendee be on the first day of congress?
-    atnd_age = self.age_in_years
-
-    # Does this attendee qualify for any automatic discounts?
-    Discount.yr(self.year).where("is_automatic = ?", true).each do |d|
-
-      # To qualify for an automatic discount, the attendee must satisfy all criteria.
-      satisfy_age_min = d.age_min.blank? || atnd_age >= d.age_min
-      satisfy_age_max = d.age_max.blank? || atnd_age <= d.age_max
-      satisfy_min_reg_date = d.min_reg_date.blank? || self.created_at.to_date <= d.min_reg_date.to_date
-
-      if (satisfy_age_min && satisfy_age_max && satisfy_min_reg_date) then
-        items << InvoiceItem.new(d.get_invoice_item_name, self.get_full_name, -1 * d.amount, 1)
-      end
-
-    end
-
-    # Did this attendee claim any non-automatic discounts?
-    # Optimization: Assuming discounts were eager-loaded, we can
-    # avoid a query by using `select{}` instead of `where()`
-    self.discounts.select{|d| !d.is_automatic?}.each do |d|
-      items << InvoiceItem.new(d.get_invoice_item_name, self.get_full_name, -1 * d.amount, 1)
-    end
 
     # Plans
     plans_to_invoice = attendee_plans.select{ |ap| ap.show_on_invoice? }

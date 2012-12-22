@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121216081949) do
+ActiveRecord::Schema.define(:version => 20121222054834) do
 
   create_table "activities", :force => true do |t|
     t.string   "name"
@@ -50,17 +50,6 @@ ActiveRecord::Schema.define(:version => 20121216081949) do
 
   add_index "attendee_activities", ["activity_id"], :name => "index_attendee_activities_on_activity_id"
   add_index "attendee_activities", ["attendee_id", "activity_id"], :name => "uniq_attendee_activity", :unique => true
-
-  create_table "attendee_discounts", :force => true do |t|
-    t.integer  "attendee_id", :null => false
-    t.integer  "discount_id", :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "year",        :null => false
-  end
-
-  add_index "attendee_discounts", ["attendee_id", "discount_id"], :name => "uniq_attendee_discount", :unique => true
-  add_index "attendee_discounts", ["discount_id"], :name => "index_attendee_discounts_on_discount_id"
 
   create_table "attendee_plans", :force => true do |t|
     t.integer  "attendee_id",                :null => false
@@ -140,21 +129,6 @@ ActiveRecord::Schema.define(:version => 20121216081949) do
 
   add_index "contents", ["content_category_id"], :name => "index_contents_on_content_category_id"
   add_index "contents", ["year", "show_on_homepage", "expires_at"], :name => "index_contents_on_year_and_show_on_homepage_and_expires_at"
-
-  create_table "discounts", :force => true do |t|
-    t.string   "name",         :limit => 50, :null => false
-    t.integer  "age_min"
-    t.integer  "age_max"
-    t.boolean  "is_automatic",               :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.date     "min_reg_date"
-    t.integer  "year",                       :null => false
-    t.integer  "amount",                     :null => false
-  end
-
-  add_index "discounts", ["id", "year"], :name => "index_discounts_on_id_and_year", :unique => true
-  add_index "discounts", ["year", "is_automatic"], :name => "index_discounts_on_year_and_is_automatic"
 
   create_table "events", :force => true do |t|
     t.integer "year", :null => false
