@@ -50,13 +50,13 @@
     %fieldset
       .field
         = f.label :email
-        = f.text_field :email
+        = f.text_field :email, :tabindex => 1
       .field
         = f.label :password, 'Choose a Password'
-        = f.password_field :password, :size => 10
+        = f.password_field :password, :size => 10, :tabindex => 2
       .field
         = f.label :password_confirmation, 'Confirm Password'
-        = f.password_field :password_confirmation, :size => 10
+        = f.password_field :password_confirmation, :size => 10, :tabindex => 3
       .field
         = label '', ''
-        = f.submit "Continue"
+        = f.submit "Continue", :tabindex => 4
