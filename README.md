@@ -9,7 +9,7 @@ Contribute
 1. Set up your local development environment
     1. fork the repo in github
     1. clone your fork locally
-    1. install the ruby version specified in the `.rvmrc` (currently 1.9.3)
+    1. install the ruby version specified in the `.rbenv-version`
     1. install postgres 9.1+
         - get the dev libs too (in apt-get that would be libpq-dev).
           you'll want the dev libs to compile the `pg` gem
