@@ -271,7 +271,7 @@ describe AttendeesController do
         let(:plan) { create :plan }
 
         def put_update plan
-          put :update, :year => 2012, :id => attendee.id, :"plan_#{plan.id}_qty" => 1
+          put :update, :year => plan.year, :id => attendee.id, :"plan_#{plan.id}_qty" => 1
         end
 
         it "updates associated plans" do
@@ -310,7 +310,7 @@ describe AttendeesController do
 
         it "stays on the same page when there is an error registering plans" do
           Registration::Registration.any_instance.stub(:register_plans) { ["derp"] }
-          put :update, :year => 2012, :id => attendee.id
+          put :update, :year => attendee.year, :id => attendee.id
           response.should be_successful
           response.should render_template(:edit)
         end
@@ -346,7 +346,7 @@ describe AttendeesController do
 
           it "does not allow them to un-select the plan" do
             put :update,
-              :year => 2012,
+              :year => attendee.year,
               :id => attendee.id,
               :plan_category_id => plan.plan_category.id,
               :"plan_#{plan2.id}_qty" => 1
