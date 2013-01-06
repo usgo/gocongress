@@ -20,6 +20,13 @@ describe Plan do
       p.max_quantity = -1
       p.should_not be_valid
     end
+
+    it 'validates the daily rate' do
+      build(:plan, :daily_rate => 1).should be_valid
+      build(:plan, :daily_rate => 0.5).should_not be_valid
+      build(:plan, :daily_rate => 0).should be_valid
+      build(:plan, :daily_rate => -1).should_not be_valid
+    end
   end
 
   describe '#inventory_consumed' do
