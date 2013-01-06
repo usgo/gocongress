@@ -3,6 +3,34 @@ require "spec_helper"
 describe TournamentsController do
   let(:tnm) { create :tournament }
 
+  describe '#index' do
+    render_views
+
+    it 'succeeds' do
+      get :index, year: Date.current.year
+      response.should be_successful
+    end
+
+    it 'assigns the expected tournaments and rounds' do
+      t = create(:tournament, :year => Date.current.year)
+      x = create(:tournament, :year => 1.year.from_now.year)
+
+      [t,x].each do |i|
+        1.upto(3) do
+          i.rounds.create attributes_for(:round)
+        end
+      end
+
+      get :index, :year => Date.current.year
+
+      # we expect to see only this year's tournament and rounds
+      assigns(:tournaments).length.should == 1
+      assigns(:rounds_by_date).should be_present
+      total_rounds = assigns(:rounds_by_date).values.flatten.length
+      total_rounds.should == t.rounds.count
+    end
+  end
+
   describe "#show" do
     render_views
 
