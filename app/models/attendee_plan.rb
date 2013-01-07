@@ -29,13 +29,13 @@ class AttendeePlan < ActiveRecord::Base
   end
 
   # Validate quantity with respect to max_quantity and inventory.
-  validates_each :quantity do |model, attr, value|
+  validates_each :quantity do |model, atr, value|
     plan_name = model.plan.name.pluralize
 
     # Quantity may not exceed max_quantity
     max_qty = model.plan.max_quantity
     if value > max_qty then
-      model.errors[:base] << "The maximum #{attr.to_s.downcase} of #{plan_name.downcase} per attendee is #{max_qty}"
+      model.errors[:base] << "The maximum #{atr.to_s.downcase} of #{plan_name.downcase} per attendee is #{max_qty}"
     end
 
     # What is the available inventory for this plan, excluding the
