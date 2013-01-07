@@ -28,6 +28,12 @@ describe AttendeePlan do
       ap.should_not be_valid
     end
 
+    it "quantity cannot exceed available inventory" do
+      p = create :plan, inventory: 42, max_quantity: 999
+      build(:attendee_plan, plan: p, quantity: 42).should be_valid
+      build(:attendee_plan, plan: p, quantity: 43).should_not be_valid
+    end
+
     context 'daily-rate plans' do
 
       it 'for daily-rate plans it is ok to specify dates' do

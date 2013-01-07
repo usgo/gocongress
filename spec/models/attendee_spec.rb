@@ -157,19 +157,5 @@ describe Attendee do
       a.should_not be_valid
       a.errors.keys.should include(:liability_release)
     end
-
-    context 'after being persisted' do
-      let(:a) { create :attendee }
-
-      it "plan quantity cannot exceed available inventory" do
-        a.attendee_plans.build plan_id: plan.id, quantity: 43
-        a.should_not be_valid
-      end
-
-      it "plan quantity can equal available inventory" do
-        a.attendee_plans.build plan_id: plan.id, quantity: 42
-        a.should be_valid
-      end
-    end
   end
 end
