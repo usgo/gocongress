@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130106232901) do
+ActiveRecord::Schema.define(:version => 20130107000840) do
 
   create_table "activities", :force => true do |t|
     t.string   "name"
@@ -50,6 +50,11 @@ ActiveRecord::Schema.define(:version => 20130106232901) do
 
   add_index "attendee_activities", ["activity_id"], :name => "index_attendee_activities_on_activity_id"
   add_index "attendee_activities", ["attendee_id", "activity_id"], :name => "uniq_attendee_activity", :unique => true
+
+  create_table "attendee_plan_dates", :force => true do |t|
+    t.date    "_date",            :null => false
+    t.integer "attendee_plan_id"
+  end
 
   create_table "attendee_plans", :force => true do |t|
     t.integer  "attendee_id",                :null => false

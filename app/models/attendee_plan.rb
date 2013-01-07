@@ -2,6 +2,7 @@ class AttendeePlan < ActiveRecord::Base
   include YearlyModel
   belongs_to :attendee
   belongs_to :plan
+  has_many :dates, :class_name => 'AttendeePlanDate'
 
   # As with other attendee linking tables, mass-assignment security
   # is not necessary yet, but may be in the future.  See the more

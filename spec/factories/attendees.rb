@@ -35,4 +35,9 @@ FactoryGirl.define do
     association :attendee, :factory => :attendee, :strategy => :build
     association :plan, :factory => :plan, :strategy => :build
   end
+
+  factory :attendee_plan_date do
+    association :attendee_plan, :factory => :attendee_plan, :strategy => :build
+    _date Date.current
+  end
 end
