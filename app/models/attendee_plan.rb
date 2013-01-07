@@ -1,5 +1,9 @@
+require 'action_view/helpers/translation_helper'
+
 class AttendeePlan < ActiveRecord::Base
   include YearlyModel
+  extend ActionView::Helpers::TranslationHelper
+
   belongs_to :attendee
   belongs_to :plan
   has_many :dates, :class_name => 'AttendeePlanDate'
@@ -20,7 +24,7 @@ class AttendeePlan < ActiveRecord::Base
 
   validates_each :dates do |model, atr, value|
     if model.plan.present? && model.plan.daily_rate.blank? && !value.empty?
-      model.errors.add(atr, " - Selecting specific dates is not supported by this plan")
+      model.errors.add(atr, translate('vldn_errs.plan_forbids_dates'))
     end
   end
 

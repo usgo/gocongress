@@ -1,7 +1,4 @@
 en:
-  activity_disabled_msg: >
-    One of the activities you tried to add or remove has been
-    disabled.  Please contact the registrar for help.
   activerecord:
     attributes:
       attendee:
@@ -112,6 +109,11 @@ en:
     o_18: "Eighteenth"
     o_19: "Nineteenth"
     o_20: "Twentieth"
+  vldn_errs:
+    activity_disabled: >
+      One of the activities you tried to add or remove has been
+      disabled.  Please contact the registrar for help.
+    plan_forbids_dates: " - Selecting specific dates is not supported by this plan"
   views:
     pagination:
       next: "Next"

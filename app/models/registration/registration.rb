@@ -57,7 +57,7 @@ class Registration::Registration
     after = Set.new selected.map(&:to_i)
     changes = (after ^ before).to_a
     invalids = disabled_activities & changes
-    return invalids.empty? ? [] : [translate(:activity_disabled_msg)]
+    return invalids.empty? ? [] : [translate('vldn_errs.activity_disabled')]
   end
 
   # `register_plans` validates and persists the selected plans
