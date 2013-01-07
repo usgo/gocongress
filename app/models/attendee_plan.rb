@@ -18,34 +18,18 @@ class AttendeePlan < ActiveRecord::Base
 
   validates_presence_of :attendee, :plan
 
-  validates_numericality_of :quantity, \
-    :only_integer => true, \
-    :greater_than_or_equal_to => 1
-
   validates_each :dates do |model, atr, value|
     if model.plan.present? && model.plan.daily_rate.blank? && !value.empty?
       model.errors.add(atr, translate('vldn_errs.plan_forbids_dates'))
     end
   end
 
-  # Validate quantity with respect to max_quantity and inventory.
+  validates :quantity,
+    :numericality => {:only_integer => true, :greater_than_or_equal_to => 1}
+
   validates_each :quantity do |model, atr, value|
-    plan_name = model.plan.name.pluralize
-
-    # Quantity may not exceed max_quantity
-    max_qty = model.plan.max_quantity
-    if value > max_qty then
-      model.errors[:base] << "The maximum #{atr.to_s.downcase} of #{plan_name.downcase} per attendee is #{max_qty}"
-    end
-
-    # What is the available inventory for this plan, excluding the
-    # current attendee who may be trying to increase their quantity?
-    available = model.plan.inventory_available(model.attendee)
-
-    # Quantity may not exceed available inventory
-    if available.present? && value > available then
-      model.errors[:base] << "#{plan_name}: You requested #{value}, but there are only #{available} available."
-    end
+    model.validate_against_max_quantity
+    model.validate_against_available_inventory
   end
 
   before_validation do |ap|
@@ -68,6 +52,31 @@ class AttendeePlan < ActiveRecord::Base
   # `attendee_full_name` as an argument
   def to_invoice_item attendee_full_name
     InvoiceItem.new('Plan: ' + plan.name, attendee_full_name, plan.price, quantity)
+  end
+
+  # Quantity may not exceed available inventory
+  def validate_against_available_inventory
+    i = inventory_available_to_this_attendee
+    if i.present? && quantity > i then
+      errors[:base] << "#{plan.name.pluralize}: You requested #{quantity}, but there are only #{i} available."
+    end
+  end
+
+  # Quantity may not exceed max_quantity (per attendee)
+  def validate_against_max_quantity
+    max_qty = plan.max_quantity
+    if quantity > max_qty then
+      errors[:base] << "The maximum quantity of #{plan.name.pluralize.downcase} per attendee is #{max_qty}"
+    end
+  end
+
+  # Private instance methods
+  # ------------------------
+
+  private
+
+  def inventory_available_to_this_attendee
+    plan.inventory_available(attendee)
   end
 
 end
