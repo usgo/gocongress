@@ -7,17 +7,21 @@ describe AttendeePlanDate do
   end
 
   describe '#valid?' do
+
     it 'requires an AttendeePlan' do
-      subject.attendee_plan = nil
-      subject.should_not be_valid
-      subject.errors.should have_key :attendee_plan
+      subject.should have_error_about :attendee_plan
     end
 
     it 'requires a date' do
-      subject._date = nil
-      subject.should_not be_valid
-      subject.errors.should have_key :_date
+      subject.should have_error_about :_date
     end
 
+    it 'date must be during congress' do
+      d = build(:attendee_plan_date)
+      d._date = CONGRESS_START_DATE[2013] - 1.day
+      d.should have_error_about :_date
+      d._date = CONGRESS_START_DATE[2013] + 3.weeks
+      d.should have_error_about :_date
+    end
   end
 end

@@ -38,6 +38,6 @@ FactoryGirl.define do
 
   factory :attendee_plan_date do
     association :attendee_plan, :factory => :attendee_plan, :strategy => :build
-    _date Date.current
+    _date CONGRESS_START_DATE[Date.current.year]
   end
 end

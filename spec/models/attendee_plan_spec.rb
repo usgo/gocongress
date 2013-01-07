@@ -28,27 +28,22 @@ describe AttendeePlan do
       ap.should_not be_valid
     end
 
-    context 'when plan has a daily rate' do
-      let(:y) { Year.find_by_year(Date.current.year) }
-      let(:p) { create :plan, daily_rate: 6000, year: y.year }
-      let(:ap) { create :attendee_plan, plan: p }
+    context 'daily-rate plans' do
 
-      it 'is valid when at least one date is selected' do
-        ap.dates << AttendeePlanDate.new(_date: Date.current)
-        ap.should be_valid
+      it 'for daily-rate plans it is ok to specify dates' do
+        p = create :plan, daily_rate: 6000
+        build_with_dates(p).should be_valid
       end
 
-      it 'is invalid if a date is before start of congress' do
-        pending
-        ap.dates << AttendeePlanDate.new(_date: y.start_date - 1.day)
-        ap.should_not be_valid
+      it 'for normal plans, without a daily rate, is not ok to specify dates' do
+        p = create :plan, daily_rate: nil
+        build_with_dates(p).should have_error_about :dates
       end
 
-      it 'is invalid if a date is after end of congress'
+      def build_with_dates plan
+        build :attendee_plan, plan: plan, dates: [build(:attendee_plan_date)]
+      end
     end
 
-    context 'when plan does not have a daily rate' do
-      it 'is invalid to specify days'
-    end
   end
 end

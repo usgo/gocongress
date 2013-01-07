@@ -18,6 +18,12 @@ class AttendeePlan < ActiveRecord::Base
     :only_integer => true, \
     :greater_than_or_equal_to => 1
 
+  validates_each :dates do |model, atr, value|
+    if model.plan.present? && model.plan.daily_rate.blank? && !value.empty?
+      model.errors.add(atr, " - Selecting specific dates is not supported by this plan")
+    end
+  end
+
   # Validate quantity with respect to max_quantity and inventory.
   validates_each :quantity do |model, attr, value|
     plan_name = model.plan.name.pluralize.downcase

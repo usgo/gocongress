@@ -49,3 +49,11 @@ def accessible_attributes_for resource
   accessibles = klass.accessible_attributes
   attrs.symbolize_keys.keep_if { |k,v| accessibles.include?(k) }
 end
+
+# Custom RSpec matchers
+
+RSpec::Matchers.define :have_error_about do |attribute|
+  match do |subject|
+    !subject.valid? && subject.errors.has_key?(attribute)
+  end
+end
