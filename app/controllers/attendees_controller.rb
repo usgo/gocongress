@@ -22,37 +22,17 @@ class AttendeesController < ApplicationController
     @kyu_count = @attendees.kyu.count
   end
 
-  # GET    /:year/attendees/new
-  # GET    /:year/users/:id/attendees/new
+  # GET /:year/users/:user_id/attendees/new
   def new
-
-    # Which user are we adding this new attendee to?
-    target_user_id = params[:id].present? ? params[:id].to_i : current_user.id
-    target_user = User.find(target_user_id)
-
-    # Only admins can add attendees to other users
-    if !current_user.is_admin? && target_user_id != current_user.id then
-      render_access_denied
-      return
-    end
-
-    # Instantiate a blank attendee for the target user
-    @attendee.user_id = target_user.id
-
-    # Will this be the primary attendee?
-    @attendee.is_primary = (target_user.attendees.count == 0)
-
-    # The default email always comes from the target user
-    @attendee.email = target_user.email
-
-    # Copy certain fields from the target user's primary_attendee
-    if target_user.primary_attendee.present?
-      fields_to_copy = ['phone','address_1','address_2','city','state','zip','country','phone']
-      fields_to_copy.each do |f|
-        @attendee[f] = target_user.primary_attendee[f]
+    @attendee.user = User.find(params[:user_id])
+    @attendee.email = @attendee.user.email
+    if @attendee.user.primary_attendee.present?
+      ['country','phone'].each do |f|
+        @attendee[f] = @attendee.user.primary_attendee[f]
       end
+    else
+      @attendee.is_primary = true
     end
-
     expose_form_vars
   end
 

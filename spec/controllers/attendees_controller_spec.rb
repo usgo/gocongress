@@ -43,7 +43,8 @@ describe AttendeesController do
 
     describe "#new" do
       it "is forbidden" do
-        get :new, :year => Time.now.year
+        u = create :user
+        get :new, :user_id => u.id, :year => u.year
         response.should be_forbidden
       end
     end
@@ -51,7 +52,7 @@ describe AttendeesController do
 
   context "as a user" do
     let!(:attendee) { create :attendee }
-    let!(:user) { attendee.user }
+    let(:user) { attendee.user }
     before { sign_in user }
 
     describe "#create" do
@@ -173,7 +174,7 @@ describe AttendeesController do
 
     describe '#new' do
       it 'succeeds' do
-        get :new, :year => user.year
+        get :new, :user_id => user.id, :year => user.year
         response.should be_successful
         assigns(:attendee_number).should == 2
       end
@@ -393,6 +394,13 @@ describe AttendeesController do
       it 'admin can edit any attendee' do
         a = create(:attendee, :year => admin.year)
         get :edit, :id => a.id, :year => a.year
+        response.should be_successful
+      end
+    end
+
+    describe '#new' do
+      it 'succeeds' do
+        get :new, user_id: admin.id, year: admin.year
         response.should be_successful
       end
     end

@@ -33,7 +33,7 @@ Gocongress::Application.routes.draw do
         resources :attendee_statistics, :only => :index
         resources :plans, :except => [:index]
 
-        resources :attendees, :except => [:show] do
+        resources :attendees, :except => [:new, :show] do
           collection do
             get 'vip'
           end
@@ -44,6 +44,7 @@ Gocongress::Application.routes.draw do
         end
 
         resources :users, :except => [:new, :create] do
+          resources :attendees, :only => [:new]
           member do
             get 'edit_email', :as => 'edit_email_for'
             get 'edit_password', :as => 'edit_password_for'
@@ -52,10 +53,6 @@ Gocongress::Application.routes.draw do
             get 'pay'
             get 'print_cost_summary', :as => 'print_cost_summary_for'
             get 'choose_attendee'
-
-            # todo: attendees should probably be a nested resource of users
-            # see http://guides.rubyonrails.org/routing.html#nested-resources
-            get 'attendees/new' => 'attendees#new', :as => 'add_attendee_to'
           end
 
           resource :terminus, :only => :show

@@ -41,7 +41,7 @@ class ApplicationController < ActionController::Base
   # Go to the "My Account" page, unless there is no attendee yet.
   def after_sign_in_path_for user
     raise ArgumentError unless user.is_a?(User)
-    user.attendees.empty? ? add_attendee_to_user_path(user) : user_path(user)
+    user.attendees.empty? ? new_user_attendee_path(user) : user_path(user)
   end
 
   rescue_from CanCan::AccessDenied do |exception|

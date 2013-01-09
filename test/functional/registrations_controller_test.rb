@@ -21,6 +21,6 @@ class RegistrationsControllerTest < ActionController::TestCase
       post :create, :user => user_attrs, :year => @year
     end
     created_user = User.yr(@year).order(:created_at).last
-    assert_redirected_to add_attendee_to_user_path(@year, created_user.id)
+    assert_redirected_to new_user_attendee_path(@year, created_user)
   end
 end
