@@ -289,10 +289,7 @@ class Attendee < ActiveRecord::Base
   end
 
   def get_rank_name
-    rank_name = ""
-    Attendee::Rank::RANKS.each { |r| if (r[1] == self.rank) then rank_name = r[0] end }
-    if rank_name.empty? then raise "assertion failed: invalid rank" end
-    return rank_name
+    Attendee::Rank.new(self.rank).name
   end
 
   def rank_name_for_badge

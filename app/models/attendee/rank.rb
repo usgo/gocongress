@@ -1,4 +1,4 @@
-module Attendee::Rank
+class Attendee::Rank
 
   # Constant array of integer ranks and corresponding rank names
   # The highest official amateur dan rank in the AGA is 7 dan
@@ -11,5 +11,14 @@ module Attendee::Rank
   # Constant array of integer ranks
   NUMERIC_RANK_LIST = []
   RANKS.each { |r| NUMERIC_RANK_LIST << r[1] }
+
+  def initialize n
+    @n = n
+  end
+
+  def name
+    pair = RANKS.find {|r| r[1] == @n }
+    pair ? pair[0] : raise("Invalid rank: #{@n}")
+  end
 
 end
