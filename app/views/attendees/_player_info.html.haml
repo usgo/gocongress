@@ -1,7 +1,7 @@
 %fieldset
   .field
     = f.label :rank, 'Rank'
-    = f.select :rank, Attendee::RANKS, :include_blank => 'Select Rank'
+    = f.select :rank, Attendee::Rank::RANKS, :include_blank => 'Select Rank'
     %span.smalltext
       = link_to 'What is my AGA rank?', '#', :id => 'open_dialog_rank'
 

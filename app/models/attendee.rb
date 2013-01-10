@@ -30,18 +30,6 @@ class Attendee < ActiveRecord::Base
   # Constants
   # ---------
 
-  # Define constant array of integer ranks and corresponding rank names
-  # The highest official amateur dan rank in the AGA is 7 dan
-  RANKS = []
-  RANKS << [ "Non-player", 0]
-  109.downto(101).each {|r| RANKS << ["#{r-100} pro", r] }
-  7.downto(1).each {|r| RANKS << [ "#{r} dan", r] }
-  -1.downto(-30).each {|r| RANKS << ["#{-r} kyu", r] }
-
-  # define constant array of integer ranks
-  NUMERIC_RANK_LIST = []
-  Attendee::RANKS.each { |r| NUMERIC_RANK_LIST << r[1] }
-
   # tshirt sizes
   TSHIRT_CHOICES = []
   TSHIRT_CHOICES << ["None",            "NO"]
@@ -102,7 +90,7 @@ class Attendee < ActiveRecord::Base
   validates :guardian_full_name, :presence => { :if => :require_guardian_full_name? }
   validates :is_primary,      :inclusion => {:in => [true, false]}
   validates :minor_agreement_received, :inclusion => {:in => [true, false]}
-  validates :rank,            :inclusion => {:in => NUMERIC_RANK_LIST, :message => "is not valid"}, :presence => true
+  validates :rank,            :inclusion => {:in => Attendee::Rank::NUMERIC_RANK_LIST, :message => "is not valid"}, :presence => true
   validates :roomate_request, :length => {:maximum => 250}
   validates :special_request, :length => {:maximum => 250}
   validates :tshirt_size,     :inclusion => {:in => TSHIRT_SIZE_LIST, :message => " - Please select a size"}
@@ -302,7 +290,7 @@ class Attendee < ActiveRecord::Base
 
   def get_rank_name
     rank_name = ""
-    RANKS.each { |r| if (r[1] == self.rank) then rank_name = r[0] end }
+    Attendee::Rank::RANKS.each { |r| if (r[1] == self.rank) then rank_name = r[0] end }
     if rank_name.empty? then raise "assertion failed: invalid rank" end
     return rank_name
   end
