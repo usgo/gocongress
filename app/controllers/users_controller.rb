@@ -60,7 +60,7 @@ class UsersController < ApplicationController
 
   def invoice
     authorize! :show, @user
-    @invoice_items = @user.get_invoice_items
+    @invoice_items = @user.invoice_items
   end
 
   def ledger

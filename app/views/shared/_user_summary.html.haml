@@ -24,7 +24,7 @@
       %th.numeric Qty
       %th.numeric Total
     %tbody
-      - user.get_invoice_items.each do |i|
+      - user.invoice_items.each do |i|
         %tr
           %td= truncate(strip_tags(i.attendee_full_name), :length => 30)
           %td= truncate(strip_tags(i.description), :length => 45)

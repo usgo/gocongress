@@ -107,12 +107,12 @@ class User < ActiveRecord::Base
     primary_attendee.present? ? primary_attendee.full_name_possessive : nil
   end
 
-  def get_invoice_items
+  def invoice_items
     attendee_invoice_items + comp_invoice_items
   end
 
   def get_invoice_total
-    subtotals = get_invoice_items.map{|i| i.price * i.qty}
+    subtotals = invoice_items.map{|i| i.price * i.qty}
     subtotals.empty? ? 0 : subtotals.reduce(:+)
   end
 

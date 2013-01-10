@@ -49,7 +49,7 @@ describe User do
     end
   end
 
-  describe "#get_invoice_items" do
+  describe "#invoice_items" do
     let(:attendee) { create :attendee }
     let(:user) { attendee.user }
 
@@ -57,12 +57,12 @@ describe User do
       create :attendee, :user => user
       items = [:foo, :bar]
       Attendee.any_instance.stub(:invoice_items) { items }
-      user.get_invoice_items.should =~ items * 2
+      user.invoice_items.should =~ items * 2
     end
 
     it "includes comp transactions" do
       comp = create(:tr_comp, :user => user, :amount => 777)
-      items = user.get_invoice_items
+      items = user.invoice_items
       items.should have(1).item
       items.first.price.should == comp.amount * -1
     end
@@ -89,7 +89,7 @@ describe User do
 
     it "equals the sum of invoice items" do
       user = build :user
-      user.stub(:get_invoice_items) {[
+      user.stub(:invoice_items) {[
         InvoiceItem.new("Baubles", "John", 1.5, 2),
         InvoiceItem.new("Trinkets", "Jane", -0.75, 1)
       ]}
