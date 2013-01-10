@@ -238,8 +238,7 @@ class Attendee < ActiveRecord::Base
   end
 
   def invoice_total
-    subtotals = invoice_items.map{|i| i.price * i.qty}
-    subtotals.empty? ? 0 : subtotals.reduce(:+)
+    Invoice::Invoice.new(invoice_items).total
   end
 
   def minor?
