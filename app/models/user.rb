@@ -80,12 +80,20 @@ class User < ActiveRecord::Base
     return sales_total - refund_total
   end
 
+  def attendee_invoice_items
+    attendees.map {|a| a.invoice_items}.flatten
+  end
+
   def balance
     get_invoice_total - amount_paid
   end
 
   def coalesce_full_name_then_email
     full_name || email
+  end
+
+  def comp_invoice_items
+    transactions.comps.map {|t| t.to_invoice_item}
   end
 
   # As with all public instance methods, `full_name` must
@@ -100,21 +108,7 @@ class User < ActiveRecord::Base
   end
 
   def get_invoice_items
-    invoice_items = []
-    self.attendees.each do |a|
-      invoice_items.concat a.invoice_items
-    end
-
-    # Comp transactions, eg. VIPs, volunteers
-    self.transactions.where(:trantype => 'C').each do |t|
-      invoice_items << InvoiceItem.new(t.description, 'N/A', -1 * t.amount, 1)
-    end
-
-    # Note: Refund transactions are NOT invoice items.  They should not
-    # appear on the cost summary.  Instead, they should appear on the
-    # ledger (payment history)
-
-    return invoice_items
+    attendee_invoice_items + comp_invoice_items
   end
 
   def get_invoice_total

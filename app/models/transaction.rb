@@ -22,6 +22,7 @@ class Transaction < ActiveRecord::Base
 	INSTRUMENTS = [['Card','C'], ['Cash','S'], ['Check','K']]
 
   # Scopes, and class methods that act like scopes
+  scope :comps, where(trantype: 'C')
   scope :for_payment_history, where(:trantype => ['S','R'])
 
 	validates_presence_of :trantype, :amount, :updated_by_user
@@ -98,6 +99,16 @@ class Transaction < ActiveRecord::Base
   def get_ledger_amount
     # on the ledger (payment history) we disply refunds as negative numbers
     trantype == 'R' ? -1 * amount : amount
+  end
+
+  # Only comps appear on invoices.  Refunds and sales appear on the
+  # ledger (payment history)
+  def to_invoice_item
+    if trantype == 'C'
+      InvoiceItem.new(description, 'N/A', -1 * amount, 1)
+    else
+      raise "Non-invoiced transaction type: #{trantype}"
+    end
   end
 
 end
