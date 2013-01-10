@@ -159,6 +159,14 @@ class Attendee < ActiveRecord::Base
   # Public Instance Methods
   # =======================
 
+  def activities_as_invoice_items
+    activities_with_prices.map { |a| a.to_invoice_item(full_name) }
+  end
+
+  def activities_with_prices
+    activities.select { |a| a.price.present? && a.price > 0.0 }
+  end
+
   # `age_in_years` Returns integer age in years on the start day of congress, not now.
   def age_in_years
     raise 'birth date undefined' if birth_date.nil?
@@ -221,20 +229,7 @@ class Attendee < ActiveRecord::Base
   end
 
   def invoice_items
-    items = []
-
-    # Plans
-    plans_to_invoice = attendee_plans.select{ |ap| ap.show_on_invoice? }
-    items.concat plans_to_invoice.map{ |ap| ap.to_invoice_item(self.full_name) }
-
-    # Activities
-    self.activities.each do |e|
-      if (e.price.present? && e.price > 0.0)
-        items << InvoiceItem.new('Activity: ' + e.name, self.get_full_name, e.price, 1)
-      end
-    end
-
-    return items
+    plans_as_invoice_items + activities_as_invoice_items
   end
 
   def invoice_total
@@ -265,6 +260,14 @@ class Attendee < ActiveRecord::Base
 
   def plan_count
     plans.count
+  end
+
+  def plans_as_invoice_items
+    plans_to_invoice.map{ |ap| ap.to_invoice_item(full_name) }
+  end
+
+  def plans_to_invoice
+    attendee_plans.select{ |ap| ap.show_on_invoice? }
   end
 
   def possessive_pronoun_or_name
