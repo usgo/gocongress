@@ -20,7 +20,7 @@ class Ability
     end
 
     # Admins can do anything in their own year
-    if user.is_admin? then
+    if user.admin? then
       can :manage, ALL_RESOURCES, :year => user.year
     end
 
@@ -30,7 +30,7 @@ class Ability
     end
 
     # Admins and Staff share a few special abilities
-    if user.is_admin? or user.role == 'S' then
+    if user.admin? or user.role == 'S' then
       can :print_official_docs, User, :year => user.year
       can :read, :report
       can :see_admin_menu, :layout

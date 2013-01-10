@@ -116,11 +116,6 @@ class User < ActiveRecord::Base
     subtotals.empty? ? 0 : subtotals.reduce(:+)
   end
 
-  # `is_admin?` is deprecated.  Please use `admin?`
-  def is_admin?
-    admin?
-  end
-
   def staff?
     role == 'S'
   end

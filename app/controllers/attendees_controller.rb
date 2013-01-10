@@ -110,7 +110,7 @@ protected
     if current_user.present?
       a = Attendee.find(params[:id].to_i)
       is_my_attendee = current_user.id.to_i == a.user_id
-      allow = is_my_attendee || current_user.is_admin?
+      allow = is_my_attendee || current_user.admin?
     end
     render_access_denied unless allow
   end

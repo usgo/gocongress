@@ -94,18 +94,18 @@ protected
   end
 
   def current_user_is_admin?
-    current_user.present? && current_user.is_admin?
+    current_user.present? && current_user.admin?
   end
 
   def allow_only_admin
-    unless current_user && current_user.is_admin?
+    unless current_user && current_user.admin?
       render_access_denied
     end
   end
 
   def allow_only_self_or_admin
     target_user_id = params[:id].to_i
-    unless current_user && (current_user.id.to_i == target_user_id || current_user.is_admin?)
+    unless current_user && (current_user.id.to_i == target_user_id || current_user.admin?)
       render_access_denied
     end
   end
