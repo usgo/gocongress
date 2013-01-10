@@ -1,10 +1,4 @@
 = form_for(@attendee) do |f|
-
-  -# When an admin creates an attendee on behalf of a user, the
-  -# user_id must be passed as a parameter.  cancan's `authorize!`
-  -# prevents malicious use. -Jared 2012-08-28
-  = f.hidden_field :user_id
-
   = render :partial => 'shared/error_messages', :locals => { :resource => @attendee }
   = render :partial => 'personal_info', :locals => { :f => f }
   = render :partial => 'player_info', :locals => { :f => f }

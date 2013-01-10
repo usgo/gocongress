@@ -36,9 +36,10 @@ class AttendeesController < ApplicationController
     expose_form_vars
   end
 
+  # POST /:year/users/:user_id/attendees
   def create
-    @attendee.user_id ||= current_user.id
-    @attendee.is_primary = @attendee.user.attendees.count == 0
+    @attendee.user = User.find(params[:user_id])
+    @attendee.is_primary = @attendee.user.primary_attendee.nil?
     authorize! :create, @attendee
     register_attendee
     if @attendee.errors.empty?

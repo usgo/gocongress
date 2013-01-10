@@ -7,8 +7,9 @@ describe AttendeesController do
   context "as a visitor" do
     describe "#create" do
       it "is forbidden for visitors" do
-        attrs = attributes_for :attendee
-        expect { post :create, attendee: attrs, year: attrs[:year]
+        u = create :user
+        attrs = attributes_for :attendee, :user => u
+        expect { post :create, attendee: attrs, user_id: u.id, year: u.year
           }.to_not change{ Attendee.count }
         response.should be_forbidden
       end
@@ -60,7 +61,7 @@ describe AttendeesController do
 
       it "succeeds under own account" do
         a = acsbl_atrs.merge(:user_id => user.id)
-        expect { post :create, :attendee => a, :year => user.year
+        expect { post :create, :attendee => a, user_id: user.id, :year => user.year
           }.to change { user.attendees.count }.by(+1)
         response.should redirect_to \
           user_terminus_path(:user_id => user.id, :year => user.year)
@@ -70,13 +71,13 @@ describe AttendeesController do
         plan = create :plan
         expect {
           post :create, :attendee => acsbl_atrs,
-            :"plan_#{plan.id}_qty" => 1, :year => user.year
+            :"plan_#{plan.id}_qty" => 1, user_id: user.id, :year => user.year
         }.to change{ plan.attendees.count }.by(+1)
       end
 
       it "fails without any attributes" do
         attrs = {:user_id => user.id}
-        expect { post :create, :attendee => attrs, :year => user.year
+        expect { post :create, :attendee => attrs, user_id: user.id, :year => user.year
           }.to_not change { Attendee.count }
         response.should render_template :new
         assigns(:attendee).errors.should_not be_empty
@@ -85,14 +86,14 @@ describe AttendeesController do
 
       it "renders new view if unsuccessful" do
         stub_registration_to_fail
-        post :create, :attendee => {}, :year => user.year
+        post :create, :attendee => {}, user_id: user.id, :year => user.year
         response.should render_template 'new'
       end
 
       it "is forbidden to create attendee under a different user" do
         user_two = create :user
         a = acsbl_atrs.merge(:user_id => user_two.id)
-        expect { post :create, :attendee => a, :year => user_two.year
+        expect { post :create, :attendee => a, user_id: user_two.id, :year => user_two.year
           }.not_to change { Attendee.count }
         response.should be_forbidden
       end
@@ -101,7 +102,7 @@ describe AttendeesController do
         attrs = acsbl_atrs.merge(:user_id => user.id)
         attrs[:gender] = "zzzz" # invalid, obviously
         expect {
-          post :create, attendee: attrs, year: user.year
+          post :create, attendee: attrs, user_id: user.id, year: user.year
         }.to_not change{ Attendee.count }
         assigns(:attendee).errors.should include(:gender)
       end
@@ -110,7 +111,7 @@ describe AttendeesController do
         attrs = accessible_attributes_for(:minor).merge(:user_id => user.id)
         attrs[:guardian_full_name] = "Mommy Moo"
         expect {
-          post :create, attendee: attrs, year: user.year
+          post :create, attendee: attrs, user_id: user.id, year: user.year
         }.to change{ Attendee.count }.by(+1)
       end
     end
@@ -368,7 +369,7 @@ describe AttendeesController do
       it "succeeds, creating attendee under any user" do
         u = create :user
         a = accessible_attributes_for(:attendee).merge(:user_id => u.id)
-        expect { post :create, :attendee => a, :year => u.year
+        expect { post :create, :attendee => a, user_id: u.id, :year => u.year
           }.to change { u.attendees.count }.by(+1)
       end
     end
