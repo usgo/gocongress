@@ -30,7 +30,7 @@ class ReportsController < ApplicationController
   def emails
     @atnd_email_list = ""
     Attendee.yr(@year).each { |a|
-      @atnd_email_list += "\"#{a.get_full_name}\" <#{a.email}>, "
+      @atnd_email_list += "\"#{a.full_name}\" <#{a.email}>, "
       }
   end
 

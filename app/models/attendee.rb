@@ -245,17 +245,12 @@ class Attendee < ActiveRecord::Base
     respect_anonymity ? anonymize(name) : name
   end
 
-  # `get_full_name` is deprecated.  Please use full_name() instead.
-  def get_full_name(respect_anonymity = false)
-    full_name(respect_anonymity)
-  end
-
   def full_name_possessive
     given_name + " " + family_name + ('s' == family_name[-1,1] ? "'" : "'s")
   end
 
   def name_and_rank
-    get_full_name(false) + ", " + get_rank_name
+    full_name(false) + ", " + get_rank_name
   end
 
   def plan_count
@@ -275,7 +270,7 @@ class Attendee < ActiveRecord::Base
   end
 
   def objective_pronoun_or_name_and_copula
-    is_primary? ? "You are" : get_full_name + " is"
+    is_primary? ? "You are" : full_name + " is"
   end
 
   def get_plan_qty(plan_id)

@@ -32,7 +32,7 @@
           .hardwrap{:style => "max-width:200px;"}= user.email
         %td
           - user.attendees.each do |atn|
-            = atn.get_full_name
+            = atn.full_name
             = "*" if atn.is_primary
             %br
         %td= user.attendees.count

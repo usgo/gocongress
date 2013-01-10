@@ -24,6 +24,6 @@
           %tbody
             - e.attendees.order('family_name').each do |a|
               %tr
-                %td= a.get_full_name
+                %td= a.full_name
                 %td= a.get_rank_name
                 %td.numeric= a.age_in_years.to_i

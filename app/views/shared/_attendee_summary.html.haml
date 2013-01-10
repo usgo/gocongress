@@ -6,7 +6,7 @@
 
   .wide-column
     %h1 Attendee Registration Sheet
-    %h2= "#{attendee.get_full_name}, #{attendee.get_rank_name}"
+    %h2= "#{attendee.full_name}, #{attendee.get_rank_name}"
 
     - if attendee.user.attendees.count > 1
       %p

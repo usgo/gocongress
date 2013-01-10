@@ -32,7 +32,7 @@
       %tbody
         - for a in @attendees
           %tr
-            %td= link_to a.get_full_name, edit_attendee_path(a)
+            %td= link_to a.full_name, edit_attendee_path(a)
             %td= a.get_rank_name
             %td.numeric= a.age_in_years.floor
             %td.smalltext
