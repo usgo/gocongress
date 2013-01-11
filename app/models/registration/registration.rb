@@ -17,8 +17,6 @@ class Registration::Registration
 
   def save
     errors = []
-
-    # Assign airport_arrival and airport_departure attributes, if possible
     errors += parse_airport_datetimes
 
     if @attendee.new_record?
@@ -29,13 +27,8 @@ class Registration::Registration
     end
 
     unless @attendee.new_record?
-
-      # Regular users are not allowed to add or remove disabled activities.
       errors += validate_activities @params[:activity_ids]
-
-      # Persist plans
       errors += register_plans(@plan_selections)
-
       if errors.empty?
         begin
           @attendee.update_attributes(@params, :as => mass_assignment_role)
@@ -105,6 +98,8 @@ class Registration::Registration
     @as_admin ? :admin : :default
   end
 
+  # `parse_airport_datetimes` assigns airport_arrival and
+  # airport_departure attributes, if possible
   def parse_airport_datetimes
     parse_errors = []
     begin
