@@ -52,4 +52,6 @@
   = render :partial => 'shared/balance', :locals => {:user => @user, :show_detail_links => true}
   %p= button_to "Make a Payment", pay_user_path(@user), :method => "get"
 
-%span.smalltext * Age on #{@start_date}, used to identify minors.
+%br
+%br
+%p.smalltext * Age on #{@start_date}, used to identify minors.
