@@ -22,9 +22,8 @@ class AttendeesController < ApplicationController
     @kyu_count = @attendees.kyu.count
   end
 
-  # GET /:year/users/:user_id/attendees/new
   def new
-    @attendee.user = User.find(params[:user_id])
+    @attendee.user = User.find(params[:user_id] || current_user.id)
     @attendee.email = @attendee.user.email
     if @attendee.user.primary_attendee.present?
       ['country','phone'].each do |f|
@@ -36,9 +35,7 @@ class AttendeesController < ApplicationController
     expose_form_vars
   end
 
-  # POST /:year/users/:user_id/attendees
   def create
-    @attendee.user = User.find(params[:user_id])
     @attendee.is_primary = @attendee.user.primary_attendee.nil?
     authorize! :create, @attendee
     register_attendee

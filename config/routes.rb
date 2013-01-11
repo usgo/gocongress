@@ -33,7 +33,7 @@ Gocongress::Application.routes.draw do
         resources :attendee_statistics, :only => :index
         resources :plans, :except => [:index]
 
-        resources :attendees, :except => [:create, :new, :show] do
+        resources :attendees, :except => [:show] do
           collection do
             get 'vip'
           end
@@ -53,14 +53,6 @@ Gocongress::Application.routes.draw do
             get 'print_cost_summary', :as => 'print_cost_summary_for'
             get 'choose_attendee'
           end
-
-          # Nesting `attendees#new` and `#create` here guarantees a
-          # user_id in the params.  That way, whether it's a user
-          # adding a new attendee to their own account, or an admin
-          # adding an attendee to someone else's account, there's
-          # only one place to look for the user_id. -Jared 2013-01-09
-          resources :attendees, :only => [:create, :new]
-
           resource :terminus, :only => :show
         end
 

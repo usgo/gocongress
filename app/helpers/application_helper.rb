@@ -5,6 +5,13 @@ module ApplicationHelper
     signed_in?(nil)
   end
 
+  # When you want to use `button_to` but your url has a query string
+  # https://github.com/rails/rails/issues/2158
+  def button_to_get text, url, id, css_class = nil
+    render :partial => 'shared/button_to_get', :locals => {
+      :btn_txt => text, :btn_url => url, :btn_id => id, :btn_class => css_class}
+  end
+
   def cents_for_currency_field x
     return '' if x.blank?
     cents_to_currency(x, delimiter: '', precision: 2, unit: '')

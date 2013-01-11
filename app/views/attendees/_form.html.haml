@@ -1,4 +1,6 @@
 = form_for(@attendee) do |f|
+  = f.hidden_field :user_id
+
   = render :partial => 'shared/error_messages', :locals => { :resource => @attendee }
   = render :partial => 'personal_info', :locals => { :f => f }
   = render :partial => 'player_info', :locals => { :f => f }

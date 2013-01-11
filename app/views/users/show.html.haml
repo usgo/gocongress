@@ -38,7 +38,7 @@
             %td.smalltext
               = link_to 'Delete', a, :data => {:confirm => "Are you sure you want to delete #{a.full_name}?"}, :method => :delete
 
-  %p= button_to 'Add Attendee', new_user_attendee_path(@user), :method => :get
+  %p= button_to_get 'Add Attendee', new_attendee_path(user_id: @user.id), 'add_attendee_btn'
 
   -if @has_minor_attendee
     %h3 Regarding Minors
