@@ -161,7 +161,7 @@ protected
     reg = Registration::Registration.new(
       @attendee,
       current_user.admin?,
-      params[:attendee],
+      params,
       get_plan_selections(@plans))
     errors = reg.save
     @attendee.errors[:base].concat(errors) unless errors.empty?

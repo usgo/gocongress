@@ -27,11 +27,11 @@ class Registration::Registration
     end
 
     unless @attendee.new_record?
-      errors += validate_activities @params[:activity_ids]
+      errors += validate_activities @params[:attendee][:activity_ids]
       errors += register_plans(@plan_selections)
       if errors.empty?
         begin
-          @attendee.update_attributes(@params, :as => mass_assignment_role)
+          @attendee.update_attributes(@params[:attendee], :as => mass_assignment_role)
         rescue ActiveModel::MassAssignmentSecurity::Error => e
           errors << "Permission denied: #{e}"
         end
@@ -69,14 +69,6 @@ class Registration::Registration
 
   private
 
-  def clear_airport_datetime_params
-    %w(airport_arrival airport_departure).each do |prefix|
-      %w(date time).each do |suffix|
-        @params.delete(prefix + '_' + suffix)
-      end
-    end
-  end
-
   def validate_models models
     models.reject(&:valid?).map{|m| m.errors.full_messages}.flatten
   end
@@ -108,7 +100,6 @@ class Registration::Registration
     rescue SplitDatetimeParserException => e
       parse_errors << e.to_s
     end
-    clear_airport_datetime_params
     return parse_errors
   end
 

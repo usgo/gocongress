@@ -19,13 +19,13 @@
       %td
         Arrival
         %span.smalltext (in #{@year.nearby_airport_city})
-      %td= text_field_tag 'attendee[airport_arrival_date]', @airport_arrival_date, :class => 'date-field', :size => 10
-      %td= text_field_tag 'attendee[airport_arrival_time]', @airport_arrival_time, :class => 'time-field', :size => 10
+      %td= text_field_tag 'airport_arrival_date', @airport_arrival_date, :class => 'date-field', :size => 10
+      %td= text_field_tag 'airport_arrival_time', @airport_arrival_time, :class => 'time-field', :size => 10
       %td= f.text_field :airport_arrival_flight, :size => 10
     %tr
       %td Departure
-      %td= text_field_tag 'attendee[airport_departure_date]', @airport_departure_date, :class => 'date-field', :size => 10
-      %td= text_field_tag 'attendee[airport_departure_time]', @airport_departure_time, :class => 'time-field', :size => 10
+      %td= text_field_tag 'airport_departure_date', @airport_departure_date, :class => 'date-field', :size => 10
+      %td= text_field_tag 'airport_departure_time', @airport_departure_time, :class => 'time-field', :size => 10
       %td
     %tr
       %td

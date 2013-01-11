@@ -10,7 +10,7 @@ describe Registration::Registration do
     describe '#save' do
       it "does not add disabled activity, and returns an error" do
         a = build :attendee
-        p = {:activity_ids => [dsbl_act.id]}
+        p = {:attendee => {:activity_ids => [dsbl_act.id]}}
         r = Registration::Registration.new a, admin, p, []
         expect { r.save.should_not be_empty
           }.to_not change { AttendeeActivity.count }
@@ -19,7 +19,7 @@ describe Registration::Registration do
       it "does not remove disabled activity, and returns an error" do
         a = create :attendee
         a.activities << dsbl_act
-        p = {:activity_ids => []}
+        p = {:attendee => {:activity_ids => []}}
         r = Registration::Registration.new a, admin, p, []
         expect { r.save.should_not be_empty
           }.to_not change { AttendeeActivity.count }
@@ -90,7 +90,7 @@ describe Registration::Registration do
     describe '#save' do
       it "adds disabled activities, and returns no errors" do
         a = build :attendee
-        p = {:activity_ids => [dsbl_act.id]}
+        p = {:attendee => {:activity_ids => [dsbl_act.id]}}
         r = Registration::Registration.new a, admin, p, []
         expect { r.save.should be_empty
           }.to change { AttendeeActivity.count }.by(+1)
@@ -99,7 +99,7 @@ describe Registration::Registration do
       it "removes disabled activities, and returns no errors" do
         a = create :attendee
         a.activities << dsbl_act
-        p = {:activity_ids => []}
+        p = {:attendee => {:activity_ids => []}}
         r = Registration::Registration.new a, admin, p, []
         expect { r.save.should be_empty
           }.to change { AttendeeActivity.count }.by(-1)

@@ -183,11 +183,12 @@ describe AttendeesController do
 
     describe "#update" do
 
-      def put_update attendee_attrs = {}
-        put :update,
+      def put_update attendee_attrs = {}, opts = {}
+        put :update, opts.merge(
           attendee: attendee_attrs,
           id: attendee.id,
           year: attendee.year
+        )
       end
 
       it "updates a trivial field" do
@@ -217,26 +218,26 @@ describe AttendeesController do
 
         it "updates valid airport datetimes" do
           d = "#{attendee.year}-01-01"
-          put_update datetime_attrs(d, valid_time)
+          put_update({}, datetime_attrs(d, valid_time))
           attendee.reload.airport_arrival.should be_present
           attendee.airport_arrival.strftime("%Y-%m-%d %H:%M").should == "#{d} 20:00"
         end
 
         it "does not update invalid airport date" do
-          put_update datetime_attrs("1/1/#{attendee.year}", valid_time)
+          put_update({}, datetime_attrs("1/1/#{attendee.year}", valid_time))
           attendee.reload.airport_arrival.should be_nil
           assigns(:attendee).errors[:base].should include(
             "Invalid airport arrival date.  Please use year-month-day format.")
         end
 
         it "does not update invalid airport time" do
-          put_update datetime_attrs(valid_date, "7:77 PM")
+          put_update({}, datetime_attrs(valid_date, "7:77 PM"))
           attendee.reload.airport_arrival.should be_nil
           assigns(:attendee).errors[:base].should include('invalid date')
         end
 
         it "does not update malformed airport time" do
-          put_update datetime_attrs(valid_date, "8 am")
+          put_update({}, datetime_attrs(valid_date, "8 am"))
           attendee.reload.airport_arrival.should be_nil
           assigns(:attendee).errors[:base].should include(
             'Invalid airport arrival time.  Please use hour:minute AM/PM format.')
