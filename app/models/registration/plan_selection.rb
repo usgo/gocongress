@@ -1,7 +1,7 @@
 # `PlanSelection` is a data class, representing an attendee's
 # choice of a plan on the registration form.  It is a useful
-# abstraction to pass between eg. AttendeesController and Registrar.
-# -Jared 2012-10-07
+# abstraction to pass between eg. AttendeesController and
+# Registration. -Jared 2012-10-07
 class Registration::PlanSelection
   attr_reader :plan, :qty
   def initialize plan, qty
@@ -20,5 +20,10 @@ class Registration::PlanSelection
   # must conform to definition of `eql?`
   def hash
     (plan.id.to_s + qty.to_s).hash
+  end
+
+  def to_attendee_plan attendee
+    AttendeePlan.new(:attendee_id => attendee.id,
+      :plan_id => @plan.id, :quantity => @qty)
   end
 end

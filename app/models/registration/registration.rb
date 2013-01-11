@@ -66,7 +66,7 @@ class Registration::Registration
   def register_plans selections
     ers = []
     selections.select! {|s| s.qty > 0}
-    nascent_attendee_plans = build_attendee_plans_from(selections)
+    nascent_attendee_plans = selections.map { |s| s.to_attendee_plan(@attendee) }
     ers += validate_mandatory_plan_cats(selections)
     ers += validate_disabled_plans(persisted_plan_selections, selections)
     ers += validate_models(nascent_attendee_plans)
@@ -75,13 +75,6 @@ class Registration::Registration
   end
 
   private
-
-  def build_attendee_plans_from plan_selections
-    plan_selections.map do |s|
-      AttendeePlan.new(:attendee_id => @attendee.id,
-        :plan_id => s.plan.id, :quantity => s.qty)
-    end
-  end
 
   def clear_airport_datetime_params
     %w(airport_arrival airport_departure).each do |prefix|
