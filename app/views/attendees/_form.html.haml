@@ -7,8 +7,15 @@
   = render :partial => 'activities', :locals => { :f => f }
   = render :partial => 'plans', :locals => { :f => f }
   = render :partial => 'wishes', :locals => { :f => f }
-  - if current_user.admin?
-    = render :partial => 'admin_info', :locals => { :f => f }
+
+  -# If we show the admin fields, we'll get MassAssignmentSecurity::Error
+  -# Can't mass-assign protected attributes: minor_agreement_received, comment
+  -# We need to be able to specify the mass-assignment role to cancan,
+  -# but that feature is still in the works:
+  -# https://github.com/ryanb/cancan/pull/686
+  -#
+  -# - if current_user.admin?
+  -#   = render :partial => 'admin_info', :locals => { :f => f }
 
   %fieldset
     .field
