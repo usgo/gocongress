@@ -19,14 +19,7 @@
     %tbody
       - @plans.each do |plan|
         %tr{:class => if plan.disabled? then "disabled" end }
-          %td.align-center
-            - ps = @plan_selections.select { |ps| ps.plan.id == plan.id }.first
-            - qty = ps.present? ? ps.qty : 0
-            - qty_field_name = "plan_#{plan.id}_qty"
-            - if plan.max_quantity == 1
-              = check_box_tag qty_field_name, 1, qty == 1, :title => "Select this " + mnh
-            - else
-              = number_field_tag qty_field_name, qty, :size => 2, :min => 0, :max => plan.max_quantity, :title => "Enter a quantity"
+          %td.align-center= plan_selection_inputs(plan)
           %td= plan.name
           = render :partial => "plan_categories/plan_table_common_cells", :locals => { :plan => plan }
 
