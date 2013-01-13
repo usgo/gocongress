@@ -30,6 +30,22 @@ class Registration::Registration
     return errors
   end
 
+  # `register_plans` validates and persists the selected plans
+  # with positive quantities.  If any validations fail, no
+  # selections will be persisted.
+  def register_plans
+    ers = []
+    selections = @plan_selections.select { |s| s.qty > 0 }
+    nascent_attendee_plans = selections.map { |s| s.to_attendee_plan(@attendee) }
+    ers += validate_mandatory_plan_cats(selections)
+    ers += validate_disabled_plans(persisted_plan_selections, selections)
+    ers += validate_models(nascent_attendee_plans)
+    @attendee.attendee_plans = nascent_attendee_plans if ers.empty?
+    return ers
+  end
+
+  private
+
   def update_attendee_attributes
     begin
       @attendee.update_attributes(@params[:attendee], :as => mass_assignment_role)
@@ -60,22 +76,6 @@ class Registration::Registration
   def persist_activities
     @attendee.activity_ids = @activity_selections
   end
-
-  # `register_plans` validates and persists the selected plans
-  # with positive quantities.  If any validations fail, no
-  # selections will be persisted.
-  def register_plans
-    ers = []
-    selections = @plan_selections.select { |s| s.qty > 0 }
-    nascent_attendee_plans = selections.map { |s| s.to_attendee_plan(@attendee) }
-    ers += validate_mandatory_plan_cats(selections)
-    ers += validate_disabled_plans(persisted_plan_selections, selections)
-    ers += validate_models(nascent_attendee_plans)
-    @attendee.attendee_plans = nascent_attendee_plans if ers.empty?
-    return ers
-  end
-
-  private
 
   def validate_models models
     models.reject(&:valid?).map{|m| m.errors.full_messages}.flatten
