@@ -13,7 +13,7 @@ class Registration::Registration
     @params = params
     @params[:attendee] ||= {} # in case of lazy tests
     @plan_selections = plan_selections
-    @activity_selections = activity_selections
+    @activity_selections = activity_selections.map(&:to_i)
     @year = attendee.year
   end
 
@@ -109,16 +109,23 @@ class Registration::Registration
     mandatory_plan_categories - selected_plan_categories(plan_selections)
   end
 
-  # `validate_activities` checks that the `selected` activity ids
-  # are not adding or removing a disabled activity.  Admins are
-  # exempt from this validation.
+  # `changes_to_selected_activities`, ie. the symmetric
+  # difference (http://bit.ly/aNXT8U) of "before" and "after" sets
+  def changes_to_selected_activities
+    Set.new(@activity_selections) ^ @attendee.activity_ids
+  end
+
+  # Adding or removing disabled activities are invalid changes
+  def invalid_changes_to_selected_activities
+    changes_to_selected_activities & disabled_activities
+  end
+
+  def activities_are_valid?
+    @as_admin || invalid_changes_to_selected_activities.empty?
+  end
+
   def validate_activities
-    return [] if @as_admin
-    before = @attendee.activities.map(&:id)
-    after = Set.new(@activity_selections.map(&:to_i))
-    changes = (after ^ before).to_a
-    invalids = disabled_activities & changes
-    invalids.empty? ? [] : [translate('vldn_errs.activity_disabled')]
+    activities_are_valid? ? [] : [translate('vldn_errs.activity_disabled')]
   end
 
   # `validate_disabled_plans` determines if any disabled plans
