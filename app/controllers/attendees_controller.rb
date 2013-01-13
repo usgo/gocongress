@@ -126,7 +126,7 @@ protected
   # In the past we used `appropriate_for_age` but during #new we
   # don't know the attendee's age yet
   def expose_plans
-    @plans = Plan.yr(@year) # todo: order
+    @plans = Plan.yr(@year).order(:plan_category_id, :cat_order)
     unless current_user.admin?
       @plans.delete_if {|p| p.disabled? && !@attendee.has_plan?(p)}
     end
