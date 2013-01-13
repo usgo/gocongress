@@ -28,8 +28,12 @@ module Purchasable
     elsif price.to_f == 0.0
       "Free"
     else
-      ApplicationController.helpers.cents_to_currency(price)
+      ApplicationController.helpers.cents_to_currency(price) + price_units
     end
+  end
+
+  def price_units
+    (respond_to?(:daily) && daily?) ? ' / day' : ''
   end
 
   def contact_msg_instead_of_price?
