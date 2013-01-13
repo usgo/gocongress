@@ -20,6 +20,11 @@ module SplitDatetimeParser
         "Invalid #{prefix_for_msg} time.  Please use hour:minute AM/PM format."
     end
 
+    if d.blank? ^ t.blank?
+      raise SplitDatetimeParserException,
+        "Invalid #{prefix_for_msg}.  Specify both date and time or neither."
+    end
+
     # The input matches the strict regexes above, so ask parse()
     # to make a Time instance.  The regexes above don't cover
     # all stupidity (eg. a time like 7:77), so we must rescue
