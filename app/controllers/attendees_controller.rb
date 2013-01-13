@@ -10,7 +10,7 @@ class AttendeesController < ApplicationController
   skip_authorize_resource :only => [:create, :index, :vip]
   add_filter_restricting_resources_to_year_in_route
   before_filter :expose_plans, :only => [:create, :edit, :new, :update]
-  before_filter :expose_selections, :only => [:create, :edit, :new, :update]
+  before_filter :expose_selections, :only => [:create, :new, :update]
 
   # Constants
   DEFAULT_ORDER = 'rank = 0, rank desc'
@@ -51,6 +51,8 @@ class AttendeesController < ApplicationController
   end
 
   def edit
+    @activity_selections = @attendee.activity_ids
+    @plan_selections = @attendee.plan_selections
     expose_form_vars
   end
 
@@ -133,6 +135,8 @@ protected
     @show_quantity_instructions = Plan.quantifiable_plan_in? @plans
   end
 
+  # For all of the "form actions" except `edit`, the "selections"
+  # come from the params scope.
   def expose_selections
     params[:attendee] ||= {} # TODO: not sure we need this
     params[:activity_ids] ||= []

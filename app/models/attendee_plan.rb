@@ -54,6 +54,10 @@ class AttendeePlan < ActiveRecord::Base
     InvoiceItem.new('Plan: ' + plan.name, attendee_full_name, plan.price, quantity)
   end
 
+  def to_plan_selection
+    Registration::PlanSelection.new plan, quantity
+  end
+
   # Quantity may not exceed available inventory
   def validate_against_available_inventory
     i = inventory_available_to_this_attendee

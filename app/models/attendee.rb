@@ -257,6 +257,10 @@ class Attendee < ActiveRecord::Base
     plans.count
   end
 
+  def plan_selections
+    attendee_plans.map(&:to_plan_selection)
+  end
+
   def plans_as_invoice_items
     plans_to_invoice.map{ |ap| ap.to_invoice_item(full_name) }
   end
