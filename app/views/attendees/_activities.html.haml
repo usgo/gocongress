@@ -20,11 +20,10 @@
     %th.numeric Price
   %tbody
     - @activities.each do |a|
-      - checked = @attendee.activities.include?(a)
+      - checked = @activity_selections.include?(a.id)
       %tr{:class => (a.disabled? ? 'disabled' : nil)}
         %td.align-center
-          = check_box_tag :activity_ids, a.id, checked,  |
-            :name => 'attendee[activity_ids][]'          |
+          = check_box_tag :activity_ids, a.id, checked, :name => 'activity_ids[]'
         %td= a.leave_time.to_date.to_formatted_s(:dow_month_day)
         %td= a.name
         %td= a.leave_time.to_formatted_s(:american)

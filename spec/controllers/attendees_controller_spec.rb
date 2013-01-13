@@ -447,8 +447,10 @@ describe AttendeesController do
   end
 
   def update_activities attendee, activities
-    put :update, :id => attendee.id, \
-      :attendee => { :activity_ids => activities.map(&:id) }, \
+    put :update,
+      :id => attendee.id,
+      :attendee => {},
+      :activity_ids => activities.map(&:id),
       :year => attendee.year
   end
 

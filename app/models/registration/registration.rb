@@ -7,31 +7,27 @@ class Registration::Registration
   # validation error messages
   include ActionView::Helpers::TranslationHelper
 
-  def initialize attendee, as_admin, params, plan_selections
+  def initialize attendee, as_admin, params, plan_selections, activity_selections
     @as_admin = as_admin
     @attendee = attendee
     @params = params
+    @params[:attendee] ||= {} # in case of lazy tests
     @plan_selections = plan_selections
+    @activity_selections = activity_selections
     @year = attendee.year
   end
 
   def save
-    errors = []
-    errors += parse_airport_datetimes
-
-    if @attendee.new_record?
-      # Activities haven't been validated yet, so we unset them
-      # before `save`. (they had been set by cancan)
-      @attendee.activities = []
-      @attendee.save
-    end
+    errors = parse_airport_datetimes
+    @attendee.save if @attendee.new_record?
 
     unless @attendee.new_record?
-      errors += validate_activities @params[:attendee][:activity_ids]
+      errors += validate_activities @activity_selections
       errors += register_plans(@plan_selections)
       if errors.empty?
         begin
-          @attendee.update_attributes(@params[:attendee], :as => mass_assignment_role)
+          parmesan = @params[:attendee].merge(:activity_ids => @activity_selections)
+          @attendee.update_attributes(parmesan, :as => mass_assignment_role)
         rescue ActiveModel::MassAssignmentSecurity::Error => e
           errors << "Permission denied: #{e}"
         end

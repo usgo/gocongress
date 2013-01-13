@@ -10,8 +10,7 @@ describe Registration::Registration do
     describe '#save' do
       it "does not add disabled activity, and returns an error" do
         a = build :attendee
-        p = {:attendee => {:activity_ids => [dsbl_act.id]}}
-        r = Registration::Registration.new a, admin, p, []
+        r = Registration::Registration.new a, admin, {}, [], [dsbl_act.id]
         expect { r.save.should_not be_empty
           }.to_not change { AttendeeActivity.count }
       end
@@ -19,8 +18,7 @@ describe Registration::Registration do
       it "does not remove disabled activity, and returns an error" do
         a = create :attendee
         a.activities << dsbl_act
-        p = {:attendee => {:activity_ids => []}}
-        r = Registration::Registration.new a, admin, p, []
+        r = Registration::Registration.new a, admin, {}, [], []
         expect { r.save.should_not be_empty
           }.to_not change { AttendeeActivity.count }
       end
@@ -28,7 +26,7 @@ describe Registration::Registration do
 
     describe '#register_plans' do
       let(:attendee) { create :attendee }
-      subject { Registration::Registration.new attendee, false, {}, [] }
+      subject { Registration::Registration.new attendee, false, {}, [], [] }
 
       it 'returns something enumerable' do
         errs = subject.register_plans []
@@ -90,8 +88,7 @@ describe Registration::Registration do
     describe '#save' do
       it "adds disabled activities, and returns no errors" do
         a = build :attendee
-        p = {:attendee => {:activity_ids => [dsbl_act.id]}}
-        r = Registration::Registration.new a, admin, p, []
+        r = Registration::Registration.new a, admin, {}, [], [dsbl_act.id]
         expect { r.save.should be_empty
           }.to change { AttendeeActivity.count }.by(+1)
       end
@@ -99,8 +96,7 @@ describe Registration::Registration do
       it "removes disabled activities, and returns no errors" do
         a = create :attendee
         a.activities << dsbl_act
-        p = {:attendee => {:activity_ids => []}}
-        r = Registration::Registration.new a, admin, p, []
+        r = Registration::Registration.new a, admin, {}, [], []
         expect { r.save.should be_empty
           }.to change { AttendeeActivity.count }.by(-1)
       end
@@ -108,7 +104,7 @@ describe Registration::Registration do
 
     describe '#register_plans' do
       let(:attendee) { create :attendee }
-      subject { Registration::Registration.new attendee, true, {}, [] }
+      subject { Registration::Registration.new attendee, true, {}, [], [] }
 
       context "disabled plans" do
         it "adds disabled plan" do

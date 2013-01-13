@@ -10,7 +10,7 @@ class AttendeesController < ApplicationController
   skip_authorize_resource :only => [:create, :index, :vip]
   add_filter_restricting_resources_to_year_in_route
   before_filter :expose_plans, :only => [:create, :edit, :new, :update]
-  before_filter :default_form_params, :only => [:create, :update]
+  before_filter :expose_selections, :only => [:create, :edit, :new, :update]
 
   def index
     params[:direction] ||= "asc"
@@ -114,11 +114,6 @@ protected
 
   private
 
-  def default_form_params
-    params[:attendee] ||= {}
-    params[:attendee][:activity_ids] ||= []
-  end
-
   # `expose_plans` exposes `@plans`, determining which plans will be
   # shown on the form, and which plans are available for selection.
   # Admins can always see disabled plans, but users only see
@@ -138,8 +133,13 @@ protected
     @show_quantity_instructions = Plan.quantifiable_plan_in? @plans
   end
 
-  def get_plan_selections plans
-    plans.map {|p| Registration::PlanSelection.new p, plan_qty(p.id)}
+  def expose_selections
+    params[:attendee] ||= {} # TODO: not sure we need this
+    params[:activity_ids] ||= []
+    @activity_selections = params[:activity_ids].map(&:to_i)
+    @plan_selections = @plans.map { |p|
+      Registration::PlanSelection.new p, plan_qty(p.id)
+    }
   end
 
   def plan_qty plan_id
@@ -159,7 +159,9 @@ protected
       @attendee,
       current_user.admin?,
       params,
-      get_plan_selections(@plans))
+      @plan_selections,
+      @activity_selections
+    )
     errors = reg.save
     @attendee.errors[:base].concat(errors) unless errors.empty?
   end
