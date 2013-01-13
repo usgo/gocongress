@@ -46,41 +46,6 @@ class Registration::Registration
 
   private
 
-  def update_attendee_attributes
-    begin
-      @attendee.update_attributes(@params[:attendee], :as => mass_assignment_role)
-    rescue ActiveModel::MassAssignmentSecurity::Error => e
-      return ["Permission denied: #{e}"]
-    end
-    return []
-  end
-
-  # `validate_activities` checks that the `selected` activity ids
-  # are not adding or removing a disabled activity.  Admins are
-  # exempt from this validation.
-  def validate_activities
-    return [] if @as_admin
-    before = @attendee.activities.map(&:id)
-    after = Set.new(@activity_selections.map(&:to_i))
-    changes = (after ^ before).to_a
-    invalids = disabled_activities & changes
-    invalids.empty? ? [] : [translate('vldn_errs.activity_disabled')]
-  end
-
-  def register_activities
-    errors = validate_activities
-    persist_activities if errors.empty?
-    return errors
-  end
-
-  def persist_activities
-    @attendee.activity_ids = @activity_selections
-  end
-
-  def validate_models models
-    models.reject(&:valid?).map{|m| m.errors.full_messages}.flatten
-  end
-
   def disabled_activities
     @disabled_activities ||= Activity.disabled.map(&:id)
   end
@@ -111,22 +76,49 @@ class Registration::Registration
     return parse_errors
   end
 
+  def persist_activities
+    @attendee.activity_ids = @activity_selections
+  end
+
   def persisted_plan_selections
     @attendee.attendee_plans.map do |ap|
       Registration::PlanSelection.new(ap.plan, ap.quantity)
     end
   end
 
+  def register_activities
+    errors = validate_activities
+    persist_activities if errors.empty?
+    return errors
+  end
+
   def selected_plan_categories plan_selections
     plan_selections.select{|s| s.qty > 0}.map(&:plan).map(&:plan_category)
+  end
+
+  def update_attendee_attributes
+    begin
+      @attendee.update_attributes(@params[:attendee], :as => mass_assignment_role)
+    rescue ActiveModel::MassAssignmentSecurity::Error => e
+      return ["Permission denied: #{e}"]
+    end
+    return []
   end
 
   def unselected_mandatory_plan_cats plan_selections
     mandatory_plan_categories - selected_plan_categories(plan_selections)
   end
 
-  def validate_mandatory_plan_cats selections
-    unselected_mandatory_plan_cats(selections).map{|c| mandatory_plan_cat_error(c)}
+  # `validate_activities` checks that the `selected` activity ids
+  # are not adding or removing a disabled activity.  Admins are
+  # exempt from this validation.
+  def validate_activities
+    return [] if @as_admin
+    before = @attendee.activities.map(&:id)
+    after = Set.new(@activity_selections.map(&:to_i))
+    changes = (after ^ before).to_a
+    invalids = disabled_activities & changes
+    invalids.empty? ? [] : [translate('vldn_errs.activity_disabled')]
   end
 
   # `validate_disabled_plans` determines if any disabled plans
@@ -142,6 +134,14 @@ class Registration::Registration
       end
     end
     return errs
+  end
+
+  def validate_mandatory_plan_cats selections
+    unselected_mandatory_plan_cats(selections).map{|c| mandatory_plan_cat_error(c)}
+  end
+
+  def validate_models models
+    models.reject(&:valid?).map{|m| m.errors.full_messages}.flatten
   end
 
 end
