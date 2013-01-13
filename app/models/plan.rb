@@ -16,8 +16,6 @@ has_many :attendees, :through => :attendee_plans
 # Validations
 # -----------
 
-validates :daily_rate, :numericality => {
-  :allow_nil => true, :greater_than_or_equal_to => 0, :only_integer => true}
 validates :disabled, :inclusion => { :in => [true, false] }
 validates_presence_of :name, :description, :price, :age_min, :plan_category_id
 validates_length_of :name, :maximum => 50

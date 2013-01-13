@@ -19,7 +19,7 @@ class AttendeePlan < ActiveRecord::Base
   validates_presence_of :attendee, :plan
 
   validates_each :dates do |model, atr, value|
-    if model.plan.present? && model.plan.daily_rate.blank? && !value.empty?
+    if model.plan.present? && !model.plan.daily? && !value.empty?
       model.errors.add(atr, translate('vldn_errs.plan_forbids_dates'))
     end
   end

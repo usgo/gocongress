@@ -17,6 +17,7 @@ FactoryGirl.define do
     price           { (rand * 10000).round }
     age_min         0
     age_max         nil
+    daily           false
     description     %w['asdf' 'fdsa'].sample
     disabled        false
     max_quantity    1

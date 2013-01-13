@@ -37,14 +37,15 @@
       = f.label :price
       = number_field_for_cents f, :price, @plan.price
     .field
+      = f.label :daily
+      = f.check_box :daily
+      %span.smalltext The price is a daily rate.
+    .field
       = f.label :needs_staff_approval
       = f.check_box :needs_staff_approval, :style => "vertical-align: top; margin-top: 2px;"
-      %span.smalltext{:style => "display: inline-block; padding: 2px 0px 0px 15px; width: 400px;"}
-        For plans that are not purchaseable through the website.
-        "Contact the Registrar" will be shown instead of the price.
-        The plan will remain selectable.  The price must be zero
-        so that it does not show up on the user's cost summary.
-
+      %span.smalltext{:style => "display: inline-block; padding: 3px 0px 0px 0px; width: 375px;"}
+        Selectable, but not purchaseable through the website. "Contact the
+        Registrar" will be shown instead of the price. Price must be zero.
 
   %fieldset
     %legend Attendee Age Requirements

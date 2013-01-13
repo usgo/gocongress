@@ -37,12 +37,12 @@ describe AttendeePlan do
     context 'daily-rate plans' do
 
       it 'for daily-rate plans it is ok to specify dates' do
-        p = create :plan, daily_rate: 6000
+        p = create :plan, daily: true
         build_with_dates(p).should be_valid
       end
 
       it 'for normal plans, without a daily rate, is not ok to specify dates' do
-        p = create :plan, daily_rate: nil
+        p = create :plan, daily: false
         build_with_dates(p).should have_error_about :dates
       end
 
