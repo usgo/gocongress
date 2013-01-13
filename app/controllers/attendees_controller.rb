@@ -12,11 +12,15 @@ class AttendeesController < ApplicationController
   before_filter :expose_plans, :only => [:create, :edit, :new, :update]
   before_filter :expose_selections, :only => [:create, :edit, :new, :update]
 
+  # Constants
+  DEFAULT_ORDER = 'rank = 0, rank desc'
+  SORTABLE_COLUMNS = %w[given_name family_name rank created_at country]
+
   def index
     params[:direction] ||= "asc"
     @opposite_direction = (params[:direction] == 'asc') ? 'desc' : 'asc'
     @attendees = Attendee.yr(@year).with_at_least_one_plan
-    @attendees = @attendees.order parse_order_clause_params
+    @attendees = @attendees.order(order_clause)
     @pro_count = @attendees.pro.count
     @dan_count = @attendees.dan.count
     @kyu_count = @attendees.kyu.count
@@ -176,35 +180,31 @@ protected
     %w[activities tournaments].include?(page) ? "Attendee updated" : nil
   end
 
-  # `parse_order_clause_params` validates the supplied sort field and
-  # direction, and returns an sql order clause string.  If no valid
-  # sort field is supplied, the default is to sort by rank (0 is non-player).
-  def parse_order_clause_params
-    valid_sortable_columns = %w[given_name family_name rank created_at country]
-    unless (valid_sortable_columns.include?(params[:sort]))
-      order_clause = "rank = 0, rank desc"
-    else
-      order_clause = params[:sort]
-
-      # sort order should be case insensitive, so we downcase certain fields
-      downcased_fields = %w[given_name family_name]
-      if downcased_fields.include? params[:sort]
-        order_clause = "lower(#{params[:sort]})"
-      end
-
-      # some sort orders could reveal clues about anonymous people,
-      # so we must first order by anonymity to protect against that.
-      unsafe_for_anon = %w[given_name family_name country]
-      if unsafe_for_anon.include? params[:sort]
-        order_clause = 'anonymous, ' + order_clause
-      end
-
-      # sort direction
-      valid_directions = %w[asc desc]
-      if valid_directions.include? params[:direction]
-        order_clause += " " + params[:direction]
-      end
-    end
+  # `order_clause` validates the supplied sort field and
+  # direction, and returns a sql order clause
+  def order_clause
+    return DEFAULT_ORDER unless SORTABLE_COLUMNS.include?(params[:sort])
+    append_direction(anonymize_order(insensitive_order))
   end
 
+  # Certain fields (eg. names) are sorted case-insensitivly
+  def insensitive_order
+    s = params[:sort]
+    %w[given_name family_name].include?(s) ? "lower(#{s})" : s
+  end
+
+  def append_direction clause
+    d = params[:direction]
+    clause + (%w[asc desc].include?(d) ? " #{d}" : '')
+  end
+
+  # Some sort orders could reveal clues about anonymous people, so
+  # we first order by anonymity to protect against that.
+  def anonymize_order clause
+    (sort_unsafe_for_anon?(params[:sort]) ? 'anonymous, ' : '') + clause
+  end
+
+  def sort_unsafe_for_anon? sort
+    %w[given_name family_name country].include?(sort)
+  end
 end
