@@ -26,38 +26,40 @@ describe Registration::Registration do
 
     describe '#register_plans' do
       let(:attendee) { create :attendee }
-      subject { Registration::Registration.new attendee, false, {}, [], [] }
 
       it 'returns something enumerable' do
-        errs = subject.register_plans []
-        errs.respond_to?(:each).should be_true
+        r = Registration::Registration.new attendee, false, {}, [], []
+        r.register_plans.respond_to?(:each).should be_true
       end
 
       context "disabled plans" do
         it "keeps extant disabled plan" do
           attendee.plans << dsbl_plan
-          errs = subject.register_plans [Registration::PlanSelection.new(dsbl_plan, 1)]
-          errs.should be_empty
+          ps = Registration::PlanSelection.new(dsbl_plan, 1)
+          r = Registration::Registration.new attendee, false, {}, [ps], []
+          r.register_plans.should be_empty
           attendee.reload.plans.should include dsbl_plan
         end
 
         it "does not add disabled plan" do
-          errs = subject.register_plans [Registration::PlanSelection.new(dsbl_plan, 1)]
-          errs.should have(1).error
+          ps = Registration::PlanSelection.new(dsbl_plan, 1)
+          r = Registration::Registration.new attendee, false, {}, [ps], []
+          r.register_plans.should have(1).error
           attendee.reload.plans.should_not include dsbl_plan
         end
 
         it "does not remove disabled plan by passing qty 0" do
           attendee.plans << dsbl_plan
-          errs = subject.register_plans [Registration::PlanSelection.new(dsbl_plan, 0)]
-          errs.should have(1).error
+          ps = Registration::PlanSelection.new(dsbl_plan, 0)
+          r = Registration::Registration.new attendee, false, {}, [ps], []
+          r.register_plans.should have(1).error
           attendee.reload.plans.should include dsbl_plan
         end
 
         it "does not remove disabled plan by passing empty array" do
           attendee.plans << dsbl_plan
-          errs = subject.register_plans []
-          errs.should have(1).error
+          r = Registration::Registration.new attendee, false, {}, [], []
+          r.register_plans.should have(1).error
           attendee.reload.plans.should include dsbl_plan
         end
       end
@@ -66,17 +68,15 @@ describe Registration::Registration do
         let!(:mandatory_category) { create :plan_category, :mandatory => true }
 
         it 'returns an error if no plan is selected' do
-          errs = subject.register_plans []
-          errs.should_not be_empty
-          errs.should include("Please select at least one plan in #{mandatory_category.name}")
+          r = Registration::Registration.new attendee, false, {}, [], []
+          r.register_plans.should include("Please select at least one plan in #{mandatory_category.name}")
         end
 
         it 'returns an error if only selection has qty of zero' do
           plan = create :plan, :plan_category => mandatory_category
-          selection = Registration::PlanSelection.new plan, 0
-          errs = subject.register_plans [selection]
-          errs.should_not be_empty
-          errs.should include("Please select at least one plan in #{mandatory_category.name}")
+          ps = Registration::PlanSelection.new plan, 0
+          r = Registration::Registration.new attendee, false, {}, [ps], []
+          r.register_plans.should include("Please select at least one plan in #{mandatory_category.name}")
         end
       end
     end
@@ -104,19 +104,19 @@ describe Registration::Registration do
 
     describe '#register_plans' do
       let(:attendee) { create :attendee }
-      subject { Registration::Registration.new attendee, true, {}, [], [] }
 
       context "disabled plans" do
         it "adds disabled plan" do
-          errs = subject.register_plans [Registration::PlanSelection.new(dsbl_plan, 1)]
-          errs.should be_empty
+          ps = Registration::PlanSelection.new(dsbl_plan, 1)
+          r = Registration::Registration.new attendee, true, {}, [ps], []
+          r.register_plans.should be_empty
           attendee.reload.plans.should include dsbl_plan
         end
 
         it "removes disabled plan" do
           attendee.plans << dsbl_plan
-          errs = subject.register_plans []
-          errs.should be_empty
+          r = Registration::Registration.new attendee, true, {}, [], []
+          r.register_plans.should be_empty
           attendee.reload.plans.should_not include dsbl_plan
         end
       end

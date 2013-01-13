@@ -22,39 +22,51 @@ class Registration::Registration
     @attendee.save if @attendee.new_record?
 
     unless @attendee.new_record?
-      errors += validate_activities @activity_selections
-      errors += register_plans(@plan_selections)
-      if errors.empty?
-        begin
-          @attendee.update_attributes(@params[:attendee], :as => mass_assignment_role)
-          @attendee.activity_ids = @activity_selections
-        rescue ActiveModel::MassAssignmentSecurity::Error => e
-          errors << "Permission denied: #{e}"
-        end
-      end
+      errors += register_activities
+      errors += register_plans
+      errors += update_attendee_attributes
     end
 
     return errors
   end
 
+  def update_attendee_attributes
+    begin
+      @attendee.update_attributes(@params[:attendee], :as => mass_assignment_role)
+    rescue ActiveModel::MassAssignmentSecurity::Error => e
+      return ["Permission denied: #{e}"]
+    end
+    return []
+  end
+
   # `validate_activities` checks that the `selected` activity ids
   # are not adding or removing a disabled activity.  Admins are
   # exempt from this validation.
-  def validate_activities selected
+  def validate_activities
     return [] if @as_admin
     before = @attendee.activities.map(&:id)
-    after = Set.new selected.map(&:to_i)
+    after = Set.new(@activity_selections.map(&:to_i))
     changes = (after ^ before).to_a
     invalids = disabled_activities & changes
-    return invalids.empty? ? [] : [translate('vldn_errs.activity_disabled')]
+    invalids.empty? ? [] : [translate('vldn_errs.activity_disabled')]
+  end
+
+  def register_activities
+    errors = validate_activities
+    persist_activities if errors.empty?
+    return errors
+  end
+
+  def persist_activities
+    @attendee.activity_ids = @activity_selections
   end
 
   # `register_plans` validates and persists the selected plans
   # with positive quantities.  If any validations fail, no
   # selections will be persisted.
-  def register_plans selections
+  def register_plans
     ers = []
-    selections.select! {|s| s.qty > 0}
+    selections = @plan_selections.select { |s| s.qty > 0 }
     nascent_attendee_plans = selections.map { |s| s.to_attendee_plan(@attendee) }
     ers += validate_mandatory_plan_cats(selections)
     ers += validate_disabled_plans(persisted_plan_selections, selections)
