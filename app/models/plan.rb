@@ -3,7 +3,7 @@ class Plan < ActiveRecord::Base
   include Purchasable
   include RankedModel
 
-attr_accessible :name, :price, :age_min, :age_max, :description, :disabled,
+attr_accessible :daily, :name, :price, :age_min, :age_max, :description, :disabled,
   :inventory, :max_quantity, :needs_staff_approval, :plan_category_id
 
 # Associations
@@ -15,6 +15,13 @@ has_many :attendees, :through => :attendee_plans
 
 # Validations
 # -----------
+
+validates_each :daily do |record, atr, value|
+  if value && record.needs_staff_approval?
+    record.errors.add(atr, " and 'needs staff approval' are
+      mutally exclusive")
+  end
+end
 
 validates :disabled, :inclusion => { :in => [true, false] }
 validates_presence_of :name, :description, :price, :age_min, :plan_category_id

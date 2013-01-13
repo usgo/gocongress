@@ -3,8 +3,9 @@ require "spec_helper"
 describe Plan do
   it_behaves_like "a yearly model"
 
-  it "has a valid factory" do
+  it "has valid factories" do
     build(:plan).should be_valid
+    build(:plan_which_needs_staff_approval).should be_valid
   end
 
   describe '#valid?' do
@@ -18,6 +19,11 @@ describe Plan do
       p.max_quantity = 0
       p.should_not be_valid
       p.max_quantity = -1
+      p.should_not be_valid
+    end
+
+    it 'cannot both be daily and need staff approval' do
+      p = build(:plan_which_needs_staff_approval, daily: true)
       p.should_not be_valid
     end
   end
