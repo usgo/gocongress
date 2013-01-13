@@ -29,9 +29,9 @@ validates_length_of :name, :maximum => 50
 validates_numericality_of :age_min, :only_integer => true, :greater_than_or_equal_to => 0
 validates_numericality_of :age_max, :only_integer => true, :allow_nil => true
 
-validates :max_quantity,
-  :presence => true,
-  :numericality => {:only_integer => true, :greater_than_or_equal_to => 1}
+validates :max_quantity, :presence => true, :numericality => {:only_integer => true}
+validates :max_quantity, :numericality => {:greater_than_or_equal_to => 1}, :unless => :daily?
+validates :max_quantity, :numericality => {:equal_to => 1}, :if => :daily?
 
 validates :inventory,
   :numericality => {

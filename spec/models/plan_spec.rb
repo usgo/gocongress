@@ -14,17 +14,20 @@ describe Plan do
     end
 
     it 'requires a positive max qty' do
-      p = build(:plan, :max_quantity => 1)
-      p.should be_valid
-      p.max_quantity = 0
-      p.should_not be_valid
-      p.max_quantity = -1
-      p.should_not be_valid
+      build(:plan, :max_quantity => 2).should be_valid
+      build(:plan, :max_quantity => 1).should be_valid
+      build(:plan, :max_quantity => 0).should have_error_about :max_quantity
+      build(:plan, :max_quantity => -1).should have_error_about :max_quantity
     end
 
     it 'cannot both be daily and need staff approval' do
-      p = build(:plan_which_needs_staff_approval, daily: true)
-      p.should_not be_valid
+      build(:plan_which_needs_staff_approval, daily: true).should \
+        have_error_about :daily
+    end
+
+    it 'cannot both be daily and have a max qty other than one' do
+      build(:plan, daily: true, max_quantity: 2).should \
+        have_error_about :max_quantity
     end
   end
 
