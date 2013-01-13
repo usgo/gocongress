@@ -19,7 +19,6 @@ gem 'pg'
 # View Layer
 gem "jquery-rails" # jquery and jquery-ui
 gem 'haml'
-gem 'haml-rails', :group => :development
 gem 'bluecloth' # markdown
 gem 'kaminari' # pagination
 
@@ -52,6 +51,7 @@ group :test, :development do
 end
 
 group :development do
+  gem 'haml-rails'
   gem 'quiet_assets'
 end
 
