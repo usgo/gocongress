@@ -26,8 +26,8 @@ class Registration::Registration
       errors += register_plans(@plan_selections)
       if errors.empty?
         begin
-          parmesan = @params[:attendee].merge(:activity_ids => @activity_selections)
-          @attendee.update_attributes(parmesan, :as => mass_assignment_role)
+          @attendee.update_attributes(@params[:attendee], :as => mass_assignment_role)
+          @attendee.activity_ids = @activity_selections
         rescue ActiveModel::MassAssignmentSecurity::Error => e
           errors << "Permission denied: #{e}"
         end
