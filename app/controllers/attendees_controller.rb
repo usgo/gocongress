@@ -88,8 +88,8 @@ class AttendeesController < ApplicationController
 protected
 
   def expose_form_vars
-    raise "Attendee undefined" if @attendee.nil?
     @attendee_number = @attendee.user.attendees.count + 1
+    @activities = Activity.yr(@year).order(:leave_time, :name)
 
     # for _travel_plans
     arrival = @attendee.airport_arrival
@@ -100,10 +100,6 @@ protected
     @airport_departure_date = departure.present? ? departure.to_date : nil
     @airport_departure_time = departure.present? ? departure.to_s(:american).strip : nil
     @airport_departure_date_rfc822 = departure.present? ? departure.to_date.to_s(:rfc822) : @year.peak_departure_date.to_s(:rfc822)
-
-    # for _activities
-    @activities = Activity.yr(@year).order(:leave_time, :name)
-    @atnd_activity_ids = @attendee.activities.map {|e| e.id}
   end
 
   def allow_only_self_or_admin
