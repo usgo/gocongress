@@ -51,7 +51,10 @@ group :test, :development do
   gem 'rspec-mocks'
 end
 
-# Testing only
+group :development do
+  gem 'quiet_assets'
+end
+
 group :test do
 	gem 'deep_merge' # recursively merge hashes
 	gem 'factory_girl'
