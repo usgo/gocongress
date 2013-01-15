@@ -4,7 +4,7 @@ $orange-dark: #FFC369;
 $zebra: darken($orange-light, 8%);
 
 table {
-  &.lightweight, &.semantic {
+  &.lightweight, &.semantic, &.mini-calendar {
     border-spacing: 0;
     border-collapse: collapse;
     margin: 0.5em 0em;
@@ -39,7 +39,10 @@ td.nowrap { white-space:nowrap; }
 table.semantic {
   thead th { vertical-align: bottom; }
   td, th { border: 1px solid #666; padding: 0.25em; }
-  td { background-color: $orange-light; }
+  td {
+    background-color: $orange-light;
+    p { padding: 0px; }
+  }
   th { background-color: $orange-dark; }
   tr.lesser-header th { background-color: $orange-dark; font-weight: normal; }
   tr.total th { background-color: $orange-light; text-align: right; }
@@ -53,4 +56,20 @@ table.semantic {
 
   tr.understated td { color: #666; }
   tr.disabled td { background-color: #DDD; color: #666; }
+}
+
+table.mini-calendar {
+  margin: 0 auto;
+  th, td {
+    font-size: 14px;
+    text-align: center;
+    padding: 0px 2px;
+    &.align-right { text-align: right; }
+  }
+}
+
+/* The following options are at the end of the stylesheet
+in order to increase their precedence. */
+table.borderless {
+  td, th { border: none; }
 }

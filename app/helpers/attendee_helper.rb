@@ -6,11 +6,17 @@ module AttendeeHelper
 
   def plan_selection_inputs plan
     selection = plan_selection(plan)
-    if plan.max_quantity == 1
+    if plan.daily?
+      plan_date_fields(plan, selection)
+    elsif plan.max_quantity == 1
       plan_cbx(plan, selection)
     else
       plan_qty_field(plan, selection)
     end
+  end
+
+  def plan_date_fields plan, selection
+    render 'shared/plan_date_fields', :locals => {plan: plan, selection: selection}
   end
 
   def plan_cbx plan, selection

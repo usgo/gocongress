@@ -19,7 +19,7 @@
     %tbody
       - @plans.each do |plan|
         %tr{:class => if plan.disabled? then "disabled" end }
-          %td.align-center= plan_selection_inputs(plan)
+          %td.valign-middle.align-center= plan_selection_inputs(plan)
           %td= plan.name
           = render :partial => "plan_categories/plan_table_common_cells", :locals => { :plan => plan }
 
