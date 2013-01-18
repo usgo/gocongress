@@ -240,7 +240,7 @@ DEPENDENCIES
   kaminari
   pg
   quiet_assets
-  rails
+  rails (~> 3.2.11)
   ranked-model
   rb-fsevent
   rspec-mocks
