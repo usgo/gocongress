@@ -16,7 +16,8 @@ module AttendeeHelper
   end
 
   def plan_date_fields plan, selection
-    render 'shared/plan_date_fields', :locals => {plan: plan, selection: selection}
+    render :partial => 'shared/plan_date_fields',
+      :locals => {plan: plan, selection: selection}
   end
 
   def plan_cbx plan, selection
