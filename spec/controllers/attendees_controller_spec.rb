@@ -67,15 +67,6 @@ describe AttendeesController do
           user_terminus_path(:user_id => user.id, :year => user.year)
       end
 
-      it "saves selected plans" do
-        plan = create :plan
-        expect {
-          post :create, :attendee => acsbl_atrs,
-            :plans => { plan.id.to_s => { 'qty' => 1 }},
-            user_id: user.id, :year => user.year
-        }.to change{ plan.attendees.count }.by(+1)
-      end
-
       it "fails without any attributes" do
         attrs = {:user_id => user.id}
         expect { post :create, :attendee => attrs, user_id: user.id, :year => user.year
@@ -114,6 +105,17 @@ describe AttendeesController do
         expect {
           post :create, attendee: attrs, user_id: user.id, year: user.year
         }.to change{ Attendee.count }.by(+1)
+      end
+
+      context 'plans' do
+        it "saves selected plans" do
+          plan = create :plan
+          expect {
+            post :create, :attendee => acsbl_atrs,
+              :plans => { plan.id.to_s => { 'qty' => 1 }},
+              user_id: user.id, :year => user.year
+          }.to change{ plan.attendees.count }.by(+1)
+        end
       end
     end
 
