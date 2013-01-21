@@ -116,6 +116,19 @@ describe AttendeesController do
               user_id: user.id, :year => user.year
           }.to change{ plan.attendees.count }.by(+1)
         end
+
+        it "saves selected dates for a daily-rate plan" do
+          plan = create :plan, daily: true
+          dates = ['2013-08-06', '2013-08-07']
+          plan_params = { plan.id.to_s => { 'qty' => 1, 'dates' => dates }}
+          expect {
+            post :create, :attendee => acsbl_atrs, :plans => plan_params,
+              user_id: user.id, :year => user.year
+          }.to change{ AttendeePlanDate.count }.by(dates.length)
+          plan.attendee_plans.should have(1).record
+          plan.attendee_plans.first.dates.map(&:_date).should == \
+            dates.map{|d| Date.parse(d)}
+        end
       end
     end
 

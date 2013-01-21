@@ -36,6 +36,7 @@ class Registration::PlanSelection
     (plan.id.to_s + qty.to_s).hash
   end
 
+  # Gotcha: Notice that dates are not included.
   def to_attendee_plan attendee
     AttendeePlan.new(:attendee_id => attendee.id,
       :plan_id => @plan.id, :quantity => @qty)

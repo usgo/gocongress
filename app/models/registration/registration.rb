@@ -35,16 +35,36 @@ class Registration::Registration
   # selections will be persisted.
   def register_plans
     ers = []
-    selections = @plan_selections.select { |s| s.qty > 0 }
-    nascent_attendee_plans = selections.map { |s| s.to_attendee_plan(@attendee) }
-    ers += validate_mandatory_plan_cats(selections)
-    ers += validate_disabled_plans(persisted_plan_selections, selections)
-    ers += validate_models(nascent_attendee_plans)
-    @attendee.attendee_plans = nascent_attendee_plans if ers.empty?
+    ers += validate_mandatory_plan_cats(selected_plans)
+    ers += validate_disabled_plans(persisted_plan_selections, selected_plans)
+    ers += validate_models(selected_attendee_plans)
+    persist_plans if ers.empty?
     return ers
   end
 
   private
+
+  def persist_plans
+    @attendee.attendee_plans = selected_attendee_plans
+    @attendee.attendee_plans.each do |ap|
+      selected_dates(ap.plan).each do |date|
+        ap.dates.create(_date: date)
+      end
+    end
+  end
+
+  def selected_dates plan
+    ps = @plan_selections.find {|s| s.plan.id == plan.id}
+    ps.nil? ? [] : ps.dates
+  end
+
+  def selected_attendee_plans
+    selected_plans.map { |s| s.to_attendee_plan(@attendee) }
+  end
+
+  def selected_plans
+    @plan_selections.select { |s| s.qty > 0 }
+  end
 
   def disabled_activities
     @disabled_activities ||= Activity.disabled.map(&:id)
