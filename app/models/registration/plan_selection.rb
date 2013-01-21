@@ -11,7 +11,7 @@ class Registration::PlanSelection
 
   # Two plan selections are `eql?` if they have all of the same
   # attributes.  This definition of equality was chosen to support
-  # operations on `Set`s of selections, eg. union and intersection.
+  # operations on sets of selections, eg. union and intersection.
   def eql? other
     plan == other.plan && qty == other.qty
   end
