@@ -9,4 +9,4 @@
           - format = (i == 0) ? '%a %-m/%-e' : '%-e'
           = d.strftime(format)
           %br
-          = check_box_tag 'herp', d.strftime('%Y-%m-%d'), false
+          = check_box_tag "plans[#{plan.id}][dates][]", d.strftime('%Y-%m-%d'), false

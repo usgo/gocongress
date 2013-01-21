@@ -47,6 +47,7 @@ class Registration::Registration
   def persist_plans
     @attendee.attendee_plans = selected_attendee_plans
     @attendee.attendee_plans.each do |ap|
+      ap.dates.clear
       selected_dates(ap.plan).each do |date|
         ap.dates.create(_date: date)
       end

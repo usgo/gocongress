@@ -8,8 +8,8 @@ class Registration::PlanSelection
 
   def initialize plan, qty, dates = nil
     @plan = plan
-    @qty = qty
     @dates = dates || []
+    @qty = @dates.length > 0 ? 1 : qty
   end
 
   # `parse_params` returns an array with a selection for *each*
