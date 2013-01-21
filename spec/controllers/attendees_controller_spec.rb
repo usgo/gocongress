@@ -71,7 +71,8 @@ describe AttendeesController do
         plan = create :plan
         expect {
           post :create, :attendee => acsbl_atrs,
-            :"plan_#{plan.id}_qty" => 1, user_id: user.id, :year => user.year
+            :plans => { plan.id.to_s => { 'qty' => 1 }},
+            user_id: user.id, :year => user.year
         }.to change{ plan.attendees.count }.by(+1)
       end
 
@@ -274,7 +275,8 @@ describe AttendeesController do
         let(:plan) { create :plan }
 
         def put_update plan
-          put :update, :year => plan.year, :id => attendee.id, :"plan_#{plan.id}_qty" => 1
+          put :update, :year => plan.year, :id => attendee.id,
+            :plans => { plan.id.to_s => { qty: 1 }}
         end
 
         it "updates associated plans" do
@@ -443,7 +445,7 @@ describe AttendeesController do
   end
 
   def params_for_plan plan, qty
-    { "plan_#{plan.id}_qty" => qty }
+    { 'plans' => { plan.id.to_s => { 'qty' => qty }}}
   end
 
   def update_activities attendee, activities

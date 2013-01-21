@@ -12,12 +12,11 @@ class Registration::PlanSelection
     @dates = dates || []
   end
 
-  # `parse_params` returns an array with a selection for each plan,
-  # even if the selected qty is zero.
-  def self.parse_params parms, plans
-    plans.map { |p|
-      new p, parms["plan_#{p.id}_qty"].to_i, parms["plan_#{p.id}_dates"]
-    }
+  # `parse_params` returns an array with a selection for *each*
+  # plan, even if the selected qty is zero.
+  def self.parse_params plan_parms, plans
+    parms = plan_parms || {}
+    plans.map { |p| parse_plan_hash(parms[p.id.to_s], p) }
   end
 
   # `==` is same as `eql?`.  This is [conventional](http://bit.ly/XPz0B3)
@@ -41,4 +40,11 @@ class Registration::PlanSelection
     AttendeePlan.new(:attendee_id => attendee.id,
       :plan_id => @plan.id, :quantity => @qty)
   end
+
+  private
+
+  def self.parse_plan_hash hsh, plan
+    hsh.nil? ? new(plan, 0) : new(plan, hsh['qty'].to_i, hsh['dates'])
+  end
+
 end

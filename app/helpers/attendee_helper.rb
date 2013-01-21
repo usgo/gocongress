@@ -48,7 +48,7 @@ module AttendeeHelper
   end
 
   def qty_field_name plan
-    "plan_#{plan.id}_qty"
+    "plans[#{plan.id}][qty]"
   end
 
 end

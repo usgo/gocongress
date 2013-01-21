@@ -141,7 +141,7 @@ protected
     params[:attendee] ||= {} # TODO: not sure we need this
     params[:activity_ids] ||= []
     @activity_selections = params[:activity_ids].map(&:to_i)
-    @plan_selections = Registration::PlanSelection.parse_params(params, @plans)
+    @plan_selections = Registration::PlanSelection.parse_params(params['plans'], @plans)
   end
 
   def redirect_to_terminus flash_notice

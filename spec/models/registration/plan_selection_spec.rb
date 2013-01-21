@@ -11,14 +11,13 @@ describe Registration::PlanSelection do
     let(:plans) { [plan, another_plan, daily_plan] }
 
     it 'builds an array of selections from the params' do
-      parms = {
-        "plan_#{plan.id}_qty" => 2,
-        "plan_#{daily_plan.id}_qty" => 1,
-        "plan_#{daily_plan.id}_dates" => dates,
-        "plan_12345_qty" => 42
+      plan_parms = {
+        plan.id.to_s => { 'qty' => 2 },
+        daily_plan.id.to_s => { 'qty' => 1, 'dates' => dates },
+        '12345' => { 'qty' => 42 }
       }
-      result = subject.parse_params(parms, plans)
-      result.should have(3).selections
+      result = subject.parse_params(plan_parms, plans)
+      result.count.should == plans.count
       result.map(&:plan).should =~ plans
       result.map{|s| s.qty}.should =~ [0,1,2]
       result.select{|s| s.plan.id == daily_plan.id}.first.dates.should == dates
