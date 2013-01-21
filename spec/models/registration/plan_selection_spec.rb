@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe Registration::PlanSelection do
   let(:plan) { create(:plan) }
+  let(:dates) { ['2013-08-06', '2013-08-07'] }
 
   describe '.parse_params' do
     subject { Registration::PlanSelection }
@@ -11,28 +12,34 @@ describe Registration::PlanSelection do
 
     it 'builds an array of selections from the params' do
       parms = {
-        "plan_#{plan.id}_qty" => 1,
-        "plan_#{daily_plan.id}_qty" => 2
+        "plan_#{plan.id}_qty" => 2,
+        "plan_#{daily_plan.id}_qty" => 1,
+        "plan_#{daily_plan.id}_dates" => dates,
+        "plan_12345_qty" => 42
       }
       result = subject.parse_params(parms, plans)
       result.should have(3).selections
       result.map(&:plan).should =~ plans
       result.map{|s| s.qty}.should =~ [0,1,2]
+      result.select{|s| s.plan.id == daily_plan.id}.first.dates.should == dates
       result.should =~ [
-        Registration::PlanSelection.new(plan, 1),
-        Registration::PlanSelection.new(daily_plan, 2),
-        Registration::PlanSelection.new(another_plan, 0)
+        ps(plan, 2),
+        ps(daily_plan, 1, dates),
+        ps(another_plan, 0)
       ]
     end
   end
 
   describe '#==' do
-    it 'compares plan id and qty' do
-      a = Registration::PlanSelection.new(plan, 1)
-      b = Registration::PlanSelection.new(plan, 1)
-      a.should == b
-      c = Registration::PlanSelection.new(plan, 3)
-      a.should_not == c
+    it 'compares plan id, qty, and dates' do
+      ps(plan, 1).should == ps(plan, 1)
+      ps(plan, 1, dates).should == ps(plan, 1, dates)
+      ps(plan, 1).should_not == ps(plan, 3)
+      ps(plan, 1, []).should_not == ps(plan, 1, [double])
     end
+  end
+
+  def ps(plan, qty, dates = [])
+    Registration::PlanSelection.new(plan, qty, dates)
   end
 end

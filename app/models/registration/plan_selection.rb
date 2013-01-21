@@ -3,15 +3,20 @@
 # abstraction to pass between eg. AttendeesController and
 # Registration. -Jared 2012-10-07
 class Registration::PlanSelection
-  attr_reader :plan, :qty
-  def initialize plan, qty
+
+  attr_reader :plan, :qty, :dates
+
+  def initialize plan, qty, dates = nil
     @plan = plan
     @qty = qty
+    @dates = dates || []
   end
 
+  # `parse_params` returns an array with a selection for each plan,
+  # even if the selected qty is zero.
   def self.parse_params parms, plans
     plans.map { |p|
-      new p, parms["plan_#{p.id}_qty"].to_i
+      new p, parms["plan_#{p.id}_qty"].to_i, parms["plan_#{p.id}_dates"]
     }
   end
 
@@ -23,7 +28,7 @@ class Registration::PlanSelection
   # support operations on sets of selections, eg. union and
   # intersection.
   def eql? other
-    plan == other.plan && qty == other.qty
+    plan == other.plan && qty == other.qty && dates == other.dates
   end
 
   # Ruby's `Set` requires `hash`.  Note that definition of `hash`
