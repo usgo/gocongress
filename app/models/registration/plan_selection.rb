@@ -9,9 +9,19 @@ class Registration::PlanSelection
     @qty = qty
   end
 
-  # Two plan selections are `eql?` if they have all of the same
-  # attributes.  This definition of equality was chosen to support
-  # operations on sets of selections, eg. union and intersection.
+  def self.parse_params parms, plans
+    plans.map { |p|
+      new p, parms["plan_#{p.id}_qty"].to_i
+    }
+  end
+
+  # `==` is same as `eql?`.  This is [conventional](http://bit.ly/XPz0B3)
+  def ==(other) self.eql?(other) end
+
+  # Two plan selections are `eql?` (and `==`) if they have all of
+  # the same attributes. This definition of equality was chosen to
+  # support operations on sets of selections, eg. union and
+  # intersection.
   def eql? other
     plan == other.plan && qty == other.qty
   end
