@@ -1,12 +1,12 @@
 %table.lightweight
   %tbody
     %tr
-      %th Total cost
+      %th Cost
       %td.numeric= cents_to_currency user.get_invoice_total
       - if show_detail_links
         %td.smalltext= link_to "Summary", invoice_user_path(user)
     %tr
-      %th Amount paid
+      %th Paid
       %td.numeric= cents_to_currency user.amount_paid
       - if show_detail_links
         %td.smalltext= link_to "History", ledger_user_path(user)
