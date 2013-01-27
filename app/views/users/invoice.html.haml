@@ -3,7 +3,7 @@
   Questions? Please contact the
   = link_to 'registrar.', contacts_path
 
-%table.semantic.fullwidth
+%table.semantic.fullwidth.zebra
   %thead
     %tr
       %th Attendee
@@ -20,7 +20,7 @@
         %td.numeric= i.qty
         %td.numeric= cents_to_currency( i.price * i.qty )
     %tr.total
-      %th{ :colspan => 4, :style => 'text-align:right;' } Grand Total
+      %th{ :colspan => 4 } Grand Total
       %td.numeric= cents_to_currency @user.get_invoice_total
 
 .row-of-buttons
