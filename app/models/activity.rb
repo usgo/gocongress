@@ -29,6 +29,6 @@ class Activity < ActiveRecord::Base
   scope :disabled, where(disabled: true)
 
   def to_invoice_item attendee_full_name
-    InvoiceItem.new('Activity: ' + name, attendee_full_name, price, 1)
+    InvoiceItem.new(name, attendee_full_name, price, 1)
   end
 end
