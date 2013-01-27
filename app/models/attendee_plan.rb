@@ -44,6 +44,10 @@ class AttendeePlan < ActiveRecord::Base
   # Public instance methods
   # -----------------------
 
+  def invoiced_quantity
+    plan.daily? ? dates.length : quantity
+  end
+
   def show_on_invoice?
     ! plan.needs_staff_approval?
   end
@@ -51,7 +55,7 @@ class AttendeePlan < ActiveRecord::Base
   # Optimization: Avoid a query by passing
   # `attendee_full_name` as an argument
   def to_invoice_item attendee_full_name
-    InvoiceItem.new('Plan: ' + plan.name, attendee_full_name, plan.price, quantity)
+    InvoiceItem.new('Plan: ' + plan.name, attendee_full_name, plan.price, invoiced_quantity)
   end
 
   def to_plan_selection

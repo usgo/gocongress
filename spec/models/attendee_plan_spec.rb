@@ -3,6 +3,26 @@ require "spec_helper"
 describe AttendeePlan do
   it_behaves_like "a yearly model"
 
+  describe '#invoiced_quantity' do
+    context 'for daily rate plans' do
+      let(:plan) { create :plan, daily: true }
+      it 'returns the number of dates' do
+        ap = create :attendee_plan, plan: plan, year: 2013
+        dates = (5..7).map { |d| Date.new(2013, 8, d) }
+        dates.map { |d| ap.dates.create!(_date: d) }
+        ap.invoiced_quantity.should == dates.length
+      end
+    end
+
+    context 'for fixed price plans' do
+      it 'returns the persisted quantity' do
+        p = create :plan, max_quantity: 5
+        ap = create :attendee_plan, plan: p, quantity: 3
+        ap.invoiced_quantity.should == 3
+      end
+    end
+  end
+
   describe '#to_plan_selection' do
     let(:dates) { (5..7).map { |d| Date.new(2013, 8, d) } }
 
