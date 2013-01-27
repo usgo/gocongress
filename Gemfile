@@ -56,6 +56,8 @@ group :development do
 end
 
 group :test do
+  gem 'capybara'
+  gem 'launchy' # provides `save_and_open_page`
 	gem 'deep_merge' # recursively merge hashes
 	gem 'factory_girl'
 	gem 'factory_girl_rails'
