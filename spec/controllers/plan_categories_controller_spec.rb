@@ -53,4 +53,16 @@ describe PlanCategoriesController do
       assigns(:plans).map(&:id).should include(plan.id)
     end
   end
+
+  describe '#update' do
+    it 'admin can reorder plans' do
+      sign_in create :admin
+      cat = create(:plan_category)
+      create(:plan, name: 'Apples', cat_order: 1, plan_category: cat)
+      create(:plan, name: 'Oranges', cat_order: 2, plan_category: cat)
+      put :update, year: cat.year, id: cat.id, plan_order: [2,1]
+      response.should redirect_to cat
+      cat.plans.order(:cat_order).map(&:name).should =~ ['Oranges', 'Apples']
+    end
+  end
 end
