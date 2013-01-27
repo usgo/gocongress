@@ -45,6 +45,8 @@ class Year < ActiveRecord::Base
     year == 2012 ? "Asheville" : city
   end
 
+  # `peak_departure_date` is used for travel plans, and in the valid
+  # range of dates for daily-rate plans.  It never returns nil.
   def peak_departure_date
     year == 2012 ? Date.civil(2012, 8, 12) : start_date + 8.days
   end
@@ -53,6 +55,8 @@ class Year < ActiveRecord::Base
     s = sponsors_by_year[self.year]
     all_sponsors.reject{|k,v| !s.include?(k)}
   end
+
+  def to_i() year end
 
   def to_s
     self.year.to_s

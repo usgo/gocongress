@@ -2,15 +2,20 @@ class AttendeePlanDate < ActiveRecord::Base
   belongs_to :attendee_plan
   validates :attendee_plan, presence: true
   validates :_date, presence: true, :timeliness => { :type => :date,
-      :on_or_after => lambda {|d| d.minimum },
-      :on_or_before => lambda {|d| d.maximum }
+      :on_or_after => lambda {|d| minimum(d._date.year) },
+      :on_or_before => lambda {|d| maximum(d._date.year) }
     }
 
-  def maximum
-    minimum + 2.weeks
+  def self.maximum year
+    y = year.is_a?(Year) ? year : Year.find_by_year(year.to_i)
+    y.peak_departure_date + 1.day
   end
 
-  def minimum
-    CONGRESS_START_DATE[_date.year]
+  def self.minimum year
+    CONGRESS_START_DATE.fetch(year.to_i)
+  end
+
+  def self.valid_range year
+    (minimum(year)..maximum(year))
   end
 end

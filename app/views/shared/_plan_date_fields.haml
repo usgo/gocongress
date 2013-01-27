@@ -1,10 +1,7 @@
-- start_date = @year.start_date - 1.day
-- end_date = @year.peak_departure_date + 1.day
-- date_range = (start_date..end_date)
 %table.understated-head.mini-calendar.borderless
   %tbody
     %tr
-      - date_range.each_with_index do |d,i|
+      - AttendeePlanDate.valid_range(@year).each_with_index do |d,i|
         %td.nowrap
           - format = (i == 0) ? '%a %-m/%-e' : '%-e'
           = d.strftime(format)

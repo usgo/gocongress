@@ -119,7 +119,8 @@ describe AttendeesController do
 
         it "saves selected dates for a daily-rate plan" do
           plan = create :plan, daily: true
-          dates = ['2013-08-06', '2013-08-07']
+          min_date = AttendeePlanDate.minimum(2013)
+          dates = (min_date..min_date + 2.days).map{|d| d.strftime('%Y-%m-%d')}
           plan_params = { plan.id.to_s => { 'qty' => 1, 'dates' => dates }}
           expect {
             post :create, :attendee => acsbl_atrs, :plans => plan_params,

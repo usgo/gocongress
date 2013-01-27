@@ -49,7 +49,7 @@ class Registration::Registration
     @attendee.attendee_plans.each do |ap|
       ap.dates.clear
       selected_dates(ap.plan).each do |date|
-        ap.dates.create(_date: date)
+        ap.dates.create!(_date: date)
       end
     end
   end
