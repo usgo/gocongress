@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130113210804) do
+ActiveRecord::Schema.define(:version => 20130127025950) do
 
   create_table "activities", :force => true do |t|
     t.string   "name"
@@ -112,11 +112,10 @@ ActiveRecord::Schema.define(:version => 20130113210804) do
   end
 
   create_table "content_categories", :force => true do |t|
-    t.integer  "year",                                               :null => false
-    t.string   "name",              :limit => 50
+    t.integer  "year",                     :null => false
+    t.string   "name",       :limit => 50
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "travel_plans_link",               :default => false, :null => false
   end
 
   add_index "content_categories", ["id", "year"], :name => "index_content_categories_on_id_and_year", :unique => true

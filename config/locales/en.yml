@@ -34,7 +34,7 @@ en:
       content:
         show_on_homepage: "Show on Homepage?"
       content_category:
-        travel_plans_link: "Show a link to the travel plans form?"
+        name: "Category"
       activity:
         activity_category_id: "Category"
         name: "Activity"
