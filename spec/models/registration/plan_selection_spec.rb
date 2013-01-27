@@ -20,10 +20,12 @@ describe Registration::PlanSelection do
       result.count.should == plans.count
       result.map(&:plan).should =~ plans
       result.map{|s| s.qty}.should =~ [0,1,2]
-      result.select{|s| s.plan.id == daily_plan.id}.first.dates.should == dates
+      daily_plan_sln = result.select{|s| s.plan.id == daily_plan.id}.first
+      parsed_dates = dates.map { |d| Date.parse(d) }
+      daily_plan_sln.dates.should =~ parsed_dates
       result.should =~ [
         ps(plan, 2),
-        ps(daily_plan, 1, dates),
+        ps(daily_plan, 1, parsed_dates),
         ps(another_plan, 0)
       ]
     end

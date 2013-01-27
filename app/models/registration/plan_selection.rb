@@ -45,7 +45,16 @@ class Registration::PlanSelection
   private
 
   def self.parse_plan_hash hsh, plan
-    hsh.nil? ? new(plan, 0) : new(plan, hsh['qty'].to_i, hsh['dates'])
+    if hsh.nil?
+      new(plan, 0)
+    else
+      new(plan, hsh['qty'].to_i, parse_dates(hsh['dates']))
+    end
+  end
+
+  # Given an array of strings, `parse_dates` returns `Date`s
+  def self.parse_dates dates
+    dates.respond_to?(:map) ? dates.map { |d| Date.parse(d) } : nil
   end
 
 end
