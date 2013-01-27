@@ -31,7 +31,12 @@ validates_numericality_of :age_max, :only_integer => true, :allow_nil => true
 
 validates :max_quantity, :presence => true, :numericality => {:only_integer => true}
 validates :max_quantity, :numericality => {:greater_than_or_equal_to => 1}, :unless => :daily?
-validates :max_quantity, :numericality => {:equal_to => 1}, :if => :daily?
+validates :max_quantity,
+  :numericality => {
+    :equal_to => 1,
+    :message => 'for daily-rate plans must be 1 (one)'
+  },
+  :if => :daily?
 
 validates :inventory,
   :numericality => {
