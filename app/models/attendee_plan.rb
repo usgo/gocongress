@@ -55,7 +55,7 @@ class AttendeePlan < ActiveRecord::Base
   end
 
   def to_plan_selection
-    Registration::PlanSelection.new plan, quantity
+    Registration::PlanSelection.new plan, quantity, dates.map(&:_date)
   end
 
   # Quantity may not exceed available inventory

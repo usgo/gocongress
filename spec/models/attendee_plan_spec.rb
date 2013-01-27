@@ -3,6 +3,17 @@ require "spec_helper"
 describe AttendeePlan do
   it_behaves_like "a yearly model"
 
+  describe '#to_plan_selection' do
+    let(:dates) { (5..7).map { |d| Date.new(2013, 8, d) } }
+
+    it 'includes dates' do
+      ap = create :attendee_plan
+      dates.each { |d| ap.dates.create!(_date: d) }
+      ps = ap.to_plan_selection
+      ps.dates.should =~ dates
+    end
+  end
+
   describe "#valid?" do
 
     it "requires attendee" do
