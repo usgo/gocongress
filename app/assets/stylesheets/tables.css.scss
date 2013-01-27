@@ -31,7 +31,9 @@ form table.lightweight tr td:first-child {
 }
 
 /* Table options eg. zebra striping */
-table.zebra tr:nth-child(odd) td { background-color: $zebra; }
+table.zebra tbody tr:nth-child(odd) {
+  td, th { background-color: $zebra; }
+}
 table.dont-wrap-th th { white-space:nowrap; }
 td.nowrap { white-space:nowrap; }
 
