@@ -26,6 +26,9 @@ gem 'kaminari' # pagination
 gem 'devise'
 gem 'cancan'
 
+# Payments
+gem 'authorize-net'
+
 # Model Layer
 gem 'ranked-model'
 gem 'validates_timeliness'
