@@ -52,6 +52,7 @@ end
 
 group :development do
   gem 'haml-rails'
+  gem 'html2haml'
   gem 'quiet_assets'
 end
 
