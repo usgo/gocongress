@@ -143,10 +143,6 @@ describe UsersController do
   end
 
   context "even when the user has zero attendees" do
-
-    # Nomrally, rspec-rails controller specs do not render views
-    # but the following examples were written to reproduce a bug
-    # that happened in the views, so we enable rendering.
     render_views
 
     let(:admin) { create :admin }
