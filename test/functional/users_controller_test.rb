@@ -7,51 +7,6 @@ class UsersControllerTest < ActionController::TestCase
     @staff = create :staff
   end
 
-  test "user cannot edit other user" do
-    sign_in @user
-    user_two = create(:user)
-    get :edit, :id => user_two.id, :year => Time.now.year
-    assert_response 403
-  end
-
-  test "staff cannot edit other user" do
-    sign_in @staff
-    get :edit, :id => @user.id, :year => Time.now.year
-    assert_response 403
-  end
-
-  test "user cannot edit themselves" do
-    sign_in @user
-    get :edit, :id => @user.id, :year => Time.now.year
-    assert_response 403
-  end
-
-  test "staff cannot edit themselves" do
-    sign_in @staff
-    get :edit, :id => @staff.id, :year => Time.now.year
-    assert_response 403
-  end
-
-  test "staff can get edit email form" do
-    sign_in @staff
-    get :edit_email, :id => @staff.id, :year => Time.now.year
-    assert_response :success
-  end
-
-  test "user can get edit password form" do
-    sign_in @user
-    get :edit_password, :id => @user.id, :year => Time.now.year
-    assert_response :success
-  end
-
-  test "user cannot destroy self" do
-    sign_in @user
-    assert_no_difference('User.count') do
-      delete :destroy, :id => @user.id, :year => Time.now.year
-    end
-    assert_response 403
-  end
-
   test "admin can destroy a user" do
     sign_in create :admin
     destroyed_user_id = @user.id

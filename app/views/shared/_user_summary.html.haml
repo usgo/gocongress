@@ -2,20 +2,24 @@
 
   .logo= image_tag "logo/usgc/144px/#{@year.year}.png"
   %h1 Cost Summary
-  
+
   %table
     %tr
       %th User Email
       %td= user.email
     %tr
       %th Primary Attendee
-      %td= user.primary_attendee.name_and_rank
+      %td
+        - if user.primary_attendee.present?
+          = user.primary_attendee.name_and_rank
+        - else
+          None
 
   = render :partial => 'shared/balance', :locals => {:user => user, :show_detail_links => false}
-  
+
   %br.clear
   %br
-  
+
   %table.fullwidth
     %thead
       %th Attendee

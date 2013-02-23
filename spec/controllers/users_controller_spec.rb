@@ -8,6 +8,8 @@ shared_examples "successful get" do |action|
 end
 
 describe UsersController do
+  render_views
+
   let(:user) { create :user }
   let(:wrong_year) { user.year - 1 }
   let(:year) { Time.zone.now.year }
@@ -30,11 +32,40 @@ describe UsersController do
 
     it 'cannot #update' do
       put :update, :id => user.id, :user => user.attributes, :year => user.year
-      assert_response 403
+      response.should be_forbidden
     end
   end
 
   context "as a user" do
+
+    it 'cannot #destroy self' do
+      sign_in user
+      expect { delete :destroy, :id => user.id, :year => user.year
+        }.to_not change { User.count }
+      response.should be_forbidden
+    end
+
+    it 'can #edit_password' do
+      sign_in user
+      get :edit_password, :id => user.id, :year => user.year
+      assert_response :success
+    end
+
+    describe '#edit' do
+      it "cannot edit other user" do
+        sign_in user
+        user_two = create(:user)
+        get :edit, :id => user_two.id, :year => user_two.year
+        response.should be_forbidden
+      end
+
+      it "cannot edit themselves" do
+        sign_in user
+        get :edit, :id => user.id, :year => user.year
+        response.should be_forbidden
+      end
+    end
+
     describe '#index' do
       it 'is forbidden' do
         sign_in user
@@ -52,8 +83,6 @@ describe UsersController do
     end
 
     describe '#show' do
-      render_views
-
       it "the same user succeeds" do
         sign_in user
         get :show, :id => user.id, :year => user.year
@@ -92,8 +121,27 @@ describe UsersController do
   end
 
   context "as staff" do
+    let(:staff) { create :staff }
+
     before do
-      sign_in create :staff
+      sign_in staff
+    end
+
+    it "can edit email" do
+      get :edit_email, :id => staff.id, :year => staff.year
+      assert_response :success
+    end
+
+    describe '#edit' do
+      it "cannot edit other user" do
+        get :edit, :id => user.id, :year => user.year
+        response.should be_forbidden
+      end
+
+      it "cannot edit themselves" do
+        get :edit, :id => staff.id, :year => staff.year
+        response.should be_forbidden
+      end
     end
 
     describe '#index' do
@@ -176,8 +224,6 @@ describe UsersController do
   end
 
   context "even when the user has zero attendees" do
-    render_views
-
     let(:admin) { create :admin }
     let(:user) { create :user, primary_attendee: nil }
 
