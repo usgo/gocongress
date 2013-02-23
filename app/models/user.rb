@@ -3,22 +3,32 @@ require "invoice_item"
 class User < ActiveRecord::Base
   include YearlyModel
 
+  # Constants
+  # ---------
+
+  ROLES = [['Admin','A'], ['Staff','S'], ['User','U']]
+
   # In practice, we often load users based on the compound key (email,year).
   # For example, when authenticating or resetting a password.
   PRACTICAL_KEY = [:email,:year]
+
+  # When generating invoices for multiple users, passing this
+  # constant into includes() can really speed things up.
+  EAGER_LOAD_CONFIG_FOR_INVOICES = [
+    :primary_attendee,
+    {
+      :attendees => [
+        {:attendee_activities => :activity},
+        {:attendee_plans => :plan}
+      ]
+    }
+  ]
 
   # Devise modules: Do not use :validatable now that
   # the email uniqueness validation has a year scope
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable,
          {:authentication_keys => PRACTICAL_KEY, :reset_password_keys => PRACTICAL_KEY}
-
-  attr_accessible :email, :password, :password_confirmation,
-    :remember_me, :primary_attendee_attributes
-
-  # Year is accessible, but we subclass RegistrationsController
-  # to provide mass-assignment security
-  attr_accessible :year
 
   has_many :transactions, :dependent => :destroy
 
@@ -27,8 +37,6 @@ class User < ActiveRecord::Base
   # (Assuming everyone registers themselves first)
   has_one  :primary_attendee, :class_name => 'Attendee', :conditions => { :is_primary => true }
   has_many :attendees, :dependent => :destroy
-
-  ROLES = [['Admin','A'], ['Staff','S'], ['User','U']]
 
   # Validations
   # -----------
@@ -50,20 +58,14 @@ class User < ActiveRecord::Base
   # enduser to enter the same email twice when signing up -Jared 2010.12.31
   before_validation :apply_user_email_to_primary_attendee, :on => :create
 
-  # Constants
-  # ---------
+  # Mass-Assignment
+  # ---------------
+  #
+  # Year is accessible, but we subclass RegistrationsController
+  # to provide mass-assignment security
 
-  # When generating invoices for multiple users, passing this
-  # constant into includes() can really speed things up.
-  EAGER_LOAD_CONFIG_FOR_INVOICES = [
-    :primary_attendee,
-    {
-      :attendees => [
-        {:attendee_activities => :activity},
-        {:attendee_plans => :plan}
-      ]
-    }
-  ]
+  attr_accessible :email, :password, :password_confirmation,
+    :remember_me, :primary_attendee_attributes, :year
 
   # Scopes
   # ------
