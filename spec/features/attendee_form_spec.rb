@@ -1,12 +1,13 @@
 require 'spec_helper'
 
 describe 'attendee form' do
-  let(:user) { create :user, :password => 'asdf' }
+  let(:password) { 'asdfasdf' }
+  let(:user) { create :user, :password => password }
 
   before do
     visit new_user_session_path(year: user.year)
     fill_in 'Email', with: user.email
-    fill_in 'Password', with: 'asdf'
+    fill_in 'Password', with: password
     click_button 'Sign in'
     expect(page).to have_content('First Attendee')
     page.should have_selector('form')

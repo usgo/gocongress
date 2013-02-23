@@ -5,7 +5,7 @@ FactoryGirl.define do
   factory :user do
     email { generate(:random_email) }
     password "whocares"
-    password_confirmation "whocares"
+    password_confirmation { password }
     role 'U'
     year Time.now.year
 
