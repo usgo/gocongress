@@ -8,6 +8,55 @@ shared_examples "successful get" do |action|
 end
 
 describe UsersController do
+  let(:year) { Time.zone.now.year }
+
+  context "as a guest" do
+    describe '#index' do
+      it 'is forbidden' do
+        get :index, :year => year
+        response.should be_forbidden
+      end
+    end
+  end
+
+  context "as a user" do
+    before do
+      sign_in create :user
+    end
+
+    describe '#index' do
+      it 'is forbidden' do
+        get :index, :year => year
+        response.should be_forbidden
+      end
+    end
+  end
+
+  context "as staff" do
+    before do
+      sign_in create :staff
+    end
+
+    describe '#index' do
+      it 'succeeds' do
+        get :index, :year => year
+        response.should be_success
+      end
+    end
+  end
+
+  context "as an admin" do
+    before do
+      sign_in create :admin
+    end
+
+    describe '#index' do
+      it 'succeeds' do
+        get :index, :year => year
+        response.should be_success
+      end
+    end
+  end
 
   describe "#choose_attendee" do
     let(:user) { create :user }

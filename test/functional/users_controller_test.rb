@@ -8,18 +8,6 @@ class UsersControllerTest < ActionController::TestCase
     @admin_user = create :admin
   end
 
-  test "admin can get index" do
-    sign_in @admin_user
-    get :index, :year => Time.now.year
-    assert_response :success
-  end
-
-  test "staff can get index" do
-    sign_in @staff
-    get :index, :year => Time.now.year
-    assert_response :success
-  end
-
   test "admin can get user cost summary" do
     sign_in @admin_user
     get :print_cost_summary, :id => @user.id, :year => Time.now.year
@@ -35,17 +23,6 @@ class UsersControllerTest < ActionController::TestCase
   test "user cannot get user cost summary" do
     sign_in @user
     get :print_cost_summary, :id => @user.id, :year => Time.now.year
-    assert_response 403
-  end
-
-  test "user cannot get index" do
-    sign_in @user
-    get :index, :year => Time.now.year
-    assert_response 403
-  end
-
-  test "guest cannot get index" do
-    get :index, :year => Time.now.year
     assert_response 403
   end
 
