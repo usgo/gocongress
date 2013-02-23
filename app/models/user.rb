@@ -42,10 +42,6 @@ class User < ActiveRecord::Base
     :confirmation => true,
     :if => :validate_password?
 
-  # Both User and Attendee have an email column, and we don't want to ask the
-  # enduser to enter the same email twice when signing up -Jared 2010.12.31
-  before_validation :apply_user_email_to_primary_attendee, :on => :create
-
   # Mass-Assignment
   # ---------------
   #
@@ -133,14 +129,6 @@ class User < ActiveRecord::Base
   end
 
 private
-
-  def apply_user_email_to_primary_attendee
-    # If primary_attendee isn't here, I don't want a NoMethodError
-    # Instead, I'd rather get a RecordNotValid
-    if primary_attendee.present?
-      primary_attendee.email = self.email
-    end
-  end
 
   # Password is validated when first creating the user record,
   # or if the password is being changed.
