@@ -37,6 +37,14 @@ describe UsersController do
       end
     end
 
+    describe '#print_cost_summary' do
+      it "is forbidden" do
+        sign_in user
+        get :print_cost_summary, :id => user.id, :year => user.year
+        response.should be_forbidden
+      end
+    end
+
     describe '#show' do
       render_views
 
@@ -112,6 +120,14 @@ describe UsersController do
       it 'succeeds' do
         get :index, :year => year
         response.should be_success
+      end
+    end
+
+    describe '#print_cost_summary' do
+      it "succeeds" do
+        sign_in create :admin
+        get :print_cost_summary, :id => user.id, :year => user.year
+        assert_response :success
       end
     end
 

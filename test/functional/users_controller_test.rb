@@ -5,29 +5,10 @@ class UsersControllerTest < ActionController::TestCase
     pa = create :attendee, is_primary: true
     @user = pa.user
     @staff = create :staff
-    @admin_user = create :admin
-  end
-
-  test "admin can get user cost summary" do
-    sign_in @admin_user
-    get :print_cost_summary, :id => @user.id, :year => Time.now.year
-    assert_response :success
-  end
-
-  test "staff can get user cost summary" do
-    sign_in @staff
-    get :print_cost_summary, :id => @user.id, :year => Time.now.year
-    assert_response :success
-  end
-
-  test "user cannot get user cost summary" do
-    sign_in @user
-    get :print_cost_summary, :id => @user.id, :year => Time.now.year
-    assert_response 403
   end
 
   test "admin can get edit" do
-    sign_in @admin_user
+    sign_in create :admin
     get :edit, :id => @user.id, :year => Time.now.year
     assert_response :success
   end
@@ -88,7 +69,7 @@ class UsersControllerTest < ActionController::TestCase
   end
 
   test "admin can destroy a user" do
-    sign_in @admin_user
+    sign_in create :admin
     destroyed_user_id = @user.id
 
     assert_difference('User.count', -1) do
@@ -103,7 +84,7 @@ class UsersControllerTest < ActionController::TestCase
   end
 
   test "admin can change a user password" do
-    sign_in @admin_user
+    sign_in create :admin
     enc_pw_before = @user.encrypted_password
     u = { 'password' => 'greeblesnarf' }
     put :update, :id => @user.id, :user => u, :year => Time.now.year
@@ -114,7 +95,7 @@ class UsersControllerTest < ActionController::TestCase
   end
 
   test "admin cannot update user year" do
-    sign_in @admin_user
+    sign_in create :admin
     year_before = @user.year
     u = { 'year' => @user.year + 1 }
     put :update, :id => @user.id, :user => u, :year => @user.year

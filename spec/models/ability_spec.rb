@@ -1,6 +1,18 @@
 require "spec_helper"
+require "cancan/matchers"
 
 describe Ability do
+
+  context 'staff' do
+    let(:staff) { build :staff }
+    subject { Ability.new(staff) }
+
+    it 'can print_cost_summary for users in same year' do
+      should be_able_to :print_official_docs, build(:user, :year => staff.year)
+      should_not be_able_to :print_official_docs, build(:user, :year => staff.year - 1)
+    end
+  end
+
   describe ".explain_denial" do
     let(:coin_toss) { [true,false].sample }
     it "says you are authenticated" do
@@ -34,4 +46,3 @@ describe Ability do
     end
   end
 end
-
