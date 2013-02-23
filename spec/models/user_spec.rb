@@ -72,17 +72,19 @@ describe User do
     build(:user).should be_valid
   end
 
-  it "is invalid if email is invalid" do
-    user = build :user, :email => "herpderp"
-    user.should_not be_valid
-    user.errors.should include(:email)
-  end
+  describe '#valid' do
+    it "is invalid if email is invalid" do
+      user = build :user, :email => "herpderp"
+      user.should_not be_valid
+      user.errors.should include(:email)
+    end
 
-  it "is invalid if email is not unique" do
-    extant = create :user, :email => "John@example.com"
-    user = build :user, {email: extant.email, year: extant.year}
-    user.should_not be_valid
-    user.errors.should include(:email)
+    it "is invalid if email is not unique" do
+      extant = create :user, :email => "John@example.com"
+      user = build :user, {email: extant.email, year: extant.year}
+      user.should_not be_valid
+      user.errors.should include(:email)
+    end
   end
 
   describe "#get_invoice_total" do
