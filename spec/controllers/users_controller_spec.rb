@@ -170,6 +170,19 @@ describe UsersController do
       sign_in create :admin
     end
 
+    it 'can #destroy' do
+      user # `create` before `expect` to change
+      expect { delete :destroy, :id => user.id, :year => user.year
+        }.to change { User.count }.by(-1)
+
+      response.should redirect_to users_path
+      flash[:notice].should == 'User deleted'
+
+      # dependent attendees should also be destroyed
+      user.id.should be > 0
+      Attendee.where(:user_id => user.id).should be_empty
+    end
+
     it 'can #edit' do
       get :edit, :id => user.id, :year => user.year
       assert_response :success
