@@ -7,17 +7,6 @@ class UsersControllerTest < ActionController::TestCase
     @staff = create :staff
   end
 
-  test "admin can get edit" do
-    sign_in create :admin
-    get :edit, :id => @user.id, :year => Time.now.year
-    assert_response :success
-  end
-
-  test "guest cannot get edit" do
-    get :edit, :id => @user.id, :year => Time.now.year
-    assert_response 403
-  end
-
   test "user cannot edit other user" do
     sign_in @user
     user_two = create(:user)
@@ -40,11 +29,6 @@ class UsersControllerTest < ActionController::TestCase
   test "staff cannot edit themselves" do
     sign_in @staff
     get :edit, :id => @staff.id, :year => Time.now.year
-    assert_response 403
-  end
-
-  test "guest cannot update user" do
-    put :update, :id => @user.id, :user => @user.attributes, :year => Time.now.year
     assert_response 403
   end
 

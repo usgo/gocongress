@@ -13,18 +13,24 @@ describe UsersController do
   let(:year) { Time.zone.now.year }
 
   context "as a visitor" do
-    describe '#index' do
-      it 'is forbidden' do
-        get :index, :year => year
-        response.should be_forbidden
-      end
+    it 'cannot #edit' do
+      get :edit, :id => user.id, :year => user.year
+      response.should be_forbidden
     end
 
-    describe '#show' do
-      it "is forbidden" do
-        get :show, :id => user.id, :year => user.year
-        response.should be_forbidden
-      end
+    it 'cannot #index' do
+      get :index, :year => year
+      response.should be_forbidden
+    end
+
+    it 'cannot #show' do
+      get :show, :id => user.id, :year => user.year
+      response.should be_forbidden
+    end
+
+    it 'cannot #update' do
+      put :update, :id => user.id, :user => user.attributes, :year => user.year
+      assert_response 403
     end
   end
 
@@ -116,19 +122,20 @@ describe UsersController do
       sign_in create :admin
     end
 
-    describe '#index' do
-      it 'succeeds' do
-        get :index, :year => year
-        response.should be_success
-      end
+    it 'can #edit' do
+      get :edit, :id => user.id, :year => user.year
+      assert_response :success
     end
 
-    describe '#print_cost_summary' do
-      it "succeeds" do
-        sign_in create :admin
-        get :print_cost_summary, :id => user.id, :year => user.year
-        assert_response :success
-      end
+    it 'can #index' do
+      get :index, :year => year
+      response.should be_success
+    end
+
+    it 'can #print_cost_summary' do
+      sign_in create :admin
+      get :print_cost_summary, :id => user.id, :year => user.year
+      assert_response :success
     end
 
     describe '#show' do
