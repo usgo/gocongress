@@ -30,7 +30,7 @@ Gocongress::Application.routes.draw do
 
         get 'costs' => 'plan_categories#index'
 
-        devise_for :users, :controllers => { :registrations => "registrations" }
+        devise_for :users, :controllers => { :registrations => "sign_ups" }
 
         resources :activities, :contacts, :content_categories, :contents,
           :activity_categories, :plan_categories,

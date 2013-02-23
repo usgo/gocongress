@@ -1,7 +1,7 @@
 require 'test_helper'
 
-class RegistrationsControllerTest < ActionController::TestCase
-  tests RegistrationsController
+class SignUpsControllerTest < ActionController::TestCase
+  tests SignUpsController
 
   setup do
     @year = Time.now.year

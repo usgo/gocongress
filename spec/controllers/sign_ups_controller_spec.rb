@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe RegistrationsController do
+describe SignUpsController do
 
   # Every time you want to unit test a devise controller, you need
   # to tell Devise which mapping to use. http://bit.ly/lhjcUm
