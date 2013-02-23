@@ -150,6 +150,21 @@ describe UsersController do
         put :update, :id => user.id, :user => attrs, :year => user.year
         response.should redirect_to user_path user
       end
+
+      it "can change a user password" do
+        new_pw = 'greeblesnarf'
+        expect {
+          put :update, :id => user.id,
+            :user => { 'password' => new_pw },
+            :year => user.year
+        }.to change { user.reload.encrypted_password }
+      end
+
+      it "cannot update user year" do
+        u = { 'year' => user.year + 1 }
+        expect { put :update, :id => user.id, :user => u, :year => user.year
+          }.to_not change { user.reload.year }
+      end
     end
   end
 

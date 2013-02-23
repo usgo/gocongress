@@ -83,24 +83,4 @@ class UsersControllerTest < ActionController::TestCase
     assert_equal 0, Attendee.where(:user_id => destroyed_user_id).count
   end
 
-  test "admin can change a user password" do
-    sign_in create :admin
-    enc_pw_before = @user.encrypted_password
-    u = { 'password' => 'greeblesnarf' }
-    put :update, :id => @user.id, :user => u, :year => Time.now.year
-
-    # re-load the user to see if the encrypted_password changed
-    @user = User.find @user.id
-    assert_not_equal @user.encrypted_password, enc_pw_before
-  end
-
-  test "admin cannot update user year" do
-    sign_in create :admin
-    year_before = @user.year
-    u = { 'year' => @user.year + 1 }
-    put :update, :id => @user.id, :user => u, :year => @user.year
-    @user.reload
-    assert_equal year_before, @user.year
-  end
-
 end
