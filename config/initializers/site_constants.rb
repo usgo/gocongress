@@ -38,5 +38,7 @@ PRIORITY_COUNTRIES = {
   "Korea, Republic of" => "KR"
 }
 
-# EMAIL_REGEX used to validate all email addresses
+# EMAIL_REGEX used to validate all email addresses, according to
+# html5 spec (http://bit.ly/nOR1B6) but slightly stricter (no single
+# quotes, backticks, slashes, or dollar signs)
 EMAIL_REGEX = /^[a-zA-Z0-9.!#%&*+=?^_{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/

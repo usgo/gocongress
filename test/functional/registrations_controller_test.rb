@@ -14,8 +14,8 @@ class RegistrationsControllerTest < ActionController::TestCase
 
   test "visitor can create a user with valid email and password" do
     user_attrs = { email: 'example@example.com',
-      password: 'asdf',
-      password_confirmation: 'asdf',
+      password: 'asdfasdf',
+      password_confirmation: 'asdfasdf',
       year: @year }
     assert_difference ["User.count"], +1 do
       post :create, :user => user_attrs, :year => @year

@@ -85,6 +85,19 @@ describe User do
       user.should_not be_valid
       user.errors.should include(:email)
     end
+
+    it "returns false if password is blank" do
+      build(:user, :password => "").should have_error_about(:password)
+    end
+
+    it "returns false if password is too short" do
+      build(:user, :password => "12345").should have_error_about(:password)
+    end
+
+    it "returns false if the password is not confirmed" do
+      build(:user, :password_confirmation => "").should \
+        have_error_about(:password)
+    end
   end
 
   describe "#get_invoice_total" do

@@ -29,14 +29,22 @@ class User < ActiveRecord::Base
   has_many :attendees, :dependent => :destroy
 
   ROLES = [['Admin','A'], ['Staff','S'], ['User','U']]
+
+  # Validations
+  # -----------
+
   validates_inclusion_of :role, :in => %w[A S U]
 
-  # Validate email address according to html5 spec (http://bit.ly/nOR1B6)
-  # but slightly stricter (no single quotes, backticks, slashes, or dollar signs)
-  validates :email, \
-    :presence => true, \
-    :uniqueness => { :scope => :year, :case_sensitive => false }, \
+  validates :email,
+    :presence => true,
+    :uniqueness => { :scope => :year, :case_sensitive => false },
     :format => { :with => EMAIL_REGEX }
+
+  validates :password,
+    :presence => true,
+    :length => {:minimum => 6},
+    :confirmation => true,
+    :if => :validate_password?
 
   # Both User and Attendee have an email column, and we don't want to ask the
   # enduser to enter the same email twice when signing up -Jared 2010.12.31
@@ -144,10 +152,10 @@ private
     end
   end
 
-protected
-
-  def password_required?
-    !persisted? || password.present? || password_confirmation.present?
+  # Password is validated when first creating the user record,
+  # or if the password is being changed.
+  def validate_password?
+    new_record? || password.present? || password_confirmation.present?
   end
 
 end
