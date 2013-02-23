@@ -58,40 +58,6 @@ describe UsersController do
     end
   end
 
-  describe "#choose_attendee" do
-    let(:user) { create :user }
-    let(:page) { :events }
-
-    before do
-      sign_in user
-    end
-
-    def get_choose_attendee user, page
-      get :choose_attendee, year: user.year, id: user.id, destination_page: page
-    end
-
-    it "is succesful when there are no attendees" do
-      get_choose_attendee user, page
-      response.should be_success
-    end
-
-    it "redirects to the destination page when there is only one attendee" do
-      attendee = create :attendee, user: user
-      get_choose_attendee user, page
-      response.should redirect_to edit_attendee_path(attendee, page)
-    end
-
-    it "is succesful when there are two or more attendees" do
-      1.upto(2) { create :attendee, user: user }
-      get_choose_attendee user, page
-      response.should be_success
-    end
-
-    it "is raises an error if given an invalid page" do
-      expect { get_choose_attendee user, "foobar" }.to raise_error
-    end
-  end
-
   describe "#show" do
     let(:user) { create :user, year: 2012 }
     let(:wrong_year) { user.year - 1 }

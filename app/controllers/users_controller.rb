@@ -8,22 +8,6 @@ class UsersController < ApplicationController
   load_resource
   authorize_resource :only => [:destroy, :index, :show, :update]
 
-  # Actions
-  def choose_attendee
-    authorize! :update, @user
-
-    @destination_page = params[:destination_page] || "tournaments"
-    unless %w[activities events tournaments].include?(@destination_page)
-      raise 'Invalid destination page'
-    end
-
-    if @user.attendees.count == 1
-      redirect_to edit_attendee_path(@user.attendees.first, @destination_page)
-    end
-
-    @destination_page_description = "sign up for " + @destination_page
-  end
-
   def edit_email
     authorize! :update, @user
   end

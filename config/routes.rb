@@ -56,7 +56,6 @@ Gocongress::Application.routes.draw do
             get 'ledger'
             get 'pay'
             get 'print_cost_summary', :as => 'print_cost_summary_for'
-            get 'choose_attendee'
           end
           resource :terminus, :only => :show
         end
