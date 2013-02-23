@@ -12,18 +12,6 @@ class User < ActiveRecord::Base
   # For example, when authenticating or resetting a password.
   PRACTICAL_KEY = [:email,:year]
 
-  # When generating invoices for multiple users, passing this
-  # constant into includes() can really speed things up.
-  EAGER_LOAD_CONFIG_FOR_INVOICES = [
-    :primary_attendee,
-    {
-      :attendees => [
-        {:attendee_activities => :activity},
-        {:attendee_plans => :plan}
-      ]
-    }
-  ]
-
   # Devise modules: Do not use :validatable now that
   # the email uniqueness validation has a year scope
   devise :database_authenticatable, :registerable,

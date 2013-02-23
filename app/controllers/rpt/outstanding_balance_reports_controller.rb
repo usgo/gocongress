@@ -1,7 +1,18 @@
 class Rpt::OutstandingBalanceReportsController < Rpt::AbstractReportController
 
 def show
-  @users = User.yr(@year).includes(User::EAGER_LOAD_CONFIG_FOR_INVOICES)
+
+  # When generating invoices for multiple users, the `includes`
+  # can really speed things up.
+  @users = User.yr(@year).includes([
+    :primary_attendee,
+    {
+      :attendees => [
+        {:attendee_activities => :activity},
+        {:attendee_plans => :plan}
+      ]
+    }
+  ])
 
   # Keep users with non-zero balances.  Obviously, we want to see
   # users who owe us money, but it is also useful for the registrar
