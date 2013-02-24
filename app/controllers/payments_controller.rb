@@ -12,6 +12,7 @@ class PaymentsController < ApplicationController
       conf('api_transaction_key'),
       @amount,
       :relay_url => environment_aware_relay_url)
+    @sim_transaction.set_fields({:cust_id => current_user.id})
   end
 
   # After processing the payment form submission, Authorize.Net
@@ -22,7 +23,12 @@ class PaymentsController < ApplicationController
   def relay_response
     sim_response = AuthorizeNet::SIM::Response.new(params)
     if sim_response.success?(conf('api_login_id'), conf('merchant_hash_value'))
-      render_js_redirect_to_receipt(sim_response)
+      begin
+        Transaction.create_from_authnet_sim_response(sim_response)
+        render_js_redirect_to_receipt(sim_response, true)
+      rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotFound
+        render_js_redirect_to_receipt(sim_response, false)
+      end
     else
       render :layout => false
     end
@@ -31,6 +37,7 @@ class PaymentsController < ApplicationController
   def receipt
     authorize! :receipt, :authnet_payment
     @auth_code = params[:x_auth_code]
+    @transaction_saved = params[:transaction_saved] == 'true'
   end
 
   private
@@ -61,8 +68,10 @@ class PaymentsController < ApplicationController
   end
 
   # Render a JS window.location redirect (and meta-refresh fallback)
-  def render_js_redirect_to_receipt sim_response
-    render :text => sim_response.direct_post_reply(
-      payments_receipt_url(:only_path => false), :include => true)
+  def render_js_redirect_to_receipt sim_response, transaction_saved
+    url = payments_receipt_url(
+      :transaction_saved => transaction_saved,
+      :only_path => false)
+    render :text => sim_response.direct_post_reply(url, :include => true)
   end
 end

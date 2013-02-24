@@ -1,2 +1,16 @@
-Thanks for your purchase! Your authorization code
-is #{@auth_code}.
+%h2 Thank you for the payment
+%p Your authorization code is #{@auth_code}.
+
+- if @transaction_saved
+  %p
+    Would you like to review your
+    = link_to('payment history', ledger_user_path(current_user)) + '?'
+- else
+  %p.notice
+    Your payment was successful, but we failed to save a record of
+    it on gocongress.org. Don't worry, because there'll be an
+    offical record. Please tell the
+    = link_to 'registrar', contacts_path
+    so you get credit for it.  Also, tell the
+    = link_to 'webmaster', contacts_path
+    too, so they can fix it.  Thanks!

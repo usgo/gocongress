@@ -70,6 +70,19 @@ class Transaction < ActiveRecord::Base
     or incorrect.  Please make sure to enter the email address of the
     correct user account."}
 
+  def self.create_from_authnet_sim_response rsp
+    user = User.find(rsp.customer_id) # x_cust_id
+    t = new
+    t.trantype = 'S' # Sale
+    t.instrument = 'C' # Card
+    t.user = user
+    t.year = user.year
+    t.amount = (rsp.fields[:amount].to_f * 100).round # convert to cents
+    t.gwtranid = rsp.transaction_id # x_trans_id
+    t.gwdate = Date.current
+    t.save!
+  end
+
   def requires_instrument?() trantype != 'C' end
   def forbids_instrument?() trantype == 'C' end
   def is_gateway_transaction?() trantype == 'S' and instrument == 'C' end
