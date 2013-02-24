@@ -10,10 +10,11 @@ class PlanCategoriesController < ApplicationController
   before_filter :expose_plans, :only => [:show, :update]
 
   def index
-    categories = @plan_categories \
+    categories = @plan_categories.joins(:event) \
       .select("plan_categories.*, events.name as event_name") \
-      .yr(@year).joins(:event).order("events.name, plan_categories.name")
+      .yr(@year).order('ordinal')
     @plan_categories_by_event = categories.group_by {|c| c.event_name}
+    @show_order_fields = can?(:update, PlanCategory) && categories.count > 1
   end
 
   def show
@@ -41,9 +42,17 @@ class PlanCategoriesController < ApplicationController
     redirect_to(@plan_category, :notice => 'Plan category updated.')
   end
 
+  def update_order
+    (params[:ordinals] || {}).each do |id, ord|
+      PlanCategory.yr(@year).find(id).update_attributes!(:ordinal => ord)
+    end
+    redirect_to plan_categories_path, :notice => 'Order updated.'
+  end
+
   def destroy
     begin
       @plan_category.destroy
+      flash[:notice] = 'Category deleted'
     rescue ActiveRecord::DeleteRestrictionError
       flash[:alert] = "Cannot delete the '#{@plan_category.name}' category
         because its plans have already been selected by attendees"

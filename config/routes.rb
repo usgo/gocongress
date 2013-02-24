@@ -33,10 +33,13 @@ Gocongress::Application.routes.draw do
         devise_for :users, :controllers => { :registrations => "sign_ups" }
 
         resources :activities, :contacts, :content_categories, :contents,
-          :activity_categories, :plan_categories,
+          :activity_categories,
           :tournaments, :transactions
         resources :attendee_statistics, :only => :index
         resources :plans, :except => [:index]
+        resources :plan_categories do
+          put 'update_order', :on => :collection
+        end
 
         resources :attendees, :except => [:show] do
           collection do
