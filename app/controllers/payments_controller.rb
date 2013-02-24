@@ -2,9 +2,9 @@ class PaymentsController < ApplicationController
   helper :authorize_net
   protect_from_forgery :except => :relay_response
 
-  # GET
-  # Displays a payment form.
-  def payment
+  before_filter :assert_config
+
+  def new
     @amount = 10.00
     @sim_transaction = AuthorizeNet::SIM::Transaction.new(
       AUTHORIZE_NET_CONFIG['api_login_id'],
@@ -31,6 +31,13 @@ class PaymentsController < ApplicationController
   end
 
   private
+
+  def assert_config
+    conf = AUTHORIZE_NET_CONFIG
+    if conf['api_login_id'].nil? || conf['api_transaction_key'].nil?
+      raise "authnet config is missing"
+    end
+  end
 
   # When developing locally, we want to specify a dyndns
   # hostname and use NAT, in order to get the relay response.
