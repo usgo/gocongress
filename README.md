@@ -29,7 +29,7 @@ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 Contribute
----------
+----------
 
 1. Set up your local development environment
     1. fork the repo in github
@@ -53,14 +53,24 @@ Contribute
     1. Push your changes to your fork on github
     1. Submit a pull request
 
-Email
-------
+Secrets
+-------
 
-If you want your working copy to be able to send email, create
-a `config/usgc_env.rb` like this:
+`ENV` variables are stored in a `.env` file, which is git-ignored.
+Some of these don't belong in source control because they are
+secret, and some vary by deployment level.
 
-    ENV['GMAIL_SMTP_USER'] = 'herpderp@gmail.com'
-    ENV['GMAIL_SMTP_PASSWORD'] = 'derpyderp'
+    AUTHNET_API_LOGIN_ID
+    AUTHNET_RELAY_HOST
+    AUTHNET_TRANSACTION_KEY
+    GMAIL_SMTP_PASSWORD
+    GMAIL_SMTP_USER
+
+For local development, start the app with [foreman][1].  For
+`stage` and `production` use [heroku config][2].
+
+Email for gocongress.org
+------------------------
 
 Email for accounts in the gocongress.org domain is managed through
 google apps. jared.beck@usgo.org has access to manage these accounts.
@@ -74,3 +84,6 @@ tested, the first year's site in 2011.
 * 2013: Chris Kirschner
 * 2012: Arlene Bridges, Bob Bacon, Steve Colburn
 * 2011: Lisa Scott, Alf Mikula, Brian David, Andrew Jackson, Steve Colburn
+
+[1][http://blog.daviddollar.org/2011/05/06/introducing-foreman.html]
+[2][https://devcenter.heroku.com/articles/config-vars]
