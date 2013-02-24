@@ -66,8 +66,13 @@ secret, and some vary by deployment level.
     GMAIL_SMTP_PASSWORD
     GMAIL_SMTP_USER
 
-For local development, start the app with [foreman][1].  For
-`stage` and `production` use [heroku config][2].
+For local development, I wish we could use [foreman][1] to load
+`.env`, but it doesn't work with `pry` or `guard` and it's overkill
+for one process. Start the app with `script/start.sh` which will
+`source` your `.env` file. Don't forget to `export` each var in
+`.env`.
+
+For `stage` and `production` use [heroku config][2].
 
 Email for gocongress.org
 ------------------------
@@ -85,5 +90,5 @@ tested, the first year's site in 2011.
 * 2012: Arlene Bridges, Bob Bacon, Steve Colburn
 * 2011: Lisa Scott, Alf Mikula, Brian David, Andrew Jackson, Steve Colburn
 
-[1][http://blog.daviddollar.org/2011/05/06/introducing-foreman.html]
-[2][https://devcenter.heroku.com/articles/config-vars]
+[1]: http://blog.daviddollar.org/2011/05/06/introducing-foreman.html
+[2]: https://devcenter.heroku.com/articles/config-vars
