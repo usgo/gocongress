@@ -25,7 +25,8 @@ class Transaction < ActiveRecord::Base
   scope :comps, where(trantype: 'C')
   scope :for_payment_history, where(:trantype => ['S','R'])
 
-	validates_presence_of :trantype, :amount, :updated_by_user
+	validates_presence_of :trantype, :amount
+	validates :updated_by_user, :presence => true, :on => :update
 
   validates_presence_of :instrument, :if => :requires_instrument?
   validates_inclusion_of :instrument, :in => [nil, ''], :if => :forbids_instrument?, \
