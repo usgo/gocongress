@@ -37,6 +37,9 @@ class PaymentsController < ApplicationController
     if conf['api_login_id'].nil? || conf['api_transaction_key'].nil?
       raise "authnet config is missing"
     end
+    if Rails.env == 'development' && ENV['AUTHNET_RELAY_HOST'].blank?
+      raise "configure authnet relay host for local dev"
+    end
   end
 
   # When developing locally, we want to specify a dyndns
