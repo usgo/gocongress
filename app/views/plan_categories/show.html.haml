@@ -14,11 +14,11 @@
             %th Order
           = render :partial => "plan_table_common_headers"
       %tbody
-        - @plans.each_with_index do |p, ix|
+        - @plans.each_with_index do |p|
           - row_classes = p.disabled? ? "disabled" : ""
           %tr{ class: row_classes }
             - if @show_order_fields
-              %td= number_field_tag "plan_order[]", ix + 1, min: 1, step: 1, size: 3
+              %td= number_field_tag "plan_order[#{p.id}]", p.cat_order, min: 1, step: 1, size: 2
             %td
               = link_to p.name, p
               = "(disabled)" if p.disabled?
@@ -29,7 +29,7 @@
   %br
 
   - if @show_order_fields
-    %div= f.submit 'Update Sort Order'
+    %div= f.submit 'Update Order'
     %br
 
 -# These three buttons are not part of the above form

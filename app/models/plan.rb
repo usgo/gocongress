@@ -1,10 +1,10 @@
 class Plan < ActiveRecord::Base
   include YearlyModel
   include Purchasable
-  include RankedModel
 
-attr_accessible :daily, :name, :price, :age_min, :age_max, :description, :disabled,
-  :inventory, :max_quantity, :needs_staff_approval, :plan_category_id
+attr_accessible :cat_order, :daily, :name, :price, :age_min,
+  :age_max, :description, :disabled, :inventory, :max_quantity,
+  :needs_staff_approval, :plan_category_id
 
 # Associations
 # ------------
@@ -70,12 +70,6 @@ scope :appropriate_for_age, lambda { |age|
 }
 scope :alphabetical, order(:name)
 scope :enabled, where(disabled: false)
-
-# Sort Order
-# see https://github.com/harvesthq/ranked-model
-# ----------
-
-ranks :cat_order, :with_same => :plan_category_id
 
 # Class Methods
 # -------------

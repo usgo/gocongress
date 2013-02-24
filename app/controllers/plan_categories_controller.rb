@@ -29,11 +29,8 @@ class PlanCategoriesController < ApplicationController
   end
 
   def update
-    if params[:plan_order].present?
-      ordering = params[:plan_order].map{|x| x.to_i}
-      unless @plan_category.reorder_plans(@plans, ordering)
-        render :action => "show" and return
-      end
+    if params[:commit] == 'Update Order'
+      @plan_category.reorder_plans(params[:plan_order])
     else
       unless @plan_category.update_attributes(params[:plan_category])
         render :action => "edit" and return
@@ -62,7 +59,7 @@ class PlanCategoriesController < ApplicationController
 
   def expose_plans
     visible_plans = @plan_category.plans.accessible_by(current_ability, :show)
-    @plans = visible_plans.rank :cat_order
+    @plans = visible_plans.order('cat_order')
     @show_order_fields = can?(:update, Plan) && @plans.count > 1
   end
 

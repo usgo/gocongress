@@ -30,7 +30,6 @@ gem 'cancan'
 gem 'authorize-net'
 
 # Model Layer
-gem 'ranked-model'
 gem 'validates_timeliness'
 
 # uncaught exception notification

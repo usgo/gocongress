@@ -69,28 +69,13 @@ class PlanCategory < ActiveRecord::Base
       .first
   end
 
-  # `reorder_plans` takes an array of plans and a corresponding array of
-  # their new position numbers.  If unsuccessful it appends some errors
-  # to self and returns false.  Otherwise, true.
-  def reorder_plans plans, ordering
-    ordering_errors = validate_ordering(ordering)
-    if ordering_errors.empty?
-
-      # ranked-model position numbers are zero-indexed,
-      # so we subtract one from each
-      ordering = ordering.map{|x| x - 1}
-
-      # Save new sort order by going through the plans in the same order
-      # they appeared before on the show page.
-      if ordering.count == plans.count
-        plans.each_with_index do |p, ix|
-          p.update_column :cat_order, ordering[ix]
-        end
+  def reorder_plans ordering
+    return unless ordering.present?
+    ordering.each do |plan_id, ordinal|
+      if ordinal.to_i > 0
+        plans.find(plan_id).update_attributes!(:cat_order => ordinal)
       end
-    else
-      errors[:base].concat ordering_errors
     end
-    return ordering_errors.empty?
   end
 
   # Private methods
