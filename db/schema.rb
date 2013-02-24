@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130224024414) do
+ActiveRecord::Schema.define(:version => 20130224075350) do
 
   create_table "activities", :force => true do |t|
     t.string   "name"
@@ -199,7 +199,7 @@ ActiveRecord::Schema.define(:version => 20130224024414) do
   create_table "transactions", :force => true do |t|
     t.integer  "user_id",                         :null => false
     t.string   "trantype",           :limit => 1, :null => false
-    t.integer  "gwtranid"
+    t.integer  "gwtranid",           :limit => 8
     t.date     "gwdate"
     t.datetime "created_at"
     t.datetime "updated_at"
