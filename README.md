@@ -4,7 +4,7 @@ Gocongress
 A maintainable web app for the US Go Congress.
 Copyright (c) 2013 American Go Association
 
-[![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/usgo/gocongress)
+[![Code Climate](https://codeclimate.com/github/usgo/gocongress.png)](https://codeclimate.com/github/usgo/gocongress)
 
 Licence
 -------
