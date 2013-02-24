@@ -169,11 +169,6 @@ protected
     render view
   end
 
-  # We do not want flash notices during initial registration
-  def update_success_notice(page)
-    %w[activities tournaments].include?(page) ? "Attendee updated" : nil
-  end
-
   # `order_clause` validates the supplied sort field and
   # direction, and returns a sql order clause
   def order_clause
