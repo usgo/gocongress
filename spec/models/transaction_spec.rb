@@ -117,10 +117,10 @@ describe Transaction do
         end
 
         it "validates gwtranid numeric range maximum" do
-          txn.gwtranid = 16404817810
+          txn.gwtranid = 9223372036854775808
           txn.should_not be_valid
           txn.errors.should include(:gwtranid)
-          txn.errors[:gwtranid].should include("must be less than 2147483648")
+          txn.errors[:gwtranid].should include("must be less than 9223372036854775807")
         end
       end
     end
