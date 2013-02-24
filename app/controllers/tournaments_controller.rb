@@ -9,13 +9,7 @@ class TournamentsController < ApplicationController
 
   # Actions
   def index
-    @tournaments = @tournaments.where(:year => @year.year).order('lower(name)').all
-    rounds = Round.where(:tournament_id => @tournaments).order 'round_start'
-    @rounds_by_date = rounds.group_by {|r| r.round_start.to_date}
-  end
-
-  def new
-    @tournament.rounds.build # Start with one round
+    @tournaments = @tournaments.where(:year => @year.year).order('lower(name)')
   end
 
   def create

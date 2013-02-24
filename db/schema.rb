@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130127025950) do
+ActiveRecord::Schema.define(:version => 20130224024414) do
 
   create_table "activities", :force => true do |t|
     t.string   "name"
@@ -33,9 +33,11 @@ ActiveRecord::Schema.define(:version => 20130127025950) do
   add_index "activities", ["year", "leave_time"], :name => "index_activities_on_year_and_start"
 
   create_table "activity_categories", :force => true do |t|
-    t.string  "name",        :limit => 25,  :null => false
-    t.integer "year",                       :null => false
-    t.string  "description", :limit => 500
+    t.string   "name",        :limit => 25,  :null => false
+    t.integer  "year",                       :null => false
+    t.string   "description", :limit => 500
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "activity_categories", ["id", "year"], :name => "uniq_activity_categories_on_id_and_year", :unique => true
@@ -52,8 +54,10 @@ ActiveRecord::Schema.define(:version => 20130127025950) do
   add_index "attendee_activities", ["attendee_id", "activity_id"], :name => "uniq_attendee_activity", :unique => true
 
   create_table "attendee_plan_dates", :force => true do |t|
-    t.date    "_date",            :null => false
-    t.integer "attendee_plan_id"
+    t.date     "_date",            :null => false
+    t.integer  "attendee_plan_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "attendee_plans", :force => true do |t|
@@ -135,8 +139,10 @@ ActiveRecord::Schema.define(:version => 20130127025950) do
   add_index "contents", ["year", "show_on_homepage", "expires_at"], :name => "index_contents_on_year_and_show_on_homepage_and_expires_at"
 
   create_table "events", :force => true do |t|
-    t.integer "year", :null => false
-    t.string  "name", :null => false
+    t.integer  "year",       :null => false
+    t.string   "name",       :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "events", ["id", "year"], :name => "index_events_on_id_and_year", :unique => true
@@ -173,15 +179,6 @@ ActiveRecord::Schema.define(:version => 20130127025950) do
 
   add_index "plans", ["id", "year"], :name => "index_plans_on_id_and_year", :unique => true
   add_index "plans", ["plan_category_id"], :name => "index_plans_on_plan_category_id"
-
-  create_table "rounds", :force => true do |t|
-    t.datetime "round_start",   :null => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "tournament_id"
-  end
-
-  add_index "rounds", ["tournament_id", "round_start"], :name => "index_rounds_on_tournament_id_and_round_start", :unique => true
 
   create_table "tournaments", :force => true do |t|
     t.string   "name",                      :limit => 50,                    :null => false
@@ -241,24 +238,26 @@ ActiveRecord::Schema.define(:version => 20130127025950) do
   add_index "users", ["year"], :name => "index_users_on_year"
 
   create_table "years", :force => true do |t|
-    t.string  "city",                             :null => false
-    t.string  "date_range",                       :null => false
-    t.date    "day_off_date",                     :null => false
-    t.integer "ordinal_number",                   :null => false
-    t.string  "registration_phase",               :null => false
-    t.string  "reply_to_email",                   :null => false
-    t.date    "start_date",                       :null => false
-    t.string  "state",                            :null => false
-    t.string  "timezone",                         :null => false
-    t.string  "twitter_url"
-    t.integer "year",                             :null => false
-    t.string  "venue_url"
-    t.string  "venue_name"
-    t.string  "venue_address"
-    t.string  "venue_city"
-    t.string  "venue_state",        :limit => 2
-    t.string  "venue_zip",          :limit => 10
-    t.string  "venue_phone",        :limit => 20
+    t.string   "city",                             :null => false
+    t.string   "date_range",                       :null => false
+    t.date     "day_off_date",                     :null => false
+    t.integer  "ordinal_number",                   :null => false
+    t.string   "registration_phase",               :null => false
+    t.string   "reply_to_email",                   :null => false
+    t.date     "start_date",                       :null => false
+    t.string   "state",                            :null => false
+    t.string   "timezone",                         :null => false
+    t.string   "twitter_url"
+    t.integer  "year",                             :null => false
+    t.string   "venue_url"
+    t.string   "venue_name"
+    t.string   "venue_address"
+    t.string   "venue_city"
+    t.string   "venue_state",        :limit => 2
+    t.string   "venue_zip",          :limit => 10
+    t.string   "venue_phone",        :limit => 20
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "years", ["year"], :name => "index_years_on_year", :unique => true

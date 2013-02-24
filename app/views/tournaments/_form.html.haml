@@ -34,12 +34,6 @@
         Highlight this particular tournament by showing it in the
         navigation menu at the top of the page
 
-  %h3 Rounds
-  .rounds-container
-    = f.fields_for :rounds do |builder|
-      = render 'round_fields', :f => builder
-  %p= link_to_add_fields "Add a Round", f, :rounds
-
   %br
   .actions
     = f.submit 'Save'

@@ -3,34 +3,12 @@
 - if current_user.present?
   .row-of-buttons
     - if can? :create, Tournament
-      = button_to 'Create a New Tournament', new_tournament_path, :method => "get"
+      = button_to 'Add Tournament', new_tournament_path, :method => "get"
 - else
   %p
     If you'd like to participate in these tournaments, please
     = link_to "register", new_user_registration_path
     as a player. Non-players may observe only.
-
-%a{ :name => "tournament_schedule" }
-
-%h3 Schedule
-
-- if @rounds_by_date.size == 0
-  %p There are no tournament rounds on the schedule yet.
-- else
-  %table.semantic.fullwidth
-    - @rounds_by_date.each do |d,rounds_this_date|
-      %tr.greater-header
-        %th.align-left{ :colspan => current_user_is_admin? ? 5 : 3 }
-          = d.to_formatted_s(:month_day_dow)
-          = " - Day Off!" if d === DAY_OFF_DATE[@year.year]
-      - rounds_this_date.each do |r|
-        %tr
-          %td= r.round_start.strftime '%l:%M %p'
-          %td= link_to r.tournament.name, r.tournament
-          %td= r.tournament.location
-  %br
-
-%h3 Tournament List
 
 - if @tournaments.size == 0
   %p There are no tournaments yet.
@@ -40,7 +18,6 @@
       %tr
         %th Name
         %th Open?
-        %th Rounds
         %th Director(s)
         %th Eligibility
         - if current_user_is_admin?
@@ -50,7 +27,6 @@
         %tr
           %td= link_to t.name, t
           %td= t.get_openness_type_name
-          %td= t.rounds.count
           %td= t.directors
           %td= t.eligible
           - if current_user_is_admin?

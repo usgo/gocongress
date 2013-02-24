@@ -1,13 +1,9 @@
 class Tournament < ActiveRecord::Base
   include YearlyModel
 
-  attr_accessible :description, :directors, :eligible, :location,
-    :name, :openness, :rounds_attributes,
+  attr_accessible :description, :directors, :eligible,
+    :location, :name, :openness,
     :show_attendee_notes_field, :show_in_nav_menu
-
-  has_many :rounds, :dependent => :destroy
-
-  accepts_nested_attributes_for :rounds, :allow_destroy => true
 
   # Openness Types:
   # Open - All attendees can sign up
@@ -28,9 +24,5 @@ class Tournament < ActiveRecord::Base
     OPENNESS_TYPES.each { |t| if (t[1] == self.openness) then openness_name = t[0] end }
     if openness_name.empty? then raise "assertion failed: invalid openness type" end
     return openness_name
-  end
-
-  def has_rounds?
-    rounds.count > 0
   end
 end
