@@ -5,7 +5,6 @@ class Contact < ActiveRecord::Base
     :phone, :title
 
   validates :email,
-    :uniqueness => { :scope => :year, :case_sensitive => false },
     :format => { :with => EMAIL_REGEX },
     :length => { :maximum => 100 },
     :allow_blank => true
