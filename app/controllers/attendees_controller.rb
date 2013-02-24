@@ -116,23 +116,18 @@ protected
 
   private
 
-  # `expose_plans` exposes `@plans`, determining which plans will be
-  # shown on the form, and which plans are available for selection.
-  # Admins can always see disabled plans, but users only see
-  # disabled plans if they had already selected such a plan, eg.
-  # back when it was enabled. Regardless of user level, only plans
-  # appropriate to the attendee's age are shown.
+  # `expose_plans` exposes `@plans_by_category`, determining which
+  # plans will be shown on the form, and which plans are available
+  # for selection. Admins can always see disabled plans, but users
+  # only see disabled plans if they had already selected such a
+  # plan, eg. back when it was enabled.
   #
-  # In the past we used `appropriate_for_age` but during #new we
-  # don't know the attendee's age yet
+  # In the past we filtered plans on `appropriate_for_age` but
+  # during `#new` we don't know the attendee's age yet
   def expose_plans
-    @plans = Plan.yr(@year).order(:plan_category_id, :cat_order)
-    unless current_user.admin?
-      @plans.delete_if {|p| p.disabled? && !@attendee.has_plan?(p)}
-    end
-
-    @show_availability = Plan.inventoried_plan_in? @plans
-    @show_quantity_instructions = Plan.quantifiable_plan_in? @plans
+    @plans_by_category = form_plans.group_by(&:plan_category)
+    @show_availability = Plan.inventoried_plan_in? form_plans
+    @show_quantity_instructions = Plan.quantifiable_plan_in? form_plans
   end
 
   # For all of the "form actions" except `edit`, the "selections"
@@ -141,7 +136,17 @@ protected
     params[:attendee] ||= {} # TODO: not sure we need this
     params[:activity_ids] ||= []
     @activity_selections = params[:activity_ids].map(&:to_i)
-    @plan_selections = Registration::PlanSelection.parse_params(params['plans'], @plans)
+    @plan_selections = Registration::PlanSelection.parse_params(params['plans'], form_plans)
+  end
+
+  def form_plans
+    return @_plans if @_plans.present?
+    @_plans = Plan.joins(:plan_category).includes(:plan_category) \
+      .yr(@year).order('plan_categories.ordinal, plans.cat_order')
+    unless current_user.admin?
+      @_plans.delete_if {|p| p.disabled? && !@attendee.has_plan?(p)}
+    end
+    @_plans
   end
 
   def redirect_to_terminus flash_notice

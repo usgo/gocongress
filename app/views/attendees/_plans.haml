@@ -3,24 +3,27 @@
 %h3= Plan.model_name.human.pluralize
 
 %p
-  Select #{noun_with_article(mnh, @plans)} with check
+  Select plans with check
   box ( #{disabled_checkbox}
   )#{ " or enter a quantity" if @show_quantity_instructions }.
 
   Questions? Contact the
   = link_to 'registrar.', contacts_path
 
-- if @plans.count > 0
+- if @plans_by_category.count > 0
   %table.semantic.fullwidth
     %thead
       %tr
         %th
         = render :partial => "plan_categories/plan_table_common_headers"
     %tbody
-      - @plans.each do |plan|
-        %tr{:class => if plan.disabled? then "disabled" end }
-          %td.valign-middle.align-center= plan_selection_inputs(plan)
-          %td= plan.name
-          = render :partial => "plan_categories/plan_table_common_cells", :locals => { :plan => plan }
+      - @plans_by_category.each do |cat, plans|
+        %tr
+          %th{:colspan => 6}= cat.name
+        - plans.each do |plan|
+          %tr{:class => if plan.disabled? then "disabled" end }
+            %td.valign-middle.align-center= plan_selection_inputs(plan)
+            %td= plan.name
+            = render :partial => "plan_categories/plan_table_common_cells", :locals => { :plan => plan }
 
 = render :partial => "plan_categories/explain_availability"

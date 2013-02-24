@@ -175,8 +175,9 @@ describe AttendeesController do
           :id => attendee.id,
           :year => attendee.year
 
-        assigns(:plans).should include(plan)
-        assigns(:plans).map(&:name).should_not include(plan2.name)
+        assigns(:plans_by_category).should_not be_nil
+        assigns(:plans_by_category).should include(plan.plan_category)
+        assigns(:plans_by_category)[plan.plan_category].should == [plan]
       end
     end
 
