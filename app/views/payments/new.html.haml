@@ -2,12 +2,25 @@
 
 = form_for :sim_transaction, :url => authnet_form_url do |f|
   = sim_fields(@sim_transaction)
-  = label_tag 'x_amount', "Total: #{number_to_currency(@amount)}"
-  %br
-  = label_tag 'x_card_num', 'Credit Card Number'
-  = text_field_tag 'x_card_num'
-  %br
-  = label_tag 'x_exp_date', 'Expiration Date (MMYY)'
-  = text_field_tag 'x_exp_date'
-  %br/
-  = f.submit 'Purchase'
+
+  %h2 Payment Information
+  %table.lightweight.lightly-spaced-rows
+    %tbody
+      %tr
+        %th Amount
+        %td
+          = number_to_currency(@amount)
+          %span.smalltext= link_to 'change', pay_user_path(current_user)
+      %tr
+        %th Credit Card Number
+        %td= text_field_tag 'x_card_num', dev? ? '4111 1111 1111 1111' : nil
+      %tr
+        %th Expiration Date (MMYY)
+        %td= text_field_tag 'x_exp_date', dev? ? '1120' : '', :size => 4
+      %tr
+        %th Card Code
+        %td= text_field_tag 'x_card_code', dev? ? '123' : '', :size => 3
+      %tr
+        %th
+        %td
+          %input{ :type => "submit", :name => "submit", :value => "Finish" }

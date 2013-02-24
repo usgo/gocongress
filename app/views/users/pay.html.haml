@@ -1,39 +1,24 @@
-%form{ :action => @formAction, :method => "POST", :onSubmit => "return confirmAmount();" }
+%form{ :action => new_payment_path, :method => "get", :onSubmit => "return confirmAmount();" }
 
-  %h2 Balance
+  %h2 Make a Payment
   %table.lightweight
     %tbody
       %tr
         %th Total cost
         %td.numeric= cents_to_currency @user.get_invoice_total
-        %td.smalltext= link_to "Cost Summary", invoice_user_path(@user)
+        %td.smalltext= link_to "Summary", invoice_user_path(@user)
       %tr
         %th Amount paid
         %td.numeric= cents_to_currency @user.amount_paid
-        %td.smalltext Updated every few days, please be patient
+        %td.smalltext= link_to "History", ledger_user_path(@user)
       %tr
         %th Balance
         %td.numeric= cents_to_currency @user.balance
       %tr
-        %td{ :colspan => "3", :style => "padding-left: 0px;" }
-          %br
-          %h2 Make a Payment
-      %tr
-        %th Account Email Address
-        %td= @user.email
-        %td.smalltext Please use this email address on the following forms
-      %tr
-        %th Enter payment amount
+        %th Payment Amount
         %td.align-right
           $
           %input.align-right{ :type => "text", :size => "6", :name => "amount", :id => "amount" }
-          %input{ :type => "hidden", :name => "action", :value => "process_variable" }
-          %input{ :type => "hidden", :name => "order_description", :value => "USGC Payment for #{@user.email}" }
-          %input{ :type => "hidden", :name => "language", :value => "en" }
-          %input{ :type => "hidden", :name => "url_finish", :value => year_url }
-          %input{ :type => "hidden", :name => "customer_receipt", :value => "true" }
-          %input{ :type => "hidden", :name => "username", :value => @merchantone_username }
-        %td.smalltext Your payment will be processed by secure.merchantonegateway.com
       %tr
         %th
         %td.align-right
