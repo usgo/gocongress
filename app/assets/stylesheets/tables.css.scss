@@ -40,7 +40,10 @@ td.nowrap { white-space:nowrap; }
 /* Semantic table: The basic table meant for data, not for layout */
 table.semantic {
   thead th { vertical-align: bottom; }
-  td, th { border: 1px solid #666; padding: 0.25em; }
+  td, th {
+    border: 1px solid #666;
+    padding: 0.25em 0.25em 0.1em 0.25em;
+  }
   td {
     background-color: $orange-light;
     p { padding: 0px; }
