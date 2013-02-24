@@ -9,7 +9,7 @@ class TournamentsController < ApplicationController
 
   # Actions
   def index
-    @tournaments = @tournaments.where(:year => @year.year).order('lower(name)')
+    @tournaments = @tournaments.yr(@year).order('lower(name)')
   end
 
   def create
