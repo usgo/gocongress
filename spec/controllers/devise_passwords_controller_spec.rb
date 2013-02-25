@@ -8,13 +8,13 @@ describe Devise::PasswordsController do
   end
 
   describe '#create' do
-    it "user can create reset password token" do
+    it "creates a reset password token" do
       u = create :user
       post :create, :user => {:email => u.email, :year => u.year}, :year => u.year
       response.should redirect_to new_user_session_path
     end
 
-    it "reset password token is created for the correct user" do
+    it "creates a token for the correct user" do
 
       # Create two users with the same email address, but different years.
       user2011 = create :user, :email => "jared@jaredbeck.com", :year => 2011

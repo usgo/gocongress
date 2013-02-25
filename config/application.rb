@@ -6,18 +6,6 @@ require 'rails/all'
 # you've limited to :test, :development, or :production.
 Bundler.require(:default, Rails.env) if defined?(Bundler)
 
-# In local dev, Gmail SMTP account will be defined in a file for
-# convenience Obviously, this file should never be committed to source
-# control Thus, at heroku, this file will not be present For heroku, use
-# heroku config:add I'd like to raise an error if GMAIL_SMTP_USER is not
-# defined, but that would prevent Heroku from running rake
-# assets:precompile because "The app’s config vars are not available in
-# the environment during the slug compilation process."
-# http://devcenter.heroku.com/articles/rails31_heroku_cedar
-usgc_env_file = File.absolute_path "config/usgc_env.rb"
-require usgc_env_file if File.file?(usgc_env_file)
-puts "Warning: ENV['GMAIL_SMTP_USER'] undefined" if ENV['GMAIL_SMTP_USER'].blank?
-
 module Gocongress
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.

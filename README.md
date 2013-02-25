@@ -60,17 +60,17 @@ Secrets
 Some of these don't belong in source control because they are
 secret, and some vary by deployment level.
 
-    AUTHNET_API_LOGIN_ID
-    AUTHNET_RELAY_HOST
-    AUTHNET_TRANSACTION_KEY
-    GMAIL_SMTP_PASSWORD
-    GMAIL_SMTP_USER
+    AUTHNET_API_LOGIN_ID='foo'
+    AUTHNET_RELAY_HOST='bar'
+    AUTHNET_TRANSACTION_KEY='baz'
+    GMAIL_SMTP_PASSWORD='herp'
+    GMAIL_SMTP_USER='derp'
+
+This file will be loaded by `config/initializers/dev_env.rb`.
 
 For local development, I wish we could use [foreman][1] to load
 `.env`, but it doesn't work with `pry` or `guard` and it's overkill
-for one process. Start the app with `script/start.sh` which will
-`source` your `.env` file. Don't forget to `export` each var in
-`.env`.
+for one process.
 
 For `stage` and `production` use [heroku config][2].
 
