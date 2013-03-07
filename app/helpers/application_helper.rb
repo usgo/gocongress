@@ -66,8 +66,4 @@ module ApplicationHelper
     v = cents_for_currency_field(cents)
     builder.number_field atr, min: 0, size: 5, step: 0.01, value: v
   end
-
-  def production?
-    ENV['RAILS_ENV'] == 'production'
-  end
 end
