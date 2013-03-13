@@ -24,6 +24,7 @@ describe 'attendee form' do
       select 'Adult Small', from: 'attendee_tshirt_size'
       select '10 kyu', from: 'attendee_rank'
       select 'Aland Islands', from: 'attendee_country'
+      choose 'attendee_will_play_in_us_open_true'
       click_button 'Continue'
       page.should have_content 'Attendee added'
       page.should have_content 'What next?'

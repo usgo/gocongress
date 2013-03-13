@@ -23,6 +23,7 @@ class Attendee < ActiveRecord::Base
     :given_name, :gender, :guardian_full_name,
     :phone, :special_request, :rank,
     :roomate_request, :tshirt_size, :understand_minor, :user_id,
+    :will_play_in_us_open,
     :as => [:default, :admin]
 
   attr_accessible :comment, :minor_agreement_received, :as => :admin
@@ -94,6 +95,8 @@ class Attendee < ActiveRecord::Base
   validates :roomate_request, :length => {:maximum => 250}
   validates :special_request, :length => {:maximum => 250}
   validates :tshirt_size,     :inclusion => {:in => TSHIRT_SIZE_LIST, :message => " - Please select a size"}
+  validates :will_play_in_us_open, :inclusion => {
+    :in => [true, false], :message => ' - Please select yes or no'}
 
   # AGA ID must be unique within each year
   validates :aga_id,

@@ -9,6 +9,7 @@ FactoryGirl.define do
     given_name 'Amerigo'
     tshirt_size 'AL'
     rank 3
+    will_play_in_us_open false
     year Time.now.year
 
     # New validation: Attendees must always have

@@ -131,6 +131,13 @@ describe Attendee do
     let(:plan) { create :plan, inventory: 42, max_quantity: 999 }
     let(:a) { build :attendee }
 
+    it 'Attendee must indicate whether or not they will play in the US Open' do
+      a.will_play_in_us_open = nil
+      a.should have_error_about(:will_play_in_us_open)
+      a.will_play_in_us_open = false
+      a.should be_valid
+    end
+
     it 'country must be two capital lettters' do
       a.country.should match /^[A-Z]{2}$/
       a.country = 'United States'

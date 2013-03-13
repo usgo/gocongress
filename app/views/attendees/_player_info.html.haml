@@ -13,6 +13,13 @@
       = link_to 'AGA ID?', '#', :id => 'open_dialog_aga_id'
       &nbsp; Leave it blank.
 
+  .field
+    = f.label :will_play_in_us_open
+    = f.radio_button :will_play_in_us_open, true
+    Yes
+    = f.radio_button :will_play_in_us_open, false
+    No
+
 .dialog#dialog_aga_id{:title => "What is an AGA ID?"}
   %p
     Each AGA member is assigned an identification number.  Only AGA members
