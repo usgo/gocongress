@@ -145,24 +145,26 @@ describe Attendee do
       a.errors.keys.should include(:country)
     end
 
-    it "requires minors to provide the name of a guardian" do
-      a.stub(:minor?) { true }
-      a.guardian_full_name = nil
-      a.should_not be_valid
-      a.errors.keys.should include(:guardian_full_name)
-    end
-
     it "requires a birth date" do
       a.birth_date = nil
       a.should_not be_valid
       a.errors.keys.should include(:birth_date)
     end
 
-    it "requires minors to agree to fill out the liability release" do
-      a[:birth_date] = 5.years.ago
-      a[:understand_minor] = false
-      a.should_not be_valid
-      a.errors.keys.should include(:liability_release)
+    describe 'minors' do
+      it "requires minors to provide the name of a guardian" do
+        a.stub(:minor?) { true }
+        a.guardian_full_name = nil
+        a.should_not be_valid
+        a.errors.keys.should include(:guardian_full_name)
+      end
+
+      it "requires minors to agree to fill out the liability release" do
+        a[:birth_date] = 5.years.ago
+        a[:understand_minor] = false
+        a.should_not be_valid
+        a.errors.keys.should include(:liability_release)
+      end
     end
   end
 end
