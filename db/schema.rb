@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130313025426) do
+ActiveRecord::Schema.define(:version => 20130313033248) do
 
   create_table "activities", :force => true do |t|
     t.string   "name"
@@ -92,12 +92,12 @@ ActiveRecord::Schema.define(:version => 20130313025426) do
     t.text     "special_request"
     t.text     "roomate_request"
     t.string   "comment"
-    t.string   "guardian_full_name"
     t.integer  "year",                                                     :null => false
     t.datetime "airport_arrival"
     t.string   "airport_arrival_flight"
     t.datetime "airport_departure"
     t.boolean  "will_play_in_us_open"
+    t.integer  "guardian_attendee_id"
   end
 
   add_index "attendees", ["aga_id", "year"], :name => "index_attendees_on_aga_id_and_year", :unique => true

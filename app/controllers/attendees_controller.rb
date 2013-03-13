@@ -10,6 +10,7 @@ class AttendeesController < ApplicationController
   skip_authorize_resource :only => [:create, :index, :vip]
   add_filter_restricting_resources_to_year_in_route
   before_filter :expose_plans, :only => [:create, :edit, :new, :update]
+  before_filter :expose_adults, :only => [:create, :edit, :new, :update]
   before_filter :expose_selections, :only => [:create, :new, :update]
 
   # Constants
@@ -115,6 +116,17 @@ protected
   end
 
   private
+
+  def adults
+    Attendee.yr(@year).adults(@year).not_anonymous
+  end
+
+  # `@adults` will be used by jquery-ui autocomplete, hence the
+  # keys `label` and `value` -Jared 2013-03-13
+  def expose_adults
+    @adults = adults.map { |a| {label: a.full_name(true), value: a.id}}
+    @guardian_name = @attendee.guardian.try(:full_name)
+  end
 
   # `expose_plans` exposes `@plans_by_category`, determining which
   # plans will be shown on the form, and which plans are available

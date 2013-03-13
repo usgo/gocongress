@@ -99,9 +99,10 @@ describe AttendeesController do
         assigns(:attendee).errors.should include(:gender)
       end
 
-      it "minors can specify the name of their guardian" do
+      it "minors can specify their guardian" do
+        uncle_creepypants = create(:attendee, :birth_date => 50.years.ago)
         attrs = accessible_attributes_for(:minor).merge(:user_id => user.id)
-        attrs[:guardian_full_name] = "Mommy Moo"
+        attrs[:guardian_attendee_id] = uncle_creepypants.id
         expect {
           post :create, attendee: attrs, user_id: user.id, year: user.year
         }.to change{ Attendee.count }.by(+1)

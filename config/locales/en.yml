@@ -26,7 +26,6 @@ en:
         special_request: "Special Request"
         roomate_request: "Roomate Request"
         comment: "Comments"
-        guardian_full_name: "Attending Guardian"
         will_play_in_us_open: "Will play in US Open?"
       contact:
         title: "Title"

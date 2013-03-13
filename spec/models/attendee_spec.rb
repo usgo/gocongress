@@ -152,11 +152,13 @@ describe Attendee do
     end
 
     describe 'minors' do
-      it "requires minors to provide the name of a guardian" do
+      it "requires minors to provide the attendee id of a guardian" do
         a.stub(:minor?) { true }
-        a.guardian_full_name = nil
+        a.guardian = nil
         a.should_not be_valid
-        a.errors.keys.should include(:guardian_full_name)
+        a.should have_error_about(:guardian)
+        a.guardian = create(:attendee)
+        a.should_not have_error_about(:guardian)
       end
 
       it "requires minors to agree to fill out the liability release" do

@@ -14,13 +14,16 @@ class Attendee < ActiveRecord::Base
   has_many :attendee_activities, :dependent => :destroy
   has_many :activities, :through => :attendee_activities
 
+  belongs_to :guardian, :class_name => "Attendee",
+    :foreign_key => "guardian_attendee_id"
+
   # Mass assignment config
   # ----------------------
 
   attr_accessible :activity_ids, :aga_id, :anonymous, :airport_arrival,
     :airport_arrival_flight, :airport_departure, :birth_date,
     :country, :email, :family_name,
-    :given_name, :gender, :guardian_full_name,
+    :given_name, :gender, :guardian_attendee_id,
     :phone, :special_request, :rank,
     :roomate_request, :tshirt_size, :understand_minor, :user_id,
     :will_play_in_us_open,
@@ -55,6 +58,8 @@ class Attendee < ActiveRecord::Base
   scope :dan, where(:rank => 1..9)
   scope :kyu, where(:rank => -30..-1)
 
+  scope :not_anonymous, where(anonymous: false)
+
   # Some "blank" birth_date values have made it into production. The following
   # scope is a useful way to filter out those records when querying birth_date
   # (eg. finding youngest attendee) -Jared 2011-02-07
@@ -88,7 +93,7 @@ class Attendee < ActiveRecord::Base
   validates :family_name,     :presence => true
   validates :gender,          :inclusion => {:in => ["m","f"], :message => "is not valid"}, :presence => true
   validates :given_name,      :presence => true
-  validates :guardian_full_name, :presence => { :if => :require_guardian_full_name? }
+  validates :guardian,        :presence => { :if => :require_guardian? }
   validates :is_primary,      :inclusion => {:in => [true, false]}
   validates :minor_agreement_received, :inclusion => {:in => [true, false]}
   validates :rank,            :inclusion => {:in => Attendee::Rank::NUMERIC_RANK_LIST, :message => "is not valid"}, :presence => true
@@ -126,6 +131,10 @@ class Attendee < ActiveRecord::Base
 
   # Class Methods
   # =============
+
+  def self.adults year
+    where('birth_date < ?', CONGRESS_START_DATE[year.to_i] - 18.years)
+  end
 
   def self.attribute_names_for_csv
 
@@ -311,7 +320,7 @@ private
 
   # Minors are required to have a guardian.  To safely invoke
   # minor?(), we must first check that birth_date is present.
-  def require_guardian_full_name?
+  def require_guardian?
     birth_date.present? && minor?
   end
 
