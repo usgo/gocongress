@@ -1,0 +1,20 @@
+%h2 Shirt Colors
+
+- if current_user.present?
+  .row-of-buttons
+    - if can? :create, Shirt::ShirtColor
+      = button_to 'Add Color', new_shirt_color_path, :method => "get"
+
+%br
+
+- if @shirt_colors.empty?
+  %p We haven't decided the tshirt colors yet.
+- else
+  - @shirt_colors.each do |c|
+    .color-card
+      .color-box{:style => "background-color: ##{c.hex_triplet}"}
+        = c.hex_triplet
+      .color-name
+        = link_to c.name, edit_shirt_color_path(c)
+      .color-tools
+        = link_to 'Delete', shirt_color_path(c), :method => :delete, :confirm => 'Delete? Are you sure?'

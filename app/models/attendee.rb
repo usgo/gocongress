@@ -17,6 +17,8 @@ class Attendee < ActiveRecord::Base
   belongs_to :guardian, :class_name => "Attendee",
     :foreign_key => "guardian_attendee_id"
 
+  belongs_to :shirt_color
+
   # Mass assignment config
   # ----------------------
 

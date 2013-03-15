@@ -1,0 +1,16 @@
+.color-card {
+  float: left;
+  margin-right: 10px;
+  width: 150px;
+  .color-box {
+    border: 1px solid black;
+    display: table-cell;
+    height: 150px;
+    text-align: center;
+    width: 150px;
+    vertical-align: middle;
+  }
+  .color-name, .color-tools {
+    margin-top: 5px;
+  }
+}

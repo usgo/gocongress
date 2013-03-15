@@ -45,7 +45,7 @@ module YearlyController
     # Try to load the resource by id.  This can throw
     # RecordNotFound, but that would happen later anyway
     # when cancan (or whatever) loads the resource.
-    model_class = controller_name.classify.constantize
+    model_class ||= controller_name.classify.constantize
     resource = model_class.find(params[:id])
 
     # If we find the resource and it doesn't belong to the year
