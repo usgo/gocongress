@@ -9,9 +9,6 @@
 
 - if current_user.present?
   .row-of-buttons
-    = form_tag choose_attendee_user_path(current_user), :method => "get" do
-      = hidden_field_tag :destination_page, :activities
-      = submit_tag "Sign Up for #{emhp}"
     - if can? :create, Activity
       .inline-children= button_to "New #{emh}", new_activity_path, :method => "get"
     - if can? :edit, @activity_category
