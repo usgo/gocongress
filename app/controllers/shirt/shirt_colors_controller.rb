@@ -13,7 +13,7 @@ class Shirt::ShirtColorsController < ApplicationController
   def create
     @shirt_color.year = @year.year
     if @shirt_color.save
-      redirect_to shirt_colors_path, :notice => 'Color added'
+      redirect_to shirt_shirt_colors_path, :notice => 'Color added'
     else
       render :action => "new"
     end
@@ -21,7 +21,7 @@ class Shirt::ShirtColorsController < ApplicationController
 
   def update
     if @shirt_color.update_attributes(params[:shirt_shirt_color])
-      redirect_to shirt_colors_path, :notice => 'Color updated'
+      redirect_to shirt_shirt_colors_path, :notice => 'Color updated'
     else
       render :action => "edit"
     end
@@ -29,6 +29,6 @@ class Shirt::ShirtColorsController < ApplicationController
 
   def destroy
     @shirt_color.destroy
-    redirect_to(shirt_colors_path, :notice => 'Color deleted')
+    redirect_to(shirt_shirt_colors_path, :notice => 'Color deleted')
   end
 end

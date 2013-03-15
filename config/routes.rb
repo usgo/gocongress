@@ -41,7 +41,7 @@ Gocongress::Application.routes.draw do
           put 'update_order', :on => :collection
         end
 
-        scope :module => "shirt" do
+        namespace :shirt do
           resources :shirt_colors, :except => :show
         end
 

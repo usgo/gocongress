@@ -1,4 +1,4 @@
-= form_for(@shirt_color, :url => @shirt_color.new_record? ? shirt_colors_path : shirt_color_path(@shirt_color)) do |f|
+= form_for @shirt_color do |f|
   = render :partial => "shared/error_messages", :locals => { :resource => @shirt_color }
 
   .field

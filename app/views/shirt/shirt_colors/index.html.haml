@@ -3,7 +3,7 @@
 - if current_user.present?
   .row-of-buttons
     - if can? :create, Shirt::ShirtColor
-      = button_to 'Add Color', new_shirt_color_path, :method => "get"
+      = button_to 'Add Color', new_shirt_shirt_color_path, :method => "get"
 
 %br
 
@@ -15,6 +15,6 @@
       .color-box{:style => "background-color: ##{c.hex_triplet}"}
         = c.hex_triplet
       .color-name
-        = link_to c.name, edit_shirt_color_path(c)
+        = link_to c.name, edit_shirt_shirt_color_path(c)
       .color-tools
-        = link_to 'Delete', shirt_color_path(c), :method => :delete, :confirm => 'Delete? Are you sure?'
+        = link_to 'Delete', shirt_shirt_color_path(c), :method => :delete, :confirm => 'Delete? Are you sure?'
