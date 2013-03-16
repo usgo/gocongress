@@ -6,7 +6,7 @@ class Ability
   # For example, when applying conditions, eg. :year
   ALL_RESOURCES = [Activity, ActivityCategory, Attendee,
     Contact, Content, ContentCategory, Event,
-    PlanCategory, Plan, Shirt::ShirtColor, Transaction, Tournament,
+    PlanCategory, Plan, Shirt, Transaction, Tournament,
     User, Year]
 
   def initialize(user)
@@ -48,7 +48,7 @@ class Ability
 
     # Guests can read public resources, but cannot write anything
     can :read, [Contact, Content, ContentCategory, Activity,
-      Shirt::ShirtColor, Tournament, PlanCategory]
+      Shirt, Tournament, PlanCategory]
 
     # Guests can show (but not index) the following:
     can :show, ActivityCategory

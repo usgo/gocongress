@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130315031224) do
+ActiveRecord::Schema.define(:version => 20130316015146) do
 
   create_table "activities", :force => true do |t|
     t.string   "name"
@@ -98,7 +98,7 @@ ActiveRecord::Schema.define(:version => 20130315031224) do
     t.datetime "airport_departure"
     t.boolean  "will_play_in_us_open"
     t.integer  "guardian_attendee_id"
-    t.integer  "shirt_color_id"
+    t.integer  "shirt_id"
   end
 
   add_index "attendees", ["aga_id", "year"], :name => "index_attendees_on_aga_id_and_year", :unique => true
@@ -183,15 +183,19 @@ ActiveRecord::Schema.define(:version => 20130315031224) do
   add_index "plans", ["id", "year"], :name => "index_plans_on_id_and_year", :unique => true
   add_index "plans", ["plan_category_id"], :name => "index_plans_on_plan_category_id"
 
-  create_table "shirt_colors", :force => true do |t|
-    t.integer "year",                      :null => false
-    t.string  "name",        :limit => 30, :null => false
-    t.string  "hex_triplet", :limit => 6,  :null => false
+  create_table "shirts", :force => true do |t|
+    t.integer  "year",                       :null => false
+    t.string   "name",        :limit => 40,  :null => false
+    t.string   "hex_triplet", :limit => 6,   :null => false
+    t.string   "description", :limit => 100, :null => false
+    t.string   "image_url",   :limit => 250
+    t.datetime "created_at",                 :null => false
+    t.datetime "updated_at",                 :null => false
   end
 
-  add_index "shirt_colors", ["hex_triplet", "year"], :name => "index_shirt_colors_on_hex_triplet_and_year", :unique => true
-  add_index "shirt_colors", ["id", "year"], :name => "index_shirt_colors_on_id_and_year", :unique => true
-  add_index "shirt_colors", ["name", "year"], :name => "index_shirt_colors_on_name_and_year", :unique => true
+  add_index "shirts", ["hex_triplet", "year"], :name => "index_shirts_on_hex_triplet_and_year", :unique => true
+  add_index "shirts", ["id", "year"], :name => "index_shirts_on_id_and_year", :unique => true
+  add_index "shirts", ["name", "year"], :name => "index_shirts_on_name_and_year", :unique => true
 
   create_table "tournaments", :force => true do |t|
     t.string   "name",                      :limit => 50,                    :null => false

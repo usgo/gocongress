@@ -1,0 +1,20 @@
+= form_for @shirt do |f|
+  = render :partial => "shared/error_messages", :locals => { :resource => @shirt }
+
+  .field
+    = f.label :name
+    = f.text_field :name
+  .field
+    = f.label :description
+    = f.text_field :description
+  .field
+    = f.label :hex_triplet
+    = f.text_field :hex_triplet, :size => 6
+    %span.smalltext eg. 00FF00 is blue
+  .field
+    = f.label :image_url
+    = f.text_field :image_url
+
+  .field
+    %label
+    = f.submit 'Save'

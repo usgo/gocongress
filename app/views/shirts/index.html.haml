@@ -1,0 +1,28 @@
+%h2 Shirts
+
+- if current_user.present?
+  .row-of-buttons
+    - if can? :create, Shirt
+      = button_to 'Add Shirt', new_shirt_path, :method => "get"
+
+- if @shirts.empty?
+  %p No shirts yet this year.
+- else
+  %table.semantic.fullwidth
+    %thead
+      %th Name
+      %th Description
+      %th Color
+      %th Image
+      %th
+    %tbody
+      - @shirts.each do |shirt|
+        %tr
+          %td= link_to shirt.name, edit_shirt_path(shirt)
+          %td= shirt.description
+          %td{:style => "background-color: ##{shirt.hex_triplet}"}
+            = shirt.hex_triplet
+          %td
+            - uri_path = URI.split(shirt.image_url)[5].split('/').last
+            = link_to uri_path, shirt.image_url
+          %td= link_to 'Delete', shirt_path(shirt), :method => :delete, :confirm => 'Delete? Are you sure?'

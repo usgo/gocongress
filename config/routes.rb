@@ -40,10 +40,7 @@ Gocongress::Application.routes.draw do
         resources :plan_categories do
           put 'update_order', :on => :collection
         end
-
-        namespace :shirt do
-          resources :shirt_colors, :except => :show
-        end
+        resources :shirts, :except => :show
 
         resources :attendees, :except => [:show] do
           collection do
