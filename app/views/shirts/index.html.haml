@@ -1,4 +1,9 @@
 %h2 Shirts
+%p
+  Every Congress attendee gets a free T-Shirt, with the Congress
+  logo (not shown).
+  - if @year.to_i == 2013
+    This year, we're excited to have a variety of styles!
 
 - if current_user.present?
   .row-of-buttons
@@ -8,21 +13,17 @@
 - if @shirts.empty?
   %p No shirts yet this year.
 - else
-  %table.semantic.fullwidth
-    %thead
-      %th Name
-      %th Description
-      %th Color
-      %th Image
-      %th
+  %table.bleached.push-top
     %tbody
       - @shirts.each do |shirt|
         %tr
-          %td= link_to shirt.name, edit_shirt_path(shirt)
-          %td= shirt.description
-          %td{:style => "background-color: ##{shirt.hex_triplet}"}
-            = shirt.hex_triplet
           %td
-            - uri_path = URI.split(shirt.image_url)[5].split('/').last
-            = link_to uri_path, shirt.image_url
-          %td= link_to 'Delete', shirt_path(shirt), :method => :delete, :confirm => 'Delete? Are you sure?'
+            .shirt-image
+              = link_to shirt.image_url do
+                %img{:src => shirt.image_url}
+          %td.valign-top
+            %h3= link_to_if can?(:edit, shirt), shirt.name, edit_shirt_path(shirt)
+            .color-block{:style => "background-color: ##{shirt.hex_triplet}"}
+            %p= shirt.description
+            - if can? :delete, shirt
+              %p= link_to 'Delete', shirt_path(shirt), :method => :delete, :confirm => 'Delete? Are you sure?'

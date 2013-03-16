@@ -1,0 +1,8 @@
+%fieldset
+  .field
+    = f.label :tshirt_size
+    = f.select :tshirt_size, Attendee::TSHIRT_CHOICES, :include_blank => ''
+  .field
+    = f.label :shirt_id, 'Shirt Style'
+    = f.select :shirt_id, options_from_collection_for_select(Shirt.all, :id, :name, selected = @attendee.shirt_id), :include_blank => ''
+    %span.smalltext= link_to 'Details', shirts_path, :target => '_blank'

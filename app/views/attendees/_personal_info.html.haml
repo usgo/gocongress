@@ -31,9 +31,6 @@
     %input#guardian{:value => @guardian_name}
     = f.hidden_field :guardian_attendee_id
     %span.smalltext Attending adult responsible for minor
-  .field
-    = f.label :tshirt_size
-    = f.select :tshirt_size, Attendee::TSHIRT_CHOICES, :include_blank => ''
 
 :javascript
   $(function() {

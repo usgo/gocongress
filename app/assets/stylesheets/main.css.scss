@@ -74,6 +74,13 @@ img.thin-border { border: 1px solid black; }
 .float-left { float: left; }
 .float-right { float: right; }
 .valign-middle { vertical-align: middle; }
+.valign-top { vertical-align: top; }
+
+/* Common margin shortcuts */
+.push-top { margin-top: 20px; }
+.push-bottom { margin-bottom: 20px; }
+.push-left { margin-left: 20px; }
+.push-right { margin-right: 20px; }
 
 /* Use this class to pad flow elements (eg. div, form) -Jared 4/9/11 */
 .flow-padding { padding: 8px 0px; }
