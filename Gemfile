@@ -1,4 +1,4 @@
-source 'http://rubygems.org'
+source 'https://rubygems.org'
 
 # Specify a ruby version
 # http://gembundler.com/v1.2/whats_new.html
