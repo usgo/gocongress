@@ -301,8 +301,12 @@ class Attendee < ActiveRecord::Base
     Hash[ids.zip(qtys)]
   end
 
+  def get_rank
+    Attendee::Rank.new(self.rank)
+  end
+
   def get_rank_name
-    Attendee::Rank.new(self.rank).name
+    get_rank.name
   end
 
   def rank_name_for_badge

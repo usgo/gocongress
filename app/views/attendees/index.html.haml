@@ -7,7 +7,7 @@
 
   %p
     There are #{ @attendees.size } people registered, including
-    #{@kyu_count} kyu-level players, #{@dan_count} dan-level
+    #{@kyu_count} kyu players, #{@dan_count} dan
     players, and #{pluralize(@pro_count, 'pro')}.  But what is the
     average age, you ask?  Check out these
     = link_to "statistics.", attendee_statistics_path

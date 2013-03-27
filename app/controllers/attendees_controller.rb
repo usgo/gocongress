@@ -20,11 +20,10 @@ class AttendeesController < ApplicationController
   def index
     params[:direction] ||= "asc"
     @opposite_direction = (params[:direction] == 'asc') ? 'desc' : 'asc'
-    @attendees = Attendee.yr(@year).with_at_least_one_plan
-    @attendees = @attendees.order(order_clause)
-    @pro_count = @attendees.pro.count
-    @dan_count = @attendees.dan.count
-    @kyu_count = @attendees.kyu.count
+    @attendees = WhoIsComing.attendees(@year, order_clause)
+    @pro_count = @attendees.select{|a| a.get_rank.pro?}.count
+    @dan_count = @attendees.select{|a| a.get_rank.dan?}.count
+    @kyu_count = @attendees.select{|a| a.get_rank.kyu?}.count
   end
 
   def new

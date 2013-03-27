@@ -21,4 +21,16 @@ class Attendee::Rank
     pair ? pair[0] : raise("Invalid rank: #{@n}")
   end
 
+  def pro?
+    (101..109).include?(@n)
+  end
+
+  def dan?
+    (1..9).include?(@n)
+  end
+
+  def kyu?
+    (-30..-1).include?(@n)
+  end
+
 end

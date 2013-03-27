@@ -27,18 +27,10 @@ describe AttendeesController do
       render_views
 
       it "succeeds" do
-        get :index, :year => Time.now.year
+        WhoIsComing.stub(:attendees) { [Attendee.new] }
+        get :index, :year => Time.zone.now.year
         response.should be_successful
-      end
-
-      it "lists attendees with at least one plan" do
-        a = create :attendee
-        a.plans << create(:plan)
-        a2 = create :attendee
-        get :index, year: a.year
-        response.should be_successful
-        assigns(:attendees).should include(a)
-        assigns(:attendees).should_not include(a2)
+        assigns(:attendees).should_not be_nil
       end
     end
 
