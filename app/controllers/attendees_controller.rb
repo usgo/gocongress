@@ -24,6 +24,7 @@ class AttendeesController < ApplicationController
     @pro_count = @attendees.select{|a| a.get_rank.pro?}.count
     @dan_count = @attendees.select{|a| a.get_rank.dan?}.count
     @kyu_count = @attendees.select{|a| a.get_rank.kyu?}.count
+    @unregistered_count = Attendee.yr(@year).count - @attendees.count
   end
 
   def new
