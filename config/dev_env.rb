@@ -42,5 +42,3 @@ module GocongressDevelopmentEnv
     end
   end
 end
-
-GocongressDevelopmentEnv.load_env

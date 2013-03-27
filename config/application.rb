@@ -6,6 +6,10 @@ require 'rails/all'
 # you've limited to :test, :development, or :production.
 Bundler.require(:default, Rails.env) if defined?(Bundler)
 
+# Load the gocongress secrets, eg. gmail credentials
+require_relative 'dev_env'
+GocongressDevelopmentEnv.load_env
+
 module Gocongress
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
@@ -22,7 +26,7 @@ module Gocongress
     config.action_mailer.smtp_settings = {
       :address => "smtp.gmail.com",
       :port => 587,
-      :authentication => 'plain',
+      :authentication => :plain,
       :user_name => ENV['GMAIL_SMTP_USER'],
       :password => ENV['GMAIL_SMTP_PASSWORD'],
       :enable_starttls_auto => true
