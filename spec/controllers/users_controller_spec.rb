@@ -127,6 +127,17 @@ describe UsersController do
       sign_in staff
     end
 
+    it 'cannot get #new' do
+      get :new, :year => year
+      response.should be_forbidden
+    end
+
+    it 'can #create' do
+      expect { post :create, :user => accessible_attributes_for(:user), :year => year
+        }.to_not change { User.yr(year).count }
+      response.should be_forbidden
+    end
+
     it "can edit email" do
       get :edit_email, :id => staff.id, :year => staff.year
       assert_response :success

@@ -12,8 +12,9 @@
   can see anything.
   Do not promote too many of either.
 
-.row-of-buttons
-  = button_to 'New User', new_user_path, :method => 'get'
+- if can? :create, User
+  .row-of-buttons
+    = button_to 'New User', new_user_path, :method => 'get'
 
 %table.semantic.fullwidth.zebra
   %thead
