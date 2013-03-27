@@ -55,9 +55,11 @@ table.semantic {
   /* Semantic table: Row emphasis */
   /* Emphasis is more important than zebra striping, so we must
   define it after zebra -Jared 1/13/11 */
-  tr td.emphasis-strong { background-color: #FF0; }
-  tr td.emphasis { background-color: #FF9; }
-  tr td.emphasis-none { background-color: auto; }
+  tbody tr td {
+    &.emphasis-strong { background-color: #FF0; }
+    &.emphasis { background-color: #FF9; }
+    &.emphasis-none { background-color: auto; }
+  }
 
   tr.understated td { color: #666; }
   tr.disabled td { background-color: #DDD; color: #666; }
