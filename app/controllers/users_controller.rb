@@ -16,6 +16,22 @@ class UsersController < ApplicationController
     authorize! :update, @user
   end
 
+  def new
+    @user = User.new(year: @year.year)
+    authorize! :new, @user
+  end
+
+  def create
+    @user.year = @year.year
+    authorize! :create, @user
+    if @user.save
+      UserMailer.welcome_email(@user).deliver
+      redirect_to users_path, :notice => 'User created'
+    else
+      render :new
+    end
+  end
+
   def index
     if %w[created_at last_sign_in_at].include? params[:sort]
       drn = (params[:drn] == "asc") ? :asc : :desc

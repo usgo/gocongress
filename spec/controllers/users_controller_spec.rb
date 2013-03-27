@@ -170,6 +170,17 @@ describe UsersController do
       sign_in create :admin
     end
 
+    it 'can get #new' do
+      get :new, :year => year
+      response.should be_success
+    end
+
+    it 'can #create' do
+      expect { post :create, :user => accessible_attributes_for(:user), :year => year
+        }.to change { User.yr(year).count }.by(+1)
+      response.should redirect_to users_path
+    end
+
     it 'can #destroy' do
       user # `create` before `expect` to change
       expect { delete :destroy, :id => user.id, :year => user.year

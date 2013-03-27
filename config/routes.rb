@@ -30,7 +30,9 @@ Gocongress::Application.routes.draw do
 
         get 'costs' => 'plan_categories#index'
 
-        devise_for :users, :controllers => { :registrations => "sign_ups" }
+        devise_for :users,
+          :controllers => { :registrations => "sign_ups" },
+          :path => 'sign_ups'
 
         resources :activities, :contacts, :content_categories,
           :contents, :activity_categories, :tournaments,
@@ -51,7 +53,7 @@ Gocongress::Application.routes.draw do
           end
         end
 
-        resources :users, :except => [:new, :create] do
+        resources :users do
           member do
             get 'edit_email', :as => 'edit_email_for'
             get 'edit_password', :as => 'edit_password_for'
