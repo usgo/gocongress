@@ -44,7 +44,7 @@ class PaymentsController < ApplicationController
 
   def assert_config
     conf = AUTHORIZE_NET_CONFIG
-    if conf['api_login_id'].nil? || conf['api_transaction_key'].nil?
+    if conf['api_login_id'].blank? || conf['api_transaction_key'].blank? || conf['merchant_hash_value'].blank?
       raise "authnet config is missing"
     end
     if Rails.env == 'development' && ENV['AUTHNET_RELAY_HOST'].blank?
