@@ -35,7 +35,6 @@ class PaymentsController < ApplicationController
   end
 
   def receipt
-    authorize! :receipt, :authnet_payment
     @auth_code = params[:x_auth_code]
     @transaction_saved = params[:transaction_saved] == 'true'
   end
