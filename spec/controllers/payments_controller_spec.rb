@@ -3,6 +3,22 @@ require "spec_helper"
 describe PaymentsController do
   render_views
 
+  describe '#new' do
+    it 'requires authentication' do
+      get :new
+      response.should be_forbidden
+    end
+
+    it 'assings a sim_transaction with a cust_id' do
+      u = create :user
+      sign_in(u)
+      get :new
+      response.should be_success
+      assigns(:sim_transaction).should_not be_nil
+      assigns(:sim_transaction).fields[:cust_id].should == u.id
+    end
+  end
+
   describe '#relay_response' do
     it 'succeeds' do
       post :relay_response
