@@ -1,8 +1,13 @@
-Sorry, your payment went through, but we weren't able to verify it.
+- if @sim_response.declined?
+  Sorry, your card was declined.
+- elsif @sim_response.error?
+  Sorry, there was an error processing your card.
+- elsif @sim_response.approved?
+  Sorry, we were unable to authenticate the response from the
+  payment gateway.
+- else
+  Sorry, something went wrong.
 
-Don't worry, because we have a record of it, and we'll get an email
-about it.
+Please go back and try your payment again.
 
-However, it's not going to show up automatically on your payment
-history. Please contact us to make sure we give you credit. Sorry
-about the trouble!
+If you continue to have trouble, please contact the registrar.
