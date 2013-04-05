@@ -3,9 +3,8 @@
 %h3= Plan.model_name.human.pluralize
 
 %p
-  Select plans with check
-  box ( #{disabled_checkbox}
-  )#{ " or enter a quantity" if @show_quantity_instructions }.
+  Mark the checkboxes below ( #{disabled_checkbox}
+  )#{" or enter quantities" if @show_quantity_instructions}.
 
   Questions? Contact the
   = link_to 'registrar.', contacts_path
