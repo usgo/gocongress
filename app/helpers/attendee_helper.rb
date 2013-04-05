@@ -1,9 +1,5 @@
 module AttendeeHelper
 
-  def address_without_linebreaks(a)
-    "#{a.address_1} #{a.address_2} #{a.city}, #{a.state} #{a.zip} #{a.country}"
-  end
-
   def plan_selection_inputs plan
     selection = plan_selection(plan)
     if plan.daily?

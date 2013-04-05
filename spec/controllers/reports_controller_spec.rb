@@ -20,6 +20,17 @@ describe ReportsController do
     end
   end
 
+  describe '#atn_reg_sheets' do
+    it "assigns certain ivars" do
+      a = create :attendee
+      sign_in admin
+      get :atn_reg_sheets, :year => admin.year, :min => 'a', :max => 'z'
+      response.should be_success
+      assigns(:attendees).should == [a]
+      assigns(:attendee_attr_names).should_not be_empty
+    end
+  end
+
   describe "#user_invoices" do
     it "filters users alphabeticaly by name" do
 

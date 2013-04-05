@@ -18,9 +18,6 @@
     %table
       %tbody
         %tr
-          %th Address
-          %td= address_without_linebreaks attendee
-        %tr
           %th Age
           %td= attendee.age_in_years.to_i
         - @attendee_attr_names.each do |a|
