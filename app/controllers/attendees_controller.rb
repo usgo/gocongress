@@ -67,8 +67,13 @@ class AttendeesController < ApplicationController
   end
 
   def destroy
-    @attendee.destroy
-    redirect_to user_path(@attendee.user_id), :notice => "Attendee deleted"
+    begin
+      @attendee.destroy
+    rescue ActiveRecord::DeleteRestrictionError => err
+      redirect_to @attendee.user, :alert => err.to_s
+      return
+    end
+    redirect_to @attendee.user, :notice => "Attendee deleted"
   end
 
   def print_summary

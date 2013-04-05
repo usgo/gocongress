@@ -402,6 +402,16 @@ describe AttendeesController do
           }.to change { Attendee.count }.by(-1)
         response.should redirect_to user_path(prim.user)
       end
+
+      it "cannot destroy a guardian" do
+        g = create :attendee
+        a = create :attendee, guardian: g
+        a.reload.guardian.should == g
+        expect { delete :destroy, :id => g.id, :year => g.year
+          }.to_not change { Attendee.count }
+        response.should redirect_to g.user
+        flash[:alert].should == 'Cannot delete record because of dependent minors'
+      end
     end
 
     describe '#edit' do
