@@ -43,10 +43,14 @@ class Transaction < ActiveRecord::Base
   with_options :if => :is_gateway_transaction? do |gwt|
     gwt.validates :gwdate, :presence => true
     gwt.validates_date :gwdate
+
+    # Now that we've switched to authorize.net, we no longer
+    # validate the uniqueness of `gwtranid`.  This is because when
+    # the account is in "test" mode, the returned transaction id is
+    # always zero. -Jared 2013-04-06
     gwt.validates :gwtranid, \
       :presence => true, \
-      :numericality => { :less_than => 9223372036854775807 }, \
-      :uniqueness => true
+      :numericality => { :less_than => 9223372036854775807 }
   end
 
   # gwdate and gwtranid are only allowed for gateway tranactions, eg. sales

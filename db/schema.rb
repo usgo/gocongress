@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130316015146) do
+ActiveRecord::Schema.define(:version => 20130406180000) do
 
   create_table "activities", :force => true do |t|
     t.string   "name"
@@ -228,7 +228,6 @@ ActiveRecord::Schema.define(:version => 20130316015146) do
     t.integer  "amount",                          :null => false
   end
 
-  add_index "transactions", ["gwtranid"], :name => "index_transactions_on_gwtranid", :unique => true
   add_index "transactions", ["user_id"], :name => "index_transactions_on_user_id"
   add_index "transactions", ["year", "created_at"], :name => "index_transactions_on_year_and_created_at"
 
