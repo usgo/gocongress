@@ -26,8 +26,8 @@ class PaymentsController < ApplicationController
       begin
         Transaction.create_from_authnet_sim_response(@sim_response)
         render_js_redirect_to_receipt(@sim_response, true)
-      rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotFound
-        render_js_redirect_to_receipt(@sim_response, false)
+      rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotFound => e
+        render_js_redirect_to_receipt(@sim_response, false, e.to_s)
       end
     else
       render :layout => false
@@ -37,6 +37,7 @@ class PaymentsController < ApplicationController
   def receipt
     @auth_code = params[:x_auth_code]
     @transaction_saved = params[:transaction_saved] == 'true'
+    @error_msg = params[:error_msg] || ""
   end
 
   private
@@ -67,9 +68,10 @@ class PaymentsController < ApplicationController
   end
 
   # Render a JS window.location redirect (and meta-refresh fallback)
-  def render_js_redirect_to_receipt sim_response, transaction_saved
+  def render_js_redirect_to_receipt sim_response, transaction_saved, error_msg
     url = payments_receipt_url(
       :transaction_saved => transaction_saved,
+      :error_msg => error_msg,
       :only_path => false)
     render :text => sim_response.direct_post_reply(url, :include => true)
   end
