@@ -68,7 +68,7 @@ class PaymentsController < ApplicationController
   end
 
   # Render a JS window.location redirect (and meta-refresh fallback)
-  def render_js_redirect_to_receipt sim_response, transaction_saved, error_msg
+  def render_js_redirect_to_receipt sim_response, transaction_saved, error_msg = nil
     url = payments_receipt_url(
       :transaction_saved => transaction_saved,
       :error_msg => error_msg,
