@@ -42,13 +42,15 @@ describe PaymentsController do
       end
 
       it 'includes url of sad receipt when saving the transaction fails' do
+        msg = "sadness"
         Transaction.stub(:create_from_authnet_sim_response) do
-          raise ActiveRecord::RecordNotFound
+          raise ActiveRecord::RecordNotFound, msg
         end
         post :relay_response
         response.should be_success
         expected_url = payments_receipt_url(
           :transaction_saved => false,
+          :error_msg => msg,
           :only_path => false)
         response.body.should include expected_url
       end
