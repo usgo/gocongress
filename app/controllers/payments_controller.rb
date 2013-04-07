@@ -4,15 +4,20 @@ class PaymentsController < ApplicationController
 
   before_filter :assert_config
 
+  # To save money, we're using Heroku's piggyback SSL, so we're
+  # sending users to https://gocongress.herokuapp.com/payments/new.
+  # Because the domain name changes, they will *not* supply cookies.
+  # Thus, current_user will be nil.  Therefore, we pass the user id
+  # in the params. -Jared 2013-04-07
   def new
-    authorize! :new, :authnet_payment
+    assert_userid_in_params
     @amount = params[:amount].to_f
     @sim_transaction = AuthorizeNet::SIM::Transaction.new(
       conf('api_login_id'),
       conf('api_transaction_key'),
       @amount,
       :relay_url => environment_aware_relay_url)
-    @sim_transaction.set_fields({:cust_id => current_user.id})
+    @sim_transaction.set_fields({:cust_id => params[:user_id].to_i})
   end
 
   # After processing the payment form submission, Authorize.Net
@@ -41,6 +46,10 @@ class PaymentsController < ApplicationController
   end
 
   private
+
+  def assert_userid_in_params
+    raise "user id undefined" unless params[:user_id].to_i > 0
+  end
 
   def assert_config
     conf = AUTHORIZE_NET_CONFIG

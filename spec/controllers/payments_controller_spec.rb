@@ -4,15 +4,14 @@ describe PaymentsController do
   render_views
 
   describe '#new' do
-    it 'requires authentication' do
-      get :new
-      response.should be_forbidden
+    it 'requires a user_id' do
+      expect { get :new }.to raise_error(RuntimeError, "user id undefined")
     end
 
     it 'assings a sim_transaction with a cust_id' do
       u = create :user
       sign_in(u)
-      get :new
+      get :new, user_id: u.id
       response.should be_success
       assigns(:sim_transaction).should_not be_nil
       assigns(:sim_transaction).fields[:cust_id].should == u.id

@@ -17,8 +17,6 @@ class Ability
     if user.nil?
       user = User.new
       user.role = '' # we cannot pass role to new() because role is attr_protected
-    else
-      can :manage, :authnet_payment
     end
 
     # Admins can do anything in their own year

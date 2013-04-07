@@ -50,6 +50,7 @@ class UsersController < ApplicationController
 
   def pay
     authorize! :update, @user
+    @form_action = new_payment_url(new_payment_url_options)
   end
 
   def invoice
@@ -119,6 +120,16 @@ protected
   end
 
 private
+
+  def new_payment_url_options
+    subdom = Rails.env.production? ? 'gocongress' : 'gocongress-dev'
+    {
+      :host => subdom + '.herokuapp.com',
+      :protocol => 'https',
+      :port => 443,
+      :user_id => current_user.id
+    }
+  end
 
   def params_contains_user_attr(attribute)
     params.key?(:user) && params[:user].key?(attribute)
