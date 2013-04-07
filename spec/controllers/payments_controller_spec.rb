@@ -58,13 +58,13 @@ describe PaymentsController do
     it 'renders error message when declined' do
       post :relay_response, {:x_response_code => 2}
       response.should be_success
-      response.body.should include('Sorry, your card was declined.')
+      response.body.should include('your card was declined.')
     end
 
     it 'renders error message when sim response is error' do
       post :relay_response, {:x_response_code => 3}
       response.should be_success
-      response.body.should include('Sorry, there was an error')
+      response.body.should include('there was an error')
     end
 
     it 'renders error message when approved, but hashing fails' do
