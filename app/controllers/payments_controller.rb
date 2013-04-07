@@ -11,13 +11,14 @@ class PaymentsController < ApplicationController
   # in the params. -Jared 2013-04-07
   def new
     assert_userid_in_params
+    @user = User.find params[:user_id].to_i
     @amount = params[:amount].to_f
     @sim_transaction = AuthorizeNet::SIM::Transaction.new(
       conf('api_login_id'),
       conf('api_transaction_key'),
       @amount,
       :relay_url => environment_aware_relay_url)
-    @sim_transaction.set_fields({:cust_id => params[:user_id].to_i})
+    @sim_transaction.set_fields({:cust_id => @user.id})
   end
 
   # After processing the payment form submission, Authorize.Net
