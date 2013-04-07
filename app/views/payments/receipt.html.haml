@@ -3,8 +3,9 @@
 
 - if @transaction_saved
   %p
-    Would you like to review your
-    = link_to('payment history', ledger_user_path(current_user)) + '?'
+    You may now
+    = link_to('return to gocongress.org', 'http://www.gocongress.org')
+    and review your payment history.
 - else
   %p.notice
     Your payment was successful, but we failed to save a record of

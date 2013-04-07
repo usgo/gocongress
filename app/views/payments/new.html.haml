@@ -8,9 +8,7 @@
     %tbody
       %tr
         %th Amount
-        %td
-          = number_to_currency(@amount)
-          %span.smalltext= link_to 'change', pay_user_path(current_user)
+        %td= number_to_currency(@amount)
       %tr
         %th Credit Card Number
         %td= text_field_tag 'x_card_num', dev? ? '4111 1111 1111 1111' : nil
