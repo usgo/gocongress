@@ -126,8 +126,7 @@ private
     {
       :host => subdom + '.herokuapp.com',
       :protocol => 'https',
-      :port => 443,
-      :user_id => current_user.id
+      :port => 443
     }
   end
 

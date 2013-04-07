@@ -1,4 +1,5 @@
 %form{ :action => @form_action, :method => "get", :onSubmit => "return confirmAmount();" }
+  = hidden_field_tag 'user_id', current_user.id
 
   %h2 Make a Payment
   %table.lightweight
