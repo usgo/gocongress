@@ -4,7 +4,7 @@ module ReportsHelper
     a = []
     a << t.created_at.to_date
     a << t.get_trantype_name
-    a << t.amount
+    a << t.amount.to_f / 100
     a << t.user.email
     a << t.user.full_name
     a << t.gwtranid
