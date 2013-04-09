@@ -1,13 +1,5 @@
-select a.*
-from attendees a
-
--- get count of attendees on the same user
-inner join (
-  select user_id, count(*) as cnt
-  from attendees
-  where year = :year
-  group by user_id
-) attendee_counts on attendee_counts.user_id = a.user_id
+select attendees.*
+from attendees
 
 -- get sum of credits (sales and comps)
 left join (
@@ -15,7 +7,7 @@ left join (
   from transactions t
   where t.trantype in ('C', 'S') and t.year = :year
   group by t.user_id
-) credits on credits.user_id = a.user_id
+) credits on credits.user_id = attendees.user_id
 
 -- get sum of debits (refunds)
 left join (
@@ -23,13 +15,33 @@ left join (
   from transactions t
   where t.trantype = 'R' and t.year = :year
   group by t.user_id
-) debits on debits.user_id = a.user_id
+) debits on debits.user_id = attendees.user_id
 
-where a.year = :year
+-- sum of plan costs
+left join (
+  select ap.attendee_id, sum(p.price) as total
+  from attendee_plans ap
+  inner join plans p on p.id = ap.plan_id
+  where ap.year = :year
+    and p.year = :year
+  group by ap.attendee_id
+) plans on plans.attendee_id = attendees.id
+
+-- sum of activity costs
+left join (
+  select aa.attendee_id, sum(a.price) as total
+  from attendee_activities aa
+  inner join activities a on a.id = aa.activity_id
+  where aa.year = :year
+    and a.year = :year
+  group by aa.attendee_id
+) activities on activities.attendee_id = attendees.id
+
+where attendees.year = :year
 
   -- must have at least one plan
-  and a.id in (select distinct attendee_id from attendee_plans where year = :year)
+  and plans.total > 0
 
-  -- user must pay required deposit for each attendee
+  -- credits minus debits must satisfy total of invoice
   and coalesce(credits.total, 0) - coalesce(debits.total, 0)
-    >= attendee_counts.cnt * :deposit
+    >= coalesce(plans.total, 0) + coalesce(activities.total, 0)

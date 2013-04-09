@@ -10,10 +10,8 @@
     #{@kyu_count} kyu players, #{@dan_count} dan
     players, and #{pluralize(@pro_count, 'pro')}.
     Also, #{@unregistered_count} other people have not finished
-    their registration.  (They either haven't paid their
-    = cents_to_currency(WhoIsComing.deposit_per_attendee)
-    deposit, or they haven't finished selecting room and board
-    plans)
+    their registration.  (They either haven't paid in full, or they
+    haven't selected any room and board plans)
 
   - unless anyone_signed_in?
     %p
