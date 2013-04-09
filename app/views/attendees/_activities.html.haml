@@ -15,8 +15,9 @@
     %th
     %th Date
     %th= mnh
-    %th Leave
-    %th Return
+    %th= trl_attr 'activity', 'notes'
+    %th= trl_attr 'activity', 'leave_time'
+    %th= trl_attr 'activity', 'return_time'
     %th.numeric Price
   %tbody
     - @activities.each do |a|
@@ -26,6 +27,7 @@
           = check_box_tag :activity_ids, a.id, checked, :name => 'activity_ids[]'
         %td= a.leave_time.to_date.to_formatted_s(:dow_month_day)
         %td= a.name
+        %td= Markdown.new(a.notes).to_html.html_safe
         %td= a.leave_time.to_formatted_s(:american)
         %td= a.return_time.to_formatted_s(:american) if a.return_time.present?
         %td.numeric= a.price_for_display
