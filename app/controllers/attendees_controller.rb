@@ -98,6 +98,7 @@ protected
   def expose_form_vars
     @attendee_number = @attendee.user.attendees.count + 1
     @activities = Activity.yr(@year).order(:leave_time, :name)
+    @plan_calendar = PlanCalendar.range_to_matrix(AttendeePlanDate.valid_range(@year))
 
     # for _travel_plans
     arrival = @attendee.airport_arrival

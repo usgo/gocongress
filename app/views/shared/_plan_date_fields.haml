@@ -1,11 +1,15 @@
 %table.understated-head.mini-calendar.borderless
   %tbody
-    %tr
-      - AttendeePlanDate.valid_range(@year).each_with_index do |d,i|
-        %td.nowrap
-          - format = (i == 0) ? '%a %-m/%-e' : '%-e'
-          = d.strftime(format)
-          %br
-          - checked = selection.dates.include?(d)
-          - cbx_name = "plans[#{plan.id}][dates][]"
-          = check_box_tag cbx_name, d.strftime('%Y-%m-%d'), checked
+    - first_clndr_date = true
+    - @plan_calendar.each do |week|
+      %tr
+        - week.each do |d|
+          %td.nowrap
+            - if d.present?
+              - format = first_clndr_date ? '%-m/%-e' : '%-e'
+              = d.strftime(format)
+              %br
+              - checked = selection.dates.include?(d)
+              - cbx_name = "plans[#{plan.id}][dates][]"
+              = check_box_tag cbx_name, d.strftime('%Y-%m-%d'), checked
+              - first_clndr_date = false

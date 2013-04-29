@@ -15,8 +15,8 @@ class PlanCalendar
   end
 
   # Given an array of dates, `padded_week` returns an array
-  # representing a calendric week, with missing days represented
-  # by `nil`. -Jared 2013
+  # representing a calendric week, Sunday to Saturday, with
+  # missing days represented by `nil`. -Jared 2013
   def self.padded_week dates
     0.upto(6).map { |i| dates.find { |d| d.wday == i } }
   end
