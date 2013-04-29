@@ -10,7 +10,9 @@ class PaymentsController < ApplicationController
   # Thus, current_user will be nil.  Therefore, we pass the user id
   # in the params. -Jared 2013-04-07
   def new
-    assert_userid_in_params
+    unless userid_in_params?
+      redirect_to_new_payment_url && return
+    end
     @user = User.find params[:user_id].to_i
     @amount = params[:amount].to_f
     @sim_transaction = AuthorizeNet::SIM::Transaction.new(
@@ -48,8 +50,19 @@ class PaymentsController < ApplicationController
 
   private
 
-  def assert_userid_in_params
-    raise "user id undefined" unless params[:user_id].to_i > 0
+  def userid_in_params?
+    params[:user_id].to_i > 0
+  end
+
+  # Before entering CC info, users are redirected to
+  # gocongress.herokuapp.com, where we can serve the form over SSL.
+  # When they finish paying, they are asked to return to gocongress.org
+  # because that's where their cookies were set.  If they don't follow
+  # instructions, just redirect them.  These are the hoops we must jump
+  # through to get free SSL :-)  Note that the host for this redirect
+  # URL will come from `default_url_options` -Jared 2013
+  def redirect_to_new_payment_url
+    redirect_to new_payment_url(:protocol => 'http')
   end
 
   def assert_config

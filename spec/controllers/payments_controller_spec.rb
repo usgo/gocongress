@@ -5,7 +5,8 @@ describe PaymentsController do
 
   describe '#new' do
     it 'requires a user_id' do
-      expect { get :new }.to raise_error(RuntimeError, "user id undefined")
+      get :new
+      response.should redirect_to new_payment_url(:protocol => 'http')
     end
 
     it 'assings a sim_transaction with a cust_id' do
