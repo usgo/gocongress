@@ -1,4 +1,5 @@
 class HomeController < ApplicationController
+  rescue_from  ActionView::MissingTemplate, :with => :missing_template
 
   def index
     @bodyClassList = "homepage"
@@ -27,4 +28,17 @@ protected
     year.to_i == 2013 ? '2013.jpg' : "#{@year.year}.png"
   end
 
+  private
+
+  # Image spiders are requesting / with
+  # HTTP_ACCEPT = image/jpeg,image/gif,image/bmp,image/png
+  # which causes a MissingTemplate error.
+  #
+  # It's an open issue: "in certain circumstances, Rails does not recognize
+  # an unacceptable request before attempting template lookup."
+  # https://github.com/rails/rails/issues/4127
+  #
+  def missing_template
+    render :nothing => true, :status => 406
+  end
 end
