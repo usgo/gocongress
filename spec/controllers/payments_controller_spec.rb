@@ -6,7 +6,7 @@ describe PaymentsController do
   describe '#new' do
     it 'requires a user_id' do
       get :new
-      response.should redirect_to new_payment_url(:protocol => 'http')
+      response.should redirect_to new_user_session_url(:protocol => 'http')
     end
 
     it 'assings a sim_transaction with a cust_id' do

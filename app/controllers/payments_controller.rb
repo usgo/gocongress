@@ -11,7 +11,7 @@ class PaymentsController < ApplicationController
   # in the params. -Jared 2013-04-07
   def new
     unless userid_in_params?
-      redirect_to_new_payment_url && return
+      redirect_to_login && return
     end
     @user = User.find params[:user_id].to_i
     @amount = params[:amount].to_f
@@ -61,8 +61,8 @@ class PaymentsController < ApplicationController
   # instructions, just redirect them.  These are the hoops we must jump
   # through to get free SSL :-)  Note that the host for this redirect
   # URL will come from `default_url_options` -Jared 2013
-  def redirect_to_new_payment_url
-    redirect_to new_payment_url(:protocol => 'http')
+  def redirect_to_login
+    redirect_to new_user_session_url(:protocol => 'http')
   end
 
   def assert_config
