@@ -192,17 +192,30 @@ describe UsersController do
       response.should redirect_to users_path
     end
 
-    it 'can #destroy' do
-      user # `create` before `expect` to change
-      expect { delete :destroy, :id => user.id, :year => user.year
-        }.to change { User.count }.by(-1)
+    describe '#destroy' do
+      it 'succeeds' do
+        user # `create` before `expect` to change
+        expect { delete :destroy, :id => user.id, :year => user.year
+          }.to change { User.count }.by(-1)
 
-      response.should redirect_to users_path
-      flash[:notice].should == 'User deleted'
+        response.should redirect_to users_path
+        flash[:notice].should == 'User deleted'
 
-      # dependent attendees should also be destroyed
-      user.id.should be > 0
-      Attendee.where(:user_id => user.id).should be_empty
+        # dependent attendees should also be destroyed
+        user.id.should be > 0
+        Attendee.where(:user_id => user.id).should be_empty
+      end
+
+      it 'cannot delete guardians' do
+        guard = create :attendee
+        guard.minors << create(:attendee)
+
+        expect { delete :destroy, :id => guard.user.id, :year => guard.year
+          }.to_not change { User.count }
+
+        response.should redirect_to users_path
+        flash[:alert].should == 'Cannot delete record because of dependent minors'
+      end
     end
 
     it 'can #edit' do

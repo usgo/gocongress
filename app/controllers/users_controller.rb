@@ -98,7 +98,11 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    @user.destroy
+    begin
+      @user.destroy
+    rescue ActiveRecord::DeleteRestrictionError => err
+      redirect_to(users_url, :alert => err.message) && return
+    end
     redirect_to users_url, :notice => "User deleted"
   end
 
