@@ -2,6 +2,8 @@ require "spec_helper"
 require "controllers/rpt/shared_examples_for_reports"
 
 describe Rpt::OutstandingBalanceReportsController do
+  render_views
+
   it_behaves_like "a report", %w[html]
 
   describe "#show" do
