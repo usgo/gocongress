@@ -20,11 +20,11 @@ class User < ActiveRecord::Base
 
   has_many :transactions, :dependent => :destroy
 
-  # A user may register multiple people, eg. their family
-  # The primary attendee corresponds with the user themselves
-  # (Assuming everyone registers themselves first)
-  has_one  :primary_attendee, :class_name => 'Attendee', :conditions => { :is_primary => true }
+  # A user may register multiple attendees, eg. their family
   has_many :attendees, :dependent => :destroy
+
+  # `primary_attendee` is deprecated
+  has_one  :primary_attendee, :class_name => 'Attendee', :conditions => { :is_primary => true }
 
   # Validations
   # -----------
