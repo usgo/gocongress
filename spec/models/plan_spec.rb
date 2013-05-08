@@ -36,11 +36,15 @@ describe Plan do
       Plan.new.inventory_consumed.should == 0
     end
 
-    it 'returns the quantity of associated attendee_plan records' do
+    it 'returns qty of plans selections, excluding an attendee, if specified' do
       p = create :plan, max_quantity: 3
       a = create :attendee
+      a2 = create :attendee
       create :attendee_plan, attendee: a, plan: p, quantity: 3, year: p.year
-      p.inventory_consumed.should == 3
+      create :attendee_plan, attendee: a2, plan: p, quantity: 2, year: p.year
+      p.inventory_consumed.should == 5
+      p.inventory_consumed(a).should == 2
+      p.inventory_consumed(a2).should == 3
     end
   end
 

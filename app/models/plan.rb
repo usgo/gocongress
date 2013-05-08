@@ -102,15 +102,19 @@ def describe_inventory_available
 end
 
 def inventory_consumed(excluded_attendee=nil)
-  ap = attendee_plans
-  ap.where('attendee_id <> ?', excluded_attendee.id) if excluded_attendee.present?
-  ap.sum(:quantity)
+  attendee_plans_except(excluded_attendee).sum(:quantity)
 end
 
 def inventory_available(excluded_attendee=nil)
   return nil if inventory.nil?
   c = inventory_consumed(excluded_attendee)
   c > inventory ? 0 : inventory - c
+end
+
+private
+
+def attendee_plans_except(atnd=nil)
+  atnd.nil? ? attendee_plans : attendee_plans.where('attendee_id <> ?', atnd.id)
 end
 
 end
