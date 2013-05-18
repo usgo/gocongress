@@ -123,7 +123,7 @@ class Attendee < ActiveRecord::Base
     first_attrs = %w[aga_id family_name given_name country phone]
 
     # we should move roommate request next to the plans
-    last_attrs = %w[shirt_style special_request roomate_request]
+    last_attrs = %w[special_request roomate_request]
 
     attrs = self.attribute_names.reject { |x|
       first_attrs.index(x) ||
