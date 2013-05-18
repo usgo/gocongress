@@ -125,7 +125,7 @@ class Attendee < ActiveRecord::Base
     # we should move roommate request next to the plans
     last_attrs = %w[special_request roomate_request]
 
-    attrs = self.attribute_names.delete_if { |x|
+    attrs = self.attribute_names.reject { |x|
       first_attrs.index(x) ||
       last_attrs.index(x) ||
       internal_attributes.index(x)
