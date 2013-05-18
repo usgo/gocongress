@@ -1,8 +1,8 @@
 class AttendeesExporter
 
-  # Lisa wants the name and email in the first few columns.
-  # We want roommate request next to the plans.
-  # The order must match attendee_to_array() in reports_helper.rb
+  # It is convenient for name and email to be in the first few
+  # columns, and for roommate request to be next to the plans.
+  # Order must match `attendee_to_array`.
   def self.attendee_attribute_names_for_csv
     first_attrs = %w[aga_id family_name given_name country phone]
     last_attrs = %w[special_request roomate_request]
@@ -14,12 +14,41 @@ class AttendeesExporter
     return first_attrs.concat(attrs.concat(last_attrs))
   end
 
-  # The order of `csv_header_line` must match
-  # `attendee_to_array` in `reports_helper.rb`
+  # Order of columns must match `csv_header_line`
+  def self.attendee_to_array(a)
+    ar = []
+
+    # basic user attributes
+    %w[email].each do |attr|
+      if a.user.blank? || a.user[attr].blank?
+        ar << nil
+      else
+        ar << a.user[attr]
+      end
+    end
+
+    # basic attendee attributes
+    attendee_attribute_names_for_csv.each do |atr|
+      ar << a.attribute_value_for_csv(atr)
+    end
+
+    # shirt name (tshirt style)
+    ar << a.shirt.try('name')
+
+    # lisa says: plans should come right after attendee attrs
+    pqh = a.plan_qty_hash
+    Plan.yr(a.year).order(:name).each do |p|
+      plan_qty = pqh[p.id].present? ? pqh[p.id].to_i : 0
+      ar << plan_qty.to_i
+    end
+
+    return ar
+  end
+
+  # Order must match `attendee_to_array`
   def self.csv_header_line year
-    atrs = AttendeesExporter.attendee_attribute_names_for_csv
     plans = Plan.yr(year).order(:name).map{ |p| "Plan: " + safe_for_csv(p.name)}
-    (['user_email'] + atrs + ['shirt_style'] + plans).join(',')
+    (['user_email'] + attendee_attribute_names_for_csv + ['shirt_style'] + plans).join(',')
   end
 
 end

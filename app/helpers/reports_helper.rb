@@ -16,36 +16,4 @@ module ReportsHelper
     return a
   end
 
-  # The order of columns in `attendee_to_array` must match the order
-  # of `csv_header_line` in the `attendee_reports_controller`
-  def attendee_to_array(a)
-    ar = []
-
-    # basic user attributes
-    %w[email].each do |attr|
-      if a.user.blank? || a.user[attr].blank?
-        ar << nil
-      else
-        ar << a.user[attr]
-      end
-    end
-
-    # basic attendee attributes
-    AttendeesExporter.attendee_attribute_names_for_csv.each do |atr|
-      ar << a.attribute_value_for_csv(atr)
-    end
-
-    # shirt name (tshirt style)
-    ar << a.shirt.try('name')
-
-    # lisa says: plans should come right after attendee attrs
-    pqh = a.plan_qty_hash
-    Plan.yr(a.year).order(:name).each do |p|
-      plan_qty = pqh[p.id].present? ? pqh[p.id].to_i : 0
-      ar << plan_qty.to_i
-    end
-
-    return ar
-  end
-
 end
