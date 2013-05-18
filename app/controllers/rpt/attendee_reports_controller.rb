@@ -11,21 +11,13 @@ def show
       render :show
     end
     format.csv do
-      @csv_header_line = csv_header_line
+      @csv_header_line = AttendeesExporter.csv_header_line(@year)
       render_csv("usgc_attendees_#{Time.now.strftime("%Y-%m-%d")}")
     end
   end
 end
 
 private
-
-# The order of `csv_header_line` must match
-# `attendee_to_array` in `reports_helper.rb`
-def csv_header_line
-  atrs = AttendeesExporter.attendee_attribute_names_for_csv
-  plans = Plan.yr(@year).order(:name).map{ |p| "Plan: " + safe_for_csv(p.name)}
-  (['user_email'] + atrs + ['shirt_style'] + plans).join(',')
-end
 
 def planlessness
   p = params[:planlessness]
