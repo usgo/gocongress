@@ -1,0 +1,8 @@
+1. dump usgc db
+2. delete data other than current year
+  a. restore locally
+  b. delete where year != current
+  c. dump locally
+3. publish dump
+  - password protected and/or encrypted
+    - s3 does not support password
