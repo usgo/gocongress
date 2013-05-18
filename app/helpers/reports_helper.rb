@@ -32,7 +32,11 @@ module ReportsHelper
 
     # basic attendee attributes
     Attendee.attribute_names_for_csv.each do |atr|
-      ar << a.attribute_value_for_csv(atr)
+      if atr == 'shirt_style'
+        ar << a.shirt.try('name')
+      else
+        ar << a.attribute_value_for_csv(atr)
+      end
     end
 
     # lisa says: plans should come right after attendee attrs
