@@ -32,8 +32,4 @@ def render_csv(filename = nil)
   render :layout => false
 end
 
-def safe_for_csv(str)
-  str.tr(',"', '')
-end
-
 end

@@ -51,4 +51,8 @@ class AttendeesCsvExporter
     (['user_email'] + attendee_attribute_names + ['shirt_style'] + plans).join(',')
   end
 
+  def self.safe_for_csv(str)
+    str.tr(',"', '')
+  end
+
 end

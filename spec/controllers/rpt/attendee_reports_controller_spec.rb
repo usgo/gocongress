@@ -22,6 +22,17 @@ describe Rpt::AttendeeReportsController do
       ix = ary[0].index 'shirt_style'
       ary[1][ix].should == shirt.name
     end
+
+    it "includes a column for each plan" do
+      p1 = create :plan, :name => 'herp', :year => admin.year
+      p2 = create :plan, :name => 'derp', :year => admin.year
+      get :show, :format => :csv, :year => admin.year
+      ary = CSV.parse response.body
+      ary.should have(1).row # the header
+      [p1, p2].each do |p|
+        ary.first.should include "Plan: #{p.name}"
+      end
+    end
   end
 
 end
