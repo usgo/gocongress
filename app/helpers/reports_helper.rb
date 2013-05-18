@@ -31,7 +31,7 @@ module ReportsHelper
     end
 
     # basic attendee attributes
-    Attendee.attribute_names_for_csv.each do |atr|
+    AttendeesExporter.attendee_attribute_names_for_csv.each do |atr|
       ar << a.attribute_value_for_csv(atr)
     end
 
