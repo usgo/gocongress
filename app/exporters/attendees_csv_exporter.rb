@@ -1,4 +1,4 @@
-class AttendeesExporter
+class AttendeesCsvExporter
 
   # It is convenient for name and email to be in the first few
   # columns, and for roommate request to be next to the plans.

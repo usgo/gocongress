@@ -11,7 +11,7 @@ def show
       render :show
     end
     format.csv do
-      @csv_header_line = AttendeesExporter.csv_header_line(@year)
+      @csv_header_line = AttendeesCsvExporter.csv_header_line(@year)
       render_csv("usgc_attendees_#{Time.now.strftime("%Y-%m-%d")}")
     end
   end

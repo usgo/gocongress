@@ -36,7 +36,7 @@ guard 'rspec', {
   watch('app/controllers/application_controller.rb')  { "spec/controllers" }
 
   # Gocongress-specific
-  watch('app/exporters/attendees_exporter.rb') {
+  watch('app/exporters/attendees_csv_exporter.rb') {
     'spec/controllers/rpt/attendee_reports_controller_spec.rb'
   }
 end
