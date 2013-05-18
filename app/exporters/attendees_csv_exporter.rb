@@ -3,7 +3,7 @@ class AttendeesCsvExporter
   # It is convenient for name and email to be in the first few
   # columns, and for roommate request to be next to the plans.
   # Order must match `attendee_to_array`.
-  def self.attendee_attribute_names_for_csv
+  def self.attendee_attribute_names
     first_attrs = %w[aga_id family_name given_name country phone]
     last_attrs = %w[special_request roomate_request]
     attrs = Attendee.attribute_names.reject { |x|
@@ -14,7 +14,7 @@ class AttendeesCsvExporter
     return first_attrs.concat(attrs.concat(last_attrs))
   end
 
-  # Order of columns must match `csv_header_line`
+  # Order of columns must match `header_line`
   def self.attendee_to_array(a)
     ar = []
 
@@ -28,7 +28,7 @@ class AttendeesCsvExporter
     end
 
     # basic attendee attributes
-    attendee_attribute_names_for_csv.each do |atr|
+    attendee_attribute_names.each do |atr|
       ar << a.attribute_value_for_csv(atr)
     end
 
@@ -46,9 +46,9 @@ class AttendeesCsvExporter
   end
 
   # Order must match `attendee_to_array`
-  def self.csv_header_line year
+  def self.header_line year
     plans = Plan.yr(year).order(:name).map{ |p| "Plan: " + safe_for_csv(p.name)}
-    (['user_email'] + attendee_attribute_names_for_csv + ['shirt_style'] + plans).join(',')
+    (['user_email'] + attendee_attribute_names + ['shirt_style'] + plans).join(',')
   end
 
 end
