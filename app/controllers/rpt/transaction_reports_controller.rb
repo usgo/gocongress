@@ -1,20 +1,19 @@
 class Rpt::TransactionReportsController < Rpt::AbstractReportController
 
 def show
-  @transactions = Transaction.yr(@year).all
+  @transactions = Transaction.yr(@year)
 
   respond_to do |format|
     format.html do
-      @sales = Transaction.yr(@year).where("trantype = ?", "S")
-      @comps = Transaction.yr(@year).where("trantype = ?", "C")
-      @refunds = Transaction.yr(@year).where("trantype = ?", "R")
+      @sales = @transactions.sales
+      @comps = @transactions.comps
+      @refunds = @transactions.refunds
 
       @sales_sum = @sales.sum(:amount)
       @comps_sum = @comps.sum(:amount)
       @refunds_sum = @refunds.sum(:amount)
-      @total_sum = @sales_sum - @comps_sum - @refunds_sum
 
-      render :show
+      @total_sum = @sales_sum - @comps_sum - @refunds_sum
     end
 
     format.csv do
@@ -40,23 +39,22 @@ end
   end
 
   def csv_header_row
-    ['Created', 'Type', 'Amount', 'User', 'Primary Attendee', 'GW Tran. ID',
+    ['Created', 'Type', 'Amount', 'User', 'GW Tran. ID',
       'Check No.', 'Last Edit', 'Updated', 'GW Date', 'Comment']
   end
 
   def transaction_to_array(t)
-    a = []
-    a << t.created_at.to_date
-    a << t.get_trantype_name
-    a << t.amount.to_f / 100
-    a << t.user.email
-    a << t.user.full_name
-    a << t.gwtranid
-    a << t.check_number
-    a << (t.updated_by_user.present? ? t.updated_by_user.primary_attendee.given_name : nil)
-    a << t.updated_at.to_date
-    a << (t.gwdate.present? ? t.gwdate.to_date : nil)
-    a << (t.comment.present? ? html_escape(t.comment) : nil)
-    return a
+    [
+      t.created_at.to_date,
+      t.get_trantype_name,
+      t.amount.to_f / 100,
+      t.user.email,
+      t.gwtranid,
+      t.check_number,
+      (t.updated_by_user.present? ? t.updated_by_user.primary_attendee.given_name : nil),
+      t.updated_at.to_date,
+      (t.gwdate.present? ? t.gwdate.to_date : nil),
+      (t.comment.present? ? html_escape(t.comment) : nil)
+    ]
   end
 end

@@ -21,9 +21,8 @@ class Transaction < ActiveRecord::Base
 	# Instruments
 	INSTRUMENTS = [['Card','C'], ['Cash','S'], ['Check','K']]
 
-  # Scopes, and class methods that act like scopes
-  scope :comps, where(trantype: 'C')
-  scope :for_payment_history, where(:trantype => ['S','R'])
+  # Validations
+  # -----------
 
 	validates_presence_of :trantype, :amount
 	validates :updated_by_user, :presence => true, :on => :update
@@ -73,6 +72,14 @@ class Transaction < ActiveRecord::Base
   validates :user, :presence => { :message => " email address is blank
     or incorrect.  Please make sure to enter the email address of the
     correct user account."}
+
+  # Scopes
+  # ------
+
+  scope :comps, where(trantype: 'C')
+  scope :for_payment_history, where(:trantype => ['S','R'])
+  scope :refunds, where(trantype: 'R')
+  scope :sales, where(trantype: 'S')
 
   def self.create_from_authnet_sim_response rsp
     user = User.find(rsp.customer_id) # x_cust_id
