@@ -1,7 +1,8 @@
 module GocongressDevelopmentEnv
 
   def self.load_env
-    if local_development? && env_file_exists?
+    return unless local_development?
+    if env_file_exists?
       load_constants_from_env_file
       apply_constants_to_global_env
       check_for_expected_constant_in_global_env
