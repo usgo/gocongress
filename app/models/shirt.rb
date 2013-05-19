@@ -1,7 +1,23 @@
 class Shirt < ActiveRecord::Base
   include YearlyModel
+
   has_many :attendees
+
   attr_accessible :description, :hex_triplet, :image_url, :name
+
+  SIZES = [
+    ["None",            "NO"],
+    ["Youth Small",     "YS"],
+    ["Youth Medium",    "YM"],
+    ["Youth Large",     "YL"],
+    ["Adult Small",     "AS"],
+    ["Adult Medium",    "AM"],
+    ["Adult Large",     "AL"],
+    ["Adult X-Large",   "1X"],
+    ["Adult XX-Large",  "2X"],
+    ["Adult XXX-Large", "3X"]
+  ].freeze
+  SIZE_CODES = SIZES.map { |s| s[1] }.freeze
 
   validates :description,
     :length => { :maximum => 100 },

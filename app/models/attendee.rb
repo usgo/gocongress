@@ -34,26 +34,6 @@ class Attendee < ActiveRecord::Base
 
   attr_accessible :comment, :minor_agreement_received, :as => :admin
 
-  # Constants
-  # ---------
-
-  # tshirt sizes
-  TSHIRT_CHOICES = []
-  TSHIRT_CHOICES << ["None",            "NO"]
-  TSHIRT_CHOICES << ["Youth Small",     "YS"]
-  TSHIRT_CHOICES << ["Youth Medium",    "YM"]
-  TSHIRT_CHOICES << ["Youth Large",     "YL"]
-  TSHIRT_CHOICES << ["Adult Small",     "AS"]
-  TSHIRT_CHOICES << ["Adult Medium",    "AM"]
-  TSHIRT_CHOICES << ["Adult Large",     "AL"]
-  TSHIRT_CHOICES << ["Adult X-Large",   "1X"]
-  TSHIRT_CHOICES << ["Adult XX-Large",  "2X"]
-  TSHIRT_CHOICES << ["Adult XXX-Large", "3X"]
-
-  # define constant array of tshirt sizes
-  TSHIRT_SIZE_LIST = []
-  Attendee::TSHIRT_CHOICES.each { |t| TSHIRT_SIZE_LIST << t[1] }
-
   # Scopes
   # ------
 
@@ -80,7 +60,7 @@ class Attendee < ActiveRecord::Base
   validates :rank,            :inclusion => {:in => Attendee::Rank::NUMERIC_RANK_LIST, :message => "is not valid"}, :presence => true
   validates :roomate_request, :length => {:maximum => 250}
   validates :special_request, :length => {:maximum => 250}
-  validates :tshirt_size,     :inclusion => {:in => TSHIRT_SIZE_LIST, :message => " - Please select a size"}
+  validates :tshirt_size,     :inclusion => {:in => Shirt::SIZE_CODES, :message => " - Please select a size"}
   validates :will_play_in_us_open, :inclusion => {
     :in => [true, false], :message => ' - Please select yes or no'}
 
@@ -263,7 +243,7 @@ class Attendee < ActiveRecord::Base
 
   def get_tshirt_size_name
     tshirt_size_name = nil
-    TSHIRT_CHOICES.each { |t| if (t[1] == self.tshirt_size) then tshirt_size_name = t[0] end }
+    Shirt::SIZES.each { |t| if (t[1] == self.tshirt_size) then tshirt_size_name = t[0] end }
     if tshirt_size_name.nil? then raise "assertion failed: invalid tshirt_size" end
     return tshirt_size_name
   end
