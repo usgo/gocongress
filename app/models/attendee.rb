@@ -153,21 +153,6 @@ class Attendee < ActiveRecord::Base
     anonymous? ? 'Anonymous' : string
   end
 
-  def attribute_value_for_csv atr
-    return nil if self[atr].blank?
-    if atr == 'rank'
-      return get_rank_name
-    elsif atr == 'tshirt_size'
-      return get_tshirt_size_name
-    else
-      # In the past, I would encode entities using html_escape()
-      # here, thinking that otherwise excel might not open the csv
-      # correctly.  However, I can no longer reproduce this issue
-      # with excel, so I'm no longer encoding entities. -Jared 2012-05-16
-      return self[atr]
-    end
-  end
-
   def birthday_after_congress?
     bday = Date.new(congress_start.year, birth_date.month, birth_date.day)
     (bday <=> congress_start) == 1
@@ -281,6 +266,14 @@ class Attendee < ActiveRecord::Base
     TSHIRT_CHOICES.each { |t| if (t[1] == self.tshirt_size) then tshirt_size_name = t[0] end }
     if tshirt_size_name.nil? then raise "assertion failed: invalid tshirt_size" end
     return tshirt_size_name
+  end
+
+  def shirt_name
+    shirt.try(:name)
+  end
+
+  def user_email
+    user.try(:email)
   end
 
 private

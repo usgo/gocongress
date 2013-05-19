@@ -2,9 +2,9 @@ require "spec_helper"
 
 describe AttendeesCsvExporter do
 
-  describe "#attendee_to_array" do
+  describe "#attendee_array" do
     let(:atnd) { build :attendee }
-    let(:ary) { AttendeesCsvExporter.attendee_to_array(atnd) }
+    let(:ary) { AttendeesCsvExporter.attendee_array(atnd) }
 
     it "returns an array" do
       ary.should be_instance_of(Array)
@@ -22,7 +22,7 @@ describe AttendeesCsvExporter do
 
     it "should have the correct number of elements" do
       create :plan
-      na = AttendeesCsvExporter.attendee_attribute_names.length
+      na = AttendeesCsvExporter::AttendeeAttributes.names.length
       np = Plan.yr(atnd.year).count
       ary.should have(na + np + 2).elements
     end
