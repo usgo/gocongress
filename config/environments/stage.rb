@@ -9,6 +9,9 @@ Gocongress::Application.configure do
   config.consider_all_requests_local       = false
   config.action_controller.perform_caching = true
 
+  # Asset sync
+  config.action_controller.asset_host = "//#{ENV['FOG_DIRECTORY']}.s3.amazonaws.com"
+
   # Mass assignment protection for Active Record models
   # See ActiveModel::MassAssignmentSecurity::ClassMethods
   config.active_record.mass_assignment_sanitizer = :logger
