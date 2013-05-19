@@ -43,6 +43,12 @@ gem 'thin'
 # instead of the full country names.
 gem 'country-select', :git => 'git://github.com/jaredbeck/country-select.git'
 
+# Because we precompile our assets, we don't need these gems
+# in production.
+group :assets do
+  gem 'asset_sync'
+end
+
 # rspec-rails wants to be in the :development group
 # to "expose generators and rake tasks"
 group :test, :development do

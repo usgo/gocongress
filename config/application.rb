@@ -46,6 +46,7 @@ module Gocongress
     config.filter_parameters += [:password]
 
     # Enable the asset pipeline
+    config.assets.digest = true
     config.assets.enabled = true
 
     # Some libraries have JS, CSS, and images.  It's a hassle
