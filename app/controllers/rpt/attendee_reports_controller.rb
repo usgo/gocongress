@@ -11,13 +11,17 @@ def show
       render :show
     end
     format.csv do
-      @csv_header_line = AttendeesCsvExporter.header_array(@year).join(',')
-      render_csv("usgc_attendees_#{Time.now.strftime("%Y-%m-%d")}")
+      csv = AttendeesCsvExporter.render(@year, @attendees)
+      send_data csv, filename: csv_filename, type: 'text/csv'
     end
   end
 end
 
 private
+
+def csv_filename
+  "usgc_attendees_#{Time.current.strftime("%Y-%m-%d")}.csv"
+end
 
 def planlessness
   p = params[:planlessness]

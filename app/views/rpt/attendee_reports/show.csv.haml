@@ -1,7 +1,0 @@
-= @csv_header_line
-- @attendees.each do |a|
-
-  -# To prevent double escaping, or escaping of field-quotes,
-  -# we mark each line as html_safe
-  -# To prevent double line-endings, we specify an empty row_sep
-  = CSV.generate_line( AttendeesCsvExporter.attendee_array(a), {:row_sep => ""} ).html_safe

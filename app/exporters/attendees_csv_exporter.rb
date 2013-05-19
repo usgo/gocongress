@@ -15,6 +15,15 @@ class AttendeesCsvExporter
     ['user_email'] + AttendeeAttributes.names + ['shirt_style'] + plan_names(year)
   end
 
+  def self.render year, attendees
+    CSV.generate do |csv|
+      csv << header_array(year)
+      attendees.each do |atnd|
+        csv << attendee_array(atnd)
+      end
+    end
+  end
+
   private
 
   def self.blank_to_nil obj
