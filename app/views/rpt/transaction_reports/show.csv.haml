@@ -1,3 +1,0 @@
-Created, Type, Amount, User, Primary Attendee, GW Tran. ID, Check No., Last Edit, Updated, GW Date, Comment
-- @transactions.each do |t|
-  = CSV.generate_line( transaction_to_array(t), {:row_sep => ""} ).html_safe
