@@ -57,6 +57,7 @@ group :development do
   gem 'haml-rails'
   gem 'html2haml'
   gem 'quiet_assets'
+  gem 'flog'
 end
 
 group :test do
