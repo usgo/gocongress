@@ -19,8 +19,9 @@ module GocongressDevelopmentEnv
   def self.load_constants_from_env_file
     begin
       module_eval File.read env_file
-    rescue
+    rescue SyntaxError => se
       $stderr.puts "Warning: Syntax error in file: #{env_file}"
+      $stderr.puts se.to_s
     end
   end
 
