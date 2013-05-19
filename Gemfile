@@ -21,6 +21,7 @@ gem "jquery-rails" # jquery and jquery-ui
 gem 'haml'
 gem 'bluecloth' # markdown
 gem 'kaminari' # pagination
+gem 'asset_sync'
 
 # AAA - Authentication, Authorization, and Access Control
 gem 'devise'
@@ -42,12 +43,6 @@ gem 'thin'
 # The jaredbeck fork uses ISO 3166-1 alpha-2 codes as option values,
 # instead of the full country names.
 gem 'country-select', :git => 'git://github.com/jaredbeck/country-select.git'
-
-# Because we precompile our assets, we don't need these gems
-# in production.
-group :assets do
-  gem 'asset_sync'
-end
 
 # rspec-rails wants to be in the :development group
 # to "expose generators and rake tasks"
