@@ -245,13 +245,6 @@ class Attendee < ActiveRecord::Base
     rank == 0 ? "NP" : get_rank_name
   end
 
-  def get_tshirt_size_name
-    tshirt_size_name = nil
-    Shirt::SIZES.each { |t| if (t[1] == self.tshirt_size) then tshirt_size_name = t[0] end }
-    if tshirt_size_name.nil? then raise "assertion failed: invalid tshirt_size" end
-    return tshirt_size_name
-  end
-
   def shirt_name
     shirt.try(:name)
   end

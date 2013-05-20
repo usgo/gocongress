@@ -71,8 +71,6 @@ class AttendeesCsvExporter
     def self.value atnd, atr
       if atr == 'rank'
         atnd.get_rank_name
-      elsif atr == 'tshirt_size'
-        atnd.get_tshirt_size_name
       else
         atnd[atr]
       end
