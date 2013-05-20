@@ -16,7 +16,6 @@ describe Rpt::TransactionReportsController do
     }
   end
 
-
   it "is limited to the current year" do
     sign_in staff
 
@@ -32,4 +31,18 @@ describe Rpt::TransactionReportsController do
     assigns(:sales_sum).should be_within(0.001).of(expected_sum)
   end
 
+  describe 'csv format' do
+    it "has one line for each transaction, plus a header" do
+      y = Time.current.year
+      create :tr_sale
+      create :tr_comp
+      create :tr_refund
+
+      sign_in staff
+      get :show, format: 'csv', year: y
+      response.should be_success
+      ary = CSV.parse response.body
+      ary.should have(4).rows
+    end
+  end
 end

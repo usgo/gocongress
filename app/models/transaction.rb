@@ -136,4 +136,7 @@ class Transaction < ActiveRecord::Base
     end
   end
 
+  def updated_by_user_email
+    updated_by_user.try(:email)
+  end
 end

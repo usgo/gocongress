@@ -40,7 +40,7 @@ end
 
   def csv_header_row
     ['Created', 'Type', 'Amount', 'User', 'GW Tran. ID',
-      'Check No.', 'Last Edit', 'Updated', 'GW Date', 'Comment']
+      'Check No.', 'Last Updated By', 'Updated', 'GW Date', 'Comment']
   end
 
   def transaction_to_array(t)
@@ -51,7 +51,7 @@ end
       t.user.email,
       t.gwtranid,
       t.check_number,
-      (t.updated_by_user.present? ? t.updated_by_user.primary_attendee.given_name : nil),
+      t.updated_by_user_email,
       t.updated_at.to_date,
       (t.gwdate.present? ? t.gwdate.to_date : nil),
       (t.comment.present? ? html_escape(t.comment) : nil)
