@@ -184,10 +184,6 @@ class Attendee < ActiveRecord::Base
     respect_anonymity ? anonymize(name) : name
   end
 
-  def full_name_possessive
-    given_name + " " + family_name + ('s' == family_name[-1,1] ? "'" : "'s")
-  end
-
   def plan_count
     plans.count
   end
@@ -204,11 +200,6 @@ class Attendee < ActiveRecord::Base
     attendee_plans.select{ |ap| ap.show_on_invoice? }
   end
 
-  # deprecated
-  def possessive_pronoun_or_name
-    full_name_possessive
-  end
-
   def populate_atrs_for_new_form
     self.email = user.email
     ufac = user.first_atnd_created
@@ -217,11 +208,6 @@ class Attendee < ActiveRecord::Base
         self[f] = ufac[f]
       end
     end
-  end
-
-  # deprecated
-  def objective_pronoun_or_name_and_copula
-    full_name + " is"
   end
 
   def get_plan_qty(plan_id)
