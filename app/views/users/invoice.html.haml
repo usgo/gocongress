@@ -25,8 +25,7 @@
 
 .row-of-buttons
   - if can? :manage, @user
-    - user_fnp = @user.full_name_possessive
-    = button_to "Return to #{user_fnp} Account", user_path(@user), :method => :get
+    = button_to "Return to Account", user_path(@user), :method => :get
   - if current_user.admin?
     - pcsfu_path = print_cost_summary_for_user_path(@user)
     = button_to 'Print Cost Summary', pcsfu_path, :method => :get

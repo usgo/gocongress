@@ -5,4 +5,4 @@
 = render :partial => 'shared/ledger', :locals => {:user => @user, :show_detail_links => true}
 
 - if can? :manage, @user
-  %p= link_to "Return to #{@user.full_name_possessive} Account", user_path(@user)
+  %p= link_to "Return to Account", user_path(@user)

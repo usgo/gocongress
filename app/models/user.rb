@@ -23,9 +23,6 @@ class User < ActiveRecord::Base
   # A user may register multiple attendees, eg. their family
   has_many :attendees, :dependent => :destroy
 
-  # `primary_attendee` is deprecated
-  has_one  :primary_attendee, :class_name => 'Attendee', :conditions => { :is_primary => true }
-
   # Validations
   # -----------
 
@@ -49,7 +46,7 @@ class User < ActiveRecord::Base
   # to provide mass-assignment security
 
   attr_accessible :email, :password, :password_confirmation,
-    :remember_me, :primary_attendee_attributes, :year
+    :remember_me, :year
 
   # Scopes
   # ------
@@ -81,27 +78,12 @@ class User < ActiveRecord::Base
     get_invoice_total - amount_paid
   end
 
-  def coalesce_full_name_then_email
-    full_name || email
-  end
-
   def comp_invoice_items
     transactions.comps.map {|t| t.to_invoice_item}
   end
 
   def first_atnd_created
     attendees.order('created_at desc').first
-  end
-
-  # As with all public instance methods, `full_name` must
-  # gracefully handle the absence of the primary_attendee, now that
-  # the presence of said association is no longer validated.
-  def full_name
-    primary_attendee.present? ? primary_attendee.full_name : nil
-  end
-
-  def full_name_possessive
-    primary_attendee.present? ? primary_attendee.full_name_possessive : nil
   end
 
   def invoice_items
