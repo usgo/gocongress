@@ -93,11 +93,6 @@ class Attendee < ActiveRecord::Base
     where('birth_date < ?', CONGRESS_START_DATE[year.to_i] - 18.years)
   end
 
-  def self.internal_attributes
-    # attrs rarely useful for display
-    %w[id shirt_id user_id understand_minor]
-  end
-
   def self.with_planlessness planlessness
     case planlessness
     when :all then all

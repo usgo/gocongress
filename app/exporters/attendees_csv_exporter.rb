@@ -50,6 +50,7 @@ class AttendeesCsvExporter
   module AttendeeAttributes
     FIRST_ATRS = %w[aga_id family_name given_name country phone].freeze
     LAST_ATRS = %w[special_request roomate_request].freeze
+    INTERNAL_ATRS = %w[id shirt_id user_id understand_minor].freeze
 
     # It is convenient for name and email to be in the first few
     # columns, and for roommate request to be next to the plans.
@@ -64,8 +65,7 @@ class AttendeesCsvExporter
     private
 
     def self.middle_atrs
-      Attendee.attribute_names - FIRST_ATRS - LAST_ATRS -
-        Attendee.internal_attributes
+      Attendee.attribute_names - FIRST_ATRS - LAST_ATRS - INTERNAL_ATRS
     end
 
     def self.value atnd, atr
