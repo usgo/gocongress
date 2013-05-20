@@ -129,9 +129,12 @@ class Attendee < ActiveRecord::Base
     anonymous? ? 'Anonymous' : string
   end
 
+  def birthdate_in_congress_year
+    Date.new(congress_start.year, birth_date.month, birth_date.day)
+  end
+
   def birthday_after_congress?
-    bday = Date.new(congress_start.year, birth_date.month, birth_date.day)
-    (bday <=> congress_start) == 1
+    (birthdate_in_congress_year <=> congress_start) == 1
   end
 
   def get_family_name(respect_anonymity = false)
