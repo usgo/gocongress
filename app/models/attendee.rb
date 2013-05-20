@@ -211,9 +211,10 @@ class Attendee < ActiveRecord::Base
 
   def populate_atrs_for_new_form
     self.email = user.email
-    if user.primary_attendee.present?
+    ufac = user.first_atnd_created
+    if ufac.present?
       ['country','phone'].each do |f|
-        self[f] = user.primary_attendee[f]
+        self[f] = ufac[f]
       end
     else
       is_primary = true

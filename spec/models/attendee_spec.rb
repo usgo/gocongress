@@ -113,6 +113,24 @@ describe Attendee do
     end
   end
 
+  describe '#populate_atrs_for_new_form' do
+    it 'copies email from user' do
+      u = create :user
+      a = build :attendee, user: u
+      a.populate_atrs_for_new_form
+      a.email.should == u.email
+    end
+
+    it 'copies country and phone from first attendee created' do
+      u = create :user
+      a1 = create :attendee, user: u, country: 'ZW', phone: '1234567890'
+      a2 = build :attendee, user: u, country: 'VI', phone: '7777777777'
+      a2.populate_atrs_for_new_form
+      a2.phone.should == a1.phone
+      a2.country.should == a1.country
+    end
+  end
+
   describe '#minor?' do
     context 'The 2012 congress starts on 8/4' do
       it 'John will be 18' do

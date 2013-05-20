@@ -90,6 +90,10 @@ class User < ActiveRecord::Base
     transactions.comps.map {|t| t.to_invoice_item}
   end
 
+  def first_atnd_created
+    attendees.order('created_at desc').first
+  end
+
   # As with all public instance methods, `full_name` must
   # gracefully handle the absence of the primary_attendee, now that
   # the presence of said association is no longer validated.
