@@ -11,14 +11,7 @@ FactoryGirl.define do
     rank 3
     will_play_in_us_open false
     year Time.now.year
-
-    # New validation: Attendees must always have
-    # a user -Jared 2012-06-02
     association :user, :factory => :user, :strategy => :build
-
-    factory :primary_attendee do
-      is_primary true
-    end
   end
 
   factory :minor, :parent => :attendee do

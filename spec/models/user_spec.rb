@@ -135,28 +135,15 @@ describe User do
 
   end
 
-  # In the interest of quickly migrating testunit tests into this
-  # spec, the following context reproduces the testunit setup()
-  context "testunit setup" do
-    before(:each) do
-      attendee = create :attendee
-      @user = attendee.user
-    end
-
-    it "destroying a user also destroys dependent attendees" do
-      num_extra_attendees = 1 + rand(3)
-      1.upto(num_extra_attendees) { |a|
-        @user.attendees << create(:attendee, :user => @user)
-      }
-
-      # when we destroy the user, we expect all dependent attendees
-      # to be destroyed, including the primary_attendee
-      expected_difference = -1 * (num_extra_attendees + 1)
-      destroyed_user_id = @user.id
-      expect { @user.destroy }.to change{ Attendee.count }.by(expected_difference)
-
-      # double check
-      Attendee.where(:user_id => destroyed_user_id).count.should == 0
+  describe '#destroy' do
+    it "destroying a user destroys all dependent attendees" do
+      user = create :user
+      num_attendees = 1 + rand(3)
+      num_attendees.times do |t|
+        user.attendees << create(:attendee, :user => user)
+      end
+      expect { user.destroy }.to change{ Attendee.count }.by(-1 * num_attendees)
+      Attendee.where(:user_id => user.id).should be_empty
     end
   end
 end

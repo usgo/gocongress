@@ -396,13 +396,6 @@ describe AttendeesController do
         flash[:notice].should == 'Attendee deleted'
       end
 
-      it "can destroy primary attendee" do
-        prim = create :primary_attendee
-        expect { delete :destroy, :id => prim.id, :year => prim.year
-          }.to change { Attendee.count }.by(-1)
-        response.should redirect_to user_path(prim.user)
-      end
-
       it "cannot destroy a guardian" do
         g = create :attendee
         a = create :attendee, guardian: g

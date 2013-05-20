@@ -273,7 +273,7 @@ describe UsersController do
 
   context "even when the user has zero attendees" do
     let(:admin) { create :admin }
-    let(:user) { create :user, primary_attendee: nil }
+    let(:user) { create :user }
 
     before(:each) do
       sign_in admin
@@ -282,7 +282,6 @@ describe UsersController do
     # protect against factory changing
     it "the context is correct and it truly has zero attendees" do
       user.attendees.should be_empty
-      user.primary_attendee.should be_nil
     end
 
     describe "GET show" do
