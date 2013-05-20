@@ -209,6 +209,17 @@ class Attendee < ActiveRecord::Base
     is_primary? ? "My" : full_name_possessive
   end
 
+  def populate_atrs_for_new_form
+    self.email = user.email
+    if user.primary_attendee.present?
+      ['country','phone'].each do |f|
+        self[f] = user.primary_attendee[f]
+      end
+    else
+      is_primary = true
+    end
+  end
+
   def objective_pronoun_or_name_and_copula
     is_primary? ? "You are" : full_name + " is"
   end

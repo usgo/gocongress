@@ -29,14 +29,7 @@ class AttendeesController < ApplicationController
 
   def new
     @attendee.user = User.find(params[:user_id] || current_user.id)
-    @attendee.email = @attendee.user.email
-    if @attendee.user.primary_attendee.present?
-      ['country','phone'].each do |f|
-        @attendee[f] = @attendee.user.primary_attendee[f]
-      end
-    else
-      @attendee.is_primary = true
-    end
+    @attendee.populate_atrs_for_new_form
     expose_form_vars
   end
 
