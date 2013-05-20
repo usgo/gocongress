@@ -7,13 +7,6 @@
     %tr
       %th User Email
       %td= user.email
-    %tr
-      %th Primary Attendee
-      %td
-        - if user.primary_attendee.present?
-          = user.primary_attendee.name_and_rank
-        - else
-          None
 
   = render :partial => 'shared/balance', :locals => {:user => user, :show_detail_links => false}
 

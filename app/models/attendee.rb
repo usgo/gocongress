@@ -189,10 +189,6 @@ class Attendee < ActiveRecord::Base
     given_name + " " + family_name + ('s' == family_name[-1,1] ? "'" : "'s")
   end
 
-  def name_and_rank
-    full_name(false) + ", " + get_rank_name
-  end
-
   def plan_count
     plans.count
   end
