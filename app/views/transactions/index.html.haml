@@ -26,7 +26,7 @@
         %th= trl_attr 'transaction', 'trantype'
         %th= trl_attr 'transaction', 'instrument'
         %th Amount
-        %th Primary Attendee
+        %th User
         %th= trl_attr 'transaction', 'gwtranid'
         %th= trl_attr 'transaction', 'check_number'
         %th= trl_attr 'transaction', 'updated_by_user_id'
@@ -39,15 +39,12 @@
           %td= t.get_trantype_name
           %td= t.get_instrument_name
           %td.numeric= cents_to_currency t.amount, :unit => ""
-          %td
-            - link_text = t.user.coalesce_full_name_then_email
-            - link_path = ledger_user_path(t.user)
-            = link_to link_text, link_path, :title => t.user.email
+          %td= link_to t.user.email, ledger_user_path(t.user)
           %td.numeric= t.gwtranid
           %td.numeric= t.check_number
           %td
             - if t.updated_by_user.present?
-              = t.updated_by_user.primary_attendee.given_name
+              = t.updated_by_user.email
           %td= link_to 'Details', t
           %td= link_to 'Edit', edit_transaction_path(t)
           %td= link_to 'Delete', t, :data => {:confirm => 'Are you sure?'}, :method => :delete
