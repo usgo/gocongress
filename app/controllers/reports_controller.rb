@@ -43,8 +43,7 @@ class ReportsController < ApplicationController
     min = params[:min].downcase
     max = params[:max].downcase
     [min, max].each{ |m| raise "Invalid param" unless ("a".."z").cover?(m) }
-    @users = User.yr(@year).pri_att_fam_name_range(min, max) \
-      .order('family_name, given_name').all
+    @users = User.yr(@year).email_range(min, max).order(:email).all
     render :layout => "print"
   end
 

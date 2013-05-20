@@ -34,27 +34,17 @@ describe ReportsController do
   describe "#user_invoices" do
     it "filters users alphabeticaly by name" do
 
-      # Sign in as an admin whose primary attendee's name starts
+      # Sign in as an admin whose email starts
       # with Z, ie. not in the range we'll be testing below.
-      admin = create :admin,
-        :primary_attendee => build(:attendee,
-          :family_name => "Zhivago", :is_primary => true)
+      admin = create :admin, email: 'zhivago@example.com'
       sign_in admin
 
       # Create a handful of users, one for each letter of a subset
-      # of the alphabet.  Also create their corresponding primary
-      # attendees, with family names beginning with that letter.
-      # In addition, capitalize half of the names, randomly.
+      # of the alphabet.  Also capitalize half of the names, randomly.
       "a".upto("f") do |letter|
         name = (letter * 5)
         name = name.capitalize if (rand < 0.5)
-        create :user,
-          :primary_attendee => build(:attendee,
-            :family_name => name,
-            :is_primary => true,
-            :year => admin.year \
-          ),
-          :year => admin.year
+        create :user, email: "#{name}@example.com", year: admin.year
       end
 
       # Get the report, and expect the users to be filtered.
