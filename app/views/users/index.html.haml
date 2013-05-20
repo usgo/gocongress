@@ -37,7 +37,6 @@
         %td
           - user.attendees.each do |atn|
             = atn.full_name
-            = "*" if atn.is_primary
             %br
         %td= user.attendees.count
         %td= user.created_at.to_date.to_formatted_s(:rfc822)
@@ -47,5 +46,3 @@
         %td= link_to 'Account', user
         %td
           = link_to 'Delete', user, :data => {:confirm => 'Are you sure?'}, :method => :delete
-
-%p * primary attendee

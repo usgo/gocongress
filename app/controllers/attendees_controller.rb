@@ -34,7 +34,6 @@ class AttendeesController < ApplicationController
   end
 
   def create
-    @attendee.is_primary = false # deprecated
     authorize! :create, @attendee
     register_attendee
     if @attendee.errors.empty?

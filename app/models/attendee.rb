@@ -55,7 +55,6 @@ class Attendee < ActiveRecord::Base
   validates :gender,          :inclusion => {:in => ["m","f"], :message => "is not valid"}, :presence => true
   validates :given_name,      :presence => true
   validates :guardian,        :presence => { :if => :require_guardian? }
-  validates :is_primary,      :inclusion => {:in => [true, false]}
   validates :minor_agreement_received, :inclusion => {:in => [true, false]}
   validates :rank,            :inclusion => {:in => Attendee::Rank::NUMERIC_RANK_LIST, :message => "is not valid"}, :presence => true
   validates :roomate_request, :length => {:maximum => 250}
@@ -86,9 +85,6 @@ class Attendee < ActiveRecord::Base
   # Use MinorAgreementValidator (found in lib/) to require that understand_minor
   # be checked if the attendee will not be 18 before the first day of the Congress.
   validates :understand_minor, :minor_agreement => true
-
-  # Validate that each user has exactly one primary attendee -Jared
-  validates_uniqueness_of :is_primary, :scope => :user_id, :if => :is_primary?
 
   # Class Methods
   # =============
@@ -205,8 +201,9 @@ class Attendee < ActiveRecord::Base
     attendee_plans.select{ |ap| ap.show_on_invoice? }
   end
 
+  # deprecated
   def possessive_pronoun_or_name
-    is_primary? ? "My" : full_name_possessive
+    full_name_possessive
   end
 
   def populate_atrs_for_new_form
@@ -216,13 +213,12 @@ class Attendee < ActiveRecord::Base
       ['country','phone'].each do |f|
         self[f] = ufac[f]
       end
-    else
-      is_primary = true
     end
   end
 
+  # deprecated
   def objective_pronoun_or_name_and_copula
-    is_primary? ? "You are" : full_name + " is"
+    full_name + " is"
   end
 
   def get_plan_qty(plan_id)
