@@ -175,18 +175,6 @@ describe AttendeesController do
       end
     end
 
-    describe "#index" do
-
-      # TODO: move to `who_is_coming_spec`
-      it "excludes attendees with zero plans" do
-        a1 = create :attendee
-        a2 = create :attendee
-        a1.plans << create(:plan)
-        get :index, year: a1.year
-        assigns(:who_is_coming).attendees.should_not include(a2)
-      end
-    end
-
     describe '#new' do
       it 'succeeds' do
         get :new, :user_id => user.id, :year => user.year
