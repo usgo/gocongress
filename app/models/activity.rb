@@ -27,7 +27,7 @@ class Activity < ActiveRecord::Base
   }
   validates :url, :length => {:maximum => 200},
     :format => {
-      :with => /^http[s]:\/{2}/,
+      :with => /^https?:\/{2}/,
       :allow_nil => true,
       :message => "must begin with protocol, eg. http://"}
 

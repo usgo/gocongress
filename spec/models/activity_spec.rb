@@ -13,4 +13,13 @@ describe Activity do
       should_not be_disabled
     end
   end
+
+  describe '#valid?' do
+    it 'validates format of url' do
+      build(:activity, url: 'www.seafair.com/').should_not be_valid
+      build(:activity, url: 'http://www.seafair.com/').should be_valid
+      build(:activity, url: 'https://www.seafair.com/').should be_valid
+      build(:activity, url: nil).should be_valid
+    end
+  end
 end
