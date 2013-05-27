@@ -2,9 +2,18 @@
 
 %h3= Plan.model_name.human.pluralize
 
+- if @year.to_i == 2013
+  :markdown
+    **Congress dates are August 3 to 10.** (8-11 is Sunday departure day.)
+    08-02 and 08-11 are extra days. For youth rates, Age is age at August
+    3. **Non players may not have an AGA rating better than 25K.**  Late
+    registration dates are 05-31 ($50), June 30 ($100), July 31 ($150).
+    **Payment must be received or postmarked before these dates to lock in
+    the lower rates.**
+
 %p
-  Mark the checkboxes below ( #{disabled_checkbox}
-  )#{" or enter quantities" if @show_quantity_instructions}.
+  Mark the checkboxes (#{disabled_checkbox})
+  below #{" or enter quantities" if @show_quantity_instructions}.
 
   Questions? Contact the
   = link_to 'registrar.', contacts_path
