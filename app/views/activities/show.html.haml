@@ -9,6 +9,12 @@
       %th= trl_attr :activity, :price
       %td= @activity.price_for_display
     %tr
+      %th= trl_attr :activity, :url
+      %td= link_to @activity.url, @activity.url
+    %tr
+      %th= trl_attr :activity, :phone
+      %td= @activity.phone
+    %tr
       %th= trl_attr :activity, :location
       %td= @activity.location
     %tr

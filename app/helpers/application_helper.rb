@@ -54,6 +54,13 @@ module ApplicationHelper
       :target => '_blank'
   end
 
+  def link_to_tel text
+    return if text.blank?
+    sets_of_numbers = text.scan(/[0-9]+/)
+    number = "+1-#{sets_of_numbers.join('-')}"
+    link_to text, "tel:#{number}"
+  end
+
   def markdown_if_present(s)
     s.blank? ? '' : Markdown.new(s).to_html.html_safe
   end

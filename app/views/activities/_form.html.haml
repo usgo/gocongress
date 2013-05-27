@@ -23,6 +23,12 @@
       %p.smalltext.aligned-with-input
         Include room number, if applicable
     .field
+      = f.label :url
+      = f.text_field :url
+    .field
+      = f.label :phone
+      = f.text_field :phone
+    .field
       = render partial: "shared/md_area", locals: { :obj => :activity, :atr => :notes}
     .field
       = f.label :disabled

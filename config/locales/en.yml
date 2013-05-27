@@ -1,6 +1,17 @@
 en:
   activerecord:
     attributes:
+      activity:
+        activity_category_id: "Category"
+        name: "Activity"
+        phone: "Phone"
+        price: "Price"
+        price_varies: "Price Varies?"
+        location: "Location"
+        notes: "Notes"
+        leave_time: "Leave"
+        return_time: "Return"
+        url: 'Website'
       attendee:
         address_1: "Address Line 1"
         address_2: "Address Line 2"
@@ -35,15 +46,6 @@ en:
         show_on_homepage: "Show on Homepage?"
       content_category:
         name: "Category"
-      activity:
-        activity_category_id: "Category"
-        name: "Activity"
-        price: "Price"
-        price_varies: "Price Varies?"
-        location: "Location"
-        notes: "Notes"
-        leave_time: "Leave"
-        return_time: "Return"
       plan:
         age_min: "Minimum Age"
         age_max: "Maximum Age"

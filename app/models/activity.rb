@@ -3,8 +3,8 @@ class Activity < ActiveRecord::Base
   include Purchasable
 
   attr_accessible :activity_category_id, :disabled,
-    :leave_time, :name, :notes, :price, :price_varies,
-    :return_time, :location
+    :leave_time, :name, :notes, :phone, :price, :price_varies,
+    :return_time, :location, :url
 
   belongs_to :activity_category
   has_many :attendee_activities, :dependent => :destroy
@@ -17,7 +17,7 @@ class Activity < ActiveRecord::Base
     :maximum => 2000,
     :message => "are too long (maximum is 2000 characters)"
   }
-
+  validates :phone, :length => {:maximum => 20}
   validates :price, :numericality => {
     :equal_to => 0,
     :if => :price_varies?,
@@ -25,6 +25,11 @@ class Activity < ActiveRecord::Base
       set the price to 0, so that this #{model_name.human.downcase}
       will not show up on invoices."
   }
+  validates :url, :length => {:maximum => 200},
+    :format => {
+      :with => /^http[s]:\/{2}/,
+      :allow_nil => true,
+      :message => "must begin with protocol, eg. http://"}
 
   scope :disabled, where(disabled: true)
 
