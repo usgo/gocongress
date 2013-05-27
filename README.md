@@ -58,26 +58,18 @@ Contribute
     1. Push your changes to your fork on github
     1. Submit a pull request
 
-Secrets
--------
+Configuration
+-------------
 
 `ENV` variables are stored in a `.env` file, which is git-ignored.
-Some of these don't belong in source control because they are
-secret, and some vary by deployment level.
+Most of these variables don't belong in source control because they
+are secret.  Others vary by deployment level.  This file will be
+loaded by the `dotenv` gem.
 
-    AUTHNET_API_LOGIN_ID='foo'
-    AUTHNET_RELAY_HOST='bar'
-    AUTHNET_TRANSACTION_KEY='baz'
-    GMAIL_SMTP_PASSWORD='herp'
-    GMAIL_SMTP_USER='derp'
-
-This file will be loaded by `config/initializers/dev_env.rb`.
-
-For local development, I wish we could use [foreman][1] to load
-`.env`, but it doesn't work with `pry` or `guard` and it's overkill
-for one process.
-
-For `stage` and `production` use [heroku config][2].
+For local development, `cp .env.example .env` to get started.  I wish
+we could use [foreman][1] to load `.env`, but it doesn't work with
+`pry` or `guard` and it's overkill for one process.  For `stage` and
+`production` use [heroku config][2].
 
 Email for gocongress.org
 ------------------------
