@@ -32,7 +32,7 @@ class ActivityCategoriesController < ApplicationController
   end
 
   def show
-    activities = @activity_category.activities.order :leave_time
+    activities = @activity_category.activities.order('leave_time, name')
     @activities_by_date = activities.group_by {|activity| activity.leave_time.to_date}
   end
 

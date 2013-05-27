@@ -28,7 +28,7 @@ class Activity < ActiveRecord::Base
   validates :url, :length => {:maximum => 200},
     :format => {
       :with => /^https?:\/{2}/,
-      :allow_nil => true,
+      :allow_blank => true,
       :message => "must begin with protocol, eg. http://"}
 
   scope :disabled, where(disabled: true)
