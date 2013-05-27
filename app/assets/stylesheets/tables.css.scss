@@ -46,7 +46,7 @@ table.semantic {
   }
   td {
     background-color: $orange-light;
-    p { padding: 0px; }
+    p { padding-top: 0px; }
   }
   th { background-color: $orange-dark; }
   tr.lesser-header th { background-color: $orange-dark; font-weight: normal; }

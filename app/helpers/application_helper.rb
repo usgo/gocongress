@@ -58,6 +58,15 @@ module ApplicationHelper
     s.blank? ? '' : Markdown.new(s).to_html.html_safe
   end
 
+  def markdown_summary model, atr, len
+    txt = model.send(atr).to_s
+    smry_txt = truncate(txt, length: len, separator: ' ')
+    if txt.length > len
+      smry_txt += ' ' + link_to('more', model)
+    end
+    markdown_if_present smry_txt
+  end
+
   def noun_with_article(singular, collection)
     (collection.count == 1) ? "the " + singular : singular.pluralize
   end
