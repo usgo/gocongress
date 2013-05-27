@@ -75,6 +75,9 @@ GEM
       railties (~> 3.1)
       warden (~> 1.2.1)
     diff-lcs (1.2.4)
+    dotenv (0.7.0)
+    dotenv-rails (0.7.0)
+      dotenv (= 0.7.0)
     erubis (2.7.0)
     eventmachine (1.0.3)
     exception_notification (3.0.1)
@@ -261,6 +264,7 @@ DEPENDENCIES
   country-select!
   deep_merge
   devise
+  dotenv-rails
   exception_notification
   factory_girl
   factory_girl_rails
