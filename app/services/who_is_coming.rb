@@ -16,8 +16,6 @@ class WhoIsComing
     @year = year
     @sort = sort
     @direction = direction
-
-    @order_clause = order_clause
     @attendees = find_attendees
   end
 
@@ -57,9 +55,9 @@ class WhoIsComing
     (sort_unsafe_for_anon?(@sort) ? 'anonymous, ' : '') + clause
   end
 
-  def attendees_qry
+  def attendees_qry order_clause
     q = File.read(attendees_qry_file_path)
-    q += " order by " + @order_clause unless @order_clause.blank?
+    q += " order by " + order_clause unless order_clause.blank?
     q
   end
 
@@ -69,7 +67,7 @@ class WhoIsComing
 
   def find_attendees
     qry_params = {year: @year.to_i}
-    Attendee.find_by_sql [attendees_qry, qry_params]
+    Attendee.find_by_sql [attendees_qry(order_clause), qry_params]
   end
 
   # Certain fields (eg. names) are sorted case-insensitivly
