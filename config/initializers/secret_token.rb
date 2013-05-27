@@ -4,4 +4,16 @@
 # If you change this key, all old signed cookies will become invalid!
 # Make sure the secret is at least 30 characters and all random,
 # no regular words or you'll be exposed to dictionary attacks.
-Gocongress::Application.config.secret_token = 'z6ee2e9b7be913d4bc3b218b03422b89d0bd3476610f8a88716cef0ef1fb7d23a0c58e703203182fee666b99ec2afdb3c363e9ca6a9e06af6720c216f3903dbf'
+
+module UsgcSecretToken
+  def self.local?
+    Rails.env.development? or Rails.env.test?
+  end
+
+  # minimum length: 30 chars
+  def self.to_s
+    local? ? ('x' * 30) : ENV['RAILS_SECRET_TOKEN']
+  end
+end
+
+Gocongress::Application.config.secret_token = UsgcSecretToken.to_s
