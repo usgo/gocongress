@@ -15,7 +15,7 @@ describe WhoIsComing do
       u2b = create :attendee, user: u2, given_name: 'u2b'
       create :tr_sale, amount: 9999, user: u2
 
-      WhoIsComing.attendees(u1.year).map(&:given_name).should == ['u1a']
+      WhoIsComing.new(u1.year).attendees.map(&:given_name).should == ['u1a']
     end
   end
 end

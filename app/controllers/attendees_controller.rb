@@ -13,18 +13,8 @@ class AttendeesController < ApplicationController
   before_filter :expose_adults, :only => [:create, :edit, :new, :update]
   before_filter :expose_selections, :only => [:create, :new, :update]
 
-  # Constants
-  DEFAULT_ORDER = 'rank = 0, rank desc'
-  SORTABLE_COLUMNS = %w[given_name family_name rank created_at country]
-
   def index
-    params[:direction] ||= "asc"
-    @opposite_direction = (params[:direction] == 'asc') ? 'desc' : 'asc'
-    @attendees = WhoIsComing.attendees(@year, order_clause)
-    @pro_count = @attendees.select{|a| a.get_rank.pro?}.count
-    @dan_count = @attendees.select{|a| a.get_rank.dan?}.count
-    @kyu_count = @attendees.select{|a| a.get_rank.kyu?}.count
-    @unregistered_count = Attendee.yr(@year).count - @attendees.count
+    @who_is_coming = WhoIsComing.new @year, params[:sort], params[:direction]
   end
 
   def new
@@ -182,33 +172,5 @@ protected
   def render_form view
     expose_form_vars
     render view
-  end
-
-  # `order_clause` validates the supplied sort field and
-  # direction, and returns a sql order clause
-  def order_clause
-    return DEFAULT_ORDER unless SORTABLE_COLUMNS.include?(params[:sort])
-    append_direction(anonymize_order(insensitive_order))
-  end
-
-  # Certain fields (eg. names) are sorted case-insensitivly
-  def insensitive_order
-    s = params[:sort]
-    %w[given_name family_name].include?(s) ? "lower(#{s})" : s
-  end
-
-  def append_direction clause
-    d = params[:direction]
-    clause + (%w[asc desc].include?(d) ? " #{d}" : '')
-  end
-
-  # Some sort orders could reveal clues about anonymous people, so
-  # we first order by anonymity to protect against that.
-  def anonymize_order clause
-    (sort_unsafe_for_anon?(params[:sort]) ? 'anonymous, ' : '') + clause
-  end
-
-  def sort_unsafe_for_anon? sort
-    %w[given_name family_name country].include?(sort)
   end
 end

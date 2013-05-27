@@ -6,10 +6,10 @@
 - else
 
   %p
-    There are #{ @attendees.size } people registered, including
-    #{@kyu_count} kyu players, #{@dan_count} dan
-    players, and #{pluralize(@pro_count, 'pro')}.
-    Also, #{@unregistered_count} other people have not finished
+    There are #{ @who_is_coming.count } people registered, including
+    #{@who_is_coming.kyu_count} kyu players, #{@who_is_coming.dan_count} dan
+    players, and #{pluralize(@who_is_coming.pro_count, 'pro')}.
+    Also, #{@who_is_coming.unregistered_count} other people have not finished
     their registration.  (They either haven't paid in full, or they
     haven't selected any room and board plans)
 
@@ -23,10 +23,10 @@
       %tr
         %th
         - %w[given_name family_name rank country created_at].each do |c|
-          - drn = (c == params[:sort]) ? @opposite_direction : :asc
+          - drn = (c == params[:sort]) ? @who_is_coming.opposite_direction : :asc
           %th= link_to trl_attr(:attendee, c), :sort => c, :direction => drn
     %tbody
-      - @attendees.each_with_index do |a,i|
+      - @who_is_coming.attendees.each_with_index do |a,i|
         %tr{:class => if a.anonymous then "understated" end }
           %td= i + 1
           %td= a.get_given_name(true)

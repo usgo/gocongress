@@ -27,10 +27,11 @@ describe AttendeesController do
       render_views
 
       it "succeeds" do
-        WhoIsComing.stub(:attendees) { [Attendee.new] }
-        get :index, :year => Time.zone.now.year
+        WhoIsComing.stub(:find_attendees) { [Attendee.new] }
+        Year.any_instance.stub(:registration_phase) { :open }
+        get :index, :year => Time.current.year
         response.should be_successful
-        assigns(:attendees).should_not be_nil
+        assigns(:who_is_coming).should_not be_nil
       end
     end
 
@@ -175,12 +176,14 @@ describe AttendeesController do
     end
 
     describe "#index" do
+
+      # TODO: move to `who_is_coming_spec`
       it "excludes attendees with zero plans" do
         a1 = create :attendee
         a2 = create :attendee
         a1.plans << create(:plan)
         get :index, year: a1.year
-        assigns(:attendees).should_not include(a2)
+        assigns(:who_is_coming).attendees.should_not include(a2)
       end
     end
 
