@@ -5,7 +5,7 @@
 # query that runs in ~8ms. I put the SQL in a separate file for
 # syntax highlighting. -Jared 2013-03-21
 
-class WhoIsComing
+class Attendee::WhoIsComing
 
   DEFAULT_ORDER = 'rank = 0, rank desc'
   SORTABLE_COLUMNS = %w[given_name family_name rank created_at country]

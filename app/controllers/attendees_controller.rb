@@ -14,7 +14,7 @@ class AttendeesController < ApplicationController
   before_filter :expose_selections, :only => [:create, :new, :update]
 
   def index
-    @who_is_coming = WhoIsComing.new @year, params[:sort], params[:direction]
+    @who_is_coming = Attendee::WhoIsComing.new @year, params[:sort], params[:direction]
   end
 
   def new

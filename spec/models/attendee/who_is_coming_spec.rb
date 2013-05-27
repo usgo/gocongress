@@ -1,11 +1,11 @@
-require_relative '../../app/services/who_is_coming'
+require "spec_helper"
 
-describe WhoIsComing do
+describe Attendee::WhoIsComing do
   describe '#attendees' do
 
     it 'excludes attendees with zero plans' do
       a = create :attendee
-      WhoIsComing.new(a.year).attendees.should_not include(a)
+      Attendee::WhoIsComing.new(a.year).attendees.should_not include(a)
     end
 
     it 'returns attendees that paid in full and have at least one plan' do
@@ -21,7 +21,7 @@ describe WhoIsComing do
       create :attendee, user: u2, given_name: 'u2b'
       create :tr_sale, amount: 9999, user: u2
 
-      WhoIsComing.new(u1.year).attendees.map(&:given_name).should == ['u1a']
+      Attendee::WhoIsComing.new(u1.year).attendees.map(&:given_name).should == ['u1a']
     end
   end
 end
