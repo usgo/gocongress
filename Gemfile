@@ -56,9 +56,13 @@ end
 
 group :development do
   gem 'haml-rails'
-  gem 'html2haml'
   gem 'quiet_assets'
-  gem 'flog'
+
+  # I love these two tools, but they use `sexp_processor` which defines
+  # a `s` method in the global namespace.  This is too much pollution
+  # for my taste.  So, I install the gems, but not in my bundle. -Jared 2013
+  # gem 'html2haml'
+  # gem 'flog'
 end
 
 group :test do
