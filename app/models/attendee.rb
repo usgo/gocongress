@@ -137,12 +137,12 @@ class Attendee < ActiveRecord::Base
   end
 
   def get_family_name(respect_anonymity = false)
-    name = NameInflector.capitalize_name(family_name)
+    name = NameInflector.capitalize(family_name)
     respect_anonymity ? anonymize(name) : name
   end
 
   def get_given_name(respect_anonymity = false)
-    name = NameInflector.capitalize_name(given_name)
+    name = NameInflector.capitalize(given_name)
     respect_anonymity ? anonymize(name) : name
   end
 
@@ -179,7 +179,7 @@ class Attendee < ActiveRecord::Base
   end
 
   def full_name(respect_anonymity = false)
-    name = NameInflector.capitalize_name(given_name) + " " + NameInflector.capitalize_name(family_name)
+    name = NameInflector.capitalize(given_name) + " " + NameInflector.capitalize(family_name)
     respect_anonymity ? anonymize(name) : name
   end
 

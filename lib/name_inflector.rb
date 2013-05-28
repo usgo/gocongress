@@ -8,7 +8,7 @@ module NameInflector
   # Macintyre and MacIntyre are both valid
   OPTPREF = ["mac", "mc"]
 
-  def self.capitalize_name(name)
+  def self.capitalize(name)
     mandpref_match = longest_matching_prefix MANDPREF, name
     optpref_match = longest_matching_prefix OPTPREF, name
 
