@@ -117,23 +117,12 @@ class Attendee < ActiveRecord::Base
     activities.select { |a| a.price.present? && a.price > 0.0 }
   end
 
-  # `age_in_years` Returns integer age in years on the start day of congress, not now.
   def age_in_years
-    raise 'birth date undefined' if birth_date.nil?
-    year_delta = congress_start.year - birth_date.year
-    birthday_after_congress? ? year_delta - 1 : year_delta
+    Attendee::Age.new(birth_date, congress_start).years
   end
 
   def anonymize string
     anonymous? ? 'Anonymous' : string
-  end
-
-  def birthdate_in_congress_year
-    Date.new(congress_start.year, birth_date.month, birth_date.day)
-  end
-
-  def birthday_after_congress?
-    (birthdate_in_congress_year <=> congress_start) == 1
   end
 
   def family_name_anonymized
