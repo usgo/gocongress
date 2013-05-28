@@ -34,16 +34,6 @@ class Attendee < ActiveRecord::Base
 
   attr_accessible :comment, :minor_agreement_received, :as => :admin
 
-  # Scopes
-  # ------
-
-  scope :not_anonymous, where(anonymous: false)
-
-  # Using a subquery in the where clause is performant up to about
-  # one thousand records.  -Jared 2012-05-13
-  scope :with_at_least_one_plan, where("0 < (select count(*) from attendee_plans ap where ap.attendee_id = attendees.id)")
-  scope :planless, where("0 = (select count(*) from attendee_plans ap where ap.attendee_id = attendees.id)")
-
   # Validations
   # -----------
 
@@ -100,6 +90,20 @@ class Attendee < ActiveRecord::Base
     when :planless then planless
     else raise ArgumentError
     end
+  end
+
+  def self.not_anonymous
+    where(anonymous: false)
+  end
+
+  # Using a subquery in the where clause is performant up to about
+  # one thousand records.  -Jared 2012-05-13
+  def self.with_at_least_one_plan
+    where("0 < (select count(*) from attendee_plans ap where ap.attendee_id = attendees.id)")
+  end
+
+  def self.planless
+    where("0 = (select count(*) from attendee_plans ap where ap.attendee_id = attendees.id)")
   end
 
   # Public Instance Methods
