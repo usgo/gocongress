@@ -16,6 +16,10 @@ class Attendee::Age
     (birthdate_in_congress_year <=> @congress_start) == 1
   end
 
+  def minor?
+    @birth + 18.years > @congress_start
+  end
+
   private
 
   def birthdate_in_congress_year

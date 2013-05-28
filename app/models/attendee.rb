@@ -117,8 +117,12 @@ class Attendee < ActiveRecord::Base
     activities.select { |a| a.price.present? && a.price > 0.0 }
   end
 
+  def age
+    Attendee::Age.new(birth_date, congress_start)
+  end
+
   def age_in_years
-    Attendee::Age.new(birth_date, congress_start).years
+    age.years
   end
 
   def anonymize string
@@ -162,7 +166,7 @@ class Attendee < ActiveRecord::Base
   end
 
   def minor?
-    self.birth_date + 18.years > congress_start
+    age.minor?
   end
 
   def full_name(respect_anonymity = false)
