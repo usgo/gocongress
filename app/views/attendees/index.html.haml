@@ -29,8 +29,8 @@
       - @who_is_coming.attendees.each_with_index do |a,i|
         %tr{:class => if a.anonymous then "understated" end }
           %td= i + 1
-          %td= a.get_given_name(true)
-          %td= a.get_family_name(true)
+          %td= a.given_name_anonymized
+          %td= a.family_name_anonymized
           %td= a.get_rank_name
           %td= a.anonymize_attribute :country
           %td= a.created_at.to_date.to_formatted_s(:rfc822)

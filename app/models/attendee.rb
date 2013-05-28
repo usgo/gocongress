@@ -136,14 +136,12 @@ class Attendee < ActiveRecord::Base
     (birthdate_in_congress_year <=> congress_start) == 1
   end
 
-  def get_family_name(respect_anonymity = false)
-    name = NameInflector.capitalize(family_name)
-    respect_anonymity ? anonymize(name) : name
+  def family_name_anonymized
+    anonymize NameInflector.capitalize family_name
   end
 
-  def get_given_name(respect_anonymity = false)
-    name = NameInflector.capitalize(given_name)
-    respect_anonymity ? anonymize(name) : name
+  def given_name_anonymized
+    anonymize NameInflector.capitalize given_name
   end
 
   def clear_plans!
