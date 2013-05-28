@@ -49,7 +49,6 @@ Gocongress::Application.routes.draw do
           end
           member do
             get 'print_summary', :as => 'print_summary_for'
-            get 'print_badge', :as => 'print_badge_for'
           end
         end
 
@@ -69,7 +68,7 @@ Gocongress::Application.routes.draw do
         # action.  Use the rpt namespace below.
         resources :reports, :only => :index do
           collection do
-            get :atn_badges_all, :atn_badges_ind, :atn_reg_sheets,
+            get :atn_reg_sheets,
               :emails, :activities, :invoices,
               :tournaments, :user_invoices
           end

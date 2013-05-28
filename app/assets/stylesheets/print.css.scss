@@ -8,9 +8,9 @@ $light-blue: #64AEDE;
 body { background-color: white; margin: 20pt; }
 hr { margin: 1em 0em 1em 0em; }
 blockquote {
-  font-size: 14pt; 
-  font-style: oblique; 
-  padding: 0pt 10pt; 
+  font-size: 14pt;
+  font-style: oblique;
+  padding: 0pt 10pt;
 }
 fieldset {
   border: none;
@@ -18,7 +18,7 @@ fieldset {
   margin: 0em;
 }
 legend {
-  font-size: 18pt; 
+  font-size: 18pt;
   font-weight: bold;
   padding: 1em 0em 0.25em 0em;
 }
@@ -67,78 +67,13 @@ td, th { padding-right: 1em; }
   width: 415pt;
 }
 tr.total {
-  th, td { 
+  th, td {
     border-top: 1px solid black;
     padding-top: 0.25em;
   }
 }
 .logo { float: left; padding-right: 20pt; }
 .registration-sheet { page-break-after: always; }
-
-/* Badge styles. -Brian 7-13-2011 */
-.badge {
-  position: relative;
-  width: 342pt;
-  height: 207pt;
-  border: 1pt dotted;
-  margin: 0 0 18pt;
-  h1 { font-size: 25pt; }
-  h2 { font-size: 18pt; }
-  p { font-size: 16pt; }
-  .badge-attendee {
-    position: absolute;
-    width: 342pt;
-    text-align: center;
-    top: 10pt;
-  }
-  .badge-year {
-    position: absolute;
-    width: 342pt;
-    bottom: 20pt;
-    text-align: center;
-  }
-  .badge-misc {
-    position: absolute;
-    width: 342pt;
-    bottom: 0pt;
-    text-align: center;
-  }
-  .badge-logo {
-    position: relative;
-    top: 44pt;
-    text-align: center;
-  }
-  .badge-rank {
-    position: absolute;
-    width: 95pt;
-    top: 78pt;
-    left: 16pt;
-    font-size: 30pt;
-    border-top: 2pt solid black;
-    border-bottom: 2pt solid black;
-	  text-shadow: -1pt 0 1pt black
-	              , 0 1pt 1pt black
-	              , 1pt 0 1pt black
-	              , 0 -1pt 1pt black;
-    text-align: center;
-    padding: 4pt 0;
-    &.badge-rank-pro { color: $dark-orange; border-color: $dark-orange; }
-    &.badge-rank-dan { color: $light-blue; border-color: $light-blue; }
-    &.badge-rank-kyu { color: black; text-shadow: none; border-color: black;}
-    &.badge-rank-np { color: #DDD; border-color: #BBB; }
-  }
-  .badge-player-status {
-    position: absolute;
-    width: 95pt;
-    left: 232pt;
-    top: 78pt;
-    font-size: 18pt;
-    text-align: center;
-    border-top: solid 2pt black;
-    border-bottom: solid 2pt black;
-    padding: 11pt 0pt;
-  }
-}
 
 /* Paper size is US Letter Portraint with half-inch gutters */
 /* 7.5 inches = 540 PostScript points */

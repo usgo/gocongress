@@ -14,7 +14,7 @@ describe ReportsController do
     end
 
     # These reports take a min and max parameter
-    %w[atn_badges_all atn_reg_sheets user_invoices].each do |r|
+    %w[atn_reg_sheets user_invoices].each do |r|
       get r, :year => admin.year, :min => 'a', :max => 'z'
       response.should be_success
     end

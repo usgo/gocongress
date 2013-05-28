@@ -65,12 +65,6 @@ class AttendeesController < ApplicationController
     render :layout => "print"
   end
 
-  def print_badge
-    @attendee = Attendee.find params[:id]
-    authorize! :read, @attendee
-    render :layout=> 'print'
-  end
-
   def vip
     @attendees = Attendee.yr(@year).where('rank >= 101').order('rank desc')
   end

@@ -229,10 +229,6 @@ class Attendee < ActiveRecord::Base
     get_rank.name
   end
 
-  def rank_name_for_badge
-    rank == 0 ? "NP" : rank_name
-  end
-
   def shirt_name
     shirt.try(:name)
   end

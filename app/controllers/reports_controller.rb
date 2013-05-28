@@ -6,13 +6,6 @@ class ReportsController < ApplicationController
   before_filter :authorize_read_report
   def authorize_read_report() authorize! :read, :report end
 
-  def atn_badges_all
-    @attendees = Attendee.yr(@year) \
-      .where('lower(substr(family_name,1,1)) between ? and ?', params[:min], params[:max]) \
-      .order('family_name, given_name')
-    render :layout => "print"
-  end
-
   def atn_reg_sheets
     @attendee_attr_names = %w[aga_id birth_date comment email gender phone special_request roomate_request].sort
     @attendees = Attendee.yr(@year) \
