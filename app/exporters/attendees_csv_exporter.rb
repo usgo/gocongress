@@ -70,7 +70,7 @@ class AttendeesCsvExporter
 
     def self.value atnd, atr
       if atr == 'rank'
-        atnd.get_rank_name
+        atnd.rank_name
       else
         atnd[atr]
       end

@@ -25,5 +25,5 @@
             - e.attendees.order('family_name').each do |a|
               %tr
                 %td= a.full_name
-                %td= a.get_rank_name
+                %td= a.rank_name
                 %td.numeric= a.age_in_years.to_i

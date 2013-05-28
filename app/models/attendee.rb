@@ -225,12 +225,12 @@ class Attendee < ActiveRecord::Base
     Attendee::Rank.new(self.rank)
   end
 
-  def get_rank_name
+  def rank_name
     get_rank.name
   end
 
   def rank_name_for_badge
-    rank == 0 ? "NP" : get_rank_name
+    rank == 0 ? "NP" : rank_name
   end
 
   def shirt_name

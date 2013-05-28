@@ -33,7 +33,7 @@
         - for a in @attendees
           %tr
             %td= link_to a.full_name, edit_attendee_path(a)
-            %td= a.get_rank_name
+            %td= a.rank_name
             %td.numeric= a.age_in_years.floor
             %td.smalltext
               = link_to 'Delete', a, :data => {:confirm => "Are you sure you want to delete #{a.full_name}?"}, :method => :delete
