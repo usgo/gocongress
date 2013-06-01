@@ -27,7 +27,8 @@ describe AttendeesController do
       render_views
 
       it "succeeds" do
-        Attendee::WhoIsComing.stub(:find_attendees) { [Attendee.new] }
+        a = create :attendee
+        Attendee::WhoIsComing.any_instance.stub(:find_attendees) { [a] }
         Year.any_instance.stub(:registration_phase) { :open }
         get :index, :year => Time.current.year
         response.should be_successful
