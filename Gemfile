@@ -17,7 +17,7 @@ gem 'uglifier'
 gem 'pg'
 
 # View Layer
-gem "jquery-rails" # jquery and jquery-ui
+gem "jquery-rails"
 gem 'haml'
 gem 'bluecloth' # markdown
 gem 'kaminari' # pagination
