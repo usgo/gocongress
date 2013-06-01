@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130527200705) do
+ActiveRecord::Schema.define(:version => 20130601201501) do
 
   create_table "activities", :force => true do |t|
     t.string   "name"
@@ -185,13 +185,14 @@ ActiveRecord::Schema.define(:version => 20130527200705) do
   add_index "plans", ["plan_category_id"], :name => "index_plans_on_plan_category_id"
 
   create_table "shirts", :force => true do |t|
-    t.integer  "year",                       :null => false
-    t.string   "name",        :limit => 40,  :null => false
-    t.string   "hex_triplet", :limit => 6,   :null => false
-    t.string   "description", :limit => 100, :null => false
+    t.integer  "year",                                          :null => false
+    t.string   "name",        :limit => 40,                     :null => false
+    t.string   "hex_triplet", :limit => 6,                      :null => false
+    t.string   "description", :limit => 100,                    :null => false
     t.string   "image_url",   :limit => 250
-    t.datetime "created_at",                 :null => false
-    t.datetime "updated_at",                 :null => false
+    t.datetime "created_at",                                    :null => false
+    t.datetime "updated_at",                                    :null => false
+    t.boolean  "disabled",                   :default => false, :null => false
   end
 
   add_index "shirts", ["hex_triplet", "year"], :name => "index_shirts_on_hex_triplet_and_year", :unique => true

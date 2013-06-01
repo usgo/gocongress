@@ -31,6 +31,7 @@ module Gocongress
     # Custom directories with classes and modules you want to be autoloadable.
     config.autoload_paths += %W(
       #{Rails.root}/app/exporters
+      #{Rails.root}/app/presenters
       #{Rails.root}/lib
       #{Rails.root}/lib/concerns
     )

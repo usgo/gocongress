@@ -39,4 +39,5 @@ guard 'rspec', {
   watch('app/exporters/attendees_csv_exporter.rb') {
     'spec/controllers/rpt/attendee_reports_controller_spec.rb'
   }
+  watch('app/presenters/shirt_menu.rb') { 'spec/features/attendee_form_spec.rb' }
 end

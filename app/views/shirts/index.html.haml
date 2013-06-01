@@ -24,6 +24,8 @@
           %td.valign-top
             %h3= link_to_if can?(:edit, shirt), shirt.name, edit_shirt_path(shirt)
             .color-block{:style => "background-color: ##{shirt.hex_triplet}"}
+            - if shirt.disabled?
+              %p No longer available
             %p= shirt.description
             - if can? :delete, shirt
               %p= link_to 'Delete', shirt_path(shirt), :method => :delete, :confirm => 'Delete? Are you sure?'

@@ -3,7 +3,7 @@ class Shirt < ActiveRecord::Base
 
   has_many :attendees, dependent: :restrict
 
-  attr_accessible :description, :hex_triplet, :image_url, :name
+  attr_accessible :description, :disabled, :hex_triplet, :image_url, :name
 
   SIZES = [
     ["None",            "NO"],
@@ -30,4 +30,8 @@ class Shirt < ActiveRecord::Base
     :length => { :is => 6 },
     :presence => true,
     :uniqueness => { :scope => :year }
+
+  def self.enabled
+    where(disabled: false)
+  end
 end

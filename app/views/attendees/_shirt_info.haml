@@ -4,5 +4,5 @@
     = f.select :tshirt_size, Shirt::SIZES, :include_blank => ''
   .field
     = f.label :shirt_id, 'Shirt Style'
-    = f.select :shirt_id, options_from_collection_for_select(Shirt.all, :id, :name, selected = @attendee.shirt_id), :include_blank => ''
+    = ShirtMenu.to_html(f, @attendee.shirt_id)
     %span.smalltext= link_to 'Details', shirts_path, :target => '_blank'
