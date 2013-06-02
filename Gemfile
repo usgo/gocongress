@@ -53,6 +53,7 @@ gem 'country-select', :git => 'git://github.com/jaredbeck/country-select.git'
 
 # Heroku gems hopefully replace plugins.
 # https://devcenter.heroku.com/articles/rails4#heroku-gems
+# Unfortunately, heroku still injects plugins.
 # Do I really want serve_static_assets?
 group :production, :stage do
   gem 'rails_log_stdout', github: 'heroku/rails_log_stdout'
