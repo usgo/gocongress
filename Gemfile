@@ -44,6 +44,21 @@ gem 'thin'
 # instead of the full country names.
 gem 'country-select', :git => 'git://github.com/jaredbeck/country-select.git'
 
+# Groups: Rails will load the group where name == Rails.env
+# http://yehudakatz.com/2010/05/09/the-how-and-why-of-bundler-groups/
+#
+# To keep your heroku slug size down, heroku automatically
+# bundles --without development:test
+# https://blog.heroku.com/archives/2011/2/15/using-bundler-groups-on-heroku
+
+# Heroku gems hopefully replace plugins.
+# https://devcenter.heroku.com/articles/rails4#heroku-gems
+# Do I really want serve_static_assets?
+group :production, :stage do
+  gem 'rails_log_stdout', github: 'heroku/rails_log_stdout'
+  gem 'rails3_serve_static_assets', github: 'heroku/rails3_serve_static_assets'
+end
+
 # rspec-rails wants to be in the :development group
 # to "expose generators and rake tasks"
 group :test, :development do
@@ -79,6 +94,3 @@ group :test do
 	# I had been using spork 1.0.0rc3
 	gem 'spork', :git => 'https://github.com/sporkrb/spork.git'
 end
-
-# To keep your heroku slug size down, try this
-# heroku config:add BUNDLE_WITHOUT="development:test"
