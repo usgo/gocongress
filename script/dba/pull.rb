@@ -1,5 +1,10 @@
 #!/usr/bin/env ruby
-
+#
+# `Puller` exports a heroku database, and overwrites the specified
+# local database.  See "Importing and Exporting Heroku Postgres
+# Databases with PG Backups" (http://bit.ly/15Udpfl)
+# -Jared Beck 2013-06-07
+#
 class Puller
 
   def initialize args
