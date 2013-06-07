@@ -26,13 +26,11 @@ class Puller
 
   def download
     %x{curl -o tmp/latest.dump `heroku pgbackups:url --app #{@app_name}`}
-    unless $?.success?
-      die "Unable to download the backup"
-    end
+    die "Unable to download the backup" unless $?.success?
   end
 
   def restore
-    opts = "--verbose --clean --no-acl --no-owner"
+    opts = "--clean --no-acl --no-owner"
     unless system "pg_restore #{opts} -d #{@local_db_name} tmp/latest.dump"
       die "Restore failed"
     end
