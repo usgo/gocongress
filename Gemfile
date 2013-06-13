@@ -23,6 +23,11 @@ gem 'bluecloth' # markdown
 gem 'kaminari' # pagination
 gem 'asset_sync'
 
+# For some reason, bundle update was downgrading fog to 0.9 even though
+# here are no constraints on fog in the Gemfile.lock.  So, I have to
+# require `1.12` here.
+gem 'fog', '~> 1.12.1'
+
 # AAA - Authentication, Authorization, and Access Control
 gem 'devise'
 gem 'cancan'
