@@ -54,7 +54,7 @@ end
       t.updated_by_user_email,
       t.updated_at.to_date,
       (t.gwdate.present? ? t.gwdate.to_date : nil),
-      (t.comment.present? ? html_escape(t.comment) : nil)
+      (t.comment.present? ? t.comment : nil)
     ]
   end
 end

@@ -34,15 +34,15 @@ describe Rpt::TransactionReportsController do
   describe 'csv format' do
     it "has one line for each transaction, plus a header" do
       y = Time.current.year
-      create :tr_sale
-      create :tr_comp
+      3.times { |i| create :tr_sale }
+      create :tr_comp, comment: 'volunteer comp'
       create :tr_refund
 
       sign_in staff
       get :show, format: 'csv', year: y
       response.should be_success
       ary = CSV.parse response.body
-      ary.should have(4).rows
+      ary.should have(6).rows
     end
   end
 end
