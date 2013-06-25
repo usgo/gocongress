@@ -149,6 +149,10 @@ class Attendee < ActiveRecord::Base
     anonymize self.send atr
   end
 
+  def guardian_name
+    guardian.try :full_name
+  end
+
   def has_plans?
     plan_count > 0
   end

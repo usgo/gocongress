@@ -5,6 +5,7 @@ class AttendeesCsvExporter
     [
       atnd.user_email,
       AttendeeAttributes.values(atnd),
+      atnd.guardian_name,
       atnd.shirt_name,
       plan_quantities(atnd)
     ].flatten.map { |v| blank_to_nil(v) }
@@ -12,7 +13,7 @@ class AttendeesCsvExporter
 
   # Order must match `attendee_array`
   def self.header_array year
-    ['user_email'] + AttendeeAttributes.names + ['shirt_style'] + plan_names(year)
+    ['user_email'] + AttendeeAttributes.names + ['guardian', 'shirt_style'] + plan_names(year)
   end
 
   def self.render year, attendees
@@ -50,7 +51,7 @@ class AttendeesCsvExporter
   module AttendeeAttributes
     FIRST_ATRS = %w[aga_id family_name given_name country phone].freeze
     LAST_ATRS = %w[special_request roomate_request].freeze
-    INTERNAL_ATRS = %w[id shirt_id user_id understand_minor].freeze
+    INTERNAL_ATRS = %w[id shirt_id user_id understand_minor guardian_attendee_id].freeze
 
     # It is convenient for name and email to be in the first few
     # columns, and for roommate request to be next to the plans.
