@@ -1,6 +1,15 @@
 %h2 Forgot your password?
 = form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post }) do |f|
-  = devise_error_messages!
+
+  -# Don't use `devise_error_messages!` here, b/c it's technical, not friendly
+  - unless resource.errors.empty?
+    #error_explanation
+      %h2 Email Address Not Found
+      %p
+        Maybe you haven't created a user account
+        %strong for this year
+        yet?
+
   = hidden_field :user, :year, :value => @year.year
   %p
     = f.label :email
