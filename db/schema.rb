@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130601201501) do
+ActiveRecord::Schema.define(:version => 20130627040731) do
 
   create_table "activities", :force => true do |t|
     t.string   "name"
@@ -200,17 +200,16 @@ ActiveRecord::Schema.define(:version => 20130601201501) do
   add_index "shirts", ["name", "year"], :name => "index_shirts_on_name_and_year", :unique => true
 
   create_table "tournaments", :force => true do |t|
-    t.string   "name",                      :limit => 50,                    :null => false
-    t.string   "eligible",                                                   :null => false
-    t.text     "description",                                                :null => false
-    t.string   "directors",                                                  :null => false
+    t.string   "name",             :limit => 50,                    :null => false
+    t.string   "eligible",                                          :null => false
+    t.text     "description",                                       :null => false
+    t.string   "directors",                                         :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "openness",                  :limit => 1,  :default => "O",   :null => false
-    t.boolean  "show_attendee_notes_field",               :default => false, :null => false
-    t.integer  "year",                                                       :null => false
-    t.string   "location",                  :limit => 50
-    t.boolean  "show_in_nav_menu",                        :default => false, :null => false
+    t.string   "openness",         :limit => 1,  :default => "O",   :null => false
+    t.integer  "year",                                              :null => false
+    t.string   "location",         :limit => 50
+    t.boolean  "show_in_nav_menu",               :default => false, :null => false
   end
 
   add_index "tournaments", ["id", "year"], :name => "index_tournaments_on_id_and_year", :unique => true

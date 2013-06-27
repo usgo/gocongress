@@ -22,12 +22,6 @@
     .field
       = render partial: "shared/md_area", locals: { :obj => :tournament, :atr => :description }
     .field
-      = f.label :show_attendee_notes_field
-      = f.check_box :show_attendee_notes_field
-      %span.smalltext
-        Allow attendees to provide comments (eg. pair go partner)
-        when signing up for tournament
-    .field
       = f.label :show_in_nav_menu
       = f.check_box :show_in_nav_menu
       %span.smalltext
