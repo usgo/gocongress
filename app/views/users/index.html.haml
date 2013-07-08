@@ -38,7 +38,9 @@
           - user.attendees.each do |atn|
             = atn.full_name
             %br
-        %td= user.attendees.count
+        %td
+          -# `count` would exec. a query, `length` doesn't because of `includes`
+          = user.attendees.length
         %td= user.created_at.to_date.to_formatted_s(:rfc822)
         %td
           - if user.last_sign_in_at.present?

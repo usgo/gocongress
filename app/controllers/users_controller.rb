@@ -39,7 +39,7 @@ class UsersController < ApplicationController
     else
       sort_order = "role = 'A' desc, role = 'S' desc"
     end
-    @users = @users.yr(@year).order(sort_order)
+    @users = @users.yr(@year).order(sort_order).includes(:attendees)
   end
 
   def show
