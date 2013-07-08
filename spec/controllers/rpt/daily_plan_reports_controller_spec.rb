@@ -24,7 +24,7 @@ describe Rpt::DailyPlanReportsController do
       let(:the_one_true_date_format) { '%Y-%m-%d' }
       render_views
 
-      it "succeeds", focus: true do
+      it "succeeds" do
         csd = CONGRESS_START_DATE[Date.current.year]
         p1 = create :plan, daily: true, name: 'Plan 1'
         p2 = create :plan, daily: true, disabled: false, name: 'Plan 2'
