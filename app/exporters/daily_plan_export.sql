@@ -1,5 +1,7 @@
 select
-  a.given_name || ' ' || a.family_name as attendee_name,
+  a.id as attendee_id,
+  a.family_name,
+  a.given_name,
   p.name as plan_name,
   min(apd._date) as first_date
 from attendees a
@@ -12,4 +14,4 @@ inner join attendee_plan_dates apd
 where a.year = $1
   and p.daily = true
 group by a.id, p.id
-order by attendee_name, a.id, plan_name, p.id
+order by a.family_name, a.given_name, a.id, plan_name, p.id

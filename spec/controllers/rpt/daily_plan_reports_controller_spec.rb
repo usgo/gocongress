@@ -40,12 +40,16 @@ describe Rpt::DailyPlanReportsController do
 
         ary = CSV.parse response.body
         ary.should have(2).rows # the header, and the one attendee
-        ary[0][0].should == 'Attendee'
-        ary[0][1].should == 'Plan 1' # should be alphabetical
-        ary[0][2].should == 'Plan 2'
-        ary[1][0].should == a1.full_name
-        ary[1][1].should == csd.strftime(the_one_true_date_format)
-        ary[1][2].should == (csd + 1.day).strftime(the_one_true_date_format)
+
+        ary[0][0].should == 'Family Name'
+        ary[0][1].should == 'Given Name'
+        ary[0][2].should == 'Plan 1' # should be alphabetical
+        ary[0][3].should == 'Plan 2'
+
+        ary[1][0].should == a1.family_name
+        ary[1][1].should == a1.given_name
+        ary[1][2].should == csd.strftime(the_one_true_date_format)
+        ary[1][3].should == (csd + 1.day).strftime(the_one_true_date_format)
       end
     end
   end

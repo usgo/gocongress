@@ -8,7 +8,7 @@ class DailyPlanCsvExporter < Exporter
   end
 
   def header
-    ["Attendee"] + @plan_names
+    ["Family Name", "Given Name"] + @plan_names
   end
 
   def render
@@ -24,16 +24,25 @@ class DailyPlanCsvExporter < Exporter
   # but cumbersome, and this will be fast enough.
   def crosstab(pg_result)
     xtab = []
-    pg_result.group_by { |row| row["attendee_name"] }.each do |attendee_name, tuples|
+    pg_result.group_by { |row| row["attendee_id"] }.each do |attendee_id, tuples|
       xtab_row = Array.new(header.length, nil)
-      xtab_row[0] = attendee_name
+      xtab_row[0] = tuples[0]["family_name"]
+      xtab_row[1] = tuples[0]["given_name"]
       tuples.each do |t|
-        xtab_col = @plan_names.index(t["plan_name"]) + 1
+        xtab_col = plan_col_num_in_xtab(t["plan_name"])
         xtab_row[xtab_col] = t["first_date"]
       end
       xtab << xtab_row
     end
     xtab
+  end
+
+  def plan_col_num_in_xtab plan_name
+    @plan_names.index(plan_name) + index_of_first_plan_column_in_header
+  end
+
+  def index_of_first_plan_column_in_header
+    @index_of_first_plan_column_in_header ||= header.length - @plan_names.length
   end
 
   def matrix_to_csv(m)
