@@ -83,6 +83,7 @@ Gocongress::Application.routes.draw do
           # These reports support CSV format
           constraints :format => /(csv)?/ do
             resource :attendee_report, :only => :show
+            resource :daily_plan_report, :only => :show
             resource :transaction_report, :only => :show
           end
         end

@@ -74,6 +74,10 @@ scope :enabled, where(disabled: false)
 # Class Methods
 # -------------
 
+def self.daily
+  where daily: true
+end
+
 # `inventoried_plan_in?` returns true if the supplied plan array
 # contains at least one plan with an inventory.
 def self.inventoried_plan_in? plans
