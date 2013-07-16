@@ -32,7 +32,7 @@ describe DailyPlanCsvExporter do
     end
 
     def format_date d
-      d.strftime '%Y-%m-%d'
+      d.strftime '%-m/%-d'
     end
 
     def format_date_range rng

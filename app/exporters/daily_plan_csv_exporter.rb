@@ -35,8 +35,12 @@ class DailyPlanCsvExporter < Exporter
     xtab
   end
 
+  def format_date iso8601_str
+    Date.iso8601(iso8601_str).strftime('%-m/%-d')
+  end
+
   def format_date_range rng
-    "#{rng.begin} to #{rng.end}"
+    "#{format_date(rng.begin)} to #{format_date(rng.end)}"
   end
 
   def plan_col_num_in_xtab plan_name
