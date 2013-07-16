@@ -3,7 +3,8 @@ select
   a.family_name,
   a.given_name,
   p.name as plan_name,
-  min(apd._date) as first_date
+  min(apd._date) as first_date,
+  max(apd._date) as last_date
 from attendees a
 cross join plans p
 inner join attendee_plans ap

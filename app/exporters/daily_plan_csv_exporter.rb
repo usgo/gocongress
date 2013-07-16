@@ -28,11 +28,15 @@ class DailyPlanCsvExporter < Exporter
       xtab_row[1] = tuples[0]["given_name"]
       tuples.each do |t|
         xtab_col = plan_col_num_in_xtab(t["plan_name"])
-        xtab_row[xtab_col] = t["first_date"]
+        xtab_row[xtab_col] = format_date_range(t["first_date"]..t["last_date"])
       end
       xtab << xtab_row
     end
     xtab
+  end
+
+  def format_date_range rng
+    "#{rng.begin} to #{rng.end}"
   end
 
   def plan_col_num_in_xtab plan_name

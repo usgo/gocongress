@@ -2,8 +2,6 @@ require "spec_helper"
 
 describe DailyPlanCsvExporter do
   describe '#render' do
-    let(:the_one_true_date_format) { '%Y-%m-%d' }
-
     it "renders one row per attendee, and one col. per plan" do
       year = Date.current.year
       csd = CONGRESS_START_DATE[year]
@@ -13,8 +11,9 @@ describe DailyPlanCsvExporter do
       a1 = create :attendee
       a1ap1 = create :attendee_plan, attendee: a1, plan: p1
       a1ap2 = create :attendee_plan, attendee: a1, plan: p2
-      create :attendee_plan_date, attendee_plan: a1ap1, _date: csd
-      create :attendee_plan_date, attendee_plan: a1ap2, _date: csd + 1.day
+      a1ap1d1 = create :attendee_plan_date, attendee_plan: a1ap1, _date: csd
+      a1ap1d2 = create :attendee_plan_date, attendee_plan: a1ap1, _date: csd + 3.days
+      a1ap2d1 = create :attendee_plan_date, attendee_plan: a1ap2, _date: csd + 1.day
 
       csv = DailyPlanCsvExporter.new(year).render
 
@@ -28,8 +27,16 @@ describe DailyPlanCsvExporter do
 
       ary[1][0].should == a1.family_name
       ary[1][1].should == a1.given_name
-      ary[1][2].should == csd.strftime(the_one_true_date_format)
-      ary[1][3].should == (csd + 1.day).strftime(the_one_true_date_format)
+      ary[1][2].should == format_date_range(a1ap1d1._date..a1ap1d2._date)
+      ary[1][3].should == format_date_range(a1ap2d1._date..a1ap2d1._date)
+    end
+
+    def format_date d
+      d.strftime '%Y-%m-%d'
+    end
+
+    def format_date_range rng
+      "#{format_date(rng.begin)} to #{format_date(rng.end)}"
     end
   end
 end
