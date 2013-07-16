@@ -7,8 +7,8 @@ ruby '1.9.3'
 
 # Core rails stuff
 gem 'rails', '~> 3.2.13'
-gem 'sass-rails'
-gem 'coffee-rails'
+gem 'sass-rails', '~> 3.2.6'
+# gem 'coffee-rails'
 gem 'uglifier'
 
 # Database
@@ -29,7 +29,7 @@ gem 'asset_sync'
 gem 'fog', '~> 1.12.1'
 
 # AAA - Authentication, Authorization, and Access Control
-gem 'devise'
+gem 'devise', '~> 2.2.4'
 gem 'cancan'
 
 # Payments
