@@ -1,5 +1,3 @@
-require 'pg'
-
 class DailyPlanCsvExporter < Exporter
   def initialize(year)
     @year = year

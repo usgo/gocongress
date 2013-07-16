@@ -1,3 +1,6 @@
+require 'csv'
+require 'pg'
+
 class Exporter
   def initialize
     @conn = activerecord_db_connection
