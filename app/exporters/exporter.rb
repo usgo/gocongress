@@ -10,6 +10,12 @@ class Exporter
     @conn
   end
 
+  protected
+
+  def sql filename_no_ext
+    File.read sql_path filename_no_ext
+  end
+
   private
 
   def assert_pg_connection conn
@@ -22,5 +28,9 @@ class Exporter
     ActiveRecord::Base.connection.raw_connection.tap do |c|
       assert_pg_connection(c)
     end
+  end
+
+  def sql_path filename_no_ext
+    File.join(File.dirname(__FILE__), filename_no_ext + '.sql')
   end
 end

@@ -1,0 +1,15 @@
+%h2 Cost Summaries Report
+
+- umnh = User.model_name.human
+- amnh = Attendee.model_name.human
+- csv_path = rpt_cost_summary_report_path + '.csv'
+
+%p
+  There are #{@user_count} #{link_to(umnh.pluralize.downcase, users_path)}
+  and #{pluralize(@attendee_count, amnh.downcase)}.
+  This report shows the cost of #{link_to('plans', plan_categories_path)}
+  selected by attendees.  A user's total cost is the sum of the
+  their attendees' costs.
+
+= form_tag(csv_path, :method => :get) do
+  %p= submit_tag "Export to CSV"
