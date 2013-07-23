@@ -3,11 +3,18 @@ select
   a.given_name,
   a.family_name,
   p.name as plan_name,
-  p.price,
+
+  /* Plan prices are stored in integer cents.  Convert to dollars. */
+  (p.price::decimal(10,2) / 100)::decimal(10,2) as price,
+
+  /* For the purposes of this report, the quantity of a daily-rate plan is
+  the number of selected dates.  For regular, non-daily plans, the quantity
+  is `attendee_plans.quantity`. */
   case when p.daily
     then coalesce(date_counts.ct, 0)
     else ap.quantity
   end as quantity
+
 from users u
 inner join attendees a on a.user_id = u.id
 inner join attendee_plans ap on ap.attendee_id = a.id

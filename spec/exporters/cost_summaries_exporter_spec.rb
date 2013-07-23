@@ -19,8 +19,8 @@ describe CostSummariesExporter do
       ary = CSV.parse ex.to_csv
       expected = [
         ['user_email', 'given_name', 'family_name', 'plan_name', 'price', 'quantity'],
-        [a.user.email, a.given_name, a.family_name, p1.name, p1.price.to_s, ap1.quantity.to_s],
-        [a.user.email, a.given_name, a.family_name, p2.name, p2.price.to_s, "2"]
+        [a.user.email, a.given_name, a.family_name, p1.name, (p1.price.to_f / 100).to_s, ap1.quantity.to_s],
+        [a.user.email, a.given_name, a.family_name, p2.name, (p2.price.to_f / 100).to_s, "2"]
       ]
       expect(ary).to eq(expected)
     end
