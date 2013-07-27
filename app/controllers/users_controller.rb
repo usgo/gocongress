@@ -6,7 +6,7 @@ class UsersController < ApplicationController
   before_filter :deny_users_from_wrong_year, :only => [:index]
   before_filter :remove_year_from_params
   load_resource
-  authorize_resource :only => [:destroy, :index, :show, :update]
+  authorize_resource :only => [:index, :show, :update]
 
   def edit_email
     authorize! :update, @user
@@ -95,15 +95,6 @@ class UsersController < ApplicationController
     else
       render :action => params[:page]
     end
-  end
-
-  def destroy
-    begin
-      @user.destroy
-    rescue ActiveRecord::DeleteRestrictionError => err
-      redirect_to(users_url, :alert => err.message) && return
-    end
-    redirect_to users_url, :notice => "User deleted"
   end
 
   def print_cost_summary

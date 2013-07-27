@@ -46,5 +46,3 @@
           - if user.last_sign_in_at.present?
             = user.last_sign_in_at.to_date.to_formatted_s(:rfc822)
         %td= link_to 'Account', user
-        %td
-          = link_to 'Delete', user, :data => {:confirm => 'Are you sure?'}, :method => :delete

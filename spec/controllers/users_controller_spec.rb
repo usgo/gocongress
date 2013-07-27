@@ -41,8 +41,7 @@ describe UsersController do
     it 'cannot #destroy self' do
       sign_in user
       expect { delete :destroy, :id => user.id, :year => user.year
-        }.to_not change { User.count }
-      response.should be_forbidden
+        }.to raise_error(ActionController::RoutingError)
     end
 
     it 'can #edit_password' do
@@ -193,28 +192,10 @@ describe UsersController do
     end
 
     describe '#destroy' do
-      it 'succeeds' do
-        user # `create` before `expect` to change
+      it 'raises ActionController::RoutingError' do
+        user # must `create` before `expect`
         expect { delete :destroy, :id => user.id, :year => user.year
-          }.to change { User.count }.by(-1)
-
-        response.should redirect_to users_path
-        flash[:notice].should == 'User deleted'
-
-        # dependent attendees should also be destroyed
-        user.id.should be > 0
-        Attendee.where(:user_id => user.id).should be_empty
-      end
-
-      it 'cannot delete guardians' do
-        guard = create :attendee
-        guard.minors << create(:attendee)
-
-        expect { delete :destroy, :id => guard.user.id, :year => guard.year
-          }.to_not change { User.count }
-
-        response.should redirect_to users_path
-        flash[:alert].should == 'Cannot delete record because of dependent minors'
+          }.to raise_error(ActionController::RoutingError)
       end
     end
 
@@ -224,6 +205,7 @@ describe UsersController do
     end
 
     it 'can #index' do
+      user # eager creation
       get :index, :year => year
       response.should be_success
     end
