@@ -1,5 +1,7 @@
 select
+  u.id * $2 as user_id,
   u.email as user_email,
+  a.id * $2 as attendee_id,
   a.given_name,
   a.family_name,
   p.name as plan_name,

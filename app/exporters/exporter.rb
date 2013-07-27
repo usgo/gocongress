@@ -6,6 +6,10 @@ class Exporter
     @conn = activerecord_db_connection
   end
 
+  def obfuscation_factor
+    Kernel.rand((1..10)).to_i
+  end
+
   def db
     @conn
   end
