@@ -35,8 +35,10 @@
         %td
           .hardwrap{:style => "max-width:200px;"}= user.email
         %td
-          - user.attendees.each do |atn|
+          - attendees = user.attendees.sort { |a,b| a.created_at <=> b.created_at }
+          - attendees.each_with_index do |atn, ix|
             = atn.full_name
+            = "*" if ix == 0 && attendees.length > 1
             %br
         %td
           -# `count` would exec. a query, `length` doesn't because of `includes`
@@ -46,3 +48,6 @@
           - if user.last_sign_in_at.present?
             = user.last_sign_in_at.to_date.to_formatted_s(:rfc822)
         %td= link_to 'Account', user
+
+%p
+  * First attendee to be created
