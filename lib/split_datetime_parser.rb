@@ -31,8 +31,8 @@ module SplitDatetimeParser
     # from ArgumentError.
     begin
       dt = Time.zone.parse("#{d} #{t}")
-    rescue ArgumentError => e
-      raise SplitDatetimeParserException, e.to_s
+    rescue ArgumentError
+      raise SplitDatetimeParserException, "invalid date"
     end
 
     return dt
