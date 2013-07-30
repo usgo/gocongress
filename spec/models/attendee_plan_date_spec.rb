@@ -18,7 +18,7 @@ describe AttendeePlanDate do
 
     it 'date must be during congress' do
       d = build(:attendee_plan_date)
-      d._date = CONGRESS_START_DATE[2013] - 2.days
+      d._date = CONGRESS_START_DATE[2013] - 3.days
       d.should have_error_about :_date
       d._date = CONGRESS_START_DATE[2013] + 3.weeks
       d.should have_error_about :_date

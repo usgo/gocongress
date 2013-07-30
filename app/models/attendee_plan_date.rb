@@ -12,7 +12,7 @@ class AttendeePlanDate < ActiveRecord::Base
   end
 
   def self.minimum year
-    CONGRESS_START_DATE.fetch(year.to_i) - 1.day
+    CONGRESS_START_DATE.fetch(year.to_i) - 2.days
   end
 
   def self.valid_range year
