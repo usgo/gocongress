@@ -34,7 +34,6 @@
         %th Rank
         %th.numeric Age*
         %th Registered
-        %th
     %tbody
       - for a in @attendees
         %tr
@@ -42,8 +41,6 @@
           %td= a.rank_name
           %td.numeric= a.age_in_years.floor
           %td= a.created_at.strftime("%b %-d %l:%M %p")
-          %td.smalltext
-            = link_to 'Delete', a, :data => {:confirm => "Are you sure you want to delete #{a.full_name}?"}, :method => :delete
 
 %p= button_to_get 'Add Attendee', new_attendee_path(user_id: @user.id), 'add_attendee_btn'
 

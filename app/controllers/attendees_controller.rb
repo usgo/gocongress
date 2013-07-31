@@ -48,16 +48,6 @@ class AttendeesController < ApplicationController
     end
   end
 
-  def destroy
-    begin
-      @attendee.destroy
-    rescue ActiveRecord::DeleteRestrictionError => err
-      redirect_to @attendee.user, :alert => err.to_s
-      return
-    end
-    redirect_to @attendee.user, :notice => "Attendee deleted"
-  end
-
   def print_summary
     @attendee = Attendee.find params[:id]
     authorize! :read, @attendee

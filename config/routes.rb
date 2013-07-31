@@ -43,7 +43,7 @@ Gocongress::Application.routes.draw do
         end
         resources :shirts, :except => :show
 
-        resources :attendees, :except => [:show] do
+        resources :attendees, :except => [:destroy, :show] do
           collection do
             get 'vip'
           end

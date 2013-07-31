@@ -128,23 +128,6 @@ describe AttendeesController do
       end
     end
 
-    describe "#destroy" do
-      it "destroys the attendee" do
-        expect {
-          delete :destroy, :id => attendee.id, :year => attendee.year
-        }.to change{ user.attendees.count }.by(-1)
-        response.should redirect_to user_path(user)
-      end
-
-      it "is forbidden to destroy attendee from other user" do
-        a = create :attendee
-        user_two = a.user
-        expect { delete :destroy, :id => a.id, :year => a.year
-          }.to_not change { Attendee.count }
-        response.should be_forbidden
-      end
-    end
-
     describe "#edit" do
       it "cannot edit another user's attendee" do
         a = create :attendee
@@ -380,22 +363,10 @@ describe AttendeesController do
     end
 
     describe "#destroy" do
-      it "can destroy any attendee" do
+      it "raises a routing error" do
         a = create :attendee
         expect { delete :destroy, :id => a.id, :year => a.year
-          }.to change { a.user.attendees.count }.by(-1)
-        response.should redirect_to user_path(a.user)
-        flash[:notice].should == 'Attendee deleted'
-      end
-
-      it "cannot destroy a guardian" do
-        g = create :attendee
-        a = create :attendee, guardian: g
-        a.reload.guardian.should == g
-        expect { delete :destroy, :id => g.id, :year => g.year
-          }.to_not change { Attendee.count }
-        response.should redirect_to g.user
-        flash[:alert].should == 'Cannot delete record because of dependent minors'
+          }.to raise_error(ActionController::RoutingError)
       end
     end
 
