@@ -10,3 +10,4 @@ config/usgc_env.rb
 coverage.data
 coverage
 *.swp
+*.swo
