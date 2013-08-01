@@ -51,10 +51,6 @@ class DailyPlanCsvExporter < Exporter
     @index_of_first_plan_column_in_header ||= header.length - @plan_names.length
   end
 
-  def matrix_to_csv(m)
-    CSV.generate { |csv| m.each { |row| csv << row } }
-  end
-
   def run_query
     qry = File.read(File.dirname(__FILE__) + '/daily_plan_export.sql')
     db.exec_params(qry, [@year.to_i])
