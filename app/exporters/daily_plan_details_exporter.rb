@@ -30,6 +30,10 @@ class DailyPlanDetailsExporter < Exporter
     @date_range.map { |d| d.strftime('%-m/%-d') }
   end
 
+  def to_csv
+    matrix_to_csv(to_matrix)
+  end
+
   def run_query
     qry = File.read(File.dirname(__FILE__) + '/daily_plan_details.sql')
     db.exec_params(qry, [@year, @plan_id])

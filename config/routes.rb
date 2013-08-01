@@ -79,6 +79,7 @@ Gocongress::Application.routes.draw do
         namespace :rpt do
           resource :attendeeless_user_report, :only => :show
           resource :outstanding_balance_report, :only => :show
+          resource :daily_plan_details_report, :only => [:new, :create]
 
           # These reports support CSV format
           constraints :format => /(csv)?/ do
