@@ -33,6 +33,8 @@ describe Registration::Registration do
       end
 
       context "disabled plans" do
+        let(:remove_dsbl_msg) { "One of the plans you tried to remove (#{dsbl_plan.name}) has been disabled to prevent changes.  Please contact the registrar." }
+
         it "keeps extant disabled plan" do
           attendee.plans << dsbl_plan
           ps = Registration::PlanSelection.new(dsbl_plan, 1)
@@ -44,7 +46,8 @@ describe Registration::Registration do
         it "does not add disabled plan" do
           ps = Registration::PlanSelection.new(dsbl_plan, 1)
           r = Registration::Registration.new attendee, false, {}, [ps], []
-          r.register_plans.should have(1).error
+          expected_msg = "One of the plans you tried to select (#{dsbl_plan.name}) has been disabled to prevent changes.  Please contact the registrar."
+          r.register_plans.should == [expected_msg]
           attendee.reload.plans.should_not include dsbl_plan
         end
 
@@ -52,14 +55,14 @@ describe Registration::Registration do
           attendee.plans << dsbl_plan
           ps = Registration::PlanSelection.new(dsbl_plan, 0)
           r = Registration::Registration.new attendee, false, {}, [ps], []
-          r.register_plans.should have(1).error
+          r.register_plans.should == [remove_dsbl_msg]
           attendee.reload.plans.should include dsbl_plan
         end
 
         it "does not remove disabled plan by passing empty array" do
           attendee.plans << dsbl_plan
           r = Registration::Registration.new attendee, false, {}, [], []
-          r.register_plans.should have(1).error
+          r.register_plans.should == [remove_dsbl_msg]
           attendee.reload.plans.should include dsbl_plan
         end
       end

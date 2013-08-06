@@ -120,13 +120,20 @@ protected
     params[:attendee] ||= {} # TODO: not sure we need this
     params[:activity_ids] ||= []
     @activity_selections = params[:activity_ids].map(&:to_i)
-    @plan_selections = Registration::PlanSelection.parse_params(params['plans'], form_plans)
+    @plan_selections = Registration::PlanSelection.parse_params(params['plans'], all_plans)
   end
 
+  # `all_plans` includes all disabled plans, whereas `form_plans` does not
+  def all_plans
+    Plan.joins(:plan_category).includes(:plan_category) \
+      .yr(@year).order('plan_categories.ordinal, plans.cat_order')
+  end
+
+  # `form_plans` returns the plans to show on the form, and thus
+  # excludes disabled plans unless already selected by the attendee.
   def form_plans
     return @_plans if @_plans.present?
-    @_plans = Plan.joins(:plan_category).includes(:plan_category) \
-      .yr(@year).order('plan_categories.ordinal, plans.cat_order')
+    @_plans = all_plans
     unless current_user.admin?
       @_plans.delete_if {|p| p.disabled? && !@attendee.has_plan?(p)}
     end

@@ -322,26 +322,27 @@ describe AttendeesController do
           context "and attendee does not already have that disabled plan" do
             it "should not allow attendee to select the disabled plan" do
               put_update plan
-              attendee.plans.should_not include(plan)
+              attendee.reload.plans.should_not include(plan)
+              response.should be_success
+              response.should render_template(:edit)
             end
           end
         end
 
-        context "when attendee un-selects a disabled plan" do
+        context "when attendee deselects a disabled plan" do
           let(:plan) { create :plan, disabled: true, name: "Numero Uno" }
           let(:plan2) { create :plan, name: "Deux", :plan_category => plan.plan_category }
           before do
             attendee.plans << plan
           end
 
-          it "does not allow them to un-select the plan" do
+          it "does not allow them to deselect the plan" do
             put :update,
               :year => attendee.year,
               :id => attendee.id,
-              :plan_category_id => plan.plan_category.id,
               :"plan_#{plan2.id}_qty" => 1
-            attendee.reload
-            attendee.plans.map(&:name).should include(plan.name)
+            attendee.reload.plans.should == [plan]
+            response.should be_success
             response.should render_template(:edit)
           end
         end
