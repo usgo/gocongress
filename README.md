@@ -34,19 +34,20 @@ Contribute
 1. Set up your local development environment
     1. fork the repo in github
     1. clone your fork locally
-    1. install the ruby version specified in the `.ruby-version`
-    1. install [postgres 9.1+][5]
-        - get the dev libs too (in apt-get that would be libpq-dev).
+    1. install the ruby version specified in `.ruby-version`
+    1. install [postgres 9.2][5]
+        - get the dev libs too (with `apt-get` that would be `libpq-dev`).
         - you'll want the dev libs to compile the `pg` gem
     1. practice connecting to postgres
       1. use the command-line client, `psql`
           - ["permission denied"][3]
           - [Client Connection Problems][4]
       1. make sure you have an account that can create tables
-    1. install a js runtime, like node (apt-get nodejs)
+    1. install a js runtime, like node (`apt-get nodejs`)
         - macs come with a js runtime already installed
-    1. `gem install bundler`
-    1. `bundle install`
+    1. install ruby gems
+      1. `gem install bundler`
+      1. `bundle install`
     1. if all's well, `bundle exec rake -T` should give you a nice
        list of rake tasks
 1. Run the tests
@@ -91,4 +92,4 @@ tested, the first year's site in 2011.
 [2]: https://devcenter.heroku.com/articles/config-vars
 [3]: http://bit.ly/YJFlPQ
 [4]: http://bit.ly/YJF4fK
-[5]: http://www.postgresql.org/docs/9.1/interactive/index.html
+[5]: http://www.postgresql.org/docs/9.2/interactive/
