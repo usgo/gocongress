@@ -32,22 +32,24 @@ Contribute
 ----------
 
 1. Set up your local development environment
-    1. fork the repo in github
-    1. clone your fork locally
-    1. install the ruby version specified in `.ruby-version`
-    1. install [postgres 9.2][5]
+    1. [Fork and clone][8] the github repo
+    1. Install the ruby version specified in `.ruby-version`
+        - Use [rbenv][9] or [compile from source][10]
+    1. Install [postgres 9.2][5]
         - get the dev libs too (with `apt-get` that would be `libpq-dev`).
         - you'll want the dev libs to compile the `pg` gem
-    1. practice connecting to postgres
-      1. use the command-line client, `psql`
-          - ["permission denied"][3]
-          - [Client Connection Problems][4]
-      1. make sure you have an account that can create tables
-    1. install a js runtime, like node (`apt-get nodejs`)
+    1. Practice connecting to postgres
+        1. use the command-line client, `psql`
+            - ["permission denied"][3]
+            - [Client Connection Problems][4]
+        1. make sure you have an account that can create tables
+    1. Install a js runtime, like [node][11] (`apt-get nodejs`)
         - macs come with a js runtime already installed
-    1. install ruby gems
-      1. `gem install bundler`
-      1. `bundle install`
+    1. Install ruby gems
+        1. `gem install bundler`
+        1. `bundle install`
+    1. Configure rails to talk to the database
+        1. Read [Configuring Rails Applications: Configuring a Database][6]
     1. if all's well, `bundle exec rake -T` should give you a nice
        list of rake tasks
 1. Run the tests
@@ -55,7 +57,7 @@ Contribute
     1. `bundle exec rake` will run all specs and tests.  if they
        all pass, you're good to go
 1. Submit your contribution
-    1. Check that all the tests pass
+    1. Write a [spec][7] that describes your contribution
     1. Push your changes to your fork on github
     1. Submit a pull request
 
@@ -93,3 +95,9 @@ tested, the first year's site in 2011.
 [3]: http://bit.ly/YJFlPQ
 [4]: http://bit.ly/YJF4fK
 [5]: http://www.postgresql.org/docs/9.2/interactive/
+[6]: http://edgeguides.rubyonrails.org/configuring.html#configuring-a-database
+[7]: https://www.relishapp.com/rspec
+[8]: https://help.github.com/articles/fork-a-repo
+[9]: https://github.com/sstephenson/rbenv
+[10]: https://www.ruby-lang.org/en/downloads/
+[11]: http://nodejs.org/
