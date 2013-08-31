@@ -48,10 +48,8 @@ Contribute
     1. Install ruby gems
         1. `gem install bundler`
         1. `bundle install`
-    1. Configure rails to talk to the database
-        1. Read [Configuring Rails Applications: Configuring a Database][6]
-    1. if all's well, `bundle exec rake -T` should give you a nice
-       list of rake tasks
+    1. [Configure rails to talk to the database][6]
+    1. If all is well, `bundle exec rake -T` should list rake tasks
 1. Run the tests
     1. `bundle exec rake db:setup db:test:prepare`
     1. `bundle exec rake` will run all specs and tests.  if they
