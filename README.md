@@ -28,7 +28,7 @@ Contribute
     1. Install ruby [gems][21] using [bundler][12]
         1. `gem install bundler`
         1. `bundle install`
-        1. Some gems depend on native libraries
+        1. If a gem fails to install, it may be missing native libraries
             1. [nokogiri][17] needs libxml2 and libxslt
             1. [pg][18] needs libpq-dev
 1. App configuration
