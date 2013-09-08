@@ -31,32 +31,41 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 Contribute
 ----------
 
-1. Set up your local development environment
-    1. [Fork and clone][8] the github repo
-    1. Install the ruby version specified in `.ruby-version`
-        - Use [rbenv][9] or [compile from source][10]
-    1. Install [postgres 9.2][5]
-        - get the dev libs too (with `apt-get` that would be `libpq-dev`).
-        - you'll want the dev libs to compile the `pg` gem
-    1. Practice connecting to postgres
-        1. use the command-line client, `psql`
-            - ["permission denied"][3]
-            - [Client Connection Problems][4]
-        1. make sure you have an account that can create tables
-    1. Install a js runtime, like [node][11] (`apt-get nodejs`)
-        - macs come with a js runtime already installed
-    1. Install ruby gems
+1. Prerequisites
+    1. Linux (eg. [Ubuntu][15] 12.04+) or Mac OS 10.8+
+    1. Proficiency with [git][13] and [sql][14]
+    1. Read [Getting Started with Rails 3.2][16]
+    1. [Fork and clone][8] this github repo
+1. Install the Ruby version specified in `.ruby-version`.
+    - Use [rbenv][9] or [compile from source][10]
+1. Install [postgres 9.2][5]
+    1. Practice connecting using the command-line client, `psql`
+        - ["permission denied"][3]
+        - [Client Connection Problems][4]
+    1. Make sure you have a [role][19] that can create tables
+1. App dependencies
+    1. Install a js runtime
+        - macs come with [JavaScriptCore][20] (part of webkit)
+        - linux or mac: [node][11] (`apt-get nodejs`)
+    1. Install ruby [gems][21] using [bundler][12]
         1. `gem install bundler`
         1. `bundle install`
-    1. [Configure rails to talk to the database][6]
+        1. Some gems depend on native libraries
+            1. [nokogiri][17] needs libxml2 and libxslt
+            1. [pg][18] needs libpq-dev
+1. App configuration
+    1. [Configure rails to talk to your database][6]
+        1. `cp config/database.example.yml config/database.yml`
+    1. `cp .env.example .env` (see Configuration below)
     1. If all is well, `bundle exec rake -T` should list rake tasks
 1. Run the tests
-    1. `bundle exec rake db:setup db:test:prepare`
+    1. `bundle exec rake db:setup`
+    1. `bundle exec rake db:test:prepare`
     1. `bundle exec rake` will run all specs and tests.  if they
        all pass, you're good to go
 1. Submit your contribution
     1. Write a [spec][7] that describes your contribution
-    1. Push your changes to your fork on github
+    1. Push your changes to your [fork][8] on github
     1. Submit a pull request
 
 Configuration
@@ -84,7 +93,7 @@ Thanks
 Special thanks to Lisa Scott, who helped invent, and tirelessly
 tested, the first year's site in 2011.
 
-* 2013: Chris Kirschner
+* 2013: Chris Kirschner, Judy Debel
 * 2012: Arlene Bridges, Bob Bacon, Steve Colburn
 * 2011: Lisa Scott, Alf Mikula, Brian David, Andrew Jackson, Steve Colburn
 
@@ -99,3 +108,13 @@ tested, the first year's site in 2011.
 [9]: https://github.com/sstephenson/rbenv
 [10]: https://www.ruby-lang.org/en/downloads/
 [11]: http://nodejs.org/
+[12]: http://bundler.io/
+[13]: http://git-scm.com/
+[14]: http://www.postgresql.org/docs/9.2/static/sql.html
+[15]: http://www.ubuntu.com/
+[16]: http://guides.rubyonrails.org/v3.2.13/
+[17]: http://nokogiri.org/tutorials/installing_nokogiri.html
+[18]: https://bitbucket.org/ged/ruby-pg/wiki/Home
+[19]: http://www.postgresql.org/docs/9.2/interactive/user-manag.html
+[20]: http://trac.webkit.org/wiki/JavaScriptCore
+[21]: http://guides.rubygems.org/
