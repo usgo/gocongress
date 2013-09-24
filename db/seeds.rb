@@ -49,3 +49,19 @@ Year.create!(
   },
   :without_protection => true
 )
+
+Year.create!(
+  {
+    city:                  'TBD',
+    date_range:            'TBD',
+    day_off_date:          Date.new(2014, 8, 2),
+    ordinal_number:        30,
+    registration_phase:    'closed',
+    reply_to_email:        'rcristal3@netscape.net',
+    start_date:            Date.new(2014, 8, 1),
+    state:                 'TBD',
+    timezone:              'Eastern Time (US & Canada)',
+    year:                  2014
+  },
+  :without_protection => true
+)
