@@ -15,7 +15,7 @@ class ReportsController < ApplicationController
   end
 
   def invoices
-    users = User.yr(@year).all
+    users = User.yr(@year).to_a
     @user_count = users.count
     @invoice_total_across_all_users = users.map(&:get_invoice_total).reduce(:+)
   end
@@ -36,7 +36,7 @@ class ReportsController < ApplicationController
     min = params[:min].downcase
     max = params[:max].downcase
     [min, max].each{ |m| raise "Invalid param" unless ("a".."z").cover?(m) }
-    @users = User.yr(@year).email_range(min, max).order(:email).all
+    @users = User.yr(@year).email_range(min, max).order(:email).to_a
     render :layout => "print"
   end
 
