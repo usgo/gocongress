@@ -2,6 +2,8 @@ require_relative 'shared/notifier'
 
 Gocongress::Application.configure do
 
+  config.eager_load = true
+
   # Code is not reloaded between requests
   config.cache_classes = true
 
