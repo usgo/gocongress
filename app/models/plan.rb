@@ -10,7 +10,7 @@ attr_accessible :cat_order, :daily, :name, :price, :age_min,
 # ------------
 
 belongs_to :plan_category
-has_many :attendee_plans, :dependent => :restrict
+has_many :attendee_plans, :dependent => :restrict_with_exception
 has_many :attendees, :through => :attendee_plans
 
 # Validations

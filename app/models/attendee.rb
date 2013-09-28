@@ -18,7 +18,7 @@ class Attendee < ActiveRecord::Base
     :foreign_key => "guardian_attendee_id"
   has_many :minors, :class_name => "Attendee",
     :foreign_key => "guardian_attendee_id",
-    :dependent => :restrict
+    :dependent => :restrict_with_exception
 
   belongs_to :shirt
 
