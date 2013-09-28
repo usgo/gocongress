@@ -31,7 +31,7 @@ class Activity < ActiveRecord::Base
       :allow_blank => true,
       :message => "must begin with protocol, eg. http://"}
 
-  scope :disabled, where(disabled: true)
+  scope :disabled, -> { where(disabled: true) }
 
   def to_invoice_item attendee_full_name
     InvoiceItem.new(name, attendee_full_name, price, 1)

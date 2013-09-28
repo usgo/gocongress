@@ -68,8 +68,8 @@ end
 scope :appropriate_for_age, lambda { |age|
   where("(age_min is null or age_min <= ?) and (age_max is null or age_max >= ?)", age, age)
 }
-scope :alphabetical, order(:name)
-scope :enabled, where(disabled: false)
+scope :alphabetical, -> { order(:name) }
+scope :enabled, -> { where(disabled: false) }
 
 # Class Methods
 # -------------
