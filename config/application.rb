@@ -1,5 +1,12 @@
 require File.expand_path('../boot', __FILE__)
 require 'rails/all'
+
+# Require nokogiri first, before other gems, in case another gem tries
+# to load a different version of `libxml` than nokogiri was built
+# against. (http://bit.ly/19NHX1L) This prevents the warning "Nokogiri
+# was built against LibXML version x.x.x, but has dynamically loaded
+# y.y.y" -Jared 2013
+require 'nokogiri'
 Bundler.require(:default, Rails.env)
 
 module Gocongress
