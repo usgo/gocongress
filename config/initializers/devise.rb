@@ -2,6 +2,8 @@
 # four configuration values can also be set straight in your models.
 Devise.setup do |config|
 
+  config.secret_key = ENV.fetch('DEVISE_SECRET_KEY')
+
   # ==> Mailer Configuration
   # Configure the e-mail address which will be shown in DeviseMailer.
   config.mailer_sender = "usgcwebsite@gmail.com"

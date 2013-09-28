@@ -29,7 +29,7 @@ gem 'asset_sync'
 gem 'fog', '~> 1.12.1'
 
 # AAA - Authentication, Authorization, and Access Control
-gem 'devise', '~> 2.2.4'
+gem 'devise'
 gem 'cancan'
 
 # Payments
