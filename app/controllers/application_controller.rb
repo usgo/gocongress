@@ -22,8 +22,11 @@ class ApplicationController < ActionController::Base
   end
 
   def set_year_from_params
-    @year = Year.find_by_year(extract_year_from_params)
-    raise_routing_error("Year not found") unless @year.present?
+    year = extract_year_from_params
+    @year = Year.where(year: year).first
+    unless @year.present?
+      raise_routing_error("Year not found: #{year}: Try test:prepare")
+    end
   end
 
   def set_yearly_vars

@@ -1,10 +1,13 @@
 require File.expand_path('../boot', __FILE__)
-
 require 'rails/all'
 
-# If you have a Gemfile, require the gems listed there, including any gems
-# you've limited to :test, :development, or :production.
-Bundler.require(:default, Rails.env) if defined?(Bundler)
+# Require nokogiri first, before other gems, in case another gem tries
+# to load a different version of `libxml` than nokogiri was built
+# against. (http://bit.ly/19NHX1L) This prevents the warning "Nokogiri
+# was built against LibXML version x.x.x, but has dynamically loaded
+# y.y.y" -Jared 2013
+require 'nokogiri'
+Bundler.require(:default, Rails.env)
 
 module Gocongress
   class Application < Rails::Application
@@ -54,5 +57,11 @@ module Gocongress
     # http://stackoverflow.com/questions/8622297/heroku-cedar-assetsprecompile-has-beef-with-attr-protected
     # http://guides.rubyonrails.org/asset_pipeline.html
     config.assets.initialize_on_precompile = false
+
+    # action_controller
+    # -----------------
+    config.action_controller.permit_all_parameters = false
+    config.action_controller.action_on_unpermitted_parameters = :raise
+
   end
 end

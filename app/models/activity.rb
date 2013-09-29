@@ -27,11 +27,11 @@ class Activity < ActiveRecord::Base
   }
   validates :url, :length => {:maximum => 200},
     :format => {
-      :with => /^https?:\/{2}/,
+      :with => /\Ahttps?:\/{2}/,
       :allow_blank => true,
       :message => "must begin with protocol, eg. http://"}
 
-  scope :disabled, where(disabled: true)
+  scope :disabled, -> { where(disabled: true) }
 
   def to_invoice_item attendee_full_name
     InvoiceItem.new(name, attendee_full_name, price, 1)

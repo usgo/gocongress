@@ -63,7 +63,7 @@ class PlanCategoriesController < ApplicationController
   private
 
   def events_for_select
-    @events_for_select = Event.yr(@year).alphabetical.all.map {|e| [e.name, e.id]}
+    @events_for_select = Event.yr(@year).alphabetical.to_a.map {|e| [e.name, e.id]}
   end
 
   def expose_plans

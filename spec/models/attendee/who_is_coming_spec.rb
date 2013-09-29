@@ -12,12 +12,14 @@ describe Attendee::WhoIsComing do
       p = create :plan, price: 10000
 
       u1 = create :user
-      create :attendee, user: u1, given_name: 'u1a', plans: [p]
+      u1a1 = create :attendee, user: u1, given_name: 'u1a'
+      u1a1.plans << p
       create :attendee, user: u1, given_name: 'u1b'
       create :tr_sale, amount: 10000, user: u1
 
       u2 = create :user
-      create :attendee, user: u2, given_name: 'u2a', plans: [p]
+      u2a1 = create :attendee, user: u2, given_name: 'u2a'
+      u2a1.plans << p
       create :attendee, user: u2, given_name: 'u2b'
       create :tr_sale, amount: 9999, user: u2
 

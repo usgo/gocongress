@@ -1,7 +1,7 @@
 class AddEventNotes < ActiveRecord::Migration
   def self.up
     add_column :events, :notes, :string
-    Event.all.each { |e|
+    Event.to_a.each { |e|
       e.notes = e.evtstarttime.to_s
       e.save
     }

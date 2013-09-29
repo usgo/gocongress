@@ -96,7 +96,7 @@ describe User do
 
     it "returns false if the password is not confirmed" do
       build(:user, :password_confirmation => "").should \
-        have_error_about(:password)
+        have_error_about(:password_confirmation)
     end
   end
 

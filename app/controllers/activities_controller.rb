@@ -34,7 +34,7 @@ class ActivitiesController < ApplicationController
 
   # Helpers
   def activity_category_options
-    ActivityCategory.yr(@year).all.map {|c| [ c.name, c.id ] }
+    ActivityCategory.yr(@year).to_a.map {|c| [ c.name, c.id ] }
   end
   helper_method :activity_category_options
 

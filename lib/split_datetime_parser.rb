@@ -9,13 +9,13 @@ module SplitDatetimeParser
     prefix_for_msg = prefix.to_s.humanize.downcase
 
     d = hash[:"#{prefix}_date"]
-    unless d.blank? || d.match(/^\d{4}(-\d{2}){2}$/)
+    unless d.blank? || d.match(/\A\d{4}(-\d{2}){2}\z/)
       raise SplitDatetimeParserException,
         "Invalid #{prefix_for_msg} date.  Please use year-month-day format."
     end
 
     t = hash[:"#{prefix}_time"]
-    unless t.blank? || t.match(/^\d{1,2}:\d{2}[ ][AP]M$/)
+    unless t.blank? || t.match(/\A\d{1,2}:\d{2}[ ][AP]M\z/)
       raise SplitDatetimeParserException,
         "Invalid #{prefix_for_msg} time.  Please use hour:minute AM/PM format."
     end

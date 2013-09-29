@@ -36,7 +36,7 @@ class ContentsController < ApplicationController
 
   # Helpers
   def content_category_options
-    ContentCategory.yr(@year).all.map {|c| [ c.name, c.id ] }
+    ContentCategory.yr(@year).to_a.map {|c| [ c.name, c.id ] }
   end
   helper_method :content_category_options
 
