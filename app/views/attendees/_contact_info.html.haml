@@ -6,7 +6,7 @@
     = f.label :email
     = f.text_field :email
 
-  -# The `country_select` method is provided by the country-select gem
+  -# ISO 3166-1 alpha-2
   .field
     = f.label :country
-    = f.country_select :country, PRIORITY_COUNTRIES, { :include_blank => true }
+    = f.select :country, COUNTRIES, { :include_blank => true }

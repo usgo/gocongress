@@ -1,10 +1,4 @@
 GIT
-  remote: git://github.com/jaredbeck/country-select.git
-  revision: 590fb35e02ffcc07b28f148ec6b394095f059bec
-  specs:
-    country-select (1.2.0)
-
-GIT
   remote: https://github.com/sporkrb/spork.git
   revision: a94412c9493a07b7a000e35777b0f76b94de9061
   specs:
@@ -255,7 +249,6 @@ DEPENDENCIES
   bluecloth
   cancan
   capybara
-  country-select!
   deep_merge
   devise
   dotenv-rails
