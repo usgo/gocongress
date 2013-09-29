@@ -8,13 +8,6 @@ ruby '1.9.3'
 # Core rails stuff
 gem 'rails', '~> 4.0.0'
 gem 'sass-rails', '~> 4.0.0'
-gem 'uglifier', '>= 1.3.0'
-
-gem 'protected_attributes'
-gem 'rails-observers'
-gem 'actionpack-page_caching'
-gem 'actionpack-action_caching'
-gem 'activerecord-deprecated_finders'
 
 # Database
 # To install the 'pg' gem, the postgres bin directory must be on your path
@@ -27,6 +20,7 @@ gem 'haml'
 gem 'bluecloth' # markdown
 gem 'kaminari' # pagination
 gem 'asset_sync'
+gem 'uglifier', '>= 1.3.0'
 
 # For some reason, bundle update was downgrading fog to 0.9 even though
 # here are no constraints on fog in the Gemfile.lock.  So, I have to
@@ -42,6 +36,7 @@ gem 'authorize-net'
 
 # Model Layer
 gem 'validates_timeliness'
+gem 'protected_attributes'
 
 # uncaught exception notification
 gem 'exception_notification', '~> 4.0.1'
