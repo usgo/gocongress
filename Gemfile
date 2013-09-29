@@ -5,43 +5,27 @@ source 'https://rubygems.org'
 # https://devcenter.heroku.com/articles/ruby-versions
 ruby '1.9.3'
 
-# Core rails stuff
 gem 'rails', '~> 4.0.0'
-gem 'sass-rails', '~> 4.0.0'
-
-# Database
-# To install the 'pg' gem, the postgres bin directory must be on your path
-# export PATH=/path/to/postgres/bin:${PATH}
-gem 'pg'
 
 # View Layer
-gem "jquery-rails"
+gem 'jquery-rails'
 gem 'haml'
 gem 'bluecloth' # markdown
 gem 'kaminari' # pagination
 gem 'asset_sync'
+gem 'sass-rails', '~> 4.0.0'
 gem 'uglifier', '>= 1.3.0'
 
-# For some reason, bundle update was downgrading fog to 0.9 even though
-# here are no constraints on fog in the Gemfile.lock.  So, I have to
-# require `1.12` here.
-gem 'fog', '~> 1.15.0'
-
-# AAA - Authentication, Authorization, and Access Control
-gem 'devise'
-gem 'cancan'
-
-# Payments
-gem 'authorize-net'
-
 # Model Layer
-gem 'validates_timeliness'
+gem 'pg'
 gem 'protected_attributes'
+gem 'validates_timeliness'
 
-# uncaught exception notification
+# Stack, middleware, engines, etc.
+gem 'authorize-net'
+gem 'cancan'
+gem 'devise'
 gem 'exception_notification', '~> 4.0.1'
-
-# After migrating to Cedar, Heroku recommends thin over webrick
 gem 'thin'
 
 # Groups: Rails will load the group where name == Rails.env
@@ -74,12 +58,6 @@ end
 group :development do
   gem 'haml-rails'
   gem 'quiet_assets'
-
-  # I love these two tools, but they use `sexp_processor` which defines
-  # a `s` method in the global namespace.  This is too much pollution
-  # for my taste.  So, I install the gems, but not in my bundle. -Jared 2013
-  # gem 'html2haml'
-  # gem 'flog'
 end
 
 group :test do
@@ -88,11 +66,7 @@ group :test do
 	gem 'deep_merge' # recursively merge hashes
 	gem 'factory_girl'
 	gem 'factory_girl_rails'
+  gem 'spork', '~> 1.0.0rc4' # rc4 has -q (quiet) option
 	gem 'spork-rails'
 	gem 'rb-fsevent'
-
-	# Using edge spork solely to get the -q (quiet) option so that
-	# we can pass :quiet => true to guard 'spork'.  Before this,
-	# I had been using spork 1.0.0rc3
-	gem 'spork', :git => 'https://github.com/sporkrb/spork.git'
 end
