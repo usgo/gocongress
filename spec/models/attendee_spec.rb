@@ -111,7 +111,7 @@ describe Attendee do
     end
 
     it 'country must be two capital lettters' do
-      a.country.should match /^[A-Z]{2}$/
+      a.country.should match /\A[A-Z]{2}\z/
       a.country = 'United States'
       a.should_not be_valid
       a.errors.keys.should include(:country)

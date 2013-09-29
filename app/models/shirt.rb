@@ -1,7 +1,7 @@
 class Shirt < ActiveRecord::Base
   include YearlyModel
 
-  has_many :attendees, dependent: :restrict
+  has_many :attendees, dependent: :restrict_with_exception
 
   attr_accessible :description, :disabled, :hex_triplet, :image_url, :name
 

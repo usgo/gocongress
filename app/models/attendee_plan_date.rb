@@ -1,5 +1,9 @@
 class AttendeePlanDate < ActiveRecord::Base
+
+  attr_accessible :_date
+
   belongs_to :attendee_plan
+
   validates :attendee_plan, presence: true
   validates :_date, presence: true, :timeliness => { :type => :date,
       :on_or_after => lambda {|d| minimum(d._date.year) },

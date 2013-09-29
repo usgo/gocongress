@@ -1,7 +1,7 @@
 class DailyPlanCsvExporter < Exporter
   def initialize(year)
     @year = year
-    @plan_names = Plan.yr(@year).daily.order(:name).all.map(&:name)
+    @plan_names = Plan.yr(@year).daily.order(:name).to_a.map(&:name)
     super()
   end
 

@@ -10,7 +10,7 @@ attr_accessible :cat_order, :daily, :name, :price, :age_min,
 # ------------
 
 belongs_to :plan_category
-has_many :attendee_plans, :dependent => :restrict
+has_many :attendee_plans, :dependent => :restrict_with_exception
 has_many :attendees, :through => :attendee_plans
 
 # Validations
@@ -68,8 +68,8 @@ end
 scope :appropriate_for_age, lambda { |age|
   where("(age_min is null or age_min <= ?) and (age_max is null or age_max >= ?)", age, age)
 }
-scope :alphabetical, order(:name)
-scope :enabled, where(disabled: false)
+scope :alphabetical, -> { order(:name) }
+scope :enabled, -> { where(disabled: false) }
 
 # Class Methods
 # -------------

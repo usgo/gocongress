@@ -28,4 +28,4 @@
               %p No longer available
             %p= shirt.description
             - if can?(:delete, shirt) && shirt.attendees.empty?
-              %p= link_to 'Delete', shirt_path(shirt), :method => :delete, :confirm => 'Delete? Are you sure?'
+              %p= link_to_delete(shirt)

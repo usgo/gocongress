@@ -76,10 +76,10 @@ class Transaction < ActiveRecord::Base
   # Scopes
   # ------
 
-  scope :comps, where(trantype: 'C')
-  scope :for_payment_history, where(:trantype => ['S','R'])
-  scope :refunds, where(trantype: 'R')
-  scope :sales, where(trantype: 'S')
+  scope :comps, -> { where(trantype: 'C') }
+  scope :for_payment_history, -> { where(:trantype => ['S','R']) }
+  scope :refunds, -> { where(trantype: 'R') }
+  scope :sales, -> { where(trantype: 'S') }
 
   def self.create_from_authnet_sim_response rsp
     user = User.find(rsp.customer_id) # x_cust_id

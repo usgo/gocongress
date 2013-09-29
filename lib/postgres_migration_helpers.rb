@@ -55,6 +55,6 @@ module PostgresMigrationHelpers
   # identifier must be fewer than 63 bytes long.
   # http://bit.ly/FUNSCI
   def is_valid_identifier id
-    /^[a-z][a-z_0-9]*$/.match(id).present? && id.length <= 63
+    /\A[a-z][a-z_0-9]*\z/.match(id).present? && id.length <= 63
   end
 end

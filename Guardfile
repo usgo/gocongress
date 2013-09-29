@@ -1,5 +1,6 @@
 # https://github.com/guard/guard#readme
 
+# :quiet => true requires spork >= 1.0.0rc4
 guard 'spork', {
     :bundler => true,
     :cucumber => false,
