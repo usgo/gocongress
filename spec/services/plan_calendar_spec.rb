@@ -5,7 +5,7 @@ describe PlanCalendar do
 
   describe '.range_to_matrix' do
     it 'returns a matrix representing a calendar' do
-      range.should have(11).days
+      expect(range.count).to eq(11)
       m = PlanCalendar.range_to_matrix(range)
       m.should respond_to :each
       m.should have(3).rows # three calendric weeks
