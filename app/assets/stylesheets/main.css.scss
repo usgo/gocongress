@@ -5,7 +5,12 @@ $content_width: 880px;
 
 /* Basic element styling (no classes yet) */
 * { margin: 0px; padding: 0px; }
-body { background-color: white; }
+
+body {
+  background-color: white;
+  margin-bottom: 1em;
+}
+
 hr { margin: 1em 0em 1em 0em; }
 blockquote {
   font-size: 14px;
@@ -359,11 +364,11 @@ fieldset.wordy-questions .aligned-with-input { margin-left: 355px !important; }
 }
 #site-credit {
   color: #333;
-  float: left;
   font-size: 10px;
   text-align: left;
+  a { color: #333; }
 }
-#site-credit a { color: #333; }
+
 #sponsors {
   float: right;
 }
