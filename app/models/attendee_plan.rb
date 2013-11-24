@@ -11,7 +11,7 @@ class AttendeePlan < ActiveRecord::Base
   # As with other attendee linking tables, mass-assignment security
   # is not necessary yet, but may be in the future.  See the more
   # detailed discussion in `attendee_activity.rb` -Jared 2012-07-15
-  attr_accessible :attendee_id, :plan_id, :quantity
+  attr_accessible :attendee, :attendee_id, :plan_id, :quantity, :year
 
   # Validations
   # -----------

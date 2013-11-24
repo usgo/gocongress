@@ -132,13 +132,6 @@ describe Attendee do
         a.guardian = create(:attendee)
         a.should_not have_error_about(:guardian)
       end
-
-      it "requires minors to agree to fill out the liability release" do
-        a[:birth_date] = 5.years.ago
-        a[:understand_minor] = false
-        a.should_not be_valid
-        a.errors.keys.should include(:liability_release)
-      end
     end
   end
 end

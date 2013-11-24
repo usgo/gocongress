@@ -27,7 +27,7 @@ describe SignUpsController do
       it "succeeds" do
         expect { post :create, :user => attrs, :year => year
           }.to change { User.count }.by(+1)
-        response.should redirect_to new_attendee_path(year)
+        response.should redirect_to new_registration_path(year)
       end
     end
 

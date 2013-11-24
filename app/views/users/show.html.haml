@@ -37,12 +37,12 @@
     %tbody
       - for a in @attendees
         %tr
-          %td= link_to a.full_name, edit_attendee_path(a)
+          %td= link_to a.full_name, edit_registration_path(a)
           %td= a.rank_name
           %td.numeric= a.age_in_years.floor
           %td= a.created_at.strftime("%b %-d %l:%M %p")
 
-%p= button_to_get 'Add Attendee', new_attendee_path(user_id: @user.id), 'add_attendee_btn'
+%p= button_to_get 'Add Attendee', new_registration_path(user_id: @user.id), 'add_attendee_btn'
 
 -if @has_minor_attendee
   %h3 Regarding Minors

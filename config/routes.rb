@@ -43,7 +43,11 @@ Gocongress::Application.routes.draw do
         end
         resources :shirts, :except => :show
 
-        resources :attendees, :except => [:destroy, :show] do
+        # Creating and updating attendees involves a few different
+        # models, not just Attendee, so it's handled by the
+        # registrations controller.
+        resources :registrations, :except => [:show, :destroy]
+        resources :attendees, :only => [:index] do
           collection do
             get 'vip'
           end

@@ -40,7 +40,7 @@ module AttendeeHelper
   end
 
   def plan_selection plan
-    @plan_selections.select { |ps| ps.plan.id == plan.id }.first ||
+    @registration.plan_selections.select { |ps| ps.plan.id == plan.id }.first ||
       Registration::PlanSelection.new(plan, 0)
   end
 

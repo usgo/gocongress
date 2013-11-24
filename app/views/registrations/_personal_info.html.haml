@@ -28,13 +28,13 @@
   .field
     %label{:for => 'guardian'}
       Guardian Name<br />(for minors)
-    %input#guardian{:value => @guardian_name}
+    %input#guardian{:value => @registration.guardian_name}
     = f.hidden_field :guardian_attendee_id
     %span.smalltext Attending adult responsible for minor
 
 :javascript
   $(function() {
-    var guardians = #{@adults.to_json};
+    var guardians = #{@registration.adults.to_json};
     $('#guardian').autocomplete({
       autoFocus: false,
       delay: 0,
@@ -46,7 +46,9 @@
       },
       select: function( event, ui ) {
         $('#guardian').val( ui.item.label );
-        $('#attendee_guardian_attendee_id').val( ui.item.value );
+        var $gid = $('#registration_guardian_attendee_id');
+        if ($gid.length !== 1) { throw "Element not found"; }
+        $gid.val( ui.item.value );
         return false;
       }
     });

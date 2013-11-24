@@ -72,10 +72,6 @@ class Attendee < ActiveRecord::Base
   # user should be saved first.
   validates_presence_of :user
 
-  # Use MinorAgreementValidator (found in lib/) to require that understand_minor
-  # be checked if the attendee will not be 18 before the first day of the Congress.
-  validates :understand_minor, :minor_agreement => true
-
   # Class Methods
   # =============
 

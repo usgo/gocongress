@@ -1,0 +1,4 @@
+%h2
+  = t :"ordinals.o_#{@registration.attendee_number}"
+  = Attendee.model_name.human
+= render 'form'

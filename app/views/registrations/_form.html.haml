@@ -2,15 +2,14 @@
   .noscript-warning
     %h3 You're <em>really</em> going to want Javascript to fill out this form.
 
-= form_for(@attendee) do |f|
+= form_for(@registration) do |f|
   = f.hidden_field :user_id
 
-  = render :partial => 'shared/error_messages', :locals => { :resource => @attendee }
+  = render :partial => 'shared/error_messages', :locals => { :resource => @registration }
   = render :partial => 'personal_info', :locals => { :f => f }
   = render :partial => 'shirt_info', :locals => { :f => f }
   = render :partial => 'player_info', :locals => { :f => f }
   = render :partial => 'contact_info', :locals => { :f => f }
-  = render :partial => 'travel_plans', :locals => { :f => f }
   = render :partial => 'plans', :locals => { :f => f }
   = render :partial => 'wishes', :locals => { :f => f }
   = render :partial => 'activities', :locals => { :f => f }

@@ -1,4 +1,4 @@
-- raise "Activities undefined" if @activities.nil?
+-# raise "Activities undefined" if @activities.nil?
 
 - mnh = Activity.model_name.human
 - mnhp = mnh.pluralize
@@ -19,8 +19,8 @@
     %th= trl_attr 'activity', 'return_time'
     %th.numeric Price
   %tbody
-    - @activities.each do |a|
-      - checked = @activity_selections.include?(a.id)
+    - @registration.activities.each do |a|
+      - checked = @registration.activity_selections.include?(a.id)
       %tr{:class => (a.disabled? ? 'disabled' : nil)}
         %td.align-center
           = check_box_tag :activity_ids, a.id, checked, :name => 'activity_ids[]'

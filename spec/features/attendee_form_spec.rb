@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'attendee form' do
+describe 'registration form' do
   let(:password) { 'asdfasdf' }
   let(:user) { create :user, :password => password }
 
@@ -17,14 +17,15 @@ describe 'attendee form' do
     it 'saves a new attendee' do
       fill_in 'Given Name', with: 'Minnie'
       fill_in 'Family Name', with: 'Mouse'
-      choose 'attendee_gender_f'
-      select 1930, from: 'attendee_birth_date_1i'
-      select 'January', from: 'attendee_birth_date_2i'
-      select 1, from: 'attendee_birth_date_3i'
-      select 'Adult Small', from: 'attendee_tshirt_size'
-      select '10 kyu', from: 'attendee_rank'
-      select 'Aland Islands', from: 'attendee_country'
-      choose 'attendee_will_play_in_us_open_true'
+      choose 'registration_gender_f'
+      select 1930, from: 'registration_birth_date_1i'
+      select 'January', from: 'registration_birth_date_2i'
+      select 1, from: 'registration_birth_date_3i'
+      select 'Adult Small', from: 'registration_tshirt_size'
+      select '10 kyu', from: 'registration_rank'
+      fill_in 'Email', with: 'minnie.mouse@example.com'
+      select 'Aland Islands', from: 'registration_country'
+      choose 'registration_will_play_in_us_open_true'
       click_button 'Continue'
       page.should have_content 'Attendee added'
       page.should have_content 'What next?'
@@ -34,15 +35,15 @@ describe 'attendee form' do
       fill_in 'Given Name', with: 'Minnie'
       click_button 'Continue'
       page.should have_selector '#error_explanation'
-      page.should have_content "Family Name can't be blank"
+      page.should have_content "Family name can't be blank"
     end
   end
 
   context 'edit' do
     let(:a) { create :attendee, user: user }
     before do
-      visit edit_attendee_path(year: a.year, id: a.id)
-      page.should have_selector 'form#edit_attendee_' + a.id.to_s
+      visit edit_registration_path(year: a.year, id: a.id)
+      page.should have_selector 'form#edit_registration_' + a.id.to_s
     end
 
     it 'updates an attendee' do
@@ -55,7 +56,7 @@ describe 'attendee form' do
       fill_in 'Family Name', with: ''
       click_button 'Continue'
       page.should have_selector '#error_explanation'
-      page.should have_content "Family Name can't be blank"
+      page.should have_content "Family name can't be blank"
     end
   end
 end
