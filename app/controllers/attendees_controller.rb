@@ -77,16 +77,6 @@ protected
     @airport_departure_date_rfc822 = departure.present? ? departure.to_date.to_s(:rfc822) : @year.peak_departure_date.to_s(:rfc822)
   end
 
-  def allow_only_self_or_admin
-    allow = false
-    if current_user.present?
-      a = Attendee.find(params[:id].to_i)
-      is_my_attendee = current_user.id.to_i == a.user_id
-      allow = is_my_attendee || current_user.admin?
-    end
-    render_access_denied unless allow
-  end
-
   private
 
   def adults

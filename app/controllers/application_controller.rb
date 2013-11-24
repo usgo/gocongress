@@ -106,14 +106,7 @@ protected
     end
   end
 
-  def allow_only_self_or_admin
-    target_user_id = params[:id].to_i
-    unless current_user && (current_user.id.to_i == target_user_id || current_user.admin?)
-      render_access_denied
-    end
-  end
-
-private
+  private
 
   # `extract_year_from_params` returns an integer year, obtained either
   # from the params hash or the deprecated CONGRESS_YEAR constant.
