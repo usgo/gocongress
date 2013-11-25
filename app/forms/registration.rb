@@ -158,10 +158,6 @@ class Registration
     @plan_selections.select { |s| s.qty > 0 }
   end
 
-  def disabled_activities
-    @disabled_activities ||= Activity.disabled.map(&:id)
-  end
-
   def mandatory_plan_categories
     PlanCategory.yr(year).mandatory
   end
@@ -189,23 +185,9 @@ class Registration
     mandatory_plan_categories - selected_plan_categories(plan_selections)
   end
 
-  # `changes_to_selected_activities`, ie. the symmetric
-  # difference (http://bit.ly/aNXT8U) of "before" and "after" sets
-  def changes_to_selected_activities
-    Set.new(@activity_selections) ^ @attendee.activity_ids
-  end
-
-  # Adding or removing disabled activities are invalid changes
-  def invalid_changes_to_selected_activities
-    changes_to_selected_activities & disabled_activities
-  end
-
-  def activities_are_valid?
-    admin? || invalid_changes_to_selected_activities.empty?
-  end
-
   def validate_activities
-    unless activities_are_valid?
+    changes = FindsChangesToDisabledActivities.new(@attendee.activity_ids, @activity_selections)
+    unless admin? || changes.valid?
       @errors[:base] << translate('vldn_errs.activity_disabled')
     end
   end
