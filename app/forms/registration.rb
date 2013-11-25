@@ -16,14 +16,14 @@ class Registration
 
   # `ATD_ATRS` is an array of *permitted* attendee attributes.
   # Forbidden attributes, like `year`, are omitted.
-  ATD_ATRS = [:aga_id, :airport_arrival_flight, :anonymous,
+  ATD_ATRS = [:aga_id, :anonymous,
     :birth_date, :country, :email, :family_name, :gender,
-    :given_name, :guardian_attendee_id, :minor?, :phone, :rank,
-    :roomate_request, :special_request, :tshirt_size, :user_id,
+    :given_name, :guardian_attendee_id, :phone, :rank,
+    :roomate_request, :special_request, :tshirt_size,
     :will_play_in_us_open]
 
   delegate *ATD_ATRS, to: :attendee
-  delegate :full_name, :id, :shirt_id, :year, to: :attendee
+  delegate :full_name, :id, :minor?, :shirt_id, :user_id, :year, to: :attendee
   delegate :admin?, to: :current_user
 
   def initialize current_user, attendee
