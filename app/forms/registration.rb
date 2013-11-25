@@ -68,32 +68,24 @@ class Registration
     @understand_minor = params[:registration][:understand_minor]
     attendee.attributes = attendee_params(params[:registration])
 
-    if valid?
-      attendee.save!
-      persist_activities
-      persist_plans
-      true
-    else
-      false
-    end
+    valid? && save
   end
 
   def persisted?
     attendee.persisted?
   end
 
-  # `valid?` - Notice the non-shortcut conjunction.
+  # A registration is `valid?` if all of its parts are valid
+  # and no `@errors` are found.
   def valid?
-    traditional_validation_result = super & attendee.valid?
-    attendee.errors.each { |atr, err| @errors.add(atr, err) }
-
-    # legacy methods add to @errors, but don't return a boolean
+    super
+    attendee.valid?
+    merge_errors(attendee.errors)
     validate_mandatory_plan_cats(selected_plans)
     validate_disabled_plans(persisted_plan_selections, selected_plans)
     validate_models(selected_attendee_plans)
     validate_activities
-
-    traditional_validation_result && @errors.empty?
+    @errors.empty?
   end
 
   def plans_by_category
@@ -128,6 +120,10 @@ class Registration
     @_plans
   end
 
+  def merge_errors e
+    e.each { |atr, err| @errors.add(atr, err) }
+  end
+
   def parse_plan_params plan_params
     Registration::PlanSelection.parse_params(plan_params, all_plans)
   end
@@ -140,6 +136,13 @@ class Registration
         ap.dates.create!(_date: date)
       end
     end
+  end
+
+  def save
+    attendee.save!
+    persist_activities
+    persist_plans
+    true
   end
 
   def selected_dates plan
