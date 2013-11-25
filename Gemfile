@@ -12,7 +12,6 @@ gem 'jquery-rails'
 gem 'haml'
 gem 'bluecloth' # markdown
 gem 'kaminari' # pagination
-gem 'asset_sync'
 gem 'sass-rails', '~> 4.0.0'
 gem 'uglifier', '>= 1.3.0'
 
@@ -27,6 +26,10 @@ gem 'cancan'
 gem 'devise'
 gem 'exception_notification', '~> 4.0.1'
 gem 'thin'
+
+# Deployment
+gem 'asset_sync'
+gem 'unf' # <- fog <- asset_sync (http://bit.ly/17TiMjA)
 
 # Groups: Rails will load the group where name == Rails.env
 # http://yehudakatz.com/2010/05/09/the-how-and-why-of-bundler-groups/
