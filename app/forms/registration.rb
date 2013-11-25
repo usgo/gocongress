@@ -212,21 +212,10 @@ class Registration
   # this validation.
   def validate_disabled_plans before, after
     unless admin?
-      removals = Set.new(before) - after
-      additions = Set.new(after) - before
-
-      removals.select { |ap| ap.plan.disabled? }.each do |ap|
-        @errors[:base] <<  msg_re_change_to_disabled_plan(ap.plan.name, "remove")
-      end
-
-      additions.select { |ap| ap.plan.disabled? }.each do |ap|
-        @errors[:base] <<  msg_re_change_to_disabled_plan(ap.plan.name, "select")
-      end
+      changes = FindsChangesToDisabledPlans.new(before, after)
+      @errors[:base].concat(changes.removal_errors)
+      @errors[:base].concat(changes.addition_errors)
     end
-  end
-
-  def msg_re_change_to_disabled_plan plan_name, verb
-    "One of the plans you tried to #{verb} (#{plan_name}) has been disabled to prevent changes.  Please contact the registrar."
   end
 
   def validate_mandatory_plan_cats selections
