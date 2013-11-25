@@ -40,12 +40,13 @@ describe User do
   end
 
   describe 'email' do
-    let(:capital_email) { 'Asdf@example.com' }
+    let(:capital) { 'Asdf@example.com' }
 
-    it 'is downcased when saved, or used in a finder' do
-      create(:user, email: capital_email)
-      User.find_by_email(capital_email.downcase).should_not be_nil
-      User.find_by_email(capital_email).should_not be_nil
+    it 'is downcased when saved' do
+      u = create(:user, email: capital)
+      expect(u.reload.email).to eq(capital.downcase)
+      expect(User.where(email: capital.downcase).first).to eq(u)
+      expect(User.where(email: capital).first).to eq(nil)
     end
   end
 

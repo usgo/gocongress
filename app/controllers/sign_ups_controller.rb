@@ -41,7 +41,7 @@ class SignUpsController < Devise::RegistrationsController
   # If the new user was created, send a welcome email.
   def send_welcome_email
     return if params[:user][:email].blank?
-    user = User.yr(@year).find_by_email(params[:user][:email])
+    user = User.yr(@year).where(email: params[:user][:email]).first
     UserMailer.welcome_email(user).deliver if user.present?
   end
 

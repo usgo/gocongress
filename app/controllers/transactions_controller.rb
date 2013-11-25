@@ -64,7 +64,7 @@ class TransactionsController < ApplicationController
   def set_attrs_from_params
     sanitize_params
     @transaction.updated_by_user = current_user
-    @transaction.user = User.yr(@year).find_by_email(params[:user_email])
+    @transaction.user = User.yr(@year).where(email: params[:user_email]).first
   end
 
   # `sanitize_params` deletes a few inaccessible transaction

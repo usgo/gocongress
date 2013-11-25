@@ -1,7 +1,7 @@
 namespace :app do
   desc 'Grant admin privileges to the specified user'
   task :grant_admin, [:email] => :environment do |t,args|
-    user = User.find_by_email(args[:email])
+    user = User.where(email: args[:email]).first
 
     raise "Unknown email #{args[:email]}" unless user
 
@@ -23,7 +23,5 @@ namespace :test do
     rcov = "rcov --rails --aggregate coverage.data --text-summary -Itest"
     system("#{rcov} --no-html test/unit/*_test.rb")
     system("#{rcov} --no-html test/functional/*_test.rb")
-    #system("#{rcov} --html test/integration/*_test.rb")
-    #system("open coverage/index.html") if PLATFORM['darwin']
   end
 end
