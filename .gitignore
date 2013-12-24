@@ -11,3 +11,4 @@ coverage.data
 coverage
 *.swp
 *.swo
+.idea
