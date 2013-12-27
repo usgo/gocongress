@@ -10,7 +10,7 @@
     %strong No account yet for #{@year.year}?
     %br
     Please
-    = link_to "start here.", new_registration_path(resource_name), :tabindex => 6
+    = link_to "start here.", new_user_registration_path, :tabindex => 6
     Sorry, you cannot use an account from a previous year.
 
 = form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f|
