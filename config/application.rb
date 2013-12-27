@@ -15,6 +15,16 @@ module Gocongress
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
 
+    # I18n
+    # ----
+
+    # https://github.com/rails/rails/commit/813ab76788206ded84cb25e6cd3c259a399ba565
+    # http://stackoverflow.com/questions/20361428/rails-i18n-validation-deprecation-warning
+    config.i18n.enforce_available_locales = true
+
+    # action_mailer
+    # -------------
+
     # action_mailer's default_url_options should not be confused with
     # ActionController#default_url_options().  Unlike in ActionController, we
     # can only set static values here, and we can only use what's available
