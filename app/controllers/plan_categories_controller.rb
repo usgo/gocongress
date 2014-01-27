@@ -10,10 +10,10 @@ class PlanCategoriesController < ApplicationController
   before_filter :expose_plans, :only => [:show, :update]
 
   def index
-    categories = @plan_categories.joins(:event) \
+    categories = @plan_categories.joins(:event).yr(@year).order('ordinal')
+    @plan_categories_by_event = categories \
       .select("plan_categories.*, events.name as event_name") \
-      .yr(@year).order('ordinal')
-    @plan_categories_by_event = categories.group_by {|c| c.event_name}
+      .group_by {|c| c.event_name}
     @show_order_fields = can?(:update, PlanCategory) && categories.count > 1
   end
 

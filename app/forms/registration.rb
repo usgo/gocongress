@@ -113,7 +113,7 @@ class Registration
   # excludes disabled plans unless already selected by the attendee.
   def form_plans
     return @_plans if @_plans.present?
-    @_plans = all_plans
+    @_plans = all_plans.to_a
     unless admin?
       @_plans.delete_if {|p| p.disabled? && !@attendee.has_plan?(p)}
     end

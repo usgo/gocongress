@@ -11,7 +11,7 @@ def show
         {:attendee_plans => :plan}
       ]
     }
-  ])
+  ]).to_a
 
   # Keep users with non-zero balances.  Obviously, we want to see
   # users who owe us money, but it is also useful for the registrar

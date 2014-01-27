@@ -1,6 +1,8 @@
 require "spec_helper"
 
 describe PlanCategoriesController do
+  render_views
+
   it_behaves_like "an admin controller", :plan_category do
     let(:event) { create :event }
     let(:extra_params_for_create) { {:plan_category => {:event_id => event.id}} }
