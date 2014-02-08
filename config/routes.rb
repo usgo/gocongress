@@ -26,7 +26,7 @@ Gocongress::Application.routes.draw do
       constraints :year => /\d+/ do
 
         get 'edit' => 'years#edit', :as => :edit_year
-        put '' => 'years#update', :as => :update_year
+        patch '' => 'years#update', :as => :update_year
 
         get 'costs' => 'plan_categories#index'
 
