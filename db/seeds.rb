@@ -52,14 +52,14 @@ Year.create!(
 
 Year.create!(
   {
-    city:                  'TBD',
-    date_range:            'TBD',
-    day_off_date:          Date.new(2014, 8, 2),
+    city:                  'New York',
+    date_range:            'August 9-17',
+    day_off_date:          Date.new(2014, 8, 13),
     ordinal_number:        30,
     registration_phase:    'closed',
     reply_to_email:        'rcristal3@netscape.net',
-    start_date:            Date.new(2014, 8, 1),
-    state:                 'TBD',
+    start_date:            Date.new(2014, 8, 9),
+    state:                 'NY',
     timezone:              'Eastern Time (US & Canada)',
     year:                  2014
   },
