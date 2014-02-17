@@ -35,7 +35,7 @@
       In that case, please
       = link_to "sign in.", new_user_session_path
 
-  = form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f|
+  = form_for(resource, :as => resource_name, :url => user_registration_path) do |f|
 
     -# For new registrations, we need to set the user's year before
     -# validation, but because we are using Devise
