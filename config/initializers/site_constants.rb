@@ -19,7 +19,7 @@ CONGRESS_START_DATE = {
   2011 => Date.civil(2011, 7, 30),
   2012 => Date.civil(2012, 8, 4),
   2013 => Date.civil(2013, 8, 3),
-  2014 => Date.civil(2014, 8, 1)
+  2014 => Date.civil(2014, 8, 9)
 }
 
 # DAY_OFF_DATE - The go congress traditionally has one "day off".
@@ -29,7 +29,7 @@ DAY_OFF_DATE = {
   2011 => Date.civil(2011, 8, 3),
   2012 => Date.civil(2012, 8, 8),
   2013 => Date.civil(2013, 8, 7),
-  2014 => Date.civil(2014, 8, 2)
+  2014 => Date.civil(2014, 8, 13)
 }
 
 # EMAIL_REGEX used to validate all email addresses, according to
