@@ -16,6 +16,7 @@ describe Registration do
         params = {registration: {understand_minor: false}}
         expect(r.submit(params)).to eq(false)
         expect(r.errors.keys).to include(:liability_release)
+        expect(attendee.understand_minor).to eq(false)
       end
 
       it "does not add disabled activity, and returns an error" do
