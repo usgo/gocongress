@@ -19,7 +19,7 @@ class Registration
   ATD_ATRS = [:aga_id, :anonymous,
     :birth_date, :country, :email, :family_name, :gender,
     :given_name, :guardian_attendee_id, :phone, :rank,
-    :roomate_request, :special_request, :tshirt_size,
+    :roomate_request, :special_request, :tshirt_size, :understand_minor,
     :will_play_in_us_open]
 
   delegate *ATD_ATRS, to: :attendee
