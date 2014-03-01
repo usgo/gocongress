@@ -24,12 +24,21 @@
     = @year.ordinal_number.ordinalize
     Annual US Go Congress
   %p
-    The US Go Congress is the largest Go activity in the United States. It
-    happens once a year and spans one week. Events include the US Open, the
-    largest annual Go tournament in the US, professional lectures and game
-    analysis, continuous self paired games, and all kinds of Go related
-    activities from morning to midnight. Come for the Go, come for the
-    camaraderie of old friends, come for the relaxing mountain air. Whatever
-    your reason, we are looking forward to seeing you there.
+    - if @year.year == 2014
+      The US Go Congress is the largest go activity in the United States. It
+      happens once a year and spans one week. Events include the US Open, the
+      largest annual go tournament in the US, professional lectures and game
+      analysis, continuous self-paired games, and all kinds of go-related
+      activities from morning to midnight. Come for the go, come for the
+      camaraderie of old friends, come for the thrill of the big city! Whatever
+      your reason, we are looking forward to seeing you there.
+    - else
+      The US Go Congress is the largest Go activity in the United States. It
+      happens once a year and spans one week. Events include the US Open, the
+      largest annual Go tournament in the US, professional lectures and game
+      analysis, continuous self paired games, and all kinds of Go related
+      activities from morning to midnight. Come for the Go, come for the
+      camaraderie of old friends, come for the relaxing mountain air. Whatever
+      your reason, we are looking forward to seeing you there.
 
   %div{:style => "clear:left;"}
