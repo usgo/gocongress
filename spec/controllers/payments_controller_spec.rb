@@ -36,6 +36,7 @@ describe PaymentsController do
         post :relay_response
         response.should be_success
         expected_url = payments_receipt_url(
+          :protocol => 'https',
           :transaction_saved => true,
           :only_path => false)
         response.body.should include expected_url
@@ -49,6 +50,7 @@ describe PaymentsController do
         post :relay_response
         response.should be_success
         expected_url = payments_receipt_url(
+          :protocol => 'https',
           :transaction_saved => false,
           :error_msg => msg,
           :only_path => false)
