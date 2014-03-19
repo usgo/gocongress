@@ -83,7 +83,7 @@ class PaymentsController < ApplicationController
   # hostname and use NAT, in order to get the relay response.
   # -Jared 2013-02-16
   def environment_aware_relay_url
-    opts = {}
+    opts = { :protocol => 'http' }
     if ENV['AUTHNET_RELAY_HOST'].present?
       opts = { host: ENV['AUTHNET_RELAY_HOST'], port: nil }
     end
@@ -93,6 +93,7 @@ class PaymentsController < ApplicationController
   # Render a JS window.location redirect (and meta-refresh fallback)
   def render_js_redirect_to_receipt sim_response, transaction_saved, error_msg = nil
     url = payments_receipt_url(
+      :protocol => 'https',
       :transaction_saved => transaction_saved,
       :error_msg => error_msg,
       :only_path => false)
