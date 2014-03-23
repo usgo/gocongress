@@ -19,11 +19,11 @@ class Registration
   ATD_ATRS = [:aga_id, :anonymous,
     :birth_date, :country, :email, :family_name, :gender,
     :given_name, :guardian_attendee_id, :phone, :rank,
-    :roomate_request, :special_request, :tshirt_size, :understand_minor,
-    :will_play_in_us_open]
+    :roomate_request, :special_request, :shirt_id, :tshirt_size,
+    :understand_minor, :will_play_in_us_open]
 
   delegate *ATD_ATRS, to: :attendee
-  delegate :full_name, :id, :minor?, :shirt_id, :user_id, :year, to: :attendee
+  delegate :full_name, :id, :minor?, :user_id, :year, to: :attendee
   delegate :admin?, to: :current_user
 
   def initialize current_user, attendee
