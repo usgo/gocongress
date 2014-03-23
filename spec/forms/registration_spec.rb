@@ -33,6 +33,13 @@ describe Registration do
           }.to_not change { AttendeeActivity.count }
       end
 
+      it "selects shirt style" do
+        r = Registration.new user, attendee
+        params = {registration: {shirt_id: 5}}
+        expect(r.submit(params)).to eq(true)
+        expect(attendee.shirt_id).to eq(5)
+      end
+
       context "when there is a mandatory category" do
         let!(:cat) { create :plan_category, :mandatory => true }
         let(:msg) { "Please select at least one plan in #{cat.name}" }
