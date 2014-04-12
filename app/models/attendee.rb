@@ -92,6 +92,14 @@ class Attendee < ActiveRecord::Base
     where(anonymous: false)
   end
 
+  def self.is_anonymous
+    where(anonymous: true)
+  end
+
+  def self.user_attendees current_user_id
+    where(user_id: current_user_id)
+  end
+
   # Using a subquery in the where clause is performant up to about
   # one thousand records.  -Jared 2012-05-13
   def self.with_at_least_one_plan

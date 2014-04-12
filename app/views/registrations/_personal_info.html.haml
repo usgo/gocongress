@@ -34,7 +34,9 @@
 
 :javascript
   $(function() {
-    var guardians = #{@registration.adults.to_json};
+    var guardians1 = #{@registration.adults_anonymous_of_user.to_json};
+    var guardians2 = #{@registration.adults.to_json};
+    var guardians = guardians1.concat(guardians2);
     $('#guardian').autocomplete({
       autoFocus: false,
       delay: 0,

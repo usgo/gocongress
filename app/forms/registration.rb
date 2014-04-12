@@ -46,6 +46,12 @@ class Registration
     end
   end
 
+  def adults_anonymous_of_user
+    Attendee.yr(year).adults(year).user_attendees(attendee.user_id).is_anonymous.map do |a|
+      {label: a.full_name, value: a.id}
+    end
+  end
+
   def guardian_name
     attendee.guardian.try(:full_name)
   end
