@@ -16,7 +16,7 @@ Contribute
     1. [Fork and clone][8] this github repo
 1. Install the Ruby version specified in `.ruby-version`.
     - Use [rbenv][9] or [compile from source][10]
-1. Install [postgres 9.2][5]
+1. Install [postgres 9.3.3+][5]
     1. Practice connecting using the command-line client, `psql`
         - ["permission denied"][3]
         - [Client Connection Problems][4]
