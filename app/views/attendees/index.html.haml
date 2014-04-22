@@ -10,8 +10,9 @@
     #{@who_is_coming.kyu_count} kyu players, #{@who_is_coming.dan_count} dan
     players, and #{pluralize(@who_is_coming.pro_count, 'pro')}.
     Also, #{@who_is_coming.unregistered_count} other people have not finished
-    their registration.  (They either haven't paid in full, or they
-    haven't selected any room and board plans)
+    their registration.  All required plans such as registration and housing
+    for all attendees in an account must be paid for before these attendees
+    can appear on this list.
 
   - unless anyone_signed_in?
     %p

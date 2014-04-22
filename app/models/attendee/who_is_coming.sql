@@ -17,31 +17,51 @@ left join (
   group by t.user_id
 ) debits on debits.user_id = attendees.user_id
 
--- sum of plan costs
+-- sum of mandatory nondaily plan costs of attendee's user account
 left join (
-  select ap.attendee_id, sum(p.price) as total
-  from attendee_plans ap
+  select a.user_id, sum(p.price) as total
+  from attendees a
+  inner join attendee_plans ap on ap.attendee_id = a.id
   inner join plans p on p.id = ap.plan_id
-  where ap.year = :year
+  inner join plan_categories pc on pc.id = p.plan_category_id
+  where a.year = :year
+    and ap.year = :year
     and p.year = :year
-  group by ap.attendee_id
-) plans on plans.attendee_id = attendees.id
+    and p.daily = false
+    and pc.year = :year
+    and pc.mandatory
+  group by a.user_id
+) nondaily_plans on nondaily_plans.user_id = attendees.user_id
 
--- sum of activity costs
+-- sum of mandatory daily plan costs of attendee's user account
 left join (
-  select aa.attendee_id, sum(a.price) as total
-  from attendee_activities aa
-  inner join activities a on a.id = aa.activity_id
-  where aa.year = :year
-    and a.year = :year
-  group by aa.attendee_id
-) activities on activities.attendee_id = attendees.id
+  select a.user_id, sum(p.price) as total
+  from attendees a
+  inner join attendee_plans ap on ap.attendee_id = a.id
+  inner join attendee_plan_dates apd on apd.attendee_plan_id = ap.id
+  inner join plans p on p.id = ap.plan_id
+  inner join plan_categories pc on pc.id = p.plan_category_id
+  where a.year = :year
+    and ap.year = :year
+    and p.year = :year
+    and pc.year = :year
+    and pc.mandatory
+  group by a.user_id
+) daily_plans on daily_plans.user_id = attendees.user_id
+
+-- count of plans
+left join (
+  select ap.attendee_id, count(ap.id) as n
+  from attendee_plans ap
+  where ap.year = :year
+  group by ap.attendee_id
+) plan_count on plan_count.attendee_id = attendees.id
 
 where attendees.year = :year
 
   -- must have at least one plan
-  and plans.total > 0
+  and plan_count.n > 0
 
-  -- credits minus debits must satisfy total of invoice
+  -- credits minus debits must satisfy total of mandatory plan costs of attendee's user account
   and coalesce(credits.total, 0) - coalesce(debits.total, 0)
-    >= coalesce(plans.total, 0) + coalesce(activities.total, 0)
+    >= coalesce(nondaily_plans.total, 0) + coalesce(daily_plans.total, 0)
