@@ -4,7 +4,7 @@ module GocongressNotifier
       :email => {
         :email_prefix => "[USGC] ",
         :sender_address => 'usgcwebsite@gmail.com',
-        :exception_recipients => 'jared@jaredbeck.com'
+        :exception_recipients => 'jared@jaredbeck.com, webmaster@gocongress.org'
       }
   end
 end
