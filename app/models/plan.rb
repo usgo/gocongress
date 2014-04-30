@@ -118,7 +118,11 @@ end
 private
 
 def attendee_plans_except(atnd=nil)
-  atnd.nil? ? attendee_plans : attendee_plans.where('attendee_id <> ?', atnd.id)
+  if atnd.nil? || atnd.new_record?
+    attendee_plans
+  else
+    attendee_plans.where('attendee_id <> ?', atnd.id)
+  end
 end
 
 end

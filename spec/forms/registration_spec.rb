@@ -42,7 +42,7 @@ describe Registration do
 
       context 'when plan selection would exceed inventory' do
         let(:attendee) { build :attendee }
-        let(:msg) { 'banana' }
+        let(:msg) { 'You requested 1, but there are only 0 available.' }
 
         it 'adds an error to the attendee, and returns false' do
           p = create :plan, inventory: 1
@@ -50,7 +50,7 @@ describe Registration do
           r = Registration.new user, attendee
           params = {plans: {p.id.to_s => {'qty' => 1}}}
           expect(r.submit(params)).to eq(false)
-          expect(r.errors.full_messages).to include(msg)
+          expect(r.errors.full_messages.join(', ')).to include(msg)
         end
       end
 
