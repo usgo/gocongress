@@ -105,7 +105,7 @@ class Registration
   private
 
   def attendee_params(params)
-    atrs = ATD_ATRS.concat(["birth_date(1i)", "birth_date(2i)", "birth_date(3i)"])
+    atrs = ATD_ATRS.concat(["birth_date(1i)", "birth_date(2i)", "birth_date(3i)", "user_id"])
     params.slice(*atrs)
   end
 

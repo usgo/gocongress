@@ -308,7 +308,7 @@ describe RegistrationsController do
       it "succeeds, creating attendee under any user" do
         u = create :user
         a = accessible_attributes_for(:attendee).merge(:user_id => u.id)
-        expect { post :create, :registration => a, user_id: u.id, :year => u.year
+        expect { post :create, :registration => a, :year => u.year
           }.to change { u.attendees.count }.by(+1)
       end
     end
