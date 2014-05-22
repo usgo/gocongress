@@ -8,6 +8,7 @@ class ApplicationController < ActionController::Base
   before_filter :set_year_from_params
   before_filter :set_yearly_vars
   before_filter :set_display_timezone
+  before_filter :set_logo_file
 
   # When running functional tests or controller specs,
   # default_url_options() is called before callbacks, so we do not
@@ -19,6 +20,10 @@ class ApplicationController < ActionController::Base
 
   def set_display_timezone
     Time.zone = @year.timezone
+  end
+
+  def set_logo_file
+    @logo_file = logo_file(@year)
   end
 
   def set_year_from_params
@@ -116,6 +121,16 @@ protected
     year = params[:year].present? ? params[:year].to_i : CONGRESS_YEAR
     raise_routing_error("Invalid year") unless (2011..LATEST_YEAR).include?(year)
     return year
+  end
+
+  def logo_file year
+    if year.to_i == 2014
+      '2014-logo.png'
+    elsif year.to_i == 2013
+      '2013.jpg'
+    else
+      "#{@year.year}.png"
+    end
   end
 
   def render_access_denied
