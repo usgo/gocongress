@@ -40,8 +40,8 @@ Contribute
 1. Run the tests
     1. `bundle exec rake db:setup`
     1. `bundle exec rake test:prepare`
-    1. `bundle exec rake` will run all specs and tests.  if they
-       all pass, you're good to go
+    1. `bundle exec rspec` will run the tests.  If they
+       all pass, you're good to go.
 1. Submit your contribution
     1. Write a [spec][7] that describes your contribution
     1. Push your changes to your [fork][8] on github
