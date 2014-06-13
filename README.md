@@ -2,7 +2,7 @@ Gocongress
 ==========
 
 A maintainable web app for the US Go Congress.
-Copyright (c) 2013 American Go Association
+Copyright (c) 2014 American Go Association
 
 [![Code Climate](https://codeclimate.com/github/usgo/gocongress.png)](https://codeclimate.com/github/usgo/gocongress)
 [![Dependency Status](https://gemnasium.com/usgo/gocongress.svg)](https://gemnasium.com/usgo/gocongress)
@@ -39,7 +39,7 @@ Contribute
     1. If all is well, `bundle exec rake -T` should list rake tasks
 1. Run the tests
     1. `bundle exec rake db:setup`
-    1. `bundle exec rake test:prepare`
+    1. `bundle exec rake db:test:prepare`
     1. `bundle exec rspec` will run the tests.  If they
        all pass, you're good to go.
 1. Submit your contribution
