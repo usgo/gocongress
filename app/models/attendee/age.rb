@@ -23,6 +23,10 @@ class Attendee::Age
   private
 
   def birthdate_in_congress_year
-    Date.new(@congress_start.year, @birth.month, @birth.day)
+    if @birth.day == 29 && @birth.month == 2 && @congress_start.leap? == false
+      Date.new(@congress_start.year, 3, 1)
+    else
+      Date.new(@congress_start.year, @birth.month, @birth.day)
+    end
   end
 end

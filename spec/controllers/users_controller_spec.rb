@@ -88,6 +88,13 @@ describe UsersController do
         response.should be_successful
       end
 
+      it "the same user with an attendee born on February 29 succeeds" do
+        create :attendee, user_id: user.id, birth_date: "1996-02-29"
+        sign_in user
+        get :show, :id => user.id, :year => user.year
+        response.should be_successful
+      end
+
       it "the same user in the wrong year raises RecordNotFound" do
         sign_in user
         expect { get :show, :id => user.id, :year => wrong_year
