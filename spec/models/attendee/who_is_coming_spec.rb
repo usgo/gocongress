@@ -8,6 +8,14 @@ describe Attendee::WhoIsComing do
       Attendee::WhoIsComing.new(a.year).attendees.should_not include(a)
     end
 
+    it 'excludes cancelled attendees' do
+      pc = create :plan_category, mandatory: true
+      p = create :plan, price: 0, plan_category: pc, description: 'Cancellation'
+      a = create :attendee
+      a.plans << p
+      Attendee::WhoIsComing.new(a.year).attendees.should_not include(a)
+    end
+
     it 'returns attendees of users that paid for mandatory plans and have at least one plan' do
       year = Date.current.year
       csd = CONGRESS_START_DATE[year]

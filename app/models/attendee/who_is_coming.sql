@@ -65,3 +65,14 @@ where attendees.year = :year
   -- credits minus debits must satisfy total of mandatory plan costs of attendee's user account
   and coalesce(credits.total, 0) - coalesce(debits.total, 0)
     >= coalesce(nondaily_plans.total, 0) + coalesce(daily_plans.total, 0)
+
+  -- exclude cancelled attendees
+  and not exists (
+    select ap.attendee_id
+    from attendee_plans ap
+    inner join plans p on p.id = ap.plan_id
+    where attendees.id = ap.attendee_id
+      and ap.year = :year
+      and p.year = :year
+      and p.description like 'Cancellation'
+  )
