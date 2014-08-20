@@ -83,7 +83,8 @@ private
       2011 => [:aga, :kaba, :kgs],
       2012 => [:aga, :agf, :confucius, :jpga, :kaba, :pandanet, :slate_and_shell, :tygem],
       2013 => [],
-      2014 => [:aga]
+      2014 => [:aga],
+      2015 => [:aga]
     }
   end
 

@@ -65,3 +65,19 @@ Year.create!(
   },
   :without_protection => true
 )
+
+Year.create!(
+  {
+    city:                  'Saint Paul',
+    date_range:            'August 1 - 9',
+    day_off_date:          Date.new(2015, 8, 5),
+    ordinal_number:        31,
+    registration_phase:    'closed',
+    reply_to_email:        'webmaster@gocongress.org',
+    start_date:            Date.new(2015, 8, 1),
+    state:                 'MN',
+    timezone:              'Central Time (US & Canada)',
+    year:                  2015
+  },
+  :without_protection => true
+)
