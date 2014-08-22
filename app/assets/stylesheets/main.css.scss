@@ -126,6 +126,7 @@ body {
   &.year2011 #header-container { background-color: #FF9B05; }
   &.year2012 #header-container { background-color: #453775; }
   &.year2013 #header-container { background-color: #333; }
+  &.year2015 #header-container { background-color: #2C3243; }
 }
 #header { margin: 0 auto; padding: 8px 0px 5px 0px; width: 900px; }
 
@@ -163,6 +164,7 @@ body {
     .nav-container { background-color: #555; }
     .nav-container-admin { background-color: #777; }
   }
+  &.year2015 .nav-container { background-color: #32394c; }
 }
 
 .nav {
