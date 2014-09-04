@@ -1,7 +1,7 @@
 require "spec_helper"
 require "controllers/rpt/shared_examples_for_reports"
 
-describe Rpt::CostSummaryReportsController do
+describe Rpt::CostSummaryReportsController, :type => :controller do
   let(:staff) { create :staff }
 
   it_behaves_like "a report", %w[html csv]

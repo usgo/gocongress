@@ -1,11 +1,11 @@
 require "spec_helper"
 
-describe Attendee::WhoIsComing do
+describe Attendee::WhoIsComing, :type => :model do
   describe '#attendees' do
 
     it 'excludes attendees with zero plans' do
       a = create :attendee
-      Attendee::WhoIsComing.new(a.year).attendees.should_not include(a)
+      expect(Attendee::WhoIsComing.new(a.year).attendees).not_to include(a)
     end
 
     it 'excludes cancelled attendees' do
@@ -13,7 +13,7 @@ describe Attendee::WhoIsComing do
       p = create :plan, price: 0, plan_category: pc, description: 'Cancellation'
       a = create :attendee
       a.plans << p
-      Attendee::WhoIsComing.new(a.year).attendees.should_not include(a)
+      expect(Attendee::WhoIsComing.new(a.year).attendees).not_to include(a)
     end
 
     it 'returns attendees of users that paid for mandatory plans and have at least one plan' do
@@ -64,7 +64,7 @@ describe Attendee::WhoIsComing do
       u5a1 = create :attendee, user: u5, given_name: 'u5a'
       u5a1.plans << p4 << p5
 
-      Attendee::WhoIsComing.new(u1.year).attendees.map(&:given_name).should =~ ['u1a', 'u2a', 'u3a', 'u3b', 'u5a']
+      expect(Attendee::WhoIsComing.new(u1.year).attendees.map(&:given_name)).to match_array(['u1a', 'u2a', 'u3a', 'u3b', 'u5a'])
     end
   end
 end

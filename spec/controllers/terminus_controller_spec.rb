@@ -1,12 +1,12 @@
 require "spec_helper"
 
-describe TerminusController do
+describe TerminusController, :type => :controller do
   describe '#show' do
     render_views
     it 'succeeds' do
       u = create :user
       get :show, :user_id => u.id, :year => u.year
-      response.should be_successful
+      expect(response).to be_successful
     end
   end
 end

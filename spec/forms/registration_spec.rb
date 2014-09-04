@@ -22,14 +22,14 @@ describe Registration do
       it "does not add disabled activity, and returns an error" do
         r = Registration.new user, attendee
         params = {activity_ids: [dsbl_act.id]}
-        expect { r.submit(params).should be_false
+        expect { expect(r.submit(params)).to be_falsey
           }.to_not change { AttendeeActivity.count }
       end
 
       it "does not remove disabled activity, and returns an error" do
         attendee.activities << dsbl_act
         r = Registration.new user, attendee
-        expect { r.submit({}).should be_false
+        expect { expect(r.submit({})).to be_falsey
           }.to_not change { AttendeeActivity.count }
       end
 
@@ -78,14 +78,14 @@ describe Registration do
       it "adds disabled activities, and returns no errors" do
         act = create(:activity, disabled: true)
         r = Registration.new admin, attendee
-        expect { r.submit(activity_ids: [act.id]).should be_true
+        expect { expect(r.submit(activity_ids: [act.id])).to be_truthy
           }.to change { AttendeeActivity.count }.by(+1)
       end
 
       it "removes disabled activities, and returns no errors" do
         attendee.activities << dsbl_act
         r = Registration.new admin, attendee
-        expect { r.submit({}).should be_true
+        expect { expect(r.submit({})).to be_truthy
           }.to change { AttendeeActivity.count }.by(-1)
       end
 
@@ -94,14 +94,14 @@ describe Registration do
           r = Registration.new admin, attendee
           params = {plans: {dsbl_plan.id.to_s => {"qty" => 1}}}
           expect(r.submit(params)).to eq(true)
-          attendee.reload.plans.should include dsbl_plan
+          expect(attendee.reload.plans).to include dsbl_plan
         end
 
         it "removes disabled plan" do
           attendee.plans << dsbl_plan
           r = Registration.new admin, attendee
           expect(r.submit(plans: {})).to eq(true)
-          attendee.reload.plans.should_not include dsbl_plan
+          expect(attendee.reload.plans).not_to include dsbl_plan
         end
       end
     end

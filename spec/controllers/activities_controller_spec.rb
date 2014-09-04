@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe ActivitiesController do
+describe ActivitiesController, :type => :controller do
   it_behaves_like "an admin controller", :activity do
     let(:cat) { create :activity_category }
     let(:extra_params_for_create) { {:activity => {:activity_category_id => cat.id}} }
@@ -12,7 +12,7 @@ describe ActivitiesController do
       it "succeeds" do
         activity = create(:activity)
         get :show, :year => Time.now.year, :id => activity.id
-        response.should be_successful
+        expect(response).to be_successful
       end
     end
   end
@@ -26,13 +26,13 @@ describe ActivitiesController do
       it "is forbidden" do
         post :create, :year => Time.now.year,
           :activity => accessible_attributes_for(:activity)
-        response.status.should == 403
+        expect(response.status).to eq(403)
       end
     end
     describe "#new" do
       it "is forbidden" do
         get :new, :year => Time.now.year
-        response.status.should == 403
+        expect(response.status).to eq(403)
       end
     end
   end

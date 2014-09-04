@@ -1,7 +1,7 @@
 require "spec_helper"
 require "controllers/rpt/shared_examples_for_reports"
 
-describe Rpt::DailyPlanReportsController do
+describe Rpt::DailyPlanReportsController, :type => :controller do
   it_behaves_like "a report", %w[html csv]
 
   describe '#show' do
@@ -15,18 +15,18 @@ describe Rpt::DailyPlanReportsController do
         create :plan, daily: true
         create :plan, daily: true, disabled: false
         get :show, year: Date.current.year
-        response.should be_success
-        assigns('num_daily_plans').should == 2
+        expect(response).to be_success
+        expect(assigns('num_daily_plans')).to eq(2)
       end
     end
 
     context "csv" do
       it "delegates to DailyPlanCsvExporter" do
         exporter = double("DailyPlanCsvExporter")
-        DailyPlanCsvExporter.stub(:new) { exporter }
-        exporter.should_receive(:render)
+        allow(DailyPlanCsvExporter).to receive(:new) { exporter }
+        expect(exporter).to receive(:render)
         get :show, format: 'csv', year: Date.current.year
-        response.should be_success
+        expect(response).to be_success
       end
     end
   end

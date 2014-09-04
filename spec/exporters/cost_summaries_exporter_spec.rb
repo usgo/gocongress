@@ -17,7 +17,7 @@ describe CostSummariesExporter do
 
   describe "#to_csv" do
     it "returns a csv string with one row per attendee_plan" do
-      CostSummariesExporter.any_instance.stub(:obfuscation_factor) { obf_factor }
+      allow_any_instance_of(CostSummariesExporter).to receive(:obfuscation_factor) { obf_factor }
       ary = CSV.parse ex.to_csv
       expected_user_id = (a.user.id * obf_factor).to_s
       expected_attendee_id = (a.id * obf_factor).to_s

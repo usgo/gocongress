@@ -1,39 +1,39 @@
 require "spec_helper"
 
-describe Plan do
+describe Plan, :type => :model do
   it_behaves_like "a yearly model"
 
   it "has valid factories" do
-    build(:plan).should be_valid
-    build(:plan_which_needs_staff_approval).should be_valid
+    expect(build(:plan)).to be_valid
+    expect(build(:plan_which_needs_staff_approval)).to be_valid
   end
 
   describe '#valid?' do
     it 'requires a nonzero inventory' do
-      build(:plan, inventory: 0).should_not be_valid
+      expect(build(:plan, inventory: 0)).not_to be_valid
     end
 
     it 'requires a positive max qty' do
-      build(:plan, :max_quantity => 2).should be_valid
-      build(:plan, :max_quantity => 1).should be_valid
-      build(:plan, :max_quantity => 0).should have_error_about :max_quantity
-      build(:plan, :max_quantity => -1).should have_error_about :max_quantity
+      expect(build(:plan, :max_quantity => 2)).to be_valid
+      expect(build(:plan, :max_quantity => 1)).to be_valid
+      expect(build(:plan, :max_quantity => 0)).to have_error_about :max_quantity
+      expect(build(:plan, :max_quantity => -1)).to have_error_about :max_quantity
     end
 
     it 'cannot both be daily and need staff approval' do
-      build(:plan_which_needs_staff_approval, daily: true).should \
+      expect(build(:plan_which_needs_staff_approval, daily: true)).to \
         have_error_about :daily
     end
 
     it 'cannot both be daily and have a max qty other than one' do
-      build(:plan, daily: true, max_quantity: 2).should \
+      expect(build(:plan, daily: true, max_quantity: 2)).to \
         have_error_about :max_quantity
     end
   end
 
   describe '#inventory_consumed' do
     it 'is zero for a new plan' do
-      Plan.new.inventory_consumed.should == 0
+      expect(Plan.new.inventory_consumed).to eq(0)
     end
 
     it 'returns qty of plans selections, excluding an attendee, if specified' do
@@ -42,9 +42,9 @@ describe Plan do
       a2 = create :attendee
       create :attendee_plan, attendee: a, plan: p, quantity: 3, year: p.year
       create :attendee_plan, attendee: a2, plan: p, quantity: 2, year: p.year
-      p.inventory_consumed.should == 5
-      p.inventory_consumed(a).should == 2
-      p.inventory_consumed(a2).should == 3
+      expect(p.inventory_consumed).to eq(5)
+      expect(p.inventory_consumed(a)).to eq(2)
+      expect(p.inventory_consumed(a2)).to eq(3)
     end
   end
 
@@ -57,17 +57,17 @@ describe Plan do
     describe "#valid?" do
       it "returns false when inventory is less than attendee count" do
         plan.inventory = 1
-        plan.valid?.should be_false
+        expect(plan.valid?).to be_falsey
       end
 
       it "returns true when inventory is equal to attendee count" do
         plan.inventory = 2
-        plan.valid?.should be_true
+        expect(plan.valid?).to be_truthy
       end
 
       it "returns true when inventory exceeds attendee count" do
         plan.inventory = 3
-        plan.valid?.should be_true
+        expect(plan.valid?).to be_truthy
       end
     end
   end

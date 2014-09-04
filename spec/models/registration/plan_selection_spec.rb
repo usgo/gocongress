@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Registration::PlanSelection do
+describe Registration::PlanSelection, :type => :model do
   let(:plan) { create(:plan) }
   let(:dates) { ['2013-08-06', '2013-08-07'] }
 
@@ -19,27 +19,27 @@ describe Registration::PlanSelection do
         disabled_plan.id.to_s => { 'qty' => '13' }
       }
       result = subject.parse_params(plan_parms, plans)
-      result.count.should == plans.count
-      result.map(&:plan).should =~ plans
-      result.map{|s| s.qty}.should =~ [0,1,2,13]
+      expect(result.count).to eq(plans.count)
+      expect(result.map(&:plan)).to match_array(plans)
+      expect(result.map{|s| s.qty}).to match_array([0,1,2,13])
       daily_plan_sln = result.select{|s| s.plan.id == daily_plan.id}.first
       parsed_dates = dates.map { |d| Date.parse(d) }
-      daily_plan_sln.dates.should =~ parsed_dates
-      result.should =~ [
+      expect(daily_plan_sln.dates).to match_array(parsed_dates)
+      expect(result).to match_array([
         ps(plan, 2),
         ps(daily_plan, 1, parsed_dates),
         ps(another_plan, 0),
         ps(disabled_plan, 13)
-      ]
+      ])
     end
   end
 
   describe '#==' do
     it 'compares plan id, qty, and dates' do
-      ps(plan, 1).should == ps(plan, 1)
-      ps(plan, 1, dates).should == ps(plan, 1, dates)
-      ps(plan, 1).should_not == ps(plan, 3)
-      ps(plan, 1, []).should_not == ps(plan, 1, [double])
+      expect(ps(plan, 1)).to eq(ps(plan, 1))
+      expect(ps(plan, 1, dates)).to eq(ps(plan, 1, dates))
+      expect(ps(plan, 1)).not_to eq(ps(plan, 3))
+      expect(ps(plan, 1, [])).not_to eq(ps(plan, 1, [double]))
     end
   end
 

@@ -3,11 +3,11 @@ require "spec_helper"
 shared_examples "successful get" do |action|
   it "succeeds" do
     get action, year: user.year, id: user.id
-    response.should be_success
+    expect(response).to be_success
   end
 end
 
-describe UsersController do
+describe UsersController, :type => :controller do
   render_views
 
   let(:user) { create :user }
@@ -17,22 +17,22 @@ describe UsersController do
   context "as a visitor" do
     it 'cannot #edit' do
       get :edit, :id => user.id, :year => user.year
-      response.should be_forbidden
+      expect(response).to be_forbidden
     end
 
     it 'cannot #index' do
       get :index, :year => year
-      response.should be_forbidden
+      expect(response).to be_forbidden
     end
 
     it 'cannot #show' do
       get :show, :id => user.id, :year => user.year
-      response.should be_forbidden
+      expect(response).to be_forbidden
     end
 
     it 'cannot #update' do
       put :update, :id => user.id, :user => user.attributes, :year => user.year
-      response.should be_forbidden
+      expect(response).to be_forbidden
     end
   end
 
@@ -55,13 +55,13 @@ describe UsersController do
         sign_in user
         user_two = create(:user)
         get :edit, :id => user_two.id, :year => user_two.year
-        response.should be_forbidden
+        expect(response).to be_forbidden
       end
 
       it "cannot edit themselves" do
         sign_in user
         get :edit, :id => user.id, :year => user.year
-        response.should be_forbidden
+        expect(response).to be_forbidden
       end
     end
 
@@ -69,7 +69,7 @@ describe UsersController do
       it 'is forbidden' do
         sign_in user
         get :index, :year => year
-        response.should be_forbidden
+        expect(response).to be_forbidden
       end
     end
 
@@ -77,7 +77,7 @@ describe UsersController do
       it "is forbidden" do
         sign_in user
         get :print_cost_summary, :id => user.id, :year => user.year
-        response.should be_forbidden
+        expect(response).to be_forbidden
       end
     end
 
@@ -85,14 +85,14 @@ describe UsersController do
       it "the same user succeeds" do
         sign_in user
         get :show, :id => user.id, :year => user.year
-        response.should be_successful
+        expect(response).to be_successful
       end
 
       it "the same user with an attendee born on February 29 succeeds" do
         create :attendee, user_id: user.id, birth_date: "1996-02-29"
         sign_in user
         get :show, :id => user.id, :year => user.year
-        response.should be_successful
+        expect(response).to be_successful
       end
 
       it "the same user in the wrong year raises RecordNotFound" do
@@ -104,7 +104,7 @@ describe UsersController do
       it "a different user from the same year is forbidden" do
         sign_in create :user, year: user.year
         get :show, :id => user.id, :year => user.year
-        response.should be_forbidden
+        expect(response).to be_forbidden
       end
     end
 
@@ -135,13 +135,13 @@ describe UsersController do
 
     it 'cannot get #new' do
       get :new, :year => year
-      response.should be_forbidden
+      expect(response).to be_forbidden
     end
 
     it 'can #create' do
       expect { post :create, :user => accessible_attributes_for(:user), :year => year
         }.to_not change { User.yr(year).count }
-      response.should be_forbidden
+      expect(response).to be_forbidden
     end
 
     it "can edit email" do
@@ -152,19 +152,19 @@ describe UsersController do
     describe '#edit' do
       it "cannot edit other user" do
         get :edit, :id => user.id, :year => user.year
-        response.should be_forbidden
+        expect(response).to be_forbidden
       end
 
       it "cannot edit themselves" do
         get :edit, :id => staff.id, :year => staff.year
-        response.should be_forbidden
+        expect(response).to be_forbidden
       end
     end
 
     describe '#index' do
       it 'succeeds' do
         get :index, :year => year
-        response.should be_success
+        expect(response).to be_success
       end
     end
 
@@ -172,7 +172,7 @@ describe UsersController do
       it "succeeds" do
         sign_in create :staff, year: user.year
         get :show, :id => user.id, :year => user.year
-        response.should be_successful
+        expect(response).to be_successful
       end
       it "from wrong year raises RecordNotFound" do
         sign_in create :staff, year: wrong_year
@@ -189,13 +189,13 @@ describe UsersController do
 
     it 'can get #new' do
       get :new, :year => year
-      response.should be_success
+      expect(response).to be_success
     end
 
     it 'can #create' do
       expect { post :create, :user => accessible_attributes_for(:user), :year => year
         }.to change { User.yr(year).count }.by(+1)
-      response.should redirect_to users_path
+      expect(response).to redirect_to users_path
     end
 
     describe '#destroy' do
@@ -214,7 +214,7 @@ describe UsersController do
     it 'can #index' do
       user # eager creation
       get :index, :year => year
-      response.should be_success
+      expect(response).to be_success
     end
 
     it 'can #print_cost_summary' do
@@ -227,7 +227,7 @@ describe UsersController do
       it "succeeds" do
         sign_in create :admin, year: user.year
         get :show, :id => user.id, :year => user.year
-        response.should be_successful
+        expect(response).to be_successful
       end
       it "from wrong year raises RecordNotFound" do
         sign_in create :admin, year: wrong_year
@@ -240,7 +240,7 @@ describe UsersController do
       it 'can update any user' do
         attrs = accessible_attributes_for user
         put :update, :id => user.id, :user => attrs, :year => user.year
-        response.should redirect_to user_path user
+        expect(response).to redirect_to user_path user
       end
 
       it "can change a user password" do
@@ -270,7 +270,7 @@ describe UsersController do
 
     # protect against factory changing
     it "the context is correct and it truly has zero attendees" do
-      user.attendees.should be_empty
+      expect(user.attendees).to be_empty
     end
 
     describe "GET show" do

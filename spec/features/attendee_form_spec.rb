@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'registration form' do
+describe 'registration form', :type => :feature do
   let(:password) { 'asdfasdf' }
   let(:user) { create :user, :password => password }
 
@@ -10,7 +10,7 @@ describe 'registration form' do
     fill_in 'Password', with: password
     click_button 'Sign in'
     expect(page).to have_content('First Attendee')
-    page.should have_selector('form')
+    expect(page).to have_selector('form')
   end
 
   context 'new' do
@@ -27,15 +27,15 @@ describe 'registration form' do
       select 'Aland Islands', from: 'registration_country'
       choose 'registration_will_play_in_us_open_true'
       click_button 'Continue'
-      page.should have_content 'Attendee added'
-      page.should have_content 'What next?'
+      expect(page).to have_content 'Attendee added'
+      expect(page).to have_content 'What next?'
     end
 
     it 'shows errors when form is invalid' do
       fill_in 'Given Name', with: 'Minnie'
       click_button 'Continue'
-      page.should have_selector '#error_explanation'
-      page.should have_content "Family name can't be blank"
+      expect(page).to have_selector '#error_explanation'
+      expect(page).to have_content "Family name can't be blank"
     end
   end
 
@@ -43,20 +43,20 @@ describe 'registration form' do
     let(:a) { create :attendee, user: user }
     before do
       visit edit_registration_path(year: a.year, id: a.id)
-      page.should have_selector 'form#edit_registration_' + a.id.to_s
+      expect(page).to have_selector 'form#edit_registration_' + a.id.to_s
     end
 
     it 'updates an attendee' do
       fill_in 'Family Name', with: 'Rothchild'
       click_button 'Continue'
-      a.reload.family_name.should == 'Rothchild'
+      expect(a.reload.family_name).to eq('Rothchild')
     end
 
     it 'shows errors when form is invalid' do
       fill_in 'Family Name', with: ''
       click_button 'Continue'
-      page.should have_selector '#error_explanation'
-      page.should have_content "Family name can't be blank"
+      expect(page).to have_selector '#error_explanation'
+      expect(page).to have_content "Family name can't be blank"
     end
   end
 end

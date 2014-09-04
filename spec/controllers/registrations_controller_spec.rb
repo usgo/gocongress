@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe RegistrationsController do
+describe RegistrationsController, :type => :controller do
   render_views
   let(:activities) { 1.upto(3).map{ create :activity } }
 
@@ -11,7 +11,7 @@ describe RegistrationsController do
         attrs = attributes_for :attendee, :user => u
         expect { post :create, registration: attrs, user_id: u.id, year: u.year
           }.to_not change{ Attendee.count }
-        response.should be_forbidden
+        expect(response).to be_forbidden
       end
     end
 
@@ -19,7 +19,7 @@ describe RegistrationsController do
       it "is forbidden" do
         a = create :attendee
         get :edit, :id => a.id, :year => a.year
-        response.should be_forbidden
+        expect(response).to be_forbidden
       end
     end
 
@@ -27,7 +27,7 @@ describe RegistrationsController do
       it "is forbidden" do
         u = create :user
         get :new, :user_id => u.id, :year => u.year
-        response.should be_forbidden
+        expect(response).to be_forbidden
       end
     end
   end
@@ -44,7 +44,7 @@ describe RegistrationsController do
         a = acsbl_atrs.merge(:user_id => user.id)
         expect { post :create, :registration => a, user_id: user.id, :year => user.year
           }.to change { user.attendees.count }.by(+1)
-        response.should redirect_to \
+        expect(response).to redirect_to \
           user_terminus_path(:user_id => user.id, :year => user.year)
       end
 
@@ -52,15 +52,15 @@ describe RegistrationsController do
         attrs = {:user_id => user.id}
         expect { post :create, :registration => attrs, user_id: user.id, :year => user.year
           }.to_not change { Attendee.count }
-        response.should render_template :new
-        assigns(:registration).errors.should_not be_empty
-        assigns(:registration).attendee_number.should == 2
+        expect(response).to render_template :new
+        expect(assigns(:registration).errors).not_to be_empty
+        expect(assigns(:registration).attendee_number).to eq(2)
       end
 
       it "renders new view if unsuccessful" do
         stub_registration_to_fail
         post :create, :registration => {}, user_id: user.id, :year => user.year
-        response.should render_template 'new'
+        expect(response).to render_template 'new'
       end
 
       it "is forbidden to create attendee under a different user" do
@@ -68,7 +68,7 @@ describe RegistrationsController do
         a = acsbl_atrs.merge(:user_id => user_two.id)
         expect { post :create, :registration => a, user_id: user_two.id, :year => user_two.year
           }.not_to change { Attendee.count }
-        response.should be_forbidden
+        expect(response).to be_forbidden
       end
 
       it "given invalid attributes it does not create attendee" do
@@ -77,7 +77,7 @@ describe RegistrationsController do
         expect {
           post :create, registration: attrs, user_id: user.id, year: user.year
         }.to_not change{ Attendee.count }
-        assigns(:registration).errors.should include(:gender)
+        expect(assigns(:registration).errors).to include(:gender)
       end
 
       it "minors can specify their guardian" do
@@ -108,9 +108,10 @@ describe RegistrationsController do
             post :create, :registration => acsbl_atrs, :plans => plan_params,
               user_id: user.id, :year => user.year
           }.to change{ AttendeePlanDate.count }.by(dates.length)
-          plan.attendee_plans.should have(1).record
-          plan.attendee_plans.first.dates.map(&:_date).should == \
+          expect(plan.attendee_plans.record.size).to eq(1)
+          expect(plan.attendee_plans.first.dates.map(&:_date)).to eq( \
             dates.map{|d| Date.parse(d)}
+          )
         end
       end
     end
@@ -119,19 +120,19 @@ describe RegistrationsController do
       it "cannot edit another user's attendee" do
         a = create :attendee
         get :edit, :id => a.id, :year => a.year
-        response.should be_forbidden
+        expect(response).to be_forbidden
       end
 
       it "user can edit their own attendees" do
         get :edit, :id => user.attendees.sample.id, :year => user.year
-        response.should be_successful
-        response.should render_template 'edit'
+        expect(response).to be_successful
+        expect(response).to render_template 'edit'
       end
 
       it "shows disabled plans, but only if attendee already has them" do
         plan = create :plan, :disabled => true
         attendee.plans << plan
-        attendee.get_plan_qty(plan.id).should == 1
+        expect(attendee.get_plan_qty(plan.id)).to eq(1)
 
         plan2 = create :plan, :disabled => true, \
           :name => "Plan Deux", :plan_category => plan.plan_category
@@ -140,17 +141,17 @@ describe RegistrationsController do
           :id => attendee.id,
           :year => attendee.year
 
-        assigns(:registration).plans_by_category.should_not be_nil
-        assigns(:registration).plans_by_category.should include(plan.plan_category)
-        assigns(:registration).plans_by_category[plan.plan_category].should == [plan]
+        expect(assigns(:registration).plans_by_category).not_to be_nil
+        expect(assigns(:registration).plans_by_category).to include(plan.plan_category)
+        expect(assigns(:registration).plans_by_category[plan.plan_category]).to eq([plan])
       end
     end
 
     describe '#new' do
       it 'succeeds' do
         get :new, :user_id => user.id, :year => user.year
-        response.should be_successful
-        assigns(:registration).attendee_number.should == 2
+        expect(response).to be_successful
+        expect(assigns(:registration).attendee_number).to eq(2)
       end
     end
 
@@ -171,14 +172,14 @@ describe RegistrationsController do
 
       it "redirects to terminus if successful" do
         put_update
-        response.should redirect_to \
+        expect(response).to redirect_to \
           user_terminus_path(:user_id => user.id, :year => user.year)
       end
 
       it "renders edit view if unsuccessful" do
         stub_registration_to_fail
         put_update
-        response.should render_template 'edit'
+        expect(response).to render_template 'edit'
       end
 
       it "does not update admin fields" do
@@ -189,7 +190,7 @@ describe RegistrationsController do
       it "is forbidden to update another user's attendee" do
         a = create :attendee
         put :update, :id => a.id, :registration => a.attributes, :year => a.year
-        response.should be_forbidden
+        expect(response).to be_forbidden
       end
 
       context "activities" do
@@ -202,7 +203,7 @@ describe RegistrationsController do
           attendee2 = create :attendee
           expect { update_activities(attendee2, activities) }.to_not \
             change { attendee2.activities.count }
-          response.status.should == 403
+          expect(response.status).to eq(403)
         end
       end
 
@@ -217,42 +218,42 @@ describe RegistrationsController do
         it "updates associated plans" do
           expect { put_update plan }.to \
             change{ attendee.plans.count }.from(0).to(1)
-          attendee.plans.should include(plan)
+          expect(attendee.plans).to include(plan)
         end
 
         it "can clear own attendee plans" do
           attendee.plans << plan
-          attendee.plans.should include(plan)
+          expect(attendee.plans).to include(plan)
           submit_plans_form attendee, {}
-          attendee.reload.plans.should be_empty
+          expect(attendee.reload.plans).to be_empty
         end
 
         it "can deselect a plan" do
           attendee.plans << plan
-          attendee.plans.should include(plan)
+          expect(attendee.plans).to include(plan)
           submit_plans_form attendee, params_for_plan(plan, 0)
-          attendee.reload.plans.should_not include(plan)
+          expect(attendee.reload.plans).not_to include(plan)
         end
 
         it "can select a plan for own attendee" do
-          attendee.plans.should be_empty
+          expect(attendee.plans).to be_empty
           expect { submit_plans_form attendee, params_for_plan(plan, 1)
             }.to change { attendee.plans.count }.by(+1)
-          attendee.reload.plans.should include(plan)
+          expect(attendee.reload.plans).to include(plan)
         end
 
         it "cannot select plan for attendee belonging to someone else" do
           a = create :attendee
           expect { submit_plans_form a, params_for_plan(plan, 1)
             }.to_not change { a.plans.count }
-          response.should be_forbidden
+          expect(response).to be_forbidden
         end
 
         it "stays on the same page when there is an error" do
-          Registration.any_instance.stub(:valid?) { false }
+          allow_any_instance_of(Registration).to receive(:valid?) { false }
           put :update, :year => attendee.year, :id => attendee.id
-          response.should be_successful
-          response.should render_template(:edit)
+          expect(response).to be_successful
+          expect(response).to render_template(:edit)
         end
 
         context "when attendee selects a disabled plan" do
@@ -265,16 +266,16 @@ describe RegistrationsController do
 
             it "should allow attendee to keep the plan" do
               put_update plan
-              attendee.plans.should include(plan)
+              expect(attendee.plans).to include(plan)
             end
           end
 
           context "and attendee does not already have that disabled plan" do
             it "should not allow attendee to select the disabled plan" do
               put_update plan
-              attendee.reload.plans.should_not include(plan)
-              response.should be_success
-              response.should render_template(:edit)
+              expect(attendee.reload.plans).not_to include(plan)
+              expect(response).to be_success
+              expect(response).to render_template(:edit)
             end
           end
         end
@@ -291,9 +292,9 @@ describe RegistrationsController do
               :year => attendee.year,
               :id => attendee.id,
               :"plan_#{plan2.id}_qty" => 1
-            attendee.reload.plans.should == [plan]
-            response.should be_success
-            response.should render_template(:edit)
+            expect(attendee.reload.plans).to eq([plan])
+            expect(response).to be_success
+            expect(response).to render_template(:edit)
           end
         end
       end
@@ -325,14 +326,14 @@ describe RegistrationsController do
       it 'admin can edit any attendee' do
         a = create(:attendee, :year => admin.year)
         get :edit, :id => a.id, :year => a.year
-        response.should be_successful
+        expect(response).to be_successful
       end
     end
 
     describe '#new' do
       it 'succeeds' do
         get :new, user_id: admin.id, year: admin.year
-        response.should be_successful
+        expect(response).to be_successful
       end
     end
 
@@ -343,12 +344,12 @@ describe RegistrationsController do
         attrs = accessible_attributes_for(a).merge({:family_name => 'banana'})
         expect { put :update, :id => a.id, :registration => attrs, :year => a.year
           }.to change { a.reload.family_name }
-        a.reload.family_name.should == 'banana'
+        expect(a.reload.family_name).to eq('banana')
       end
 
       it 'can select plan for attendee belonging to someone else' do
         plan = create :plan
-        a.plans.should be_empty
+        expect(a.plans).to be_empty
         expect { submit_plans_form a, params_for_plan(plan, 1)
           }.to change { a.plans.count }.by(+1)
       end
@@ -361,7 +362,7 @@ describe RegistrationsController do
   end
 
   def stub_registration_to_fail
-    Registration.any_instance.stub(:submit) { false }
+    allow_any_instance_of(Registration).to receive(:submit) { false }
   end
 
   def submit_plans_form(attendee, params)

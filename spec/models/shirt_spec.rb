@@ -1,10 +1,10 @@
 require "spec_helper"
 
-describe Shirt do
+describe Shirt, :type => :model do
   it_behaves_like "a yearly model"
 
   it "has a valid factory" do
-    build(:shirt).should be_valid
+    expect(build(:shirt)).to be_valid
   end
 
   describe '#destroy' do

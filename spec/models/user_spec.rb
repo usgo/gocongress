@@ -1,11 +1,11 @@
 require "spec_helper"
 
-describe User do
+describe User, :type => :model do
   it_behaves_like "a yearly model"
 
   context "when initialized" do
     it "is not yet valid" do
-      User.new.should_not be_valid
+      expect(User.new).not_to be_valid
     end
   end
 
@@ -16,7 +16,7 @@ describe User do
       refunds = 1.upto(3).map{ create :tr_refund, user_id: user.id }
       sale_total = sales.map(&:amount).reduce(:+)
       refund_total = refunds.map(&:amount).reduce(:+)
-      user.amount_paid.should == sale_total - refund_total
+      expect(user.amount_paid).to eq(sale_total - refund_total)
     end
   end
 
@@ -25,17 +25,17 @@ describe User do
       a1 = create :attendee
       u1 = a1.user
       u2 = create :user
-      u2.attendees.should be_empty
-      User.attendeeless.should == [u2]
+      expect(u2.attendees).to be_empty
+      expect(User.attendeeless).to eq([u2])
     end
   end
 
   describe "#balance" do
     it "equals invoice total minus amount paid" do
       u = build :user
-      u.stub(:get_invoice_total) { 7 }
-      u.stub(:amount_paid) { 9 }
-      u.balance.should == -2
+      allow(u).to receive(:get_invoice_total) { 7 }
+      allow(u).to receive(:amount_paid) { 9 }
+      expect(u.balance).to eq(-2)
     end
   end
 
@@ -57,46 +57,46 @@ describe User do
     it "includes invoice items from all attendees" do
       create :attendee, :user => user
       items = [:foo, :bar]
-      Attendee.any_instance.stub(:invoice_items) { items }
-      user.invoice_items.should =~ items * 2
+      allow_any_instance_of(Attendee).to receive(:invoice_items) { items }
+      expect(user.invoice_items).to match_array(items * 2)
     end
 
     it "includes comp transactions" do
       comp = create(:tr_comp, :user => user, :amount => 777)
       items = user.invoice_items
-      items.should have(1).item
-      items.first.price.should == comp.amount * -1
+      expect(items.size).to eq(1)
+      expect(items.first.price).to eq(comp.amount * -1)
     end
   end
 
   it "has a valid factory" do
-    build(:user).should be_valid
+    expect(build(:user)).to be_valid
   end
 
   describe '#valid' do
     it "is invalid if email is invalid" do
       user = build :user, :email => "herpderp"
-      user.should_not be_valid
-      user.errors.should include(:email)
+      expect(user).not_to be_valid
+      expect(user.errors).to include(:email)
     end
 
     it "is invalid if email is not unique" do
       extant = create :user, :email => "John@example.com"
       user = build :user, {email: extant.email, year: extant.year}
-      user.should_not be_valid
-      user.errors.should include(:email)
+      expect(user).not_to be_valid
+      expect(user.errors).to include(:email)
     end
 
     it "returns false if password is blank" do
-      build(:user, :password => "").should have_error_about(:password)
+      expect(build(:user, :password => "")).to have_error_about(:password)
     end
 
     it "returns false if password is too short" do
-      build(:user, :password => "12345").should have_error_about(:password)
+      expect(build(:user, :password => "12345")).to have_error_about(:password)
     end
 
     it "returns false if the password is not confirmed" do
-      build(:user, :password_confirmation => "").should \
+      expect(build(:user, :password_confirmation => "")).to \
         have_error_about(:password_confirmation)
     end
   end
@@ -105,11 +105,11 @@ describe User do
 
     it "equals the sum of invoice items" do
       user = build :user
-      user.stub(:invoice_items) {[
+      allow(user).to receive(:invoice_items) {[
         InvoiceItem.new("Baubles", "John", 1.5, 2),
         InvoiceItem.new("Trinkets", "Jane", -0.75, 1)
       ]}
-      user.get_invoice_total.should == 2.25
+      expect(user.get_invoice_total).to eq(2.25)
     end
 
     it "increases when plan with qty is added" do
@@ -126,12 +126,12 @@ describe User do
       # assert that user's inv. item total increases by price * qty
       expected = (total_before + qty * p.price).to_f
       actual = user.get_invoice_total.to_f
-      actual.should be_within(0.001).of(expected)
+      expect(actual).to be_within(0.001).of(expected)
 
       # change plan qty by 1, assert that invoice total changes by price
       expected = user.get_invoice_total + p.price
       ap.quantity += 1
-      user.get_invoice_total.should be_within(0.001).of(expected)
+      expect(user.get_invoice_total).to be_within(0.001).of(expected)
     end
 
   end
@@ -144,7 +144,7 @@ describe User do
         user.attendees << create(:attendee, :user => user)
       end
       expect { user.destroy }.to change{ Attendee.count }.by(-1 * num_attendees)
-      Attendee.where(:user_id => user.id).should be_empty
+      expect(Attendee.where(:user_id => user.id)).to be_empty
     end
   end
 end
