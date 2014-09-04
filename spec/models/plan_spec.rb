@@ -51,7 +51,7 @@ describe Plan, :type => :model do
   context "when two attendees have selected it" do
     let(:plan) { create :plan }
     before do
-      plan.stub attendees: ["alice", "bob"]
+      allow(plan).to receive_messages attendees: ["alice", "bob"]
     end
 
     describe "#valid?" do
