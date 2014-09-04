@@ -16,7 +16,6 @@ Spork.prefork do
   require 'rails/test_help'
 
   require 'rspec/rails'
-  require 'rspec/autorun'
   RSpec.configure do |conf|
     conf.use_transactional_fixtures = true
     conf.filter_run :focus => true
