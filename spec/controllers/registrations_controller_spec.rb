@@ -108,7 +108,7 @@ describe RegistrationsController, :type => :controller do
             post :create, :registration => acsbl_atrs, :plans => plan_params,
               user_id: user.id, :year => user.year
           }.to change{ AttendeePlanDate.count }.by(dates.length)
-          expect(plan.attendee_plans.record.size).to eq(1)
+          expect(plan.attendee_plans.count).to eq(1)
           expect(plan.attendee_plans.first.dates.map(&:_date)).to eq( \
             dates.map{|d| Date.parse(d)}
           )
