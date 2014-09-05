@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Devise::PasswordsController do
+describe Devise::PasswordsController, :type => :controller do
   render_views
 
   before do
@@ -11,7 +11,7 @@ describe Devise::PasswordsController do
     it "creates a reset password token" do
       u = create :user
       post :create, :user => {:email => u.email, :year => u.year}, :year => u.year
-      response.should redirect_to new_user_session_path
+      expect(response).to redirect_to new_user_session_path
     end
 
     it "creates a token for the correct user" do
@@ -36,7 +36,7 @@ describe Devise::PasswordsController do
     it "pw reset form has both year and email" do
       u = create :user
       get :new, :year => u.year
-      response.should be_success
+      expect(response).to be_success
       assert_select "input[name*=email]"
       assert_select "input[name*=year][value=#{u.year}]"
     end

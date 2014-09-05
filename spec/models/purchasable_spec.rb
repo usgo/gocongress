@@ -2,25 +2,25 @@ require "spec_helper"
 
 # This spec describes a module included by Plan and Activity, so
 # it should probably be rewritten as shared examples
-describe Purchasable do
+describe Purchasable, :type => :model do
   subject { create :plan }
 
   describe "#contact_msg_instead_of_price?" do
     it "returns true if needs_staff_approval?" do
-      subject.stub(:needs_staff_approval?) { true }
-      subject.contact_msg_instead_of_price?.should be_true
+      allow(subject).to receive(:needs_staff_approval?) { true }
+      expect(subject.contact_msg_instead_of_price?).to be_truthy
     end
   end
 
   describe "#price_for_display" do
     it "obeys contact_msg_instead_of_price?" do
-      subject.stub(:contact_msg_instead_of_price?) { true }
-      subject.price_for_display.should == "Contact the Registrar"
+      allow(subject).to receive(:contact_msg_instead_of_price?) { true }
+      expect(subject.price_for_display).to eq("Contact the Registrar")
     end
 
     it "obeys price_varies?" do
-      subject.stub(:price_varies?) { true }
-      subject.price_for_display.should == "Varies"
+      allow(subject).to receive(:price_varies?) { true }
+      expect(subject.price_for_display).to eq("Varies")
     end
   end
 
@@ -34,15 +34,15 @@ describe Purchasable do
       end
 
       it 'complains when the price is a decimal' do
-        err_msg_keys(4.2).should include(:price)
+        expect(err_msg_keys(4.2)).to include(:price)
       end
 
       it 'does not complain when the price is an integer' do
-        err_msg_keys(42).should_not include(:price)
+        expect(err_msg_keys(42)).not_to include(:price)
       end
 
       it 'complains when the price is negative' do
-        err_msg_keys(-42).should include(:price)
+        expect(err_msg_keys(-42)).to include(:price)
       end
     end
   end
@@ -62,11 +62,11 @@ describe Purchasable do
     describe "#valid?" do
       it "returns false if the price is changed" do
         subject.price += 50
-        subject.valid?.should be_false
+        expect(subject.valid?).to be_falsey
       end
 
       it "returns true if zero attributes have changed" do
-        subject.valid?.should be_true
+        expect(subject.valid?).to be_truthy
       end
     end
   end

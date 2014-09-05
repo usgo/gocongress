@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe TransactionsController do
+describe TransactionsController, :type => :controller do
   it_behaves_like "an admin controller", :transaction do
     let(:user) { create :user }
     let(:extra_params_for_create) { {:user_email => user.email} }
@@ -22,13 +22,13 @@ describe TransactionsController do
           :user_email => bad_email,
           :transaction => accessible_attributes_for(:tr_sale)
       }.to_not change{ Transaction.count }
-      response.should render_template :new
+      expect(response).to render_template :new
     end
 
     it "will not update the transaction" do
       t = create :tr_sale
       expect { put_update(t, bad_email) }.to_not change{ t.user.email }
-      response.should render_template :edit
+      expect(response).to render_template :edit
     end
   end
 
@@ -43,7 +43,7 @@ describe TransactionsController do
       it "redirects to the correct year" do
         t = create :tr_sale, { user: user, year: 2011 }
         put_update(t, t.user.email)
-        response.should redirect_to transaction_path(id: t.id, year: t.year)
+        expect(response).to redirect_to transaction_path(id: t.id, year: t.year)
       end
     end
   end

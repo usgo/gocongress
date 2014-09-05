@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe AttendeesController do
+describe AttendeesController, :type => :controller do
   render_views
   let(:activities) { 1.upto(3).map{ create :activity } }
 
@@ -10,11 +10,11 @@ describe AttendeesController do
 
       it "succeeds" do
         a = create :attendee
-        Attendee::WhoIsComing.any_instance.stub(:find_attendees) { [a] }
-        Year.any_instance.stub(:registration_phase) { :open }
+        allow_any_instance_of(Attendee::WhoIsComing).to receive(:find_attendees) { [a] }
+        allow_any_instance_of(Year).to receive(:registration_phase) { :open }
         get :index, :year => Time.current.year
-        response.should be_successful
-        assigns(:who_is_coming).should_not be_nil
+        expect(response).to be_successful
+        expect(assigns(:who_is_coming)).not_to be_nil
       end
     end
   end

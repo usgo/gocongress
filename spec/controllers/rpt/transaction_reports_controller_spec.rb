@@ -1,7 +1,7 @@
 require "spec_helper"
 require "controllers/rpt/shared_examples_for_reports"
 
-describe Rpt::TransactionReportsController do
+describe Rpt::TransactionReportsController, :type => :controller do
   let(:staff) { create :staff }
 
   it_behaves_like "a report", %w[html csv]
@@ -12,7 +12,7 @@ describe Rpt::TransactionReportsController do
     expected_assigns = %w[transactions sales comps refunds
       sales_sum comps_sum refunds_sum total_sum]
     expected_assigns.each{ |v|
-      assigns(v.to_sym).should_not be_nil
+      expect(assigns(v.to_sym)).not_to be_nil
     }
   end
 
@@ -27,8 +27,8 @@ describe Rpt::TransactionReportsController do
 
     # expect to only see this year's sales on report
     get :show, :year => Time.now.year
-    assigns(:sales).should have(expected_sales_count).sales
-    assigns(:sales_sum).should be_within(0.001).of(expected_sum)
+    expect(assigns(:sales).sales.size).to eq(expected_sales_count)
+    expect(assigns(:sales_sum)).to be_within(0.001).of(expected_sum)
   end
 
   describe 'csv format' do
@@ -40,9 +40,9 @@ describe Rpt::TransactionReportsController do
 
       sign_in staff
       get :show, format: 'csv', year: y
-      response.should be_success
+      expect(response).to be_success
       ary = CSV.parse response.body
-      ary.should have(6).rows
+      expect(ary.size).to eq(6)
     end
   end
 end

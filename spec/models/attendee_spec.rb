@@ -1,20 +1,20 @@
 require "spec_helper"
 
-describe Attendee do
+describe Attendee, :type => :model do
   it_behaves_like "a yearly model"
 
   it "has a valid factory" do
-    build(:attendee).should be_valid
+    expect(build(:attendee)).to be_valid
   end
 
   context "after initialize" do
     it 'should have no activities' do
-      subject.activities.should be_empty
+      expect(subject.activities).to be_empty
     end
 
     describe "#has_plans?" do
       it "does not have plans" do
-        subject.has_plans?.should == false
+        expect(subject.has_plans?).to eq(false)
       end
     end
   end
@@ -22,7 +22,7 @@ describe Attendee do
   context 'when built by factory' do
     describe '#invoice_total' do
       it 'should return zero' do
-        build(:attendee).invoice_total.should == 0
+        expect(build(:attendee).invoice_total).to eq(0)
       end
     end
   end
@@ -37,15 +37,15 @@ describe Attendee do
     end
 
     it "can return all attendees" do
-      Attendee.with_planlessness(:all).should =~ [a1, a2]
+      expect(Attendee.with_planlessness(:all)).to match_array([a1, a2])
     end
 
     it "can return only attendees with plans" do
-      Attendee.with_planlessness(:planful).should =~ [a2]
+      expect(Attendee.with_planlessness(:planful)).to match_array([a2])
     end
 
     it "can return only attendees without plans" do
-      Attendee.with_planlessness(:planless).should =~ [a1]
+      expect(Attendee.with_planlessness(:planless)).to match_array([a1])
     end
   end
 
@@ -54,7 +54,7 @@ describe Attendee do
       a = create(:attendee)
       a.plans << create(:plan)
       expect { a.destroy }.to change { AttendeePlan.count }.by(-1)
-      AttendeePlan.where(:attendee_id => a.id).should be_empty
+      expect(AttendeePlan.where(:attendee_id => a.id)).to be_empty
     end
   end
 
@@ -86,7 +86,7 @@ describe Attendee do
       u = create :user
       a = build :attendee, user: u
       a.populate_atrs_for_new_form
-      a.email.should == u.email
+      expect(a.email).to eq(u.email)
     end
 
     it 'copies country and phone from first attendee created' do
@@ -94,8 +94,8 @@ describe Attendee do
       a1 = create :attendee, user: u, country: 'ZW', phone: '1234567890'
       a2 = build :attendee, user: u, country: 'VI', phone: '7777777777'
       a2.populate_atrs_for_new_form
-      a2.phone.should == a1.phone
-      a2.country.should == a1.country
+      expect(a2.phone).to eq(a1.phone)
+      expect(a2.country).to eq(a1.country)
     end
   end
 
@@ -105,32 +105,32 @@ describe Attendee do
 
     it 'Attendee must indicate whether or not they will play in the US Open' do
       a.will_play_in_us_open = nil
-      a.should have_error_about(:will_play_in_us_open)
+      expect(a).to have_error_about(:will_play_in_us_open)
       a.will_play_in_us_open = false
-      a.should be_valid
+      expect(a).to be_valid
     end
 
     it 'country must be two capital lettters' do
-      a.country.should match /\A[A-Z]{2}\z/
+      expect(a.country).to match /\A[A-Z]{2}\z/
       a.country = 'United States'
-      a.should_not be_valid
-      a.errors.keys.should include(:country)
+      expect(a).not_to be_valid
+      expect(a.errors.keys).to include(:country)
     end
 
     it "requires a birth date" do
       a.birth_date = nil
-      a.should_not be_valid
-      a.errors.keys.should include(:birth_date)
+      expect(a).not_to be_valid
+      expect(a.errors.keys).to include(:birth_date)
     end
 
     describe 'minors' do
       it "requires minors to provide the attendee id of a guardian" do
-        a.stub(:minor?) { true }
+        allow(a).to receive(:minor?) { true }
         a.guardian = nil
-        a.should_not be_valid
-        a.should have_error_about(:guardian)
+        expect(a).not_to be_valid
+        expect(a).to have_error_about(:guardian)
         a.guardian = create(:attendee)
-        a.should_not have_error_about(:guardian)
+        expect(a).not_to have_error_about(:guardian)
       end
     end
   end

@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe TournamentsController do
+describe TournamentsController, :type => :controller do
   let(:tnm) { create :tournament }
 
   describe '#index' do
@@ -8,15 +8,15 @@ describe TournamentsController do
 
     it 'succeeds' do
       get :index, year: Date.current.year
-      response.should be_successful
+      expect(response).to be_successful
     end
 
     it "assigns only this year's tournaments" do
       t = create(:tournament, :year => Date.current.year)
       x = create(:tournament, :year => 1.year.from_now.year)
       get :index, :year => Date.current.year
-      assigns(:tournaments).length.should == 1
-      assigns(:tournaments).should == [t]
+      expect(assigns(:tournaments).length).to eq(1)
+      expect(assigns(:tournaments)).to eq([t])
     end
   end
 
@@ -25,7 +25,7 @@ describe TournamentsController do
 
     it "succeeds" do
       get :show, id: tnm.id, year: tnm.year
-      response.should be_successful
+      expect(response).to be_successful
     end
   end
 

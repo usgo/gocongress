@@ -1,31 +1,31 @@
 require "spec_helper"
 
-describe NameInflector do
+describe NameInflector, :type => :model do
   describe "capitalize" do
     subject { NameInflector }
 
     it "handles all caps" do
-      subject.capitalize("DUDE").should == "Dude"
+      expect(subject.capitalize("DUDE")).to eq("Dude")
     end
 
     it "handles all lower case" do
-      subject.capitalize("dude").should == "Dude"
+      expect(subject.capitalize("dude")).to eq("Dude")
     end
 
     it "capitalizes all parts of a hyphenated name" do
-      subject.capitalize("harnett-hARgRoVE").should == "Harnett-Hargrove"
+      expect(subject.capitalize("harnett-hARgRoVE")).to eq("Harnett-Hargrove")
     end
 
     it "preserves the capitalization of certain English prepositions" do
-      subject.capitalize("MacIntyre").should == "MacIntyre"
-      subject.capitalize("Macintyre").should == "Macintyre"
-      subject.capitalize("macintyre").should == "Macintyre"
-      subject.capitalize("McIntyre").should == "McIntyre"
+      expect(subject.capitalize("MacIntyre")).to eq("MacIntyre")
+      expect(subject.capitalize("Macintyre")).to eq("Macintyre")
+      expect(subject.capitalize("macintyre")).to eq("Macintyre")
+      expect(subject.capitalize("McIntyre")).to eq("McIntyre")
     end
 
     it "always capitalizes certain other English prepositions" do
-      subject.capitalize("O'BRIAN").should == "O'Brian"
-      subject.capitalize("o'brian").should == "O'Brian"
+      expect(subject.capitalize("O'BRIAN")).to eq("O'Brian")
+      expect(subject.capitalize("o'brian")).to eq("O'Brian")
     end
 
     # In the future, we could implement proper capitalization of

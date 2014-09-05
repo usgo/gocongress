@@ -1,45 +1,45 @@
 require "spec_helper"
 
-describe Transaction do
+describe Transaction, :type => :model do
   it_behaves_like "a yearly model"
 
   it "has valid factories" do
     %w[transaction tr_comp tr_refund tr_sale].each do |f|
-      build(f.to_sym).should be_valid
+      expect(build(f.to_sym)).to be_valid
     end
   end
 
   describe "#description" do
     it "includes comment, if present" do
       t = build(:tr_comp, :comment => "foobar")
-      t.description.should == "Comp: foobar"
+      expect(t.description).to eq("Comp: foobar")
       t.comment = nil
-      t.description.should == "Comp"
+      expect(t.description).to eq("Comp")
     end
   end
 
   describe "#is_gateway_transaction?" do
     it "is true for sales with card" do
       t = build(:tr_sale, :instrument => 'C')
-      t.is_gateway_transaction?.should be_true
+      expect(t.is_gateway_transaction?).to be_truthy
     end
 
     it "is false for sales with instrument other than card" do
       t = build(:tr_sale, :instrument => 'S')
-      t.is_gateway_transaction?.should be_false
+      expect(t.is_gateway_transaction?).to be_falsey
     end
   end
 
   describe "#valid" do
     it "validates year" do
       t = build(:tr_sale)
-      t.should be_valid
+      expect(t).to be_valid
       [nil, 2100, 2010].each do |y|
         t.year = y
-        t.should_not be_valid
+        expect(t).not_to be_valid
       end
       t.year = 2011
-      t.should be_valid
+      expect(t).to be_valid
     end
 
     describe 'amount' do
@@ -51,38 +51,38 @@ describe Transaction do
       end
 
       it 'complains when amount is a decimal' do
-        trn_err_msg_keys(4.2).should include(:amount)
+        expect(trn_err_msg_keys(4.2)).to include(:amount)
       end
 
       it 'does not complain when amount is an integer' do
-        trn_err_msg_keys(42).should_not include(:amount)
+        expect(trn_err_msg_keys(42)).not_to include(:amount)
       end
 
       it 'complains when amount is negative' do
-        trn_err_msg_keys(-42).should include(:amount)
+        expect(trn_err_msg_keys(-42)).to include(:amount)
       end
     end
 
     context "comp" do
       it "must not have a gwtranid" do
         t = build :tr_comp, {gwtranid: 12897}
-        t.should_not be_valid
+        expect(t).not_to be_valid
       end
 
       it "must not have a gwdate" do
         t = build :tr_comp, {gwdate: Time.now.to_date}
-        t.should_not be_valid
+        expect(t).not_to be_valid
       end
 
       it "instrument must be blank" do
         t = build :tr_comp
         [nil, ''].each do |i|
           t.instrument = i
-          t.should be_valid
+          expect(t).to be_valid
         end
         %w[C S K].each do |i|
           t.instrument = i
-          t.should_not be_valid
+          expect(t).not_to be_valid
         end
       end
 
@@ -93,34 +93,34 @@ describe Transaction do
 
       context "gateway transaction" do
         before do
-          txn.stub(:is_gateway_transaction?) { true }
+          allow(txn).to receive(:is_gateway_transaction?) { true }
         end
 
         it "requires gwdate" do
           txn.gwdate = nil
-          txn.should_not be_valid
-          txn.errors.should include(:gwdate)
+          expect(txn).not_to be_valid
+          expect(txn.errors).to include(:gwdate)
         end
 
         it "requires gwtranid" do
           txn.gwtranid = nil
-          txn.should_not be_valid
-          txn.errors.should include(:gwtranid)
-          txn.errors[:gwtranid].should include("can't be blank")
+          expect(txn).not_to be_valid
+          expect(txn.errors).to include(:gwtranid)
+          expect(txn.errors[:gwtranid]).to include("can't be blank")
         end
 
         it "validates gwtranid numericality" do
           txn.gwtranid = "lOOOO"
-          txn.should_not be_valid
-          txn.errors.should include(:gwtranid)
-          txn.errors[:gwtranid].should include("is not a number")
+          expect(txn).not_to be_valid
+          expect(txn.errors).to include(:gwtranid)
+          expect(txn.errors[:gwtranid]).to include("is not a number")
         end
 
         it "validates gwtranid numeric range maximum" do
           txn.gwtranid = 9223372036854775808
-          txn.should_not be_valid
-          txn.errors.should include(:gwtranid)
-          txn.errors[:gwtranid].should include("must be less than 9223372036854775807")
+          expect(txn).not_to be_valid
+          expect(txn.errors).to include(:gwtranid)
+          expect(txn.errors[:gwtranid]).to include("must be less than 9223372036854775807")
         end
       end
     end

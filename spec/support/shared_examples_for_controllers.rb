@@ -27,7 +27,7 @@ shared_examples "an admin controller" do |model_name|
       render_views
       it "succeeds" do
         get :index, year: year
-        response.should be_successful
+        expect(response).to be_successful
       end
     end
     describe "create" do
@@ -35,36 +35,36 @@ shared_examples "an admin controller" do |model_name|
         expect {
           post :create, params_for_create(model_name)
         }.to_not change{ resource_class.count }
-        response.status.should == 403
+        expect(response.status).to eq(403)
       end
     end
     describe "edit" do
       it "is forbidden" do
         get :edit, year: resource.year, id: resource.id
-        response.status.should == 403
+        expect(response.status).to eq(403)
       end
     end
     describe "delete" do
       it "is forbidden" do
-        resource.should be_present # create outside expect()
+        expect(resource).to be_present # create outside expect()
         expect {
           delete :destroy, year: resource.year, id: resource.id
         }.to_not change{ resource_class.count }
-        resource_class.all.should include(resource)
-        response.status.should == 403
+        expect(resource_class.all).to include(resource)
+        expect(response.status).to eq(403)
       end
     end
     describe "show" do
       it "succeeds" do
         get :show, year: resource.year, id: resource.id
-        response.should be_success
-        assigns(model_name).should == resource
+        expect(response).to be_success
+        expect(assigns(model_name)).to eq(resource)
       end
     end
     describe "update" do
       it "is forbidden" do
         put :update, params_for_update(model_name)
-        response.status.should == 403
+        expect(response.status).to eq(403)
       end
     end
   end
@@ -78,7 +78,7 @@ shared_examples "an admin controller" do |model_name|
     describe "index" do
       it "succeeds" do
         get :index, year: year
-        response.should be_successful
+        expect(response).to be_successful
       end
     end
     describe "create" do
@@ -88,39 +88,39 @@ shared_examples "an admin controller" do |model_name|
         }.to change{ resource_class.yr(year).count }.by(+1)
 
         # not all controllers redirect to the index, some go to the show
-        response.should be_redirect
+        expect(response).to be_redirect
       end
       it "forbids creating in a different year" do
         params = params_for_create(model_name)
         params[:year] = year - 1
         params[model_name].delete :year
         expect { post :create, params }.to_not change{ resource_class.count }
-        response.status.should == 403
+        expect(response.status).to eq(403)
       end
     end
     describe "edit" do
       it "succeeds" do
         get :edit, year: resource.year, id: resource.id
-        response.should be_successful
+        expect(response).to be_successful
       end
     end
     describe "delete" do
       it "succeeds" do
-        resource.should be_present # create outside expect()
+        expect(resource).to be_present # create outside expect()
         expect {
           delete :destroy, year: resource.year, id: resource.id
         }.to change{ resource_class.yr(year).count }.by(-1)
-        resource_class.all.should_not include(resource)
+        expect(resource_class.all).not_to include(resource)
 
         # not all controllers redirect to the index after delete
-        response.should be_redirect
+        expect(response).to be_redirect
       end
     end
     describe "show" do
       it "succeeds" do
         get :show, year: resource.year, id: resource.id
-        response.should be_success
-        assigns(model_name).should == resource
+        expect(response).to be_success
+        expect(assigns(model_name)).to eq(resource)
       end
     end
     describe "update" do
@@ -131,7 +131,7 @@ shared_examples "an admin controller" do |model_name|
         }.to change { resource.send updateable_attribute }
 
         # not all controllers redirect to the index, some go to the show
-        response.should be_redirect
+        expect(response).to be_redirect
       end
     end
   end

@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Rpt::DailyPlanDetailsReportsController do
+describe Rpt::DailyPlanDetailsReportsController, :type => :controller do
   let(:admin) { create :admin }
   before { sign_in admin }
 
@@ -11,8 +11,8 @@ describe Rpt::DailyPlanDetailsReportsController do
       p1 = create :plan, daily: true
       p2 = create :plan, daily: true, disabled: false
       get :new, year: Date.current.year
-      response.should be_success
-      assigns('daily_plans').should =~ [p1, p2]
+      expect(response).to be_success
+      expect(assigns('daily_plans')).to match_array([p1, p2])
     end
   end
 
@@ -20,10 +20,10 @@ describe Rpt::DailyPlanDetailsReportsController do
     it "delegates to DailyPlanCsvExporter" do
       plan = create :plan, daily: true
       exporter = double("DailyPlanDetailsExporter")
-      DailyPlanDetailsExporter.stub(:new) { exporter }
-      exporter.should_receive(:to_csv)
+      allow(DailyPlanDetailsExporter).to receive(:new) { exporter }
+      expect(exporter).to receive(:to_csv)
       get :create, plan_id: plan.id, year: Date.current.year
-      response.should be_success
+      expect(response).to be_success
       expect(response.content_type).to eq('text/csv')
     end
   end

@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe SignUpsController do
+describe SignUpsController, :type => :controller do
   let(:year) { Time.zone.now.year }
 
   # Every time you want to unit test a devise controller, you need
@@ -27,7 +27,7 @@ describe SignUpsController do
       it "succeeds" do
         expect { post :create, :user => attrs, :year => year
           }.to change { User.count }.by(+1)
-        response.should redirect_to new_registration_path(year)
+        expect(response).to redirect_to new_registration_path(year)
       end
     end
 
@@ -44,13 +44,13 @@ describe SignUpsController do
 
       it "does not sign in a user" do
         attempt_to_create_invalid_user
-        warden.authenticated?(:user).should == false
+        expect(warden.authenticated?(:user)).to eq(false)
       end
 
       it "shows the form again" do
         attempt_to_create_invalid_user
-        response.should be_success
-        response.should render_template("new")
+        expect(response).to be_success
+        expect(response).to render_template("new")
       end
     end
 

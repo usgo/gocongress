@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe YearsController do
+describe YearsController, :type => :controller do
   let(:y) { 2013 }
   let(:year) { Year.find_by_year(y) }
 
@@ -33,7 +33,7 @@ describe YearsController do
           expect {
             put :update, {year: year.year, year_record: {city: new_city}}
           }.to_not raise_exception
-          year.reload.city.should == new_city
+          expect(year.reload.city).to eq(new_city)
         end
 
         it 'cannot update the year attribute' do
@@ -61,7 +61,7 @@ describe YearsController do
   end
 
   def should_deny_access response
-    response.should be_forbidden
-    response.should render_template :access_denied
+    expect(response).to be_forbidden
+    expect(response).to render_template :access_denied
   end
 end

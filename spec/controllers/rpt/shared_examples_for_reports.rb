@@ -10,7 +10,7 @@ shared_examples "a report" do |format_array|
       sign_in admin
       format_array.each do |f|
         get :show, :format => f, :year => admin.year
-        response.should be_success
+        expect(response).to be_success
       end
     end
   end
@@ -20,7 +20,7 @@ shared_examples "a report" do |format_array|
     sign_in staff
     format_array.each do |f|
       get :show, :format => f, :year => staff.year
-      response.should be_success
+      expect(response).to be_success
     end
   end
 
@@ -29,7 +29,7 @@ shared_examples "a report" do |format_array|
     sign_in user
     format_array.each do |f|
       get :show, :format => f, :year => user.year
-      response.code.to_i.should == 403
+      expect(response.code.to_i).to eq(403)
     end
   end
 
@@ -37,7 +37,7 @@ shared_examples "a report" do |format_array|
     admin = create :admin, :year => 2012
     sign_in admin
     get :show, :year => 2011
-    response.status.should == 403
+    expect(response.status).to eq(403)
   end
 
 end
