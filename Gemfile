@@ -22,7 +22,7 @@ gem 'validates_timeliness'
 
 # Stack, middleware, engines, etc.
 gem 'authorize-net'
-gem 'cancan'
+gem 'cancancan', '~> 1.9'
 gem 'devise'
 gem 'exception_notification', '~> 4.0.1'
 gem 'thin'
