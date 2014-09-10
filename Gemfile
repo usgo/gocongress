@@ -18,7 +18,7 @@ gem 'uglifier', '>= 1.3.0'
 # Model Layer
 gem 'pg'
 gem 'protected_attributes'
-gem 'validates_timeliness'
+gem 'jc-validates_timeliness'
 
 # Stack, middleware, engines, etc.
 gem 'authorize-net'
