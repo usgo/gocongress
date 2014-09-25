@@ -24,6 +24,16 @@ describe AttendeesController, :type => :controller do
     let(:admin) { create :admin }
     before { sign_in admin }
 
+    describe "#print_summary" do
+      it "shows individual registration sheet" do
+        a = create :attendee
+        get :print_summary, :id => a.id, :year => a.year
+        expect(response).to be_success
+        expect(assigns(:attendee)).to eq(a)
+        expect(assigns(:attendee_attr_names)).not_to be_empty
+      end
+    end
+
     describe "#destroy" do
       it "raises a routing error" do
         a = create :attendee
