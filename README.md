@@ -11,9 +11,9 @@ Contribute
 ----------
 
 1. Prerequisites
-    1. Linux (eg. [Ubuntu][15] 12.04+) or Mac OS 10.8+
+    1. Linux (eg. [Ubuntu][15] 14.04+) or Mac OS 10.8+
     1. Proficiency with [git][13] and [sql][14]
-    1. Read [Getting Started with Rails 3.2][16]
+    1. Read [Getting Started with Rails][16]
     1. [Fork and clone][8] this github repo
 1. Install the Ruby version specified in `.ruby-version`.
     - Use [rbenv][9] or [compile from source][10]
@@ -79,8 +79,8 @@ tested, the first year's site in 2011.
 [1]: http://blog.daviddollar.org/2011/05/06/introducing-foreman.html
 [2]: https://devcenter.heroku.com/articles/config-vars
 [3]: http://bit.ly/YJFlPQ
-[4]: http://bit.ly/YJF4fK
-[5]: http://www.postgresql.org/docs/9.2/interactive/
+[4]: http://www.postgresql.org/docs/9.3/interactive/server-start.html#CLIENT-CONNECTION-PROBLEMS
+[5]: http://www.postgresql.org/docs/9.3/interactive/index.html
 [6]: http://edgeguides.rubyonrails.org/configuring.html#configuring-a-database
 [7]: https://www.relishapp.com/rspec
 [8]: https://help.github.com/articles/fork-a-repo
@@ -89,11 +89,11 @@ tested, the first year's site in 2011.
 [11]: http://nodejs.org/
 [12]: http://bundler.io/
 [13]: http://git-scm.com/
-[14]: http://www.postgresql.org/docs/9.2/static/sql.html
+[14]: http://www.postgresql.org/docs/9.3/static/sql.html
 [15]: http://www.ubuntu.com/
-[16]: http://guides.rubyonrails.org/v3.2.13/
+[16]: http://guides.rubyonrails.org/
 [17]: http://nokogiri.org/tutorials/installing_nokogiri.html
 [18]: https://bitbucket.org/ged/ruby-pg/wiki/Home
-[19]: http://www.postgresql.org/docs/9.2/interactive/user-manag.html
+[19]: http://www.postgresql.org/docs/9.3/interactive/user-manag.html
 [20]: http://trac.webkit.org/wiki/JavaScriptCore
 [21]: http://guides.rubygems.org/
