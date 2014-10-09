@@ -5,6 +5,10 @@ module ApplicationHelper
     signed_in?(nil)
   end
 
+  def asset_file?(subdirectory, filename)
+    File.file?(File.join(Rails.root, 'app', 'assets', subdirectory, filename))
+  end
+
   # When you want to use `button_to` but your url has a query string
   # https://github.com/rails/rails/issues/2158
   def button_to_get text, url, id, css_class = nil
@@ -19,6 +23,10 @@ module ApplicationHelper
 
   def cents_to_currency x, opts = {}
     number_to_currency(x.to_f / 100, opts)
+  end
+
+  def image_file?(image)
+    asset_file?('images', image)
   end
 
   def link_to_my_account_or_to_register
