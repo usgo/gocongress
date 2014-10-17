@@ -3,15 +3,16 @@ require "spec_helper"
 describe AttendeesCsvExporter do
 
   describe "#attendee_array" do
-    let(:atnd) { build :attendee }
-    let(:ary) { AttendeesCsvExporter.attendee_array(atnd) }
+    let(:atnd) { create :attendee }
+    let(:obf_factor) { rand(100) }
+    let(:ary) { AttendeesCsvExporter.attendee_array(atnd, obf_factor) }
 
     it "returns an array" do
       expect(ary).to be_instance_of(Array)
     end
 
-    it "has the user email in the first element" do
-      expect(ary.first).to eq(atnd.user.email)
+    it "has user_id (obfuscated) in the first element" do
+      expect(ary.first).to eq(atnd.user_id * obf_factor)
     end
 
     it "does not encode entities" do
@@ -24,13 +25,13 @@ describe AttendeesCsvExporter do
       create :plan
       na = AttendeesCsvExporter::AttendeeAttributes.names.length
       np = Plan.yr(atnd.year).count
-      expect(ary.size).to eq(na + np + 3)
+      expect(ary.size).to eq(na + np + 5)
     end
 
     it "should include the guardian's full name" do
       minor = create :minor
       guardian_name = minor.guardian.full_name
-      expect(AttendeesCsvExporter.attendee_array(minor)).to include(guardian_name)
+      expect(AttendeesCsvExporter.attendee_array(minor, obf_factor)).to include(guardian_name)
     end
   end
 

@@ -2,16 +2,14 @@ require 'csv'
 require 'pg'
 
 class Exporter
+  include Obfuscator
+
   def initialize
     @conn = activerecord_db_connection
   end
 
   def matrix_to_csv(m)
     CSV.generate { |csv| m.each { |row| csv << row } }
-  end
-
-  def obfuscation_factor
-    Kernel.rand((1..10)).to_i
   end
 
   def db
