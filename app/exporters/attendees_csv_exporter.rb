@@ -20,10 +20,11 @@ class AttendeesCsvExporter
   end
 
   def self.render year, attendees
+    o = obfuscation_factor
     CSV.generate do |csv|
       csv << header_array(year)
       attendees.each do |atnd|
-        csv << attendee_array(atnd, obfuscation_factor)
+        csv << attendee_array(atnd, o)
       end
     end
   end
