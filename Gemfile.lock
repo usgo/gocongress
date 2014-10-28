@@ -35,7 +35,7 @@ GEM
       unf
     authorize-net (1.5.2)
       nokogiri (~> 1.4)
-    bcrypt (3.1.7)
+    bcrypt (3.1.9)
     bluecloth (2.2.0)
     builder (3.2.2)
     cancancan (1.9.2)
@@ -70,10 +70,10 @@ GEM
       activesupport (>= 3.0.4)
     excon (0.40.0)
     execjs (2.2.2)
-    factory_girl (4.4.0)
+    factory_girl (4.5.0)
       activesupport (>= 3.0.0)
-    factory_girl_rails (4.4.1)
-      factory_girl (~> 4.4.0)
+    factory_girl_rails (4.5.0)
+      factory_girl (~> 4.5.0)
       railties (>= 3.0.0)
     ffi (1.9.6)
     fog (1.24.0)
@@ -85,7 +85,7 @@ GEM
       fog-softlayer
       ipaddress (~> 0.5)
       nokogiri (~> 1.5, >= 1.5.11)
-    fog-brightbox (0.5.1)
+    fog-brightbox (0.6.1)
       fog-core (~> 1.22)
       fog-json
       inflecto
@@ -105,14 +105,14 @@ GEM
     fog-sakuracloud (0.1.1)
       fog-core
       fog-json
-    fog-softlayer (0.3.20)
+    fog-softlayer (0.3.22)
       fog-core
       fog-json
     fog-xml (0.1.0)
       fog-core
       nokogiri (~> 1.5, >= 1.5.11)
     formatador (0.2.5)
-    guard (2.6.1)
+    guard (2.7.0)
       formatador (>= 0.2.4)
       listen (~> 2.7)
       lumberjack (~> 1.0)
@@ -156,7 +156,7 @@ GEM
     mail (2.6.1)
       mime-types (>= 1.16, < 3)
     method_source (0.8.2)
-    mime-types (2.4.2)
+    mime-types (2.4.3)
     mini_portile (0.6.0)
     minitest (5.4.2)
     multi_json (1.10.1)
