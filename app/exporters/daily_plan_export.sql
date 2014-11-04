@@ -1,4 +1,5 @@
 select
+  a.user_id * $2 as user_id,
   a.id * $2 as attendee_id,
   a.family_name,
   a.given_name,
