@@ -10,11 +10,13 @@ class DailyPlanDetailsExporter < Exporter
     xtab = []
     pg_result.group_by { |row| row["attendee_id"] }.each do |attendee_id, tuples|
       xtab_row = Array.new(header.length, false)
-      xtab_row[0] = tuples[0]["family_name"]
-      xtab_row[1] = tuples[0]["given_name"]
+      xtab_row[0] = tuples[0]["user_id"]
+      xtab_row[1] = tuples[0]["attendee_id"]
+      xtab_row[2] = tuples[0]["family_name"]
+      xtab_row[3] = tuples[0]["given_name"]
       tuples.each do |t|
         apdate = t["apdate"].to_date
-        xtab_col = @date_range.find_index(apdate) + 2
+        xtab_col = @date_range.find_index(apdate) + 4
         xtab_row[xtab_col] = true
       end
       xtab << xtab_row
@@ -23,7 +25,7 @@ class DailyPlanDetailsExporter < Exporter
   end
 
   def header
-    %w[family_name given_name] + dates_for_header
+    %w[user_id attendee_id family_name given_name] + dates_for_header
   end
 
   def dates_for_header
@@ -36,7 +38,7 @@ class DailyPlanDetailsExporter < Exporter
 
   def run_query
     qry = File.read(File.dirname(__FILE__) + '/daily_plan_details.sql')
-    db.exec_params(qry, [@year, @plan_id])
+    db.exec_params(qry, [@year, @plan_id, obfuscation_factor])
   end
 
   def to_matrix
