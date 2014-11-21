@@ -16,7 +16,7 @@ class Transaction < ActiveRecord::Base
 	# Comp - Admin reduces total cost for a User (eg. a VIP)
 	# Refund - Admin has sent a refund check to a User who overpaid
 	# Sale - User makes a payment
-	TRANTYPES = [['Comp','C'], ['Refund','R'], ['Sale','S']]
+	TRANTYPES = [['Comp','C'], ['Comp (AGF)', 'A'], ['Comp (Pro)', 'P'], ['Refund','R'], ['Sale','S']]
 
 	# Instruments
 	INSTRUMENTS = [['Card','C'], ['Cash','S'], ['Check','K']]
@@ -76,7 +76,7 @@ class Transaction < ActiveRecord::Base
   # Scopes
   # ------
 
-  scope :comps, -> { where(trantype: 'C') }
+  scope :comps, -> { where(trantype: ['C', 'A', 'P']) }
   scope :for_payment_history, -> { where(:trantype => ['S','R']) }
   scope :refunds, -> { where(trantype: 'R') }
   scope :sales, -> { where(trantype: 'S') }
@@ -94,8 +94,8 @@ class Transaction < ActiveRecord::Base
     t.save!
   end
 
-  def requires_instrument?() trantype != 'C' end
-  def forbids_instrument?() trantype == 'C' end
+  def requires_instrument?() %w[C A P].exclude?(trantype) end
+  def forbids_instrument?() %w[C A P].include?(trantype) end
   def is_gateway_transaction?() trantype == 'S' and instrument == 'C' end
   def requires_check_number?() instrument == 'K' end
 
@@ -129,7 +129,7 @@ class Transaction < ActiveRecord::Base
   # Only comps appear on invoices.  Refunds and sales appear on the
   # ledger (payment history)
   def to_invoice_item
-    if trantype == 'C'
+    if %w[C A P].include?(trantype)
       InvoiceItem.new(description, 'N/A', -1 * amount, 1)
     else
       raise "Non-invoiced transaction type: #{trantype}"

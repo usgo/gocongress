@@ -5,7 +5,7 @@ from attendees
 left join (
   select t.user_id, sum(t.amount) as total
   from transactions t
-  where t.trantype in ('C', 'S') and t.year = :year
+  where t.trantype in ('C', 'A', 'P', 'S') and t.year = :year
   group by t.user_id
 ) credits on credits.user_id = attendees.user_id
 
