@@ -54,7 +54,7 @@
       = f.label :venue_phone
       = f.text_field :venue_phone, :size => 20
 
-  %h3 Miscelaneous
+  %h3 Miscellaneous
   %fieldset
     .field
       = f.label :ordinal_number
@@ -70,6 +70,7 @@
     .field
       = f.label :registration_phase
       = f.select :registration_phase, @reg_phase_opts
+      %span.smalltext Plan categories and plans are fixed during the registration period.
 
   %fieldset
     .field

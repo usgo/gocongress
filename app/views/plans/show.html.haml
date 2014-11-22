@@ -26,4 +26,5 @@
 - if can? :manage, @plan
   .inline-children
     = button_to 'Edit', edit_plan_path(@plan), :method => :get
-    = button_to 'Delete', @plan, :method => :delete, :data => {:confirm => 'Are you sure?'}
+    - if @year.registration_phase == 'closed'
+      = button_to 'Delete', @plan, :method => :delete, :data => {:confirm => 'Are you sure?'}

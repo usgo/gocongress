@@ -1,6 +1,6 @@
 %h2 Costs
 
-- if can? :manage, PlanCategory
+- if can?(:manage, PlanCategory) && @year.registration_phase == 'closed'
   .flow-padding= button_to 'Create New Category', new_plan_category_path, :method => "get"
 
 = form_tag(update_order_plan_categories_path, :method => :put) do
@@ -18,7 +18,8 @@
             %td= markdown_if_present(c.description)
             - if can?(:manage, c)
               %td= link_to 'Edit', edit_plan_category_path(c)
-              %td= link_to 'Delete', c, :data => {:confirm => "Delete #{c.name}?"}, :method => :delete
+              - if @year.registration_phase == 'closed'
+                %td= link_to 'Delete', c, :data => {:confirm => "Delete #{c.name}?"}, :method => :delete
 
   %br
 
