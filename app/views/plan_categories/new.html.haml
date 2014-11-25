@@ -1,5 +1,9 @@
 %h2 New Plan Category
 
-= render 'form'
+- if @year.registration_phase == 'closed'
+  = render 'form'
 
-= link_to 'Back', plan_categories_path
+  = link_to 'Back', plan_categories_path
+
+%p
+  Plan categories are fixed while the registration phase is open or complete.
