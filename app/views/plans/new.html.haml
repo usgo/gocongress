@@ -1,3 +1,6 @@
-%h2 New plan
-= render 'form'
+%h2 New Plan
+- if @year.registration_phase == 'closed'
+  = render 'form'
 
+%p
+  Plans are fixed while the registration phase is open or complete.
