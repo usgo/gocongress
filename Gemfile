@@ -21,7 +21,7 @@ gem 'protected_attributes'
 gem 'jc-validates_timeliness'
 
 # Stack, middleware, engines, etc.
-gem 'authorize-net'
+gem 'authorizenet'
 gem 'cancancan', '~> 1.9'
 gem 'devise'
 gem 'exception_notification', '~> 4.0.1'
