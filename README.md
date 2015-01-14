@@ -2,7 +2,7 @@ Gocongress
 ==========
 
 A maintainable web app for the US Go Congress.
-Copyright (c) 2014 American Go Association
+Copyright (c) 2015 American Go Association
 
 [![Code Climate](https://codeclimate.com/github/usgo/gocongress.png)](https://codeclimate.com/github/usgo/gocongress)
 [![Dependency Status](https://gemnasium.com/usgo/gocongress.svg)](https://gemnasium.com/usgo/gocongress)
@@ -71,7 +71,11 @@ Thanks
 
 Special thanks to Lisa Scott, who helped invent, and tirelessly
 tested, the first year's site in 2011.
+Special thanks to Jared Beck, who provided mentoring and assistance for the 2014
+site.
 
+* 2014: Jared Beck, Andrew Jackson, Matthew Hershberger, Chris Kirschner, Steve
+Colburn
 * 2013: Chris Kirschner, Judy Debel
 * 2012: Arlene Bridges, Bob Bacon, Steve Colburn
 * 2011: Lisa Scott, Alf Mikula, Brian David, Andrew Jackson, Steve Colburn
