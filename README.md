@@ -64,7 +64,7 @@ Email for gocongress.org
 ------------------------
 
 Email for accounts in the gocongress.org domain is managed through
-google apps. jared.beck@usgo.org has access to manage these accounts.
+Google Apps. steve.colburn@usgo.org has access to manage these accounts.
 
 Thanks
 ------
