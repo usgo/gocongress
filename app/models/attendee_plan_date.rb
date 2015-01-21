@@ -12,11 +12,19 @@ class AttendeePlanDate < ActiveRecord::Base
 
   def self.maximum year
     y = year.is_a?(Year) ? year : Year.find_by_year(year.to_i)
-    y.peak_departure_date + 1.day
+    if y.to_i == 2015
+      y.peak_departure_date - 1.day
+    else
+      y.peak_departure_date + 1.day
+    end
   end
 
   def self.minimum year
-    CONGRESS_START_DATE.fetch(year.to_i) - 2.days
+    if year.to_i == 2015
+      CONGRESS_START_DATE.fetch(year.to_i)
+    else
+      CONGRESS_START_DATE.fetch(year.to_i) - 2.days
+    end
   end
 
   def self.valid_range year
