@@ -51,6 +51,7 @@ class Ability
     # Guests can show (but not index) the following:
     can :show, ActivityCategory
     can :show, Plan, :disabled => false
+    can :show, Plan, :show_disabled => true
   end
 
   # `explain_denial` provides a friendly "access denied" message

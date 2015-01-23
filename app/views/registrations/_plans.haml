@@ -30,7 +30,7 @@
           %th{:colspan => 6}= cat.name
         - plans.each do |plan|
           %tr{:class => if plan.disabled? then "disabled" end }
-            %td.valign-middle.align-center= plan_selection_inputs(plan)
+            %td.valign-middle.align-center= plan_selection_inputs(plan) unless plan.disabled? && plan.show_disabled?
             %td= plan.name
             = render :partial => "plan_categories/plan_table_common_cells", :locals => { :plan => plan }
 

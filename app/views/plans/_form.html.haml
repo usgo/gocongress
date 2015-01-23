@@ -30,6 +30,12 @@
         = Attendee.model_name.human.pluralize
         cannot select this
         = Plan.model_name.human.downcase
+    .field
+      = f.label :show_disabled
+      = f.check_box :show_disabled
+      %span.smalltext
+        = Attendee.model_name.human.pluralize
+        can see this plan even if it is disabled
 
   %fieldset
     %legend Price

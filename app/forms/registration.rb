@@ -116,12 +116,13 @@ class Registration
   end
 
   # `form_plans` returns the plans to show on the form, and thus
-  # excludes disabled plans unless already selected by the attendee.
+  # excludes disabled plans unless already selected by the attendee or if
+  # show_disabled is set to true.
   def form_plans
     return @_plans if @_plans.present?
     @_plans = all_plans.to_a
     unless admin?
-      @_plans.delete_if {|p| p.disabled? && !@attendee.has_plan?(p)}
+      @_plans.delete_if {|p| p.disabled? && !@attendee.has_plan?(p) && !p.show_disabled?}
     end
     @_plans
   end

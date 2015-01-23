@@ -21,7 +21,6 @@
               %td= number_field_tag "plan_order[#{p.id}]", p.cat_order, min: 1, step: 1, size: 2
             %td
               = link_to p.name, p
-              = "(disabled)" if p.disabled?
             = render :partial => "plan_table_common_cells", :locals => { :plan => p }
 
   = render :partial => "explain_availability"
