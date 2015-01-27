@@ -124,7 +124,9 @@ protected
   end
 
   def logo_file year
-    if year.to_i == 2014
+    if year.to_i == 2015
+      '2015-transparent.png'
+    elsif year.to_i == 2014
       '2014-logo.png'
     elsif year.to_i == 2013
       '2013.jpg'
