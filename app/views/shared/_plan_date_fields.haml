@@ -10,6 +10,22 @@
               = d.strftime(format)
               %br
               - checked = selection.dates.include?(d)
-              - cbx_name = "plans[#{plan.id}][dates][]"
-              = check_box_tag cbx_name, d.strftime('%Y-%m-%d'), checked
+              - @cbx_name = "plans[#{plan.id}][dates][]"
+              = check_box_tag @cbx_name, d.strftime('%Y-%m-%d'), checked
               - first_clndr_date = false
+    Set All/Clear
+    %br
+    = check_box_tag('selectAll_' + @cbx_name, 1, false)
+
+:javascript
+  $("[name='selectAll_#{@cbx_name}']").click(function() {
+    if(this.checked) {
+      $("[name='#{@cbx_name}']").each(function() {
+        this.checked = true;
+      });
+    } else {
+      $("[name='#{@cbx_name}']").each(function() {
+        this.checked = false;
+      });
+    }
+  });

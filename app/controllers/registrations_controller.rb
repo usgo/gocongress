@@ -46,6 +46,7 @@ class RegistrationsController < ApplicationController
 
   def expose_legacy_form_vars
     @plan_calendar = PlanCalendar.range_to_matrix(AttendeePlanDate.valid_range(@year))
+    @cbx_name = "plans[plan.id][dates][]"
     @show_availability = @registration.show_availability
   end
 
