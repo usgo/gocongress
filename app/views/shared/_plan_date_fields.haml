@@ -13,19 +13,22 @@
               - @cbx_name = "plans[#{plan.id}][dates][]"
               = check_box_tag @cbx_name, d.strftime('%Y-%m-%d'), checked
               - first_clndr_date = false
-    Set All/Clear
-    %br
-    = check_box_tag('selectAll_' + @cbx_name, 1, false)
+    %tr
+      %td{:colspan=>3}
+        = button_tag('Set All', type: 'button', name: 'setAll_' + @cbx_name)
+      %td
+      %td{:colspan=>3}
+        = button_tag('Clear', type: 'button', name: 'clear_' + @cbx_name)
 
 :javascript
-  $("[name='selectAll_#{@cbx_name}']").click(function() {
-    if(this.checked) {
-      $("[name='#{@cbx_name}']").each(function() {
-        this.checked = true;
-      });
-    } else {
-      $("[name='#{@cbx_name}']").each(function() {
-        this.checked = false;
-      });
-    }
+  $("[name='setAll_#{@cbx_name}']").click(function() {
+    $("[name='#{@cbx_name}']").each(function() {
+      this.checked = true;
+    });
+  });
+
+  $("[name='clear_#{@cbx_name}']").click(function() {
+    $("[name='#{@cbx_name}']").each(function() {
+      this.checked = false;
+    });
   });
