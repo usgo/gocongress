@@ -124,13 +124,11 @@ describe Attendee, :type => :model do
     end
 
     describe 'minors' do
-      it "requires minors to provide the attendee id of a guardian" do
+      it "requires minors to provide the name of a guardian" do
         allow(a).to receive(:minor?) { true }
-        a.guardian = nil
+        a.guardian_full_name = nil
         expect(a).not_to be_valid
-        expect(a).to have_error_about(:guardian)
-        a.guardian = create(:attendee)
-        expect(a).not_to have_error_about(:guardian)
+        expect(a.errors.keys).to include(:guardian_full_name)
       end
     end
   end

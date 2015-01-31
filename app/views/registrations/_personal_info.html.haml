@@ -26,32 +26,6 @@
       then I must submit the #{link_to_liability_release} to the
       = link_to 'registrar.', contacts_path, :target => '_blank'
   .field
-    %label{:for => 'guardian'}
-      Guardian Name<br />(for minors)
-    %input#guardian{:value => @registration.guardian_name}
-    = f.hidden_field :guardian_attendee_id
+    = f.label :guardian_full_name, 'Guardian Name<br />(for minors)'.html_safe
+    = f.text_field :guardian_full_name
     %span.smalltext Attending adult responsible for minor
-
-:javascript
-  $(function() {
-    var guardians1 = #{@registration.adults_anonymous_of_user.to_json};
-    var guardians2 = #{@registration.adults.to_json};
-    var guardians = guardians1.concat(guardians2);
-    $('#guardian').autocomplete({
-      autoFocus: false,
-      delay: 0,
-      minLength: 1,
-      source: guardians,
-      focus: function( event, ui ) {
-        $('#guardian').val( ui.item.label );
-        return false;
-      },
-      select: function( event, ui ) {
-        $('#guardian').val( ui.item.label );
-        var $gid = $('#registration_guardian_attendee_id');
-        if ($gid.length !== 1) { throw "Element not found"; }
-        $gid.val( ui.item.value );
-        return false;
-      }
-    });
-  });

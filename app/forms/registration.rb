@@ -18,7 +18,7 @@ class Registration
   # Forbidden attributes, like `year`, are omitted.
   ATD_ATRS = [:aga_id, :anonymous,
     :birth_date, :country, :email, :family_name, :gender,
-    :given_name, :guardian_attendee_id, :phone, :rank,
+    :given_name, :guardian_attendee_id, :guardian_full_name, :phone, :rank,
     :roomate_request, :special_request, :shirt_id, :tshirt_size,
     :understand_minor, :will_play_in_us_open]
 
@@ -36,20 +36,6 @@ class Registration
 
   def activities
     Activity.yr(year).order(:leave_time, :name)
-  end
-
-  # `adults` will be used by jquery-ui autocomplete, hence the
-  # keys `label` and `value` -Jared 2013-03-13
-  def adults
-    Attendee.yr(year).adults(year).not_anonymous.map do |a|
-      {label: a.full_name(true), value: a.id}
-    end
-  end
-
-  def adults_anonymous_of_user
-    Attendee.yr(year).adults(year).user_attendees(attendee.user_id).is_anonymous.map do |a|
-      {label: a.full_name, value: a.id}
-    end
   end
 
   def guardian_name

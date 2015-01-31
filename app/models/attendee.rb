@@ -28,8 +28,8 @@ class Attendee < ActiveRecord::Base
   attr_accessible :activity_ids, :aga_id, :anonymous,
     :airport_arrival, :airport_arrival_flight, :airport_departure,
     :birth_date, :country, :email, :family_name, :given_name, :gender,
-    :guardian_attendee_id, :phone, :special_request, :rank,
-    :roomate_request, :shirt_id, :tshirt_size, :understand_minor,
+    :guardian_attendee_id, :guardian_full_name, :phone, :special_request,
+    :rank, :roomate_request, :shirt_id, :tshirt_size, :understand_minor,
     :user_id, :will_play_in_us_open, :as => [:default, :admin]
 
   attr_accessible :comment, :minor_agreement_received, :as => :admin
@@ -44,7 +44,7 @@ class Attendee < ActiveRecord::Base
   validates :family_name,     :presence => true
   validates :gender,          :inclusion => {:in => ["m","f"], :message => "is not valid"}, :presence => true
   validates :given_name,      :presence => true
-  validates :guardian,        :presence => { :if => :require_guardian? }
+  validates :guardian_full_name, :presence => { :if => :require_guardian_full_name? }
   validates :minor_agreement_received, :inclusion => {:in => [true, false]}
   validates :rank,            :inclusion => {:in => Attendee::Rank::NUMERIC_RANK_LIST, :message => "is not valid"}, :presence => true
   validates :roomate_request, :length => {:maximum => 250}
@@ -86,18 +86,6 @@ class Attendee < ActiveRecord::Base
     when :planless then planless
     else raise ArgumentError
     end
-  end
-
-  def self.not_anonymous
-    where(anonymous: false)
-  end
-
-  def self.is_anonymous
-    where(anonymous: true)
-  end
-
-  def self.user_attendees current_user_id
-    where(user_id: current_user_id)
   end
 
   # Using a subquery in the where clause is performant up to about
@@ -240,7 +228,7 @@ private
 
   # Minors are required to have a guardian.  To safely invoke
   # minor?(), we must first check that birth_date is present.
-  def require_guardian?
+  def require_guardian_full_name?
     birth_date.present? && minor?
   end
 
