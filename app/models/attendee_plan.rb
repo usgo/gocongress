@@ -30,6 +30,8 @@ class AttendeePlan < ActiveRecord::Base
   validates_each :quantity do |model, atr, value|
     model.validate_against_max_quantity
     model.validate_against_available_inventory
+    model.validate_against_min_age
+    model.validate_against_max_age
   end
 
   before_validation do |ap|
@@ -75,6 +77,23 @@ class AttendeePlan < ActiveRecord::Base
     max_qty = plan.max_quantity
     if quantity > max_qty then
       errors[:base] << "The maximum quantity of #{plan.name.pluralize.downcase} per attendee is #{max_qty}"
+    end
+  end
+
+  # Attendee age must be appropriate
+  def validate_against_min_age
+    age = attendee.age_in_years
+    min = plan.age_min
+    if age < min
+      errors[:base] << "#{plan.name.pluralize}: Attendee age will be #{age} which is less than minimum age for this plan."
+    end
+  end
+
+  def validate_against_max_age
+    age = attendee.age_in_years
+    max = plan.age_max
+    if max.present? && age > max
+      errors[:base] << "#{plan.name.pluralize}: Attendee age will be #{age} which is greater than maximum age for this plan."
     end
   end
 

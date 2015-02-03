@@ -36,12 +36,6 @@ describe AttendeePlan, :type => :model do
 
   describe "#valid?" do
 
-    it "requires attendee" do
-      ap = build :attendee_plan, :attendee => nil
-      expect(ap).not_to be_valid
-      expect(ap.errors).to include :attendee
-    end
-
     it "has minimum quantity of one" do
       ap = build :attendee_plan, :quantity => 0
       expect(ap).not_to be_valid
@@ -63,6 +57,20 @@ describe AttendeePlan, :type => :model do
       p = create :plan, inventory: 42, max_quantity: 999
       expect(build(:attendee_plan, plan: p, quantity: 42)).to be_valid
       expect(build(:attendee_plan, plan: p, quantity: 43)).not_to be_valid
+    end
+
+    it "is invalid when attendee age is less than minimum age for plan" do
+      a = create :minor
+      p = create :plan, age_min: 18
+      ap = build :attendee_plan, plan: p, attendee_id: a.id
+      expect(ap).not_to be_valid
+    end
+
+    it "is invalid when attendee age is greater than maximum age for plan" do
+      a = create :attendee
+      p = create :plan, age_max: 17
+      ap = build :attendee_plan, plan: p, attendee_id: a.id
+      expect(ap).not_to be_valid
     end
 
     context 'daily-rate plans' do
