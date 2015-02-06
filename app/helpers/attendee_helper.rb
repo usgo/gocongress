@@ -19,7 +19,11 @@ module AttendeeHelper
   def plan_cbx plan, selection
     checked = selection.qty == 1
     title = "Select this " + mnh
-    check_box_tag qty_field_name(plan), 1, checked, :title => title
+    if plan.disabled? && !current_user_is_admin?
+      check_box_tag qty_field_name(plan), 1, checked, :disabled => true
+    else
+      check_box_tag qty_field_name(plan), 1, checked, :title => title
+    end
   end
 
   def plan_qty_field plan, selection

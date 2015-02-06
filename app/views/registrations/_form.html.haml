@@ -26,3 +26,8 @@
   %p= f.submit 'Continue'
 
 = content_for :footnote
+
+:javascript
+  $("form").submit(function() {
+    $("input").removeAttr("disabled");
+  });
