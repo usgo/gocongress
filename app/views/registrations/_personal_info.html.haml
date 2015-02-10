@@ -18,7 +18,7 @@
     = f.date_select :birth_date, :start_year => @year.year, :end_year => 1900, :include_blank => true
     %span.smalltext (to identify minors)
   .field
-    = f.label :understand_minor, 'Liability Release<br />(for minors)'.html_safe
+    = f.label :understand_minor, 'Youth Attendance Agreement<br />(for minors)'.html_safe
     = f.check_box :understand_minor, class: "valign-middle"
     %div#liability-release-instructions.smalltext
       I understand that if this attendee will not be at least 18 years old on

@@ -57,7 +57,7 @@ module ApplicationHelper
   end
 
   def link_to_liability_release()
-    link_to "Liability Release",
+    link_to "Youth Attendance Agreement",
       asset_path("liability_release/USGC#{@year.year}-Liability-Release.pdf"),
       :target => '_blank'
   end
