@@ -37,7 +37,10 @@
     %tbody
       - for a in @attendees
         %tr
-          %td= link_to a.full_name, edit_registration_path(a)
+          - if a.cancelled?
+            %td= a.full_name + ' (Cancelled)'
+          - else
+            %td= link_to a.full_name, edit_registration_path(a)
           %td= a.rank_name
           %td.numeric= a.age_in_years.floor
           %td= a.created_at.strftime("%b %-d %l:%M %p")
