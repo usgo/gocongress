@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150130220450) do
+ActiveRecord::Schema.define(version: 20150211232505) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -100,6 +100,7 @@ ActiveRecord::Schema.define(version: 20150130220450) do
     t.integer  "guardian_attendee_id"
     t.integer  "shirt_id"
     t.string   "guardian_full_name"
+    t.boolean  "cancelled",                          default: false, null: false
   end
 
   add_index "attendees", ["aga_id", "year"], name: "index_attendees_on_aga_id_and_year", unique: true, using: :btree

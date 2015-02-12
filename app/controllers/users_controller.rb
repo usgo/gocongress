@@ -102,6 +102,17 @@ class UsersController < ApplicationController
     render :layout => 'print'
   end
 
+  def update_attendee_cancelled
+    @attendee = Attendee.find(params[:attendee_id])
+    if @attendee.cancelled?
+      @user.cancel_attendee(@attendee, false)
+      redirect_to(@user, :notice => 'Restored attendee.')
+    else
+      @user.cancel_attendee(@attendee, true)
+      redirect_to(@user, :notice => 'Cancelled attendee.')
+    end
+  end
+
 protected
 
   def remove_year_from_params

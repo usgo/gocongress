@@ -41,6 +41,11 @@
           %td= a.rank_name
           %td.numeric= a.age_in_years.floor
           %td= a.created_at.strftime("%b %-d %l:%M %p")
+          - if current_user_is_admin?
+            - if a.cancelled?
+              %td= button_to "Uncancel", { action: "update_attendee_cancelled", id: @user.id, attendee_id: a.id }, method: :patch, data: { confirm: "Are you sure?" }
+            - else
+              %td= button_to "Cancel", { action: "update_attendee_cancelled", id: @user.id, attendee_id: a.id }, method: :patch, data: { confirm: "Are you sure?" }
 
 %p= button_to_get 'Add Attendee', new_registration_path(user_id: @user.id), 'add_attendee_btn'
 
