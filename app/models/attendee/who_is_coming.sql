@@ -25,6 +25,7 @@ left join (
   inner join plans p on p.id = ap.plan_id
   inner join plan_categories pc on pc.id = p.plan_category_id
   where a.year = :year
+    and a.cancelled = false
     and ap.year = :year
     and p.year = :year
     and p.daily = false
@@ -42,6 +43,7 @@ left join (
   inner join plans p on p.id = ap.plan_id
   inner join plan_categories pc on pc.id = p.plan_category_id
   where a.year = :year
+    and a.cancelled = false
     and ap.year = :year
     and p.year = :year
     and pc.year = :year
@@ -67,6 +69,8 @@ where attendees.year = :year
     >= coalesce(nondaily_plans.total, 0) + coalesce(daily_plans.total, 0)
 
   -- exclude cancelled attendees
+  and attendees.cancelled = false
+
   and not exists (
     select ap.attendee_id
     from attendee_plans ap
