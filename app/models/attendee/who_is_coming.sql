@@ -59,7 +59,7 @@ left join (
   group by ap.attendee_id
 ) plan_count on plan_count.attendee_id = attendees.id
 
-where attendees.year = :year
+where attendees.year = :year and attendees.cancelled = false
 
   -- must have at least one plan
   and plan_count.n > 0
@@ -69,8 +69,6 @@ where attendees.year = :year
     >= coalesce(nondaily_plans.total, 0) + coalesce(daily_plans.total, 0)
 
   -- exclude cancelled attendees
-  and attendees.cancelled = false
-
   and not exists (
     select ap.attendee_id
     from attendee_plans ap
