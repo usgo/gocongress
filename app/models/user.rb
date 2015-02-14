@@ -73,7 +73,7 @@ class User < ActiveRecord::Base
   end
 
   def attendee_invoice_items
-    attendees.map {|a| a.invoice_items}.flatten
+    attendees.order('created_at').map {|a| a.invoice_items}.flatten
   end
 
   def balance

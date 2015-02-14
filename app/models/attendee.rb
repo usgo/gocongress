@@ -154,7 +154,11 @@ class Attendee < ActiveRecord::Base
   end
 
   def invoice_items
-    plans_as_invoice_items + activities_as_invoice_items
+    if cancelled?
+      [InvoiceItem.new('Cancelled', full_name, 0, 0)]
+    else
+      plans_as_invoice_items + activities_as_invoice_items
+    end
   end
 
   def invoice_total

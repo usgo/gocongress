@@ -106,6 +106,10 @@ def describe_inventory_available
   inventory.present? ? "#{inventory_available} of #{inventory}" : "Unlimited"
 end
 
+def inventory_cancelled
+  attendee_plans.joins(:attendee).where(attendees: { cancelled: true }).sum(:quantity)
+end
+
 def inventory_consumed(excluded_attendee=nil)
   attendee_plans_except(excluded_attendee).sum(:quantity)
 end
@@ -113,7 +117,8 @@ end
 def inventory_available(excluded_attendee=nil)
   return nil if inventory.nil?
   c = inventory_consumed(excluded_attendee)
-  c > inventory ? 0 : inventory - c
+  n = inventory_cancelled
+  c - n > inventory ? 0 : inventory + n - c
 end
 
 private

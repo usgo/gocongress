@@ -25,6 +25,7 @@ left join (
   inner join plans p on p.id = ap.plan_id
   inner join plan_categories pc on pc.id = p.plan_category_id
   where a.year = :year
+    and a.cancelled = false
     and ap.year = :year
     and p.year = :year
     and p.daily = false
@@ -42,6 +43,7 @@ left join (
   inner join plans p on p.id = ap.plan_id
   inner join plan_categories pc on pc.id = p.plan_category_id
   where a.year = :year
+    and a.cancelled = false
     and ap.year = :year
     and p.year = :year
     and pc.year = :year
@@ -57,7 +59,7 @@ left join (
   group by ap.attendee_id
 ) plan_count on plan_count.attendee_id = attendees.id
 
-where attendees.year = :year
+where attendees.year = :year and attendees.cancelled = false
 
   -- must have at least one plan
   and plan_count.n > 0

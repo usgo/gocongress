@@ -131,6 +131,7 @@ describe User, :type => :model do
       # change plan qty by 1, assert that invoice total changes by price
       expected = user.get_invoice_total + p.price
       ap.quantity += 1
+      ap.save
       expect(user.get_invoice_total).to be_within(0.001).of(expected)
     end
 
