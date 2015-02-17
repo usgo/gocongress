@@ -71,12 +71,14 @@ class Registration
   # and no `@errors` are found.
   def valid?
     super
-    attendee.valid?
-    merge_errors(attendee.errors)
-    validate_mandatory_plan_cats(selected_plans)
-    validate_disabled_plans(persisted_plan_selections, selected_plans)
-    validate_models(selected_attendee_plans)
-    validate_activities
+    if attendee.valid?
+      validate_mandatory_plan_cats(selected_plans)
+      validate_disabled_plans(persisted_plan_selections, selected_plans)
+      validate_models(selected_attendee_plans)
+      validate_activities
+    else
+      merge_errors(attendee.errors)
+    end
     @errors.empty?
   end
 
