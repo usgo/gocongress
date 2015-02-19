@@ -38,7 +38,7 @@ class DailyPlanDetailsExporter < Exporter
 
   def run_query
     qry = File.read(File.dirname(__FILE__) + '/daily_plan_details.sql')
-    db.exec_params(qry, [@year, @plan_id, obfuscation_factor])
+    db.exec_params(qry, [@year, @plan_id])
   end
 
   def to_matrix

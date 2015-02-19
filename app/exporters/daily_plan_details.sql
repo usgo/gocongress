@@ -1,6 +1,6 @@
 select
-  a.user_id * $3 as user_id,
-  a.id * $3 as attendee_id,
+  a.user_id as user_id,
+  a.id as attendee_id,
   a.family_name,
   a.given_name,
   d._date as apdate

@@ -5,7 +5,6 @@ describe DailyPlanDetailsExporter do
   let(:year) { Date.current.year }
   let(:range) { AttendeePlanDate.valid_range(year) }
   let(:exporter) { DailyPlanDetailsExporter.new(year, range, plan.id) }
-  let(:obf_factor) { rand(100) }
 
   describe '#header' do
     it 'has one col per day' do
@@ -26,11 +25,10 @@ describe DailyPlanDetailsExporter do
       create :attendee_plan_date, :attendee_plan => ap1, :_date => dates[0]
       create :attendee_plan_date, :attendee_plan => ap2, :_date => dates[1]
       falsies = Array.new(dates.length - 2, false)
-      allow_any_instance_of(DailyPlanDetailsExporter).to receive(:obfuscation_factor) { obf_factor }
       expect(exporter.to_matrix).to eq(
         [exporter.header] + [
-          [(a1.user_id * obf_factor).to_s, (a1.id * obf_factor).to_s, a1.family_name, a1.given_name, true, false] + falsies,
-          [(a2.user_id * obf_factor).to_s, (a2.id * obf_factor).to_s, a2.family_name, a2.given_name, false, true] + falsies
+          [a1.user_id.to_s, a1.id.to_s, a1.family_name, a1.given_name, true, false] + falsies,
+          [a2.user_id.to_s, a2.id.to_s, a2.family_name, a2.given_name, false, true] + falsies
         ])
     end
   end
