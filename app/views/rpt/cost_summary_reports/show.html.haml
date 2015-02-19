@@ -14,10 +14,6 @@
 %p
   The numeric IDs given to users and attendees in this report
   are subject to change without notice.
-  %span.smalltext
-    To prevent anyone from relying on these IDs, a different random
-    number will be selected each time this report is run, and the IDs
-    will all be multipled by it.
 
 = form_tag(csv_path, :method => :get) do
   %p= submit_tag "Export to CSV"

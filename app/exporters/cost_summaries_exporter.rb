@@ -13,7 +13,7 @@ class CostSummariesExporter < Exporter
   end
 
   def qry
-    db.exec_params(sql('cost_summaries'), [@year.to_i, obfuscation_factor])
+    db.exec_params(sql('cost_summaries'), [@year.to_i])
   end
 
   def to_csv
