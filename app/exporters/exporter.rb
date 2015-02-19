@@ -2,8 +2,6 @@ require 'csv'
 require 'pg'
 
 class Exporter
-  include Obfuscator
-
   def initialize
     @conn = activerecord_db_connection
   end
