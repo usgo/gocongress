@@ -1,12 +1,11 @@
 class AttendeesCsvExporter
-  extend Obfuscator
 
   # Order of columns must match `header_array`
-  def self.attendee_array atnd, obf_factor
+  def self.attendee_array atnd
     [
-      atnd.user_id * obf_factor,
+      atnd.user_id,
       atnd.user_email,
-      atnd.id * obf_factor,
+      atnd.id,
       AttendeeAttributes.values(atnd),
       atnd.guardian_name,
       atnd.shirt_name,
@@ -20,11 +19,10 @@ class AttendeesCsvExporter
   end
 
   def self.render year, attendees
-    o = obfuscation_factor
     CSV.generate do |csv|
       csv << header_array(year)
       attendees.each do |atnd|
-        csv << attendee_array(atnd, o)
+        csv << attendee_array(atnd)
       end
     end
   end

@@ -4,15 +4,14 @@ describe AttendeesCsvExporter do
 
   describe "#attendee_array" do
     let(:atnd) { create :attendee }
-    let(:obf_factor) { rand(100) }
-    let(:ary) { AttendeesCsvExporter.attendee_array(atnd, obf_factor) }
+    let(:ary) { AttendeesCsvExporter.attendee_array(atnd) }
 
     it "returns an array" do
       expect(ary).to be_instance_of(Array)
     end
 
-    it "has user_id (obfuscated) in the first element" do
-      expect(ary.first).to eq(atnd.user_id * obf_factor)
+    it "has user_id in the first element" do
+      expect(ary.first).to eq(atnd.user_id)
     end
 
     it "does not encode entities" do
@@ -31,7 +30,7 @@ describe AttendeesCsvExporter do
     it "should include the guardian's full name" do
       minor = create :minor
       guardian_name = minor.guardian.full_name
-      expect(AttendeesCsvExporter.attendee_array(minor, obf_factor)).to include(guardian_name)
+      expect(AttendeesCsvExporter.attendee_array(minor)).to include(guardian_name)
     end
   end
 
