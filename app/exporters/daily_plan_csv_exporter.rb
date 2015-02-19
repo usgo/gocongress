@@ -55,6 +55,6 @@ class DailyPlanCsvExporter < Exporter
 
   def run_query
     qry = File.read(File.dirname(__FILE__) + '/daily_plan_export.sql')
-    db.exec_params(qry, [@year.to_i, obfuscation_factor])
+    db.exec_params(qry, [@year.to_i])
   end
 end
