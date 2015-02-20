@@ -1,17 +1,17 @@
-= radio_button_tag :planlessness, :all, true
-%label{:for => 'planlessness_all'} All attendees
-%br
-
-= radio_button_tag :planlessness, :planful
+= radio_button_tag :planlessness, :planful, true
 %label{:for => 'planlessness_planful'}
-  Attendees that have selected <strong>at least one</strong> plan
+  Attendees that are active.
   - if @planful_attendee_count.present?
     (#{@planful_attendee_count})
 %br
 
 = radio_button_tag :planlessness, :planless
 %label{:for => 'planlessness_planless'}
-  Attendees that have <strong>not</strong> selected any plans
+  Attendees that are cancelled or have not selected any plans.
   - if @planless_attendee_count.present?
     (#{@planless_attendee_count})
+%br
+
+= radio_button_tag :planlessness, :all
+%label{:for => 'planlessness_all'} All attendees.
 %br

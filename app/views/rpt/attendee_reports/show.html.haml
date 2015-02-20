@@ -8,7 +8,7 @@
   There are
   = link_to pluralize(@user_count, umnh.downcase), users_path
   and
-  = pluralize(@attendees.count, amnh.downcase) + '.'
+  = pluralize(@attendees.count, amnh.downcase) + ' (' + pluralize(@cancelled_attendee_count, 'cancellation') + ').'
 
 %h3 Export to CSV
 = form_tag(csv_path, :method => :get) do

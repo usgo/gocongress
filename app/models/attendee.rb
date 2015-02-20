@@ -79,6 +79,10 @@ class Attendee < ActiveRecord::Base
     where('birth_date < ?', CONGRESS_START_DATE[year.to_i] - 18.years)
   end
 
+  def self.attendee_cancelled
+    where(cancelled: true)
+  end
+
   def self.with_planlessness planlessness
     case planlessness
     when :all then all
@@ -91,11 +95,11 @@ class Attendee < ActiveRecord::Base
   # Using a subquery in the where clause is performant up to about
   # one thousand records.  -Jared 2012-05-13
   def self.with_at_least_one_plan
-    where("0 < (select count(*) from attendee_plans ap where ap.attendee_id = attendees.id)")
+    where("cancelled = ? AND 0 < (select count(*) from attendee_plans ap where ap.attendee_id = attendees.id)", false)
   end
 
   def self.planless
-    where("0 = (select count(*) from attendee_plans ap where ap.attendee_id = attendees.id)")
+    where("cancelled = ? OR 0 = (select count(*) from attendee_plans ap where ap.attendee_id = attendees.id)", true)
   end
 
   # Public Instance Methods

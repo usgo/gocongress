@@ -6,6 +6,7 @@ def show
     format.html do
       @attendee_count = @attendees.count
       @user_count = User.yr(@year).count
+      @cancelled_attendee_count = Attendee.yr(@year).attendee_cancelled.count
       @planless_attendee_count = Attendee.yr(@year).planless.count
       @planful_attendee_count = Attendee.yr(@year).count - @planless_attendee_count
       render :show

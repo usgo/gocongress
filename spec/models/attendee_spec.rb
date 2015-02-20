@@ -31,21 +31,24 @@ describe Attendee, :type => :model do
     let!(:plan) { create :plan }
     let!(:a1) { create :attendee }
     let!(:a2) { create :attendee }
+    let!(:a3) { create :attendee, cancelled: true }
+    let!(:a4) { create :attendee, cancelled: true }
 
     before(:each) do
       a2.plans << plan
+      a4.plans << plan
     end
 
-    it "can return all attendees" do
-      expect(Attendee.with_planlessness(:all)).to match_array([a1, a2])
-    end
-
-    it "can return only attendees with plans" do
+    it "can return active attendees with plans" do
       expect(Attendee.with_planlessness(:planful)).to match_array([a2])
     end
 
-    it "can return only attendees without plans" do
-      expect(Attendee.with_planlessness(:planless)).to match_array([a1])
+    it "can return cancelled attendees or attendees without plans" do
+      expect(Attendee.with_planlessness(:planless)).to match_array([a1, a3, a4])
+    end
+
+    it "can return all attendees" do
+      expect(Attendee.with_planlessness(:all)).to match_array([a1, a2, a3, a4])
     end
   end
 
