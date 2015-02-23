@@ -3,6 +3,8 @@ select
   a.id as attendee_id,
   a.family_name,
   a.given_name,
+  p.name as plan_name,
+  ap.id as attendee_plan_id,
   d._date as apdate
 from attendees a
 inner join attendee_plans ap
@@ -12,9 +14,8 @@ inner join attendee_plan_dates d
 inner join plans p
   on p.id = ap.plan_id
 where a.year = $1
+  and a.cancelled = false
   and p.year = $1
   and ap.year = $1
-  and p.id = $2
   and p.daily = true
-order by a.id, d._date
-
+order by p.id, a.id, d._date

@@ -1,15 +1,16 @@
 require 'spec_helper'
 
 describe DailyPlanDetailsExporter do
-  let(:plan) { create :plan, daily: true }
+  let(:p1) { create :plan, daily: true, name: 'Plan 1' }
+  let(:p2) { create :plan, daily: true, name: 'Plan 2' }
   let(:year) { Date.current.year }
   let(:range) { AttendeePlanDate.valid_range(year) }
-  let(:exporter) { DailyPlanDetailsExporter.new(year, range, plan.id) }
+  let(:exporter) { DailyPlanDetailsExporter.new(year, range) }
 
   describe '#header' do
     it 'has one col per day' do
       expect(exporter.header).to eq(
-        %w[user_id attendee_id family_name given_name] +
+        %w[user_id attendee_id family_name given_name plan_name] +
         range.map { |d| d.strftime('%-m/%-d') }
       )
     end
@@ -19,16 +20,22 @@ describe DailyPlanDetailsExporter do
     it 'return one row per attendee, one col per day' do
       a1 = create :attendee
       a2 = create :attendee
-      ap1 = create :attendee_plan, plan: plan, attendee: a1
-      ap2 = create :attendee_plan, plan: plan, attendee: a2
+      ap1 = create :attendee_plan, plan: p1, attendee: a1
+      ap2 = create :attendee_plan, plan: p1, attendee: a2
+      ap3 = create :attendee_plan, plan: p2, attendee: a1
+      ap4 = create :attendee_plan, plan: p2, attendee: a2
       dates = range.to_a
       create :attendee_plan_date, :attendee_plan => ap1, :_date => dates[0]
       create :attendee_plan_date, :attendee_plan => ap2, :_date => dates[1]
-      falsies = Array.new(dates.length - 2, false)
+      create :attendee_plan_date, :attendee_plan => ap3, :_date => dates[0]
+      create :attendee_plan_date, :attendee_plan => ap4, :_date => dates[1]
+      zeros = Array.new(dates.length - 2, 0)
       expect(exporter.to_matrix).to eq(
         [exporter.header] + [
-          [a1.user_id.to_s, a1.id.to_s, a1.family_name, a1.given_name, true, false] + falsies,
-          [a2.user_id.to_s, a2.id.to_s, a2.family_name, a2.given_name, false, true] + falsies
+          [a1.user_id.to_s, a1.id.to_s, a1.family_name, a1.given_name, p1.name, 1, 0] + zeros,
+          [a2.user_id.to_s, a2.id.to_s, a2.family_name, a2.given_name, p1.name, 0, 1] + zeros,
+          [a1.user_id.to_s, a1.id.to_s, a1.family_name, a1.given_name, p2.name, 1, 0] + zeros,
+          [a2.user_id.to_s, a2.id.to_s, a2.family_name, a2.given_name, p2.name, 0, 1] + zeros
         ])
     end
   end
