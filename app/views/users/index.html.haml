@@ -23,7 +23,7 @@
       %th Email
       %th Attendees
       %th # Attendees
-      - [:created_at, :last_sign_in_at].each do |a|
+      - [:created_at, :current_sign_in_at].each do |a|
         %th
           - drn = (params[:sort] == a.to_s && params[:drn] == "asc") ? :desc : :asc
           = link_to trl_attr("user", a), :sort => a, :drn => drn
@@ -45,8 +45,8 @@
           = user.attendees.length
         %td= user.created_at.to_date.to_formatted_s(:rfc822)
         %td
-          - if user.last_sign_in_at.present?
-            = user.last_sign_in_at.to_date.to_formatted_s(:rfc822)
+          - if user.current_sign_in_at.present?
+            = user.current_sign_in_at.to_date.to_formatted_s(:rfc822)
         %td= link_to 'Account', user
 
 %p

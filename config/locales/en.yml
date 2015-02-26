@@ -80,8 +80,8 @@ en:
         updated_by_user_id: "Last Edited By"
       user:
         created_at: "Created"
+        current_sign_in_at: "Most Recent Sign In"
         email: "Email"
-        last_sign_in_at: "Last Sign In"
         password: "Password"
       year:
         reply_to_email: "Reply-To Email"
