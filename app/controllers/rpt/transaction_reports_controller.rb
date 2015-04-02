@@ -39,7 +39,7 @@ end
   end
 
   def csv_header_row
-    ['Created', 'Type', 'Amount', 'User', 'GW Tran. ID',
+    ['Created', 'Type', 'Amount', 'user_id', 'User', 'GW Tran. ID',
       'Check No.', 'Last Updated By', 'Updated', 'GW Date', 'Comment']
   end
 
@@ -48,6 +48,7 @@ end
       t.created_at.to_date,
       t.get_trantype_name,
       t.amount.to_f / 100,
+      t.user_id,
       t.user.email,
       t.gwtranid,
       t.check_number,

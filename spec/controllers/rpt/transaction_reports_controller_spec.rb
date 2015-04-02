@@ -44,5 +44,15 @@ describe Rpt::TransactionReportsController, :type => :controller do
       ary = CSV.parse response.body
       expect(ary.size).to eq(6)
     end
+
+    it "shows user_id" do
+      t = create :tr_sale
+      sign_in staff
+      get :show, format: 'csv', year: Time.current.year
+      expect(response).to be_success
+      ary = CSV.parse response.body
+      expect(ary[0]).to include 'user_id'
+      expect(ary[1][ary[0].index 'user_id']).to eq(t.user_id.to_s)
+    end
   end
 end
