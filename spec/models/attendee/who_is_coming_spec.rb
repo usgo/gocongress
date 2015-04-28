@@ -16,7 +16,7 @@ describe Attendee::WhoIsComing, :type => :model do
       expect(Attendee::WhoIsComing.new(a.year).attendees).not_to include(a)
     end
 
-    it 'returns attendees of users that paid for mandatory plans (or paid at least $100) and have at least one plan' do
+    it 'returns attendees of users that paid at least $70 and have at least one plan' do
       year = Date.current.year
       csd = CONGRESS_START_DATE[year]
       pc1 = create :plan_category, mandatory: true
@@ -68,15 +68,15 @@ describe Attendee::WhoIsComing, :type => :model do
       u6a1 = create :attendee, user: u6, given_name: 'u6a'
       u6a1.plans << p3
       create :attendee, user: u6, given_name: 'u6b'
-      create :tr_sale, amount: 10000, user: u6
+      create :tr_sale, amount: 7000, user: u6
 
       u7 = create :user
       u7a1 = create :attendee, user: u7, given_name: 'u7a'
       u7a1.plans << p3
       create :attendee, user: u7, given_name: 'u7b'
-      create :tr_sale, amount: 9999, user: u7
+      create :tr_sale, amount: 6999, user: u7
 
-      expect(Attendee::WhoIsComing.new(u1.year).attendees.map(&:given_name)).to match_array(['u1a', 'u2a', 'u3a', 'u3b', 'u4a', 'u4b', 'u5a', 'u6a'])
+      expect(Attendee::WhoIsComing.new(u1.year).attendees.map(&:given_name)).to match_array(['u1a', 'u2a', 'u3a', 'u3b', 'u4a', 'u4b', 'u6a'])
     end
   end
 end

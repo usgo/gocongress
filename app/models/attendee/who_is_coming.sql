@@ -64,10 +64,8 @@ where attendees.year = :year and attendees.cancelled = false
   -- must have at least one plan
   and plan_count.n > 0
 
-  -- credits minus debits must satisfy total of mandatory plan costs of attendee's user account or be at least $100
-  and (
-    coalesce(credits.total, 0) - coalesce(debits.total, 0) >= coalesce(nondaily_plans.total, 0) + coalesce(daily_plans.total, 0) or coalesce(credits.total, 0) - coalesce(debits.total, 0) >= 10000
-  )
+  -- credits minus debits must be at least $70
+  and coalesce(credits.total, 0) - coalesce(debits.total, 0) >= 7000
 
   -- exclude cancelled attendees
   and not exists (
