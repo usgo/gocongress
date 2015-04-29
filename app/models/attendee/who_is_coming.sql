@@ -17,40 +17,6 @@ left join (
   group by t.user_id
 ) debits on debits.user_id = attendees.user_id
 
--- sum of mandatory nondaily plan costs of attendee's user account
-left join (
-  select a.user_id, sum(p.price) as total
-  from attendees a
-  inner join attendee_plans ap on ap.attendee_id = a.id
-  inner join plans p on p.id = ap.plan_id
-  inner join plan_categories pc on pc.id = p.plan_category_id
-  where a.year = :year
-    and a.cancelled = false
-    and ap.year = :year
-    and p.year = :year
-    and p.daily = false
-    and pc.year = :year
-    and pc.mandatory
-  group by a.user_id
-) nondaily_plans on nondaily_plans.user_id = attendees.user_id
-
--- sum of mandatory daily plan costs of attendee's user account
-left join (
-  select a.user_id, sum(p.price) as total
-  from attendees a
-  inner join attendee_plans ap on ap.attendee_id = a.id
-  inner join attendee_plan_dates apd on apd.attendee_plan_id = ap.id
-  inner join plans p on p.id = ap.plan_id
-  inner join plan_categories pc on pc.id = p.plan_category_id
-  where a.year = :year
-    and a.cancelled = false
-    and ap.year = :year
-    and p.year = :year
-    and pc.year = :year
-    and pc.mandatory
-  group by a.user_id
-) daily_plans on daily_plans.user_id = attendees.user_id
-
 -- count of plans
 left join (
   select ap.attendee_id, count(ap.id) as n
