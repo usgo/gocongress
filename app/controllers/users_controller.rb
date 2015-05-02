@@ -33,7 +33,7 @@ class UsersController < ApplicationController
   end
 
   def index
-    if %w[created_at current_sign_in_at].include? params[:sort]
+    if %w[email created_at current_sign_in_at].include? params[:sort]
       drn = (params[:drn] == "asc") ? :asc : :desc
       sort_order = "#{params[:sort]} #{drn}"
     else

@@ -20,7 +20,7 @@
   %thead
     %tr
       %th= link_to "Role", :sort => :role
-      %th Email
+      %th= link_to "Email", :sort => :email, :drn => params[:drn] == "asc" ? :desc : :asc
       %th Attendees
       %th # Attendees
       - [:created_at, :current_sign_in_at].each do |a|
