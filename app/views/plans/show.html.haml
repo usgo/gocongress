@@ -19,7 +19,7 @@
     %td= @plan.age_range_in_words
   %tr
     %th= Attendee.model_name.human.pluralize
-    %td= @plan.attendees.count
+    %td= @plan.attendees.where(cancelled: false).count
 
 %br
 
