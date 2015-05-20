@@ -46,7 +46,7 @@ validates :inventory,
     }
 
 validates_each :inventory do |record, attr, value|
-  cnt = record.attendees.count
+  cnt = record.attendees.where(cancelled: false).count
   if value.present? && value < cnt
     record.errors.add(attr, " cannot be decreased to #{value} because
       #{cnt} #{Attendee.model_name.human.pluralize.downcase} have

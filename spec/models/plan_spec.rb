@@ -50,9 +50,12 @@ describe Plan, :type => :model do
 
   context "when two attendees have selected it" do
     let(:plan) { create :plan }
-    before do
-      allow(plan).to receive_messages attendees: ["alice", "bob"]
-    end
+    let(:a1) { create :attendee }
+    let(:a2) { create :attendee }
+    let(:a3) { create :attendee, cancelled: true }
+    let!(:ap1) { create :attendee_plan, attendee: a1, plan: plan }
+    let!(:ap2) { create :attendee_plan, attendee: a2, plan: plan }
+    let!(:ap3) { create :attendee_plan, attendee: a3, plan: plan }
 
     describe "#valid?" do
       it "returns false when inventory is less than attendee count" do
