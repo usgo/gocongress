@@ -10,7 +10,7 @@ describe Rpt::TransactionReportsController, :type => :controller do
     sign_in staff
     get :show, format: 'html', year: staff.year
     expected_assigns = %w[transactions sales comps refunds
-      sales_sum comps_sum refunds_sum total_sum]
+      sales_sum comps_sum refunds_sum net_income]
     expected_assigns.each{ |v|
       expect(assigns(v.to_sym)).not_to be_nil
     }

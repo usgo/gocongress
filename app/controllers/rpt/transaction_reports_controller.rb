@@ -13,7 +13,7 @@ def show
       @comps_sum = @comps.sum(:amount)
       @refunds_sum = @refunds.sum(:amount)
 
-      @total_sum = @sales_sum - @comps_sum - @refunds_sum
+      @net_income = @sales_sum - @refunds_sum
     end
 
     format.csv do

@@ -15,19 +15,18 @@
       %td.numeric= @sales.count
       %td.numeric= cents_to_currency(@sales_sum, :unit => '')
 
-    -# Display refunds and comps as negative numbers because they
-    -# are subtracted from sales to get the total.
+    -# Display refunds and comps as negative numbers.
     %tr
       %td Refunds
       %td.numeric= @refunds.count
       %td.numeric= cents_to_currency(@refunds_sum * -1, :unit => '', :negative_format => "(%n)")
     %tr
+      %td Net Income
+      %td
+      %td.numeric= cents_to_currency(@net_income, :unit => '')
+    %tr
       %td Comps
       %td.numeric= @comps.count
       %td.numeric= cents_to_currency(@comps_sum * -1, :unit => '', :negative_format => "(%n)")
-    %tr
-      %td Total
-      %td.numeric= @transactions.length
-      %td.numeric= cents_to_currency(@total_sum, :unit => '')
 
 %p= button_to "Export #{mnh.pluralize} To CSV", csv_path, :method => "get"
