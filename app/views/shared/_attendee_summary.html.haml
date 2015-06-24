@@ -50,3 +50,25 @@
         %tr.total
           %th{:colspan=>3} Total
           %td.numeric= cents_to_currency attendee.invoice_total
+
+    %h2 Balance
+    %table.lightweight
+      %tbody
+        %tr
+          %th Cost
+          %td.numeric= cents_to_currency attendee.user.get_invoice_total
+        %tr
+          %th Paid
+          %td.numeric= cents_to_currency attendee.user.amount_paid
+        %tr
+          %th Balance
+          %td.numeric= cents_to_currency attendee.user.balance
+        %tr
+          %th Status
+          %td
+            - if attendee.user.balance > 0
+              = "User owes #{cents_to_currency attendee.user.balance}"
+            - elsif attendee.user.balance < 0
+              = "User requires a refund of #{cents_to_currency attendee.user.balance.abs}"
+            - else
+              Paid in full
