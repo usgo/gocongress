@@ -9,12 +9,11 @@
     %h1 Attendee Registration Sheet
     %h2= "#{attendee.full_name}, #{attendee.rank_name}"
 
-    - if attendee.user.attendees.count > 1
-      %p
-        One of
-        = attendee.user.attendees.count
-        attendees on the user account of
-        = attendee.user.email
+    %p
+      One of
+      = attendee.user.attendees.count
+      attendees on the user account of
+      = attendee.user.email
 
     %table
       %tbody
