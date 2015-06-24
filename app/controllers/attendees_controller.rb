@@ -12,7 +12,7 @@ class AttendeesController < ApplicationController
   def print_summary
     @attendee = Attendee.find params[:id]
     authorize! :read, @attendee
-    @attendee_attr_names = %w[aga_id birth_date comment email gender phone special_request roomate_request].sort
+    @attendee_attr_names = %w[aga_id birth_date comment email gender phone special_request roomate_request will_play_in_us_open].sort
     render :layout => "print"
   end
 
