@@ -10,9 +10,8 @@
     %h2= "#{attendee.full_name}, #{attendee.rank_name}"
 
     %p
-      One of
-      = attendee.user.attendees.count
-      attendees on the user account of
+      = pluralize(attendee.user.attendees.count, Attendee.model_name.human.downcase)
+      on the user account of
       = attendee.user.email
 
     %table
