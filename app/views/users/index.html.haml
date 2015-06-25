@@ -37,7 +37,10 @@
         %td
           - attendees = user.attendees.sort { |a,b| a.created_at <=> b.created_at }
           - attendees.each_with_index do |atn, ix|
-            = link_to atn.full_name, print_summary_for_attendee_path(atn)
+            - if atn.cancelled?
+              = link_to atn.full_name + ' (Cancelled)', print_summary_for_attendee_path(atn)
+            - else
+              = link_to atn.full_name, print_summary_for_attendee_path(atn)
             = "*" if ix == 0 && attendees.length > 1
             %br
         %td
