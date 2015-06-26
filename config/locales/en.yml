@@ -31,6 +31,7 @@ en:
         gender: "Gender"
         given_name: "Given Name"
         family_name: "Family Name"
+        guardian_full_name: "Guardian Name"
         minor_agreement_received: "Minor Agreement Received"
         phone: "Phone"
         state: "State/Province"
@@ -42,6 +43,7 @@ en:
         special_request: "Special Request"
         roomate_request: "Roomate Request"
         comment: "Comments"
+        understand_minor: "Youth Attendance Agreement"
         will_play_in_us_open: "Will play in US Open?"
       contact:
         title: "Title"
