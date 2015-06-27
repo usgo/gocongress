@@ -1,6 +1,7 @@
 .registration-sheet
 
-  .logo= image_tag "logo/usgc/144px/#{@year.year}.png"
+  - f = "logo/usgc/144px/#{@year.year}.png"
+  .logo= image_tag f if image_file?(f)
   %h1 Cost Summary
 
   %table
