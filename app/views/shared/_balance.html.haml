@@ -13,3 +13,12 @@
     %tr
       %th Balance
       %td.numeric= cents_to_currency user.balance
+    %tr
+      %th Status
+      %td
+        - if user.balance == 0
+          Paid in full
+        - elsif user.balance > 0
+          = "User owes #{cents_to_currency user.balance}"
+        - else
+          = "User requires a refund of #{cents_to_currency user.balance.abs}"
