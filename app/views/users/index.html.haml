@@ -33,7 +33,7 @@
       %tr
         %td{ :class => role_emphasis_class(user) }= user.role_name
         %td
-          .hardwrap{:style => "max-width:200px;"}= user.email
+          .hardwrap{:style => "max-width:200px;"}= link_to user.email, print_cost_summary_for_user_path(user)
         %td
           - attendees = user.attendees.sort { |a,b| a.created_at <=> b.created_at }
           - attendees.each_with_index do |atn, ix|
