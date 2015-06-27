@@ -8,6 +8,9 @@
     %tr
       %th User Email
       %td= user.email
+    %tr
+      %th Number of Attendees
+      %td= user.attendees.count
 
   = render :partial => 'shared/balance', :locals => {:user => user, :show_detail_links => false}
 
