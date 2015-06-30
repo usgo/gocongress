@@ -42,6 +42,7 @@ class Ability
     if %w[S U].include?(user.role) then
       can [:show, :update], User, :id => user.id
       can :manage, Attendee, :user_id => user.id
+      cannot :list, Attendee if user.role == 'U'
     end
 
     # Guests can read public resources, but cannot write anything

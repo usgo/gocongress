@@ -49,6 +49,7 @@ Gocongress::Application.routes.draw do
         resources :registrations, :except => [:show, :destroy]
         resources :attendees, :only => [:index] do
           collection do
+            get 'list'
             get 'vip'
           end
           member do

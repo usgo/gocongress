@@ -1,0 +1,12 @@
+%h2 All Attendees
+
+%table.semantic.fullwidth.zebra
+  %thead
+    %tr
+      %th Attendees
+      %th User Email Address
+    %tbody
+      - @attendees.each do |attendee|
+        %tr
+          %td= attendee.full_name
+          %td= attendee.user.email

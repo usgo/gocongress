@@ -4,9 +4,14 @@ class AttendeesController < ApplicationController
   # Callbacks, in order
   before_filter :require_authentication, :except => [:index, :vip]
   add_filter_restricting_resources_to_year_in_route
+  load_and_authorize_resource :only => :list
 
   def index
     @who_is_coming = Attendee::WhoIsComing.new @year, params[:sort], params[:direction]
+  end
+
+  def list
+    @attendees = Attendee.yr(@year)
   end
 
   def print_summary

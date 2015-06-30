@@ -17,12 +17,49 @@ describe AttendeesController, :type => :controller do
         expect(assigns(:who_is_coming)).not_to be_nil
       end
     end
+
+    describe "#list" do
+      it "is forbidden" do
+        get :list, :year => Time.current.year
+        expect(response).to be_forbidden
+      end
+    end
   end
 
+  context "as a user" do
+    let(:user) { create :user }
+    before { sign_in user }
+
+    describe "#list" do
+      it "is forbidden" do
+        get :list, :year => user.year
+        expect(response).to be_forbidden
+      end
+    end
+  end
+
+  context "as staff" do
+    let(:staff) { create :staff }
+    before { sign_in staff }
+
+    describe "#list" do
+      it "is successful" do
+        get :list, :year => staff.year
+        expect(response).to be_successful
+      end
+    end
+  end
 
   context "as an admin" do
     let(:admin) { create :admin }
     before { sign_in admin }
+
+    describe "#list" do
+      it "is successful" do
+        get :list, :year => admin.year
+        expect(response).to be_successful
+      end
+    end
 
     describe "#print_summary" do
       it "shows individual registration sheet" do
