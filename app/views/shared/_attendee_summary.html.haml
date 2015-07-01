@@ -7,7 +7,7 @@
 
   .wide-column
     %h1 Attendee Registration Sheet
-    %h2= "#{attendee.full_name}, #{attendee.rank_name}"
+    %h2= "#{attendee.family_name}, #{attendee.given_name}"
 
     %p
       = pluralize(attendee.user.attendees.count, Attendee.model_name.human.downcase)
@@ -16,6 +16,9 @@
 
     %table
       %tbody
+        %tr
+          %th Rank
+          %td= attendee.rank_name
         %tr
           %th Age
           %td= attendee.age_in_years.to_i
