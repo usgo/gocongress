@@ -9,6 +9,6 @@
     %tbody
       - @attendees.each do |attendee|
         %tr
-          %td= "#{attendee.family_name}, #{attendee.given_name}"
+          %td= link_to "#{attendee.family_name}, #{attendee.given_name}", print_summary_for_attendee_path(attendee)
           %td= attendee.user.email
           %td= link_to 'Account', attendee.user
