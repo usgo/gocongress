@@ -9,6 +9,9 @@
     %tbody
       - @attendees.each do |attendee|
         %tr
-          %td= link_to "#{attendee.family_name}, #{attendee.given_name}", print_summary_for_attendee_path(attendee)
+          - if attendee.cancelled?
+            %td= link_to "#{attendee.family_name}, #{attendee.given_name} (Cancelled)", print_summary_for_attendee_path(attendee)
+          - else
+            %td= link_to "#{attendee.family_name}, #{attendee.given_name}", print_summary_for_attendee_path(attendee)
           %td= attendee.user.email
           %td= link_to 'Account', attendee.user
