@@ -5,8 +5,10 @@
     %tr
       %th Attendees
       %th User Email Address
+      %th{:colspan => "2"}
     %tbody
       - @attendees.each do |attendee|
         %tr
           %td= attendee.full_name
           %td= attendee.user.email
+          %td= link_to 'Account', attendee.user
