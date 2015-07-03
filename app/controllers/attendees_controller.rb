@@ -11,7 +11,7 @@ class AttendeesController < ApplicationController
   end
 
   def list
-    @attendees = Attendee.yr(@year)
+    @attendees = Attendee.yr(@year).order(:family_name, :given_name)
   end
 
   def print_summary
