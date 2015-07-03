@@ -13,5 +13,5 @@
             %td= link_to "#{attendee.family_name}, #{attendee.given_name} (Cancelled)", print_summary_for_attendee_path(attendee)
           - else
             %td= link_to "#{attendee.family_name}, #{attendee.given_name}", print_summary_for_attendee_path(attendee)
-          %td= attendee.user.email
+          %td= link_to attendee.user.email, print_cost_summary_for_user_path(attendee.user)
           %td= link_to 'Account', attendee.user
