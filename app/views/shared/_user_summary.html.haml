@@ -7,7 +7,10 @@
     %p No attendees yet.
   - else
     - for a in user.attendees.order(:family_name, :given_name)
-      %h2= "#{a.family_name}, #{a.given_name}"
+      - if a.cancelled?
+        %h2= "#{a.family_name}, #{a.given_name} (Cancelled)"
+      - else
+        %h2= "#{a.family_name}, #{a.given_name}"
 
   %table
     %tr
