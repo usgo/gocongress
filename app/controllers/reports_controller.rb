@@ -8,9 +8,13 @@ class ReportsController < ApplicationController
 
   def atn_reg_sheets
     @attendee_attr_names = %w[aga_id birth_date comment email gender phone special_request roomate_request].sort
-    @attendees = Attendee.yr(@year) \
-      .where('lower(substr(family_name,1,1)) between ? and ?', params[:min], params[:max]) \
-      .order('family_name, given_name')
+    if params.has_key?(:min) && params.has_key?(:max)
+      @attendees = Attendee.yr(@year) \
+        .where('lower(substr(family_name,1,1)) between ? and ?', params[:min], params[:max]) \
+        .order('family_name, given_name')
+    else
+      @attendees = Attendee.where('id in (?)', params[:attendee_ids]).order('family_name, given_name')
+    end
     render :layout => "print"
   end
 
