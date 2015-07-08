@@ -46,8 +46,24 @@ class AttendeePlan < ActiveRecord::Base
   # Public instance methods
   # -----------------------
 
+  def invoice_plan_dates
+    s = ' ('
+    plan_dates.each do |d|
+      unless d == plan_dates.last
+        s += d + ', '
+      else
+        s += d
+      end
+    end
+    s += ')'
+  end
+
   def invoiced_quantity
     plan.daily? ? dates.length : quantity
+  end
+
+  def plan_dates
+    dates.map {|d| d._date.strftime("%-m/%-d") }
   end
 
   def show_on_invoice?
@@ -57,7 +73,11 @@ class AttendeePlan < ActiveRecord::Base
   # Optimization: Avoid a query by passing
   # `attendee_full_name` as an argument
   def to_invoice_item attendee_full_name
-    InvoiceItem.new(plan.name, attendee_full_name, plan.price, invoiced_quantity)
+    if plan.daily?
+      InvoiceItem.new(plan.name + invoice_plan_dates, attendee_full_name, plan.price, invoiced_quantity)
+    else
+      InvoiceItem.new(plan.name, attendee_full_name, plan.price, invoiced_quantity)
+    end
   end
 
   def to_plan_selection
