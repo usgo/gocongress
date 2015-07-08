@@ -21,10 +21,13 @@
         %tr
           %th Rank
           %td= attendee.rank_name
-        %tr
-          %th Age
-          %td= attendee.age_in_years.to_i
         - if attendee.age_in_years.to_i <= 17
+          %tr
+            %th Age
+            %td= attendee.age_in_years.to_i
+          %tr
+            %th Birth Date
+            %td= attendee.birth_date
           %tr
             %th Guardian
             %td= attendee.guardian_full_name
