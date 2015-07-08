@@ -6,6 +6,7 @@
 
   .wide-column
     %h1 Attendee Registration Sheet
+    %p Please verify all information.
     - if attendee.cancelled?
       %h2= "#{attendee.family_name}, #{attendee.given_name} (Cancelled)"
     - else
