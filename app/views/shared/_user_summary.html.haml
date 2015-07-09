@@ -36,7 +36,7 @@
       - user.invoice_items.each do |i|
         %tr
           %td= truncate(strip_tags(i.attendee_full_name), :length => 30)
-          %td= truncate(strip_tags(i.description), :length => 45)
+          %td= strip_tags(i.description)
           %td.numeric= cents_to_currency i.price
           %td.numeric= i.qty
           %td.numeric= cents_to_currency( i.price * i.qty )
