@@ -2,29 +2,20 @@
 
   - f = "logo/usgc/144px/#{@year.year}.png"
   .logo= image_tag f if image_file?(f)
-  %h1 Cost Summary
+  %h2= "User Email: #{user.email}"
+  %p= "Number of Attendees: #{user.attendees.count}"
   - if user.attendees.empty?
     %p No attendees yet.
   - else
-    - for a in user.attendees.order(:family_name, :given_name)
+    - user.attendees.order(:family_name, :given_name).each_with_index do |a,i|
+      = "#{i + 1}."
       - if a.cancelled?
-        %h2= "#{a.family_name}, #{a.given_name} (Cancelled)"
+        = "#{a.family_name}, #{a.given_name} (Cancelled)"
       - else
-        %h2= "#{a.family_name}, #{a.given_name}"
+        = "#{a.family_name}, #{a.given_name}"
+      %br
 
-  %table
-    %tr
-      %th User Email
-      %td= user.email
-    %tr
-      %th Number of Attendees
-      %td= user.attendees.count
-
-  = render :partial => 'shared/balance', :locals => {:user => user, :show_detail_links => false}
-
-  %br.clear
-  %br
-
+  %h2 Cost Summary
   %table.fullwidth
     %thead
       %th Attendee
@@ -45,3 +36,6 @@
         %td.numeric= cents_to_currency user.get_invoice_total
 
   = render :partial => 'shared/ledger', :locals => {:user => user}
+
+  %h2 Balance
+  = render :partial => 'shared/balance', :locals => {:user => user, :show_detail_links => false}
