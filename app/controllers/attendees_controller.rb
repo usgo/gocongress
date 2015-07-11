@@ -11,7 +11,8 @@ class AttendeesController < ApplicationController
   end
 
   def list
-    @attendees = Attendee.yr(@year).order(:family_name, :given_name)
+    drn = (params[:drn] == "desc") ? :desc : :asc
+    @attendees = Attendee.yr(@year).order("family_name #{drn}, given_name #{drn}")
   end
 
   def print_summary
