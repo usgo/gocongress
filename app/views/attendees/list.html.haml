@@ -5,8 +5,8 @@
     %thead
       %tr
         %th
-        %th= link_to "Attendee", :drn => params[:drn] == "desc" ? :asc : :desc
-        %th User Email Address
+        %th= link_to "Attendee", :drn => (params[:sort] == "user_email" || params[:drn] == "desc") ? :asc : :desc
+        %th= link_to "User Email Address", :sort => :user_email, :drn => (params[:sort] == "user_email" && params[:drn] == "asc") ? :desc : :asc
         %th{:colspan => "2"}
       %tbody
         - @attendees.each do |attendee|

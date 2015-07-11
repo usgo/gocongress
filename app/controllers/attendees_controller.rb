@@ -12,7 +12,11 @@ class AttendeesController < ApplicationController
 
   def list
     drn = (params[:drn] == "desc") ? :desc : :asc
-    @attendees = Attendee.yr(@year).order("family_name #{drn}, given_name #{drn}")
+    if params[:sort] == "user_email"
+      @attendees = Attendee.yr(@year).joins(:user).order("users.email #{drn}")
+    else
+      @attendees = Attendee.yr(@year).order("family_name #{drn}, given_name #{drn}")
+    end
   end
 
   def print_summary
