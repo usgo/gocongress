@@ -19,11 +19,18 @@
             %td= link_to attendee.user.email, print_cost_summary_for_user_path(attendee.user)
             %td= link_to 'Account', attendee.user
   = button_tag('Set All', type: 'button', name: 'setAll_attendee_ids[]')
+  = button_tag('Clear', type: 'button', name: 'clear_attendee_ids[]')
   = submit_tag "Print Attendee Registration Sheets"
 
 :javascript
   $("[name='setAll_attendee_ids[]']").click(function() {
     $("[name='attendee_ids[]']").each(function() {
       this.checked = true;
+    });
+  });
+
+  $("[name='clear_attendee_ids[]']").click(function() {
+    $("[name='attendee_ids[]']").each(function() {
+      this.checked = false;
     });
   });
