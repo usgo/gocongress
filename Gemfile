@@ -12,7 +12,7 @@ gem 'jquery-rails'
 gem 'haml'
 gem 'bluecloth' # markdown
 gem 'kaminari' # pagination
-gem 'sass-rails', '~> 4.0.2'
+gem 'sass-rails'
 gem 'uglifier', '>= 1.3.0'
 
 # Model Layer
@@ -24,7 +24,7 @@ gem 'jc-validates_timeliness'
 gem 'authorizenet'
 gem 'cancancan', '~> 1.9'
 gem 'devise'
-gem 'exception_notification', '~> 4.0.1'
+gem 'exception_notification'
 gem 'thin'
 
 # Deployment
@@ -54,7 +54,7 @@ group :test, :development do
   gem 'dotenv-rails'
   gem 'guard-rspec'
   gem 'guard-spork'
-  gem 'rspec-rails', '~> 3.1.0'
+  gem 'rspec-rails', '~> 3.3.0'
   gem 'rspec-mocks'
 end
 
