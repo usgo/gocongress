@@ -26,7 +26,7 @@ describe Devise::PasswordsController, :type => :controller do
       # We expect the delivered email to include an anchor with the correct
       # year in the path in the href.  For example:
       # <a href="http://www.gocongress.org/2012/users/password/edit ...
-      body = HTML::Document.new(ActionMailer::Base.deliveries.last.body.to_s).root
+      body = Nokogiri::HTML.parse(ActionMailer::Base.deliveries.last.body.to_s).root
       assert_select body, 'a[href*=2012]'
       assert_select body, "a[href*=#{user2012.reset_password_token}]"
     end
