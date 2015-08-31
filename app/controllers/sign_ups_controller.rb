@@ -42,7 +42,7 @@ class SignUpsController < Devise::RegistrationsController
   def send_welcome_email
     return if params[:user][:email].blank?
     user = User.yr(@year).where(email: params[:user][:email]).first
-    UserMailer.welcome_email(user).deliver if user.present?
+    UserMailer.welcome_email(user).deliver_later if user.present?
   end
 
 end
