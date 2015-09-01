@@ -33,5 +33,6 @@ Gocongress::Application.configure do
   # Override mailer host in application.rb -Jared 2010.12.27
   config.action_mailer.default_url_options = { :host => "0.0.0.0", :port => "3000" }
 
+  config.web_console.whitelisted_ips = '10.0.0.0/16'
 end
 
