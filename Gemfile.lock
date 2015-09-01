@@ -411,6 +411,7 @@ DEPENDENCIES
   rails (= 4.2.1)
   rails_12factor
   rb-fsevent
+  responders (~> 2.0)
   rspec-mocks
   rspec-rails (~> 3.3.0)
   sass-rails

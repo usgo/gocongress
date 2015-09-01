@@ -25,6 +25,7 @@ gem 'authorizenet'
 gem 'cancancan', '~> 1.9'
 gem 'devise'
 gem 'exception_notification'
+gem 'responders', '~> 2.0'
 gem 'thin'
 
 # Deployment
