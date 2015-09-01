@@ -56,6 +56,7 @@ group :test, :development do
   gem 'guard-spork'
   gem 'rspec-rails', '~> 3.3.0'
   gem 'rspec-mocks'
+  gem 'web-console', '~> 2.0'
 end
 
 group :development do
