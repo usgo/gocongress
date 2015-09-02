@@ -41,7 +41,7 @@ describe UsersController, :type => :controller do
     it 'cannot #destroy self' do
       sign_in user
       expect { delete :destroy, :id => user.id, :year => user.year
-        }.to raise_error(ActionController::RoutingError)
+        }.to raise_error(ActionController::UrlGenerationError)
     end
 
     it 'can #edit_password' do
@@ -199,10 +199,10 @@ describe UsersController, :type => :controller do
     end
 
     describe '#destroy' do
-      it 'raises ActionController::RoutingError' do
+      it 'raises ActionController::UrlGenerationError' do
         user # must `create` before `expect`
         expect { delete :destroy, :id => user.id, :year => user.year
-          }.to raise_error(ActionController::RoutingError)
+          }.to raise_error(ActionController::UrlGenerationError)
       end
     end
 

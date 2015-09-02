@@ -5,7 +5,7 @@ source 'https://rubygems.org'
 # https://devcenter.heroku.com/articles/ruby-versions
 ruby '2.1.7'
 
-gem 'rails', '4.1.13'
+gem 'rails', '4.2.4'
 
 # View Layer
 gem 'jquery-rails'
@@ -25,6 +25,7 @@ gem 'authorizenet'
 gem 'cancancan', '~> 1.9'
 gem 'devise'
 gem 'exception_notification'
+gem 'responders', '~> 2.0'
 gem 'thin'
 
 # Deployment
@@ -56,6 +57,7 @@ group :test, :development do
   gem 'guard-spork'
   gem 'rspec-rails', '~> 3.3.0'
   gem 'rspec-mocks'
+  gem 'web-console', '~> 2.0'
 end
 
 group :development do

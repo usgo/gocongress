@@ -315,10 +315,10 @@ describe RegistrationsController, :type => :controller do
     end
 
     describe "#destroy" do
-      it "raises a routing error" do
+      it "raises ActionController::UrlGenerationError" do
         a = create :attendee
         expect { delete :destroy, :id => a.id, :year => a.year
-          }.to raise_error(ActionController::RoutingError)
+          }.to raise_error(ActionController::UrlGenerationError)
       end
     end
 

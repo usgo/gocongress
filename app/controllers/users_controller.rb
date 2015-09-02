@@ -25,7 +25,7 @@ class UsersController < ApplicationController
     @user.year = @year.year
     authorize! :create, @user
     if @user.save
-      UserMailer.welcome_email(@user).deliver
+      UserMailer.welcome_email(@user).deliver_later
       redirect_to users_path, :notice => 'User created'
     else
       render :new

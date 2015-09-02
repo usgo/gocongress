@@ -22,13 +22,14 @@ describe Devise::PasswordsController, :type => :controller do
 
       # Create a reset password token
       post :create, :user => {:email => user2012.email, :year => 2012}, :year => 2012
+      @reset_password_token = user2012.send_reset_password_instructions
 
       # We expect the delivered email to include an anchor with the correct
       # year in the path in the href.  For example:
       # <a href="http://www.gocongress.org/2012/users/password/edit ...
-      body = HTML::Document.new(ActionMailer::Base.deliveries.last.body.to_s).root
-      assert_select body, 'a[href*=2012]'
-      assert_select body, "a[href*=#{user2012.reset_password_token}]"
+      body = Nokogiri::HTML.parse(ActionMailer::Base.deliveries.last.body.to_s).root
+      assert_select body, 'a[href*=?]', '2012'
+      assert_select body, 'a[href*=?]', @reset_password_token
     end
   end
 
@@ -38,7 +39,7 @@ describe Devise::PasswordsController, :type => :controller do
       get :new, :year => u.year
       expect(response).to be_success
       assert_select "input[name*=email]"
-      assert_select "input[name*=year][value=#{u.year}]"
+      assert_select 'input[name*=year][value=?]', u.year.to_s
     end
   end
 end
