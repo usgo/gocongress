@@ -17,7 +17,7 @@ Gocongress::Application.configure do
   config.active_record.mass_assignment_sanitizer = :logger
 
   # Disable Rails's static asset server
-  config.serve_static_assets = false
+  config.serve_static_files = false
 
   # Compress JavaScripts and CSS.
   config.assets.compress = true
