@@ -30,6 +30,8 @@ Gocongress::Application.configure do
   # Specifies the header that your server uses for sending files.
   config.action_dispatch.x_sendfile_header = "X-Sendfile" # for apache
 
+  config.log_level = :info
+
   # Disable delivery errors, bad email addresses will be ignored.
   config.action_mailer.raise_delivery_errors = false
   config.action_mailer.default_url_options = { :host => "www.gocongress.org" }
