@@ -10,7 +10,7 @@ gem 'rails', '4.2.4'
 # View Layer
 gem 'jquery-rails'
 gem 'haml'
-gem 'bluecloth' # markdown
+gem 'bluecloth', :require => 'tilt/bluecloth' # markdown
 gem 'kaminari' # pagination
 gem 'sass-rails'
 gem 'uglifier', '>= 1.3.0'
