@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 # Specify a ruby version
 # http://gembundler.com/v1.2/whats_new.html
 # https://devcenter.heroku.com/articles/ruby-versions
-ruby '2.1.7'
+ruby '2.2.0'
 
 gem 'rails', '4.2.4'
 
