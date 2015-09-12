@@ -52,19 +52,7 @@ class Attendee < ActiveRecord::Base
   validates :tshirt_size,     :inclusion => {:in => Shirt::SIZE_CODES, :message => " - Please select a size"}
   validates :will_play_in_us_open, :inclusion => {
     :in => [true, false], :message => ' - Please select yes or no'}
-
-  # AGA ID must be unique within each year
-  validates :aga_id,
-    :uniqueness => {
-      :scope => :year,
-      :allow_nil => true,
-      :message => "id has already been taken"
-    },
-    :numericality => {
-      :only_integer => true,
-      :allow_nil => true,
-      :message => "id is not a number"
-    }
+  validates_numericality_of :aga_id, :only_integer => true, :allow_nil => true, :message => "id is not a number"
 
   # Attendee must always have a user.  We validate the presence of
   # the user, rather than the user_id, so that models can be
