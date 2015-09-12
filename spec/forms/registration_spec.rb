@@ -34,10 +34,11 @@ describe Registration do
       end
 
       it "selects shirt style" do
+        s = create :shirt
         r = Registration.new user, attendee
-        params = {registration: {shirt_id: 5}}
+        params = {registration: {shirt_id: s.id}}
         expect(r.submit(params)).to eq(true)
-        expect(attendee.shirt_id).to eq(5)
+        expect(attendee.shirt_id).to eq(s.id)
       end
 
       context 'when plan selection would exceed inventory' do
