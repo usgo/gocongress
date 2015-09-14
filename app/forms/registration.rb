@@ -16,7 +16,7 @@ class Registration
 
   # `ATD_ATRS` is an array of *permitted* attendee attributes.
   # Forbidden attributes, like `year`, are omitted.
-  ATD_ATRS = [:aga_id, :anonymous,
+  ATD_ATRS = [:aga_id, :alternate_name, :anonymous,
     :birth_date, :country, :email, :family_name, :gender,
     :given_name, :guardian_attendee_id, :guardian_full_name, :phone, :rank,
     :roomate_request, :special_request, :shirt_id, :tshirt_size,
