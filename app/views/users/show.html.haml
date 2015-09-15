@@ -31,6 +31,7 @@
     %thead
       %tr
         %th Name
+        %th Alternate Name
         %th Rank
         %th.numeric Age*
         %th Registered
@@ -41,6 +42,7 @@
             %td= a.full_name + ' (Cancelled)'
           - else
             %td= link_to a.full_name, edit_registration_path(a)
+          %td= a.alternate_name if a.alternate_name.present?
           %td= a.rank_name
           %td.numeric= a.age_in_years.floor
           %td= a.created_at.strftime("%b %-d %l:%M %p")
