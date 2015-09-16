@@ -6,6 +6,7 @@
       %tr
         %th
         %th= link_to "Attendee", :drn => (params[:sort] == "user_email" || params[:drn] == "desc") ? :asc : :desc
+        %th Alternate Name
         %th= link_to "User Email Address", :sort => :user_email, :drn => (params[:sort] == "user_email" && params[:drn] == "asc") ? :desc : :asc
         %th{:colspan => "2"}
       %tbody
@@ -16,6 +17,7 @@
               %td= link_to "#{attendee.family_name}, #{attendee.given_name} (Cancelled)", print_summary_for_attendee_path(attendee)
             - else
               %td= link_to "#{attendee.family_name}, #{attendee.given_name}", print_summary_for_attendee_path(attendee)
+            %td= attendee.alternate_name
             %td= link_to attendee.user.email, print_cost_summary_for_user_path(attendee.user)
             %td= link_to 'Account', attendee.user
   = button_tag('Set All', type: 'button', name: 'setAll_attendee_ids[]')
