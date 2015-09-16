@@ -14,6 +14,8 @@ class AttendeesController < ApplicationController
     drn = (params[:drn] == "desc") ? :desc : :asc
     if params[:sort] == "user_email"
       @attendees = Attendee.yr(@year).joins(:user).order("users.email #{drn}")
+    elsif params[:sort] == "alternate_name"
+      @attendees = Attendee.yr(@year).order("alternate_name #{drn}")
     else
       @attendees = Attendee.yr(@year).order("family_name #{drn}, given_name #{drn}")
     end

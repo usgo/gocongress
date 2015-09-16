@@ -5,8 +5,8 @@
     %thead
       %tr
         %th
-        %th= link_to "Attendee", :drn => (params[:sort] == "user_email" || params[:drn] == "desc") ? :asc : :desc
-        %th Alternate Name
+        %th= link_to "Attendee", :drn => (%w[alternate_name user_email].include?(params[:sort]) || params[:drn] == "desc") ? :asc : :desc
+        %th= link_to "Alternate Name", :sort => :alternate_name, :drn => (params[:sort] == "alternate_name" && params[:drn] == "asc") ? :desc : :asc
         %th= link_to "User Email Address", :sort => :user_email, :drn => (params[:sort] == "user_email" && params[:drn] == "asc") ? :desc : :asc
         %th{:colspan => "2"}
       %tbody
