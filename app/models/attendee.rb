@@ -113,6 +113,14 @@ class Attendee < ActiveRecord::Base
     anonymous? ? 'Anonymous' : string
   end
 
+  def attendee_alternate_name
+    if alternate_name.present?
+      ' (' + alternate_name + ')'
+    else
+      ''
+    end
+  end
+
   def family_name_anonymized
     anonymize NameInflector.capitalize family_name
   end
@@ -147,7 +155,7 @@ class Attendee < ActiveRecord::Base
 
   def invoice_items
     if cancelled?
-      [InvoiceItem.new('Cancelled', full_name, 0, 0)]
+      [InvoiceItem.new('Cancelled', full_name + attendee_alternate_name, 0, 0)]
     else
       plans_as_invoice_items + activities_as_invoice_items
     end
@@ -175,7 +183,7 @@ class Attendee < ActiveRecord::Base
   end
 
   def plans_as_invoice_items
-    plans_to_invoice.map{ |ap| ap.to_invoice_item(full_name) }
+    plans_to_invoice.map{ |ap| ap.to_invoice_item(full_name, attendee_alternate_name) }
   end
 
   def plans_to_invoice
