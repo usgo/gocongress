@@ -51,7 +51,7 @@ class AttendeesCsvExporter
   end
 
   module AttendeeAttributes
-    FIRST_ATRS = %w[aga_id family_name given_name country phone].freeze
+    FIRST_ATRS = %w[aga_id family_name given_name alternate_name country phone].freeze
     LAST_ATRS = %w[special_request roomate_request].freeze
     INTERNAL_ATRS = %w[id shirt_id user_id understand_minor guardian_attendee_id].freeze
 
