@@ -3,6 +3,7 @@ select
   a.id as attendee_id,
   a.family_name,
   a.given_name,
+  a.alternate_name,
   p.name as plan_name,
   min(apd._date) as first_date,
   max(apd._date) as last_date
