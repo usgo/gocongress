@@ -10,9 +10,9 @@
     - user.attendees.order(:family_name, :given_name).each_with_index do |a,i|
       = "#{i + 1}."
       - if a.cancelled?
-        = "#{a.family_name}, #{a.given_name} (Cancelled)"
+        = "#{a.family_name}, #{a.given_name}#{a.attendee_alternate_name} (Cancelled)"
       - else
-        = "#{a.family_name}, #{a.given_name}"
+        = "#{a.family_name}, #{a.given_name}#{a.attendee_alternate_name}"
       %br
 
   %h2 Cost Summary
