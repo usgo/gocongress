@@ -4,6 +4,7 @@ select
   a.id as attendee_id,
   a.given_name,
   a.family_name,
+  a.alternate_name,
   p.name as plan_name,
 
   /* Plan prices are stored in integer cents.  Convert to dollars. */
