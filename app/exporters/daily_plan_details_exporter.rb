@@ -13,10 +13,11 @@ class DailyPlanDetailsExporter < Exporter
       xtab_row[1] = tuples[0]["attendee_id"]
       xtab_row[2] = tuples[0]["family_name"]
       xtab_row[3] = tuples[0]["given_name"]
-      xtab_row[4] = tuples[0]["plan_name"]
+      xtab_row[4] = tuples[0]["alternate_name"]
+      xtab_row[5] = tuples[0]["plan_name"]
       tuples.each do |t|
         apdate = t["apdate"].to_date
-        xtab_col = @date_range.find_index(apdate) + 5
+        xtab_col = @date_range.find_index(apdate) + 6
         xtab_row[xtab_col] = 1
       end
       xtab << xtab_row
@@ -25,7 +26,7 @@ class DailyPlanDetailsExporter < Exporter
   end
 
   def header
-    %w[user_id attendee_id family_name given_name plan_name] + dates_for_header
+    %w[user_id attendee_id family_name given_name alternate_name plan_name] + dates_for_header
   end
 
   def dates_for_header
