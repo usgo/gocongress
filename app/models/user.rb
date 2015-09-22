@@ -80,10 +80,6 @@ class User < ActiveRecord::Base
     get_invoice_total - amount_paid
   end
 
-  def cancel_attendee attendee, c
-    attendees.find(attendee.id).update_attributes!(:cancelled => c)
-  end
-
   def comp_invoice_items
     transactions.comps.map {|t| t.to_invoice_item}
   end

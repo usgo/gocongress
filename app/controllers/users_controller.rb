@@ -105,10 +105,10 @@ class UsersController < ApplicationController
   def update_attendee_cancelled
     @attendee = Attendee.find(params[:attendee_id])
     if @attendee.cancelled?
-      @user.cancel_attendee(@attendee, false)
-      redirect_to(@user, :notice => 'Restored attendee.')
+      redirect_to edit_registration_path(@attendee), :notice => 'Please submit this form to restore this attendee.'
     else
-      @user.cancel_attendee(@attendee, true)
+      @attendee.update(cancelled: true)
+      @attendee.attendee_plans.destroy_all
       redirect_to(@user, :notice => 'Cancelled attendee.')
     end
   end

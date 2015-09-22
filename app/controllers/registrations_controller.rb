@@ -36,7 +36,12 @@ class RegistrationsController < ApplicationController
     @registration = Registration.new(current_user, attendee)
     expose_legacy_form_vars # TODO: don't!
     if @registration.submit(params)
-      redirect_to_terminus 'Changes saved'
+      if attendee.cancelled?
+        attendee.update(cancelled: false)
+        redirect_to_terminus 'Restored attendee.'
+      else
+        redirect_to_terminus 'Changes saved'
+      end
     else
       render :edit
     end
