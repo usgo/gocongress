@@ -34,10 +34,15 @@ describe UsersController, :type => :controller do
       put :update, :id => user.id, :user => user.attributes, :year => user.year
       expect(response).to be_forbidden
     end
+
+    it "cannot cancel attendee" do
+      a = create :attendee, user_id: user.id
+      patch :cancel_attendee, :attendee_id => a.id, :id => user.id, :year => user.year
+      expect(response).to be_forbidden
+    end
   end
 
   context "as a user" do
-
     it 'cannot #destroy self' do
       sign_in user
       expect { delete :destroy, :id => user.id, :year => user.year
@@ -48,6 +53,26 @@ describe UsersController, :type => :controller do
       sign_in user
       get :edit_password, :id => user.id, :year => user.year
       assert_response :success
+    end
+
+    describe "#cancel_attendee" do
+      it "can cancel attendee" do
+        a = create :attendee, user_id: user.id
+        create :attendee_plan, attendee_id: a.id
+        sign_in user
+        patch :cancel_attendee, :attendee_id => a.id, :id => user.id, :year => user.year
+        expect(a.reload.cancelled).to eq(true)
+        expect(a.attendee_plans.count).to eq(0)
+        expect(response).to redirect_to(user)
+      end
+
+      it "cannot cancel attendee of another user" do
+        user_two = create :user
+        a = create :attendee, user_id: user_two.id
+        sign_in user
+        patch :cancel_attendee, :attendee_id => a.id, :id => user_two.id, :year => user_two.year
+        expect(response).to be_forbidden
+      end
     end
 
     describe '#edit' do
@@ -133,6 +158,12 @@ describe UsersController, :type => :controller do
       sign_in staff
     end
 
+    it "cannot cancel attendee" do
+      a = create :attendee, user_id: user.id
+      patch :cancel_attendee, :attendee_id => a.id, :id => user.id, :year => user.year
+      expect(response).to be_forbidden
+    end
+
     it 'cannot get #new' do
       get :new, :year => year
       expect(response).to be_forbidden
@@ -185,6 +216,15 @@ describe UsersController, :type => :controller do
   context "as an admin" do
     before do
       sign_in create :admin
+    end
+
+    it "can cancel attendee" do
+      a = create :attendee, user_id: user.id
+      create :attendee_plan, attendee_id: a.id
+      patch :cancel_attendee, :attendee_id => a.id, :id => user.id, :year => user.year
+      expect(a.reload.cancelled).to eq(true)
+      expect(a.attendee_plans.count).to eq(0)
+      expect(response).to redirect_to(user)
     end
 
     it 'can get #new' do

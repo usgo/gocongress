@@ -8,6 +8,14 @@ class UsersController < ApplicationController
   load_resource
   authorize_resource :only => [:index, :show, :update]
 
+  def cancel_attendee
+    authorize! :update, @user
+    @attendee = Attendee.find(params[:attendee_id])
+    @attendee.update(cancelled: true)
+    @attendee.attendee_plans.destroy_all
+    redirect_to(@user, :notice => 'Cancelled attendee.')
+  end
+
   def edit_email
     authorize! :update, @user
   end

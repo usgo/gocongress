@@ -49,7 +49,7 @@
           - if a.cancelled?
             %td= button_to "Uncancel", { action: "update_attendee_cancelled", id: @user.id, attendee_id: a.id }, method: :patch, data: { confirm: "Are you sure?" }
           - else
-            %td= button_to "Cancel", { action: "update_attendee_cancelled", id: @user.id, attendee_id: a.id }, method: :patch, data: { confirm: "Plan selections will be removed.  Are you sure?" }
+            %td= button_to "Cancel", { action: "cancel_attendee", id: @user.id, attendee_id: a.id }, method: :patch, data: { confirm: "Plan selections will be removed.  Are you sure?" }
 
 %p= button_to_get 'Add Attendee', new_registration_path(user_id: @user.id), 'add_attendee_btn'
 
