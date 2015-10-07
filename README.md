@@ -17,7 +17,7 @@ Contribute
     1. [Fork and clone][8] this github repo
 1. Install the Ruby version specified in `.ruby-version`.
     - Use [rbenv][9] or [compile from source][10]
-1. Install [PostgreSQL 9.3.9+][5]
+1. Install [PostgreSQL 9.4.4+][5]
     1. Practice connecting using the command-line client, `psql`
         - ["permission denied"][3]
         - [Client Connection Problems][4]
@@ -83,8 +83,8 @@ Colburn
 [1]: http://blog.daviddollar.org/2011/05/06/introducing-foreman.html
 [2]: https://devcenter.heroku.com/articles/config-vars
 [3]: http://bit.ly/YJFlPQ
-[4]: http://www.postgresql.org/docs/9.3/interactive/server-start.html#CLIENT-CONNECTION-PROBLEMS
-[5]: http://www.postgresql.org/docs/9.3/interactive/index.html
+[4]: http://www.postgresql.org/docs/9.4/interactive/server-start.html#CLIENT-CONNECTION-PROBLEMS
+[5]: http://www.postgresql.org/docs/9.4/interactive/index.html
 [6]: http://edgeguides.rubyonrails.org/configuring.html#configuring-a-database
 [7]: https://www.relishapp.com/rspec
 [8]: https://help.github.com/articles/fork-a-repo
@@ -93,11 +93,11 @@ Colburn
 [11]: http://nodejs.org/
 [12]: http://bundler.io/
 [13]: http://git-scm.com/
-[14]: http://www.postgresql.org/docs/9.3/static/sql.html
+[14]: http://www.postgresql.org/docs/9.4/static/sql.html
 [15]: http://www.ubuntu.com/
 [16]: http://guides.rubyonrails.org/
 [17]: http://nokogiri.org/tutorials/installing_nokogiri.html
 [18]: https://bitbucket.org/ged/ruby-pg/wiki/Home
-[19]: http://www.postgresql.org/docs/9.3/interactive/user-manag.html
+[19]: http://www.postgresql.org/docs/9.4/interactive/user-manag.html
 [20]: http://trac.webkit.org/wiki/JavaScriptCore
 [21]: http://guides.rubygems.org/
