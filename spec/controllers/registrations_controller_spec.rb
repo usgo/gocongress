@@ -165,6 +165,12 @@ describe RegistrationsController, :type => :controller do
         )
       end
 
+      it "restores attendee" do
+        a = create :attendee, user_id: user.id, cancelled: true
+        put :update, :id => a.id, :registration => a.attributes, :year => a.year
+        expect(a.reload.cancelled).to eq(false)
+      end
+
       it "updates a trivial field" do
         expect { put_update :given_name => 'banana'
           }.to change { attendee.reload.given_name }
@@ -339,6 +345,12 @@ describe RegistrationsController, :type => :controller do
 
     describe '#update' do
       let(:a) { create(:attendee, :year => admin.year) }
+
+      it "can restore attendee" do
+        cancelled_attendee = create :attendee, cancelled: true
+        put :update, :id => cancelled_attendee.id, :registration => cancelled_attendee.attributes, :year => cancelled_attendee.year
+        expect(cancelled_attendee.reload.cancelled).to eq(false)
+      end
 
       it 'can update attendee of any user' do
         attrs = accessible_attributes_for(a).merge({:family_name => 'banana'})

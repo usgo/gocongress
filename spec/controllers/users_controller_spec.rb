@@ -25,6 +25,12 @@ describe UsersController, :type => :controller do
       expect(response).to be_forbidden
     end
 
+    it "cannot #restore_attendee" do
+      a = create :attendee, user_id: user.id, cancelled: true
+      patch :restore_attendee, :attendee_id => a.id, :id => user.id, :year => user.year
+      expect(response).to be_forbidden
+    end
+
     it 'cannot #show' do
       get :show, :id => user.id, :year => user.year
       expect(response).to be_forbidden
@@ -106,6 +112,23 @@ describe UsersController, :type => :controller do
       end
     end
 
+    describe "#restore_attendee" do
+      it "can #restore_attendee" do
+        a = create :attendee, user_id: user.id, cancelled: true
+        sign_in user
+        patch :restore_attendee, :attendee_id => a.id, :id => user.id, :year => user.year
+        expect(response).to redirect_to edit_registration_path(a)
+      end
+
+      it "cannot #restore_attendee if attendee belongs to another user" do
+        user_two = create :user
+        a = create :attendee, user_id: user_two.id, cancelled: true
+        sign_in user
+        patch :restore_attendee, :attendee_id => a.id, :id => user_two.id, :year => user_two.year
+        expect(response).to be_forbidden
+      end
+    end
+
     describe '#show' do
       it "the same user succeeds" do
         sign_in user
@@ -156,6 +179,12 @@ describe UsersController, :type => :controller do
 
     before do
       sign_in staff
+    end
+
+    it "cannot #restore_attendee" do
+      a = create :attendee, user_id: user.id, cancelled: true
+      patch :restore_attendee, :attendee_id => a.id, :id => user.id, :year => user.year
+      expect(response).to be_forbidden
     end
 
     it "cannot cancel attendee" do
@@ -216,6 +245,12 @@ describe UsersController, :type => :controller do
   context "as an admin" do
     before do
       sign_in create :admin
+    end
+
+    it "can #restore_attendee" do
+      a = create :attendee, user_id: user.id, cancelled: true
+      patch :restore_attendee, :attendee_id => a.id, :id => user.id, :year => user.year
+      expect(response).to redirect_to edit_registration_path(a)
     end
 
     it "can cancel attendee" do

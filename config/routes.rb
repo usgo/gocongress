@@ -66,6 +66,7 @@ Gocongress::Application.routes.draw do
             get 'pay'
             get 'print_cost_summary', :as => 'print_cost_summary_for'
             patch 'cancel_attendee'
+            patch 'restore_attendee'
             patch 'update_attendee_cancelled'
           end
           resource :terminus, :only => :show

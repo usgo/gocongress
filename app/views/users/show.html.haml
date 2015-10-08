@@ -47,7 +47,7 @@
           %td.numeric= a.age_in_years.floor
           %td= a.created_at.strftime("%b %-d %l:%M %p")
           - if a.cancelled?
-            %td= button_to "Uncancel", { action: "update_attendee_cancelled", id: @user.id, attendee_id: a.id }, method: :patch, data: { confirm: "Are you sure?" }
+            %td= button_to "Uncancel", { action: "restore_attendee", id: @user.id, attendee_id: a.id }, method: :patch, data: { confirm: "Are you sure?" }
           - else
             %td= button_to "Cancel", { action: "cancel_attendee", id: @user.id, attendee_id: a.id }, method: :patch, data: { confirm: "Plan selections will be removed.  Are you sure?" }
 

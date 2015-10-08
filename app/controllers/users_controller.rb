@@ -29,6 +29,12 @@ class UsersController < ApplicationController
     authorize! :new, @user
   end
 
+  def restore_attendee
+    authorize! :update, @user
+    @attendee = Attendee.find(params[:attendee_id])
+    redirect_to edit_registration_path(@attendee), :notice => 'Please submit this form to restore this attendee.'
+  end
+
   def create
     @user.year = @year.year
     authorize! :create, @user
