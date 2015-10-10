@@ -78,7 +78,7 @@ Gocongress::Application.routes.draw do
           collection do
             get :atn_reg_sheets,
               :emails, :activities, :invoices,
-              :tournaments, :user_invoices
+              :user_invoices
           end
         end
 
