@@ -84,7 +84,8 @@ private
       2012 => [:aga, :agf, :confucius, :jpga, :kaba, :pandanet, :slate_and_shell, :tygem],
       2013 => [],
       2014 => [:aga],
-      2015 => [:aga]
+      2015 => [:aga],
+      2016 => [:aga]
     }
   end
 

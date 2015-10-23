@@ -81,3 +81,19 @@ Year.create!(
   },
   :without_protection => true
 )
+
+Year.create!(
+  {
+    city:                  'Boston',
+    date_range:            'July 30 - August 7',
+    day_off_date:          Date.new(2016, 8, 3),
+    ordinal_number:        32,
+    registration_phase:    'closed',
+    reply_to_email:        'webmaster@gocongress.org',
+    start_date:            Date.new(2016, 7, 30),
+    state:                 'MA',
+    timezone:              'Eastern Time (US & Canada)',
+    year:                  2016
+  },
+  :without_protection => true
+)
