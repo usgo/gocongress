@@ -1,23 +1,25 @@
 .curvy-text-container
-  - logo_class = @year.circular_logo? ? 'circular-logo' : 'rectangular-logo'
-  = image_tag "logo/usgc/#{@logo_file}", :id => 'usgc-logo', :class => logo_class
-  - if @year.circular_logo?
-    .curvy-spacer{:style => "width: 115px;"} &nbsp;
-    .curvy-spacer{:style => "width: 125px;"} &nbsp;
-    .curvy-spacer{:style => "width: 140px;"} &nbsp;
-    .curvy-spacer{:style => "width: 150px;"} &nbsp;
-    .curvy-spacer{:style => "width: 160px;"} &nbsp;
-    .curvy-spacer{:style => "width: 165px;"} &nbsp;
-    .curvy-spacer{:style => "width: 170px;"} &nbsp;
-    .curvy-spacer{:style => "width: 170px;"} &nbsp;
-    .curvy-spacer{:style => "width: 170px;"} &nbsp;
-    .curvy-spacer{:style => "width: 170px;"} &nbsp;
-    .curvy-spacer{:style => "width: 165px;"} &nbsp;
-    .curvy-spacer{:style => "width: 155px;"} &nbsp;
-    .curvy-spacer{:style => "width: 150px;"} &nbsp;
-    .curvy-spacer{:style => "width: 125px;"} &nbsp;
-    .curvy-spacer{:style => "width: 105px;"} &nbsp;
-    .curvy-spacer{:style => "width: 70px;"} &nbsp;
+  - f = "logo/usgc/#{@logo_file}"
+  - if image_file?(f)
+    - logo_class = @year.circular_logo? ? 'circular-logo' : 'rectangular-logo'
+    = image_tag "logo/usgc/#{@logo_file}", :id => 'usgc-logo', :class => logo_class
+    - if @year.circular_logo?
+      .curvy-spacer{:style => "width: 115px;"} &nbsp;
+      .curvy-spacer{:style => "width: 125px;"} &nbsp;
+      .curvy-spacer{:style => "width: 140px;"} &nbsp;
+      .curvy-spacer{:style => "width: 150px;"} &nbsp;
+      .curvy-spacer{:style => "width: 160px;"} &nbsp;
+      .curvy-spacer{:style => "width: 165px;"} &nbsp;
+      .curvy-spacer{:style => "width: 170px;"} &nbsp;
+      .curvy-spacer{:style => "width: 170px;"} &nbsp;
+      .curvy-spacer{:style => "width: 170px;"} &nbsp;
+      .curvy-spacer{:style => "width: 170px;"} &nbsp;
+      .curvy-spacer{:style => "width: 165px;"} &nbsp;
+      .curvy-spacer{:style => "width: 155px;"} &nbsp;
+      .curvy-spacer{:style => "width: 150px;"} &nbsp;
+      .curvy-spacer{:style => "width: 125px;"} &nbsp;
+      .curvy-spacer{:style => "width: 105px;"} &nbsp;
+      .curvy-spacer{:style => "width: 70px;"} &nbsp;
 
   %h2
     Join us for the
