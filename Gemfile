@@ -57,12 +57,12 @@ group :test, :development do
   gem 'guard-spork'
   gem 'rspec-rails', '~> 3.4.0'
   gem 'rspec-mocks'
-  gem 'web-console', '~> 2.0'
 end
 
 group :development do
   gem 'haml-rails'
   gem 'quiet_assets'
+  gem 'web-console', '~> 3.0'
 end
 
 group :test do
