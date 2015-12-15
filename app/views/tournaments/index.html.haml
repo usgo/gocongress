@@ -9,6 +9,8 @@
     If you'd like to participate in these tournaments, please
     = link_to "register", new_user_registration_path
     as a player. Non-players may observe only.
+    - if @year.year == 2016
+      More tournament information will be available soon.
 
 - if @tournaments.size == 0
   %p There are no tournaments yet.
