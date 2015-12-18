@@ -73,7 +73,10 @@ Special thanks to Lisa Scott, who helped invent, and tirelessly
 tested, the first year's site in 2011.
 Special thanks to Jared Beck, who provided mentoring and assistance for the 2014
 site.
+Special thanks to Tim Hoel and Jared Beck who both provided mentoring and
+assistance for the 2015 site.
 
+* 2015: Tim Hoel, Jared Beck, Andrew Jackson, Josh Larson, Steve Colburn
 * 2014: Jared Beck, Andrew Jackson, Matthew Hershberger, Chris Kirschner, Steve
 Colburn
 * 2013: Chris Kirschner, Judy Debel
