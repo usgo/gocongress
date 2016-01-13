@@ -27,7 +27,7 @@ describe SignUpsController, :type => :controller do
       it "succeeds" do
         expect { post :create, :user => attrs, :year => year
           }.to change { User.count }.by(+1)
-        expect(response).to redirect_to new_registration_path(year)
+        expect(response).to redirect_to user_path(User.last)
       end
     end
 

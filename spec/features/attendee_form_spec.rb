@@ -9,6 +9,9 @@ describe 'registration form', :type => :feature do
     fill_in 'Email', with: user.email
     fill_in 'Password', with: password
     click_button 'Sign in'
+    expect(page).to have_content('My Account')
+    expect(page).to have_selector('form')
+    visit new_registration_path(year: user.year, user_id: user.id)
     expect(page).to have_content('First Attendee')
     expect(page).to have_selector('form')
   end

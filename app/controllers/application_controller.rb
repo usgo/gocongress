@@ -46,10 +46,10 @@ class ApplicationController < ActionController::Base
   end
 
   # Redirect Devise after sign in (or after updating the password?)
-  # Go to the "My Account" page, unless there is no attendee yet.
+  # Go to the "My Account" page.
   def after_sign_in_path_for user
     raise ArgumentError unless user.is_a?(User)
-    user.attendees.empty? ? new_registration_path : user_path(user)
+    user_path(user)
   end
 
   rescue_from CanCan::AccessDenied do |exception|
