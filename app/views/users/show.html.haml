@@ -51,7 +51,8 @@
           - else
             %td= button_to "Cancel", { action: "cancel_attendee", id: @user.id, attendee_id: a.id }, method: :patch, data: { confirm: "Plan selections will be removed.  Are you sure?" }
 
-%p= button_to_get 'Add Attendee', new_registration_path(user_id: @user.id), 'add_attendee_btn'
+= button_to_get 'Add Attendee', new_registration_path(user_id: @user.id), 'add_attendee_btn'
+= button_to_get 'Add Adult Attendee', new_registration_path(user_id: @user.id), 'add_adult_attendee_btn'
 
 -if @has_minor_attendee
   %h3 Regarding Minors
