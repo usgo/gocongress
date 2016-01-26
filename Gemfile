@@ -5,7 +5,7 @@ source 'https://rubygems.org'
 # https://devcenter.heroku.com/articles/ruby-versions
 ruby '2.3.0'
 
-gem 'rails', '4.2.5'
+gem 'rails', '4.2.5.1'
 
 # View Layer
 gem 'jquery-rails'
