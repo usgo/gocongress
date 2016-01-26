@@ -50,20 +50,21 @@ GEM
     bluecloth (2.2.0)
     builder (3.2.2)
     cancancan (1.13.1)
-    capybara (2.5.0)
+    capybara (2.6.0)
+      addressable
       mime-types (>= 1.16)
       nokogiri (>= 1.3.3)
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
-    childprocess (0.5.8)
+    childprocess (0.5.9)
       ffi (~> 1.0, >= 1.0.11)
     coderay (1.1.0)
     concurrent-ruby (1.0.0)
     daemons (1.2.3)
     debug_inspector (0.0.2)
     deep_merge (1.0.1)
-    devise (3.5.3)
+    devise (3.5.5)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
       railties (>= 3.2.6, < 5)
@@ -71,13 +72,13 @@ GEM
       thread_safe (~> 0.1)
       warden (~> 1.2.3)
     diff-lcs (1.2.5)
-    dotenv (2.0.2)
-    dotenv-rails (2.0.2)
-      dotenv (= 2.0.2)
-      railties (~> 4.0)
+    dotenv (2.1.0)
+    dotenv-rails (2.1.0)
+      dotenv (= 2.1.0)
+      railties (>= 4.0, < 5.1)
     erubis (2.7.0)
-    eventmachine (1.0.8)
-    exception_notification (4.1.2)
+    eventmachine (1.0.9.1)
+    exception_notification (4.1.4)
       actionmailer (~> 4.0)
       activesupport (~> 4.0)
     excon (0.45.4)
@@ -90,7 +91,7 @@ GEM
     ffi (1.9.10)
     fission (0.5.0)
       CFPropertyList (~> 2.2)
-    fog (1.36.0)
+    fog (1.37.0)
       fog-aliyun (>= 0.1.0)
       fog-atmos
       fog-aws (>= 0.6.0)
@@ -112,10 +113,10 @@ GEM
       fog-terremark
       fog-vmfusion
       fog-voxel
+      fog-vsphere (>= 0.4.0)
       fog-xenserver
       fog-xml (~> 0.1.1)
       ipaddress (~> 0.5)
-      nokogiri (~> 1.5, >= 1.5.11)
     fog-aliyun (0.1.0)
       fog-core (~> 1.27)
       fog-json (~> 1.0)
@@ -124,7 +125,7 @@ GEM
     fog-atmos (0.1.0)
       fog-core
       fog-xml
-    fog-aws (0.7.6)
+    fog-aws (0.8.1)
       fog-core (~> 1.27)
       fog-json (~> 1.0)
       fog-xml (~> 0.1)
@@ -161,7 +162,7 @@ GEM
       fog-core
       fog-xml
       nokogiri
-    fog-radosgw (0.0.4)
+    fog-radosgw (0.0.5)
       fog-core (>= 1.21.0)
       fog-json
       fog-xml (>= 0.0.1)
@@ -169,13 +170,13 @@ GEM
       fog-core
       fog-json
       fog-xml
-    fog-sakuracloud (1.5.0)
+    fog-sakuracloud (1.7.5)
       fog-core
       fog-json
     fog-serverlove (0.1.2)
       fog-core
       fog-json
-    fog-softlayer (1.0.2)
+    fog-softlayer (1.0.3)
       fog-core
       fog-json
     fog-storm_on_demand (0.1.1)
@@ -190,7 +191,10 @@ GEM
     fog-voxel (0.1.0)
       fog-core
       fog-xml
-    fog-xenserver (0.2.2)
+    fog-vsphere (0.5.0)
+      fog-core
+      rbvmomi (~> 1.8)
+    fog-xenserver (0.2.3)
       fog-core
       fog-xml
     fog-xml (0.1.2)
@@ -233,10 +237,10 @@ GEM
       ruby_parser (~> 3.5)
     i18n (0.7.0)
     inflecto (0.0.2)
-    ipaddress (0.8.0)
+    ipaddress (0.8.2)
     jc-validates_timeliness (3.1.1)
       timeliness (~> 0.3.7)
-    jquery-rails (4.0.5)
+    jquery-rails (4.1.0)
       rails-dom-testing (~> 1.0)
       railties (>= 4.2.0)
       thor (>= 0.14, < 2.0)
@@ -251,7 +255,7 @@ GEM
       rb-inotify (>= 0.9)
     loofah (2.0.3)
       nokogiri (>= 1.5.9)
-    lumberjack (1.0.9)
+    lumberjack (1.0.10)
     mail (2.6.3)
       mime-types (>= 1.16, < 3)
     method_source (0.8.2)
@@ -308,11 +312,15 @@ GEM
       rake (>= 0.8.7)
       thor (>= 0.18.1, < 2.0)
     rake (10.5.0)
-    rb-fsevent (0.9.6)
+    rb-fsevent (0.9.7)
     rb-inotify (0.9.5)
       ffi (>= 0.5.0)
-    responders (2.1.0)
-      railties (>= 4.2.0, < 5)
+    rbvmomi (1.8.2)
+      builder
+      nokogiri (>= 1.4.1)
+      trollop
+    responders (2.1.1)
+      railties (>= 4.2.0, < 5.1)
     roxml (3.3.1)
       activesupport (>= 2.3.0)
       nokogiri (>= 1.3.3)
@@ -325,7 +333,7 @@ GEM
     rspec-expectations (3.4.0)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.4.0)
-    rspec-mocks (3.4.0)
+    rspec-mocks (3.4.1)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.4.0)
     rspec-rails (3.4.0)
@@ -337,16 +345,16 @@ GEM
       rspec-mocks (~> 3.4.0)
       rspec-support (~> 3.4.0)
     rspec-support (3.4.1)
-    ruby_parser (3.7.2)
+    ruby_parser (3.7.3)
       sexp_processor (~> 4.1)
-    sass (3.4.20)
+    sass (3.4.21)
     sass-rails (5.0.4)
       railties (>= 4.0.0, < 5.0)
       sass (~> 3.1)
       sprockets (>= 2.8, < 4.0)
       sprockets-rails (>= 2.0, < 4.0)
       tilt (>= 1.1, < 3)
-    sexp_processor (4.6.0)
+    sexp_processor (4.6.1)
     shellany (0.0.1)
     slop (3.6.0)
     spork (1.0.0rc4)
@@ -366,8 +374,9 @@ GEM
       rack (~> 1.0)
     thor (0.19.1)
     thread_safe (0.3.5)
-    tilt (2.0.1)
-    timeliness (0.3.7)
+    tilt (2.0.2)
+    timeliness (0.3.8)
+    trollop (2.1.2)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
     uglifier (2.7.2)
