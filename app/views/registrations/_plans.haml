@@ -29,9 +29,11 @@
         %tr
           %th{:colspan => 6}= cat.name
         - plans.each do |plan|
-          %tr{:class => if plan.disabled? then "disabled" end }
-            %td.valign-middle.align-center= plan_selection_inputs(plan)
-            %td= plan.name
-            = render :partial => "plan_categories/plan_table_common_cells", :locals => { :plan => plan }
+          - if params[:type] == "adult" && plan.age_min >= 18
+            = render :partial => "plan_categories/plan_table_plan_row", :locals => { :plan => plan }
+          - if params[:type] == "youth" && plan.age_max.present? && plan.age_max <= 17
+            = render :partial => "plan_categories/plan_table_plan_row", :locals => { :plan => plan }
+          - if plan.age_min <= 17 && plan.age_max.blank?
+            = render :partial => "plan_categories/plan_table_plan_row", :locals => { :plan => plan }
 
 = render :partial => "plan_categories/explain_availability"
