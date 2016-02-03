@@ -41,7 +41,10 @@
           - if a.cancelled?
             %td= a.full_name + ' (Cancelled)'
           - else
-            %td= link_to a.full_name, edit_registration_path(a)
+            - if a.age_in_years >= 18
+              %td= link_to a.full_name, edit_registration_path(a, type: 'adult')
+            - else
+              %td= link_to a.full_name, edit_registration_path(a, type: 'youth')
           %td= a.alternate_name if a.alternate_name.present?
           %td= a.rank_name
           %td.numeric= a.age_in_years.floor
