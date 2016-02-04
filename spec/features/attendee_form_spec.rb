@@ -11,7 +11,7 @@ describe 'registration form', :type => :feature do
     click_button 'Sign in'
     expect(page).to have_content('My Account')
     expect(page).to have_selector('form')
-    visit new_registration_path(year: user.year, user_id: user.id)
+    visit new_registration_path(year: user.year, user_id: user.id, type: 'adult')
     expect(page).to have_content('First Attendee')
     expect(page).to have_selector('form')
   end
@@ -45,7 +45,7 @@ describe 'registration form', :type => :feature do
   context 'edit' do
     let(:a) { create :attendee, user: user }
     before do
-      visit edit_registration_path(year: a.year, id: a.id)
+      visit edit_registration_path(year: a.year, id: a.id, type: 'adult')
       expect(page).to have_selector 'form#edit_registration_' + a.id.to_s
     end
 

@@ -16,7 +16,10 @@
     Female
   .field
     = f.label :birth_date, 'Birth date'
-    = f.date_select :birth_date, :start_year => @year.year, :end_year => 1900, :include_blank => true
+    - if params[:type] == "adult"
+      = f.date_select :birth_date, :start_year => @year.year - 18, :end_year => 1900, :include_blank => true
+    - else
+      = f.date_select :birth_date, :start_year => @year.year, :end_year => @year.year - 18, :include_blank => true
     %span.smalltext (to identify minors)
   - if params[:type] == "youth"
     .field
