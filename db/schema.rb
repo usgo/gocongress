@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150913233527) do
+ActiveRecord::Schema.define(version: 20160210041703) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -158,6 +158,7 @@ ActiveRecord::Schema.define(version: 20150913233527) do
     t.integer  "event_id",                                null: false
     t.boolean  "mandatory",               default: false, null: false
     t.integer  "ordinal",                 default: 1,     null: false
+    t.boolean  "single",                  default: false, null: false
   end
 
   add_index "plan_categories", ["id", "year"], name: "index_plan_categories_on_id_and_year", unique: true, using: :btree
