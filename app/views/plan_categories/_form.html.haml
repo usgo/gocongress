@@ -17,6 +17,13 @@
         = Attendee.model_name.human.pluralize
         must select at least one
         = Plan.model_name.human.downcase + ' in this category.'
+    .field
+      = f.label :single
+      = f.check_box :single
+      %span.smalltext
+        = Attendee.model_name.human.pluralize
+        must select exactly one
+        = Plan.model_name.human.downcase + ' in this category.'
 
   %fieldset
     .field

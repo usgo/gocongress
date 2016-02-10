@@ -64,6 +64,7 @@ en:
       plan_category:
         name: "Category"
         mandatory: "Mandatory"
+        single: "Exactly One Plan"
       tournament:
         directors: "Director(s)"
         eligible: "Eligibility"
