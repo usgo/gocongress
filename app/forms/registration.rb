@@ -73,6 +73,7 @@ class Registration
     super
     if attendee.valid?
       validate_mandatory_plan_cats(selected_plans)
+      validate_single_plan_categories(selected_plans)
       validate_disabled_plans(persisted_plan_selections, selected_plans)
       validate_models(selected_attendee_plans)
       validate_activities
@@ -176,6 +177,19 @@ class Registration
     plan_selections.select{|s| s.qty > 0}.map(&:plan).map(&:plan_category)
   end
 
+  def selected_plan_count(category, selections)
+    selections.count {|s| s.plan.plan_category_id == category.id}
+  end
+
+  def single_plan_categories
+    PlanCategory.yr(year).single
+  end
+
+  def single_plan_category_error category
+    pmnhd = Plan.model_name.human.downcase
+    "Please select exactly one #{pmnhd} in #{category.name}."
+  end
+
   def unselected_mandatory_plan_cats plan_selections
     mandatory_plan_categories - selected_plan_categories(plan_selections)
   end
@@ -212,4 +226,11 @@ class Registration
     end
   end
 
+  def validate_single_plan_categories selections
+    single_plan_categories.each do |c|
+      if selected_plan_count(c, selections) > 1
+        @errors[:base] << single_plan_category_error(c)
+      end
+    end
+  end
 end

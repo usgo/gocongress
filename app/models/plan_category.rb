@@ -27,6 +27,7 @@ class PlanCategory < ActiveRecord::Base
       where p.plan_category_id = plan_categories.id
     )")
   }
+  scope :single, -> { where(:single => true) }
 
   # Class methods
   # ----------------

@@ -73,6 +73,20 @@ describe Registration do
           expect(r.errors.full_messages).to include(msg)
         end
       end
+
+      context "when there is a single plan category" do
+        let(:category) { create :plan_category, :single => true }
+        let(:message) { "Please select exactly one plan in #{category.name}." }
+
+        it "returns an error if selected plan count is greater than 1" do
+          p1 = create :plan, plan_category: category
+          p2 = create :plan, plan_category: category
+          r = Registration.new user, attendee
+          params = {plans: {p1.id.to_s => {"qty" => 1}, p2.id.to_s => {"qty" => 1}}}
+          expect(r.submit(params)).to eq(false)
+          expect(r.errors.full_messages).to include(message)
+        end
+      end
     end
 
     context "as an admin" do
