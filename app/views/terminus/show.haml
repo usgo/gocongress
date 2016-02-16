@@ -13,6 +13,8 @@
 .floating-padded-line-item
   = button_to_get 'Add Adult Attendee', new_registration_path(user_id: @user.id, type: 'adult'), 'add_adult_attendee_btn', 'button-emphasis'
 .floating-padded-line-item
+  = button_to_get 'Add Youth Attendee', new_registration_path(user_id: @user.id, type: 'youth'), 'add_youth_attendee_btn', 'button-emphasis'
+.floating-padded-line-item
   = button_to "Make a Payment", pay_user_path(@user), :method => "get", :class => 'button-emphasis'
   %p{ style: "width: 175px;"}
     Review your account balance and make a payment.
