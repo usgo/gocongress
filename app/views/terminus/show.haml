@@ -4,12 +4,9 @@
   = pluralize(@user.attendees.count, 'attendee')
   on your account.  When you're done adding attendees, make a
   payment. Registration is not complete until paid.
-
-.floating-padded-line-item
-  = button_to_get "Register Another Person", new_registration_path(user_id: @user.id), 'add_attendee_btn', 'button-emphasis'
-  %p{ style: "width: 250px;"}
-    You may register as many people as you want on the same account.
-    Bring the whole family!
+%p
+  You may register as many people as you want on the same account.
+  Bring the whole family!
 .floating-padded-line-item
   = button_to_get 'Add Adult Attendee', new_registration_path(user_id: @user.id, type: 'adult'), 'add_adult_attendee_btn', 'button-emphasis'
 .floating-padded-line-item
