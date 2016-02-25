@@ -3,7 +3,8 @@
     %p
       Other Years: &nbsp;
       = link_to 2006, "http://www.trianglegoclub.org/gocongress06"
-      - [2007,2009,2010].each do |y|
-        = link_to y, "http://old.usgo.org/congresses/#{y}"
+      // 2007 - Was on old.usgo.org, no longer exists
+      // 2008 - Not sure, we never had a link to it?
+      // 2009-10 - Was on old.usgo.org, no longer exists
       - @years.each do |y|
         = link_to y, "/#{y}"
