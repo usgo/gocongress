@@ -5,7 +5,7 @@ class PlanCategory < ActiveRecord::Base
   has_many :plans
 
   attr_accessible :description, :event_id, :mandatory, :name, :ordinal,
-    :single
+    :show_description, :single
 
   validates :event, :presence => true
   validates :name, :presence => true,

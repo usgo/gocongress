@@ -11,6 +11,12 @@
     .field
       = render partial: "shared/md_area", locals: { :obj => :plan_category, :atr => :description }
     .field
+      = f.label :show_description
+      = f.check_box :show_description
+      %span.smalltext
+        = Attendee.model_name.human.pluralize
+        can see the description on the registration form.
+    .field
       = f.label trl_attr 'plan_category', 'mandatory'
       = f.check_box :mandatory
       %span.smalltext
