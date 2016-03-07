@@ -46,7 +46,7 @@ GEM
     authorizenet (1.8.8.1)
       nokogiri (~> 1.6, >= 1.6.4)
       roxml (= 3.3.1)
-    bcrypt (3.1.10)
+    bcrypt (3.1.11)
     bluecloth (2.2.0)
     builder (3.2.2)
     cancancan (1.13.1)
@@ -81,7 +81,7 @@ GEM
     exception_notification (4.1.4)
       actionmailer (~> 4.0)
       activesupport (~> 4.0)
-    excon (0.45.4)
+    excon (0.47.0)
     execjs (2.6.0)
     factory_girl (4.5.0)
       activesupport (>= 3.0.0)
@@ -125,7 +125,7 @@ GEM
     fog-atmos (0.1.0)
       fog-core
       fog-xml
-    fog-aws (0.8.1)
+    fog-aws (0.9.1)
       fog-core (~> 1.27)
       fog-json (~> 1.0)
       fog-xml (~> 0.1)
@@ -152,7 +152,7 @@ GEM
     fog-json (1.0.2)
       fog-core (~> 1.0)
       multi_json (~> 1.10)
-    fog-local (0.2.1)
+    fog-local (0.3.0)
       fog-core (~> 1.27)
     fog-powerdns (0.1.1)
       fog-core (~> 1.27)
@@ -191,7 +191,7 @@ GEM
     fog-voxel (0.1.0)
       fog-core
       fog-xml
-    fog-vsphere (0.6.0)
+    fog-vsphere (0.6.1)
       fog-core
       rbvmomi (~> 1.8)
     fog-xenserver (0.2.3)
@@ -364,7 +364,7 @@ GEM
     sprockets (3.5.2)
       concurrent-ruby (~> 1.0)
       rack (> 1, < 3)
-    sprockets-rails (3.0.3)
+    sprockets-rails (3.0.4)
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
