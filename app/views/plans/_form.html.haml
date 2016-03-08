@@ -52,6 +52,11 @@
       %span.smalltext{:style => "display: inline-block; padding: 3px 0px 0px 0px; width: 375px;"}
         Selectable, but not purchaseable through the website. "Contact the
         Registrar" will be shown instead of the price. Price must be zero.
+    .field
+      = f.label :n_a
+      = f.check_box :n_a
+      %span.smalltext
+        "N/A" will be shown instead of "Free" if the price is zero.
 
   %fieldset
     %legend Attendee Age Requirements

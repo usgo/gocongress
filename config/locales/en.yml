@@ -60,6 +60,7 @@ en:
         inventory: "Inventory"
         name: "Plan"
         max_quantity: "Max. Qty. Per Attendee"
+        n_a: "N/A"
         price: "Price"
       plan_category:
         name: "Category"
