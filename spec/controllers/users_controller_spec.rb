@@ -117,7 +117,7 @@ describe UsersController, :type => :controller do
         a = create :attendee, user_id: user.id, cancelled: true
         sign_in user
         patch :restore_attendee, :attendee_id => a.id, :id => user.id, :year => user.year
-        expect(response).to redirect_to edit_registration_path(a)
+        expect(response).to redirect_to edit_registration_path(a, type: 'adult')
       end
 
       it "cannot #restore_attendee if attendee belongs to another user" do
@@ -250,7 +250,7 @@ describe UsersController, :type => :controller do
     it "can #restore_attendee" do
       a = create :attendee, user_id: user.id, cancelled: true
       patch :restore_attendee, :attendee_id => a.id, :id => user.id, :year => user.year
-      expect(response).to redirect_to edit_registration_path(a)
+      expect(response).to redirect_to edit_registration_path(a, type: 'adult')
     end
 
     it "can cancel attendee" do

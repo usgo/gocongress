@@ -32,7 +32,11 @@ class UsersController < ApplicationController
   def restore_attendee
     authorize! :update, @user
     @attendee = Attendee.find(params[:attendee_id])
-    redirect_to edit_registration_path(@attendee), :notice => 'Please submit this form to restore this attendee.'
+    if @attendee.age_in_years >= 18
+      redirect_to edit_registration_path(@attendee, type: 'adult'), :notice => 'Please submit this form to restore this attendee.'
+    else
+      redirect_to edit_registration_path(@attendee, type: 'youth'), :notice => 'Please submit this form to restore this attendee.'
+    end
   end
 
   def create
