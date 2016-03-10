@@ -57,9 +57,13 @@ module ApplicationHelper
   end
 
   def link_to_liability_release()
-    link_to "Youth Attendance Agreement",
-      asset_path("liability_release/USGC#{@year.year}-Liability-Release.pdf"),
-      :target => '_blank'
+    if @year.year < 2016
+      link_to "Youth Attendance Agreement",
+        asset_path("liability_release/USGC#{@year.year}-Liability-Release.pdf"),
+        :target => '_blank'
+    else
+      "Youth Attendance Agreement"
+    end
   end
 
   def link_to_tel text
