@@ -18,6 +18,12 @@ describe Purchasable, :type => :model do
       expect(subject.price_for_display).to eq("Contact the Registrar")
     end
 
+    it "obeys n_a?" do
+      allow(subject).to receive(:price) { 0 }
+      allow(subject).to receive(:n_a?) { true }
+      expect(subject.price_for_display).to eq("N/A")
+    end
+
     it "obeys price_varies?" do
       allow(subject).to receive(:price_varies?) { true }
       expect(subject.price_for_display).to eq("Varies")

@@ -25,6 +25,8 @@ module Purchasable
       "Varies"
     elsif contact_msg_instead_of_price?
       "Contact the Registrar"
+    elsif self.respond_to?(:n_a) && n_a? && price.to_f == 0.0
+      "N/A"
     elsif price.to_f == 0.0
       "Free"
     else
