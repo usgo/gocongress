@@ -36,11 +36,11 @@ Contribute
     1. [Configure rails to talk to your database][6]
         1. `cp config/database.example.yml config/database.yml`
     1. `cp .env.example .env` (see Configuration below)
-    1. If all is well, `bundle exec rake -T` should list rake tasks
+    1. If all is well, `bin/rake -T` should list rake tasks
 1. Run the tests
-    1. `bundle exec rake db:setup`
-    1. `bundle exec rake db:test:prepare`
-    1. `bundle exec rspec` will run the tests.  If they
+    1. `bin/rake db:setup`
+    1. `bin/rake db:test:prepare`
+    1. `bin/rspec` will run the tests.  If they
        all pass, you're good to go.
 1. Submit your contribution
     1. Write a [spec][7] that describes your contribution
