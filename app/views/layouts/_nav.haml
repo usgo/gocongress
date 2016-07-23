@@ -26,6 +26,8 @@
       %li= link_to "Costs", costs_path
       - @content_categories_for_menu.each do |c|
         %li= link_to c.name, c
+      - if @year.year == 2016
+        %li= link_to "Schedule", "http://live.gocongress.org/"
       %li= link_to "Contact / Volunteer", contacts_path
 
 - if can_see_admin_menu?
