@@ -107,7 +107,7 @@ class UsersController < ApplicationController
       # When changing our own password, refresh session credentials
       # or else we will get logged out!
       # Credit: Bill Eisenhauer
-      sign_in(@user, :bypass => true) if (current_user.id == @user.id)
+      bypass_sign_in(@user) if (current_user.id == @user.id)
 
       redirect_to user_path(@user), :notice => "User updated"
     else
