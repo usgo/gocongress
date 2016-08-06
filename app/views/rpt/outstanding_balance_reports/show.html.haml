@@ -2,15 +2,15 @@
 
 %h2= page_title
 
-- if @users.size == 0
+- if @users_array.size == 0
   %p
     Good news! There are no #{mnh.pluralize.downcase}
-    with outstanding balances.
+    with outstanding balances on this page.
 - else
   %p
     There are
-    %strong= pluralize @users.size, mnh.downcase
-    with outstanding balances.
+    %strong= pluralize @users_array.size, mnh.downcase
+    with outstanding balances on this page.
 
   %h3 Emails
   %p Select all, then copy from the box below.
@@ -18,6 +18,7 @@
     %textarea.fullwidth{ :rows => 10 }= @email_list
 
   %h3 Details
+  .pagination-controls= paginate @users
   %table.semantic.fullwidth.zebra
     %thead
       %tr
@@ -25,7 +26,7 @@
         %th.numeric Balance
         %th
     %tbody
-      - @users.each do |u|
+      - @users_array.each do |u|
         %tr
           %td= u.email
           %td.numeric
