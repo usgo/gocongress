@@ -1,5 +1,7 @@
 %h2 All Attendees
 
+.pagination-controls= paginate @attendees
+
 = form_tag(atn_reg_sheets_reports_path, :method => :get) do
   %table.semantic.fullwidth.zebra
     %thead
@@ -23,6 +25,7 @@
   = button_tag('Set All', type: 'button', name: 'setAll_attendee_ids[]')
   = button_tag('Clear', type: 'button', name: 'clear_attendee_ids[]')
   = submit_tag "Print Attendee Registration Sheets"
+  .pagination-controls= paginate @attendees
 
 :javascript
   $("[name='setAll_attendee_ids[]']").click(function() {

@@ -6,6 +6,9 @@ class AttendeesController < ApplicationController
   add_filter_restricting_resources_to_year_in_route
   load_and_authorize_resource :only => :list
 
+  # Pagination
+  PER_PAGE = 200
+
   def index
     @who_is_coming = Attendee::WhoIsComing.new @year, params[:sort], params[:direction]
   end
@@ -13,11 +16,11 @@ class AttendeesController < ApplicationController
   def list
     drn = (params[:drn] == "desc") ? :desc : :asc
     if params[:sort] == "user_email"
-      @attendees = Attendee.yr(@year).joins(:user).order("users.email #{drn}")
+      @attendees = Attendee.yr(@year).joins(:user).order("users.email #{drn}").page(params[:page]).per(PER_PAGE)
     elsif params[:sort] == "alternate_name"
-      @attendees = Attendee.yr(@year).order("alternate_name #{drn}")
+      @attendees = Attendee.yr(@year).order("alternate_name #{drn}").page(params[:page]).per(PER_PAGE)
     else
-      @attendees = Attendee.yr(@year).order("family_name #{drn}, given_name #{drn}")
+      @attendees = Attendee.yr(@year).order("family_name #{drn}, given_name #{drn}").page(params[:page]).per(PER_PAGE)
     end
   end
 
