@@ -75,10 +75,12 @@ Special thanks to Jared Beck, who provided mentoring and assistance for the 2014
 site.
 Special thanks to Tim Hoel and Jared Beck who both provided mentoring and
 assistance for the 2015 site.
+Special thanks to Rex Cristal, for taking over maintenance of the site in 2015 and ensuring its continued development!
 
-* 2015: Tim Hoel, Jared Beck, Andrew Jackson, Josh Larson, Steve Colburn
+* 2016: Rex Cristal, Walther Chen, Sun Chun,
+* 2015: Tim Hoel, Jared Beck, Andrew Jackson, Josh Larson, Steve Colburn, Rex Cristal
 * 2014: Jared Beck, Andrew Jackson, Matthew Hershberger, Chris Kirschner, Steve
-Colburn
+Colburn, Rex Cristal
 * 2013: Chris Kirschner, Judy Debel
 * 2012: Arlene Bridges, Bob Bacon, Steve Colburn
 * 2011: Lisa Scott, Alf Mikula, Brian David, Andrew Jackson, Steve Colburn
