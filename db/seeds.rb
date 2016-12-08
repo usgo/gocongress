@@ -97,3 +97,19 @@ Year.create!(
   },
   :without_protection => true
 )
+
+Year.create!(
+  {
+    city:                  'San Diego',
+    date_range:            'August 5 - 12',
+    day_off_date:          Date.new(2017, 8, 9),
+    ordinal_number:        33,
+    registration_phase:    'closed',
+    reply_to_email:        'webmaster@gocongress.org',
+    start_date:            Date.new(2017, 8, 5),
+    state:                 'CA',
+    timezone:              'Pacific Time (US & Canada)',
+    year:                  2017
+  },
+  :without_protection => true
+)
