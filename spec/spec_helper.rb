@@ -13,7 +13,6 @@ Spork.prefork do
   Spork.trap_method(Rails::Application::RoutesReloader, :reload!)
 
   require File.expand_path("../../config/environment", __FILE__)
-  require 'rails/test_help'
 
   require 'rspec/rails'
   RSpec.configure do |conf|

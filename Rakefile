@@ -50,7 +50,4 @@ if defined? RSpec
   end
 end
 
-# The default task used to be test, but I have no idea why. Now we're
-# explictly defining the default task; we'll run both rspec and minitest.
-# Eventually, we'll transition to only rspec.
-task :default => [:spec, :test]
+task :default => :spec
