@@ -55,8 +55,7 @@ group :test, :development do
   gem 'dotenv-rails'
   gem 'guard-rspec'
   gem 'guard-spork'
-  gem 'rspec-rails', '~> 3.4.0'
-  gem 'rspec-mocks'
+  gem 'rspec-rails'
 end
 
 group :development do
