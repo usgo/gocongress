@@ -53,7 +53,6 @@ end
 # to "expose generators and rake tasks"
 group :test, :development do
   gem 'dotenv-rails'
-  gem 'guard-rspec'
   gem 'rspec-rails'
 end
 
