@@ -1,6 +1,6 @@
-require "spec_helper"
+require "rails_helper"
 
-describe DailyPlanCsvExporter do
+RSpec.describe DailyPlanCsvExporter do
   describe '#render' do
     it "renders one row per attendee, and one col. per plan" do
       year = Date.current.year

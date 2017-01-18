@@ -54,7 +54,6 @@ end
 group :test, :development do
   gem 'dotenv-rails'
   gem 'guard-rspec'
-  gem 'guard-spork'
   gem 'rspec-rails'
 end
 
@@ -72,7 +71,5 @@ group :test do
 	gem 'deep_merge' # recursively merge hashes
 	gem 'factory_girl'
 	gem 'factory_girl_rails'
-  gem 'spork', '~> 1.0.0rc4' # rc4 has -q (quiet) option
-	gem 'spork-rails'
 	gem 'rb-fsevent'
 end

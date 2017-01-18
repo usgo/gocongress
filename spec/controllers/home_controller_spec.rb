@@ -1,6 +1,6 @@
-require "spec_helper"
+require "rails_helper"
 
-describe HomeController, :type => :controller do
+RSpec.describe HomeController, :type => :controller do
   describe "#index" do
     render_views
 

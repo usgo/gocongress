@@ -1,6 +1,6 @@
-require "spec_helper"
+require "rails_helper"
 
-describe AttendeePlan, :type => :model do
+RSpec.describe AttendeePlan, :type => :model do
   it_behaves_like "a yearly model"
 
   describe '#invoiced_quantity' do

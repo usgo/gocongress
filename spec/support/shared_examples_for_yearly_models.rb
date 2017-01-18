@@ -1,4 +1,4 @@
-shared_examples "a yearly model" do
+RSpec.shared_examples "a yearly model" do
   describe "#yr" do
     it "returns records with the given year" do
       model_class = subject.class

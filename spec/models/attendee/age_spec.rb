@@ -1,6 +1,6 @@
-require "spec_helper"
+require "rails_helper"
 
-describe Attendee::Age, :type => :model do
+RSpec.describe Attendee::Age, :type => :model do
   let(:sd) { Year.find_by_year(2012).start_date }
 
   describe '.new' do

@@ -1,6 +1,6 @@
-require 'spec_helper'
+require "rails_helper"
 
-describe Devise::PasswordsController, :type => :controller do
+RSpec.describe Devise::PasswordsController, :type => :controller do
   let(:year) { Time.zone.now.year }
 
   # Every time you want to unit test a devise controller, you need

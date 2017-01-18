@@ -1,6 +1,6 @@
-require 'spec_helper'
+require "rails_helper"
 
-describe 'plans', :type => :feature do
+RSpec.describe 'plans', :type => :feature do
   let(:password) { 'asdfasdf' }
   let(:admin) { create :admin, :password => password }
 

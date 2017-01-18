@@ -10,7 +10,7 @@
 # 1. a factory of the same name exists
 # 2. a path helper exists for the index action, eg. contents_path
 #
-shared_examples "an admin controller" do |model_name|
+RSpec.shared_examples "an admin controller" do |model_name|
   let(:resource) { create model_name }
   let(:resource_attrs) { accessible_attributes_for model_name }
   let(:year) { Time.now.year }

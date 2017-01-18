@@ -1,13 +1,13 @@
-require "spec_helper"
+require "rails_helper"
 
-shared_examples "successful get" do |action|
+RSpec.shared_examples "successful get" do |action|
   it "succeeds" do
     get action, year: user.year, id: user.id
     expect(response).to be_success
   end
 end
 
-describe UsersController, :type => :controller do
+RSpec.describe UsersController, :type => :controller do
   render_views
 
   let(:user) { create :user }

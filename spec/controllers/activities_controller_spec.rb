@@ -1,6 +1,6 @@
-require "spec_helper"
+require "rails_helper"
 
-describe ActivitiesController, :type => :controller do
+RSpec.describe ActivitiesController, :type => :controller do
   it_behaves_like "an admin controller", :activity do
     let(:cat) { create :activity_category }
     let(:extra_params_for_create) { {:activity => {:activity_category_id => cat.id}} }

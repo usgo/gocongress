@@ -1,6 +1,6 @@
-require "spec_helper"
+require "rails_helper"
 
-describe SignUpsController, :type => :controller do
+RSpec.describe SignUpsController, :type => :controller do
   let(:year) { Time.zone.now.year }
 
   # Every time you want to unit test a devise controller, you need

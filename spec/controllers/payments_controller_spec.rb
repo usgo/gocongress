@@ -1,6 +1,6 @@
-require "spec_helper"
+require "rails_helper"
 
-describe PaymentsController, :type => :controller do
+RSpec.describe PaymentsController, :type => :controller do
   render_views
 
   describe '#new' do

@@ -1,6 +1,6 @@
-require 'spec_helper'
+require "rails_helper"
 
-describe Devise::PasswordsController, :type => :controller do
+RSpec.describe Devise::PasswordsController, :type => :controller do
   render_views
 
   before do

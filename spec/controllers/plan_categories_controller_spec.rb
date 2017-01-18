@@ -1,6 +1,6 @@
-require "spec_helper"
+require "rails_helper"
 
-describe PlanCategoriesController, :type => :controller do
+RSpec.describe PlanCategoriesController, :type => :controller do
   render_views
 
   it_behaves_like "an admin controller", :plan_category do

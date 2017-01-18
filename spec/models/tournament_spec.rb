@@ -1,6 +1,6 @@
-require "spec_helper"
+require "rails_helper"
 
-describe Tournament, :type => :model do
+RSpec.describe Tournament, :type => :model do
   it_behaves_like "a yearly model"
 
   it "has valid factory" do

@@ -1,6 +1,6 @@
-require "spec_helper"
+require "rails_helper"
 
-describe NameInflector, :type => :model do
+RSpec.describe NameInflector, :type => :model do
   describe "capitalize" do
     subject { NameInflector }
 

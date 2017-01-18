@@ -1,7 +1,7 @@
 require "csv"
-require "spec_helper"
+require "rails_helper"
 
-describe CostSummariesExporter do
+RSpec.describe CostSummariesExporter do
 
   let(:year) { Date.current.year }
   let(:ex) { CostSummariesExporter.new(year) }

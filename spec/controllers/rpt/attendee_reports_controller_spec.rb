@@ -1,7 +1,7 @@
-require "spec_helper"
+require "rails_helper"
 require "controllers/rpt/shared_examples_for_reports"
 
-describe Rpt::AttendeeReportsController, :type => :controller do
+RSpec.describe Rpt::AttendeeReportsController, :type => :controller do
   it_behaves_like "a report", %w[html csv]
 
   context "as an admin" do

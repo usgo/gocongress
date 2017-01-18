@@ -1,7 +1,7 @@
-require "spec_helper"
+require "rails_helper"
 require "controllers/rpt/shared_examples_for_reports"
 
-describe Rpt::TransactionReportsController, :type => :controller do
+RSpec.describe Rpt::TransactionReportsController, :type => :controller do
   let(:staff) { create :staff }
 
   it_behaves_like "a report", %w[html csv]
