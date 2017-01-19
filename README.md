@@ -2,7 +2,7 @@ Gocongress
 ==========
 
 A maintainable web app for the US Go Congress.
-Copyright (c) 2010-2016 American Go Association
+Copyright (c) 2010-2017 American Go Association
 
 [![Code Climate](https://codeclimate.com/github/usgo/gocongress.png)](https://codeclimate.com/github/usgo/gocongress)
 [![Dependency Status](https://gemnasium.com/usgo/gocongress.svg)](https://gemnasium.com/usgo/gocongress)
@@ -75,7 +75,7 @@ Special thanks to Tim Hoel and Jared Beck who both provided mentoring and
 assistance for the 2015 site.
 Special thanks to Rex Cristal, for taking over maintenance of the site in 2015 and ensuring its continued development!
 
-* 2016: Rex Cristal, Walther Chen, Sun Chun,
+* 2016: Rex Cristal, Walther Chen, Sun Chun
 * 2015: Tim Hoel, Jared Beck, Andrew Jackson, Josh Larson, Steve Colburn, Rex Cristal
 * 2014: Jared Beck, Andrew Jackson, Matthew Hershberger, Chris Kirschner, Steve
 Colburn, Rex Cristal
