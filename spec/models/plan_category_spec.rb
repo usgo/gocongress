@@ -1,6 +1,6 @@
-require "spec_helper"
+require "rails_helper"
 
-describe PlanCategory, :type => :model do
+RSpec.describe PlanCategory, :type => :model do
   it_behaves_like "a yearly model"
 
   let(:cat) { create :plan_category }

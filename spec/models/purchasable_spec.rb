@@ -1,8 +1,8 @@
-require "spec_helper"
+require "rails_helper"
 
 # This spec describes a module included by Plan and Activity, so
 # it should probably be rewritten as shared examples
-describe Purchasable, :type => :model do
+RSpec.describe Purchasable, :type => :model do
   subject { create :plan }
 
   describe "#contact_msg_instead_of_price?" do

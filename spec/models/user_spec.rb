@@ -1,6 +1,6 @@
-require "spec_helper"
+require "rails_helper"
 
-describe User, :type => :model do
+RSpec.describe User, :type => :model do
   it_behaves_like "a yearly model"
 
   context "when initialized" do

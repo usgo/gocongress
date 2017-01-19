@@ -1,6 +1,6 @@
-require "spec_helper"
+require "rails_helper"
 
-describe ReportsController, :type => :controller do
+RSpec.describe ReportsController, :type => :controller do
   let(:admin) { create :admin }
   render_views
 

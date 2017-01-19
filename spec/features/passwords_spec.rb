@@ -1,6 +1,6 @@
-require 'spec_helper'
+require "rails_helper"
 
-describe 'passwords', :type => :feature do
+RSpec.describe 'passwords', :type => :feature do
   let(:password) { 'asdfasdf' }
   let(:user) { create :user, :password => password }
 

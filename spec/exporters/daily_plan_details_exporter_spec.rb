@@ -1,6 +1,6 @@
-require 'spec_helper'
+require "rails_helper"
 
-describe DailyPlanDetailsExporter do
+RSpec.describe DailyPlanDetailsExporter do
   let(:p1) { create :plan, daily: true, name: 'Plan 1' }
   let(:p2) { create :plan, daily: true, name: 'Plan 2' }
   let(:year) { Date.current.year }

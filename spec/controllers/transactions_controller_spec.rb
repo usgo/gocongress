@@ -1,6 +1,6 @@
-require "spec_helper"
+require "rails_helper"
 
-describe TransactionsController, :type => :controller do
+RSpec.describe TransactionsController, :type => :controller do
   it_behaves_like "an admin controller", :transaction do
     let(:user) { create :user }
     let(:extra_params_for_create) { {:user_email => user.email} }

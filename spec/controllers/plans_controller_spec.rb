@@ -1,6 +1,6 @@
-require "spec_helper"
+require "rails_helper"
 
-describe PlansController, :type => :controller do
+RSpec.describe PlansController, :type => :controller do
   let(:plan) { create :plan }
 
   context 'as a visitor' do

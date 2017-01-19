@@ -1,6 +1,6 @@
-require 'spec_helper'
+require "rails_helper"
 
-describe Registration::PlanSelection, :type => :model do
+RSpec.describe Registration::PlanSelection, :type => :model do
   let(:plan) { create(:plan) }
   let(:dates) { ['2013-08-06', '2013-08-07'] }
 

@@ -1,6 +1,6 @@
-require "spec_helper"
+require "rails_helper"
 
-describe RegistrationsController, :type => :controller do
+RSpec.describe RegistrationsController, :type => :controller do
   render_views
   let(:activities) { 1.upto(3).map{ create :activity } }
 

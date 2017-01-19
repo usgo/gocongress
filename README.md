@@ -55,10 +55,8 @@ Most of these variables don't belong in source control because they
 are secret.  Others vary by deployment level.  This file will be
 loaded by the `dotenv` gem.
 
-For local development, `cp .env.example .env` to get started.  I wish
-we could use [foreman][1] to load `.env`, but it doesn't work with
-`pry` or `guard` and it's overkill for one process.  For `stage` and
-`production` use [heroku config][2].
+For local development, `cp .env.example .env` to get started.
+For `stage` and `production` use [heroku config][2].
 
 Email for gocongress.org
 ------------------------

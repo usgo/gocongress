@@ -1,6 +1,6 @@
-require 'spec_helper'
+require "rails_helper"
 
-describe 'registration form', :type => :feature do
+RSpec.describe 'registration form', :type => :feature do
   let(:password) { 'asdfasdf' }
   let(:user) { create :user, :password => password }
 

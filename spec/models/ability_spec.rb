@@ -1,7 +1,7 @@
-require "spec_helper"
+require "rails_helper"
 require "cancan/matchers"
 
-describe Ability, :type => :model do
+RSpec.describe Ability, :type => :model do
 
   context 'staff' do
     let(:staff) { build :staff }

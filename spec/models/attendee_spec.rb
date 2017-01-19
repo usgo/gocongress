@@ -1,6 +1,6 @@
-require "spec_helper"
+require "rails_helper"
 
-describe Attendee, :type => :model do
+RSpec.describe Attendee, :type => :model do
   it_behaves_like "a yearly model"
 
   it "has a valid factory" do

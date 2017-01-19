@@ -1,6 +1,6 @@
-require "spec_helper"
+require "rails_helper"
 
-describe YearsController, :type => :controller do
+RSpec.describe YearsController, :type => :controller do
   let(:y) { 2013 }
   let(:year) { Year.find_by_year(y) }
 

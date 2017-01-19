@@ -4,7 +4,7 @@ class FoobarSplitDatetimeParser
   include SplitDatetimeParser
 end
 
-describe '.parse_split_datetime' do
+RSpec.describe '.parse_split_datetime' do
   it 'raises SplitDatetimeParserException when date is invalid' do
     params = {
       :airport_arrival_date => "#{Date.current.year}-01-01",

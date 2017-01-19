@@ -1,6 +1,6 @@
-require "spec_helper"
+require "rails_helper"
 
-describe Attendee::WhoIsComing, :type => :model do
+RSpec.describe Attendee::WhoIsComing, :type => :model do
   describe '#attendees' do
 
     it 'excludes attendees with zero plans' do

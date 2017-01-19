@@ -1,6 +1,6 @@
-require 'spec_helper'
+require "rails_helper"
 
-describe Registration do
+RSpec.describe Registration do
   let(:dsbl_act) { create :activity, disabled: true }
   let(:dsbl_plan) { create :plan, disabled: true }
   let(:admin) { create :admin }

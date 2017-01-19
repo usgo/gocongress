@@ -12,3 +12,4 @@ coverage
 *.swp
 *.swo
 .idea
+spec/examples.txt

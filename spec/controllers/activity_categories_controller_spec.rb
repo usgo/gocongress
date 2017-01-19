@@ -1,6 +1,6 @@
-require "spec_helper"
+require "rails_helper"
 
-describe ActivityCategoriesController, :type => :controller do
+RSpec.describe ActivityCategoriesController, :type => :controller do
   render_views
 
   it_behaves_like "an admin controller", :activity_category do

@@ -1,6 +1,6 @@
-require "spec_helper"
+require "rails_helper"
 
-describe Transaction, :type => :model do
+RSpec.describe Transaction, :type => :model do
   it_behaves_like "a yearly model"
 
   it "has valid factories" do

@@ -1,4 +1,4 @@
-shared_examples "a report" do |format_array|
+RSpec.shared_examples "a report" do |format_array|
 
   # We want to test our views, but for spec performance we
   # only render_views once

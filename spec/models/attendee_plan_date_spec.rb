@@ -1,6 +1,6 @@
-require "spec_helper"
+require "rails_helper"
 
-describe AttendeePlanDate, :type => :model do
+RSpec.describe AttendeePlanDate, :type => :model do
 
   it 'has a valid factory' do
     expect(build(:attendee_plan_date)).to be_valid

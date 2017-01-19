@@ -1,6 +1,6 @@
-require "spec_helper"
+require "rails_helper"
 
-describe TerminusController, :type => :controller do
+RSpec.describe TerminusController, :type => :controller do
   describe '#show' do
     render_views
     it 'succeeds' do
