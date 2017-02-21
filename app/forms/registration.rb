@@ -22,7 +22,7 @@ class Registration
     :roomate_request, :special_request, :shirt_id, :tshirt_size,
     :understand_minor, :will_play_in_us_open]
 
-  delegate *ATD_ATRS, to: :attendee
+  delegate(*ATD_ATRS, to: :attendee)
   delegate :full_name, :id, :minor?, :user_id, :year, to: :attendee
   delegate :admin?, to: :current_user
 

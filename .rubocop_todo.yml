@@ -7,11 +7,6 @@
 # versions of RuboCop, may require this file to be generated again.
 
 # Offense count: 1
-Lint/AmbiguousOperator:
-  Exclude:
-    - 'app/forms/registration.rb'
-
-# Offense count: 1
 Lint/AmbiguousRegexpLiteral:
   Exclude:
     - 'spec/models/attendee_spec.rb'
