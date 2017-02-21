@@ -8,6 +8,10 @@ Metrics/BlockLength:
 Metrics/ClassLength:
   Enabled: false
 
+Metrics/LineLength:
+  Exclude:
+    - db/schema.rb
+
 # Not useful compared to e.g. `Metrics/AbcSize`
 Metrics/MethodLength:
   Enabled: false

@@ -358,7 +358,10 @@ RSpec.describe RegistrationsController, :type => :controller do
 
       it "can restore attendee" do
         cancelled_attendee = create :attendee, cancelled: true
-        put :update, :id => cancelled_attendee.id, :registration => cancelled_attendee.attributes, :year => cancelled_attendee.year
+        put :update,
+          id: cancelled_attendee.id,
+          registration: cancelled_attendee.attributes,
+          year: cancelled_attendee.year
         expect(cancelled_attendee.reload.cancelled).to eq(false)
       end
 
