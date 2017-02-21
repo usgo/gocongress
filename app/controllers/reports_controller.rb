@@ -28,7 +28,7 @@ class ReportsController < ApplicationController
     @atnd_email_list = ""
     Attendee.yr(@year).each { |a|
       @atnd_email_list += "\"#{a.full_name}\" <#{a.email}>, "
-      }
+    }
   end
 
   def activities

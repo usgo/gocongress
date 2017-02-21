@@ -9,8 +9,9 @@ RSpec.describe RegistrationsController, :type => :controller do
       it "is forbidden for visitors" do
         u = create :user
         attrs = attributes_for :attendee, :user => u
-        expect { post :create, registration: attrs, user_id: u.id, year: u.year
-          }.to_not change{ Attendee.count }
+        expect {
+          post :create, registration: attrs, user_id: u.id, year: u.year
+        }.to_not change{ Attendee.count }
         expect(response).to be_forbidden
       end
     end
@@ -42,16 +43,18 @@ RSpec.describe RegistrationsController, :type => :controller do
 
       it "succeeds under own account" do
         a = acsbl_atrs.merge(:user_id => user.id)
-        expect { post :create, :registration => a, user_id: user.id, :year => user.year
-          }.to change { user.attendees.count }.by(+1)
+        expect {
+          post :create, :registration => a, user_id: user.id, :year => user.year
+        }.to change { user.attendees.count }.by(+1)
         expect(response).to redirect_to \
           user_terminus_path(:user_id => user.id, :year => user.year)
       end
 
       it "fails without any attributes" do
         attrs = {:user_id => user.id}
-        expect { post :create, :registration => attrs, user_id: user.id, :year => user.year
-          }.to_not change { Attendee.count }
+        expect {
+          post :create, :registration => attrs, user_id: user.id, :year => user.year
+        }.to_not change { Attendee.count }
         expect(response).to render_template :new
         expect(assigns(:registration).errors).not_to be_empty
         expect(assigns(:registration).attendee_number).to eq(2)
@@ -66,8 +69,9 @@ RSpec.describe RegistrationsController, :type => :controller do
       it "is forbidden to create attendee under a different user" do
         user_two = create :user
         a = acsbl_atrs.merge(:user_id => user_two.id)
-        expect { post :create, :registration => a, user_id: user_two.id, :year => user_two.year
-          }.not_to change { Attendee.count }
+        expect {
+          post :create, :registration => a, user_id: user_two.id, :year => user_two.year
+        }.not_to change { Attendee.count }
         expect(response).to be_forbidden
       end
 
@@ -172,8 +176,9 @@ RSpec.describe RegistrationsController, :type => :controller do
       end
 
       it "updates a trivial field" do
-        expect { put_update :given_name => 'banana'
-          }.to change { attendee.reload.given_name }
+        expect {
+          put_update :given_name => 'banana'
+        }.to change { attendee.reload.given_name }
       end
 
       it "redirects to terminus if successful" do
@@ -189,8 +194,9 @@ RSpec.describe RegistrationsController, :type => :controller do
       end
 
       it "does not update admin fields" do
-        expect { put_update :comment => 'banana'
-          }.to_not change { attendee.reload.comment }
+        expect {
+          put_update :comment => 'banana'
+        }.to_not change { attendee.reload.comment }
       end
 
       it "is forbidden to update another user's attendee" do
@@ -243,15 +249,17 @@ RSpec.describe RegistrationsController, :type => :controller do
 
         it "can select a plan for own attendee" do
           expect(attendee.plans).to be_empty
-          expect { submit_plans_form attendee, params_for_plan(plan, 1)
-            }.to change { attendee.plans.count }.by(+1)
+          expect {
+            submit_plans_form attendee, params_for_plan(plan, 1)
+          }.to change { attendee.plans.count }.by(+1)
           expect(attendee.reload.plans).to include(plan)
         end
 
         it "cannot select plan for attendee belonging to someone else" do
           a = create :attendee
-          expect { submit_plans_form a, params_for_plan(plan, 1)
-            }.to_not change { a.plans.count }
+          expect {
+            submit_plans_form a, params_for_plan(plan, 1)
+          }.to_not change { a.plans.count }
           expect(response).to be_forbidden
         end
 
@@ -315,16 +323,18 @@ RSpec.describe RegistrationsController, :type => :controller do
       it "succeeds, creating attendee under any user" do
         u = create :user
         a = accessible_attributes_for(:attendee).merge(:user_id => u.id)
-        expect { post :create, :registration => a, :year => u.year
-          }.to change { u.attendees.count }.by(+1)
+        expect {
+          post :create, :registration => a, :year => u.year
+        }.to change { u.attendees.count }.by(+1)
       end
     end
 
     describe "#destroy" do
       it "raises ActionController::UrlGenerationError" do
         a = create :attendee
-        expect { delete :destroy, :id => a.id, :year => a.year
-          }.to raise_error(ActionController::UrlGenerationError)
+        expect {
+          delete :destroy, :id => a.id, :year => a.year
+        }.to raise_error(ActionController::UrlGenerationError)
       end
     end
 
@@ -354,16 +364,18 @@ RSpec.describe RegistrationsController, :type => :controller do
 
       it 'can update attendee of any user' do
         attrs = accessible_attributes_for(a).merge({:family_name => 'banana'})
-        expect { put :update, :id => a.id, :registration => attrs, :year => a.year
-          }.to change { a.reload.family_name }
+        expect {
+          put :update, :id => a.id, :registration => attrs, :year => a.year
+        }.to change { a.reload.family_name }
         expect(a.reload.family_name).to eq('banana')
       end
 
       it 'can select plan for attendee belonging to someone else' do
         plan = create :plan
         expect(a.plans).to be_empty
-        expect { submit_plans_form a, params_for_plan(plan, 1)
-          }.to change { a.plans.count }.by(+1)
+        expect {
+          submit_plans_form a, params_for_plan(plan, 1)
+        }.to change { a.plans.count }.by(+1)
       end
 
       it "allows an admin to add activities to any attendee" do

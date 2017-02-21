@@ -51,8 +51,9 @@ RSpec.describe UsersController, :type => :controller do
   context "as a user" do
     it 'cannot #destroy self' do
       sign_in user
-      expect { delete :destroy, :id => user.id, :year => user.year
-        }.to raise_error(ActionController::UrlGenerationError)
+      expect {
+        delete :destroy, :id => user.id, :year => user.year
+      }.to raise_error(ActionController::UrlGenerationError)
     end
 
     it 'can #edit_password' do
@@ -145,8 +146,9 @@ RSpec.describe UsersController, :type => :controller do
 
       it "the same user in the wrong year raises RecordNotFound" do
         sign_in user
-        expect { get :show, :id => user.id, :year => wrong_year
-          }.to raise_error(ActiveRecord::RecordNotFound)
+        expect {
+          get :show, :id => user.id, :year => wrong_year
+        }.to raise_error(ActiveRecord::RecordNotFound)
       end
 
       it "a different user from the same year is forbidden" do
@@ -160,16 +162,18 @@ RSpec.describe UsersController, :type => :controller do
       it 'user cannot promote themselves' do
         sign_in user
         attrs = accessible_attributes_for(user).merge(role: 'A')
-        expect { put :update, :id => user.id, :user => attrs, :year => user.year
-          }.to_not change { user.reload.role }
+        expect {
+          put :update, :id => user.id, :user => attrs, :year => user.year
+        }.to_not change { user.reload.role }
       end
 
       it 'user can update own email address' do
         sign_in user
         new_email = 'derp' + user.email
         attrs = accessible_attributes_for(user).merge(email: new_email)
-        expect { put :update, :id => user.id, :user => attrs, :year => user.year
-          }.to change { user.reload.email }
+        expect {
+          put :update, :id => user.id, :user => attrs, :year => user.year
+        }.to change { user.reload.email }
       end
     end
   end
@@ -199,8 +203,9 @@ RSpec.describe UsersController, :type => :controller do
     end
 
     it 'can #create' do
-      expect { post :create, :user => accessible_attributes_for(:user), :year => year
-        }.to_not change { User.yr(year).count }
+      expect {
+        post :create, :user => accessible_attributes_for(:user), :year => year
+      }.to_not change { User.yr(year).count }
       expect(response).to be_forbidden
     end
 
@@ -236,8 +241,9 @@ RSpec.describe UsersController, :type => :controller do
       end
       it "from wrong year raises RecordNotFound" do
         sign_in create :staff, year: wrong_year
-        expect { get :show, :id => user.id, :year => wrong_year
-          }.to raise_error(ActiveRecord::RecordNotFound)
+        expect {
+          get :show, :id => user.id, :year => wrong_year
+        }.to raise_error(ActiveRecord::RecordNotFound)
       end
     end
   end
@@ -268,16 +274,18 @@ RSpec.describe UsersController, :type => :controller do
     end
 
     it 'can #create' do
-      expect { post :create, :user => accessible_attributes_for(:user), :year => year
-        }.to change { User.yr(year).count }.by(+1)
+      expect {
+        post :create, :user => accessible_attributes_for(:user), :year => year
+      }.to change { User.yr(year).count }.by(+1)
       expect(response).to redirect_to users_path
     end
 
     describe '#destroy' do
       it 'raises ActionController::UrlGenerationError' do
         user # must `create` before `expect`
-        expect { delete :destroy, :id => user.id, :year => user.year
-          }.to raise_error(ActionController::UrlGenerationError)
+        expect {
+          delete :destroy, :id => user.id, :year => user.year
+        }.to raise_error(ActionController::UrlGenerationError)
       end
     end
 
@@ -306,8 +314,9 @@ RSpec.describe UsersController, :type => :controller do
       end
       it "from wrong year raises RecordNotFound" do
         sign_in create :admin, year: wrong_year
-        expect { get :show, :id => user.id, :year => wrong_year
-          }.to raise_error(ActiveRecord::RecordNotFound)
+        expect {
+          get :show, :id => user.id, :year => wrong_year
+        }.to raise_error(ActiveRecord::RecordNotFound)
       end
     end
 
@@ -329,8 +338,9 @@ RSpec.describe UsersController, :type => :controller do
 
       it "cannot update user year" do
         u = { 'year' => user.year + 1 }
-        expect { put :update, :id => user.id, :user => u, :year => user.year
-          }.to_not change { user.reload.year }
+        expect {
+          put :update, :id => user.id, :user => u, :year => user.year
+        }.to_not change { user.reload.year }
       end
     end
   end

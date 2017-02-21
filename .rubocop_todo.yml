@@ -6,21 +6,6 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 33
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyleAlignWith, SupportedStylesAlignWith.
-# SupportedStylesAlignWith: either, start_of_block, start_of_line
-Lint/BlockAlignment:
-  Exclude:
-    - 'app/controllers/reports_controller.rb'
-    - 'spec/controllers/attendees_controller_spec.rb'
-    - 'spec/controllers/plan_categories_controller_spec.rb'
-    - 'spec/controllers/plans_controller_spec.rb'
-    - 'spec/controllers/registrations_controller_spec.rb'
-    - 'spec/controllers/sign_ups_controller_spec.rb'
-    - 'spec/controllers/users_controller_spec.rb'
-    - 'spec/forms/registration_spec.rb'
-
 # Offense count: 2
 # Cop supports --auto-correct.
 Lint/DeprecatedClassMethods:
@@ -108,7 +93,7 @@ Metrics/AbcSize:
 # Offense count: 71
 # Configuration parameters: CountComments, ExcludedMethods.
 Metrics/BlockLength:
-  Max: 334
+  Max: 346
 
 # Offense count: 4
 # Configuration parameters: CountComments.
