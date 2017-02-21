@@ -50,4 +50,7 @@ if defined? RSpec
   end
 end
 
-task :default => :spec
+# Default task: lint then test
+task default: [] # in case it hasn't been set
+Rake::Task[:default].clear
+task default: [:rubocop, :spec]
