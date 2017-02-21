@@ -1,35 +1,23 @@
 source 'https://rubygems.org'
-
-# Specify a ruby version
-# http://gembundler.com/v1.2/whats_new.html
-# https://devcenter.heroku.com/articles/ruby-versions
 ruby '2.3.3'
 
-gem 'rails', '4.2.7.1'
-
-# View Layer
-gem 'jquery-rails'
-gem 'haml'
-gem 'bluecloth', :require => 'tilt/bluecloth' # markdown
-gem 'kaminari' # pagination
-gem 'sass-rails'
-gem 'uglifier', '>= 1.3.0'
-
-# Model Layer
-gem 'pg'
-gem 'protected_attributes'
-gem 'jc-validates_timeliness'
-
-# Stack, middleware, engines, etc.
+gem 'asset_sync'
 gem 'authorizenet'
+gem 'bluecloth', require: 'tilt/bluecloth'
 gem 'cancancan', '~> 1.9'
 gem 'devise'
 gem 'exception_notification'
+gem 'haml'
+gem 'jc-validates_timeliness'
+gem 'jquery-rails'
+gem 'kaminari'
+gem 'pg'
+gem 'protected_attributes'
+gem 'rails', '4.2.7.1'
 gem 'responders', '~> 2.0'
+gem 'sass-rails'
 gem 'thin'
-
-# Deployment
-gem 'asset_sync'
+gem 'uglifier', '>= 1.3.0'
 gem 'unf' # <- fog <- asset_sync (http://bit.ly/17TiMjA)
 
 # Groups: Rails will load the group where name == Rails.env
@@ -67,9 +55,9 @@ end
 
 group :test do
   gem 'capybara'
+  gem 'deep_merge' # recursively merge hashes
+  gem 'factory_girl'
+  gem 'factory_girl_rails'
   gem 'launchy' # provides `save_and_open_page`
-	gem 'deep_merge' # recursively merge hashes
-	gem 'factory_girl'
-	gem 'factory_girl_rails'
-	gem 'rb-fsevent'
+  gem 'rb-fsevent'
 end
