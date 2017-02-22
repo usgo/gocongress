@@ -20,9 +20,39 @@ RSpec.describe CostSummariesExporter do
       expected_price_1 = sprintf("%.2f", p1.price.to_f / 100)
       expected_price_2 = sprintf("%.2f", p2.price.to_f / 100)
       expected = [
-        ['user_id', 'user_email', 'attendee_id', 'given_name', 'family_name', 'alternate_name', 'plan_name', 'price', 'quantity'],
-        [a.user.id.to_s, a.user.email, a.id.to_s, a.given_name, a.family_name, a.alternate_name, p1.name, expected_price_1, ap1.quantity.to_s],
-        [a.user.id.to_s, a.user.email, a.id.to_s, a.given_name, a.family_name, a.alternate_name, p2.name, expected_price_2, "2"]
+        [
+          'user_id',
+          'user_email',
+          'attendee_id',
+          'given_name',
+          'family_name',
+          'alternate_name',
+          'plan_name',
+          'price',
+          'quantity'
+        ],
+        [
+          a.user.id.to_s,
+          a.user.email,
+          a.id.to_s,
+          a.given_name,
+          a.family_name,
+          a.alternate_name,
+          p1.name,
+          expected_price_1,
+          ap1.quantity.to_s
+        ],
+        [
+          a.user.id.to_s,
+          a.user.email,
+          a.id.to_s,
+          a.given_name,
+          a.family_name,
+          a.alternate_name,
+          p2.name,
+          expected_price_2,
+          "2"
+        ]
       ]
       expect(ary).to eq(expected)
     end

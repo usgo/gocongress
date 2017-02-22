@@ -74,8 +74,9 @@ RSpec.describe AttendeesController, :type => :controller do
     describe "#destroy" do
       it "raises ActionController::UrlGenerationError" do
         a = create :attendee
-        expect { delete :destroy, :id => a.id, :year => a.year
-          }.to raise_error(ActionController::UrlGenerationError)
+        expect {
+          delete :destroy, :id => a.id, :year => a.year
+        }.to raise_error(ActionController::UrlGenerationError)
       end
     end
   end

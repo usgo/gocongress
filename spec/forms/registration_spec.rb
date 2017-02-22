@@ -22,15 +22,17 @@ RSpec.describe Registration do
       it "does not add disabled activity, and returns an error" do
         r = Registration.new user, attendee
         params = {activity_ids: [dsbl_act.id]}
-        expect { expect(r.submit(params)).to be_falsey
-          }.to_not change { AttendeeActivity.count }
+        expect {
+          expect(r.submit(params)).to be_falsey
+        }.to_not change { AttendeeActivity.count }
       end
 
       it "does not remove disabled activity, and returns an error" do
         attendee.activities << dsbl_act
         r = Registration.new user, attendee
-        expect { expect(r.submit({})).to be_falsey
-          }.to_not change { AttendeeActivity.count }
+        expect {
+          expect(r.submit({})).to be_falsey
+        }.to_not change { AttendeeActivity.count }
       end
 
       it "selects shirt style" do
@@ -93,15 +95,17 @@ RSpec.describe Registration do
       it "adds disabled activities, and returns no errors" do
         act = create(:activity, disabled: true)
         r = Registration.new admin, attendee
-        expect { expect(r.submit(activity_ids: [act.id])).to be_truthy
-          }.to change { AttendeeActivity.count }.by(+1)
+        expect {
+          expect(r.submit(activity_ids: [act.id])).to be_truthy
+        }.to change { AttendeeActivity.count }.by(+1)
       end
 
       it "removes disabled activities, and returns no errors" do
         attendee.activities << dsbl_act
         r = Registration.new admin, attendee
-        expect { expect(r.submit({})).to be_truthy
-          }.to change { AttendeeActivity.count }.by(-1)
+        expect {
+          expect(r.submit({})).to be_truthy
+        }.to change { AttendeeActivity.count }.by(-1)
       end
 
       context "disabled plans" do

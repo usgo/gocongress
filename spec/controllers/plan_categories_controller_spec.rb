@@ -19,8 +19,9 @@ RSpec.describe PlanCategoriesController, :type => :controller do
       end
       it "admin should get a friendly warning" do
         sign_in create(:admin)
-        expect { delete :destroy, id: cat.id, year: cat.year
-          }.to_not change{ PlanCategory.count }
+        expect {
+          delete :destroy, id: cat.id, year: cat.year
+        }.to_not change{ PlanCategory.count }
         expect(flash[:alert]).to include "Cannot delete the '#{cat.name}' category"
       end
     end

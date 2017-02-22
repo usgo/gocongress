@@ -1,0 +1,21 @@
+inherit_from: .rubocop_todo.yml
+
+# Not useful compared to e.g. `Metrics/AbcSize`
+Metrics/BlockLength:
+  Enabled: false
+
+# Not useful compared to e.g. `Metrics/AbcSize`
+Metrics/ClassLength:
+  Enabled: false
+
+Metrics/LineLength:
+  Exclude:
+    - db/schema.rb
+
+# Not useful compared to e.g. `Metrics/AbcSize`
+Metrics/MethodLength:
+  Enabled: false
+
+# Not useful compared to e.g. `Metrics/AbcSize`
+Metrics/ModuleLength:
+  Enabled: false

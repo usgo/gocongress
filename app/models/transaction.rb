@@ -55,7 +55,13 @@ class Transaction < ActiveRecord::Base
   # gwdate and gwtranid are only allowed for gateway tranactions, eg. sales
   # unfortunately, validating the absence of something is ugly in rails
   GATEWAY_ATTR_MSG = "must be blank for non-gateway transactions"
-  with_options :unless => :is_gateway_transaction?, :allow_nil => false, :allow_blank => false, :in => [nil, ''], :message => GATEWAY_ATTR_MSG do |o|
+  with_options(
+    unless: :is_gateway_transaction?,
+    allow_nil: false,
+    allow_blank: false,
+    in: [nil, ''],
+    message: GATEWAY_ATTR_MSG
+  ) do |o|
     o.validates_inclusion_of :gwdate
     o.validates_inclusion_of :gwtranid
   end

@@ -114,7 +114,7 @@ RSpec.describe Attendee, :type => :model do
     end
 
     it 'country must be two capital lettters' do
-      expect(a.country).to match /\A[A-Z]{2}\z/
+      expect(a.country).to match(/\A[A-Z]{2}\z/)
       a.country = 'United States'
       expect(a).not_to be_valid
       expect(a.errors.keys).to include(:country)

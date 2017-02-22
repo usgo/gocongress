@@ -31,8 +31,9 @@ RSpec.describe PlansController, :type => :controller do
 
     it 'can create' do
       attrs = accessible_attributes_for plan
-      expect { post :create, :plan => attrs, :year => plan.year
-        }.to change { Plan.count }.by(+1)
+      expect {
+        post :create, :plan => attrs, :year => plan.year
+      }.to change { Plan.count }.by(+1)
       expect(response).to redirect_to plan_category_path plan.plan_category
     end
 

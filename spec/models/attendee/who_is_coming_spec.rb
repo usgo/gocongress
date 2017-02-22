@@ -87,7 +87,9 @@ RSpec.describe Attendee::WhoIsComing, :type => :model do
       create :attendee, user: u7, given_name: 'u7b'
       create :tr_sale, amount: 6999, user: u7
 
-      expect(Attendee::WhoIsComing.new(u1.year).attendees.map(&:given_name)).to match_array(['u1a', 'u2a', 'u3a', 'u3b', 'u4a', 'u4b', 'u6a'])
+      expect(
+        Attendee::WhoIsComing.new(u1.year).attendees.map(&:given_name)
+      ).to match_array(['u1a', 'u2a', 'u3a', 'u3b', 'u4a', 'u4b', 'u6a'])
     end
   end
 end
