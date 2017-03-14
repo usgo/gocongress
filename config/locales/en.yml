@@ -4,6 +4,7 @@ en:
       registration:
         guardian_full_name: "Guardian Name"
         liability_release: "Youth Attendance Agreement"
+        local_phone: "Local Phone"
   activerecord:
     attributes:
       activity:
