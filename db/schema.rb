@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170315025600) do
+ActiveRecord::Schema.define(version: 20170317030537) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -104,6 +104,7 @@ ActiveRecord::Schema.define(version: 20170315025600) do
     t.string   "alternate_name",           limit: 255
     t.string   "local_phone",              limit: 255
     t.string   "emergency_name",           limit: 255
+    t.string   "emergency_phone",          limit: 255
   end
 
   add_index "attendees", ["id", "year"], name: "index_attendees_on_id_and_year", unique: true, using: :btree
