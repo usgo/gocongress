@@ -1,7 +1,7 @@
 %fieldset
   .field
-    = f.label :rank, 'Rank'
-    = f.select :rank, Attendee::Rank::RANKS, :include_blank => 'Select Rank'
+    = f.label :rank, 'Estimated Rank'
+    = f.select :rank, Attendee::Rank::RANKS, :include_blank => 'Select Estimated Rank'
     %span.smalltext
       = link_to 'What is my AGA rank?', '#', :id => 'open_dialog_rank'
 
@@ -17,6 +17,10 @@
     = f.label :will_play_in_us_open
     = f.radio_button :will_play_in_us_open, true
     Yes
+    %span.smalltext
+      (Please contact the US Open TD at
+      = mail_to "usopen@gocongress.org"
+      if your estimated rank is different from your AGA rank.)
     = f.radio_button :will_play_in_us_open, false
     No
 
