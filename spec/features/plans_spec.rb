@@ -4,7 +4,7 @@ RSpec.describe 'plans', :type => :feature do
   let(:password) { 'asdfasdf' }
   let(:admin) { create :admin, :password => password }
 
-  it 'removes ability for admins to save new plans while registration phase is not closed' do
+  it 'adds ability for admins to save new plans while registration phase is not closed' do
     visit new_user_session_path(year: admin.year)
     fill_in 'Email', with: admin.email
     fill_in 'Password', with: password
@@ -15,6 +15,6 @@ RSpec.describe 'plans', :type => :feature do
     click_button 'Submit'
     expect(page).to have_content 'Settings updated'
     visit new_plan_path(year: admin.year)
-    expect(page).not_to have_button('Save')
+    expect(page).to have_button('Save')
   end
 end
