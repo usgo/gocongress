@@ -24,7 +24,7 @@ RSpec.describe AttendeesCsvExporter do
       create :plan
       na = AttendeesCsvExporter::AttendeeAttributes.names.length
       np = Plan.yr(atnd.year).count
-      expect(ary.size).to eq(na + np + 5)
+      expect(ary.size).to eq(na + np + 6)
     end
 
     it "should include the guardian's full name" do

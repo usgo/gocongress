@@ -92,6 +92,14 @@ class User < ActiveRecord::Base
     attendee_invoice_items + comp_invoice_items
   end
 
+  def paid_deposit
+    if amount_paid >= 7000
+      'Paid'
+    else
+      'Not paid'
+    end
+  end
+
   def get_invoice_total
     Invoice::Invoice.new(invoice_items).total
   end

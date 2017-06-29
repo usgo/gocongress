@@ -7,6 +7,7 @@ class AttendeesCsvExporter
       atnd.user_email,
       atnd.id,
       AttendeeAttributes.values(atnd),
+      atnd.user_paid_deposit,
       atnd.guardian_name,
       atnd.shirt_name,
       plan_quantities(atnd)
@@ -15,7 +16,7 @@ class AttendeesCsvExporter
 
   # Order must match `attendee_array`
   def self.header_array year
-    ['user_id', 'user_email', 'attendee_id'] + AttendeeAttributes.names + ['guardian', 'shirt_style'] + plan_names(year)
+    ['user_id', 'user_email', 'attendee_id'] + AttendeeAttributes.names + ['user_paid_deposit', 'guardian', 'shirt_style'] + plan_names(year)
   end
 
   def self.render year, attendees

@@ -234,6 +234,10 @@ class Attendee < ActiveRecord::Base
     user.try(:email)
   end
 
+  def user_paid_deposit
+    user.try(:paid_deposit)
+  end
+
 private
 
   # Minors are required to have a guardian.  To safely invoke
