@@ -42,6 +42,7 @@ class Attendee < ActiveRecord::Base
   validates_date :birth_date, :after => Date.civil(1900,1,1), :allow_blank => false
   validates :country,         :format => {:with => /\A[A-Z]{2}\z/}, :presence => true
   validates :email,           :presence => true
+  validates :emergency_name,  :presence => true
   validates :family_name,     :presence => true
   validates :gender,          :inclusion => {:in => ["m","f"], :message => "is not valid"}, :presence => true
   validates :given_name,      :presence => true
