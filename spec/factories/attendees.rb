@@ -4,6 +4,8 @@ FactoryGirl.define do
     birth_date "1981-09-10"
     country 'JP'
     email "example@example.com"
+    emergency_name 'Jenny'
+    emergency_phone '867-5309'
     family_name 'Vespucci'
     gender 'm'
     given_name 'Amerigo'

@@ -28,6 +28,8 @@ RSpec.describe 'registration form', :type => :feature do
       select '10 kyu', from: 'registration_rank'
       fill_in 'Email', with: 'minnie.mouse@example.com'
       select 'Aland Islands', from: 'registration_country'
+      fill_in 'Emergency Contact Name', with: 'Jenny'
+      fill_in 'Emergency Contact Phone', with: '867-5309'
       choose 'registration_will_play_in_us_open_true'
       click_button 'Continue'
       expect(page).to have_content 'Attendee added'

@@ -43,6 +43,7 @@ class Attendee < ActiveRecord::Base
   validates :country,         :format => {:with => /\A[A-Z]{2}\z/}, :presence => true
   validates :email,           :presence => true
   validates :emergency_name,  :presence => true
+  validates :emergency_phone, :presence => true
   validates :family_name,     :presence => true
   validates :gender,          :inclusion => {:in => ["m","f"], :message => "is not valid"}, :presence => true
   validates :given_name,      :presence => true
