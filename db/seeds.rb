@@ -113,3 +113,19 @@ Year.create!(
   },
   :without_protection => true
 )
+
+Year.create!(
+  {
+    city:                  'Williamsburg',
+    date_range:            'July 21 - 28',
+    day_off_date:          Date.new(2018, 7, 25),
+    ordinal_number:        34,
+    registration_phase:    'closed',
+    reply_to_email:        'webmaster@gocongress.org',
+    start_date:            Date.new(2018, 7, 21),
+    state:                 'VA',
+    timezone:              'Eastern Time (US & Canada)',
+    year:                  2018
+  },
+  :without_protection => true
+)
