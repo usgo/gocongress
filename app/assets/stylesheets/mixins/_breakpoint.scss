@@ -1,0 +1,49 @@
+// The greatest breakpoint mixin in the world
+// Pass in any number of comma separated stops, including
+// gt- or lt- prefixes for any size.
+@mixin breakpoint($sizes...) {
+	// A map of breakpoint stops should be set in _variables.scss
+	$stops: $breakpoint-stops;
+
+	// Iterate through the list of incoming sizes
+	@for $i from 1 through length($sizes) {
+		$size: nth($sizes, $i);
+
+		// Check for `gt-(size)` and `lt-(size)`
+		$size: str-split($size, '-');
+		$comparison: '';
+		@if length($size) > 1 {
+			$comparison: nth($size, 1);
+			$size: nth($size, 2);
+		} @else {
+			$size: nth($size, 1);
+		}
+
+		@each $stop, $value in $stops {
+			@if $size == $stop {
+				@if $comparison != '' {
+					// Ex: `gt-sm` -> applies to anything greater than small
+					@if $comparison == 'gt' {
+						@media (min-width: nth($value, 2)) { @content; }
+					}
+
+					// Ex: `lt-md` -> applies to anything less than medium
+					@if $comparison == 'lt' {
+						@media (max-width: nth($value, 1)) { @content; }
+					}
+				} @else {
+					@if nth($value, 1) and nth($value, 2) {
+						// Apply minimum and maximum values
+						@media (min-width: nth($value, 1)) and (max-width: nth($value, 2)) { @content; }
+					} @else if not nth($value, 1) {
+						// Just apply a maximum
+						@media (max-width: nth($value, 2)) { @content; }
+					} @else if not nth($value, 2) {
+						// Just apply a minimum
+						@media (min-width: nth($value, 1)) { @content; }
+					}
+				}
+			}
+		}
+	}
+}

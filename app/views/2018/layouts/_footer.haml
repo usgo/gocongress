@@ -1,0 +1,10 @@
+#footer
+  -# #sponsors
+    - @year.sponsors.each do |name,url|
+      %a{:href => url}= image_tag "sponsors/#{name}.jpg"
+  #site-credit
+    %p Content &copy; #{@year.year} US Go Congress
+    %p
+      Web Programming by
+      %a{:href => "http://www.jaredbeck.com", :target => "_blank"} Jared Beck
+      and Rexford Cristal
