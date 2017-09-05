@@ -21,6 +21,9 @@ body {
 		family: 'Cormorant Garamond', serif;
 		size: 24px;
 	}
+	@include breakpoint(lt-sm) {
+		font-size: 18px;
+	}
 }
 
 #header {
@@ -61,18 +64,19 @@ body {
 
 	@include breakpoint(xxs) {
 		// outline: 10px solid purple;
-		padding-left: 150px;
+		padding-left: 100px;
 		background: {
 			image: url(asset-path('2018/revolutionary-woman-woodcut-crop2.png'));
-			position: 0% 0%;
+			position: 0% 100%;
+			size: 120px;
 		}
 		h1 {
 			font: {
-				size: 28px;
+				size: 24px;
 			}
 		}
 		#usgc-when-where-container {
-			font-size: 14px;
+			font-size: 12px;
 		}
 		.button {
 			font: {
@@ -146,6 +150,9 @@ h1, h2, h3, h4, h5, h6 {
 h2 {
 	font: {
 		size: 36px;
+	}
+	@include breakpoint(lt-sm) {
+		font-size: 30px;
 	}
 	margin: 0;
 }
