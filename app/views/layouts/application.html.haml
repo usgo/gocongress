@@ -1,8 +1,10 @@
 !!!
 %html
   %head
+    %meta{:charset => 'UTF8'}
     %meta{:content => "text/html", "http-equiv" => "Content-Type"}/
     %meta{:content => "http:#{asset_path("logo/usgc/#{@logo_file}")}", :property => "og:image"}
+    %meta{:name => "viewport", :content => "width=device-width, initial-scale=1.0"}
     = favicon_link_tag "favicon.png"
     %title
       US Go Congress
@@ -12,15 +14,18 @@
 
     = csrf_meta_tag
     = javascript_include_tag :application
-    = stylesheet_link_tag :application
+    - if @year.year == 2018
+      = stylesheet_link_tag '2018/application'
+    - else
+      = stylesheet_link_tag :application
     = stylesheet_link_tag '//ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/themes/ui-lightness/jquery-ui.css'
     - if Rails.env.production?
       = render 'shared/google_analytics'
 
   %body{:class => "#{@bodyClassList} year#{@year.year}"}
     .body-container
-      = render '/layouts/header'
-      = render '/layouts/nav'
+      = render "#{@year.year}/layouts/header" rescue render '/layouts/header'
+      = render "#{@year.year}/layouts/nav" rescue render '/layouts/nav'
       .content
         - if flash[:notice]
           .flash.flash-notice= notice
@@ -29,4 +34,4 @@
         = yield
         .clear
       = yield :before_footer
-      = render '/layouts/footer'
+      = render "#{@year.year}/layouts/footer" rescue render '/layouts/footer'

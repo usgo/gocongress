@@ -1,7 +1,11 @@
 - content_for :before_footer do
   .content.past-years
     %p
-      Other Years: &nbsp;
+      - if @year.year == @years.last
+        Previous
+      - else
+        Other
+      Years: &nbsp;
       = link_to 2006, "http://www.trianglegoclub.org/gocongress06"
       // 2007 - Was on old.usgo.org, no longer exists
       // 2008 - Not sure, we never had a link to it?

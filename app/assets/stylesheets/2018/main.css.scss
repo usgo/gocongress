@@ -1,0 +1,201 @@
+@import 'variables';
+@import '../functions/str-split';
+@import '../mixins/breakpoint';
+
+@import url('https://fonts.googleapis.com/css?family=Cormorant+Garamond');
+
+@font-face {
+	font-family: 'boswell';
+	src: url(font-path('boswell.woff2')) format('woff2'),
+	url(font-path('boswell.woff')) format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
+
+html, body {
+	margin: 0;
+	padding: 0;
+}
+body {
+	font: {
+		family: 'Cormorant Garamond', serif;
+		size: 24px;
+	}
+	@include breakpoint(lt-sm) {
+		font-size: 18px;
+	}
+}
+
+#header {
+	background: {
+		image: url(asset-path('2018/revolutionary-woman-woodcut-crop.png'));
+		// size: 100%;
+		position: 0% 10%;
+		repeat: no-repeat;
+	}
+	border-bottom: 3px solid #333;
+	padding: 5vw;
+
+
+	position: relative;
+
+	&:after {
+		background: white;
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		content: '';
+		border-top: 2px solid #333;
+		height: 1px;
+	}
+
+	h1 {
+		font: {
+			size: 60px;
+			weight: normal;
+		}
+		margin: 0;
+		a {
+			color: #333;
+			text-decoration: none;
+		}
+	}
+
+	@include breakpoint(xxs) {
+		// outline: 10px solid purple;
+		padding-left: 100px;
+		background: {
+			image: url(asset-path('2018/revolutionary-woman-woodcut-crop2.png'));
+			position: 0% 100%;
+			size: 120px;
+		}
+		h1 {
+			font: {
+				size: 24px;
+			}
+		}
+		#usgc-when-where-container {
+			font-size: 12px;
+		}
+		.button {
+			font: {
+				size: 14px;
+			}
+		}
+	}
+	@include breakpoint(xs) {
+		// outline: 10px solid blue;
+		padding-left: 150px;
+		background: {
+			image: url(asset-path('2018/revolutionary-woman-woodcut-crop2.png'));
+			position: 0% 100%;
+		}
+		h1 {
+			font: {
+				size: 48px;
+			}
+		}
+		#usgc-when-where-container {
+			font-size: 24px;
+		}
+		.button {
+			font: {
+				size: 18px;
+			}
+		}
+	}
+	@include breakpoint(sm) {
+		// outline: 10px solid green;
+		padding-left: 350px;
+		h1 {
+			font: {
+				size: 48px;
+			}
+		}
+		#usgc-when-where-container {
+			font-size: 24px;
+		}
+		.button {
+			font: {
+				size: 18px;
+			}
+		}
+	}
+	@include breakpoint(gt-sm) {
+		// outline: 10px solid orange;
+		padding-left: 350px;
+	}
+
+}
+
+#usgc-when-where-container {
+	font: {
+		family: boswell;
+		size: 24px;
+	}
+	margin-bottom: 1em;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font: {
+		family: boswell;
+	}
+}
+
+.content {
+	padding: 5vw;
+}
+
+h2 {
+	font: {
+		size: 36px;
+	}
+	@include breakpoint(lt-sm) {
+		font-size: 30px;
+	}
+	margin: 0;
+}
+
+a {
+	color: hsl(0, 60%, 50%);
+	&:visited {
+		color: hsl(0, 20%, 50%);
+	}
+}
+
+.past-years {
+
+}
+
+#footer {
+	background: #333;
+	color: #ccc;
+	padding: 2vw 5vw;
+}
+
+.button {
+	$color: #eee;
+	background: hsl(0, 60%, 50%);
+	color: $color;
+	display: inline-block;
+	font: {
+		family: boswell;
+	}
+	padding: 10px;
+	position: relative;
+	text-decoration: none;
+	&:after {
+		$offset: 2px;
+		content: '';
+		position: absolute;
+		top: $offset;
+		right: $offset;
+		bottom: $offset;
+		left: $offset;
+		border: 1px solid $color;
+	}
+	&:visited {
+		color: $color;
+	}
+}

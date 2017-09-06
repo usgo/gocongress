@@ -1,7 +1,8 @@
 #gallery-column
   = render 'slideshow'
   = render 'addresses'
-= render 'logo_and_welcome'
-= render 'mailing_list' if @year.year >= 2016
+= render "#{@year.year}/home/logo_and_welcome" rescue render 'logo_and_welcome'
+- if @year.year >= 2016
+  = render "#{@year.year}/home/mailing_list" rescue render 'mailing_list'
 = render @contents
 = render 'past_years'

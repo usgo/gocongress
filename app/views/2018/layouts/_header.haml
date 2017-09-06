@@ -1,0 +1,16 @@
+%noscript
+  .noscript-warning
+    %h3 GoCongress.org works best with Javascript enabled
+
+#header-container
+  #header
+    #usgc-title-container
+      %h1= link_to "#{@year.year} US Go Congress", year_path
+    #usgc-when-where-container
+      = @congress_city + ', ' + @congress_state
+      &bull;
+      = @congress_date_range + ','
+      = @year.year
+    %div{:style => "clear:both;"}
+
+    %a.button.button-large{:href => "http://eepurl.com/bC8CBX"} Subscribe for Updates
