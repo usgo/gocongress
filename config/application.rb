@@ -63,7 +63,7 @@ module Gocongress
     config.assets.paths << "#{Rails.root}/vendor/assets/libs"
 
     config.assets.paths << Rails.root.join('vendor', 'assets', 'fonts')
-    config.assets.precompile << /\.(?:svg|eot|woff|ttf)$/
+    config.assets.precompile << /\.(?:svg|eot|woff|woff2|ttf)$/
 
     # We don't want Heroku to try to initialize our models during assets:precompile
     # because on Heroku Cedar, the database is not available during slug compilation.

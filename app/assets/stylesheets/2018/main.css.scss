@@ -29,12 +29,12 @@ body {
 #header {
 	background: {
 		image: url(asset-path('2018/revolutionary-woman-woodcut-crop.png'));
-		// size: 100%;
-		position: 0% 10%;
+		size: 240px;
+		position: 0% 100%;
 		repeat: no-repeat;
 	}
 	border-bottom: 3px solid #333;
-	padding: 5vw;
+	padding: 2em 5vw;
 
 
 	position: relative;
@@ -107,7 +107,10 @@ body {
 	}
 	@include breakpoint(sm) {
 		// outline: 10px solid green;
-		padding-left: 350px;
+		padding-left: 270px;
+		background: {
+			size: 240px;
+		}
 		h1 {
 			font: {
 				size: 48px;
@@ -124,7 +127,7 @@ body {
 	}
 	@include breakpoint(gt-sm) {
 		// outline: 10px solid orange;
-		padding-left: 350px;
+		padding-left: 270px;
 	}
 
 }
