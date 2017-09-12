@@ -1,6 +1,7 @@
 @import 'variables';
 @import '../functions/str-split';
 @import '../mixins/breakpoint';
+@import 'colonial-bullets';
 
 @import url('https://fonts.googleapis.com/css?family=Cormorant+Garamond');
 
@@ -36,8 +37,13 @@ body {
 	border-bottom: 3px solid #333;
 	padding: 2em 5vw;
 
+	@include breakpoint(lt-xs) {
+		padding: 1em 5vw;
+	}
+
 
 	position: relative;
+
 
 	&:after {
 		background: white;
@@ -62,6 +68,20 @@ body {
 		}
 	}
 
+	#usgc-when-where-container {
+		.icon {
+			display: inline-block;
+			height: 15px;
+			width: 15px;
+			margin: 0;
+
+			@include breakpoint(lt-xs) {
+				height: 10px;
+				width: 10px;
+			}
+		}
+	}
+
 	@include breakpoint(xxs) {
 		// outline: 10px solid purple;
 		padding-left: 100px;
@@ -72,15 +92,15 @@ body {
 		}
 		h1 {
 			font: {
-				size: 24px;
+				size: 28px;
 			}
 		}
 		#usgc-when-where-container {
-			font-size: 12px;
+			font-size: 16px;
 		}
 		.button {
 			font: {
-				size: 14px;
+				size: 18px;
 			}
 		}
 	}
@@ -90,6 +110,7 @@ body {
 		background: {
 			image: url(asset-path('2018/revolutionary-woman-woodcut-crop2.png'));
 			position: 0% 100%;
+			size: 180px;
 		}
 		h1 {
 			font: {
@@ -143,6 +164,7 @@ body {
 h1, h2, h3, h4, h5, h6 {
 	font: {
 		family: boswell;
+		weight: normal;
 	}
 }
 
@@ -201,4 +223,10 @@ a {
 	&:visited {
 		color: $color;
 	}
+}
+
+.content-bullet {
+	display: block;
+	margin: 2em auto;
+	height: 50px;
 }

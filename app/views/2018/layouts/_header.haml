@@ -8,7 +8,8 @@
       %h1= link_to "#{@year.year} US Go Congress", year_path
     #usgc-when-where-container
       = @congress_city + ', ' + @congress_state
-      &bull;
+      %svg.icon.icon-A.content-bullet.medium
+        %use{:'xlink:href' => image_path('colonial-bullets/symbol-defs.svg') + '#icon-A'}
       = @congress_date_range + ','
       = @year.year
     %div{:style => "clear:both;"}
