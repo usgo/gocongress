@@ -6,5 +6,8 @@
     %p Content &copy; #{@year.year} US Go Congress
     %p
       Web Programming by
-      %a{:href => "http://www.jaredbeck.com", :target => "_blank"} Jared Beck
-      and Rexford Cristal
+      = succeed ', ' do
+        %a{:href => "http://www.jaredbeck.com", :target => "_blank"} Jared Beck
+      Rexford Cristal, and
+      = succeed '.' do
+        %a{:href => "http://nateeagle.com", :target => "_blank"} Nate Eagle
