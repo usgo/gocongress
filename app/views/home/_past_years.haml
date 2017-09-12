@@ -11,4 +11,5 @@
       // 2008 - Not sure, we never had a link to it?
       // 2009-10 - Was on old.usgo.org, no longer exists
       - @years.each do |y|
-        = link_to y, "/#{y}"
+        - if y != @year.year
+          = link_to y, "/#{y}"
