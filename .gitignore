@@ -13,3 +13,4 @@ coverage
 *.swo
 .idea
 spec/examples.txt
+public/assets
