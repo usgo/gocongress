@@ -5,6 +5,11 @@
     %meta{:content => "text/html", "http-equiv" => "Content-Type"}/
     %meta{:content => "http:#{asset_path("logo/usgc/#{@logo_file}")}", :property => "og:image"}
     %meta{:name => "viewport", :content => "width=device-width, initial-scale=1.0"}
+    %meta{:name => "og:title", :content => "US Go Congress #{@year.year}"}
+    %meta{:name => "og:description", :content => "2018's annual Go Congress will be held in Williamsburg, Virginia from July 21 – 28, hosted by the National Go Center."}
+    %meta{:name => "og:image", :content => image_path('2018/og-image.png')}
+    %meta{:name => "og:image:width", :content => '1156'}
+    %meta{:name => "og:image:height", :content => '308'}
     = favicon_link_tag "favicon.png"
     %title
       US Go Congress
