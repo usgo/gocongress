@@ -1,7 +1,7 @@
 Gocongress
 ==========
 
-A maintainable web app for the US Go Congress.
+A maintainable web app for the U.S. Go Congress.
 Copyright (c) 2010-2017 American Go Association
 
 [![Code Climate](https://codeclimate.com/github/usgo/gocongress.png)](https://codeclimate.com/github/usgo/gocongress)
