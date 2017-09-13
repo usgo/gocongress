@@ -6,7 +6,7 @@
     -#
       %meta{:content => "http:#{asset_path("logo/usgc/#{@logo_file}")}", :property => "og:image"}
     %meta{:name => "viewport", :content => "width=device-width, initial-scale=1.0"}
-    %meta{:property => "og:title", :content => "US Go Congress #{@year.year}"}
+    %meta{:property => "og:title", :content => "U.S. Go Congress #{@year.year}"}
     %meta{:property => "og:description", :content => "2018's annual Go Congress will be held in Williamsburg, Virginia from July 21 – 28, hosted by the National Go Center."}
     %meta{:property => "og:image", :content => image_path('2018/og-image.png')}
     %meta{:property => "og:image:type", :content => "image/png"}
@@ -15,7 +15,7 @@
     %meta{:property => "og:image:height", :content => "308"}
     = favicon_link_tag "favicon.png"
     %title
-      US Go Congress
+      U.S. Go Congress
       = @year.year
       - unless controller_name == "home" and action_name == "index"
         = "- #{page_title}"
