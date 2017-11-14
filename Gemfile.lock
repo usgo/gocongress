@@ -82,10 +82,10 @@ GEM
       activesupport (>= 4.0, < 6)
     excon (0.59.0)
     execjs (2.7.0)
-    factory_girl (4.9.0)
+    factory_bot (4.8.2)
       activesupport (>= 3.0.0)
-    factory_girl_rails (4.9.0)
-      factory_girl (~> 4.9.0)
+    factory_bot_rails (4.8.2)
+      factory_bot (~> 4.8.2)
       railties (>= 3.0.0)
     ffi (1.9.18)
     fog-aws (1.4.1)
@@ -301,8 +301,8 @@ DEPENDENCIES
   devise
   dotenv-rails
   exception_notification
-  factory_girl
-  factory_girl_rails
+  factory_bot
+  factory_bot_rails
   fog-aws
   haml
   haml-rails

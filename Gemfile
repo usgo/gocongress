@@ -57,8 +57,8 @@ end
 group :test do
   gem 'capybara'
   gem 'deep_merge' # recursively merge hashes
-  gem 'factory_girl'
-  gem 'factory_girl_rails'
+  gem 'factory_bot'
+  gem 'factory_bot_rails'
   gem 'launchy' # provides `save_and_open_page`
   gem 'rb-fsevent'
 end

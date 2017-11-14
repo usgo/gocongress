@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :year do
     year Date.current.year
     city 'Black Mountain'

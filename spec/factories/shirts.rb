@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :shirt do
     name 'Unicorn vs. Werewolf'
     description 'Nam ac tortor lorem, vel egestas lorem.'

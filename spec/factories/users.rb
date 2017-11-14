@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
 
   sequence(:random_email) {|n| "test#{n}@example.com" }
 

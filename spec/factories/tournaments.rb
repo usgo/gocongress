@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :tournament do
     sequence(:name) { |n| "Tournament #{n}"}
     eligible "blah"

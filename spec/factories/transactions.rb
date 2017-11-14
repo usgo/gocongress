@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
 
   # The `:base_transaction` represents the attributes
   # common to all other factories.  It does not have enough

@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :contact do
     title "Registrar"
     given_name "Jane"
