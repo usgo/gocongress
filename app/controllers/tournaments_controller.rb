@@ -22,7 +22,7 @@ class TournamentsController < ApplicationController
   end
 
   def update
-    if @tournament.update_attributes(params[:tournament])
+    if @tournament.update_attributes!(tournament_params)
       redirect_to tournament_path(@tournament), :notice => 'Tournament updated.'
     else
       render :action => "edit"
@@ -32,5 +32,12 @@ class TournamentsController < ApplicationController
   def destroy
     @tournament.destroy
     redirect_to tournaments_url
+  end
+
+  private
+
+  def tournament_params
+    params.require(:tournament).permit(:description, :directors, :eligible,
+      :location, :name, :openness, :show_in_nav_menu)
   end
 end
