@@ -22,7 +22,7 @@ class ContentsController < ApplicationController
   end
 
   def update
-    if @content.update_attributes(params[:content])
+    if @content.update_attributes!(content_params)
       redirect_to(@content, :notice => 'Content updated.')
     else
       render :action => "edit"
@@ -40,4 +40,10 @@ class ContentsController < ApplicationController
   end
   helper_method :content_category_options
 
+  private
+
+  def content_params
+    params.require(:content).permit(:body, :content_category_id, :expires_at,
+      :show_on_homepage, :subject)
+  end
 end
