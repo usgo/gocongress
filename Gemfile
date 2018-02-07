@@ -52,6 +52,7 @@ group :development do
   gem 'spring'
   gem 'spring-commands-rspec'
   gem 'web-console', '~> 3.0'
+  gem 'rb-readline'
 end
 
 group :test do
