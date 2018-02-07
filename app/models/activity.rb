@@ -1,4 +1,5 @@
 class Activity < ActiveRecord::Base
+  include ActiveModel::ForbiddenAttributesProtection
   include YearlyModel
   include Purchasable
 
