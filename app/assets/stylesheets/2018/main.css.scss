@@ -27,34 +27,76 @@ body {
 	}
 }
 
+.body-container {
+}
+
+.header-logo {
+	position: absolute;
+	left: 50%;
+	bottom: -50px;
+	height: calc(10vh + 100px);
+	@include breakpoint(lt-md) {
+		bottom: -15px;
+		height: 20vh;
+	}
+	transform: translateX(-50%);
+	z-index: 2;
+}
+
+#header.home {
+	.header-logo {
+		height: calc(50vh + 100px);
+		@include breakpoint(lt-md) {
+			bottom: -30px;
+			height: auto;
+			width: 80vw;
+		}
+	}
+}
+
+#header-container {
+}
+
 #header {
 	background: {
-		image: url(asset-path('2018/revolutionary-woman-woodcut-crop.png'));
-		size: 240px;
-		position: 0% 100%;
+		// attachment: fixed;
+		color: #333;
+		image:
+		radial-gradient(circle at bottom, black 0, transparent 50%),
+		url(asset-path('2018/photographs/williamsburg/IMG_6730.jpg'));
+		size: cover;
+		position: 50% 100%;
 		repeat: no-repeat;
+
+	};
+	// border-bottom: 2px solid #000;
+	color: #fff;
+	height: 20vh;
+
+	&.home {
+		height: 75vh;
+		background: {
+			image:
+			radial-gradient(circle at bottom, black 0, transparent 50%),
+			url(asset-path('2018/photographs/williamsburg/header1.jpg'));
+		}
 	}
-	border-bottom: 3px solid #333;
-	padding: 2em 5vw;
+	// background: {
+	// 	image: url(asset-path('2018/revolutionary-woman-woodcut-crop.png'));
+	// 	size: 240px;
+	// 	position: 0% 100%;
+	// 	repeat: no-repeat;
+	// }
+	// border-bottom: 3px solid #333;
+	// padding: 2em 5vw;
 
 	@include breakpoint(lt-xs) {
-		padding: 1em 5vw;
+		// padding: 1em 5vw;
 	}
 
 
 	position: relative;
 
-
-	&:after {
-		background: white;
-		position: absolute;
-		bottom: 0;
-		left: 0;
-		right: 0;
-		content: '';
-		border-top: 2px solid #333;
-		height: 1px;
-	}
 
 	h1 {
 		font: {
@@ -63,14 +105,57 @@ body {
 		}
 		margin: 0;
 		a {
-			color: #333;
+			color: #fff;
 			text-decoration: none;
 		}
 	}
 
+	}
+
+	#nav-header {
+		background: #222;
+		display: flex;
+		align-items: center;
+		padding: 5px 10px;
+	}
+
+	#usgc-title-container {
+		flex: 1 1 auto;
+		font: {
+			size: 18px;
+		}
+
+		@include breakpoint(lt-md) {
+			display: none;
+		}
+
+		> h1 {
+			margin: 0;
+
+			a {
+				color: #eee;
+			}
+		}
+	}
+
 	#usgc-when-where-container {
+		color: #eee;
+		font: {
+			family: boswell;
+			size: 24px;
+		}
+		line-height: 1;
+
+		@include breakpoint(lt-md) {
+			font-size: 18px;
+			padding: 0.75em 1em 0.25em;
+			text-align: center;
+			flex: 1 1 auto;
+		}
+
 		.icon {
 			display: inline-block;
+			fill: #eee;
 			height: 15px;
 			width: 15px;
 			margin: 0;
@@ -80,86 +165,8 @@ body {
 				width: 10px;
 			}
 		}
-	}
-
-	@include breakpoint(xxs) {
-		// outline: 10px solid purple;
-		padding-left: 100px;
-		background: {
-			image: url(asset-path('2018/revolutionary-woman-woodcut-crop2.png'));
-			position: 0% 100%;
-			size: 120px;
-		}
-		h1 {
-			font: {
-				size: 28px;
-			}
-		}
-		#usgc-when-where-container {
-			font-size: 16px;
-		}
-		.button {
-			font: {
-				size: 18px;
-			}
-		}
-	}
-	@include breakpoint(xs) {
-		// outline: 10px solid blue;
-		padding-left: 150px;
-		background: {
-			image: url(asset-path('2018/revolutionary-woman-woodcut-crop2.png'));
-			position: 0% 100%;
-			size: 180px;
-		}
-		h1 {
-			font: {
-				size: 48px;
-			}
-		}
-		#usgc-when-where-container {
-			font-size: 24px;
-		}
-		.button {
-			font: {
-				size: 18px;
-			}
-		}
-	}
-	@include breakpoint(sm) {
-		// outline: 10px solid green;
-		padding-left: 270px;
-		background: {
-			size: 240px;
-		}
-		h1 {
-			font: {
-				size: 48px;
-			}
-		}
-		#usgc-when-where-container {
-			font-size: 24px;
-		}
-		.button {
-			font: {
-				size: 18px;
-			}
-		}
-	}
-	@include breakpoint(gt-sm) {
-		// outline: 10px solid orange;
-		padding-left: 270px;
-	}
-
 }
 
-#usgc-when-where-container {
-	font: {
-		family: boswell;
-		size: 24px;
-	}
-	margin-bottom: 1em;
-}
 
 h1, h2, h3, h4, h5, h6 {
 	font: {
@@ -210,16 +217,6 @@ a {
 	padding: 10px;
 	position: relative;
 	text-decoration: none;
-	&:after {
-		$offset: 2px;
-		content: '';
-		position: absolute;
-		top: $offset;
-		right: $offset;
-		bottom: $offset;
-		left: $offset;
-		border: 1px solid $color;
-	}
 	&:visited {
 		color: $color;
 	}
@@ -229,4 +226,111 @@ a {
 	display: block;
 	margin: 2em auto;
 	height: 50px;
+}
+
+.nav-container {
+	position: sticky;
+	top: 0;
+	z-index: 1;
+
+	a {
+		text-decoration: none;
+	}
+}
+
+.nav-list-main, .nav-admin {
+	font: {
+		size: 18px;
+	}
+	margin: 0;
+	padding: 0;
+	display: flex;
+	list-style: none;
+	flex-wrap: wrap;
+
+	li {
+		display: flex;
+		align-items: stretch;
+		flex: 1 1 auto;
+		text-align: center;
+
+		> a {
+			color: #fff;
+			display: block;
+			flex: 1 1 auto;
+			padding: 0.5em;
+			transition: all 0.2s;
+			&:hover {
+				background: #fff;
+				color: hsl(0, 60%, 50%);
+			}
+		}
+	}
+}
+
+.nav-list-main {
+	background: {
+		color: hsl(0, 60%, 50%);
+	}
+}
+
+.nav-admin {
+	background: {
+		color: hsl(50, 70%, 50%);
+	}
+}
+
+.scroller-image {
+	margin: 0 -5vw;
+	background: {
+		attachment: fixed;
+		size: cover;
+		position: 50% 50%;
+		repeat: no-repeat;
+	}
+	height: 25vh;
+}
+
+.directors-photo {
+	background: {
+		image: url(asset-path('2018/photographs/williamsburg/diego-and-nate.jpg'));
+	}
+}
+
+.dorm-facade {
+	background: {
+		image: url(asset-path('2018/photographs/williamsburg/IMG_6787.jpg'));
+	}
+}
+
+
+#below-gallery {
+	color: white;
+	background: {
+		color: hsl(0, 60%, 50%);
+	}
+	float: right;
+	padding: 1em;
+	position: relative;
+
+	* {
+		position: relative;
+	}
+
+	a {
+		color: white;
+	}
+
+	&:before {
+		display: block;
+		content: '';
+		position: absolute;
+		$inset: 5px;
+		top: $inset;
+		right: $inset;
+		bottom: $inset;
+		left: $inset;
+		border: 1px solid white;
+
+	}
 }
