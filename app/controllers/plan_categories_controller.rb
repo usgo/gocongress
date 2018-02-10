@@ -33,7 +33,7 @@ class PlanCategoriesController < ApplicationController
     if params[:commit] == 'Update Order'
       @plan_category.reorder_plans(params[:plan_order])
     else
-      unless @plan_category.update_attributes(params[:plan_category])
+      unless @plan_category.update_attributes!(plan_category_params)
         render :action => "edit" and return
       end
     end
@@ -72,4 +72,8 @@ class PlanCategoriesController < ApplicationController
     @show_order_fields = can?(:update, Plan) && @plans.count > 1
   end
 
+  def plan_category_params
+    params.require(:plan_category).permit(:description, :event_id, :mandatory,
+      :name, :ordinal, :show_description, :single)
+  end
 end

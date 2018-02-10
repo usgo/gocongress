@@ -5,10 +5,11 @@ RSpec.describe PlanCategoriesController, :type => :controller do
 
   it_behaves_like "an admin controller", :plan_category do
     let(:event) { create :event }
-    let(:extra_params_for_create) { {:plan_category => {:event_id => event.id}} }
+    let(:extra_params_for_create) { {:plan_category => {:event_id => event.id, :name => "Plan Category"}} }
     let(:updateable_attribute) { :description }
   end
 
+  let(:event) { create :event }
   let(:cat) { create :plan_category }
   let!(:plan) { create :plan, disabled: true, plan_category: cat }
 
@@ -63,7 +64,8 @@ RSpec.describe PlanCategoriesController, :type => :controller do
       cat = create(:plan_category)
       create(:plan, name: 'Apples', cat_order: 1, plan_category: cat)
       create(:plan, name: 'Oranges', cat_order: 2, plan_category: cat)
-      put :update, year: cat.year, id: cat.id, plan_order: [2,1]
+      patch :update, :year => cat.year, :id => cat.id, :plan_order => [2,1],
+        :plan_category => { :event_id => event.id, :name => "Plan Category" }
       expect(response).to redirect_to cat
       expect(cat.plans.order(:cat_order).map(&:name)).to match_array(['Oranges', 'Apples'])
     end
