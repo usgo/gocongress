@@ -1,7 +1,8 @@
 require "rails_helper"
 
 RSpec.describe PlansController, :type => :controller do
-  let(:plan) { create :plan }
+  let(:category) { create :plan_category }
+  let(:plan) { create :plan, plan_category_id: category.id }
 
   context 'as a visitor' do
     it 'can show plan' do
@@ -19,8 +20,7 @@ RSpec.describe PlansController, :type => :controller do
 
     it 'cannot create' do
       sign_in create :user
-      attrs = accessible_attributes_for plan
-      post :create, :plan => attrs, :year => Time.now.year
+      post :create, :year => Time.now.year, :plan => { :price => 1, :name => "Plan", :description => "Description", :age_min => 0, :plan_category_id => category.id }
       expect(response).to be_forbidden
     end
   end
@@ -30,9 +30,8 @@ RSpec.describe PlansController, :type => :controller do
     before do sign_in admin end
 
     it 'can create' do
-      attrs = accessible_attributes_for plan
       expect {
-        post :create, :plan => attrs, :year => plan.year
+        post :create, :year => Time.now.year, :plan => { :price => 1, :name => "Plan", :description => "Description", :age_min => 0, :plan_category_id => category.id }
       }.to change { Plan.count }.by(+1)
       expect(response).to redirect_to plan_category_path plan.plan_category
     end

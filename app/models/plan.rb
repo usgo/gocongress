@@ -1,10 +1,7 @@
 class Plan < ActiveRecord::Base
+  include ActiveModel::ForbiddenAttributesProtection
   include YearlyModel
   include Purchasable
-
-attr_accessible :cat_order, :daily, :name, :price, :age_min,
-  :age_max, :description, :disabled, :show_disabled, :inventory, :max_quantity,
-  :n_a, :needs_staff_approval, :plan_category_id
 
 # Associations
 # ------------

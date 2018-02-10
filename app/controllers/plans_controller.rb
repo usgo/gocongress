@@ -32,7 +32,7 @@ class PlansController < ApplicationController
 
   def update
     @plan_categories = categories_for_select
-    if @plan.update_attributes(params[:plan])
+    if @plan.update_attributes!(plan_params)
       redirect_to plan_category_path(@plan.plan_category), :notice => 'Plan updated.'
     else
       render :action => "edit"
@@ -57,4 +57,9 @@ class PlansController < ApplicationController
     PlanCategory.yr(@year).order(:name).to_a.map {|c| [c.name, c.id]}
   end
 
+  def plan_params
+    params.require(:plan).permit(:cat_order, :daily, :name, :price, :age_min,
+      :age_max, :description, :disabled, :show_disabled, :inventory,
+      :max_quantity, :n_a, :needs_staff_approval, :plan_category_id)
+  end
 end
