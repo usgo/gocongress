@@ -4,6 +4,11 @@ RSpec.describe ActivityCategoriesController, :type => :controller do
   let(:activity_category) { create :activity_category }
   render_views
 
+  it_behaves_like "an admin controller", :activity_category do
+    let(:extra_params_for_create) { { :activity_category => { :name => "Name" } } }
+    let(:updateable_attribute) { :description }
+  end
+
   describe "#show" do
     it "is successful for visitors" do
       c = create :activity_category
