@@ -59,7 +59,7 @@ RSpec.describe SignUpsController, :type => :controller do
     it "raises error if role parameter is present" do
       u = accessible_attributes_for(:user).merge(role: 'A')
       expect {
-        post :create, :user => u, :year => u[:year]
+        post :create, :user => u, :year => year
       }.to raise_error(ActionController::UnpermittedParameters)
     end
   end

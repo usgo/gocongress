@@ -11,6 +11,7 @@ RSpec.describe UsersController, :type => :controller do
   render_views
 
   let(:user) { create :user }
+  let(:user_attributes) { { :email => "test@example.com", :password => "password", :password_confirmation => "password" } }
   let(:wrong_year) { user.year - 1 }
   let(:year) { Time.zone.now.year }
 
@@ -163,8 +164,8 @@ RSpec.describe UsersController, :type => :controller do
         sign_in user
         attrs = accessible_attributes_for(user).merge(role: 'A')
         expect {
-          put :update, :id => user.id, :user => attrs, :year => user.year
-        }.to_not change { user.reload.role }
+          patch :update, :id => user.id, :user => attrs, :year => user.year
+        }.to raise_error(ActionController::UnpermittedParameters)
       end
 
       it 'user can update own email address' do
@@ -204,7 +205,7 @@ RSpec.describe UsersController, :type => :controller do
 
     it 'can #create' do
       expect {
-        post :create, :user => accessible_attributes_for(:user), :year => year
+        post :create, :user => user_attributes, :year => year
       }.to_not change { User.yr(year).count }
       expect(response).to be_forbidden
     end
@@ -275,7 +276,7 @@ RSpec.describe UsersController, :type => :controller do
 
     it 'can #create' do
       expect {
-        post :create, :user => accessible_attributes_for(:user), :year => year
+        post :create, :user => user_attributes, :year => year
       }.to change { User.yr(year).count }.by(+1)
       expect(response).to redirect_to users_path
     end
@@ -322,8 +323,7 @@ RSpec.describe UsersController, :type => :controller do
 
     describe '#update' do
       it 'can update any user' do
-        attrs = accessible_attributes_for user
-        put :update, :id => user.id, :user => attrs, :year => user.year
+        patch :update, :id => user.id, :user => user_attributes, :year => user.year
         expect(response).to redirect_to user_path user
       end
 
@@ -339,7 +339,7 @@ RSpec.describe UsersController, :type => :controller do
       it "cannot update user year" do
         u = { 'year' => user.year + 1 }
         expect {
-          put :update, :id => user.id, :user => u, :year => user.year
+          patch :update, :id => user.id, :user => user_attributes.merge(u), :year => user.year
         }.to_not change { user.reload.year }
       end
     end
