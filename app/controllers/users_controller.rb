@@ -144,7 +144,7 @@ private
   end
 
   def user_params
-    params.require(:user).permit(:email, :password, :password_confirmation,
+    params.require(:user).except(:role).permit(:email, :password, :password_confirmation,
       :remember_me, :year)
   end
 end

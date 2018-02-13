@@ -165,7 +165,7 @@ RSpec.describe UsersController, :type => :controller do
         attrs = accessible_attributes_for(user).merge(role: 'A')
         expect {
           patch :update, :id => user.id, :user => attrs, :year => user.year
-        }.to raise_error(ActionController::UnpermittedParameters)
+        }.to_not change { user.reload.role }
       end
 
       it 'user can update own email address' do
