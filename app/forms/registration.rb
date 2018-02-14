@@ -97,6 +97,12 @@ class Registration
   def attendee_params(params)
     atrs = ATD_ATRS.concat(["birth_date(1i)", "birth_date(2i)", "birth_date(3i)", "user_id"])
     params.slice(*atrs)
+    parameters = ActionController::Parameters.new(params)
+    if admin?
+      parameters.permit!
+    else
+      parameters.except(:comment, :minor_agreement_received).permit!
+    end
   end
 
   # `all_plans` includes all disabled plans, whereas `form_plans` does not

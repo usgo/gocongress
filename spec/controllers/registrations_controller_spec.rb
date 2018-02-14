@@ -2,6 +2,7 @@ require "rails_helper"
 
 RSpec.describe RegistrationsController, :type => :controller do
   render_views
+  let(:attendee_attributes) { { :birth_date => "1981-09-10", :country => "US", :email => "test@gocongress.org", :emergency_name => "Jenny", :emergency_phone => "867-5309", :family_name => "Attendee", :gender => "m", :given_name => "Test", :rank => 3, :tshirt_size => "NO", :will_play_in_us_open => false } }
   let(:activities) { 1.upto(3).map{ create :activity } }
 
   context "as a visitor" do
@@ -39,10 +40,8 @@ RSpec.describe RegistrationsController, :type => :controller do
     before { sign_in user }
 
     describe "#create" do
-      let(:acsbl_atrs) { accessible_attributes_for(:attendee) }
-
       it "succeeds under own account" do
-        a = acsbl_atrs.merge(:user_id => user.id)
+        a = attendee_attributes.merge(:user_id => user.id)
         expect {
           post :create, :registration => a, user_id: user.id, :year => user.year
         }.to change { user.attendees.count }.by(+1)
@@ -68,7 +67,7 @@ RSpec.describe RegistrationsController, :type => :controller do
 
       it "is forbidden to create attendee under a different user" do
         user_two = create :user
-        a = acsbl_atrs.merge(:user_id => user_two.id)
+        a = attendee_attributes.merge(:user_id => user_two.id)
         expect {
           post :create, :registration => a, user_id: user_two.id, :year => user_two.year
         }.not_to change { Attendee.count }
@@ -76,7 +75,7 @@ RSpec.describe RegistrationsController, :type => :controller do
       end
 
       it "given invalid attributes it does not create attendee" do
-        attrs = acsbl_atrs.merge(:user_id => user.id)
+        attrs = attendee_attributes.merge(:user_id => user.id)
         attrs[:gender] = "zzzz" # invalid, obviously
         expect {
           post :create, registration: attrs, user_id: user.id, year: user.year
@@ -86,8 +85,10 @@ RSpec.describe RegistrationsController, :type => :controller do
 
       it "minors can specify the name of their guardian" do
         uncle_creepypants = create(:attendee, :birth_date => 50.years.ago)
-        attrs = accessible_attributes_for(:minor).merge(:user_id => user.id)
+        attrs = attendee_attributes.merge(:user_id => user.id)
+        attrs[:birth_date] = CONGRESS_START_DATE[Time.now.year] - 10.years
         attrs[:guardian_full_name] = "Mommy Moo"
+        attrs[:understand_minor] = true
         expect {
           post :create, registration: attrs, user_id: user.id, year: user.year
         }.to change{ Attendee.count }.by(+1)
@@ -97,7 +98,7 @@ RSpec.describe RegistrationsController, :type => :controller do
         it "saves selected plans" do
           plan = create :plan
           expect {
-            post :create, :registration => acsbl_atrs,
+            post :create, :registration => attendee_attributes,
               :plans => { plan.id.to_s => { 'qty' => 1 }},
               user_id: user.id, :year => user.year
           }.to change{ plan.attendees.count }.by(+1)
@@ -109,8 +110,8 @@ RSpec.describe RegistrationsController, :type => :controller do
           dates = (min_date..min_date + 2.days).map{|d| d.strftime('%Y-%m-%d')}
           plan_params = { plan.id.to_s => { 'qty' => 1, 'dates' => dates }}
           expect {
-            post :create, :registration => acsbl_atrs, :plans => plan_params,
-              user_id: user.id, :year => user.year
+            post :create, :registration => attendee_attributes,
+              :plans => plan_params, user_id: user.id, :year => user.year
           }.to change{ AttendeePlanDate.count }.by(dates.length)
           expect(plan.attendee_plans.count).to eq(1)
           expect(plan.attendee_plans.first.dates.map(&:_date)).to eq( \
@@ -322,7 +323,7 @@ RSpec.describe RegistrationsController, :type => :controller do
     describe "#create" do
       it "succeeds, creating attendee under any user" do
         u = create :user
-        a = accessible_attributes_for(:attendee).merge(:user_id => u.id)
+        a = attendee_attributes.merge(:user_id => u.id)
         expect {
           post :create, :registration => a, :year => u.year
         }.to change { u.attendees.count }.by(+1)
