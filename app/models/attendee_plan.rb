@@ -1,17 +1,13 @@
 require 'action_view/helpers/translation_helper'
 
 class AttendeePlan < ActiveRecord::Base
+  include ActiveModel::ForbiddenAttributesProtection
   include YearlyModel
   extend ActionView::Helpers::TranslationHelper
 
   belongs_to :attendee
   belongs_to :plan
   has_many :dates, :class_name => 'AttendeePlanDate'
-
-  # As with other attendee linking tables, mass-assignment security
-  # is not necessary yet, but may be in the future.  See the more
-  # detailed discussion in `attendee_activity.rb` -Jared 2012-07-15
-  attr_accessible :attendee, :attendee_id, :plan_id, :quantity, :year
 
   # Validations
   # -----------
