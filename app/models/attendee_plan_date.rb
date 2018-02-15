@@ -1,6 +1,5 @@
 class AttendeePlanDate < ActiveRecord::Base
-
-  attr_accessible :_date
+  include ActiveModel::ForbiddenAttributesProtection
 
   belongs_to :attendee_plan
 
