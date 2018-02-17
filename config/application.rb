@@ -75,7 +75,5 @@ module Gocongress
     # -----------------
     config.action_controller.permit_all_parameters = false
     config.action_controller.action_on_unpermitted_parameters = :raise
-
-    config.active_record.whitelist_attributes = false
   end
 end
