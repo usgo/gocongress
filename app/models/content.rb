@@ -1,5 +1,4 @@
 class Content < ActiveRecord::Base
-  include ActiveModel::ForbiddenAttributesProtection
   include YearlyModel
   belongs_to :content_category
 

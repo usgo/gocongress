@@ -1,5 +1,4 @@
 class Tournament < ActiveRecord::Base
-  include ActiveModel::ForbiddenAttributesProtection
   include YearlyModel
 
   # Openness Types:

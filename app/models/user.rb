@@ -1,7 +1,6 @@
 require "invoice_item"
 
 class User < ActiveRecord::Base
-  include ActiveModel::ForbiddenAttributesProtection
   include YearlyModel
 
   # Constants

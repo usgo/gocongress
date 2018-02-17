@@ -1,5 +1,4 @@
 class ActivityCategory < ActiveRecord::Base
-  include ActiveModel::ForbiddenAttributesProtection
   include YearlyModel
   has_many :activities
 

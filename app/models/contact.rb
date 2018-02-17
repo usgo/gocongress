@@ -1,5 +1,4 @@
 class Contact < ActiveRecord::Base
-  include ActiveModel::ForbiddenAttributesProtection
   include YearlyModel
 
   validates :email,

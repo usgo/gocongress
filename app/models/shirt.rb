@@ -1,5 +1,4 @@
 class Shirt < ActiveRecord::Base
-  include ActiveModel::ForbiddenAttributesProtection
   include YearlyModel
 
   has_many :attendees, dependent: :restrict_with_exception

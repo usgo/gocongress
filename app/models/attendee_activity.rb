@@ -1,5 +1,4 @@
 class AttendeeActivity < ActiveRecord::Base
-  include ActiveModel::ForbiddenAttributesProtection
   belongs_to :attendee
   belongs_to :activity
 

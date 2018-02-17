@@ -1,7 +1,6 @@
 require "invoice_item"
 
 class Attendee < ActiveRecord::Base
-  include ActiveModel::ForbiddenAttributesProtection
   include YearlyModel
 
   # Associations

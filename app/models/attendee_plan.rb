@@ -1,7 +1,6 @@
 require 'action_view/helpers/translation_helper'
 
 class AttendeePlan < ActiveRecord::Base
-  include ActiveModel::ForbiddenAttributesProtection
   include YearlyModel
   extend ActionView::Helpers::TranslationHelper
 

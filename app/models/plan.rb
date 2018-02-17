@@ -1,5 +1,4 @@
 class Plan < ActiveRecord::Base
-  include ActiveModel::ForbiddenAttributesProtection
   include YearlyModel
   include Purchasable
 

@@ -1,5 +1,4 @@
 class Year < ActiveRecord::Base
-  include ActiveModel::ForbiddenAttributesProtection
 
   REG_PHASES = %w[closed open complete]
 

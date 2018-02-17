@@ -1,5 +1,4 @@
 class PlanCategory < ActiveRecord::Base
-  include ActiveModel::ForbiddenAttributesProtection
   include YearlyModel
 
   belongs_to :event

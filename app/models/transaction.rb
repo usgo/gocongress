@@ -1,5 +1,4 @@
 class Transaction < ActiveRecord::Base
-  include ActiveModel::ForbiddenAttributesProtection
   include YearlyModel
 
   # The account this transaction applies to
