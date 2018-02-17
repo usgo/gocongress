@@ -304,6 +304,7 @@ DEPENDENCIES
   exception_notification
   factory_bot
   factory_bot_rails
+  ffi (= 1.9.18)
   fog-aws
   haml
   haml-rails
