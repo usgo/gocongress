@@ -14,10 +14,6 @@ Gocongress::Application.configure do
   # Asset sync
   config.action_controller.asset_host = "//#{ENV['FOG_DIRECTORY']}.s3.amazonaws.com"
 
-  # Mass assignment protection for Active Record models
-  # See ActiveModel::MassAssignmentSecurity::ClassMethods
-  config.active_record.mass_assignment_sanitizer = :logger
-
   # Disable Rails's static asset server
   config.serve_static_files = false
 
