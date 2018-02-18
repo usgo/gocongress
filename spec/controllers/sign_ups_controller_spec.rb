@@ -2,6 +2,7 @@ require "rails_helper"
 
 RSpec.describe SignUpsController, :type => :controller do
   let(:year) { Time.zone.now.year }
+  let(:user_attributes) { { :email => "test@gocongress.org", :password => "password", :password_confirmation => "password" } }
 
   # Every time you want to unit test a devise controller, you need
   # to tell Devise which mapping to use. http://bit.ly/lhjcUm
@@ -57,7 +58,7 @@ RSpec.describe SignUpsController, :type => :controller do
     end
 
     it "raises error if role parameter is present" do
-      u = accessible_attributes_for(:user).merge(role: 'A')
+      u = user_attributes.merge(role: 'A')
       expect {
         post :create, :user => u, :year => year
       }.to raise_error(ActionController::UnpermittedParameters)

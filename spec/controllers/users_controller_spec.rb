@@ -162,7 +162,7 @@ RSpec.describe UsersController, :type => :controller do
     describe '#update' do
       it 'user cannot promote themselves' do
         sign_in user
-        attrs = accessible_attributes_for(user).merge(role: 'A')
+        attrs = user_attributes.merge(role: 'A')
         expect {
           patch :update, :id => user.id, :user => attrs, :year => user.year
         }.to_not change { user.reload.role }
@@ -171,9 +171,9 @@ RSpec.describe UsersController, :type => :controller do
       it 'user can update own email address' do
         sign_in user
         new_email = 'derp' + user.email
-        attrs = accessible_attributes_for(user).merge(email: new_email)
+        attrs = user_attributes.merge(email: new_email)
         expect {
-          put :update, :id => user.id, :user => attrs, :year => user.year
+          patch :update, :id => user.id, :user => attrs, :year => user.year
         }.to change { user.reload.email }
       end
     end

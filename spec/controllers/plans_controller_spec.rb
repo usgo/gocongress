@@ -3,6 +3,7 @@ require "rails_helper"
 RSpec.describe PlansController, :type => :controller do
   let(:category) { create :plan_category }
   let(:plan) { create :plan, plan_category_id: category.id }
+  let(:plan_attributes) { { :price => 1, :name => "Plan", :description => "Description", :age_min => 0 } }
 
   context 'as a visitor' do
     it 'can show plan' do
@@ -49,8 +50,8 @@ RSpec.describe PlansController, :type => :controller do
     it 'can update max quantity' do
       new_max_quantity = 100+rand(10)
       expect(plan.max_quantity).not_to eq(new_max_quantity)
-      attrs = accessible_attributes_for(plan).merge(max_quantity: new_max_quantity)
-      put :update, :id => plan.id, :plan => attrs, :year => plan.year
+      attrs = plan_attributes.merge(max_quantity: new_max_quantity)
+      patch :update, :id => plan.id, :plan => attrs, :year => plan.year
       expect(Plan.find(plan.id).max_quantity).to eq(new_max_quantity)
       expect(response).to redirect_to plan_category_path plan.plan_category
     end

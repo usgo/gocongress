@@ -367,9 +367,9 @@ RSpec.describe RegistrationsController, :type => :controller do
       end
 
       it 'can update attendee of any user' do
-        attrs = accessible_attributes_for(a).merge({:family_name => 'banana'})
+        attrs = attendee_attributes.merge({:family_name => 'banana'})
         expect {
-          put :update, :id => a.id, :registration => attrs, :year => a.year
+          patch :update, :id => a.id, :registration => attrs, :year => a.year
         }.to change { a.reload.family_name }
         expect(a.reload.family_name).to eq('banana')
       end
