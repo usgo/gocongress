@@ -2,10 +2,6 @@ class Activity < ActiveRecord::Base
   include YearlyModel
   include Purchasable
 
-  attr_accessible :activity_category_id, :disabled,
-    :leave_time, :name, :notes, :phone, :price, :price_varies,
-    :return_time, :location, :url
-
   belongs_to :activity_category
   has_many :attendee_activities, :dependent => :destroy
   has_many :attendees, :through => :attendee_activities

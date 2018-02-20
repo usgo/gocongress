@@ -1,9 +1,6 @@
 class Tournament < ActiveRecord::Base
   include YearlyModel
 
-  attr_accessible :description, :directors, :eligible,
-    :location, :name, :openness, :show_in_nav_menu
-
   # Openness Types:
   # Open - All attendees can sign up
   # Invitational - Admins select certain attendees

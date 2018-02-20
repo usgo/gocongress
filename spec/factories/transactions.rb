@@ -33,14 +33,11 @@ FactoryBot.define do
 
   factory :tr_sale, :parent => :base_transaction do
     trantype 'S' # sale
-    ins = %w[C S K].sample
+    ins = %w[C S].sample
     instrument ins
-    case ins
-    when 'C'
+    if ins == 'C'
       gwdate { generate(:gwdate) }
       sequence(:gwtranid) { |n| n }
-    when 'K'
-      check_number 101
     end
   end
 

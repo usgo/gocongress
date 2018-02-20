@@ -8,7 +8,7 @@ class YearsController < ApplicationController
   before_filter :expose_reg_phase_opts
 
   def update
-    if @year.update_attributes(params[:year_record])
+    if @year.update_attributes!(year_record_params)
       redirect_to(edit_year_path, :notice => 'Settings updated')
     else
       render :action => "edit"
@@ -23,4 +23,10 @@ class YearsController < ApplicationController
     end
   end
 
+  def year_record_params
+    params.require(:year_record).permit(:city, :date_range, :day_off_date,
+      :ordinal_number, :registration_phase, :reply_to_email, :start_date,
+      :state, :timezone, :twitter_url, :venue_name, :venue_address,
+      :venue_city, :venue_state, :venue_zip, :venue_url, :venue_phone)
+  end
 end

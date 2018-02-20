@@ -1,9 +1,6 @@
 class Contact < ActiveRecord::Base
   include YearlyModel
 
-  attr_accessible :email, :family_name, :given_name, :list_order,
-    :phone, :title
-
   validates :email,
     :format => { :with => EMAIL_REGEX },
     :length => { :maximum => 100 },

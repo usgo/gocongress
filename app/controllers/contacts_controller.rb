@@ -22,7 +22,7 @@ class ContactsController < ApplicationController
   end
 
   def update
-    if @contact.update_attributes(params[:contact])
+    if @contact.update_attributes!(contact_params)
       redirect_to contacts_path, :notice => 'Contact updated'
     else
       render :action => "edit"
@@ -34,4 +34,10 @@ class ContactsController < ApplicationController
     redirect_to contacts_path, :notice => 'Contact deleted'
   end
 
+  private
+
+  def contact_params
+    params.require(:contact).permit(:email, :family_name, :given_name,
+      :list_order, :phone, :title)
+  end
 end

@@ -13,9 +13,6 @@ Gocongress::Application.configure do
   config.consider_all_requests_local       = true
   config.action_controller.perform_caching = false
 
-  # Raise exception on mass assignment protection for Active Record models.
-  config.active_record.mass_assignment_sanitizer = :strict
-
   # Raise exceptions instead of rendering exception templates
   config.action_dispatch.show_exceptions = false
 

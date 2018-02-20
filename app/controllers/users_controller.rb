@@ -96,13 +96,9 @@ class UsersController < ApplicationController
       @user.save
     end
 
-    # Now that we have handled the protected attributes, remove them
-    # from the params hash to avoid a warning. -Jared 2011.1.30
-    mass_assignable_attrs = params[:user].except(:role)
-
     # Update mass-assignable attributes. update_with_password() performs
     # some extra validation before calling update_attributes
-    if @user.update_with_password(mass_assignable_attrs)
+    if @user.update_with_password(user_params)
 
       # When changing our own password, refresh session credentials
       # or else we will get logged out!
@@ -147,4 +143,8 @@ private
     params.key?(:user) && params[:user].key?(attribute)
   end
 
+  def user_params
+    params.require(:user).except(:role).permit(:email, :password, :password_confirmation,
+      :remember_me, :year)
+  end
 end

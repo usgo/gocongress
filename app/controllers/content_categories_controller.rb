@@ -31,7 +31,7 @@ class ContentCategoriesController < ApplicationController
   end
 
   def update
-    if @content_category.update_attributes(params[:content_category])
+    if @content_category.update_attributes!(content_category_params)
       redirect_to(@content_category, :notice => 'Category updated.')
     else
       render :action => "edit"
@@ -44,4 +44,9 @@ protected
     action_name == "show" ? @content_category.name : super
   end
 
+  private
+
+  def content_category_params
+    params.require(:content_category).permit(:name)
+  end
 end

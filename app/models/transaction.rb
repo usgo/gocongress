@@ -1,11 +1,6 @@
 class Transaction < ActiveRecord::Base
   include YearlyModel
 
-  # On the form, admins enter an email, not a user_id,
-  # so user_id is not accessible.
-  attr_accessible :instrument, :trantype, :amount, :gwtranid, :gwdate,
-    :check_number, :comment
-
   # The account this transaction applies to
   belongs_to :user
 

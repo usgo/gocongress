@@ -46,7 +46,7 @@ class TransactionsController < ApplicationController
   def update
     @email_picker_value = params[:user_email]
 
-    if @transaction.update_attributes(params[:transaction])
+    if @transaction.update_attributes(transaction_params)
       redirect_to(@transaction, :notice => 'Transaction updated.')
     else
       render :action => "edit"
@@ -73,6 +73,11 @@ class TransactionsController < ApplicationController
     if params[:transaction].present?
       %w[user_id year].each{ |atr| params[:transaction].delete(atr) }
     end
+  end
+
+  def transaction_params
+    params.require(:transaction).permit(:instrument, :trantype, :amount,
+      :gwtranid, :gwdate, :check_number, :comment)
   end
 
   # View Helpers

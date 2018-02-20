@@ -21,7 +21,7 @@ class ShirtsController < ApplicationController
   end
 
   def update
-    if @shirt.update_attributes(params[:shirt])
+    if @shirt.update_attributes!(shirt_params)
       redirect_to shirts_path, :notice => 'Shirt updated'
     else
       render :action => "edit"
@@ -31,5 +31,12 @@ class ShirtsController < ApplicationController
   def destroy
     @shirt.destroy
     redirect_to(shirts_path, :notice => 'Shirt deleted')
+  end
+
+  private
+
+  def shirt_params
+    params.require(:shirt).permit(:description, :disabled, :hex_triplet,
+      :image_url, :name)
   end
 end

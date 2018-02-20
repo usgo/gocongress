@@ -8,11 +8,6 @@ class AttendeePlan < ActiveRecord::Base
   belongs_to :plan
   has_many :dates, :class_name => 'AttendeePlanDate'
 
-  # As with other attendee linking tables, mass-assignment security
-  # is not necessary yet, but may be in the future.  See the more
-  # detailed discussion in `attendee_activity.rb` -Jared 2012-07-15
-  attr_accessible :attendee, :attendee_id, :plan_id, :quantity, :year
-
   # Validations
   # -----------
 

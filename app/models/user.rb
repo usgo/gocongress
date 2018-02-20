@@ -39,15 +39,6 @@ class User < ActiveRecord::Base
     :confirmation => true,
     :if => :validate_password?
 
-  # Mass-Assignment
-  # ---------------
-  #
-  # Year is accessible, but we subclass RegistrationsController
-  # to provide mass-assignment security
-
-  attr_accessible :email, :password, :password_confirmation,
-    :remember_me, :year
-
   # Scopes
   # ------
 
@@ -120,7 +111,7 @@ class User < ActiveRecord::Base
       params.delete(:password)
       params.delete(:password_confirmation) if params[:password_confirmation].blank?
     end
-    update_attributes(params)
+    update_attributes!(params)
   end
 
 private

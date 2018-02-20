@@ -137,7 +137,7 @@ RSpec.shared_examples "an admin controller" do |model_name|
   end
 
   def params_for_create model_name
-    params = {:year => year, model_name => resource_attrs}
+    p = {:year => year}
 
     # Some controllers require extra params for create, eg.
     # `transaction_controller` takes an extra top-level param
@@ -145,10 +145,8 @@ RSpec.shared_examples "an admin controller" do |model_name|
     # `event_id` as part of the `plan_category` hash. Recursively
     # merge the extra params using `deep_merge` gem.
     if respond_to? :extra_params_for_create
-      params = params.deep_merge extra_params_for_create
+      p = p.deep_merge extra_params_for_create
     end
-
-    params
   end
 
   def params_for_update model_name

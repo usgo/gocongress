@@ -3,8 +3,6 @@ class Shirt < ActiveRecord::Base
 
   has_many :attendees, dependent: :restrict_with_exception
 
-  attr_accessible :description, :disabled, :hex_triplet, :image_url, :name
-
   SIZES = [
     ["None",            "NO"],
     ["Youth Small",     "YS"],

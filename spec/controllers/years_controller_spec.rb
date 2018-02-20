@@ -38,8 +38,8 @@ RSpec.describe YearsController, :type => :controller do
 
         it 'cannot update the year attribute' do
           expect {
-            put :update, {year: year.year, year_record: {year: 2312}}
-          }.to raise_exception(ActiveModel::MassAssignmentSecurity::Error)
+            patch :update, {year: year.year, year_record: {year: 2312}}
+          }.to raise_exception(ActionController::UnpermittedParameters)
         end
       end
     end
