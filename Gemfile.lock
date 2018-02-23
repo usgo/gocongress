@@ -159,13 +159,11 @@ GEM
       mini_portile2 (~> 2.3.0)
     orm_adapter (0.5.0)
     parallel (1.12.1)
-    parser (2.5.0.0)
+    parser (2.5.0.2)
       ast (~> 2.4.0)
     pg (0.21.0)
     powerpack (0.1.1)
     public_suffix (3.0.2)
-    quiet_assets (1.1.0)
-      railties (>= 3.1, < 5.0)
     rack (1.6.8)
     rack-test (0.6.3)
       rack (>= 1.0)
@@ -310,7 +308,6 @@ DEPENDENCIES
   kaminari
   launchy
   pg (< 1.0)
-  quiet_assets
   rails (= 4.2.10)
   rails_12factor
   rb-fsevent

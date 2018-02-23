@@ -48,7 +48,6 @@ end
 
 group :development do
   gem 'haml-rails'
-  gem 'quiet_assets'
   gem 'spring'
   gem 'spring-commands-rspec'
   gem 'web-console', '~> 3.0'
