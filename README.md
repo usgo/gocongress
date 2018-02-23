@@ -2,7 +2,7 @@ Gocongress
 ==========
 
 A maintainable web app for the U.S. Go Congress.
-Copyright (c) 2010-2017 American Go Association
+Copyright (c) 2010-2018 American Go Association
 
 [![Code Climate](https://codeclimate.com/github/usgo/gocongress.png)](https://codeclimate.com/github/usgo/gocongress)
 [![Dependency Status](https://gemnasium.com/usgo/gocongress.svg)](https://gemnasium.com/usgo/gocongress)
@@ -11,7 +11,7 @@ Contribute
 ----------
 
 1. Prerequisites
-    1. Linux (eg. [Ubuntu][15] 14.04+) or Mac OS 10.8+
+    1. Linux (eg. [Ubuntu][15] 16.04+) or Mac OS 10.8+
     1. Proficiency with [git][13] and [sql][14]
     1. Read [Getting Started with Rails][16]
     1. [Fork and clone][8] this github repo
