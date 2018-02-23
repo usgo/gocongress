@@ -27,6 +27,8 @@ Gocongress::Application.configure do
   # Turn debug mode off to concatenate and preprocess assets.
   config.assets.debug = true
 
+  config.assets.quiet = true
+
   # Override mailer host in application.rb -Jared 2010.12.27
   config.action_mailer.default_url_options = { :host => "0.0.0.0", :port => "3000" }
 
