@@ -60,5 +60,6 @@ group :test do
   gem 'factory_bot'
   gem 'factory_bot_rails'
   gem 'launchy' # provides `save_and_open_page`
+  gem 'rails-controller-testing'
   gem 'rb-fsevent'
 end
