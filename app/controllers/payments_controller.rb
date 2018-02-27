@@ -29,7 +29,7 @@ class PaymentsController < ApplicationController
   # a JS window.location redirect (and meta-refresh fallback) to
   # the `#receipt` action.
   def relay_response
-    @sim_response = AuthorizeNet::SIM::Response.new(params)
+    @sim_response = AuthorizeNet::SIM::Response.new(params.permit([:x_response_code]).to_h)
     if @sim_response.success?(conf('api_login_id'), conf('merchant_hash_value'))
       begin
         Transaction.create_from_authnet_sim_response(@sim_response)
