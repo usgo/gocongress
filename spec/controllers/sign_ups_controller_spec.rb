@@ -3,6 +3,7 @@ require "rails_helper"
 RSpec.describe SignUpsController, :type => :controller do
   let(:year) { Time.zone.now.year }
   let(:user_attributes) { { :email => "test@gocongress.org", :password => "password", :password_confirmation => "password" } }
+  let(:invalid_user_attributes) { { :email => "", :password => "password", :password_confirmation => "password" } }
 
   # Every time you want to unit test a devise controller, you need
   # to tell Devise which mapping to use. http://bit.ly/lhjcUm
@@ -36,7 +37,7 @@ RSpec.describe SignUpsController, :type => :controller do
     context "given an invalid user" do
 
       def attempt_to_create_invalid_user
-        post :create, {:user => {}, :year => year}
+        post :create, {:user => invalid_user_attributes, :year => year}
       end
 
       it "does not create a user" do
