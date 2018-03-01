@@ -8,11 +8,11 @@ module YearlyController
     # and helps the controller class to adjust the order of callbacks,
     # while keeping all includes at the top. -Jared 2012-07-14
     def add_filter_restricting_resources_to_year_in_route
-      before_filter :ensure_rsrc_year_matches_route_year, :except => [:create, :index, :new]
+      before_action :ensure_rsrc_year_matches_route_year, :except => [:create, :index, :new]
     end
 
     def add_filter_to_set_resource_year
-      before_filter :set_resource_year_from_route, :only => [:create, :new]
+      before_action :set_resource_year_from_route, :only => [:create, :new]
     end
 
   end

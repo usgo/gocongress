@@ -2,7 +2,7 @@ class PaymentsController < ApplicationController
   helper :authorize_net
   protect_from_forgery :except => :relay_response
 
-  before_filter :assert_config
+  before_action :assert_config
 
   # To save money, we're using Heroku's piggyback SSL, so we're
   # sending users to https://gocongress.herokuapp.com/payments/new.

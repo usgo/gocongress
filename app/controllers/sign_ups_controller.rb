@@ -1,6 +1,6 @@
 class SignUpsController < Devise::RegistrationsController
-  before_filter :remove_year_from_params, :except => [:create]
-  before_filter :assert_year_matches_route
+  before_action :remove_year_from_params, :except => [:create]
+  before_action :assert_year_matches_route
   after_filter :send_welcome_email, :only => [:create]
 
   protected

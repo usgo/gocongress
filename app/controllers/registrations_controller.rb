@@ -1,5 +1,5 @@
 class RegistrationsController < ApplicationController
-  before_filter :require_authentication, :except => [:index, :vip]
+  before_action :require_authentication, :except => [:index, :vip]
 
   def new
     attendee = Attendee.new

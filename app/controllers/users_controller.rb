@@ -3,8 +3,8 @@ class UsersController < ApplicationController
 
   # Callbacks, in order
   add_filter_restricting_resources_to_year_in_route
-  before_filter :deny_users_from_wrong_year, :only => [:index]
-  before_filter :remove_year_from_params
+  before_action :deny_users_from_wrong_year, :only => [:index]
+  before_action :remove_year_from_params
   load_resource
   authorize_resource :only => [:index, :show, :update]
 
