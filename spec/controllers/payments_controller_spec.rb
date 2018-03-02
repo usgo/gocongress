@@ -12,7 +12,7 @@ RSpec.describe PaymentsController, :type => :controller do
     it 'assings a sim_transaction with a cust_id' do
       u = create :user
       sign_in(u)
-      get :new, user_id: u.id
+      get :new, params: { user_id: u.id }
       expect(response).to be_success
       expect(assigns(:sim_transaction)).not_to be_nil
       expect(assigns(:sim_transaction).fields[:cust_id]).to eq(u.id)
@@ -57,19 +57,19 @@ RSpec.describe PaymentsController, :type => :controller do
     end
 
     it 'renders error message when declined' do
-      post :relay_response, {:x_response_code => 2}
+      post :relay_response, params: { x_response_code: 2 }
       expect(response).to be_success
       expect(response.body).to include('your card was declined.')
     end
 
     it 'renders error message when sim response is error' do
-      post :relay_response, {:x_response_code => 3}
+      post :relay_response, params: { x_response_code: 3 }
       expect(response).to be_success
       expect(response.body).to include('there was an error')
     end
 
     it 'renders error message when approved, but hashing fails' do
-      post :relay_response, {:x_response_code => 1}
+      post :relay_response, params: { x_response_code: 1 }
       expect(response).to be_success
       expect(response.body).to include('unable to authenticate the response')
     end

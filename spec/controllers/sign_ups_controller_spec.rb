@@ -13,7 +13,7 @@ RSpec.describe SignUpsController, :type => :controller do
 
   describe '#new' do
     it 'should succeed' do
-      get :new, :year => year
+      get :new, params: { :year => year }
       assert_response :success
     end
   end
@@ -28,7 +28,7 @@ RSpec.describe SignUpsController, :type => :controller do
 
       it "succeeds" do
         expect {
-          post :create, :user => attrs, :year => year
+          post :create, params: { user: attrs, year: year }
         }.to change { User.count }.by(+1)
         expect(response).to redirect_to user_path(User.last)
       end
@@ -37,7 +37,7 @@ RSpec.describe SignUpsController, :type => :controller do
     context "given an invalid user" do
 
       def attempt_to_create_invalid_user
-        post :create, {:user => invalid_user_attributes, :year => year}
+        post :create, params: { user: invalid_user_attributes, year: year }
       end
 
       it "does not create a user" do
@@ -61,7 +61,7 @@ RSpec.describe SignUpsController, :type => :controller do
     it "raises error if role parameter is present" do
       u = user_attributes.merge(role: 'A')
       expect {
-        post :create, :user => u, :year => year
+        post :create, params: { user: u, year: year }
       }.to raise_error(ActionController::UnpermittedParameters)
     end
   end
