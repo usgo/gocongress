@@ -55,12 +55,16 @@ class Registration
     params[:activity_ids] ||= {}
     params[:plans] ||= {}
     params[:registration] ||= {}
-
-    @activity_selections = params[:activity_ids].map(&:to_i)
-    @plan_selections = parse_plan_params(params[:plans])
-    @understand_minor = params[:registration][:understand_minor]
-    attendee.attributes = attendee_params(params[:registration])
-
+    if admin?
+      params.permit!
+    else
+      params.except(:comment, :minor_agreement_received).permit!
+    end
+    p = params.to_unsafe_h
+    @activity_selections = p[:activity_ids].map(&:to_i)
+    @plan_selections = parse_plan_params(p[:plans])
+    @understand_minor = p[:registration][:understand_minor]
+    attendee.attributes = attendee_params(p[:registration])
     valid? && save
   end
 
@@ -97,12 +101,6 @@ class Registration
   def attendee_params(params)
     atrs = ATD_ATRS.concat(["birth_date(1i)", "birth_date(2i)", "birth_date(3i)", "user_id"])
     params.slice(*atrs)
-    parameters = ActionController::Parameters.new(params)
-    if admin?
-      parameters.permit!
-    else
-      parameters.except(:comment, :minor_agreement_received).permit!
-    end
   end
 
   # `all_plans` includes all disabled plans, whereas `form_plans` does not
