@@ -96,6 +96,6 @@ class PaymentsController < ApplicationController
       :transaction_saved => transaction_saved,
       :error_msg => error_msg,
       :only_path => false)
-    render :text => sim_response.direct_post_reply(url, :include => true)
+    render body: sim_response.direct_post_reply(url, :include => true)
   end
 end
