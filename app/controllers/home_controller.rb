@@ -33,6 +33,6 @@ protected
   # https://github.com/rails/rails/issues/4127
   #
   def missing_template
-    render :nothing => true, :status => 406
+    head :not_acceptable
   end
 end
