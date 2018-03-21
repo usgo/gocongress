@@ -355,17 +355,27 @@ fieldset {
 		width: 25%;
 	}
 
+	> :first-child:last-child {
+		flex: 1 1 auto;
+		text-align: left;
+	}
+
 	> :not(:first-child):not(:last-child) {
-		flex: 0 0 auto;
+		flex: 1 1 auto;
 		align-self: center;
 	}
 
+	> :last-child {
+	}
+
+	> select {
+		flex-grow: 0;
+	}
+
 	> input, textarea {
-		&:last-child {
-			padding: 0.5em;
-			font: {
-				size: 14px;
-			}
+		padding: 0.5em;
+		font: {
+			size: 14px;
 		}
 	}
 
@@ -411,7 +421,7 @@ fieldset {
 }
 
 table {
-	// What does this mean?
+	// TODO: Figure out what the classname "semantic" means, in this context :)
 	&.semantic {
 		border-collapse: collapse;
 
@@ -453,5 +463,11 @@ table {
 	}
 	&.fullwidth {
 		width: 100%;
+	}
+}
+
+.smalltext {
+	font: {
+		size: 18px;
 	}
 }
