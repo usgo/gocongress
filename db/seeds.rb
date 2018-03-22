@@ -12,8 +12,7 @@ Year.create!(
     timezone:              'Pacific Time (US & Canada)',
     twitter_url:           nil,
     year:                  2011
-  },
-  :without_protection => true
+  }
 )
 
 Year.create!(
@@ -29,8 +28,7 @@ Year.create!(
     timezone:              'Eastern Time (US & Canada)',
     twitter_url:           'https://twitter.com/#!/GoCongress12',
     year:                  2012
-  },
-  :without_protection => true
+  }
 )
 
 Year.create!(
@@ -46,8 +44,7 @@ Year.create!(
     timezone:              'Pacific Time (US & Canada)',
     twitter_url:           'https://twitter.com/#!/GoCongress13',
     year:                  2013
-  },
-  :without_protection => true
+  }
 )
 
 Year.create!(
@@ -62,8 +59,7 @@ Year.create!(
     state:                 'NY',
     timezone:              'Eastern Time (US & Canada)',
     year:                  2014
-  },
-  :without_protection => true
+  }
 )
 
 Year.create!(
@@ -78,8 +74,7 @@ Year.create!(
     state:                 'MN',
     timezone:              'Central Time (US & Canada)',
     year:                  2015
-  },
-  :without_protection => true
+  }
 )
 
 Year.create!(
@@ -94,8 +89,7 @@ Year.create!(
     state:                 'MA',
     timezone:              'Eastern Time (US & Canada)',
     year:                  2016
-  },
-  :without_protection => true
+  }
 )
 
 Year.create!(
@@ -110,8 +104,7 @@ Year.create!(
     state:                 'CA',
     timezone:              'Pacific Time (US & Canada)',
     year:                  2017
-  },
-  :without_protection => true
+  }
 )
 
 Year.create!(
@@ -126,6 +119,5 @@ Year.create!(
     state:                 'VA',
     timezone:              'Eastern Time (US & Canada)',
     year:                  2018
-  },
-  :without_protection => true
+  }
 )
