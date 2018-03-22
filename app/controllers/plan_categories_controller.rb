@@ -73,7 +73,7 @@ class PlanCategoriesController < ApplicationController
   end
 
   def plan_category_params
-    params.require(:plan_category).permit(:description, :event_id, :mandatory,
+    params.require(:plan_category).permit(:extended_description, :description, :event_id, :mandatory,
       :name, :ordinal, :show_description, :single)
   end
 end
