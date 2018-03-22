@@ -27,6 +27,7 @@ $(function () {
     }
 
     const counter = document.createElement("div");
+    counter.className = "textarea-maxlength-counter";
     elem.parentNode.appendChild(counter);
 
     elem.addEventListener("keydown", (event) => {
