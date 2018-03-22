@@ -209,16 +209,25 @@ a {
 .button {
 	$color: #eee;
 	background: hsl(0, 60%, 50%);
+	border: 0;
 	color: $color;
+	cursor: pointer;
 	display: inline-block;
 	font: {
 		family: boswell;
 	}
-	padding: 10px;
+	padding: 10px 20px;
 	position: relative;
 	text-decoration: none;
+
 	&:visited {
 		color: $color;
+	}
+}
+
+.button-large {
+	font: {
+		size: 36px;
 	}
 }
 
@@ -322,6 +331,81 @@ a {
 		color: white;
 	}
 
+	@extend .fancy-border;
+}
+
+// Forms
+fieldset {
+	border: 5px double #333;
+	margin: 1em 0;
+}
+
+.field {
+	display: flex;
+	padding: 10px;
+	> * {
+		flex: 1 1 auto;
+		margin: 0.5em;
+		align-self: center;
+	}
+
+	> :first-child {
+		flex: 0 0 auto;
+		text-align: right;
+		width: 25%;
+	}
+
+	> :first-child:last-child {
+		flex: 1 1 auto;
+		text-align: left;
+	}
+
+	> :not(:first-child):not(:last-child) {
+		flex: 1 1 auto;
+		align-self: center;
+	}
+
+	> :last-child {
+	}
+
+	> select {
+		flex-grow: 0;
+	}
+
+	> input, textarea {
+		padding: 0.5em;
+		font: {
+			size: 14px;
+		}
+	}
+
+	.field_with_errors {
+		display: flex;
+		> {
+			flex: 1 1 auto;
+		}
+	}
+}
+
+.pull-right {
+	float: right;
+}
+
+.pull-left {
+	float: left;
+}
+
+.flash.flash-notice {
+	background: hsl(100, 50%, 50%);
+	color: white;
+	padding: 0.5em 1em;
+	margin: 0 -1em 1em;
+	position: relative;
+
+	@extend .fancy-border;
+}
+
+.fancy-border {
 	&:before {
 		display: block;
 		content: '';
@@ -333,5 +417,57 @@ a {
 		left: $inset;
 		border: 1px solid white;
 
+	}
+}
+
+table {
+	// TODO: Figure out what the classname "semantic" means, in this context :)
+	&.semantic {
+		border-collapse: collapse;
+
+		thead {
+			background: hsl(50, 100%, 50%);
+		}
+
+		tbody {
+			background: hsl(50, 100%, 90%);
+
+			th {
+				background: hsl(50, 100%, 50%);
+				font: {
+					size: 36px;
+				}
+			}
+		}
+
+		th, td {
+			margin: 0;
+			padding: 0.25em 0.5em;
+			text-align: left;
+		}
+	}
+
+	&.lightweight {
+		background: hsl(50, 100%, 50%);
+
+		th {
+			text-align: right;
+		}
+		td {
+			padding: 0.25em 0.5em;
+		}
+
+		padding: 1em;
+		position: relative;
+		@extend .fancy-border;
+	}
+	&.fullwidth {
+		width: 100%;
+	}
+}
+
+.smalltext {
+	font: {
+		size: 18px;
 	}
 }

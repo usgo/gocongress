@@ -19,7 +19,9 @@
         = Attendee.model_name.human.pluralize
         can see the description on the registration form.
     .field
-      = f.label trl_attr 'plan_category', 'mandatory'
+      = f.label :mandatory
+      -# TODO: Figure out why this bug causes a mis-matched for attribute
+      -#= f.label trl_attr 'plan_category', 'mandatory'
       = f.check_box :mandatory
       %span.smalltext
         = Attendee.model_name.human.pluralize
@@ -33,7 +35,4 @@
         must select exactly one
         = Plan.model_name.human.downcase + ' in this category.'
 
-  %fieldset
-    .field
-      = label '', ''
-      = f.submit 'Save'
+  = f.submit 'Save', :class => 'button button-large pull-right save'
