@@ -1,5 +1,6 @@
 %h2= @plan_category.name
 = markdown_if_present(@plan_category.description)
+= markdown_if_present(@plan_category.extended_description)
 
 = form_for @plan_category do |f|
   = render :partial => "shared/error_messages", :locals => { :resource => @plan_category }

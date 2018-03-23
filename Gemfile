@@ -48,6 +48,7 @@ end
 
 group :development do
   gem 'haml-rails'
+  gem 'meta_request'
   gem 'spring'
   gem 'spring-commands-rspec'
   gem 'web-console', '~> 3.0'

@@ -17,3 +17,32 @@ only has autocomplete, datepicker, and dialog. -Jared 2012-07-09 */
 /* TODO: We only need the galleria stuff on the homepage. Hiding
 this on other pages could improve page speed -Jared 2011.2.3 */
 //= require galleria/galleria-1.2.8.min.js
+
+
+// check for text areas with a maxlength prop
+$(function () {
+  document.querySelectorAll("textarea[maxlength]").forEach(elem => {
+    if (!elem.getAttribute("maxLength")) {
+      return;
+    }
+
+    const counter = document.createElement("div");
+    counter.className = "textarea-maxlength-counter";
+    elem.parentNode.appendChild(counter);
+
+    elem.addEventListener("keydown", (event) => {
+      updateCounter(elem, counter);
+    });
+    elem.addEventListener("keyup", (event) => {
+      updateCounter(elem, counter);
+    });
+  })
+});
+
+function updateCounter(elem, counter) {
+  counter.innerHTML = `Characters left: ${elem.maxLength - elem.value.length}`;
+}
+
+// create a element to show chars left
+
+// update element of textarea value change
