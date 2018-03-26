@@ -361,11 +361,12 @@ fieldset {
 	}
 
 	> :not(:first-child):not(:last-child) {
-		flex: 1 1 auto;
+		flex: 0 1 auto;
 		align-self: center;
 	}
 
 	> :last-child {
+		text-align: left;
 	}
 
 	> select {
