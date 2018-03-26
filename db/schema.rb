@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170317030537) do
+ActiveRecord::Schema.define(version: 20180322102515) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -153,16 +153,17 @@ ActiveRecord::Schema.define(version: 20170317030537) do
   add_index "events", ["id", "year"], name: "index_events_on_id_and_year", unique: true, using: :btree
 
   create_table "plan_categories", force: :cascade do |t|
-    t.string   "name",             limit: 255,                 null: false
+    t.string   "name",                 limit: 255,                 null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "year",                                         null: false
-    t.string   "description",      limit: 255
-    t.integer  "event_id",                                     null: false
-    t.boolean  "mandatory",                    default: false, null: false
-    t.integer  "ordinal",                      default: 1,     null: false
-    t.boolean  "single",                       default: false, null: false
-    t.boolean  "show_description",             default: false, null: false
+    t.integer  "year",                                             null: false
+    t.string   "description",          limit: 255
+    t.integer  "event_id",                                         null: false
+    t.boolean  "mandatory",                        default: false, null: false
+    t.integer  "ordinal",                          default: 1,     null: false
+    t.boolean  "single",                           default: false, null: false
+    t.boolean  "show_description",                 default: false, null: false
+    t.text     "extended_description"
   end
 
   add_index "plan_categories", ["id", "year"], name: "index_plan_categories_on_id_and_year", unique: true, using: :btree
