@@ -408,6 +408,7 @@ fieldset {
 
 .fancy-border {
 	&:before {
+		pointer-events: none;
 		display: block;
 		content: '';
 		position: absolute;
