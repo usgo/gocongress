@@ -570,3 +570,21 @@ ul.radio {
 .disabled {
 	opacity: 0.3;
 }
+
+.created-updated-dates {
+	color: #666;
+	margin: 0 0 1em;
+	font: {
+		size: 18px;
+	}
+
+	.icon {
+		display: inline-block;
+		fill: #666;
+		width: 15px;
+		height: 15px;
+		margin: 0 5px;
+		position: relative;
+		top: 3px;
+	}
+}
