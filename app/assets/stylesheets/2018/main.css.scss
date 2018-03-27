@@ -206,22 +206,28 @@ a {
 	padding: 2vw 5vw;
 }
 
-.button {
+input[type="submit"], input[type="button"], button, .button {
 	$color: #eee;
 	background: hsl(0, 60%, 50%);
-	border: 0;
+	border: 3px double #fff;
 	color: $color;
 	cursor: pointer;
 	display: inline-block;
 	font: {
 		family: boswell;
+		size: 18px;
 	}
 	padding: 10px 20px;
 	position: relative;
 	text-decoration: none;
+	transition: all 0.2s;
 
 	&:visited {
 		color: $color;
+	}
+
+	&:hover {
+		background: hsl(0, 80%, 50%);
 	}
 }
 
@@ -429,6 +435,9 @@ table {
 
 		thead {
 			background: hsl(50, 100%, 50%);
+			th {
+				color: hsl(50, 100%, 25%);
+			}
 		}
 
 		tbody {
@@ -436,6 +445,7 @@ table {
 
 			th {
 				background: hsl(50, 100%, 50%);
+				color: hsl(50, 100%, 20%);
 				font: {
 					size: 36px;
 				}
@@ -446,6 +456,36 @@ table {
 			margin: 0;
 			padding: 0.25em 0.5em;
 			text-align: left;
+		}
+
+		td {
+			font: {
+				size: 18px;
+			}
+		}
+
+		.description {
+			td {
+				position: relative;
+				background: hsla(0, 0%, 100%, 0.5);
+				color: hsl(50, 20%, 20%);
+				padding: 1em 2em !important;
+				font: {
+					size: 24px;
+				}
+			}
+		}
+
+		.extended-description {
+			td {
+				position: relative;
+				background: hsla(0, 0%, 100%, 0.5);
+				color: hsl(50, 20%, 20%);
+				padding: 1em 2em !important;
+				font: {
+					size: 18px;
+				}
+			}
 		}
 	}
 
@@ -473,3 +513,35 @@ table {
 		size: 18px;
 	}
 }
+
+
+.hardwrap {
+	/* These are technically the same, but use both */
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+
+  -ms-word-break: break-all;
+  /* This is the dangerous one in WebKit, as it breaks things wherever */
+  word-break: break-all;
+  /* Instead use this non-standard one: */
+  word-break: break-word;
+
+  /* Adds a hyphen where the word breaks, if supported (No Blink) */
+  -ms-hyphens: auto;
+  -moz-hyphens: auto;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+}
+
+/* Use this class to pad flow elements (eg. div, form) -Jared 4/9/11 */
+.flow-padding { padding: 8px 0px; }
+
+/* Symetrical two column layout */
+.left-column, .right-column {
+  box-sizing: border-box;
+  display: inline-block;
+  vertical-align: top;
+  width: calc(50% - 2.5vw);
+}
+.left-column { padding-right: 5px; }
+.right-column { padding-left: 5px; }

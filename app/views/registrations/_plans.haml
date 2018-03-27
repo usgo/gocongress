@@ -29,10 +29,11 @@
         %tr
           %th{:colspan => 6}= cat.name
         - if cat.show_description?
-          %tr
+          %tr{ class: 'description' }
             %td{:colspan => 6}= markdown_if_present(cat.description)
-          %tr
-            %td{:colspan => 6}= markdown_if_present(cat.extended_description)
+          - if defined?(cat.extended_description)
+            %tr{ class: 'extended-description' }
+              %td{:colspan => 6}= markdown_if_present(cat.extended_description)
         - plans.each do |plan|
           - if params[:type] == "adult" && plan.age_min >= 18
             = render :partial => "plan_categories/plan_table_plan_row", :locals => { :plan => plan }

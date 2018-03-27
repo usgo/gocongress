@@ -4,7 +4,7 @@
     %tbody
       %tr
         %th Email
-        %td= @user.email
+        %td.hardwrap= @user.email
         %td.smalltext= link_to 'Edit', edit_email_for_user_path(@user)
       %tr
         %th Password

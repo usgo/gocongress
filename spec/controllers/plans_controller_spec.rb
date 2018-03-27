@@ -43,7 +43,7 @@ RSpec.describe PlansController, :type => :controller do
       expect {
         delete :destroy, year: plan.year, id: plan.id
       }.to_not change{ Plan.count }
-      expect(flash[:alert]).to eq('Cannot delete plan because attendees have already selected it')
+      expect(flash[:alert]).to eq('Cannot delete plan because attendees have already selected it.')
       expect(response).to redirect_to(plan_path(plan))
     end
 
