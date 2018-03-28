@@ -1,4 +1,4 @@
-class Content < ActiveRecord::Base
+class Content < ApplicationRecord
   include YearlyModel
   belongs_to :content_category
 

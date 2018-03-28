@@ -1,6 +1,6 @@
 require 'action_view/helpers/translation_helper'
 
-class AttendeePlan < ActiveRecord::Base
+class AttendeePlan < ApplicationRecord
   include YearlyModel
   extend ActionView::Helpers::TranslationHelper
 

@@ -1,4 +1,4 @@
-class ContentCategory < ActiveRecord::Base
+class ContentCategory < ApplicationRecord
   include YearlyModel
   has_many :contents
   validates :name, :presence => true, :length => { maximum: 50 }

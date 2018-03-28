@@ -1,4 +1,4 @@
-class PlanCategory < ActiveRecord::Base
+class PlanCategory < ApplicationRecord
   include YearlyModel
 
   belongs_to :event
