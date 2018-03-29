@@ -57,7 +57,7 @@ RSpec.describe PaymentsController, :type => :controller do
     end
 
     it 'renders error message when declined' do
-      post :relay_response, params: { x_response_code: 2 }
+      post :relay_response, params: { x_response_code: 2, x_cust_id: 1 }
       expect(response).to be_success
       expect(response.body).to include('your card was declined.')
     end
