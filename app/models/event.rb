@@ -1,4 +1,4 @@
-class Event < ActiveRecord::Base
+class Event < ApplicationRecord
   include YearlyModel
   has_many :plan_categories
   validates :name, :presence => true

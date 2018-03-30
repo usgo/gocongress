@@ -12,7 +12,7 @@ RSpec.describe AttendeesController, :type => :controller do
         a = create :attendee
         allow_any_instance_of(Attendee::WhoIsComing).to receive(:find_attendees) { [a] }
         allow_any_instance_of(Year).to receive(:registration_phase) { :open }
-        get :index, :year => Time.current.year
+        get :index, params: { year: Time.current.year }
         expect(response).to be_successful
         expect(assigns(:who_is_coming)).not_to be_nil
       end
@@ -20,7 +20,7 @@ RSpec.describe AttendeesController, :type => :controller do
 
     describe "#list" do
       it "is forbidden" do
-        get :list, :year => Time.current.year
+        get :list, params: { year: Time.current.year }
         expect(response).to be_forbidden
       end
     end
@@ -32,7 +32,7 @@ RSpec.describe AttendeesController, :type => :controller do
 
     describe "#list" do
       it "is forbidden" do
-        get :list, :year => user.year
+        get :list, params: { year: user.year }
         expect(response).to be_forbidden
       end
     end
@@ -44,7 +44,7 @@ RSpec.describe AttendeesController, :type => :controller do
 
     describe "#list" do
       it "is successful" do
-        get :list, :year => staff.year
+        get :list, params: { year: staff.year }
         expect(response).to be_successful
       end
     end
@@ -56,7 +56,7 @@ RSpec.describe AttendeesController, :type => :controller do
 
     describe "#list" do
       it "is successful" do
-        get :list, :year => admin.year
+        get :list, params: { year: admin.year }
         expect(response).to be_successful
       end
     end
@@ -64,7 +64,7 @@ RSpec.describe AttendeesController, :type => :controller do
     describe "#print_summary" do
       it "shows individual registration sheet" do
         a = create :attendee
-        get :print_summary, :id => a.id, :year => a.year
+        get :print_summary, params: { id: a.id, year: a.year }
         expect(response).to be_success
         expect(assigns(:attendee)).to eq(a)
         expect(assigns(:attendee_attr_names)).not_to be_empty
@@ -75,7 +75,7 @@ RSpec.describe AttendeesController, :type => :controller do
       it "raises ActionController::UrlGenerationError" do
         a = create :attendee
         expect {
-          delete :destroy, :id => a.id, :year => a.year
+          delete :destroy, params: { id: a.id, year: a.year }
         }.to raise_error(ActionController::UrlGenerationError)
       end
     end

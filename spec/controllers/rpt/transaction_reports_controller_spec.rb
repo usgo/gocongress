@@ -8,7 +8,7 @@ RSpec.describe Rpt::TransactionReportsController, :type => :controller do
 
   it "assigns certain variables" do
     sign_in staff
-    get :show, format: 'html', year: staff.year
+    get :show, format: 'html', params: { year: staff.year }
     expected_assigns = %w[transactions sales comps refunds
       sales_sum comps_sum refunds_sum net_income]
     expected_assigns.each{ |v|
@@ -26,7 +26,7 @@ RSpec.describe Rpt::TransactionReportsController, :type => :controller do
     expected_sum = this_year_sales.map(&:amount).reduce(:+)
 
     # expect to only see this year's sales on report
-    get :show, :year => Time.now.year
+    get :show, params: { year: Time.now.year }
     expect(assigns(:sales).sales.size).to eq(expected_sales_count)
     expect(assigns(:sales_sum)).to be_within(0.001).of(expected_sum)
   end
@@ -39,7 +39,7 @@ RSpec.describe Rpt::TransactionReportsController, :type => :controller do
       create :tr_refund
 
       sign_in staff
-      get :show, format: 'csv', year: y
+      get :show, format: 'csv', params: { year: y }
       expect(response).to be_success
       ary = CSV.parse response.body
       expect(ary.size).to eq(6)
@@ -48,7 +48,7 @@ RSpec.describe Rpt::TransactionReportsController, :type => :controller do
     it "shows user_id" do
       t = create :tr_sale
       sign_in staff
-      get :show, format: 'csv', year: Time.current.year
+      get :show, format: 'csv', params: { year: Time.current.year }
       expect(response).to be_success
       ary = CSV.parse response.body
       expect(ary[0]).to include 'user_id'

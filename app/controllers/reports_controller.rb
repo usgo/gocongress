@@ -2,8 +2,8 @@ class ReportsController < ApplicationController
   include YearlyController
 
   # Callbacks
-  before_filter :deny_users_from_wrong_year
-  before_filter :authorize_read_report
+  before_action :deny_users_from_wrong_year
+  before_action :authorize_read_report
   def authorize_read_report() authorize! :read, :report end
 
   def atn_reg_sheets

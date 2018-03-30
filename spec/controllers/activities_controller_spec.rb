@@ -11,7 +11,7 @@ RSpec.describe ActivitiesController, :type => :controller do
     describe "#show" do
       it "succeeds" do
         activity = create(:activity)
-        get :show, :year => Time.now.year, :id => activity.id
+        get :show, params: { year: Time.now.year, id: activity.id }
         expect(response).to be_successful
       end
     end
@@ -25,14 +25,14 @@ RSpec.describe ActivitiesController, :type => :controller do
     end
     describe "#create" do
       it "is forbidden" do
-        post :create, :year => Time.now.year,
-          :activity => { :activity_category_id => activity_category.id, :leave_time => DateTime.current + 2.days, :name => "Activity", :price => 1, :return_time => Time.current + 3.days }
+        post :create, params: { year: Time.now.year,
+          activity: { activity_category_id: activity_category.id, leave_time: DateTime.current + 2.days, name: "Activity", price: 1, return_time: Time.current + 3.days } }
         expect(response.status).to eq(403)
       end
     end
     describe "#new" do
       it "is forbidden" do
-        get :new, :year => Time.now.year
+        get :new, params: { year: Time.now.year }
         expect(response.status).to eq(403)
       end
     end

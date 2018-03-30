@@ -6,7 +6,7 @@ class ActivityCategoriesController < ApplicationController
   add_filter_to_set_resource_year
   authorize_resource
   add_filter_restricting_resources_to_year_in_route
-  before_filter :deny_users_from_wrong_year, :except => [:show]
+  before_action :deny_users_from_wrong_year, :except => [:show]
 
   def create
     @activity_category.year = @year.year

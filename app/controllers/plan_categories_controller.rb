@@ -6,9 +6,9 @@ class PlanCategoriesController < ApplicationController
   add_filter_to_set_resource_year
   authorize_resource
   add_filter_restricting_resources_to_year_in_route
-  before_filter :events_for_select, :only => [:create, :edit, :new, :update]
-  before_filter :max_description_length, :only => [:create, :edit, :new, :update]
-  before_filter :expose_plans, :only => [:show, :update]
+  before_action :events_for_select, :only => [:create, :edit, :new, :update]
+  before_action :max_description_length, :only => [:create, :edit, :new, :update]
+  before_action :expose_plans, :only => [:show, :update]
 
   def index
     categories = @plan_categories.joins(:event).yr(@year).order('ordinal')

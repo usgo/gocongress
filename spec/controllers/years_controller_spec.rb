@@ -10,12 +10,12 @@ RSpec.describe YearsController, :type => :controller do
     end
 
     it 'denies edit' do
-      get :edit, year: year.year
+      get :edit, params: { year: year.year }
       should_deny_access(response)
     end
 
     it 'denies update' do
-      put :update, year: year.year
+      patch :update, params: { year: year.year }
       should_deny_access(response)
     end
   end
@@ -31,14 +31,14 @@ RSpec.describe YearsController, :type => :controller do
       describe '#update' do
         it 'can update the city' do
           expect {
-            put :update, {year: year.year, year_record: {city: new_city}}
+            patch :update, params: { year: year.year, year_record: { city: new_city } }
           }.to_not raise_exception
           expect(year.reload.city).to eq(new_city)
         end
 
         it 'cannot update the year attribute' do
           expect {
-            patch :update, {year: year.year, year_record: {year: 2312}}
+            patch :update, params: { year: year.year, year_record: { year: 2312 } }
           }.to raise_exception(ActionController::UnpermittedParameters)
         end
       end
@@ -52,7 +52,7 @@ RSpec.describe YearsController, :type => :controller do
       describe '#update' do
         it 'is forbidden' do
           expect {
-            put :update, {year: year.year, year_record: {city: new_city}}
+            patch :update, params: { year: year.year, year_record: { city: new_city } }
           }.to_not change { year.reload.city }
           expect(response).to be_forbidden
         end

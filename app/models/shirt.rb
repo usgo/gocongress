@@ -1,4 +1,4 @@
-class Shirt < ActiveRecord::Base
+class Shirt < ApplicationRecord
   include YearlyModel
 
   has_many :attendees, dependent: :restrict_with_exception

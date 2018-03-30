@@ -2,7 +2,7 @@ class AttendeesController < ApplicationController
   include YearlyController
 
   # Callbacks, in order
-  before_filter :require_authentication, :except => [:index, :vip]
+  before_action :require_authentication, :except => [:index, :vip]
   add_filter_restricting_resources_to_year_in_route
   load_and_authorize_resource :only => :list
 

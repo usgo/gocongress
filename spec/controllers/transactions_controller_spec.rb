@@ -19,10 +19,7 @@ RSpec.describe TransactionsController, :type => :controller do
 
     it "will not create the transaction" do
       expect {
-        post :create,
-          :year => user.year,
-          :user_email => bad_email,
-          :transaction => transaction_attributes
+        post :create, params: { year: user.year, user_email: bad_email, transaction: transaction_attributes }
       }.to_not change{ Transaction.count }
       expect(response).to render_template :new
     end
@@ -51,10 +48,6 @@ RSpec.describe TransactionsController, :type => :controller do
   end
 
   def patch_update t, email
-    patch :update,
-      :year => t.year,
-      :user_email => email,
-      :id => t.id,
-      :transaction => transaction_attributes
+    patch :update, params: { year: t.year, user_email: email, id: t.id, transaction: transaction_attributes }
   end
 end

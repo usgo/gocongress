@@ -1,5 +1,6 @@
 class HomeController < ApplicationController
   rescue_from  ActionView::MissingTemplate, :with => :missing_template
+  rescue_from ActionController::UnknownFormat, :with => :missing_template
 
   def index
     @bodyClassList = "homepage"
@@ -32,6 +33,6 @@ protected
   # https://github.com/rails/rails/issues/4127
   #
   def missing_template
-    render :nothing => true, :status => 406
+    head :not_acceptable
   end
 end

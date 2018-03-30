@@ -5,10 +5,10 @@ class ApplicationController < ActionController::Base
 
   # set_year_from_params() should run first because it
   # defines @year which other methods depend on.
-  before_filter :set_year_from_params
-  before_filter :set_yearly_vars
-  before_filter :set_display_timezone
-  before_filter :set_logo_file
+  before_action :set_year_from_params
+  before_action :set_yearly_vars
+  before_action :set_display_timezone
+  before_action :set_logo_file
 
   # When running functional tests or controller specs,
   # default_url_options() is called before callbacks, so we do not

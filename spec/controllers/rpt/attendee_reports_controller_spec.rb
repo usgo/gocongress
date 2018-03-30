@@ -13,7 +13,7 @@ RSpec.describe Rpt::AttendeeReportsController, :type => :controller do
     it "shows tshirt style name, instead of number" do
       shirt = create :shirt, :name => 'Cras vel arcu tellus, quis sodales sem'
       atnd = create :attendee, :shirt => shirt
-      get :show, :format => :csv, :year => atnd.year
+      get :show, format: 'csv', params: { year: atnd.year }
       expect(response).to be_success
       ary = CSV.parse response.body
       expect(ary.size).to eq(2)
@@ -26,7 +26,7 @@ RSpec.describe Rpt::AttendeeReportsController, :type => :controller do
     it "includes a column for each plan" do
       p1 = create :plan, :name => 'herp', :year => admin.year
       p2 = create :plan, :name => 'derp', :year => admin.year
-      get :show, :format => :csv, :year => admin.year
+      get :show, format: 'csv', params: { year: admin.year }
       ary = CSV.parse response.body
       expect(ary.size).to eq(1) # the header
       [p1, p2].each do |p|
@@ -34,5 +34,4 @@ RSpec.describe Rpt::AttendeeReportsController, :type => :controller do
       end
     end
   end
-
 end

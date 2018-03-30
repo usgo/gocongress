@@ -14,7 +14,7 @@ RSpec.describe Registration do
         attendee.birth_date = 5.years.ago
         r = Registration.new user, attendee
         params = {registration: {understand_minor: false}}
-        expect(r.submit(params)).to eq(false)
+        expect(r.submit(ActionController::Parameters.new(params))).to eq(false)
         expect(r.errors.keys).to include(:liability_release)
         expect(attendee.understand_minor).to eq(false)
       end
@@ -23,7 +23,7 @@ RSpec.describe Registration do
         r = Registration.new user, attendee
         params = {activity_ids: [dsbl_act.id]}
         expect {
-          expect(r.submit(params)).to be_falsey
+          expect(r.submit(ActionController::Parameters.new(params))).to be_falsey
         }.to_not change { AttendeeActivity.count }
       end
 
@@ -31,7 +31,7 @@ RSpec.describe Registration do
         attendee.activities << dsbl_act
         r = Registration.new user, attendee
         expect {
-          expect(r.submit({})).to be_falsey
+          expect(r.submit(ActionController::Parameters.new({}))).to be_falsey
         }.to_not change { AttendeeActivity.count }
       end
 
@@ -39,7 +39,7 @@ RSpec.describe Registration do
         s = create :shirt
         r = Registration.new user, attendee
         params = {registration: {shirt_id: s.id}}
-        expect(r.submit(params)).to eq(true)
+        expect(r.submit(ActionController::Parameters.new(params))).to eq(true)
         expect(attendee.shirt_id).to eq(s.id)
       end
 
@@ -52,7 +52,7 @@ RSpec.describe Registration do
           create :attendee_plan, plan: p, quantity: 1 # now, ivty is 0
           r = Registration.new user, attendee
           params = {plans: {p.id.to_s => {'qty' => 1}}}
-          expect(r.submit(params)).to eq(false)
+          expect(r.submit(ActionController::Parameters.new(params))).to eq(false)
           expect(r.errors.full_messages.join(', ')).to include(msg)
         end
       end
@@ -63,7 +63,7 @@ RSpec.describe Registration do
 
         it 'returns an error if no plan is selected' do
           r = Registration.new user, attendee
-          expect(r.submit({})).to eq(false)
+          expect(r.submit(ActionController::Parameters.new({}))).to eq(false)
           expect(r.errors.full_messages).to include(msg)
         end
 
@@ -71,7 +71,7 @@ RSpec.describe Registration do
           plan = create :plan, :plan_category => cat
           r = Registration.new user, attendee
           params = {plans: {plan.id => {"qty" => 0}}}
-          expect(r.submit(params)).to eq(false)
+          expect(r.submit(ActionController::Parameters.new(params))).to eq(false)
           expect(r.errors.full_messages).to include(msg)
         end
       end
@@ -85,7 +85,7 @@ RSpec.describe Registration do
           p2 = create :plan, plan_category: category
           r = Registration.new user, attendee
           params = {plans: {p1.id.to_s => {"qty" => 1}, p2.id.to_s => {"qty" => 1}}}
-          expect(r.submit(params)).to eq(false)
+          expect(r.submit(ActionController::Parameters.new(params))).to eq(false)
           expect(r.errors.full_messages).to include(message)
         end
       end
@@ -96,7 +96,7 @@ RSpec.describe Registration do
         act = create(:activity, disabled: true)
         r = Registration.new admin, attendee
         expect {
-          expect(r.submit(activity_ids: [act.id])).to be_truthy
+          expect(r.submit(ActionController::Parameters.new(activity_ids: [act.id]))).to be_truthy
         }.to change { AttendeeActivity.count }.by(+1)
       end
 
@@ -104,7 +104,7 @@ RSpec.describe Registration do
         attendee.activities << dsbl_act
         r = Registration.new admin, attendee
         expect {
-          expect(r.submit({})).to be_truthy
+          expect(r.submit(ActionController::Parameters.new({}))).to be_truthy
         }.to change { AttendeeActivity.count }.by(-1)
       end
 
@@ -112,14 +112,14 @@ RSpec.describe Registration do
         it "adds disabled plan" do
           r = Registration.new admin, attendee
           params = {plans: {dsbl_plan.id.to_s => {"qty" => 1}}}
-          expect(r.submit(params)).to eq(true)
+          expect(r.submit(ActionController::Parameters.new(params))).to eq(true)
           expect(attendee.reload.plans).to include dsbl_plan
         end
 
         it "removes disabled plan" do
           attendee.plans << dsbl_plan
           r = Registration.new admin, attendee
-          expect(r.submit(plans: {})).to eq(true)
+          expect(r.submit(ActionController::Parameters.new(plans: {}))).to eq(true)
           expect(attendee.reload.plans).not_to include dsbl_plan
         end
       end
