@@ -69,8 +69,21 @@ table .numeric { text-align: right; }
 img.thin-border { border: 1px solid black; }
 .initially_hidden { display: none; }
 .hardwrap {
-  overflow-wrap: break-word; // css 3, but not supported yet
-  word-wrap: break-word; // non-conforming, but works
+	/* These are technically the same, but use both */
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+
+  -ms-word-break: break-all;
+  /* This is the dangerous one in WebKit, as it breaks things wherever */
+  word-break: break-all;
+  /* Instead use this non-standard one: */
+  word-break: break-word;
+
+  /* Adds a hyphen where the word breaks, if supported (No Blink) */
+  -ms-hyphens: auto;
+  -moz-hyphens: auto;
+  -webkit-hyphens: auto;
+  hyphens: auto;
 }
 
 /* Basic shortcuts: alignment */

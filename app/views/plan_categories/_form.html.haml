@@ -9,7 +9,9 @@
       = f.label :event_id
       = f.select :event_id, @events_for_select
     .field
-      = render partial: "shared/md_area", locals: { :obj => :plan_category, :atr => :description }
+      = render partial: "shared/md_area", locals: { :obj => :plan_category, :atr => :description, maximum_length: @max_description_length }
+    .field
+      = render partial: "shared/md_area", locals: { :obj => :plan_category, :atr => :extended_description, rows: 30 }
     .field
       = f.label :show_description
       = f.check_box :show_description
@@ -17,7 +19,9 @@
         = Attendee.model_name.human.pluralize
         can see the description on the registration form.
     .field
-      = f.label trl_attr 'plan_category', 'mandatory'
+      = f.label :mandatory
+      -# TODO: Figure out why this bug causes a mis-matched for attribute
+      -#= f.label trl_attr 'plan_category', 'mandatory'
       = f.check_box :mandatory
       %span.smalltext
         = Attendee.model_name.human.pluralize
@@ -31,7 +35,4 @@
         must select exactly one
         = Plan.model_name.human.downcase + ' in this category.'
 
-  %fieldset
-    .field
-      = label '', ''
-      = f.submit 'Save'
+  = f.submit 'Save', :class => 'button button-large pull-right save'

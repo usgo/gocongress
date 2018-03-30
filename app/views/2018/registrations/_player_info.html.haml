@@ -1,0 +1,65 @@
+%fieldset
+  .field
+    = f.label :rank, 'Estimated Rank'
+    = f.select :rank, Attendee::Rank::RANKS, :include_blank => 'Select Estimated Rank'
+    %span.smalltext
+      = link_to 'What is my AGA rank?', '#', :id => 'open_dialog_rank'
+
+  .field
+    = f.label :aga_id, 'AGA ID'
+    = f.number_field :aga_id, :size => 8, :min => 1, :step => 1
+    %span.smalltext
+      No
+      = link_to 'AGA ID?', '#', :id => 'open_dialog_aga_id'
+      &nbsp; Leave it blank.
+
+  .field
+    = f.label :will_play_in_us_open
+    %div
+      %label
+        = f.radio_button :will_play_in_us_open, true
+        Yes
+      %label
+        = f.radio_button :will_play_in_us_open, false
+        No
+  .field
+    %span.smalltext
+      (Please contact the US Open TD at
+      = mail_to "usopen@gocongress.org"
+      if your estimated rank is different from your AGA rank.)
+
+.dialog#dialog_aga_id{:title => "What is an AGA ID?"}
+  %p
+    Each AGA member is assigned an identification number.  Only AGA members
+    may participate in AGA tournaments.
+  %p
+    If you are not currently an AGA member, please visit the
+    = link_to "American Go Association", "http://www.usgo.org", :target => '_blank'
+    website and join before coming to the #{@year.year} U.S. Go Congress.
+
+.dialog#dialog_rank{:title => "What is my AGA Rank?"}
+  %p
+    If you have played in AGA tournaments, you can look up your rank
+    = link_to 'here.', 'http://usgo.org/ratings/RatingsQuery.php', :target => '_blank'
+  %p
+    If you are not sure of your AGA rating or
+    rank, but know your rating from another system, please consult
+    = link_to "Sensei's Library", "http://senseis.xmp.net/?RankWorldwideComparison", :target => '_blank'
+    for a rough comparison.
+  %p
+    Please contact the Registrar at
+    = link_to "Registrar@gocongress.org", "mailto:registrar@gocongress.org"
+    if you have further questions.
+
+:javascript
+  $(function() {
+    $( "#open_dialog_aga_id" ).click(function() {
+      $( "#dialog_aga_id" ).dialog( "open" );
+      return false;
+    });
+
+    $( "#open_dialog_rank" ).click(function() {
+      $( "#dialog_rank" ).dialog( "open" );
+      return false;
+    });
+  });

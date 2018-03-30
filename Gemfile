@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '2.4.3'
+ruby '2.4.4'
 
 gem 'asset_sync'
 gem 'authorizenet'
@@ -48,6 +48,7 @@ end
 
 group :development do
   gem 'haml-rails'
+  gem 'meta_request'
   gem 'spring'
   gem 'spring-commands-rspec'
   gem 'web-console', '~> 3.0'

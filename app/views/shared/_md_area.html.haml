@@ -10,5 +10,6 @@
   %br
   %span.smalltext
     You can format the text (bold, etc.) with
-    %a{ :href => 'http://en.wikipedia.org/wiki/Markdown', :target => '_blank' } Markdown.
-= text_area obj, atr, { :class => 'wide', :rows => rows }
+    %a{ :href => 'https://daringfireball.net/projects/markdown/syntax', :target => '_blank' } Markdown.
+
+= text_area obj, atr, { maxlength: defined?(maximum_length) ? maximum_length : "", :class => 'wide', :rows => rows }

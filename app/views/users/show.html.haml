@@ -4,8 +4,7 @@
     %tbody
       %tr
         %th Email
-        %td
-          .hardwrap{:style => "max-width:250px;"}= @user.email
+        %td.hardwrap= @user.email
         %td.smalltext= link_to 'Edit', edit_email_for_user_path(@user)
       %tr
         %th Password

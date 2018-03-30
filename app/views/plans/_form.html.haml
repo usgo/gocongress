@@ -69,7 +69,4 @@
       = f.number_field :age_max, size: 3
       %span.smalltext (optional)
 
-  %fieldset
-    .field
-      %label
-      = f.submit 'Save'
+  = f.submit 'Save', :class => 'button button-large pull-right save'

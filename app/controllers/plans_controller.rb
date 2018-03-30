@@ -42,11 +42,11 @@ class PlansController < ApplicationController
   def destroy
     begin
       @plan.destroy
-      flash[:notice] = "Plan deleted"
+      flash[:notice] = "Plan deleted."
       redirect_to plan_category_path(@plan.plan_category)
     rescue ActiveRecord::DeleteRestrictionError => e
       @plan.errors.add(:base, e)
-      flash[:alert] = "Cannot delete plan because attendees have already selected it"
+      flash[:alert] = "Cannot delete plan because attendees have already selected it."
       redirect_to plan_path(@plan)
     end
   end

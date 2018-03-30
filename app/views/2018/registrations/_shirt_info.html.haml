@@ -1,0 +1,9 @@
+%fieldset
+  .field
+    = f.label :tshirt_size
+    = f.select :tshirt_size, Shirt::SIZES, :include_blank => ''
+  .field
+    = f.label :shirt_id, 'Shirt Style'
+    %div
+      = ShirtMenu.to_html(f, @year, @registration.shirt_id)
+    %span.smalltext= link_to 'Details', shirts_path, :target => '_blank'

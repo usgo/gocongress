@@ -7,6 +7,7 @@ class PlanCategoriesController < ApplicationController
   authorize_resource
   add_filter_restricting_resources_to_year_in_route
   before_action :events_for_select, :only => [:create, :edit, :new, :update]
+  before_action :max_description_length, :only => [:create, :edit, :new, :update]
   before_action :expose_plans, :only => [:show, :update]
 
   def index
@@ -30,6 +31,7 @@ class PlanCategoriesController < ApplicationController
   end
 
   def update
+
     if params[:commit] == 'Update Order'
       @plan_category.reorder_plans(params[:plan_order])
     else
@@ -52,15 +54,19 @@ class PlanCategoriesController < ApplicationController
   def destroy
     begin
       @plan_category.destroy
-      flash[:notice] = 'Category deleted'
+      flash[:notice] = 'Category deleted.'
     rescue ActiveRecord::DeleteRestrictionError
       flash[:alert] = "Cannot delete the '#{@plan_category.name}' category
-        because its plans have already been selected by attendees"
+        because its plans have already been selected by attendees."
     end
     redirect_to plan_categories_url
   end
 
   private
+
+  def max_description_length
+    @max_description_length = PlanCategory.validators_on( :description ).first.options[:maximum]
+  end
 
   def events_for_select
     @events_for_select = Event.yr(@year).alphabetical.to_a.map {|e| [e.name, e.id]}
@@ -73,7 +79,7 @@ class PlanCategoriesController < ApplicationController
   end
 
   def plan_category_params
-    params.require(:plan_category).permit(:description, :event_id, :mandatory,
+    params.require(:plan_category).permit(:extended_description, :description, :event_id, :mandatory,
       :name, :ordinal, :show_description, :single)
   end
 end
