@@ -9,13 +9,14 @@
           %li= msg
 
   %h3 Role
-  .field
+  %ul.radio
     - User::ROLES.each do |r|
-      = radio_button :user, :role, r[1]
-      = r[0]
-      = "- can edit anything" if r[1] == 'A'
-      = "- can view anything" if r[1] == 'S'
-      %br
+      %li
+        %label
+          = radio_button :user, :role, r[1]
+          = r[0]
+          = "- can edit anything" if r[1] == 'A'
+          = "- can view anything" if r[1] == 'S'
 
   %br
 
