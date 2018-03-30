@@ -23,7 +23,7 @@ RSpec.describe PlanCategoriesController, :type => :controller do
         expect {
           delete :destroy, id: cat.id, year: cat.year
         }.to_not change{ PlanCategory.count }
-        expect(flash[:alert]).to include "Cannot delete the '#{cat.name}' category."
+        expect(flash[:alert]).to include "Cannot delete the '#{cat.name}' category"
       end
     end
   end
