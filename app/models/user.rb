@@ -1,6 +1,6 @@
 require "invoice_item"
 
-class User < ActiveRecord::Base
+class User < ApplicationRecord
   include YearlyModel
 
   # Constants

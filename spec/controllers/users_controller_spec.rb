@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.shared_examples "successful get" do |action|
   it "succeeds" do
-    get action, year: user.year, id: user.id
+    get action, params: { year: user.year, id: user.id }
     expect(response).to be_success
   end
 end
@@ -17,34 +17,34 @@ RSpec.describe UsersController, :type => :controller do
 
   context "as a visitor" do
     it 'cannot #edit' do
-      get :edit, :id => user.id, :year => user.year
+      get :edit, params: { id: user.id, year: user.year }
       expect(response).to be_forbidden
     end
 
     it 'cannot #index' do
-      get :index, :year => year
+      get :index, params: { year: year }
       expect(response).to be_forbidden
     end
 
     it "cannot #restore_attendee" do
       a = create :attendee, user_id: user.id, cancelled: true
-      patch :restore_attendee, :attendee_id => a.id, :id => user.id, :year => user.year
+      patch :restore_attendee, params: { attendee_id: a.id, id: user.id, year: user.year }
       expect(response).to be_forbidden
     end
 
     it 'cannot #show' do
-      get :show, :id => user.id, :year => user.year
+      get :show, params: { id: user.id, year: user.year }
       expect(response).to be_forbidden
     end
 
     it 'cannot #update' do
-      put :update, :id => user.id, :user => user.attributes, :year => user.year
+      patch :update, params: { id: user.id, user: user.attributes, year: user.year }
       expect(response).to be_forbidden
     end
 
     it "cannot cancel attendee" do
       a = create :attendee, user_id: user.id
-      patch :cancel_attendee, :attendee_id => a.id, :id => user.id, :year => user.year
+      patch :cancel_attendee, params: { attendee_id: a.id, id: user.id, year: user.year }
       expect(response).to be_forbidden
     end
   end
@@ -53,13 +53,13 @@ RSpec.describe UsersController, :type => :controller do
     it 'cannot #destroy self' do
       sign_in user
       expect {
-        delete :destroy, :id => user.id, :year => user.year
+        delete :destroy, params: { id: user.id, year: user.year }
       }.to raise_error(ActionController::UrlGenerationError)
     end
 
     it 'can #edit_password' do
       sign_in user
-      get :edit_password, :id => user.id, :year => user.year
+      get :edit_password, params: { id: user.id, year: user.year }
       assert_response :success
     end
 
@@ -68,7 +68,7 @@ RSpec.describe UsersController, :type => :controller do
         a = create :attendee, user_id: user.id
         create :attendee_plan, attendee_id: a.id
         sign_in user
-        patch :cancel_attendee, :attendee_id => a.id, :id => user.id, :year => user.year
+        patch :cancel_attendee, params: { attendee_id: a.id, id: user.id, year: user.year }
         expect(a.reload.cancelled).to eq(true)
         expect(a.attendee_plans.count).to eq(0)
         expect(response).to redirect_to(user)
@@ -78,7 +78,7 @@ RSpec.describe UsersController, :type => :controller do
         user_two = create :user
         a = create :attendee, user_id: user_two.id
         sign_in user
-        patch :cancel_attendee, :attendee_id => a.id, :id => user_two.id, :year => user_two.year
+        patch :cancel_attendee, params: { attendee_id: a.id, id: user_two.id, year: user_two.year }
         expect(response).to be_forbidden
       end
     end
@@ -87,13 +87,13 @@ RSpec.describe UsersController, :type => :controller do
       it "cannot edit other user" do
         sign_in user
         user_two = create(:user)
-        get :edit, :id => user_two.id, :year => user_two.year
+        get :edit, params: { id: user_two.id, year: user_two.year }
         expect(response).to be_forbidden
       end
 
       it "cannot edit themselves" do
         sign_in user
-        get :edit, :id => user.id, :year => user.year
+        get :edit, params: { id: user.id, year: user.year }
         expect(response).to be_forbidden
       end
     end
@@ -101,7 +101,7 @@ RSpec.describe UsersController, :type => :controller do
     describe '#index' do
       it 'is forbidden' do
         sign_in user
-        get :index, :year => year
+        get :index, params: { year: year }
         expect(response).to be_forbidden
       end
     end
@@ -109,7 +109,7 @@ RSpec.describe UsersController, :type => :controller do
     describe '#print_cost_summary' do
       it "is forbidden" do
         sign_in user
-        get :print_cost_summary, :id => user.id, :year => user.year
+        get :print_cost_summary, params: { id: user.id, year: user.year }
         expect(response).to be_forbidden
       end
     end
@@ -118,7 +118,7 @@ RSpec.describe UsersController, :type => :controller do
       it "can #restore_attendee" do
         a = create :attendee, user_id: user.id, cancelled: true
         sign_in user
-        patch :restore_attendee, :attendee_id => a.id, :id => user.id, :year => user.year
+        patch :restore_attendee, params: { attendee_id: a.id, id: user.id, year: user.year }
         expect(response).to redirect_to edit_registration_path(a, type: 'adult')
       end
 
@@ -126,7 +126,7 @@ RSpec.describe UsersController, :type => :controller do
         user_two = create :user
         a = create :attendee, user_id: user_two.id, cancelled: true
         sign_in user
-        patch :restore_attendee, :attendee_id => a.id, :id => user_two.id, :year => user_two.year
+        patch :restore_attendee, params: { attendee_id: a.id, id: user_two.id, year: user_two.year }
         expect(response).to be_forbidden
       end
     end
@@ -134,27 +134,27 @@ RSpec.describe UsersController, :type => :controller do
     describe '#show' do
       it "the same user succeeds" do
         sign_in user
-        get :show, :id => user.id, :year => user.year
+        get :show, params: { id: user.id, year: user.year }
         expect(response).to be_successful
       end
 
       it "the same user with an attendee born on February 29 succeeds" do
         create :attendee, user_id: user.id, birth_date: "1996-02-29"
         sign_in user
-        get :show, :id => user.id, :year => user.year
+        get :show, params: { id: user.id, year: user.year }
         expect(response).to be_successful
       end
 
       it "the same user in the wrong year raises RecordNotFound" do
         sign_in user
         expect {
-          get :show, :id => user.id, :year => wrong_year
+          get :show, params: { id: user.id, year: wrong_year }
         }.to raise_error(ActiveRecord::RecordNotFound)
       end
 
       it "a different user from the same year is forbidden" do
         sign_in create :user, year: user.year
-        get :show, :id => user.id, :year => user.year
+        get :show, params: { id: user.id, year: user.year }
         expect(response).to be_forbidden
       end
     end
@@ -164,7 +164,7 @@ RSpec.describe UsersController, :type => :controller do
         sign_in user
         attrs = user_attributes.merge(role: 'A')
         expect {
-          patch :update, :id => user.id, :user => attrs, :year => user.year
+          patch :update, params: { id: user.id, user: attrs, year: user.year }
         }.to_not change { user.reload.role }
       end
 
@@ -173,7 +173,7 @@ RSpec.describe UsersController, :type => :controller do
         new_email = 'derp' + user.email
         attrs = user_attributes.merge(email: new_email)
         expect {
-          patch :update, :id => user.id, :user => attrs, :year => user.year
+          patch :update, params: { id: user.id, user: attrs, year: user.year }
         }.to change { user.reload.email }
       end
     end
@@ -188,48 +188,48 @@ RSpec.describe UsersController, :type => :controller do
 
     it "cannot #restore_attendee" do
       a = create :attendee, user_id: user.id, cancelled: true
-      patch :restore_attendee, :attendee_id => a.id, :id => user.id, :year => user.year
+      patch :restore_attendee, params: { attendee_id: a.id, id: user.id, year: user.year }
       expect(response).to be_forbidden
     end
 
     it "cannot cancel attendee" do
       a = create :attendee, user_id: user.id
-      patch :cancel_attendee, :attendee_id => a.id, :id => user.id, :year => user.year
+      patch :cancel_attendee, params: { attendee_id: a.id, id: user.id, year: user.year }
       expect(response).to be_forbidden
     end
 
     it 'cannot get #new' do
-      get :new, :year => year
+      get :new, params: { year: year }
       expect(response).to be_forbidden
     end
 
     it 'can #create' do
       expect {
-        post :create, :user => user_attributes, :year => year
+        post :create, params: { user: user_attributes, year: year }
       }.to_not change { User.yr(year).count }
       expect(response).to be_forbidden
     end
 
     it "can edit email" do
-      get :edit_email, :id => staff.id, :year => staff.year
+      get :edit_email, params: { id: staff.id, year: staff.year }
       assert_response :success
     end
 
     describe '#edit' do
       it "cannot edit other user" do
-        get :edit, :id => user.id, :year => user.year
+        get :edit, params: { id: user.id, year: user.year }
         expect(response).to be_forbidden
       end
 
       it "cannot edit themselves" do
-        get :edit, :id => staff.id, :year => staff.year
+        get :edit, params: { id: staff.id, year: staff.year }
         expect(response).to be_forbidden
       end
     end
 
     describe '#index' do
       it 'succeeds' do
-        get :index, :year => year
+        get :index, params: { year: year }
         expect(response).to be_success
       end
     end
@@ -237,13 +237,13 @@ RSpec.describe UsersController, :type => :controller do
     describe '#show' do
       it "succeeds" do
         sign_in create :staff, year: user.year
-        get :show, :id => user.id, :year => user.year
+        get :show, params: { id: user.id, year: user.year }
         expect(response).to be_successful
       end
       it "from wrong year raises RecordNotFound" do
         sign_in create :staff, year: wrong_year
         expect {
-          get :show, :id => user.id, :year => wrong_year
+          get :show, params: { id: user.id, year: wrong_year }
         }.to raise_error(ActiveRecord::RecordNotFound)
       end
     end
@@ -256,27 +256,27 @@ RSpec.describe UsersController, :type => :controller do
 
     it "can #restore_attendee" do
       a = create :attendee, user_id: user.id, cancelled: true
-      patch :restore_attendee, :attendee_id => a.id, :id => user.id, :year => user.year
+      patch :restore_attendee, params: { attendee_id: a.id, id: user.id, year: user.year }
       expect(response).to redirect_to edit_registration_path(a, type: 'adult')
     end
 
     it "can cancel attendee" do
       a = create :attendee, user_id: user.id
       create :attendee_plan, attendee_id: a.id
-      patch :cancel_attendee, :attendee_id => a.id, :id => user.id, :year => user.year
+      patch :cancel_attendee, params: { attendee_id: a.id, id: user.id, year: user.year }
       expect(a.reload.cancelled).to eq(true)
       expect(a.attendee_plans.count).to eq(0)
       expect(response).to redirect_to(user)
     end
 
     it 'can get #new' do
-      get :new, :year => year
+      get :new, params: { year: year }
       expect(response).to be_success
     end
 
     it 'can #create' do
       expect {
-        post :create, :user => user_attributes, :year => year
+        post :create, params: { user: user_attributes, year: year }
       }.to change { User.yr(year).count }.by(+1)
       expect(response).to redirect_to users_path
     end
@@ -285,61 +285,61 @@ RSpec.describe UsersController, :type => :controller do
       it 'raises ActionController::UrlGenerationError' do
         user # must `create` before `expect`
         expect {
-          delete :destroy, :id => user.id, :year => user.year
+          delete :destroy, params: { id: user.id, year: user.year }
         }.to raise_error(ActionController::UrlGenerationError)
       end
     end
 
     it 'can #edit' do
-      get :edit, :id => user.id, :year => user.year
+      get :edit, params: { id: user.id, year: user.year }
       assert_response :success
     end
 
     it 'can #index' do
       user # eager creation
-      get :index, :year => year
+      get :index, params: { year: year }
       expect(response).to be_success
     end
 
     it 'can #print_cost_summary' do
       sign_in create :admin
-      get :print_cost_summary, :id => user.id, :year => user.year
+      get :print_cost_summary, params: { id: user.id, year: user.year }
       assert_response :success
     end
 
     describe '#show' do
       it "succeeds" do
         sign_in create :admin, year: user.year
-        get :show, :id => user.id, :year => user.year
+        get :show, params: { id: user.id, year: user.year }
         expect(response).to be_successful
       end
       it "from wrong year raises RecordNotFound" do
         sign_in create :admin, year: wrong_year
         expect {
-          get :show, :id => user.id, :year => wrong_year
+          get :show, params: { id: user.id, year: wrong_year }
         }.to raise_error(ActiveRecord::RecordNotFound)
       end
     end
 
     describe '#update' do
       it 'can update any user' do
-        patch :update, :id => user.id, :user => user_attributes, :year => user.year
+        patch :update, params: { id: user.id, user: user_attributes, year: user.year }
         expect(response).to redirect_to user_path user
       end
 
       it "can change a user password" do
         new_pw = 'greeblesnarf'
         expect {
-          put :update, :id => user.id,
-            :user => { 'password' => new_pw },
-            :year => user.year
+          patch :update, params: { id: user.id,
+            user: { password: new_pw },
+            year: user.year }
         }.to change { user.reload.encrypted_password }
       end
 
       it "cannot update user year" do
         u = { 'year' => user.year + 1 }
         expect {
-          patch :update, :id => user.id, :user => user_attributes.merge(u), :year => user.year
+          patch :update, params: { id: user.id, user: user_attributes.merge(u), year: user.year }
         }.to_not change { user.reload.year }
       end
     end
@@ -381,6 +381,5 @@ RSpec.describe UsersController, :type => :controller do
     describe "GET edit_password" do
       it_behaves_like "successful get", :edit_password
     end
-
   end
 end

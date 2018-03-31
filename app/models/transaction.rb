@@ -1,4 +1,4 @@
-class Transaction < ActiveRecord::Base
+class Transaction < ApplicationRecord
   include YearlyModel
 
   # The account this transaction applies to

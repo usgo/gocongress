@@ -1,16 +1,17 @@
 require 'csv'
 
 class Rpt::AbstractReportController < ApplicationController
-include YearlyController
+  include YearlyController
 
-# Access Control
-before_filter :deny_users_from_wrong_year
-before_filter :authorize_read_report
-def authorize_read_report() authorize! :read, :report end
+  # Access Control
+  before_action :deny_users_from_wrong_year
+  before_action :authorize_read_report
 
-protected
+  def authorize_read_report() authorize! :read, :report end
 
-def page_title
-  human_controller_name
-end
+  protected
+
+  def page_title
+    human_controller_name
+  end
 end

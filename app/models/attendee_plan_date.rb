@@ -1,4 +1,4 @@
-class AttendeePlanDate < ActiveRecord::Base
+class AttendeePlanDate < ApplicationRecord
 
   belongs_to :attendee_plan
 

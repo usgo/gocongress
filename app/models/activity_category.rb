@@ -1,4 +1,4 @@
-class ActivityCategory < ActiveRecord::Base
+class ActivityCategory < ApplicationRecord
   include YearlyModel
   has_many :activities
 

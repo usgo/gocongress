@@ -1,4 +1,4 @@
-class Tournament < ActiveRecord::Base
+class Tournament < ApplicationRecord
   include YearlyModel
 
   # Openness Types:

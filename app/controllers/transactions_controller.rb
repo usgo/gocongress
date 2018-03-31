@@ -8,7 +8,7 @@ class TransactionsController < ApplicationController
   add_filter_to_set_resource_year
   authorize_resource
   add_filter_restricting_resources_to_year_in_route
-  before_filter :set_attrs_from_params, :only => [:create, :update]
+  before_action :set_attrs_from_params, :only => [:create, :update]
 
   # Pagination
   PER_PAGE = 20

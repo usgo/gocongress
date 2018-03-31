@@ -5,7 +5,7 @@ RSpec.describe TerminusController, :type => :controller do
     render_views
     it 'succeeds' do
       u = create :user
-      get :show, :user_id => u.id, :year => u.year
+      get :show, params: { user_id: u.id, year: u.year }
       expect(response).to be_successful
     end
   end

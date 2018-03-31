@@ -26,21 +26,21 @@ RSpec.shared_examples "an admin controller" do |model_name|
     describe "index" do
       render_views
       it "succeeds" do
-        get :index, year: year
+        get :index, params: { year: year }
         expect(response).to be_successful
       end
     end
     describe "create" do
       it "is forbidden" do
         expect {
-          post :create, params_for_create(model_name)
+          post :create, params: params_for_create(model_name)
         }.to_not change{ resource_class.count }
         expect(response.status).to eq(403)
       end
     end
     describe "edit" do
       it "is forbidden" do
-        get :edit, year: resource.year, id: resource.id
+        get :edit, params: { year: resource.year, id: resource.id }
         expect(response.status).to eq(403)
       end
     end
@@ -48,7 +48,7 @@ RSpec.shared_examples "an admin controller" do |model_name|
       it "is forbidden" do
         expect(resource).to be_present # create outside expect()
         expect {
-          delete :destroy, year: resource.year, id: resource.id
+          delete :destroy, params: { year: resource.year, id: resource.id }
         }.to_not change{ resource_class.count }
         expect(resource_class.all).to include(resource)
         expect(response.status).to eq(403)
@@ -56,14 +56,14 @@ RSpec.shared_examples "an admin controller" do |model_name|
     end
     describe "show" do
       it "succeeds" do
-        get :show, year: resource.year, id: resource.id
+        get :show, params: { year: resource.year, id: resource.id }
         expect(response).to be_success
         expect(assigns(model_name)).to eq(resource)
       end
     end
     describe "update" do
       it "is forbidden" do
-        put :update, params_for_update(model_name)
+        patch :update, params: params_for_update(model_name)
         expect(response.status).to eq(403)
       end
     end
@@ -77,14 +77,14 @@ RSpec.shared_examples "an admin controller" do |model_name|
 
     describe "index" do
       it "succeeds" do
-        get :index, year: year
+        get :index, params: { year: year }
         expect(response).to be_successful
       end
     end
     describe "create" do
       it "succeeds" do
         expect {
-          post :create, params_for_create(model_name)
+          post :create, params: params_for_create(model_name)
         }.to change{ resource_class.yr(year).count }.by(+1)
 
         # not all controllers redirect to the index, some go to the show
@@ -94,13 +94,13 @@ RSpec.shared_examples "an admin controller" do |model_name|
         params = params_for_create(model_name)
         params[:year] = year - 1
         params[model_name].delete :year
-        expect { post :create, params }.to_not change{ resource_class.count }
+        expect { post :create, params: params }.to_not change{ resource_class.count }
         expect(response.status).to eq(403)
       end
     end
     describe "edit" do
       it "succeeds" do
-        get :edit, year: resource.year, id: resource.id
+        get :edit, params: { year: resource.year, id: resource.id }
         expect(response).to be_successful
       end
     end
@@ -108,7 +108,7 @@ RSpec.shared_examples "an admin controller" do |model_name|
       it "succeeds" do
         expect(resource).to be_present # create outside expect()
         expect {
-          delete :destroy, year: resource.year, id: resource.id
+          delete :destroy, params: { year: resource.year, id: resource.id }
         }.to change{ resource_class.yr(year).count }.by(-1)
         expect(resource_class.all).not_to include(resource)
 
@@ -118,7 +118,7 @@ RSpec.shared_examples "an admin controller" do |model_name|
     end
     describe "show" do
       it "succeeds" do
-        get :show, year: resource.year, id: resource.id
+        get :show, params: { year: resource.year, id: resource.id }
         expect(response).to be_success
         expect(assigns(model_name)).to eq(resource)
       end
@@ -126,7 +126,7 @@ RSpec.shared_examples "an admin controller" do |model_name|
     describe "update" do
       it "succeeds" do
         expect {
-          put :update, params_for_update(model_name)
+          patch :update, params: params_for_update(model_name)
           resource.reload
         }.to change { resource.send updateable_attribute }
 
@@ -154,5 +154,4 @@ RSpec.shared_examples "an admin controller" do |model_name|
     p[model_name][updateable_attribute] = rand
     p.merge(:id => resource.id)
   end
-
 end

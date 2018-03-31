@@ -41,6 +41,8 @@ module Gocongress
       :enable_starttls_auto => true
     }
 
+    config.enable_dependency_loading = true
+
     # Custom directories with classes and modules you want to be autoloadable.
     config.autoload_paths += %W(
       #{Rails.root}/app/exporters
@@ -51,9 +53,6 @@ module Gocongress
 
     # Configure the default encoding used in templates for Ruby 1.9.
     config.encoding = "utf-8"
-
-    # Configure sensitive parameters which will be filtered from the log file.
-    config.filter_parameters += [:password]
 
     # Enable the asset pipeline
     config.assets.enabled = true
@@ -75,5 +74,7 @@ module Gocongress
     # -----------------
     config.action_controller.permit_all_parameters = false
     config.action_controller.action_on_unpermitted_parameters = :raise
+
+    config.active_record.time_zone_aware_types = [:datetime, :time]
   end
 end

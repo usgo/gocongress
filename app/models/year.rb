@@ -1,4 +1,4 @@
-class Year < ActiveRecord::Base
+class Year < ApplicationRecord
 
   REG_PHASES = %w[closed open complete]
 

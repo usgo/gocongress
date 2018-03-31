@@ -10,7 +10,7 @@ RSpec.describe Devise::PasswordsController, :type => :controller do
   describe '#create' do
     it "creates a reset password token" do
       u = create :user
-      post :create, :user => {:email => u.email, :year => u.year}, :year => u.year
+      post :create, params: { user: { email: u.email, year: u.year }, year: u.year }
       expect(response).to redirect_to new_user_session_path
     end
 
@@ -21,7 +21,7 @@ RSpec.describe Devise::PasswordsController, :type => :controller do
       user2012 = create :user, :email => "jared@jaredbeck.com", :year => 2012
 
       # Create a reset password token
-      post :create, :user => {:email => user2012.email, :year => 2012}, :year => 2012
+      post :create, params: { user: { email: user2012.email, year: 2012 }, year: 2012 }
       @reset_password_token = user2012.send_reset_password_instructions
 
       # We expect the delivered email to include an anchor with the correct
@@ -36,7 +36,7 @@ RSpec.describe Devise::PasswordsController, :type => :controller do
   describe '#new' do
     it "pw reset form has both year and email" do
       u = create :user
-      get :new, :year => u.year
+      get :new, params: { year: u.year }
       expect(response).to be_success
       assert_select "input[name*=email]"
       assert_select 'input[name*=year][value=?]', u.year.to_s

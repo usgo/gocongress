@@ -14,7 +14,7 @@ RSpec.describe Rpt::DailyPlanReportsController, :type => :controller do
       it "succeeds" do
         create :plan, daily: true
         create :plan, daily: true, disabled: false
-        get :show, year: Date.current.year
+        get :show, params: { year: Date.current.year }
         expect(response).to be_success
         expect(assigns('num_daily_plans')).to eq(2)
       end
@@ -25,7 +25,7 @@ RSpec.describe Rpt::DailyPlanReportsController, :type => :controller do
         exporter = double("DailyPlanCsvExporter")
         allow(DailyPlanCsvExporter).to receive(:new) { exporter }
         expect(exporter).to receive(:render)
-        get :show, format: 'csv', year: Date.current.year
+        get :show, format: 'csv', params: { year: Date.current.year }
         expect(response).to be_success
       end
     end

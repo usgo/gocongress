@@ -1,6 +1,6 @@
 require "invoice_item"
 
-class Attendee < ActiveRecord::Base
+class Attendee < ApplicationRecord
   include YearlyModel
 
   # Associations

@@ -2,10 +2,10 @@ class YearsController < ApplicationController
   include YearlyController
 
   # Callbacks
-  before_filter :deny_users_from_wrong_year
+  before_action :deny_users_from_wrong_year
   authorize_resource
   add_filter_restricting_resources_to_year_in_route
-  before_filter :expose_reg_phase_opts
+  before_action :expose_reg_phase_opts
 
   def update
     if @year.update_attributes!(year_record_params)

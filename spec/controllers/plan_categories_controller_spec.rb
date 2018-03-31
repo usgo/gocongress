@@ -21,16 +21,16 @@ RSpec.describe PlanCategoriesController, :type => :controller do
       it "admin should get a friendly warning" do
         sign_in create(:admin)
         expect {
-          delete :destroy, id: cat.id, year: cat.year
+          delete :destroy, params: { id: cat.id, year: cat.year }
         }.to_not change{ PlanCategory.count }
-        expect(flash[:alert]).to include "Cannot delete the '#{cat.name}' category."
+        expect(flash[:alert]).to include "Cannot delete the '#{cat.name}' category"
       end
     end
   end
 
   describe "#index" do
     it "allows visitors" do
-      get :index, year: cat.year
+      get :index, params: { year: cat.year }
       expect(response).to be_success
       expect(assigns(:plan_categories)).not_to be_empty
     end
@@ -38,7 +38,7 @@ RSpec.describe PlanCategoriesController, :type => :controller do
 
   describe "#show" do
     it "allows visitors" do
-      get :show, id: cat.id, year: cat.year
+      get :show, params: { id: cat.id, year: cat.year }
       expect(response).to be_success
       expect(assigns(:plan_category)).not_to be_nil
     end
@@ -46,14 +46,14 @@ RSpec.describe PlanCategoriesController, :type => :controller do
     it "user cannot see disabled plans" do
       user = create :user
       sign_in user
-      get :show, year: cat.year, id: cat.id
+      get :show, params: { year: cat.year, id: cat.id }
       expect(assigns(:plans).map(&:id)).not_to include(plan.id)
     end
 
     it "admin can see disabled plans" do
       admin = create :admin
       sign_in admin
-      get :show, year: cat.year, id: cat.id
+      get :show, params: { year: cat.year, id: cat.id }
       expect(assigns(:plans).map(&:id)).to include(plan.id)
     end
   end
@@ -64,8 +64,7 @@ RSpec.describe PlanCategoriesController, :type => :controller do
       cat = create(:plan_category)
       create(:plan, name: 'Apples', cat_order: 1, plan_category: cat)
       create(:plan, name: 'Oranges', cat_order: 2, plan_category: cat)
-      patch :update, :year => cat.year, :id => cat.id, :plan_order => [2,1],
-        :plan_category => { :event_id => event.id, :name => "Plan Category" }
+      patch :update, params: { year: cat.year, id: cat.id, plan_order: [2,1], plan_category: { event_id: event.id, name: "Plan Category" } }
       expect(response).to redirect_to cat
       expect(cat.plans.order(:cat_order).map(&:name)).to match_array(['Oranges', 'Apples'])
     end

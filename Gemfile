@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '2.4.3'
+ruby '2.4.4'
 
 gem 'asset_sync'
 gem 'authorizenet'
@@ -14,7 +14,7 @@ gem 'jc-validates_timeliness'
 gem 'jquery-rails'
 gem 'kaminari'
 gem 'pg', '< 1.0'
-gem 'rails', '4.2.10'
+gem 'rails', '5.0.6'
 gem 'responders', '~> 2.0'
 gem 'sass-rails'
 gem 'thin'
@@ -61,5 +61,6 @@ group :test do
   gem 'factory_bot'
   gem 'factory_bot_rails'
   gem 'launchy' # provides `save_and_open_page`
+  gem 'rails-controller-testing'
   gem 'rb-fsevent'
 end
