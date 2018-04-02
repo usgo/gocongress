@@ -1,4 +1,3 @@
-# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -31,19 +30,17 @@ ActiveRecord::Schema.define(version: 20180322102515) do
     t.integer  "price",                                             null: false
     t.string   "phone",                limit: 20
     t.string   "url",                  limit: 200
+    t.index ["activity_category_id"], name: "index_activities_on_activity_category_id", using: :btree
+    t.index ["id", "year"], name: "uniq_activities_on_id_and_year", unique: true, using: :btree
+    t.index ["year", "leave_time"], name: "index_activities_on_year_and_start", using: :btree
   end
-
-  add_index "activities", ["activity_category_id"], name: "index_activities_on_activity_category_id", using: :btree
-  add_index "activities", ["id", "year"], name: "uniq_activities_on_id_and_year", unique: true, using: :btree
-  add_index "activities", ["year", "leave_time"], name: "index_activities_on_year_and_start", using: :btree
 
   create_table "activity_categories", force: :cascade do |t|
     t.string  "name",        limit: 25,  null: false
     t.integer "year",                    null: false
     t.string  "description", limit: 500
+    t.index ["id", "year"], name: "uniq_activity_categories_on_id_and_year", unique: true, using: :btree
   end
-
-  add_index "activity_categories", ["id", "year"], name: "uniq_activity_categories_on_id_and_year", unique: true, using: :btree
 
   create_table "attendee_activities", force: :cascade do |t|
     t.integer  "attendee_id", null: false
@@ -51,10 +48,9 @@ ActiveRecord::Schema.define(version: 20180322102515) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "year",        null: false
+    t.index ["activity_id"], name: "index_attendee_activities_on_activity_id", using: :btree
+    t.index ["attendee_id", "activity_id"], name: "uniq_attendee_activity", unique: true, using: :btree
   end
-
-  add_index "attendee_activities", ["activity_id"], name: "index_attendee_activities_on_activity_id", using: :btree
-  add_index "attendee_activities", ["attendee_id", "activity_id"], name: "uniq_attendee_activity", unique: true, using: :btree
 
   create_table "attendee_plan_dates", force: :cascade do |t|
     t.date    "_date",            null: false
@@ -68,9 +64,8 @@ ActiveRecord::Schema.define(version: 20180322102515) do
     t.datetime "updated_at"
     t.integer  "quantity",    default: 1, null: false
     t.integer  "year",                    null: false
+    t.index ["attendee_id", "plan_id"], name: "uniq_attendee_plan", unique: true, using: :btree
   end
-
-  add_index "attendee_plans", ["attendee_id", "plan_id"], name: "uniq_attendee_plan", unique: true, using: :btree
 
   create_table "attendees", force: :cascade do |t|
     t.string   "given_name",               limit: 255,                 null: false
@@ -105,10 +100,9 @@ ActiveRecord::Schema.define(version: 20180322102515) do
     t.string   "local_phone",              limit: 255
     t.string   "emergency_name",           limit: 255
     t.string   "emergency_phone",          limit: 255
+    t.index ["id", "year"], name: "index_attendees_on_id_and_year", unique: true, using: :btree
+    t.index ["user_id"], name: "index_attendees_on_user_id", using: :btree
   end
-
-  add_index "attendees", ["id", "year"], name: "index_attendees_on_id_and_year", unique: true, using: :btree
-  add_index "attendees", ["user_id"], name: "index_attendees_on_user_id", using: :btree
 
   create_table "contacts", force: :cascade do |t|
     t.integer  "year",                    null: false
@@ -127,9 +121,8 @@ ActiveRecord::Schema.define(version: 20180322102515) do
     t.string   "name",       limit: 50
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["id", "year"], name: "index_content_categories_on_id_and_year", unique: true, using: :btree
   end
-
-  add_index "content_categories", ["id", "year"], name: "index_content_categories_on_id_and_year", unique: true, using: :btree
 
   create_table "contents", force: :cascade do |t|
     t.text     "body",                            null: false
@@ -140,17 +133,15 @@ ActiveRecord::Schema.define(version: 20180322102515) do
     t.datetime "updated_at"
     t.integer  "year",                            null: false
     t.integer  "content_category_id",             null: false
+    t.index ["content_category_id"], name: "index_contents_on_content_category_id", using: :btree
+    t.index ["year", "show_on_homepage", "expires_at"], name: "index_contents_on_year_and_show_on_homepage_and_expires_at", using: :btree
   end
-
-  add_index "contents", ["content_category_id"], name: "index_contents_on_content_category_id", using: :btree
-  add_index "contents", ["year", "show_on_homepage", "expires_at"], name: "index_contents_on_year_and_show_on_homepage_and_expires_at", using: :btree
 
   create_table "events", force: :cascade do |t|
     t.integer "year",             null: false
     t.string  "name", limit: 255, null: false
+    t.index ["id", "year"], name: "index_events_on_id_and_year", unique: true, using: :btree
   end
-
-  add_index "events", ["id", "year"], name: "index_events_on_id_and_year", unique: true, using: :btree
 
   create_table "plan_categories", force: :cascade do |t|
     t.string   "name",                 limit: 255,                 null: false
@@ -164,9 +155,8 @@ ActiveRecord::Schema.define(version: 20180322102515) do
     t.boolean  "single",                           default: false, null: false
     t.boolean  "show_description",                 default: false, null: false
     t.text     "extended_description"
+    t.index ["id", "year"], name: "index_plan_categories_on_id_and_year", unique: true, using: :btree
   end
-
-  add_index "plan_categories", ["id", "year"], name: "index_plan_categories_on_id_and_year", unique: true, using: :btree
 
   create_table "plans", force: :cascade do |t|
     t.string   "name",                 limit: 50,                 null: false
@@ -186,10 +176,9 @@ ActiveRecord::Schema.define(version: 20180322102515) do
     t.boolean  "daily",                           default: false, null: false
     t.boolean  "show_disabled",                   default: false, null: false
     t.boolean  "n_a",                             default: false, null: false
+    t.index ["id", "year"], name: "index_plans_on_id_and_year", unique: true, using: :btree
+    t.index ["plan_category_id"], name: "index_plans_on_plan_category_id", using: :btree
   end
-
-  add_index "plans", ["id", "year"], name: "index_plans_on_id_and_year", unique: true, using: :btree
-  add_index "plans", ["plan_category_id"], name: "index_plans_on_plan_category_id", using: :btree
 
   create_table "shirts", force: :cascade do |t|
     t.integer  "year",                                    null: false
@@ -200,11 +189,10 @@ ActiveRecord::Schema.define(version: 20180322102515) do
     t.datetime "created_at",                              null: false
     t.datetime "updated_at",                              null: false
     t.boolean  "disabled",                default: false, null: false
+    t.index ["hex_triplet", "year"], name: "index_shirts_on_hex_triplet_and_year", unique: true, using: :btree
+    t.index ["id", "year"], name: "index_shirts_on_id_and_year", unique: true, using: :btree
+    t.index ["name", "year"], name: "index_shirts_on_name_and_year", unique: true, using: :btree
   end
-
-  add_index "shirts", ["hex_triplet", "year"], name: "index_shirts_on_hex_triplet_and_year", unique: true, using: :btree
-  add_index "shirts", ["id", "year"], name: "index_shirts_on_id_and_year", unique: true, using: :btree
-  add_index "shirts", ["name", "year"], name: "index_shirts_on_name_and_year", unique: true, using: :btree
 
   create_table "tournaments", force: :cascade do |t|
     t.string   "name",             limit: 50,                  null: false
@@ -217,14 +205,13 @@ ActiveRecord::Schema.define(version: 20180322102515) do
     t.integer  "year",                                         null: false
     t.string   "location",         limit: 50
     t.boolean  "show_in_nav_menu",             default: false, null: false
+    t.index ["id", "year"], name: "index_tournaments_on_id_and_year", unique: true, using: :btree
   end
-
-  add_index "tournaments", ["id", "year"], name: "index_tournaments_on_id_and_year", unique: true, using: :btree
 
   create_table "transactions", force: :cascade do |t|
     t.integer  "user_id",                        null: false
     t.string   "trantype",           limit: 1,   null: false
-    t.integer  "gwtranid",           limit: 8
+    t.bigint   "gwtranid"
     t.date     "gwdate"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -234,10 +221,9 @@ ActiveRecord::Schema.define(version: 20180322102515) do
     t.string   "instrument",         limit: 1
     t.integer  "year",                           null: false
     t.integer  "amount",                         null: false
+    t.index ["user_id"], name: "index_transactions_on_user_id", using: :btree
+    t.index ["year", "created_at"], name: "index_transactions_on_year_and_created_at", using: :btree
   end
-
-  add_index "transactions", ["user_id"], name: "index_transactions_on_user_id", using: :btree
-  add_index "transactions", ["year", "created_at"], name: "index_transactions_on_year_and_created_at", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  limit: 255, default: "",  null: false
@@ -254,12 +240,11 @@ ActiveRecord::Schema.define(version: 20180322102515) do
     t.string   "role",                   limit: 1,   default: "U", null: false
     t.integer  "year",                                             null: false
     t.datetime "reset_password_sent_at"
+    t.index ["email", "year"], name: "index_users_on_email_and_year", unique: true, using: :btree
+    t.index ["id", "year"], name: "index_users_on_id_and_year", unique: true, using: :btree
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+    t.index ["year"], name: "index_users_on_year", using: :btree
   end
-
-  add_index "users", ["email", "year"], name: "index_users_on_email_and_year", unique: true, using: :btree
-  add_index "users", ["id", "year"], name: "index_users_on_id_and_year", unique: true, using: :btree
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
-  add_index "users", ["year"], name: "index_users_on_year", using: :btree
 
   create_table "years", force: :cascade do |t|
     t.string  "city",               limit: 255, null: false
@@ -280,9 +265,8 @@ ActiveRecord::Schema.define(version: 20180322102515) do
     t.string  "venue_state",        limit: 2
     t.string  "venue_zip",          limit: 10
     t.string  "venue_phone",        limit: 20
+    t.index ["year"], name: "index_years_on_year", unique: true, using: :btree
   end
-
-  add_index "years", ["year"], name: "index_years_on_year", unique: true, using: :btree
 
   add_foreign_key "activities", "activity_categories", name: "fk_events_event_category_id_year", on_update: :cascade, on_delete: :cascade
   add_foreign_key "attendee_activities", "activities", name: "fk_attendee_events_event_id_year", on_update: :cascade, on_delete: :cascade
