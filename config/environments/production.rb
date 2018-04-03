@@ -39,7 +39,8 @@ Gocongress::Application.configure do
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
 
+  config.force_ssl = true
+
   # Runtime exception notification
   GocongressNotifier.use_exception_notifier_middleware(config)
-
 end
