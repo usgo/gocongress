@@ -1,9 +1,1 @@
-%button{:id => btn_id, :class => btn_class}= btn_txt
-
-:javascript
-  $(function(){
-    var btn_id = "#{btn_id}";
-    $('#' + btn_id).click(function(){
-      window.location.href = "#{btn_url}"
-    });
-  });
+%a{:id => btn_id, :class => ['button', :btn_class], :href => btn_url}= btn_txt

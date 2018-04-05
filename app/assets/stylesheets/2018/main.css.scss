@@ -492,11 +492,21 @@ table {
 	&.lightweight {
 		background: hsl(50, 100%, 50%);
 
+		thead {
+			th {
+				font: {
+					size: 18px;
+				}
+				text-align: left;
+			}
+		}
+
 		th {
 			text-align: right;
+			padding: 5px 10px;
 		}
 		td {
-			padding: 0.25em 0.5em;
+			padding: 5px 10px;
 		}
 
 		padding: 1em;
@@ -591,4 +601,12 @@ ul.radio {
 
 hr {
 	border: 1px solid #333;
+}
+
+/* A horizontal line of stuff, each one floated left with
+some padding between each -Jared 2012-05-30 */
+.floating-padded-line-item { float: left; padding: 1em 2em 1em 0em; }
+
+.buffer-bottom {
+	margin-bottom: 1em;
 }
