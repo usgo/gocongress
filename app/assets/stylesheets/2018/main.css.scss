@@ -492,8 +492,18 @@ table {
 	&.lightweight {
 		background: hsl(50, 100%, 50%);
 
+		thead {
+			th {
+				font: {
+					size: 18px;
+				}
+				text-align: left;
+			}
+		}
+
 		th {
 			text-align: right;
+			padding: 0.25em 0.5em;
 		}
 		td {
 			padding: 0.25em 0.5em;
