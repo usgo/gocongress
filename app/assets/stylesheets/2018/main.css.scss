@@ -351,14 +351,23 @@ fieldset {
 	padding: 10px;
 	> * {
 		flex: 1 1 auto;
-		margin: 0.5em;
+		margin: 10px;
 		align-self: center;
+	}
+
+	> input[type='submit'], input[type='checkbox'] {
+		flex: 0 1 auto;
 	}
 
 	> :first-child {
 		flex: 0 0 auto;
 		text-align: right;
 		width: 25%;
+
+		* {
+			flex: 1 1 auto;
+			text-align: right;
+		}
 	}
 
 	> :first-child:last-child {
@@ -375,11 +384,12 @@ fieldset {
 		text-align: left;
 	}
 
-	> select {
+	select {
 		flex-grow: 0;
 	}
 
-	> input, textarea {
+	input, textarea {
+		flex: 1 1 auto;
 		padding: 0.5em;
 		font: {
 			size: 14px;
