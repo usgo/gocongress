@@ -8,7 +8,7 @@
 
 - @contents.each do |c|
   %h3= c.subject
-  = Markdown.new(c.body).to_html.html_safe
+  = markdown(c.body).html_safe
   - if can? :manage, c
     .row-of-buttons
       = button_to "Edit", edit_content_path(c), :method => :get

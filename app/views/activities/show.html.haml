@@ -30,7 +30,7 @@
       %th= Attendee.model_name.human.pluralize
       %td= @activity.attendees.count
 
-%div= Markdown.new(@activity.notes).to_html.html_safe
+%div= markdown(@activity.notes).html_safe
 
 %br
 

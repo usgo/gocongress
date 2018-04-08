@@ -1,2 +1,2 @@
 %h3= content.subject
-= Markdown.new(content.body).to_html.html_safe
+= markdown(content.body).html_safe
