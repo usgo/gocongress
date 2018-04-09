@@ -25,7 +25,6 @@ module NameInflector
 
       if mandsuf_match.present?
         presuffix = remove_suffix name, mandsuf_match
-        puts presuffix.capitalize + mandsuf_match.capitalize
         return presuffix.capitalize + mandsuf_match.capitalize
       end
 
