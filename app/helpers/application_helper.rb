@@ -73,8 +73,23 @@ module ApplicationHelper
     link_to text, "tel:#{number}"
   end
 
+  def markdown(content)
+    @markdown ||= Redcarpet::Markdown.new(MarkdownRenderer, {
+      autolink: true,
+      space_after_headers: true,
+      highlight: true,
+      footnotes: true,
+      tables: true
+    })
+    @markdown.render(content)
+  end
+
+  def smarty(s)
+    Redcarpet::Render::SmartyPants.render(s)
+  end
+
   def markdown_if_present(s)
-    s.blank? ? '' : Markdown.new(s).to_html.html_safe
+    s.blank? ? '' : markdown(s).html_safe
   end
 
   def markdown_summary model, atr, len

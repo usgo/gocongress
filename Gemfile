@@ -19,6 +19,7 @@ gem 'responders', '~> 2.0'
 gem 'sass-rails'
 gem 'thin'
 gem 'uglifier', '>= 1.3.0'
+gem 'redcarpet'
 gem 'unf' # <- fog <- asset_sync (http://bit.ly/17TiMjA)
 
 # Groups: Rails will load the group where name == Rails.env

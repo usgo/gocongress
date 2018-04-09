@@ -217,6 +217,7 @@ GEM
     rb-inotify (0.9.10)
       ffi (>= 0.5.0, < 2)
     rb-readline (0.5.5)
+    redcarpet (3.4.0)
     responders (2.4.0)
       actionpack (>= 4.2.0, < 5.3)
       railties (>= 4.2.0, < 5.3)
@@ -333,6 +334,7 @@ DEPENDENCIES
   rails_12factor
   rb-fsevent
   rb-readline
+  redcarpet
   responders (~> 2.0)
   rspec-rails
   rubocop

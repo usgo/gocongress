@@ -5,7 +5,7 @@
 %h2= @activity_category.name
 
 -if @activity_category.has_description?
-  %div= Markdown.new(@activity_category.description).to_html.html_safe
+  %div= markdown(@activity_category.description).html_safe
 
 - if current_user.present?
   .row-of-buttons
