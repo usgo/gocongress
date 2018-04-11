@@ -2,7 +2,7 @@
 
 .row-of-buttons
   - if can? :create, Content
-    = button_to "New Content", new_content_path, :method => :get
+    = button_to "New Content", new_content_path, :method => :get, params: { content_category_id: @content_category.id }
   - if can? :edit, ContentCategory
     = button_to "Edit This Category", edit_content_category_path(@content_category), :method => :get
 
