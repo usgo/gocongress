@@ -303,6 +303,12 @@ input[type="submit"], input[type="button"], button, .button {
 		position: 50% 50%;
 		repeat: no-repeat;
 	}
+	@include breakpoint(lt-sm) {
+		background: {
+			attachment: inherit;
+		}
+	}
+
 	height: 25vh;
 }
 
@@ -681,7 +687,7 @@ some padding between each -Jared 2012-05-30 */
 		text-decoration: none;
 		position: relative;
 		transition: all 0.2s;
-		
+
 		@extend .fancy-border;
 
 		&:hover {
