@@ -20,5 +20,4 @@
         %td= text_field_tag 'x_card_code', dev? ? '123' : '', :size => 3
       %tr
         %th
-        %td
-          %input{ :type => "submit", :name => "submit", :value => "Finish" }
+        %td= submit_tag('Finish', data: { disable_with: 'Please wait...' })
