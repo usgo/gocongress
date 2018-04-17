@@ -36,13 +36,42 @@ $(function () {
     elem.addEventListener("keyup", (event) => {
       updateCounter(elem, counter);
     });
-  })
+  });
+
+  function updateCounter(elem, counter) {
+    counter.innerHTML = `Characters left: ${elem.maxLength - elem.value.length}`;
+  }
 });
 
-function updateCounter(elem, counter) {
-  counter.innerHTML = `Characters left: ${elem.maxLength - elem.value.length}`;
-}
+// Add a separator control for email lists
+$(function () {
+  document.querySelectorAll('[data-email-list]').forEach(elem => {
+    var separator = document.createElement('div');
+    var glueLabel = document.createElement('span');
+    var glueInput = document.createElement('input');
 
-// create a element to show chars left
+    glueLabel.innerHTML = 'Separator:';
+    separator.classList.add('list-separator');
+    glueInput.classList.add('glue');
+    glueInput.value = elem.dataset.glue || ';';
 
-// update element of textarea value change
+    separator.appendChild(glueLabel);
+    separator.appendChild(glueInput);
+    elem.parentNode.insertBefore(separator, elem);
+
+    // Select all on focus
+    glueInput.addEventListener('focus', function (event) {
+      event.target.setSelectionRange(0, this.value.length)
+    });
+
+    // Update the email list whenever the value changes
+    glueInput.addEventListener('keyup', function (event) {
+      var char = event.target.value;
+      var json = elem.dataset.json;
+
+      elem.value = JSON.parse(elem.dataset.json).map(
+        attendee => `"${attendee.name}" <${attendee.email}>`
+      ).join(char + ' ');
+    });
+  });
+});

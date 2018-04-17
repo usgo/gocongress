@@ -1,3 +1,4 @@
 %h2 Attendee Email Addresses
 %p Copy and paste from the box below.
-%textarea.fullwidth{ :rows => 20 }= @atnd_email_list
+
+%textarea.fullwidth{ :rows => 20, :data => { 'email-list': true, glue: ',', json: @atnd_email_list_json } }= @atnd_email_list

@@ -718,3 +718,23 @@ some padding between each -Jared 2012-05-30 */
 		}
 	}
 }
+
+.list-separator {
+	margin: 0 0 0.5em;
+
+	span {
+		font-size: 18px;
+		display: inline-block;
+		margin-right: 0.5em;
+	}
+
+	.glue {
+		font-size: 18px;
+		width: 1em;
+		text-align: center;
+	}
+}
+
+[data-email-list] {
+	width: 100%;
+}
