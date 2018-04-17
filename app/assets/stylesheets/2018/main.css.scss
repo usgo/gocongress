@@ -1,552 +1,559 @@
-@import 'variables';
-@import '../functions/str-split';
-@import '../mixins/breakpoint';
-@import 'colonial-bullets';
+@import "variables";
+@import "../functions/str-split";
+@import "../mixins/breakpoint";
+@import "colonial-bullets";
 
-@import url('https://fonts.googleapis.com/css?family=Cormorant+Garamond');
+@import url("https://fonts.googleapis.com/css?family=Cormorant+Garamond");
 
 @font-face {
-	font-family: 'boswell';
-	src: url(font-path('boswell.woff2')) format('woff2'),
-	url(font-path('boswell.woff')) format('woff');
-	font-weight: normal;
-	font-style: normal;
+  font-family: "boswell";
+  src: url(font-path("boswell.woff2")) format("woff2"),
+    url(font-path("boswell.woff")) format("woff");
+  font-weight: normal;
+  font-style: normal;
 }
 
-html, body {
-	margin: 0;
-	padding: 0;
+html,
+body {
+  margin: 0;
+  padding: 0;
 }
 body {
-	font: {
-		family: 'Cormorant Garamond', serif;
-		size: 24px;
-	}
-	@include breakpoint(lt-sm) {
-		font-size: 18px;
-	}
+  font: {
+    family: "Cormorant Garamond", serif;
+    size: 24px;
+  }
+  @include breakpoint(lt-sm) {
+    font-size: 18px;
+  }
 }
 
 .body-container {
 }
 
 .header-logo {
-	position: absolute;
-	left: 50%;
-	bottom: -50px;
-	height: calc(10vh + 100px);
-	@include breakpoint(lt-md) {
-		bottom: -15px;
-		height: 20vh;
-	}
-	transform: translateX(-50%);
-	z-index: 2;
+  position: absolute;
+  left: 50%;
+  bottom: -50px;
+  height: calc(10vh + 100px);
+  @include breakpoint(lt-md) {
+    bottom: -15px;
+    height: 20vh;
+  }
+  transform: translateX(-50%);
+  z-index: 2;
 }
 
 #header.home {
-	.header-logo {
-		height: calc(50vh + 100px);
-		@include breakpoint(lt-md) {
-			bottom: -30px;
-			height: auto;
-			width: 80vw;
-		}
-	}
+  .header-logo {
+    height: calc(50vh + 100px);
+    @include breakpoint(lt-md) {
+      bottom: -30px;
+      height: auto;
+      width: 80vw;
+    }
+  }
 }
 
 #header-container {
 }
 
 #header {
-	background: {
-		// attachment: fixed;
-		color: #333;
-		image:
-		radial-gradient(circle at bottom, black 0, transparent 50%),
-		url(asset-path('2018/photographs/williamsburg/IMG_6730.jpg'));
-		size: cover;
-		position: 50% 100%;
-		repeat: no-repeat;
+  background: {
+    // attachment: fixed;
+    color: #333;
+    image: radial-gradient(circle at bottom, black 0, transparent 50%),
+      url(asset-path("2018/photographs/williamsburg/IMG_6730.jpg"));
+    size: cover;
+    position: 50% 100%;
+    repeat: no-repeat;
+  }
+  // border-bottom: 2px solid #000;
+  color: #fff;
+  height: 20vh;
 
-	};
-	// border-bottom: 2px solid #000;
-	color: #fff;
-	height: 20vh;
+  &.home {
+    height: 75vh;
+    background: {
+      image: radial-gradient(circle at bottom, black 0, transparent 50%),
+        url(asset-path("2018/photographs/williamsburg/header1.jpg"));
+    }
+  }
+  // background: {
+  // 	image: url(asset-path('2018/revolutionary-woman-woodcut-crop.png'));
+  // 	size: 240px;
+  // 	position: 0% 100%;
+  // 	repeat: no-repeat;
+  // }
+  // border-bottom: 3px solid #333;
+  // padding: 2em 5vw;
 
-	&.home {
-		height: 75vh;
-		background: {
-			image:
-			radial-gradient(circle at bottom, black 0, transparent 50%),
-			url(asset-path('2018/photographs/williamsburg/header1.jpg'));
-		}
-	}
-	// background: {
-	// 	image: url(asset-path('2018/revolutionary-woman-woodcut-crop.png'));
-	// 	size: 240px;
-	// 	position: 0% 100%;
-	// 	repeat: no-repeat;
-	// }
-	// border-bottom: 3px solid #333;
-	// padding: 2em 5vw;
+  @include breakpoint(lt-xs) {
+    // padding: 1em 5vw;
+  }
 
-	@include breakpoint(lt-xs) {
-		// padding: 1em 5vw;
-	}
+  position: relative;
 
-
-	position: relative;
-
-
-	h1 {
-		font: {
-			size: 60px;
-			weight: normal;
-		}
-		margin: 0;
-		a {
-			color: #fff;
-			text-decoration: none;
-		}
-	}
-
-	}
-
-	#nav-header {
-		background: #222;
-		display: flex;
-		align-items: center;
-		padding: 5px 10px;
-	}
-
-	#usgc-title-container {
-		flex: 1 1 auto;
-		font: {
-			size: 18px;
-		}
-
-		@include breakpoint(lt-md) {
-			display: none;
-		}
-
-		> h1 {
-			margin: 0;
-
-			a {
-				color: #eee;
-			}
-		}
-	}
-
-	#usgc-when-where-container {
-		color: #eee;
-		font: {
-			family: boswell;
-			size: 24px;
-		}
-		line-height: 1;
-
-		@include breakpoint(lt-md) {
-			font-size: 18px;
-			padding: 0.75em 1em 0.25em;
-			text-align: center;
-			flex: 1 1 auto;
-		}
-
-		.icon {
-			display: inline-block;
-			fill: #eee;
-			height: 15px;
-			width: 15px;
-			margin: 0;
-
-			@include breakpoint(lt-xs) {
-				height: 10px;
-				width: 10px;
-			}
-		}
+  h1 {
+    font: {
+      size: 60px;
+      weight: normal;
+    }
+    margin: 0;
+    a {
+      color: #fff;
+      text-decoration: none;
+    }
+  }
 }
 
+#nav-header {
+  background: #222;
+  display: flex;
+  align-items: center;
+  padding: 5px 10px;
+}
 
-h1, h2, h3, h4, h5, h6 {
-	font: {
-		family: boswell;
-		weight: normal;
-	}
+#usgc-title-container {
+  flex: 1 1 auto;
+  font: {
+    size: 18px;
+  }
+
+  @include breakpoint(lt-md) {
+    display: none;
+  }
+
+  > h1 {
+    margin: 0;
+
+    a {
+      color: #eee;
+    }
+  }
+}
+
+#usgc-when-where-container {
+  color: #eee;
+  font: {
+    family: boswell;
+    size: 24px;
+  }
+  line-height: 1;
+
+  @include breakpoint(lt-md) {
+    font-size: 18px;
+    padding: 0.75em 1em 0.25em;
+    text-align: center;
+    flex: 1 1 auto;
+  }
+
+  .icon {
+    display: inline-block;
+    fill: #eee;
+    height: 15px;
+    width: 15px;
+    margin: 0;
+
+    @include breakpoint(lt-xs) {
+      height: 10px;
+      width: 10px;
+    }
+  }
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font: {
+    family: boswell;
+    weight: normal;
+  }
 }
 
 .content {
-	padding: 5vw;
+  padding: 5vw;
 }
 
 h2 {
-	font: {
-		size: 36px;
-	}
-	@include breakpoint(lt-sm) {
-		font-size: 30px;
-	}
-	margin: 0;
+  font: {
+    size: 36px;
+  }
+  @include breakpoint(lt-sm) {
+    font-size: 30px;
+  }
+  margin: 0;
 }
 
 a {
-	color: hsl(0, 60%, 50%);
-	&:visited {
-		color: hsl(0, 20%, 50%);
-	}
+  color: hsl(0, 60%, 50%);
+  &:visited {
+    color: hsl(0, 20%, 50%);
+  }
 }
 
 .past-years {
-
+  padding: {
+    top: 0;
+  }
 }
 
 #footer {
-	background: #333;
-	color: #ccc;
-	padding: 2vw 5vw;
+  background: #333;
+  color: #ccc;
+  padding: 2vw 5vw;
 }
 
-input[type="submit"], input[type="button"], button, .button {
-	$color: #eee;
-	background: hsl(0, 60%, 50%);
-	border: 3px double #fff;
-	color: $color;
-	cursor: pointer;
-	display: inline-block;
-	font: {
-		family: boswell;
-		size: 18px;
-	}
-	padding: 10px 20px;
-	position: relative;
-	text-decoration: none;
-	transition: all 0.2s;
+input[type="submit"],
+input[type="button"],
+button,
+.button {
+  $color: #eee;
+  background: hsl(0, 60%, 50%);
+  border: 3px double #fff;
+  color: $color;
+  cursor: pointer;
+  display: inline-block;
+  font: {
+    family: boswell;
+    size: 18px;
+  }
+  padding: 10px 20px;
+  position: relative;
+  text-decoration: none;
+  transition: all 0.2s;
 
-	&:visited {
-		color: $color;
-	}
+  &:visited {
+    color: $color;
+  }
 
-	&:hover {
-		background: hsl(0, 80%, 50%);
-	}
+  &:hover {
+    background: hsl(0, 80%, 50%);
+  }
 }
 
 .button-large {
-	font: {
-		size: 36px;
-	}
+  font: {
+    size: 36px;
+  }
 }
 
 .content-bullet {
-	display: block;
-	margin: 2em auto;
-	height: 50px;
+  display: block;
+  margin: 2em auto;
+  height: 50px;
+  max-width: 80%;
 }
 
 .nav-container {
-	position: sticky;
-	top: 0;
-	z-index: 1;
+  position: sticky;
+  top: 0;
+  z-index: 1;
 
-	a {
-		text-decoration: none;
-	}
+  a {
+    text-decoration: none;
+  }
 }
 
-.nav-list-main, .nav-admin {
-	font: {
-		size: 18px;
-	}
-	margin: 0;
-	padding: 0;
-	display: flex;
-	list-style: none;
-	flex-wrap: wrap;
+.nav-list-main,
+.nav-admin {
+  font: {
+    size: 18px;
+  }
+  margin: 0;
+  padding: 0;
+  display: flex;
+  list-style: none;
+  flex-wrap: wrap;
 
-	li {
-		display: flex;
-		align-items: stretch;
-		flex: 1 1 auto;
-		text-align: center;
+  li {
+    display: flex;
+    align-items: stretch;
+    flex: 1 1 auto;
+    text-align: center;
 
-		> a {
-			color: #fff;
-			display: block;
-			flex: 1 1 auto;
-			padding: 0.5em;
-			transition: all 0.2s;
-			&:hover {
-				background: #fff;
-				color: hsl(0, 60%, 50%);
-			}
-		}
-	}
+    > a {
+      color: #fff;
+      display: block;
+      flex: 1 1 auto;
+      padding: 0.5em;
+      transition: all 0.2s;
+      &:hover {
+        background: #fff;
+        color: hsl(0, 60%, 50%);
+      }
+    }
+  }
 }
 
 .nav-list-main {
-	background: {
-		color: hsl(0, 60%, 50%);
-	}
+  background: {
+    color: hsl(0, 60%, 50%);
+  }
 }
 
 .nav-admin {
-	background: {
-		color: hsl(50, 70%, 50%);
-	}
+  background: {
+    color: hsl(50, 70%, 50%);
+  }
 }
 
 .scroller-image {
-	margin: 0 -5vw;
-	background: {
-		attachment: fixed;
-		size: cover;
-		position: 50% 50%;
-		repeat: no-repeat;
-	}
-	@include breakpoint(lt-sm) {
-		background: {
-			attachment: inherit;
-		}
-	}
+  clear: both;
+  margin: 0 -5vw;
+  background: {
+    attachment: fixed;
+    size: cover;
+    position: 50% 50%;
+    repeat: no-repeat;
+  }
+  @include breakpoint(lt-sm) {
+    background: {
+      attachment: inherit;
+    }
+  }
 
-	height: 25vh;
+  height: 25vh;
 }
 
 .directors-photo {
-	background: {
-		image: url(asset-path('2018/photographs/williamsburg/diego-and-nate.jpg'));
-	}
+  background: {
+    image: url(asset-path("2018/photographs/williamsburg/diego-and-nate.jpg"));
+  }
 }
 
 .dorm-facade {
-	background: {
-		image: url(asset-path('2018/photographs/williamsburg/IMG_6787.jpg'));
-	}
+  background: {
+    image: url(asset-path("2018/photographs/williamsburg/IMG_6787.jpg"));
+  }
 }
 
-
 #below-gallery {
-	color: white;
-	background: {
-		color: hsl(0, 60%, 50%);
-	}
-	float: right;
-	margin: 0 0 1em 1em;
-	padding: 1em;
-	position: relative;
-	@include breakpoint(lt-sm) {
-		float: none;
-		margin: 0 0 1em;
-	}
+  color: white;
+  background: {
+    color: hsl(0, 60%, 50%);
+  }
+  float: right;
+  margin: 0 0 1em 1em;
+  padding: 1em;
+  position: relative;
+  @include breakpoint(lt-sm) {
+    float: none;
+    margin: 0 0 1em;
+  }
 
-	* {
-		position: relative;
-	}
+  * {
+    position: relative;
+  }
 
-	a {
-		color: white;
-	}
+  a {
+    color: white;
+  }
 
-	@extend .fancy-border;
+  @extend .fancy-border;
 }
 
 // Forms
 fieldset {
-	border: 5px double #333;
-	margin: 1em 0;
+  border: 5px double #333;
+  margin: 1em 0;
 }
 
 .field {
-	display: flex;
-	padding: 10px;
-	> * {
-		flex: 1 1 auto;
-		margin: 10px;
-		align-self: center;
-	}
+  display: flex;
+  padding: 10px;
+  > * {
+    flex: 1 1 auto;
+    margin: 10px;
+    align-self: center;
+  }
 
-	> input[type='submit'], input[type='checkbox'] {
-		flex: 0 1 auto;
-	}
+  > input[type="submit"],
+  input[type="checkbox"] {
+    flex: 0 1 auto;
+  }
 
-	> :first-child {
-		flex: 0 0 auto;
-		text-align: right;
-		width: 25%;
+  > :first-child {
+    flex: 0 0 auto;
+    text-align: right;
+    width: 25%;
 
-		* {
-			flex: 1 1 auto;
-			text-align: right;
-		}
-	}
+    * {
+      flex: 1 1 auto;
+      text-align: right;
+    }
+  }
 
-	> :first-child:last-child {
-		flex: 1 1 auto;
-		text-align: left;
-	}
+  > :first-child:last-child {
+    flex: 1 1 auto;
+    text-align: left;
+  }
 
-	> :not(:first-child):not(:last-child) {
-		flex: 0 1 auto;
-		align-self: center;
-	}
+  > :not(:first-child):not(:last-child) {
+    flex: 0 1 auto;
+    align-self: center;
+  }
 
-	> :last-child {
-		text-align: left;
-	}
+  > :last-child {
+    text-align: left;
+  }
 
-	select {
-		flex-grow: 0;
-	}
+  select {
+    flex-grow: 0;
+  }
 
-	input, textarea {
-		flex: 1 1 auto;
-		padding: 0.5em;
-		font: {
-			size: 14px;
-		}
-	}
+  input,
+  textarea {
+    flex: 1 1 auto;
+    padding: 0.5em;
+    font: {
+      size: 14px;
+    }
+  }
 
-	.field_with_errors {
-		display: flex;
-		> {
-			flex: 1 1 auto;
-		}
-	}
+  .field_with_errors {
+    display: flex;
+    >  {
+      flex: 1 1 auto;
+    }
+  }
 }
 
 .pull-right {
-	float: right;
+  float: right;
 }
 
 .pull-left {
-	float: left;
+  float: left;
 }
 
 .flash.flash-notice {
-	background: hsl(100, 50%, 50%);
-	color: white;
-	padding: 0.5em 1em;
-	margin: 0 -1em 1em;
-	position: relative;
+  background: hsl(100, 50%, 50%);
+  color: white;
+  padding: 0.5em 1em;
+  margin: 0 -1em 1em;
+  position: relative;
 
-	@extend .fancy-border;
+  @extend .fancy-border;
 }
 
 .fancy-border {
-	&:before {
-		pointer-events: none;
-		display: block;
-		content: '';
-		position: absolute;
-		$inset: 5px;
-		top: $inset;
-		right: $inset;
-		bottom: $inset;
-		left: $inset;
-		border: 1px solid white;
-
-	}
+  &:before {
+    pointer-events: none;
+    display: block;
+    content: "";
+    position: absolute;
+    $inset: 5px;
+    top: $inset;
+    right: $inset;
+    bottom: $inset;
+    left: $inset;
+    border: 1px solid white;
+  }
 }
 
 table {
-	// TODO: Figure out what the classname "semantic" means, in this context :)
-	&.semantic {
-		border-collapse: collapse;
+  // TODO: Figure out what the classname "semantic" means, in this context :)
+  &.semantic {
+    border-collapse: collapse;
 
-		thead {
-			background: hsl(50, 100%, 50%);
-			th {
-				color: hsl(50, 100%, 25%);
-			}
-		}
+    thead {
+      background: hsl(50, 100%, 50%);
+      th {
+        color: hsl(50, 100%, 25%);
+      }
+    }
 
-		tbody {
-			background: hsl(50, 100%, 90%);
+    tbody {
+      background: hsl(50, 100%, 90%);
 
-			th {
-				background: hsl(50, 100%, 50%);
-				color: hsl(50, 100%, 20%);
-				font: {
-					size: 36px;
-				}
-			}
-		}
+      th {
+        background: hsl(50, 100%, 50%);
+        color: hsl(50, 100%, 20%);
+        font: {
+          size: 36px;
+        }
+      }
+    }
 
-		th, td {
-			margin: 0;
-			padding: 0.25em 0.5em;
-			text-align: left;
-		}
+    th,
+    td {
+      margin: 0;
+      padding: 0.25em 0.5em;
+      text-align: left;
+    }
 
-		td {
-			font: {
-				size: 18px;
-			}
-		}
+    td {
+      font: {
+        size: 18px;
+      }
+    }
 
-		.description {
-			td {
-				position: relative;
-				background: hsla(0, 0%, 100%, 0.5);
-				color: hsl(50, 20%, 20%);
-				padding: 10px 20px !important;
-				font: {
-					size: 24px;
-				}
-			}
-		}
+    .description {
+      td {
+        position: relative;
+        background: hsla(0, 0%, 100%, 0.5);
+        color: hsl(50, 20%, 20%);
+        padding: 10px 20px !important;
+        font: {
+          size: 24px;
+        }
+      }
+    }
 
-		.extended-description {
-			td {
-				position: relative;
-				background: hsla(0, 0%, 100%, 0.5);
-				color: hsl(50, 20%, 20%);
-				padding: 0 20px 10px !important;
-				font: {
-					size: 18px;
-				}
-			}
-		}
-	}
+    .extended-description {
+      td {
+        position: relative;
+        background: hsla(0, 0%, 100%, 0.5);
+        color: hsl(50, 20%, 20%);
+        padding: 0 20px 10px !important;
+        font: {
+          size: 18px;
+        }
+      }
+    }
+  }
 
-	&.lightweight {
-		background: hsl(50, 100%, 50%);
+  &.lightweight {
+    background: hsl(50, 100%, 50%);
 
-		thead {
-			th {
-				font: {
-					size: 18px;
-				}
-				text-align: left;
-			}
-		}
+    thead {
+      th {
+        font: {
+          size: 18px;
+        }
+        text-align: left;
+      }
+    }
 
-		th {
-			text-align: right;
-			padding: 5px 10px;
-		}
-		td {
-			padding: 5px 10px;
-		}
+    th {
+      text-align: right;
+      padding: 5px 10px;
+    }
+    td {
+      padding: 5px 10px;
+    }
 
-		padding: 1em;
-		position: relative;
-		@extend .fancy-border;
-	}
-	&.fullwidth {
-		width: 100%;
-	}
+    padding: 1em;
+    position: relative;
+    @extend .fancy-border;
+  }
+  &.fullwidth {
+    width: 100%;
+  }
 }
 
 .smalltext {
-	font: {
-		size: 18px;
-	}
+  font: {
+    size: 18px;
+  }
 }
 
-
 .hardwrap {
-	/* These are technically the same, but use both */
+  /* These are technically the same, but use both */
   overflow-wrap: break-word;
   word-wrap: break-word;
 
@@ -564,22 +571,29 @@ table {
 }
 
 /* Use this class to pad flow elements (eg. div, form) -Jared 4/9/11 */
-.flow-padding { padding: 8px 0px; }
+.flow-padding {
+  padding: 8px 0px;
+}
 
 /* Symetrical two column layout */
-.left-column, .right-column {
+.left-column,
+.right-column {
   box-sizing: border-box;
   vertical-align: top;
-	display: inline-block;
+  display: inline-block;
 
-	@include breakpoint(xs) {
-		width: 100%;
-	}
-	@include breakpoint(gt-xs) {
-	  width: calc(50% - 2.5vw);
-		.left-column { padding-right: 5px; }
-		.right-column { padding-left: 5px; }
-	}
+  @include breakpoint(xs) {
+    width: 100%;
+  }
+  @include breakpoint(gt-xs) {
+    width: calc(50% - 2.5vw);
+    .left-column {
+      padding-right: 5px;
+    }
+    .right-column {
+      padding-left: 5px;
+    }
+  }
 }
 
 /* Horizontal row of buttons.  Pad the same as a paragraph,
@@ -587,136 +601,155 @@ except when following an h2, then pad half as much on top as
 normal. -Jared 2012-06-10 */
 .row-of-buttons {
   padding: 0.5em 0em;
-  h2 + & { padding: 0.25em 0em 0.5em 0em; }
-  form, div { display: inline; }
+  h2 + & {
+    padding: 0.25em 0em 0.5em 0em;
+  }
+  form,
+  div {
+    display: inline;
+  }
 }
 
 ul.radio {
-	list-style-type: none;
-	padding: 0;
-	margin: 0;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
 }
 
 .disabled {
-	opacity: 0.3;
+  opacity: 0.3;
 }
 
 .created-updated-dates {
-	color: #666;
-	margin: 0 0 1em;
-	font: {
-		size: 18px;
-	}
+  color: #666;
+  margin: 0 0 1em;
+  font: {
+    size: 18px;
+  }
 
-	.icon {
-		display: inline-block;
-		fill: #666;
-		width: 15px;
-		height: 15px;
-		margin: 0 5px;
-		position: relative;
-		top: 3px;
-	}
+  .icon {
+    display: inline-block;
+    fill: #666;
+    width: 15px;
+    height: 15px;
+    margin: 0 5px;
+    position: relative;
+    top: 3px;
+  }
 }
 
 hr {
-	border: 1px solid #333;
+  border: 1px solid #333;
 }
 
 /* A horizontal line of stuff, each one floated left with
 some padding between each -Jared 2012-05-30 */
-.floating-padded-line-item { float: left; padding: 1em 2em 1em 0em; }
+.floating-padded-line-item {
+  float: left;
+  padding: 1em 2em 1em 0em;
+}
+
+.buffer-top {
+  margin-top: 1em;
+}
 
 .buffer-bottom {
-	margin-bottom: 1em;
+  margin-bottom: 1em;
 }
 
 .clear {
-	clear: both;
+  clear: both;
 }
 
 .app-call-to-action {
-	color: white;
-	clear: both;
-	font: {
-		family: boswell;
-	}
-	float: right;
-	margin: 0 0 1em 1em;
-	@include breakpoint(lt-sm) {
-		float: none;
-		margin: 0 0 1em;
-	}
-	padding: 0;
-	text-align: center;
-	max-width: 400px;
+  color: white;
+  clear: both;
+  font: {
+    family: boswell;
+  }
+  float: right;
+  margin: 0 0 1em 1em;
+  @include breakpoint(lt-sm) {
+    float: none;
+    margin: 0 0 1em;
+  }
+  padding: 0;
+  text-align: center;
+  max-width: 400px;
 
-	.download {
-		margin: 0;
-		font: {
-			size: 24px;
-		}
-		@include breakpoint(lt-sm) {
-			font: {
-				size: 18px;
-			}
-		}
-		text-transform: uppercase;
-	}
+  .download {
+    margin: 0;
+    font: {
+      size: 24px;
+    }
+    @include breakpoint(lt-sm) {
+      font: {
+        size: 18px;
+      }
+    }
+    text-transform: uppercase;
+  }
 
-	p {
-		font: {
-			size: 14px;
-		}
-		@include breakpoint(lt-sm) {
-			font: {
-				size: 12px;
-			}
-		}
-		margin: 0;
-		text-transform: uppercase;
-	}
+  p {
+    font: {
+      size: 14px;
+    }
+    @include breakpoint(lt-sm) {
+      font: {
+        size: 12px;
+      }
+    }
+    margin: 0;
+    text-transform: uppercase;
+  }
 
-	a {
-		background: {
-			color: hsl(100, 60%, 50%);
-		}
-		color: white;
-		display: block;
-		padding: 1em;
-		text-decoration: none;
-		position: relative;
-		transition: all 0.2s;
+  a {
+    background: {
+      color: hsl(100, 60%, 50%);
+    }
+    color: white;
+    display: block;
+    padding: 1em;
+    text-decoration: none;
+    position: relative;
+    transition: all 0.2s;
 
-		@extend .fancy-border;
+    @extend .fancy-border;
 
-		&:hover {
-			background: {
-				color: hsl(100, 50%, 50%);
-			}
-		}
-	}
+    &:hover {
+      background: {
+        color: hsl(100, 50%, 50%);
+      }
+    }
+  }
 
-	.side-by-side {
-		display: flex;
+  .side-by-side {
+    display: flex;
 
-		> {
-			flex: 1 1 auto;
-		}
-	}
+    >  {
+      flex: 1 1 auto;
+    }
+  }
 
-	.icon {
-		fill: white;
-	}
+  .icon {
+    fill: white;
+  }
 
-	.content-bullet {
-		margin: 0.25em auto;
-		height: 40px;
+  .content-bullet {
+    margin: 0.25em auto;
+    height: 40px;
 
-		@include breakpoint(lt-sm) {
-			height: 30px;
-		}
-	}
+    @include breakpoint(lt-sm) {
+      height: 30px;
+    }
+  }
+}
+
+.give-me-liberties {
+  display: block;
+  max-width: 400px;
+  margin: 0 auto;
+  width: 80%;
 }
 
 .list-separator {
