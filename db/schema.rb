@@ -10,12 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180322102515) do
+ActiveRecord::Schema.define(version: 20180417215552) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "activities", force: :cascade do |t|
+  create_table "activities", id: :integer, default: -> { "nextval('events_id_seq'::regclass)" }, force: :cascade do |t|
     t.string   "name",                 limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -35,14 +35,14 @@ ActiveRecord::Schema.define(version: 20180322102515) do
     t.index ["year", "leave_time"], name: "index_activities_on_year_and_start", using: :btree
   end
 
-  create_table "activity_categories", force: :cascade do |t|
+  create_table "activity_categories", id: :integer, default: -> { "nextval('event_categories_id_seq'::regclass)" }, force: :cascade do |t|
     t.string  "name",        limit: 25,  null: false
     t.integer "year",                    null: false
     t.string  "description", limit: 500
     t.index ["id", "year"], name: "uniq_activity_categories_on_id_and_year", unique: true, using: :btree
   end
 
-  create_table "attendee_activities", force: :cascade do |t|
+  create_table "attendee_activities", id: :integer, default: -> { "nextval('attendee_events_id_seq'::regclass)" }, force: :cascade do |t|
     t.integer  "attendee_id", null: false
     t.integer  "activity_id", null: false
     t.datetime "created_at"
@@ -100,6 +100,10 @@ ActiveRecord::Schema.define(version: 20180322102515) do
     t.string   "local_phone",              limit: 255
     t.string   "emergency_name",           limit: 255
     t.string   "emergency_phone",          limit: 255
+    t.string   "social_link_twitter"
+    t.string   "social_link_facebook"
+    t.string   "social_link_linkedin"
+    t.string   "social_link_website"
     t.index ["id", "year"], name: "index_attendees_on_id_and_year", unique: true, using: :btree
     t.index ["user_id"], name: "index_attendees_on_user_id", using: :btree
   end

@@ -21,7 +21,8 @@ class Registration
     :family_name, :gender, :given_name, :guardian_attendee_id,
     :guardian_full_name, :local_phone, :phone, :rank, :roomate_request,
     :special_request, :shirt_id, :tshirt_size, :understand_minor,
-    :will_play_in_us_open]
+    :will_play_in_us_open, :social_link_twitter, :social_link_facebook,
+    :social_link_linkedin, :social_link_website]
 
   delegate(*ATD_ATRS, to: :attendee)
   delegate :full_name, :id, :minor?, :user_id, :year, to: :attendee

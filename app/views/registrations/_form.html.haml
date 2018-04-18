@@ -8,6 +8,7 @@
 
   = render :partial => 'shared/error_messages', :locals => { :resource => @registration }
   = render :partial => "/#{@year.year}/registrations/personal_info", :locals => { :f => f } rescue render :partial => 'personal_info', :locals => { :f => f }
+  = render :partial => 'social_links', :locals => { :f => f }
   = render :partial => "/#{@year.year}/registrations/shirt_info", :locals => { :f => f } rescue render :partial => 'shirt_info', :locals => { :f => f }
   = render :partial => "/#{@year.year}/registrations/player_info", :locals => { :f => f } rescue render :partial => 'player_info', :locals => { :f => f }
   = render :partial => 'contact_info', :locals => { :f => f }
