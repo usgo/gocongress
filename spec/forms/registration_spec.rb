@@ -70,7 +70,7 @@ RSpec.describe Registration do
         it 'returns an error if only selection has qty of zero' do
           plan = create :plan, :plan_category => cat
           r = Registration.new user, attendee
-          params = {plans: {plan.id => {"qty" => 0}}}
+          params = {plans: {plan.id.to_s => {"qty" => 0}}}
           expect(r.submit(ActionController::Parameters.new(params))).to eq(false)
           expect(r.errors.full_messages).to include(msg)
         end

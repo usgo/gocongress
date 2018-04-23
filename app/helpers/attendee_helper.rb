@@ -5,7 +5,7 @@ module AttendeeHelper
     if plan.daily?
       plan_date_fields(plan, selection)
     elsif plan.max_quantity == 1
-      plan_cbx(plan, selection)
+      plan.plan_category.single === true ? plan_radio_btn(plan, selection) : plan_cbx(plan, selection)
     else
       plan_qty_field(plan, selection)
     end
@@ -23,6 +23,16 @@ module AttendeeHelper
       check_box_tag qty_field_name(plan), 1, checked, :disabled => true
     else
       check_box_tag qty_field_name(plan), 1, checked, :title => title
+    end
+  end
+
+  def plan_radio_btn(plan, selection)
+    checked = selection.qty === 1
+    title = "Select this " + mnh
+    if plan.disabled? && !current_user_is_admin?
+      radio_button_tag radio_btn_name(plan), plan.id, checked, :disabled => true
+    else
+      radio_button_tag radio_btn_name(plan), plan.id, checked, :title => title
     end
   end
 
@@ -50,6 +60,10 @@ module AttendeeHelper
 
   def qty_field_name plan
     "plans[#{plan.id}][qty]"
+  end
+
+  def radio_btn_name plan
+    "plans[single_plan_cat_id:#{plan.plan_category.id}][plan_id]" 
   end
 
 end
