@@ -109,6 +109,19 @@ class Registration
       .yr(year).order('plan_categories.ordinal, plans.cat_order')
   end
 
+  def convert_radio_btn_params params
+    normalized_params = {}
+    params.each do |key, value|  
+      if key.include?("single")
+        plan_id_key = params[key]["plan_id"]
+        normalized_params[plan_id_key] = { "qty"=>"1" }
+      else
+        normalized_params[key] = value
+      end
+    end
+    normalized_params
+  end
+
   # `form_plans` returns the plans to show on the form, and thus
   # excludes disabled plans unless already selected by the attendee or if
   # show_disabled is set to true.
@@ -126,7 +139,8 @@ class Registration
   end
 
   def parse_plan_params plan_params
-    Registration::PlanSelection.parse_params(plan_params, all_plans)
+    converted_params = convert_radio_btn_params(plan_params)
+    Registration::PlanSelection.parse_params(converted_params, all_plans)
   end
 
   def persist_plans
