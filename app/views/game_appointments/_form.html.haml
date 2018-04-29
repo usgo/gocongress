@@ -1,0 +1,26 @@
+= form_for @game_appointment, :html => { :class => "form-horizontal game_appointment" } do |f|
+  = render :partial => "shared/error_messages", :locals => { :resource => @game_appointment }
+
+  %fieldset
+    .field
+      = f.label :attendee_id
+      = f.collection_select(:attendee_id, Attendee.all, :id, :full_name)
+
+    .field
+      = f.label :opponent
+      = f.text_field :opponent
+    .field
+      = f.label :location
+      = f.text_field :location
+  %fieldset
+    = f.label :time, "Time and Date"
+    / Rails expects time_select when dealing with ActiveRecord forms
+    .field
+      = time_select :game_appointment, :time
+    .field
+      = date_select :game_appointment, :time
+    .field
+      = f.time_zone_select :time_zone, ActiveSupport::TimeZone.all.sort, default: "Eastern Time (US & Canada)"
+  = f.submit nil, :class => 'button button-large pull right save'
+  = link_to t('.cancel', :default => t("helpers.links.cancel")), |
+        game_appointments_path, :class => 'button'               |

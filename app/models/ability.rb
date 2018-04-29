@@ -5,8 +5,8 @@ class Ability
   # when the cancan syntax does not allow the symbol :all
   # For example, when applying conditions, eg. :year
   ALL_RESOURCES = [Activity, ActivityCategory, Attendee,
-    Contact, Content, ContentCategory, Event,
-    PlanCategory, Plan, Shirt, Transaction, Tournament,
+    Contact, Content, ContentCategory, Event, GameAppointment,
+    PlanCategory, Plan, Shirt, SmsNotification, Transaction, Tournament,
     User, Year]
 
   def initialize(user)

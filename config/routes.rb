@@ -1,5 +1,6 @@
 Gocongress::Application.routes.draw do
 
+  resources :game_appointments
   # TODO: Find a permanent home for these authorize.net routes
   match '/payments/new', :to => 'payments#new', :as => 'new_payment', :via => [:get]
   match '/payments/relay_response', :to => 'payments#relay_response', :as => 'payments_relay_response', :via => [:post]
@@ -36,13 +37,12 @@ Gocongress::Application.routes.draw do
 
         resources :activities, :contacts, :content_categories,
           :contents, :activity_categories, :tournaments,
-          :transactions
+          :transactions, :sms_notifications, :game_appointments
         resources :plans, :except => [:index]
         resources :plan_categories do
           put 'update_order', :on => :collection
         end
         resources :shirts, :except => :show
-
         # Creating and updating attendees involves a few different
         # models, not just Attendee, so it's handled by the
         # registrations controller.
