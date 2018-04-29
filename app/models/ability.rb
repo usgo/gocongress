@@ -6,7 +6,7 @@ class Ability
   # For example, when applying conditions, eg. :year
   ALL_RESOURCES = [Activity, ActivityCategory, Attendee,
     Contact, Content, ContentCategory, Event,
-    PlanCategory, Plan, Shirt, Transaction, Tournament,
+    PlanCategory, Plan, Shirt, SmsNotification, Transaction, Tournament,
     User, Year]
 
   def initialize(user)

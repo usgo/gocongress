@@ -36,7 +36,7 @@ Gocongress::Application.routes.draw do
 
         resources :activities, :contacts, :content_categories,
           :contents, :activity_categories, :tournaments,
-          :transactions
+          :transactions, :sms_notifications
         resources :plans, :except => [:index]
         resources :plan_categories do
           put 'update_order', :on => :collection
