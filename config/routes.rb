@@ -96,6 +96,10 @@ Gocongress::Application.routes.draw do
             resource :daily_plan_report, :only => :show
             resource :transaction_report, :only => :show
           end
+
+          constraints :format => /(xml)?/ do
+            resource :usopen_players_report, :only => :show
+          end
         end
 
         # This route provides `year_path`, so it's not defunct,
