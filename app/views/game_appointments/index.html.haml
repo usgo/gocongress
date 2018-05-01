@@ -2,7 +2,7 @@
 
 .page-header
   %h2= t '.title', :default => model_class.model_name.human.pluralize.titleize
-%table.table.table-striped
+%table.semantic.fullwidth
   %thead
     %tr
       %th= model_class.human_attribute_name(:id)
@@ -19,10 +19,11 @@
         %td= game_appointment.opponent
         %td= game_appointment.time
         %td= l game_appointment.created_at
-        %td= link_to "Edit", edit_game_appointment_path(game_appointment)
-        %td= link_to "Delete",                                           |
+        %td
+          = link_to "Edit", edit_game_appointment_path(game_appointment)
+          = link_to "Delete",                                           |
             game_appointment_path(game_appointment),                     |
             :method => :delete,                                          |
             :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },  |
             :class => 'btn btn-xs btn-danger'                            |
-= link_to "New", new_game_appointment_path
+= link_to "New", new_game_appointment_path, :class => 'button' 

@@ -15,7 +15,11 @@ ActiveRecord::Schema.define(version: 20180508025356) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+<<<<<<< HEAD
   create_table "activities", force: :cascade do |t|
+=======
+   create_table "activities", force: :cascade do |t|
+>>>>>>> Added TwilioTextMessenger service
     t.string   "name",                 limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
