@@ -10,6 +10,7 @@ class GameAppointmentsController < ApplicationController
 
   def index
     @game_appointments = GameAppointment.all
+    @import = GameAppointment::Import.new
     if @game_appointments.length.zero?
       flash[:alert] = 'You have no game appointments. Create one now to get started.'
     end
@@ -57,10 +58,24 @@ class GameAppointmentsController < ApplicationController
     end
   end
 
+  def import
+    @import = GameAppointment::Import.new user_import_params
+    if @import.save
+      redirect_to game_appointments_path, notice: "Imported #{@import.imported_count} game appointments"
+    else
+      @game_appointments = GameAppointment.all
+      render action: index, notice: "There were errors with your XML file"
+    end
+  end
+
   private
 
   def find_game_appointment
     @game_appointment = GameAppointment.find(params[:id])
+  end
+
+  def game_import_params
+    params.require(:game_appointment_import).permit(:file)
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.

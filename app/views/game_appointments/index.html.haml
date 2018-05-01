@@ -26,4 +26,10 @@
             :method => :delete,                                          |
             :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },  |
             :class => 'btn btn-xs btn-danger'                            |
-= link_to "New", new_game_appointment_path, :class => 'button' 
+= link_to "New", new_game_appointment_path, :class => 'button'
+= form_for @import, url: import_game_appointments_path, mulitpart: true do |f|
+  %fieldset
+    %h2 Import Game Appointments
+    .field
+      = file_field_tag :file
+      = submit_tag "Upload"
