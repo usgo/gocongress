@@ -9,7 +9,7 @@ class Attendee < ApplicationRecord
 
   has_many :attendee_plans, :dependent => :destroy
   has_many :plans, :through => :attendee_plans
-  has_many :game_appointments
+  has_many :game_appointments, :dependent => :destroy
 
   has_many :attendee_activities, :dependent => :destroy
   has_many :activities, :through => :attendee_activities
