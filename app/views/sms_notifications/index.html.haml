@@ -1,10 +1,2 @@
 %h2 SMS Notifications
-.card
-  = form_for @import, url: import_games_path, multipart: true do |f|
-    - if @import.errors.any?
-      .alert.alert-error
-        - @import.errors.full_messages.each do |msg|
-          %div
-            = msg
-    = f.file_field :file
-    = f.submit "Upload Games"
+= link_to "Game Appointments", game_appointments_path
