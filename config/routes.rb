@@ -39,7 +39,8 @@ Gocongress::Application.routes.draw do
           :contents, :activity_categories, :tournaments,
           :transactions, :sms_notifications
         resources :game_appointments do
-          collection { post :import}
+          member { get :send_sms }
+          collection { post :import }
         end
         resources :plans, :except => [:index]
         resources :plan_categories do

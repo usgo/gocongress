@@ -26,6 +26,7 @@
             :method => :delete,                                          |
             :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },  |
             :class => 'btn btn-xs btn-danger'                            |
+          = link_to "Send SMS", send_sms_game_appointment_path(game_appointment.id)
 = link_to "New", new_game_appointment_path, :class => 'button'
 = form_for @import, url: import_game_appointments_path, mulitpart: true do |f|
   %fieldset

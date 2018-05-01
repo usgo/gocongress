@@ -68,6 +68,13 @@ class GameAppointmentsController < ApplicationController
     end
   end
 
+  def send_sms
+    recipient = "#{@game_appointment.attendee.phone}"
+    message = "Hello #{@game_appointment.attendee.full_name}. You are scheduled to play #{@game_appointment.opponent} in #{@game_appointment.location} at #{@game_appointment.time}."
+    TwilioTextMessenger.new(message, recipient).call
+    redirect_to game_appointments_url
+  end
+
   private
 
   def find_game_appointment
