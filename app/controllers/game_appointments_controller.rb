@@ -19,12 +19,14 @@ class GameAppointmentsController < ApplicationController
   def show
   end
 
+  # GET /game_appointments/new
   def new
     @game_appointment = GameAppointment.new
     @game_appointment.year = @year.year
     @min_date = DateTime.now
   end
 
+<<<<<<< HEAD
   def edit
   end
 
@@ -44,10 +46,49 @@ class GameAppointmentsController < ApplicationController
       else
         format.html { render :edit }
         format.json { render json: @game_appointment.errors, status: :unprocessable_entity }
+=======
+  # GET /game_appointments/1/edit
+  def edit
+  end
+
+  # POST /game_appointments
+  # POST /game_appointments.json
+  def create
+
+    Time.zone = game_appointment_params[:time_zone]
+
+
+    respond_to do |format|
+      if @game_appointment.save
+        format.html { redirect_to game_appointments_path, notice: 'Game Appointment was successfully created.' }
+        # format.json { render :show, status: :created, location: @game_appointment }
+      else
+        format.html { render :new }
+        # format.json { render json: @game_appointment.errors, status: :unprocessable_entity }
       end
     end
   end
 
+  # PATCH/PUT /game_appointments/1
+  # PATCH/PUT /game_appointments/1.json
+  def update
+    respond_to do |format|
+      if @game_appointment.update(game_appointment_params)
+        format.html { redirect_to @game_appointment, notice: 'Game Appointment was successfully updated.' }
+        # format.json { render :show, status: :ok, location: @game_appointment }
+      else
+        format.html { render :edit }
+        # format.json { render json: @game_appointment.errors, status: :unprocessable_entity }
+>>>>>>> Added Game Appointments
+      end
+    end
+  end
+
+<<<<<<< HEAD
+=======
+  # DELETE /game_appointments/1
+  # DELETE /game_appointments/1.json
+>>>>>>> Added Game Appointments
   def destroy
     @game_appointment.destroy
     respond_to do |format|
@@ -56,6 +97,7 @@ class GameAppointmentsController < ApplicationController
     end
   end
 
+<<<<<<< HEAD
   def import
     @round = Round.find(game_appointment_import_params[:round_id])
     @import = GameAppointment::Import.new  game_appointment_import_params
@@ -76,10 +118,16 @@ class GameAppointmentsController < ApplicationController
 
   private
 
+=======
+  private
+  # Use callbacks to share common setup or constraints between actions.
+  # See above ---> before_action :set_appointment, only: [:show, :edit, :update, :destroy]
+>>>>>>> Added Game Appointments
   def find_game_appointment
     @game_appointment = GameAppointment.find(params[:id])
   end
 
+<<<<<<< HEAD
   def game_appointment_import_params
     params.require(:game_appointment_import).permit(:file, :round_id)
   end
@@ -87,5 +135,10 @@ class GameAppointmentsController < ApplicationController
   # Never trust parameters from the scary internet, only allow the white list through.
   def game_appointment_params
     params.require(:game_appointment).permit(:round_id, :attendee_one_id, :attendee_two_id, :location, :table, :time)
+=======
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def game_appointment_params
+    params.require(:game_appointment).permit(:attendee_id, :opponent, :location, :time, :time_zone)
+>>>>>>> Added Game Appointments
   end
 end
