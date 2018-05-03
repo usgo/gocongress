@@ -3,11 +3,14 @@ require "rails_helper"
 RSpec.feature 'SMS notifications', :type => :feature do
   let(:password) { 'asdfasdf' }
   let(:admin) { create :admin, :password => password }
+<<<<<<< HEAD
   let!(:tournament) { create :tournament, name: "US Open"}
   let!(:round_one) { create :round, tournament: tournament }
   let!(:attendee_one) { create :ga_attendee_one }
   let!(:attendee_two) { create :ga_attendee_two }
   let!(:game_appointment_one) { create :game_appointment, round: round_one, attendee_one: attendee_one, attendee_two: attendee_two }
+=======
+>>>>>>> Add vcr gem and webmock for mocking twilio api
 
   before(:each) do
     visit new_user_session_path(year: admin.year)
@@ -25,6 +28,7 @@ RSpec.feature 'SMS notifications', :type => :feature do
       click_button "Send SMS Notifications"
       expect(page).to have_content '2 notifications sent'
     end
+    scenario 'allows a file upload of attendee game pairing data'
 
     scenario 'allows a file upload of attendee game pairing data'
 
