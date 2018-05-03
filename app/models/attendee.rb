@@ -8,6 +8,7 @@ class Attendee < ApplicationRecord
 
   belongs_to :user
 
+  has_many :social_links, :dependent => :destroy
   has_many :attendee_plans, :dependent => :destroy
   has_many :plans, :through => :attendee_plans
 
@@ -36,6 +37,31 @@ class Attendee < ApplicationRecord
   validates :given_name,      :presence => true
   validates :guardian_full_name, :presence => { :if => :require_guardian_full_name? }
   validates :minor_agreement_received, :inclusion => {:in => [true, false]}
+
+  TWITTER_REGEXP = /\Ahttps:\/\/twitter.com\/([a-zA-Z0-9_]+)\/?/
+  validates :social_link_twitter, allow_blank: true, :format => {
+    with: TWITTER_REGEXP,
+    message: "Invalid Twitter URL"
+  }
+
+  FACEBOOK_REGEXP = /\Ahttps:\/\/www.facebook.com\/([a-zA-Z0-9_]+)\/?/
+  validates :social_link_facebook, allow_blank: true, :format => {
+    with: FACEBOOK_REGEXP,
+    message: "Invalid Facebook URL"
+  }
+
+  LINKEDIN_REGEXP = /\Ahttps:\/\/www.linkedin.com\/in\/([a-zA-Z0-9_]+)\/?/
+  validates :social_link_linkedin, allow_blank: true, :format => {
+    with: LINKEDIN_REGEXP,
+    message: "Invalid LinkedIn URL"
+  }
+
+  validates :social_link_website, allow_blank: true, :format => {
+    with: URI::regexp(%w(http https)),
+    message: "Invalid website URL"
+  }
+
+
   validates :rank,
     inclusion: {
       in: Attendee::Rank::NUMERIC_RANK_LIST,

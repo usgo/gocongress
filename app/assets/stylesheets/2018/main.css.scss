@@ -360,6 +360,25 @@ button,
 fieldset {
   border: 5px double #333;
   margin: 1em 0;
+
+  .header {
+    padding: 1em;
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      margin: 0;
+    }
+
+    p {
+      font: {
+        size: 18px;
+      }
+      margin: 0;
+    }
+  }
 }
 
 .field {
@@ -753,21 +772,41 @@ some padding between each -Jared 2012-05-30 */
 }
 
 .list-separator {
-	margin: 0 0 0.5em;
+  margin: 0 0 0.5em;
 
-	span {
-		font-size: 18px;
-		display: inline-block;
-		margin-right: 0.5em;
-	}
+  span {
+    font-size: 18px;
+    display: inline-block;
+    margin-right: 0.5em;
+  }
 
-	.glue {
-		font-size: 18px;
-		width: 1em;
-		text-align: center;
-	}
+  .glue {
+    font-size: 18px;
+    width: 1em;
+    text-align: center;
+  }
 }
 
 [data-email-list] {
-	width: 100%;
+  width: 100%;
+}
+
+/* The beginnings of a grid system */
+.row {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+[class^="col-"] {
+  width: 100%;
+}
+
+@include breakpoint(gt-sm) {
+  .col-md-6 {
+    width: 50%;
+  }
+
+  .col-md-12 {
+    width: 100%;
+  }
 }

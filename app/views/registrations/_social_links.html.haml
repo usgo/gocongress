@@ -1,0 +1,28 @@
+%fieldset
+	.row
+		.col-xs-12.header
+			%h3 Social Links
+			%p Share your social presence on our website and the mobile app! All fields are optional.
+
+	.row
+		.col-md-6
+			.field
+				= f.label :social_link_twitter, 'Twitter'
+				= f.url_field :social_link_twitter
+
+
+		.col-md-6
+			.field
+				= f.label :social_link_facebook, 'Facebook'
+				= f.url_field :social_link_facebook
+
+	.row
+		.col-md-6
+			.field
+				= f.label :social_link_facebook, 'LinkedIn'
+				= f.url_field :social_link_linkedin
+
+		.col-md-6
+			.field
+				= f.label :social_link_facebook, 'Website'
+				= f.url_field :social_link_website
