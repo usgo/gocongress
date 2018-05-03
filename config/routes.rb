@@ -1,6 +1,5 @@
 Gocongress::Application.routes.draw do
 
-  resources :game_appointments
   # TODO: Find a permanent home for these authorize.net routes
   match '/payments/new', :to => 'payments#new', :as => 'new_payment', :via => [:get]
   match '/payments/relay_response', :to => 'payments#relay_response', :as => 'payments_relay_response', :via => [:post]
