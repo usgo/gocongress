@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe GameAppointment, type: :model do
   before do
-    @game_appointment = FactoryBot.create(:game_appointment)
+    @game_appointment = FactoryBot.build_stubbed(:game_appointment)
   end
   describe 'create' do
     it 'can be properly created' do
@@ -12,7 +12,11 @@ RSpec.describe GameAppointment, type: :model do
 
   describe 'validations' do
     it 'it should be required to have a tournament association' do
-      @game_appointment.user_id = nil
+      @game_appointment.tournament_id = nil
+      expect(@game_appointment).to_not be_valid
+    end
+    it 'it should be required to have an attendee association' do
+      @game_appointment.attendee = nil
       expect(@game_appointment).to_not be_valid
     end
 
@@ -26,10 +30,15 @@ RSpec.describe GameAppointment, type: :model do
       expect(@game_appointment).to_not be_valid
     end
 
-    it 'it should have a start date equal to 6 days prior' do
-      new_audit_log = AuditLog.create(user_id: User.last.id)
-      expect(new_audit_log.start_date).to eq(Date.today - 6.days)
+    it 'it should be required to have a time zone' do
+      @game_appointment.time_zone = nil
+      expect(@game_appointment).to_not be_valid
     end
-  end
 
+    it 'it should be required to have a year' do
+      @game_appointment.year = nil
+      expect(@game_appointment).to_not be_valid
+    end
+
+  end
 end
