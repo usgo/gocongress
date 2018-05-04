@@ -1,12 +1,13 @@
 class GameAppointment < ApplicationRecord
   include YearlyModel
 
-  belongs_to :attendee
+  belongs_to :attendee_one, class_name: "Attendee",  foreign_key: "attendee_one_id"
+  belongs_to :attendee_two, class_name: "Attendee",  foreign_key: "attendee_two_id"
   belongs_to :tournament
 
-  validates :attendee, presence: true
+  validates :attendee_one, presence: true
+  validates :attendee_two, presence: true
   validates :tournament, presence: true
-  validates :opponent, presence: true
   validates :location, presence: true
   validates :time,     presence: true
   validates :time_zone,     presence: true
