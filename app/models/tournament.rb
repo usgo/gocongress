@@ -1,6 +1,8 @@
 class Tournament < ApplicationRecord
   include YearlyModel
 
+  has_many :game_appointments
+
   # Openness Types:
   # Open - All attendees can sign up
   # Invitational - Admins select certain attendees

@@ -2,11 +2,14 @@ class GameAppointment < ApplicationRecord
   include YearlyModel
 
   belongs_to :attendee
+  belongs_to :tournament
 
   validates :attendee, presence: true
+  validates :tournament, presence: true
   validates :opponent, presence: true
   validates :location, presence: true
   validates :time,     presence: true
+  validates :time_zone,     presence: true
 
   # after_create :reminder
 
