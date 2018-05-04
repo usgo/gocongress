@@ -1,6 +1,6 @@
 ## Notifications TODO List:
 
-### Game Appointments
+## Game Appointments
 
 - [x] add tournament relationship
 - [x] change opponent to reference attendee
