@@ -15,8 +15,14 @@ RSpec.describe GameAppointment, type: :model do
       @game_appointment.tournament_id = nil
       expect(@game_appointment).to_not be_valid
     end
-    it 'it should be required to have an attendee association' do
-      @game_appointment.attendee = nil
+
+    it 'it should be required to have an attendee_one association' do
+      @game_appointment.attendee_one = nil
+      expect(@game_appointment).to_not be_valid
+    end
+
+    it 'it should be required to have an attendee_two association' do
+      @game_appointment.attendee_two = nil
       expect(@game_appointment).to_not be_valid
     end
 

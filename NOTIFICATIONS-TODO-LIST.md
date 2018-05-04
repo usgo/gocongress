@@ -1,9 +1,9 @@
 ## Notifications TODO List
 
-### Game Appointments
+## Game Appointments
 
-* add tournament relationship
-* change opponent to reference attendee
+* [x] add tournament relationship
+* [x] change opponent to reference attendee
 * add round model
 * tournments have many rounds
 
