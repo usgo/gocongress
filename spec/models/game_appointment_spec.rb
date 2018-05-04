@@ -40,28 +40,6 @@ RSpec.describe GameAppointment, type: :model do
       expect(@game_appointment).to_not be_valid
     end
 
-<<<<<<< HEAD
-<<<<<<< HEAD
   end
-=======
-    it 'it should have a start date equal to 6 days prior' do
-      new_audit_log = AuditLog.create(user_id: User.last.id)
-      expect(new_audit_log.start_date).to eq(Date.today - 6.days)
-=======
-    it 'it should be required to have a time zone' do
-      @game_appointment.time_zone = nil
-      expect(@game_appointment).to_not be_valid
->>>>>>> Add validation tests for game_appointment model
-    end
 
-<<<<<<< HEAD
->>>>>>> Add test
-=======
-    it 'it should be required to have a year' do
-      @game_appointment.year = nil
-      expect(@game_appointment).to_not be_valid
-    end
-
-  end
->>>>>>> Add validation tests for game_appointment model
 end

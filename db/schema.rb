@@ -15,19 +15,8 @@ ActiveRecord::Schema.define(version: 20180508025356) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-<<<<<<< HEAD
   create_table "activities", force: :cascade do |t|
-=======
-<<<<<<< HEAD
-<<<<<<< HEAD
-  create_table "activities", force: :cascade do |t|
-=======
-   create_table "activities", force: :cascade do |t|
->>>>>>> Added TwilioTextMessenger service
-=======
-  create_table "activities", force: :cascade do |t|
->>>>>>> Add validation tests for game_appointment model
->>>>>>> Add validation tests for game_appointment model
+
     t.string   "name",                 limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -177,16 +166,17 @@ ActiveRecord::Schema.define(version: 20180508025356) do
 <<<<<<< HEAD
 =======
   create_table "game_appointments", force: :cascade do |t|
-    t.integer  "attendee_id"
-    t.string   "opponent"
     t.string   "location"
     t.datetime "time"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
     t.string   "time_zone"
     t.integer  "year"
     t.integer  "tournament_id"
-    t.index ["attendee_id"], name: "index_game_appointments_on_attendee_id", using: :btree
+    t.integer  "attendee_one_id"
+    t.integer  "attendee_two_id"
+    t.index ["attendee_one_id"], name: "index_game_appointments_on_attendee_one_id", using: :btree
+    t.index ["attendee_two_id"], name: "index_game_appointments_on_attendee_two_id", using: :btree
     t.index ["tournament_id"], name: "index_game_appointments_on_tournament_id", using: :btree
 >>>>>>> Add validation tests for game_appointment model
   end
@@ -357,17 +347,9 @@ ActiveRecord::Schema.define(version: 20180508025356) do
   add_foreign_key "attendees", "users", name: "fk_attendees_user_id_year", on_update: :cascade, on_delete: :cascade
   add_foreign_key "contacts", "years", column: "year", primary_key: "year", name: "fk_contacts_year", on_update: :cascade, on_delete: :cascade
   add_foreign_key "contents", "content_categories", name: "fk_contents_content_category_id_year", on_update: :cascade, on_delete: :cascade
-<<<<<<< HEAD
   add_foreign_key "game_appointments", "attendees", column: "attendee_one_id"
   add_foreign_key "game_appointments", "attendees", column: "attendee_two_id"
   add_foreign_key "game_appointments", "rounds"
-=======
-<<<<<<< HEAD
-=======
-  add_foreign_key "game_appointments", "attendees"
-  add_foreign_key "game_appointments", "tournaments"
->>>>>>> Add validation tests for game_appointment model
->>>>>>> Add validation tests for game_appointment model
   add_foreign_key "plan_categories", "events", name: "fk_plan_categories_event_id_year", on_update: :cascade, on_delete: :cascade
   add_foreign_key "plans", "plan_categories", name: "fk_plans_plan_category_id_year", on_update: :cascade, on_delete: :cascade
   add_foreign_key "rounds", "tournaments"
