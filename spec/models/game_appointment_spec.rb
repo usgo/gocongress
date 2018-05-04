@@ -40,5 +40,14 @@ RSpec.describe GameAppointment, type: :model do
       expect(@game_appointment).to_not be_valid
     end
 
+<<<<<<< HEAD
   end
+=======
+    it 'it should have a start date equal to 6 days prior' do
+      new_audit_log = AuditLog.create(user_id: User.last.id)
+      expect(new_audit_log.start_date).to eq(Date.today - 6.days)
+    end
+  end
+
+>>>>>>> Add test
 end
