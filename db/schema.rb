@@ -147,7 +147,6 @@ ActiveRecord::Schema.define(version: 20180508025356) do
     t.index ["id", "year"], name: "index_events_on_id_and_year", unique: true, using: :btree
   end
 
-<<<<<<< HEAD
   create_table "game_appointments", force: :cascade do |t|
     t.string   "location"
     t.datetime "time"
@@ -162,35 +161,7 @@ ActiveRecord::Schema.define(version: 20180508025356) do
     t.index ["attendee_one_id"], name: "index_game_appointments_on_attendee_one_id", using: :btree
     t.index ["attendee_two_id"], name: "index_game_appointments_on_attendee_two_id", using: :btree
     t.index ["round_id"], name: "index_game_appointments_on_round_id", using: :btree
-=======
-<<<<<<< HEAD
-=======
-  create_table "game_appointments", force: :cascade do |t|
-    t.string   "location"
-    t.datetime "time"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
-    t.string   "time_zone"
-    t.integer  "year"
-    t.integer  "tournament_id"
-    t.integer  "attendee_one_id"
-    t.integer  "attendee_two_id"
-    t.index ["attendee_one_id"], name: "index_game_appointments_on_attendee_one_id", using: :btree
-    t.index ["attendee_two_id"], name: "index_game_appointments_on_attendee_two_id", using: :btree
-    t.index ["tournament_id"], name: "index_game_appointments_on_tournament_id", using: :btree
->>>>>>> Add validation tests for game_appointment model
-  end
 
-  create_table "jobs", force: :cascade do |t|
-    t.string   "jobname"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-<<<<<<< HEAD
-=======
->>>>>>> Add validation tests for game_appointment model
->>>>>>> Add validation tests for game_appointment model
   create_table "plan_categories", force: :cascade do |t|
     t.string   "name",                 limit: 255,                 null: false
     t.datetime "created_at"
@@ -231,11 +202,17 @@ ActiveRecord::Schema.define(version: 20180508025356) do
   create_table "rounds", force: :cascade do |t|
     t.integer  "tournament_id"
     t.integer  "number"
+<<<<<<< HEAD
     t.datetime "start_time",           null: false
     t.datetime "created_at",           null: false
     t.datetime "updated_at",           null: false
     t.integer  "year"
     t.text     "notification_message"
+=======
+    t.datetime "start_time",    null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+>>>>>>> Added round model
     t.index ["tournament_id"], name: "index_rounds_on_tournament_id", using: :btree
   end
 
