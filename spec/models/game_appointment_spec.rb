@@ -4,6 +4,11 @@ RSpec.describe GameAppointment, type: :model do
   before do
     @game_appointment = FactoryBot.build_stubbed(:game_appointment)
   end
+
+  it "has a valid factory" do
+    expect(build(:game_appointment)).to be_valid
+  end
+
   describe 'create' do
     it 'can be properly created' do
       expect(@game_appointment).to be_valid
@@ -11,8 +16,8 @@ RSpec.describe GameAppointment, type: :model do
   end
 
   describe 'validations' do
-    it 'it should be required to have a tournament association' do
-      @game_appointment.tournament_id = nil
+    it 'it should be required to have a round association' do
+      @game_appointment.round_id = nil
       expect(@game_appointment).to_not be_valid
     end
 

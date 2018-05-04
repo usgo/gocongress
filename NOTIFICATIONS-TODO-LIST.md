@@ -4,8 +4,8 @@
 
 * [x] add tournament relationship
 * [x] change opponent to reference attendee
-* add round model
-* tournments have many rounds
+* [x] add round model
+* [x] tournaments have many rounds
 
 ### Game Appointment import
 

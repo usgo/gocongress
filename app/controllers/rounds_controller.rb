@@ -1,0 +1,2 @@
+class RoundsController < ApplicationController
+end

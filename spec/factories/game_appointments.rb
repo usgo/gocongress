@@ -6,6 +6,6 @@ FactoryBot.define do
     time "4:30 PM"
     time_zone "Eastern Standard"
     year Time.now.year
-    tournament
+    round
   end
 end
