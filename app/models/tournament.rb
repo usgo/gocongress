@@ -1,7 +1,6 @@
 class Tournament < ApplicationRecord
   include YearlyModel
-
-  has_many :game_appointments
+  has_many :rounds, dependent: :destroy
 
   # Openness Types:
   # Open - All attendees can sign up

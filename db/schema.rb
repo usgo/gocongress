@@ -12,6 +12,7 @@
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 20180508025356) do
 =======
 ActiveRecord::Schema.define(version: 20180503192843) do
@@ -19,6 +20,9 @@ ActiveRecord::Schema.define(version: 20180503192843) do
 =======
 ActiveRecord::Schema.define(version: 20180504164102) do
 >>>>>>> Updated game_appointments to reference both attendees
+=======
+ActiveRecord::Schema.define(version: 20180504191618) do
+>>>>>>> Added round model
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -171,12 +175,12 @@ ActiveRecord::Schema.define(version: 20180504164102) do
     t.datetime "updated_at",      null: false
     t.string   "time_zone"
     t.integer  "year"
-    t.integer  "tournament_id"
     t.integer  "attendee_one_id"
     t.integer  "attendee_two_id"
+    t.integer  "round_id"
     t.index ["attendee_one_id"], name: "index_game_appointments_on_attendee_one_id", using: :btree
     t.index ["attendee_two_id"], name: "index_game_appointments_on_attendee_two_id", using: :btree
-    t.index ["tournament_id"], name: "index_game_appointments_on_tournament_id", using: :btree
+    t.index ["round_id"], name: "index_game_appointments_on_round_id", using: :btree
   end
 
   create_table "jobs", force: :cascade do |t|
@@ -221,6 +225,15 @@ ActiveRecord::Schema.define(version: 20180504164102) do
     t.boolean  "n_a",                             default: false, null: false
     t.index ["id", "year"], name: "index_plans_on_id_and_year", unique: true, using: :btree
     t.index ["plan_category_id"], name: "index_plans_on_plan_category_id", using: :btree
+  end
+
+  create_table "rounds", force: :cascade do |t|
+    t.integer  "tournament_id"
+    t.integer  "number"
+    t.datetime "start_time",    null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.index ["tournament_id"], name: "index_rounds_on_tournament_id", using: :btree
   end
 
   create_table "shirts", force: :cascade do |t|
@@ -338,11 +351,16 @@ ActiveRecord::Schema.define(version: 20180504164102) do
 =======
   add_foreign_key "game_appointments", "attendees", column: "attendee_one_id"
   add_foreign_key "game_appointments", "attendees", column: "attendee_two_id"
+<<<<<<< HEAD
 >>>>>>> Updated game_appointments to reference both attendees
   add_foreign_key "game_appointments", "tournaments"
 >>>>>>> Add validation tests for game_appointment model
+=======
+  add_foreign_key "game_appointments", "rounds"
+>>>>>>> Added round model
   add_foreign_key "plan_categories", "events", name: "fk_plan_categories_event_id_year", on_update: :cascade, on_delete: :cascade
   add_foreign_key "plans", "plan_categories", name: "fk_plans_plan_category_id_year", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "rounds", "tournaments"
   add_foreign_key "transactions", "users", column: "updated_by_user_id", name: "fk_transactions_updated_by_user_id_year", on_update: :cascade, on_delete: :nullify
   add_foreign_key "transactions", "users", name: "fk_transactions_user_id_year", on_update: :cascade, on_delete: :restrict
 end
