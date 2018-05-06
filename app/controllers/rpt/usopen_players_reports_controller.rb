@@ -35,11 +35,6 @@ def xml_filename
   "usopen_players_#{Time.current.strftime("%Y-%m-%d")}.xml"
 end
 
-def planlessness
-  p = params[:planlessness]
-  %w[all planful planless].include?(p) ? p.to_sym : :all
-end
-
 def aga_member_info_tsv
   Rails.cache.fetch("usgo.org/mm/agagdtdlista.txt", :expires_in => 24.hours) do
     open("https://www.usgo.org/mm/tdlista.txt", "r:UTF-8", &:read)
