@@ -10,36 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 20180508025356) do
-=======
-ActiveRecord::Schema.define(version: 20180503192843) do
->>>>>>> Add validation tests for game_appointment model
-=======
-ActiveRecord::Schema.define(version: 20180504164102) do
->>>>>>> Updated game_appointments to reference both attendees
-=======
-ActiveRecord::Schema.define(version: 20180504191618) do
->>>>>>> Added round model
-=======
-ActiveRecord::Schema.define(version: 20180506170703) do
->>>>>>> Add table attribute to game appointments
+
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
   create_table "activities", force: :cascade do |t|
-=======
-   create_table "activities", force: :cascade do |t|
->>>>>>> Added TwilioTextMessenger service
-=======
-  create_table "activities", force: :cascade do |t|
->>>>>>> Add validation tests for game_appointment model
     t.string   "name",                 limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -170,8 +147,6 @@ ActiveRecord::Schema.define(version: 20180506170703) do
     t.index ["id", "year"], name: "index_events_on_id_and_year", unique: true, using: :btree
   end
 
-<<<<<<< HEAD
-=======
   create_table "game_appointments", force: :cascade do |t|
     t.string   "location"
     t.datetime "time"
@@ -194,7 +169,6 @@ ActiveRecord::Schema.define(version: 20180506170703) do
     t.datetime "updated_at"
   end
 
->>>>>>> Add validation tests for game_appointment model
   create_table "plan_categories", force: :cascade do |t|
     t.string   "name",                 limit: 255,                 null: false
     t.datetime "created_at"
@@ -349,20 +323,10 @@ ActiveRecord::Schema.define(version: 20180506170703) do
   add_foreign_key "attendees", "users", name: "fk_attendees_user_id_year", on_update: :cascade, on_delete: :cascade
   add_foreign_key "contacts", "years", column: "year", primary_key: "year", name: "fk_contacts_year", on_update: :cascade, on_delete: :cascade
   add_foreign_key "contents", "content_categories", name: "fk_contents_content_category_id_year", on_update: :cascade, on_delete: :cascade
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-  add_foreign_key "game_appointments", "attendees"
-=======
   add_foreign_key "game_appointments", "attendees", column: "attendee_one_id"
   add_foreign_key "game_appointments", "attendees", column: "attendee_two_id"
-<<<<<<< HEAD
->>>>>>> Updated game_appointments to reference both attendees
   add_foreign_key "game_appointments", "tournaments"
->>>>>>> Add validation tests for game_appointment model
-=======
   add_foreign_key "game_appointments", "rounds"
->>>>>>> Added round model
   add_foreign_key "plan_categories", "events", name: "fk_plan_categories_event_id_year", on_update: :cascade, on_delete: :cascade
   add_foreign_key "plans", "plan_categories", name: "fk_plans_plan_category_id_year", on_update: :cascade, on_delete: :cascade
   add_foreign_key "rounds", "tournaments"

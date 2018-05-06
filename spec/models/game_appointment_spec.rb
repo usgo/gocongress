@@ -6,13 +6,7 @@ RSpec.describe GameAppointment, type: :model do
   end
 
   it "has a valid factory" do
-    expect(build(:game_appointment)).to be_valid
-  end
-
-  describe 'create' do
-    it 'can be properly created' do
-      expect(@game_appointment).to be_valid
-    end
+    expect(@game_appointment).to be_valid
   end
 
   describe 'validations' do
