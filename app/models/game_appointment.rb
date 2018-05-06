@@ -8,6 +8,7 @@ class GameAppointment < ApplicationRecord
   validates :attendee_one, presence: true
   validates :attendee_two, presence: true
   validates :round, presence: true
+  validates :table, presence: true
   validates :location, presence: true
   validates :time,     presence: true
   validates :time_zone,     presence: true
