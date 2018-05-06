@@ -202,17 +202,11 @@ ActiveRecord::Schema.define(version: 20180508025356) do
   create_table "rounds", force: :cascade do |t|
     t.integer  "tournament_id"
     t.integer  "number"
-<<<<<<< HEAD
     t.datetime "start_time",           null: false
     t.datetime "created_at",           null: false
     t.datetime "updated_at",           null: false
     t.integer  "year"
     t.text     "notification_message"
-=======
-    t.datetime "start_time",    null: false
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
->>>>>>> Added round model
     t.index ["tournament_id"], name: "index_rounds_on_tournament_id", using: :btree
   end
 
