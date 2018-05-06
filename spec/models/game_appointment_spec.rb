@@ -16,7 +16,7 @@ RSpec.describe GameAppointment, type: :model do
   end
 
   describe 'validations' do
-    it 'it should be required to have a round association' do
+    it 'it should be required to belong to a round' do
       @game_appointment.round_id = nil
       expect(@game_appointment).to_not be_valid
     end
@@ -28,6 +28,11 @@ RSpec.describe GameAppointment, type: :model do
 
     it 'it should be required to have an attendee_two association' do
       @game_appointment.attendee_two = nil
+      expect(@game_appointment).to_not be_valid
+    end
+
+    it 'it should always have a table' do
+      @game_appointment.table = nil
       expect(@game_appointment).to_not be_valid
     end
 
