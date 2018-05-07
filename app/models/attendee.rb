@@ -35,6 +35,7 @@ class Attendee < ApplicationRecord
   validates :gender,          :inclusion => {:in => ["m","f"], :message => "is not valid"}, :presence => true
   validates :given_name,      :presence => true
   validates :guardian_full_name, :presence => { :if => :require_guardian_full_name? }
+  validates :local_phone, presence: true, if: Proc.new { |a| a.receive_sms }
   validates :minor_agreement_received, :inclusion => {:in => [true, false]}
   validates :rank,
     inclusion: {
@@ -42,6 +43,8 @@ class Attendee < ApplicationRecord
       message: "is not valid"
     },
     presence: true
+  validates :receive_sms, :inclusion => {
+    :in => [true, false], :message => ' - Please select yes or no'}
   validates :roomate_request, :length => {:maximum => 250}
   validates :special_request, :length => {:maximum => 250}
   validates :tshirt_size,     :inclusion => {:in => Shirt::SIZE_CODES, :message => " - Please select a size"}
