@@ -16,15 +16,26 @@ RSpec.describe Attendee::WhoIsComing, :type => :model do
       expect(Attendee::WhoIsComing.new(a.year).attendees).not_to include(a)
     end
 
-    it 'excludes attendees with child registration plan' do
-      pc = create :plan_category, mandatory: true
-      p1 = create :plan, price: 0, plan_category: pc, name: 'Child Registration'
-      p2 = create :plan, price: 12000, plan_category: pc
+    it 'excludes attendees under thirteen' do
+      p1 = create :plan, price: 10000
+
       u = create :user
-      a = create :attendee, user: u
-      a.plans << p1 << p2
-      create :tr_sale, amount: 12000, user: u
-      expect(Attendee::WhoIsComing.new(a.year).attendees).not_to include(a)
+      adult = create :attendee, user: u
+      old_enough = create :teenager, user: u, birth_date: CONGRESS_START_DATE[Time.now.year] - 14.years
+      not_old_enough = create :teenager, user: u, birth_date: CONGRESS_START_DATE[Time.now.year] - 12.years
+      child = create :child, user: u
+
+      # Give the attendees a plan
+      adult.plans << p1
+      old_enough.plans << p1
+      not_old_enough.plans << p1
+      child.plans << p1
+
+      create :tr_sale, amount: 40000, user: u
+      # Include the adult
+      expect(Attendee::WhoIsComing.new(adult.year).attendees).to include(adult, old_enough)
+      # Exclude the children
+      expect(Attendee::WhoIsComing.new(adult.year).attendees).not_to include(not_old_enough, child)
     end
 
     it 'returns attendees of users that paid at least $70 and have at least one plan' do

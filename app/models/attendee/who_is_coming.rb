@@ -66,7 +66,10 @@ class Attendee::WhoIsComing
   end
 
   def find_attendees
-    qry_params = {year: @year.to_i}
+    qry_params = {
+      year: @year.to_i,
+      congress_start_date: CONGRESS_START_DATE[@year]
+    }
     Attendee.find_by_sql [attendees_qry(order_clause), qry_params]
   end
 

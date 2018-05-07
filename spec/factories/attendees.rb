@@ -16,6 +16,13 @@ FactoryBot.define do
     association :user, :factory => :user, :strategy => :build
   end
 
+  factory :teenager, :parent => :attendee do
+    birth_date CONGRESS_START_DATE[Time.now.year] - 15.years
+    guardian_full_name "Mother Dearest"
+    understand_minor true
+    association :guardian, :factory => :attendee, :strategy => :build
+  end
+
   factory :minor, :parent => :attendee do
     birth_date CONGRESS_START_DATE[Time.now.year] - 10.years
     guardian_full_name "Mother Dearest"
