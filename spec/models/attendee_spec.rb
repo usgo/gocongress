@@ -113,6 +113,12 @@ RSpec.describe Attendee, :type => :model do
       expect(a).to be_valid
     end
 
+    it 'Attendee must have a valid local phone if receive_sms_true' do
+      a.receive_sms = true
+      a.local_phone = nil
+      expect(a).to have_error_about :local_phone
+    end
+
     it 'country must be two capital lettters' do
       expect(a.country).to match(/\A[A-Z]{2}\z/)
       a.country = 'United States'

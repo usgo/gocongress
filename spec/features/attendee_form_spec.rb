@@ -44,26 +44,6 @@ RSpec.describe 'registration form', :type => :feature do
       expect(page).to have_selector '#error_explanation'
       expect(page).to have_content "Family name can't be blank"
     end
-    it 'shows errors when receive_sms_true and local phone is missing' do
-      fill_in 'Given Name', with: 'Minnie'
-      fill_in 'Family Name', with: 'Mouse'
-      choose 'registration_gender_f'
-      select 1930, from: 'registration_birth_date_1i'
-      select 'January', from: 'registration_birth_date_2i'
-      select 1, from: 'registration_birth_date_3i'
-      select 'Adult Small', from: 'registration_tshirt_size'
-      select '10 kyu', from: 'registration_rank'
-      choose 'registration_receive_sms_true'
-
-      fill_in 'Email', with: 'minnie.mouse@example.com'
-      select 'Aland Islands', from: 'registration_country'
-      fill_in 'Emergency Contact Name', with: 'Jenny'
-      fill_in 'Emergency Contact Phone', with: '867-5309'
-      choose 'registration_will_play_in_us_open_true'
-      click_button 'Continue'
-      expect(page).to have_selector '#error_explanation'
-      expect(page).to have_content "Local Phone can't be blank"
-    end
   end
 
   context 'edit' do
