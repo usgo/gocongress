@@ -2,7 +2,6 @@ require "invoice_item"
 
 class Attendee < ApplicationRecord
   include YearlyModel
-
   # Associations
   # ------------
 
