@@ -352,6 +352,7 @@ DEPENDENCIES
   kaminari
   launchy
   meta_request
+  nokogiri
   pg (< 1.0)
   phonelib
   rails (= 5.0.7)

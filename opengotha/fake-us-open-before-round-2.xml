@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Tournament dataVersion="201">
+<Players>
+<Player agaExpirationDate="5/6/2019" agaId="22281" club="" country="" egfPin="" ffgLicence="" ffgLicenceStatus="" firstName="Joel" grade="2D" name="Cahalan" participating="11111111111111111111" rank="2D" rating="2200" ratingOrigin="" registeringStatus="FIN" smmsCorrection="0"/>
+<Player agaExpirationDate="6/9/2021" agaId="18202" club="XYZG" country="" egfPin="" ffgLicence="" ffgLicenceStatus="" firstName="Nate" grade="1D" name="Eagle, Jr." participating="11111111111111111111" rank="1D" rating="2100" ratingOrigin="" registeringStatus="FIN" smmsCorrection="0"/>
+<Player agaExpirationDate="" agaId="" club="" country="" egfPin="" ffgLicence="" ffgLicenceStatus="" firstName="NaTe" grade="9 PRO" name="McEagle, Jr." participating="11111111111111111111" rank="99K" rating="2949" ratingOrigin="" registeringStatus="FIN" smmsCorrection="0"/>
+<Player agaExpirationDate="5/2/2018" agaId="20532" club="XYZG" country="" egfPin="" ffgLicence="" ffgLicenceStatus="" firstName="Nathan" grade="1D" name="Epstein" participating="11111111111111111111" rank="1D" rating="2100" ratingOrigin="" registeringStatus="FIN" smmsCorrection="0"/>
+<Player agaExpirationDate="10/21/2020" agaId="8290" club="SDGC" country="" egfPin="" ffgLicence="" ffgLicenceStatus="" firstName="James" grade="1D" name="Acres" participating="11111111111111111111" rank="1D" rating="2100" ratingOrigin="" registeringStatus="FIN" smmsCorrection="0"/>
+<Player agaExpirationDate="10/13/2007" agaId="13684" club="LAKV" country="" egfPin="" ffgLicence="" ffgLicenceStatus="" firstName="Jason" grade="1D" name="Allen" participating="11111111111111111111" rank="1D" rating="2100" ratingOrigin="" registeringStatus="FIN" smmsCorrection="0"/>
+<Player agaExpirationDate="" agaId="" club="" country="" egfPin="" ffgLicence="" ffgLicenceStatus="" firstName="Alexander" grade="25K" name="Eagle" participating="11111111111111111111" rank="25K" rating="-400" ratingOrigin="" registeringStatus="FIN" smmsCorrection="0"/>
+<Player agaExpirationDate="9/18/2018" agaId="4679" club="TGG" country="" egfPin="" ffgLicence="" ffgLicenceStatus="" firstName="Charles" grade="1D" name="Alden" participating="11111111111111111111" rank="1D" rating="2100" ratingOrigin="" registeringStatus="FIN" smmsCorrection="0"/>
+</Players>
+<Games>
+<Game blackPlayer="CAHALANJOEL" handicap="0" knownColor="true" result="RESULT_BLACKWINS" roundNumber="1" tableNumber="1" whitePlayer="EAGLE,JR.NATE"/>
+<Game blackPlayer="MCEAGLE,JR.NATE" handicap="9" knownColor="true" result="RESULT_WHITEWINS" roundNumber="1" tableNumber="2" whitePlayer="ALLENJASON"/>
+<Game blackPlayer="EPSTEINNATHAN" handicap="0" knownColor="true" result="RESULT_BLACKWINS" roundNumber="1" tableNumber="3" whitePlayer="ACRESJAMES"/>
+<Game blackPlayer="EAGLEALEXANDER" handicap="9" knownColor="true" result="RESULT_WHITEWINS" roundNumber="1" tableNumber="4" whitePlayer="ALDENCHARLES"/>
+<Game blackPlayer="ALDENCHARLES" handicap="0" knownColor="true" result="RESULT_UNKNOWN" roundNumber="2" tableNumber="1" whitePlayer="CAHALANJOEL"/>
+<Game blackPlayer="ALLENJASON" handicap="0" knownColor="true" result="RESULT_UNKNOWN" roundNumber="2" tableNumber="2" whitePlayer="EPSTEINNATHAN"/>
+<Game blackPlayer="MCEAGLE,JR.NATE" handicap="9" knownColor="true" result="RESULT_UNKNOWN" roundNumber="2" tableNumber="3" whitePlayer="ACRESJAMES"/>
+<Game blackPlayer="EAGLEALEXANDER" handicap="9" knownColor="true" result="RESULT_UNKNOWN" roundNumber="2" tableNumber="4" whitePlayer="EAGLE,JR.NATE"/>
+</Games>
+<TournamentParameterSet>
+<GeneralParameterSet basicTime="60" beginDate="2018-05-08" canByoYomiTime="300" complementaryTimeSystem="STDBYOYOMI" director="Andrew Vestibule" endDate="2018-05-08" fischerTime="10" genCountNotPlayedGamesAsHalfPoint="false" genMMBar="4D" genMMFloor="20K" genMMS2ValueAbsent="1" genMMS2ValueBye="2" genMMZero="30K" genNBW2ValueAbsent="0" genNBW2ValueBye="2" genRoundDownNBWMMS="true" komi="7.5" location="Not Really Williamsburg" name="Fake US Open" nbMovesCanTime="15" numberOfCategories="1" numberOfRounds="6" shortName="fake-us-open-before-round-2" size="19" stdByoYomiTime="30"/>
+<HandicapParameterSet hdBasedOnMMS="true" hdCeiling="9" hdCorrection="1" hdNoHdRankThreshold="1D"/>
+<PlacementParameterSet>
+<PlacementCriteria>
+<PlacementCriterion name="MMS" number="1"/>
+<PlacementCriterion name="SOSM" number="2"/>
+<PlacementCriterion name="SOSOSM" number="3"/>
+<PlacementCriterion name="NULL" number="4"/>
+<PlacementCriterion name="NULL" number="5"/>
+<PlacementCriterion name="NULL" number="6"/>
+</PlacementCriteria>
+</PlacementParameterSet>
+<PairingParameterSet paiBaAvoidDuplGame="500000000000000" paiBaBalanceWB="1000000" paiBaDeterministic="true" paiBaRandom="0" paiMaAdditionalPlacementCritSystem1="Rating" paiMaAdditionalPlacementCritSystem2="NULL" paiMaAvoidMixingCategories="0" paiMaCompensateDUDD="true" paiMaDUDDLowerMode="MID" paiMaDUDDUpperMode="MID" paiMaDUDDWeight="100000000" paiMaLastRoundForSeedSystem1="2" paiMaMaximizeSeeding="5000000" paiMaMinimizeScoreDifference="100000000000" paiMaSeedSystem1="SPLITANDRANDOM" paiSeAvoidSameGeo="100000000000" paiSeBarThresholdActive="true" paiSeDefSecCrit="100000000000" paiSeMinimizeHandicap="0" paiSeNbWinsThresholdActive="false" paiSePreferMMSDiffRatherThanSameClub="3" paiSePreferMMSDiffRatherThanSameClubsGroup="2" paiSePreferMMSDiffRatherThanSameCountry="1" paiSeRankThreshold="1D" paiStandardNX1Factor="0.5"/>
+<DPParameterSet displayClCol="true" displayCoCol="true" displayIndGamesInMatches="true" displayNPPlayers="false" displayNumCol="true" displayPlCol="true" gameFormat="full" playerSortType="name" showByePlayer="true" showNotFinallyRegisteredPlayers="true" showNotPairedPlayers="true" showNotParticipatingPlayers="false" showPlayerClub="true" showPlayerCountry="false" showPlayerGrade="true"/>
+<PublishParameterSet exportToLocalFile="true" htmlAutoScroll="false" print="false"/>
+</TournamentParameterSet>
+<TeamTournamentParameterSet>
+<TeamGeneralParameterSet teamSize="4"/>
+<TeamPlacementParameterSet>
+<PlacementCriteria>
+<PlacementCriterion name="TEAMP" number="1"/>
+<PlacementCriterion name="BDW" number="2"/>
+<PlacementCriterion name="BDW3U" number="3"/>
+<PlacementCriterion name="BDW2U" number="4"/>
+<PlacementCriterion name="BDW1U" number="5"/>
+<PlacementCriterion name="MNR" number="6"/>
+</PlacementCriteria>
+</TeamPlacementParameterSet>
+</TeamTournamentParameterSet>
+</Tournament>
