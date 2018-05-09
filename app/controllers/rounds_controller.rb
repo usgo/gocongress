@@ -75,11 +75,24 @@ class RoundsController < ApplicationController
     redirect_to round_path(@round), notice: "#{notifications_sent} #{'notification'.pluralize(notifications_sent)} sent."
   end
 
+<<<<<<< HEAD
   def delete_all_game_appointments
     count = @round.game_appointments.count
     @round.game_appointments.destroy_all
     redirect_to round_path(@round), notice: count.to_s + " game #{"appointment".pluralize(count)} deleted."
   end
+=======
+  def send_sms_reminders
+    game_appointments = @round.game_appointments
+    game_appointments.each do |game_appointment|
+      send_reminder(game_appointment.attendee_one, game_appointment) if game_appointment.attendee_one.receive_sms
+      send_reminder(game_appointment.attendee_two, game_appointment) if game_appointment.attendee_two.receive_sms
+    end
+    redirect_to rounds_url
+
+  end
+
+>>>>>>> Added send_sms_reminders to RoundsController
 
   def update_notification_message
     if @round.update(update_notification_message_params)
