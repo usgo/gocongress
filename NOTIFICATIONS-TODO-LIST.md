@@ -20,10 +20,10 @@
 
 ### Views
 
-* list appointments by round
-* list of rounds by tournaments
+* [x] list appointments by round
+* [x] list of rounds by tournaments
 * preview notifications
-* one button round game appointment notifications
+* [x] one button round game appointment notifications
 
 ### SMS functions
 
@@ -32,10 +32,10 @@
 
 ### User Stories
 
-* A user can view and select rounds by tournament
+* [x] A user can view and select rounds by tournament
 
   * Given: a tournament and round for that tournament
-  * When: A user navigates to the tournaments_path
+  * When: A user navigates to the rounds_path
   * Then: A user can see a list of rounds and select a round to view game_appointments
 
 * A user can preview game appointment sms-notification messages before sending them
@@ -44,7 +44,7 @@
   * When: A user clicks preview messages
   * Then: The user is shown the message to be sent
 
-* A user can send sms reminders for a tournament round's game appointments
+* [x] A user can send sms reminders for a tournament round's game appointments
 
   * Given: A round with several game appointments
   * When: A user clicks "send sms reminders"
@@ -54,3 +54,10 @@
   * Given: An attendee form with a receive sms option
   * When: The user fills out the form and checks the receive sms option
   * Then: The receive_sms attribute is set to true and a local phone number is required
+
+### Refactoring TODO's:
+
+* Move the send_sms_reminders into a workflow object
+* Add an editable preview message form
+* Add tests
+* Improve UI
