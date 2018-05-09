@@ -69,6 +69,16 @@ class RoundsController < ApplicationController
     end
   end
 
+  def send_sms_reminders
+    game_appointments = @round.game_appointments
+    game_appointments.each do |game_appointment|
+      send_reminder(game_appointment.attendee_one, game_appointment) if game_appointment.attendee_one.receive_sms
+      send_reminder(game_appointment.attendee_two, game_appointment) if game_appointment.attendee_two.receive_sms
+    end
+    redirect_to rounds_url
+
+  end
+
 
 
   private
@@ -81,8 +91,17 @@ class RoundsController < ApplicationController
     params.require(:round_import).permit(:file)
   end
 
+  def send_reminder(attendee, game_appointment)
+    opponent = game_appointment.attendee_one == attendee ? game_appointment.attendee_two.full_name : game_appointment.attendee_one.full_name
+    recipient = "#{attendee.local_phone}"
+    message = "Hello #{attendee.full_name}. You are scheduled to play #{opponent} in #{game_appointment.location} at #{game_appointment.time}."
+    puts recipient
+    puts message
+
+  end
+
   # Never trust parameters from the scary internet, only allow the white list through.
   def round_params
-    params.require(:round).permit(:number, :start_time)
+    params.require(:round).permit(:number, :start_time, :tournament_id)
   end
 end

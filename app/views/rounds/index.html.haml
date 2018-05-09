@@ -20,6 +20,7 @@
         %td= round.start_time
         %td= l round.created_at
         %td
+          = link_to "Show", round_path(round)
           = link_to "Edit", edit_round_path(round)
           = link_to "Delete",                                           |
             round_path(round),                     |
