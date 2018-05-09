@@ -1,0 +1,20 @@
+%h2 #{@round.tournament.name} Round Number: #{@round.number} Start Time: #{@round.start_time.strftime('%B, %d, %Y')}  #{@round.start_time.strftime('%I %p')}
+
+= link_to "Send SMS Reminders", send_sms_reminders_round_path(@round)
+
+%table.semantic.fullwidth.zebra
+  %thead
+    %tr
+      %th= GameAppointment.human_attribute_name(:id)
+      %th= GameAppointment.human_attribute_name(:table)
+      %th= GameAppointment.human_attribute_name(:attendee_one)
+      %th= GameAppointment.human_attribute_name(:attendee_two)
+      %th= GameAppointment.human_attribute_name(:location)
+
+    - @round.game_appointments.each do |game_appointment|
+      %tr
+        %td= link_to game_appointment.id, game_appointment
+        %td= game_appointment.table
+        %td= game_appointment.attendee_one.full_name
+        %td= game_appointment.attendee_two.full_name
+        %td= game_appointment.location
