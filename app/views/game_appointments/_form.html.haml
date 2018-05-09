@@ -3,12 +3,14 @@
 
   %fieldset
     .field
-      = f.label :attendee_id
-      = f.collection_select(:attendee_id, Attendee.all, :id, :full_name)
-
+      = f.label :attendee_one_id
+      = f.collection_select(:attendee_one_id, Attendee.all, :id, :full_name)
     .field
-      = f.label :opponent
-      = f.text_field :opponent
+      = f.label :attendee_two_id
+      = f.collection_select(:attendee_two_id, Attendee.all, :id, :full_name)
+
+
+
     .field
       = f.label :location
       = f.text_field :location

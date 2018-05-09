@@ -60,7 +60,7 @@ class GameAppointmentsController < ApplicationController
   end
 
   def import
-    @import = GameAppointment::Import.new user_import_params
+    @import = GameAppointment::Import.new game_appointment_import_params
     if @import.save
       redirect_to game_appointments_path, notice: "Imported #{@import.imported_count} game appointments"
     else
@@ -82,7 +82,7 @@ class GameAppointmentsController < ApplicationController
     @game_appointment = GameAppointment.find(params[:id])
   end
 
-  def game_import_params
+  def game_appointment_import_params
     params.require(:game_appointment_import).permit(:file)
   end
 
