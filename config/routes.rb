@@ -1,6 +1,5 @@
 Gocongress::Application.routes.draw do
 
-  resources :rounds
   # TODO: Find a permanent home for these authorize.net routes
   match '/payments/new', :to => 'payments#new', :as => 'new_payment', :via => [:get]
   match '/payments/relay_response', :to => 'payments#relay_response', :as => 'payments_relay_response', :via => [:post]
@@ -42,6 +41,10 @@ Gocongress::Application.routes.draw do
           member { get :send_sms }
           collection { post :import }
         end
+        resources :rounds do
+          collection { post :import}
+        end
+
         resources :plans, :except => [:index]
         resources :plan_categories do
           put 'update_order', :on => :collection
