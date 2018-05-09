@@ -63,16 +63,23 @@
   - When: The user fills out the form and checks the receive sms option
   - Then: The receive_sms attribute is set to true and a local phone number is required
 
+<<<<<<< HEAD
+
 ### Refactoring TODO's:
 
-- Move the send_sms_notifications into a workflow object
-- Add an editable preview message form
-- Add tests
-- Improve UI
-- [x] Add edit view and action to rounds
-- make a form for adding rounds with a game
-- [x] prevent duplicate round numbers for a tournament
-- [x] Remove timezone migration for game appointments
+=======
 
-- remove sms_notifications
-- send an sms for verification on submit of attendee reg form
+- [x] A user can send sms reminders for a tournament round's game appointments
+  > > > > > > > Updated TODO file
+
+* Move the send_sms_notifications into a workflow object
+* Add an editable preview message form
+* Add tests
+* Improve UI
+* [x] Add edit view and action to rounds
+* make a form for adding rounds with a game
+* [x] prevent duplicate round numbers for a tournament
+* [x] Remove timezone migration for game appointments
+
+* remove sms_notifications
+* send an sms for verification on submit of attendee reg form
