@@ -9,7 +9,7 @@
 
 ### Game Appointment import
 
-* xml parsing using nokogiri
+* [x] xml parsing using nokogiri
 * assign round on import
 
 ### SMS Update
@@ -62,3 +62,4 @@
 * Add tests
 * Improve UI
 * Add edit view and action to rounds
+* make a form for adding rounds with a game
