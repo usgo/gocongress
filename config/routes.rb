@@ -42,7 +42,7 @@ Gocongress::Application.routes.draw do
           collection { post :import }
         end
         resources :rounds do
-          member { get :send_sms_reminders }
+          member { post :send_sms_reminders }
           collection { post :import}
         end
 

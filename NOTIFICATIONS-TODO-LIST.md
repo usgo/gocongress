@@ -61,3 +61,4 @@
 * Add an editable preview message form
 * Add tests
 * Improve UI
+* Add edit view and action to rounds

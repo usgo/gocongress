@@ -9,7 +9,6 @@ class GameAppointmentsController < ApplicationController
   before_action :find_game_appointment , only: [:show, :edit, :update, :destroy]
 
   def index
-    @tournaments = Tournament.all
     @game_appointments = GameAppointment.all
     @import = GameAppointment::Import.new
     if @game_appointments.length.zero?

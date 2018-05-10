@@ -75,7 +75,7 @@ class RoundsController < ApplicationController
       send_reminder(game_appointment.attendee_one, game_appointment) if game_appointment.attendee_one.receive_sms
       send_reminder(game_appointment.attendee_two, game_appointment) if game_appointment.attendee_two.receive_sms
     end
-    redirect_to rounds_url
+    redirect_to rounds_url, notice: 'Reminders Sent'
 
   end
 

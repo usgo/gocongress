@@ -3,7 +3,7 @@
 %h3 Start Time: #{@round.start_time.strftime('%B, %d, %Y')}  #{@round.start_time.strftime('%I %p')}
 %h3 Reminder Preview: This is where we can show a preview of the message and allow it to be edited?
 
-= link_to "Send SMS Reminders", send_sms_reminders_round_path(@round)
+= button_to "Send SMS Reminders", send_sms_reminders_round_path(@round)
 %br
 %table.semantic.fullwidth.zebra
   %thead
@@ -13,7 +13,7 @@
       %th= GameAppointment.human_attribute_name(:attendee_one)
       %th= GameAppointment.human_attribute_name(:attendee_two)
       %th= GameAppointment.human_attribute_name(:location)
-
+  %tbody
     - @round.game_appointments.each do |game_appointment|
       %tr
         %td= link_to game_appointment.id, game_appointment
