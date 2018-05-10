@@ -2,7 +2,7 @@
 
 .page-header
   %h2= t '.title', :default => model_class.model_name.human.pluralize.titleize
-%table.semantic.fullwidth
+%table.semantic.fullwidth.zebra
   %thead
     %tr
       %th= model_class.human_attribute_name(:id)
