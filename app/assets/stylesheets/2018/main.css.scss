@@ -1,5 +1,6 @@
 @import "variables";
 @import "../functions/str-split";
+@import "../functions/decimal-round";
 @import "../mixins/breakpoint";
 @import "colonial-bullets";
 
@@ -360,6 +361,7 @@ button,
 fieldset {
   border: 5px double #333;
   margin: 1em 0;
+  padding: 0;
 }
 
 .field {
@@ -416,7 +418,7 @@ fieldset {
 
   .field_with_errors {
     display: flex;
-    >  {
+    > {
       flex: 1 1 auto;
     }
   }
@@ -726,7 +728,7 @@ some padding between each -Jared 2012-05-30 */
   .side-by-side {
     display: flex;
 
-    >  {
+    > {
       flex: 1 1 auto;
     }
   }
@@ -753,21 +755,135 @@ some padding between each -Jared 2012-05-30 */
 }
 
 .list-separator {
-	margin: 0 0 0.5em;
+  margin: 0 0 0.5em;
 
-	span {
-		font-size: 18px;
-		display: inline-block;
-		margin-right: 0.5em;
-	}
+  span {
+    font-size: 18px;
+    display: inline-block;
+    margin-right: 0.5em;
+  }
 
-	.glue {
-		font-size: 18px;
-		width: 1em;
-		text-align: center;
-	}
+  .glue {
+    font-size: 18px;
+    width: 1em;
+    text-align: center;
+  }
 }
 
 [data-email-list] {
-	width: 100%;
+  width: 100%;
+}
+
+/* GOStrap */
+.d-flex {
+  display: flex;
+}
+
+.text-left {
+  text-align: left;
+}
+.text-right {
+  text-align: right;
+}
+
+/* The beginnings of a grid system */
+// Variables
+$columns-total: 12;
+
+.padded-grid {
+  [class^="col-"] {
+    padding: 10px;
+  }
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.col {
+  flex-grow: 1;
+}
+
+[class^="col-"] {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/*
+ * .col-${size}-${column}
+ */
+$breakpoints: map-keys($breakpoint-stops);
+@for $i from 2 through length($breakpoints) {
+  $breakpoint: nth($breakpoints, $i);
+  $previous-breakpoint: nth($breakpoints, $i - 1);
+  @include breakpoint("gt-#{$previous-breakpoint}") {
+    @for $i from 1 through $columns-total {
+      .col-#{$breakpoint}-#{$i} {
+        width: percentage(decimal-round($i / $columns-total, 2));
+      }
+    }
+  }
+}
+
+/*
+ * .text-${size}-${left|right}
+ */
+$breakpoints: map-keys($breakpoint-stops);
+@for $i from 1 through length($breakpoints) {
+  $breakpoint: nth($breakpoints, $i);
+  @include breakpoint("#{$breakpoint}") {
+    @for $i from 1 through $columns-total {
+      .text-#{$breakpoint}-left {
+        text-align: left;
+      }
+
+      .text-#{$breakpoint}-right {
+        text-align: right;
+      }
+    }
+  }
+}
+
+.player-list {
+  border-collapse: collapse;
+  width: 100%;
+
+  th,
+  td {
+    padding: 10px;
+  }
+
+  $thead-background: hsl(50, 70%, 50%);
+  $tbody-background: lighten($thead-background, 20%);
+
+  thead {
+    background: {
+      color: $thead-background;
+    }
+
+    th {
+      color: darken($thead-background, 20%);
+      text-align: left;
+    }
+  }
+
+  tbody {
+    font: {
+      size: 18px;
+    }
+
+    tr {
+      &:nth-child(odd) {
+        background: {
+          color: $tbody-background;
+        }
+      }
+      &:nth-child(even) {
+        background: {
+          color: lighten($tbody-background, 10%);
+        }
+      }
+    }
+  }
 }
