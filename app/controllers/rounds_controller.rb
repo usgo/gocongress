@@ -26,6 +26,7 @@ class RoundsController < ApplicationController
   end
 
   def edit
+    @import = Round::Import.new
   end
 
   def create
