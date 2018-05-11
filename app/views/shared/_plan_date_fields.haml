@@ -4,31 +4,49 @@
     - @plan_calendar.each do |week|
       %tr
         - week.each do |d|
-          %td.nowrap
+          %td.nowrap{:class => ("input" if d.present?)}
             - if d.present?
               - format = first_clndr_date ? '%-m/%-e' : '%-e'
               = d.strftime(format)
-              %br
               - checked = selection.dates.include?(d)
               - @cbx_name = "plans[#{plan.id}][dates][]"
               = check_box_tag @cbx_name, d.strftime('%Y-%m-%d'), checked
               - first_clndr_date = false
     %tr
-      %td{:colspan=>3}
+      %td{:colspan=>10, :class => 'align-right'}
         = button_tag('Set All', type: 'button', name: 'setAll_' + @cbx_name)
-      %td
-      %td{:colspan=>3}
         = button_tag('Clear', type: 'button', name: 'clear_' + @cbx_name)
 
 :javascript
   $("[name='setAll_#{@cbx_name}']").click(function() {
-    $("[name='#{@cbx_name}']").each(function() {
-      this.checked = true;
+    $("[name='#{@cbx_name}']").each(function(i, checkbox) {
+      if (!this.checked) {
+        $(this).trigger('click');
+      }
     });
   });
 
+  $("[name='#{@cbx_name}']").on('change', function(event) {
+    var $target = $(event.currentTarget);
+    var $td = $target.closest('td');
+    if ($target.prop('checked')) {
+      $td.addClass('checked');
+    } else {
+      $td.removeClass('checked');
+    }
+  });
+
+  $("[name='#{@cbx_name}']").closest('td').click(function(event) {
+    if (!$(event.target).is('input')) {
+      var checkbox = $(this).find('input');
+      checkbox.trigger('click');
+    }
+  });
+
   $("[name='clear_#{@cbx_name}']").click(function() {
-    $("[name='#{@cbx_name}']").each(function() {
-      this.checked = false;
+    $("[name='#{@cbx_name}']").each(function(event) {
+      if (this.checked) {
+        $(this).trigger('click');
+      }
     });
   });

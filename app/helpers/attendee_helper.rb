@@ -47,6 +47,14 @@ module AttendeeHelper
     )
   end
 
+  def plan_label_name plan
+    if plan.max_quantity == 1
+      plan.plan_category.single === true ?
+        "plans_single_plan_cat_id:#{plan.plan_category.id}_plan_id_#{plan.id}" :
+        qty_field_name(plan)
+    end
+  end
+
   private
 
   def mnh

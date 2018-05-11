@@ -887,3 +887,42 @@ $breakpoints: map-keys($breakpoint-stops);
     }
   }
 }
+
+.align-center {
+  text-align: right;
+}
+
+.align-right {
+  text-align: right !important;
+}
+
+table.mini-calendar {
+  border-collapse: collapse;
+
+  td {
+    transition: all 0.2s;
+    &.input {
+      cursor: pointer;
+      text-align: center;
+
+      &:hover {
+        background: hsla(100, 50%, 70%, 0.5);
+      }
+    }
+    &.checked {
+      background: hsl(100, 50%, 70%) !important;
+    }
+    font: {
+      size: 14px;
+    }
+    padding: 0;
+  }
+
+  button {
+    font: {
+      size: 14px;
+    }
+    margin-top: 5px;
+    padding: 3px;
+  }
+}
