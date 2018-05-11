@@ -1,6 +1,5 @@
 class RoundsController < ApplicationController
   include YearlyController
-
   load_resource
   add_filter_to_set_resource_year
   # authorize_resource # TODO: fix authorization to use this
@@ -18,6 +17,7 @@ class RoundsController < ApplicationController
   end
 
   def show
+    @import = GameAppointment::Import.new
   end
 
   def new

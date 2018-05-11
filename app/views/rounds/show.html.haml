@@ -2,6 +2,14 @@
 %h3 Round Number: #{@round.number}
 %h3 Start Time: #{@round.start_time.strftime('%B, %d, %Y')}  #{@round.start_time.strftime('%I %p')}
 %h3 Reminder Preview: This is where we can show a preview of the message and allow it to be edited?
+= form_for @import, url: import_game_appointments_path, mulitpart: true do |f|
+  %fieldset
+    %h2 Import Game Appointments
+    .field
+      = f.hidden_field :round, name: "game_appointment_import[round_id]", value: "#{@round.id}"
+    .field
+      = f.file_field :file
+      = f.submit "Upload"
 
 = button_to "Send SMS Reminders", send_sms_reminders_round_path(@round)
 %br

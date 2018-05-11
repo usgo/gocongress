@@ -63,3 +63,4 @@
 * Improve UI
 * Add edit view and action to rounds
 * make a form for adding rounds with a game
+* prevent duplicate round numbers for a tournament
