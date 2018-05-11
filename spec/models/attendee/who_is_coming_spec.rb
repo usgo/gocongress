@@ -91,5 +91,12 @@ RSpec.describe Attendee::WhoIsComing, :type => :model do
         Attendee::WhoIsComing.new(u1.year).attendees.map(&:given_name)
       ).to match_array(['u1a', 'u2a', 'u3a', 'u3b', 'u4a', 'u4b', 'u6a'])
     end
+
+    it 'excludes cancelled attendees from unregistered count' do
+      a = create :attendee
+      cancelled_attendee = create :attendee, cancelled: true
+
+      expect(Attendee::WhoIsComing.new(a.year).unregistered_count).to eq(1)
+    end
   end
 end

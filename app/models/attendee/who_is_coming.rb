@@ -40,7 +40,7 @@ class Attendee::WhoIsComing
   end
 
   def unregistered_count
-    Attendee.yr(@year).count - @attendees.count
+    Attendee.yr(@year).count - @attendees.count - Attendee.yr(@year).attendee_cancelled.count
   end
 
   private
