@@ -72,7 +72,7 @@ class GameAppointment::Import
 
   def parse_xml(doc)
     # TODO: check for errors! Right now we're assuming perfection.
-    
+
     # Find the players in the XML import
     players = doc.xpath("//Players/Player")
 

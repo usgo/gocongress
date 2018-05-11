@@ -9,19 +9,15 @@
 
 ### Game Appointment import
 
-<<<<<<< HEAD
-
 - [x] xml parsing using nokogiri
 - [x] assign round on import
 - [ ] send a message to bye players
 - [ ] capture error messages without cookie overflow
-      error
 - [ ] remove requiring location
 - [ ] # write automated tests
 
 * [x] xml parsing using nokogiri
 * assign round on import
-  > > > > > > > added game_appointment import to edit round view
 
 ### SMS Update
 
