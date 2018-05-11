@@ -60,16 +60,6 @@ class RoundsController < ApplicationController
     end
   end
 
-  def import
-    @import = Round::Import.new round_import_params
-    if @import.save
-      redirect_to rounds_path, notice: "Imported #{@import.imported_count} round"
-    else
-      @rounds = Round.all
-      render action: index, notice: "There were errors with your XML file"
-    end
-  end
-
   def send_sms_reminders
     game_appointments = @round.game_appointments
     game_appointments.each do |game_appointment|

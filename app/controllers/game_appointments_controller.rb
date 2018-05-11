@@ -59,12 +59,13 @@ class GameAppointmentsController < ApplicationController
   end
 
   def import
+    @round = Round.find(game_appointment_import_params[:round_id])
     @import = GameAppointment::Import.new  game_appointment_import_params
     if @import.save
-      redirect_to game_appointments_path, notice: "Imported #{@import.imported_count} game appointments"
+      redirect_to round_path(@round.id), notice: "Imported #{@import.imported_count} game appointments"
     else
-      @game_appointments = GameAppointment.all
-      render action: index, notice: "There were errors with your XML file"
+
+      redirect_to round_path(@round.id) , notice: "There were errors with your XML file"
     end
   end
 
