@@ -1,6 +1,6 @@
 class GameAppointment::Import
   include ActiveModel::Model
-  attr_accessor :file, :imported_count
+  attr_accessor :file, :imported_count, :round_id
 
   def process!
     doc = Nokogiri::XML(@file)
@@ -22,7 +22,7 @@ class GameAppointment::Import
 
   def parse_xml(doc)
     # TODO: check for errors! Right now we're assuming perfection.
-    
+
     # Find the players in the XML import
     players = doc.xpath("//Players/Player")
 

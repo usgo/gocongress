@@ -59,7 +59,7 @@ class GameAppointmentsController < ApplicationController
   end
 
   def import
-    @import = GameAppointment::Import.new game_appointment_import_params
+    @import = GameAppointment::Import.new  game_appointment_import_params
     if @import.save
       redirect_to game_appointments_path, notice: "Imported #{@import.imported_count} game appointments"
     else
@@ -82,7 +82,7 @@ class GameAppointmentsController < ApplicationController
   end
 
   def game_appointment_import_params
-    params.require(:game_appointment_import).permit(:file)
+    params.require(:game_appointment_import).permit(:file, :round_id)
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.
