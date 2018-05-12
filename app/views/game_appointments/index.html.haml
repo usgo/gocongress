@@ -6,8 +6,8 @@
   %thead
     %tr
       %th= model_class.human_attribute_name(:id)
-      %th= model_class.human_attribute_name(:attendee)
-      %th= model_class.human_attribute_name(:opponent)
+      %th= model_class.human_attribute_name(:attendee_one)
+      %th= model_class.human_attribute_name(:attendee_two)
       %th= model_class.human_attribute_name(:time)
       %th= model_class.human_attribute_name(:created_at)
       %th= t '.actions', :default => t("helpers.actions")
@@ -15,8 +15,8 @@
     - @game_appointments.each do |game_appointment|
       %tr
         %td= link_to game_appointment.id, game_appointment_path(game_appointment)
-        %td= game_appointment.attendee.full_name
-        %td= game_appointment.opponent
+        %td= game_appointment.attendee_one.full_name
+        %td= game_appointment.attendee_two.full_name
         %td= game_appointment.time
         %td= l game_appointment.created_at
         %td
@@ -28,9 +28,3 @@
             :class => 'btn btn-xs btn-danger'                            |
           = link_to "Send SMS", send_sms_game_appointment_path(game_appointment.id)
 = link_to "New", new_game_appointment_path, :class => 'button'
-= form_for @import, url: import_game_appointments_path, mulitpart: true do |f|
-  %fieldset
-    %h2 Import Game Appointments
-    .field
-      = f.file_field :file
-      = f.submit "Upload"

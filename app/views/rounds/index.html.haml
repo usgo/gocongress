@@ -29,9 +29,3 @@
             :class => 'btn btn-xs btn-danger'                            |
 
 = link_to "New", new_round_path, :class => 'button'
-= form_for @import, url: import_rounds_path, mulitpart: true do |f|
-  %fieldset
-    %h2 Import Round
-    .field
-      = f.file_field :file
-      = f.submit "Upload"
