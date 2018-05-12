@@ -7,11 +7,18 @@ class GameAppointment < ApplicationRecord
 
   validates :attendee_one, presence: true
   validates :attendee_two, presence: true
+  validate :compare_attendees
   validates :round, presence: true
   validates :table, presence: true
   validates :location, presence: true
-  validates :time,     presence: true
-  validates :time_zone,     presence: true
+  validates :time, presence: true
+  validates :time_zone, presence: true
+
+  def compare_attendees
+    if self.attendee_one == self.attendee_two
+      errors.add("Attendees", "can't be the same person")
+    end
+  end
 
   # after_create :reminder
 

@@ -3,17 +3,21 @@
 
   %fieldset
     .field
+      = f.label :round
+      = f.collection_select(:round_id, Round.all, :id, :number)
+    .field
       = f.label :attendee_one_id
-      = f.collection_select(:attendee_one_id, Attendee.all, :id, :full_name)
+      = f.collection_select(:attendee_one_id, Attendee.order('family_name ASC').all, :id, :full_name)
     .field
       = f.label :attendee_two_id
-      = f.collection_select(:attendee_two_id, Attendee.all, :id, :full_name)
-
-
-
+      = f.collection_select(:attendee_two_id, Attendee.order('family_name ASC').all, :id, :full_name)
     .field
       = f.label :location
       = f.text_field :location
+    .field
+      = f.label :table
+      = f.number_field :table
+
   %fieldset
     = f.label :time, "Time and Date"
     / Rails expects time_select when dealing with ActiveRecord forms
