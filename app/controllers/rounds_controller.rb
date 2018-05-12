@@ -10,7 +10,6 @@ class RoundsController < ApplicationController
   def index
     # @tournaments = Tournament.all
     @rounds = Round.all
-    @import = Round::Import.new
     if @rounds.length.zero?
       flash[:alert] = 'You have no rounds. Create one now to get started.'
     end
@@ -27,7 +26,6 @@ class RoundsController < ApplicationController
   end
 
   def edit
-    @import = Round::Import.new
   end
 
   def create

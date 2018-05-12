@@ -2,9 +2,3 @@
 .page-header
   %h1= t '.title', :default => [:'helpers.titles.edit', 'Edit %{model}'], :model => model_class.model_name.human.titleize
 = render :partial => 'form'
-= form_for @import, url: import_rounds_path, mulitpart: true do |f|
-  %fieldset
-    %h2 Import Round
-    .field
-      = f.file_field :file
-      = f.submit "Upload"
