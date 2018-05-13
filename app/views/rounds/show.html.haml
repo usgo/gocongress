@@ -17,6 +17,10 @@
 =======
 %h3 Reminder Preview: This is where we can show a preview of the message and allow it to be edited?
 
+= form_for @round, url: { action: "update_notification_message" } do |f|
+  = f.text_area :notification_message
+  = f.submit "Update"
+
 = button_to "Send SMS Notifications", send_sms_notifications_round_path(@round)
 >>>>>>> Change "reminder" to "notification"
 %br
