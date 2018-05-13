@@ -44,10 +44,10 @@
   * When: A user clicks preview messages
   * Then: The user is shown the message to be sent
 
-* [x] A user can send sms reminders for a tournament round's game appointments
+* [x] A user can send sms notifications for a tournament round's game appointments
 
   * Given: A round with several game appointments
-  * When: A user clicks "send sms reminders"
+  * When: A user clicks "send sms notifications"
   * Then: Texts are sent to each attendee with `receive_sms: true` with the game appointment details
 
 * [x] A user can opt to receive sms notifications on the attendee form
@@ -57,7 +57,7 @@
 
 ### Refactoring TODO's:
 
-* Move the send_sms_reminders into a workflow object
+* Move the send_sms_notifications into a workflow object
 * Add an editable preview message form
 * Add tests
 * Improve UI

@@ -17,11 +17,11 @@ RSpec.feature 'SMS notifications', :type => :feature do
   end
   context 'signed in admin user' do
 
-    it 'can send sms reminders for a round game appointments' do
+    it 'can send sms notifications for a round game appointments' do
       click_link "Rounds"
       click_link "Show"
-      click_button "Send SMS Reminders"
-      expect(page).to have_content 'Reminders Sent'
+      click_button "Send SMS Notifications"
+      expect(page).to have_content 'Notifications Sent'
     end
 
     scenario 'allows a file upload of attendee game pairing data'
