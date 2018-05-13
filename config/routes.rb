@@ -45,6 +45,7 @@ Gocongress::Application.routes.draw do
           member do
             post :send_sms_notifications
             post :delete_all_game_appointments
+            patch :update_notification_message
           end
           collection { post :import}
         end
