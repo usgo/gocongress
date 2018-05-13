@@ -3,12 +3,26 @@ class GameAppointment::Import
   attr_accessor :file, :imported_count, :round_id
 
   def process!
+    round = Round.find(@round_id)
     doc = Nokogiri::XML(@file)
-    # Retrieve a hash of appointments (games without a result yet) that includes
-    # player information, round, table, &c
+
+    # Retrieve an array of appointment hashes (games without a result yet) that
+    # includes player information, round, table, &c
     appointments = parse_xml(doc)
-    # TODO: do something with the appointments hash from OpenGotha!
-    errors.add(:base, "ERROR")
+
+    @imported_count = 0
+    appointments.each do |appointment|
+      if (appointment['roundNumber'].to_i == round.number)
+        game_appointment = GameAppointment::assign_from_hash(round, appointment)
+        if game_appointment.save
+          # TODO: Use this imported count somewhere
+          @imported_count += 1
+        else
+          # TODO: Figure out why these errors don't display
+          errors.add(:base, "Line #{$.} #{game_appointment.errors.full_messages.join(",")}")
+        end
+      end
+    end
   end
 
   # OpenGotha has the player names for games as strings with all letters
@@ -51,6 +65,9 @@ class GameAppointment::Import
 
   def save
     process!
+    # TODO: Do these have to be returned?
+    puts self.imported_count
+    puts errors.inspect
     errors.none?
   end
 end

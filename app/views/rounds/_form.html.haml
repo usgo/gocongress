@@ -1,5 +1,6 @@
 = form_for @round, :html => { :class => "form-horizontal round" } do |f|
   = render :partial => "shared/error_messages", :locals => { :resource => @round }
+  
   %fieldset
     .field
       = f.label :tournament_id

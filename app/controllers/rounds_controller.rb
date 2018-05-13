@@ -65,9 +65,13 @@ class RoundsController < ApplicationController
       send_reminder(game_appointment.attendee_two, game_appointment) if game_appointment.attendee_two.receive_sms
     end
     redirect_to rounds_url, notice: 'Reminders Sent'
-
   end
 
+  def delete_all_game_appointments
+    count = @round.game_appointments.count
+    @round.game_appointments.destroy_all
+    redirect_to round_path(@round), notice: count.to_s + " game #{"appointment".pluralize(count)} deleted."
+  end
 
 
   private

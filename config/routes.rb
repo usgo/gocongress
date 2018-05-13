@@ -42,7 +42,10 @@ Gocongress::Application.routes.draw do
           collection { post :import }
         end
         resources :rounds do
-          member { post :send_sms_reminders }
+          member do
+            post :send_sms_reminders
+            post :delete_all_game_appointments
+          end
           collection { post :import}
         end
 
