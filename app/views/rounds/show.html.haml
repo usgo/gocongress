@@ -2,6 +2,10 @@
 %time{datetime: @round.start_time} #{@round.start_time.strftime('%B %e, %Y at %l:%M %p')}
 %h3 Reminder Preview: This is where we can show a preview of the message and allow it to be edited?
 
+= form_for @round, url: { action: "update_notification_message" } do |f|
+  = f.text_area :notification_message
+  = f.submit "Update"
+
 = button_to "Send SMS Notifications", send_sms_notifications_round_path(@round)
 %br
 %table.semantic.fullwidth.zebra
@@ -15,8 +19,10 @@
     - @round.game_appointments.each do |game_appointment|
       %tr
         %td= link_to game_appointment.table, edit_game_appointment_path(game_appointment)
-        %td= game_appointment.attendee_one.full_name
-        %td= game_appointment.attendee_two.full_name
+        %td{:class => game_appointment.attendee_one.receive_sms ? "sms_enabled" : "sms_disabled" }
+          = game_appointment.attendee_one.full_name
+        %td{:class => game_appointment.attendee_two.receive_sms ? "sms_enabled" : "sms_disabled" }
+          = game_appointment.attendee_two.full_name
         %td= game_appointment.location
 
 %br

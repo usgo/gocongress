@@ -9,7 +9,6 @@
       %th= model_class.human_attribute_name(:tournament)
       %th= model_class.human_attribute_name(:number)
       %th= model_class.human_attribute_name(:start_time)
-      %th= model_class.human_attribute_name(:created_at)
       %th= t '.actions', :default => t("helpers.actions")
   %tbody
     - @rounds.each do |round|
@@ -17,8 +16,7 @@
         %td= link_to round.id, round_path(round)
         %td= round.tournament.name
         %td= round.number
-        %td= round.start_time
-        %td= l round.created_at
+        %td= round.start_time.strftime('%B %e, %Y at %l:%M %p')
         %td
           = link_to "Show", round_path(round)
           = link_to "Edit", edit_round_path(round)

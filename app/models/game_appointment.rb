@@ -42,19 +42,19 @@ class GameAppointment < ApplicationRecord
     game_appointment
   end
 
-  # after_create :reminder
+  # after_create :notification
 
   # Notify our appointment attendee X minutes before the appointment time
-  def reminder
+  def notification
     @twilio_number = ENV['TWILIO_NUMBER']
     account_sid = ENV['TWILIO_ACCOUNT_SID']
     @client = Twilio::REST::Client.new account_sid, ENV['TWILIO_AUTH_TOKEN']
     time_str = ((self.time).localtime).strftime("%I:%M%p on %b. %d, %Y")
-    reminder = "Hi #{self.attendee}. You have a game scheduled with the following details: Opponent: #{self.oppoenent}, Time: #{time_str}, Location: #{self.location}."
+    notification = "Hi #{self.attendee}. You have a game scheduled with the following details: Opponent: #{self.oppoenent}, Time: #{time_str}, Location: #{self.location}."
     message = @client.api.account(account_sid).messages.create(
       :from => @twilio_number,
       :to => self.attendee.phone_number,
-      :body => reminder,
+      :body => notification,
     )
   end
 end
