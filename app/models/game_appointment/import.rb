@@ -101,6 +101,9 @@ class GameAppointment::Import
 
   def save
     process!
+    # TODO: Do these have to be returned?
+    puts self.imported_count
+    puts errors.inspect
     errors.none?
   end
 end
