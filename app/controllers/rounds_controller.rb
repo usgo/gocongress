@@ -59,10 +59,14 @@ class RoundsController < ApplicationController
   end
 
   def send_sms_notifications
+<<<<<<< HEAD
     tournament = Tournament.find(@round.tournament_id)
+=======
+>>>>>>> Change "reminder" to "notification"
     game_appointments = @round.game_appointments
     notifications_sent = 0
     game_appointments.each do |game_appointment|
+<<<<<<< HEAD
       if game_appointment.attendee_one.receive_sms
         send_notification(game_appointment.attendee_one, tournament, @round, game_appointment)
         notifications_sent += 1
@@ -73,6 +77,12 @@ class RoundsController < ApplicationController
       end
     end
     redirect_to round_path(@round), notice: "#{notifications_sent} #{'notification'.pluralize(notifications_sent)} sent."
+=======
+      send_notification(game_appointment.attendee_one, game_appointment) if game_appointment.attendee_one.receive_sms
+      send_notification(game_appointment.attendee_two, game_appointment) if game_appointment.attendee_two.receive_sms
+    end
+    redirect_to rounds_url, notice: 'Notifications Sent'
+>>>>>>> Change "reminder" to "notification"
   end
 
   def delete_all_game_appointments
