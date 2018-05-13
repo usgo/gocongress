@@ -1,22 +1,12 @@
-%h2 #{@round.tournament.name}
-%h3 Round Number: #{@round.number}
-%h3 Start Time: #{@round.start_time.strftime('%B, %d, %Y')}  #{@round.start_time.strftime('%I %p')}
+%h2 #{@round.tournament.name}, Round #{@round.number}
+%time{datetime: @round.start_time} #{@round.start_time.strftime('%B %e, %Y at %l:%M %p')}
 %h3 Reminder Preview: This is where we can show a preview of the message and allow it to be edited?
-= form_for @import, url: import_game_appointments_path, multipart: true do |f|
-  %fieldset
-    %h2 Import Game Appointments
-    .field
-      = f.hidden_field :round, name: "game_appointment_import[round_id]", value: "#{@round.id}"
-    .field
-      = f.file_field :file
-      = f.submit "Upload"
 
-= button_to "Send SMS Reminders", send_sms_reminders_round_path(@round)
+= button_to "Send SMS Notifications", send_sms_notifications_round_path(@round)
 %br
 %table.semantic.fullwidth.zebra
   %thead
     %tr
-      %th= GameAppointment.human_attribute_name(:id)
       %th= GameAppointment.human_attribute_name(:table)
       %th= GameAppointment.human_attribute_name(:attendee_one)
       %th= GameAppointment.human_attribute_name(:attendee_two)
@@ -24,8 +14,7 @@
   %tbody
     - @round.game_appointments.each do |game_appointment|
       %tr
-        %td= link_to game_appointment.id, game_appointment
-        %td= game_appointment.table
+        %td= link_to game_appointment.table, edit_game_appointment_path(game_appointment)
         %td= game_appointment.attendee_one.full_name
         %td= game_appointment.attendee_two.full_name
         %td= game_appointment.location
@@ -34,3 +23,12 @@
 = button_to "Delete All", delete_all_game_appointments_round_path(@round),
   :method => :post,
   :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure? This will delete ALL appointments in this round.')) }
+
+= form_for @import, url: import_game_appointments_path, multipart: true do |f|
+  %fieldset
+    %h2 Import Game Appointments
+    .field
+      = f.hidden_field :round, name: "game_appointment_import[round_id]", value: "#{@round.id}"
+    .field
+      = f.file_field :file
+      = f.submit "Upload"

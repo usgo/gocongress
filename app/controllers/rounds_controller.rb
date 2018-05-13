@@ -58,13 +58,13 @@ class RoundsController < ApplicationController
     end
   end
 
-  def send_sms_reminders
+  def send_sms_notifications
     game_appointments = @round.game_appointments
     game_appointments.each do |game_appointment|
-      send_reminder(game_appointment.attendee_one, game_appointment) if game_appointment.attendee_one.receive_sms
-      send_reminder(game_appointment.attendee_two, game_appointment) if game_appointment.attendee_two.receive_sms
+      send_notification(game_appointment.attendee_one, game_appointment) if game_appointment.attendee_one.receive_sms
+      send_notification(game_appointment.attendee_two, game_appointment) if game_appointment.attendee_two.receive_sms
     end
-    redirect_to rounds_url, notice: 'Reminders Sent'
+    redirect_to rounds_url, notice: 'Notifications Sent'
   end
 
   def delete_all_game_appointments
@@ -84,7 +84,7 @@ class RoundsController < ApplicationController
     params.require(:round_import).permit(:file)
   end
 
-  def send_reminder(attendee, game_appointment)
+  def send_notification(attendee, game_appointment)
     opponent = game_appointment.attendee_one == attendee ? game_appointment.attendee_two.full_name : game_appointment.attendee_one.full_name
     recipient = "#{attendee.local_phone}"
     message = "Hello #{attendee.full_name}. You are scheduled to play #{opponent} in #{game_appointment.location} at #{game_appointment.time}."
