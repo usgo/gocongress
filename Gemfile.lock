@@ -69,6 +69,7 @@ GEM
       safe_yaml (~> 1.0.0)
     crass (1.0.3)
     daemons (1.2.6)
+    database_cleaner (1.7.0)
     deep_merge (1.2.1)
     devise (4.4.1)
       bcrypt (~> 3.0)
@@ -335,6 +336,7 @@ DEPENDENCIES
   bluecloth
   cancancan (~> 1.9)
   capybara
+  database_cleaner
   deep_merge
   devise
   dotenv-rails
