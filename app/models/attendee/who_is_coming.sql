@@ -33,16 +33,8 @@ where attendees.year = :year and attendees.cancelled = false
   -- credits minus debits must be at least $70
   and coalesce(credits.total, 0) - coalesce(debits.total, 0) >= 7000
 
-  -- exclude attendees with child registration plan
-  and not exists (
-    select ap.attendee_id
-    from attendee_plans ap
-    inner join plans p on p.id = ap.plan_id
-    where attendees.id = ap.attendee_id
-      and ap.year = :year
-      and p.year = :year
-      and p.name like 'Child Registration'
-  )
+  -- exclude attendees under thirteen
+  and attendees.birth_date < (:congress_start_date::date - interval '13 years')
 
   -- exclude cancelled attendees
   and not exists (
