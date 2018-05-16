@@ -24,7 +24,6 @@ RSpec.feature 'SMS notifications', :type => :feature do
       click_link "Show"
       click_button "Send SMS Notifications"
       expect(page).to have_content '2 notifications sent'
-
     end
 
     scenario 'allows a file upload of attendee game pairing data'
