@@ -123,6 +123,7 @@ class RoundsController < ApplicationController
 
     puts recipient
     puts message
+    TwilioTextMessenger.new(message, recipient).call
 
     #TODO Deal with errors from invalid phone numbers
 
