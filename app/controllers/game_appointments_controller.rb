@@ -29,8 +29,6 @@ class GameAppointmentsController < ApplicationController
   end
 
   def create
-    Time.zone = game_appointment_params[:time_zone]
-
     if @game_appointment.save
       redirect_to game_appointments_path, notice: 'Game Appointment was successfully created.'
     else
@@ -88,6 +86,6 @@ class GameAppointmentsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def game_appointment_params
-    params.require(:game_appointment).permit(:round_id, :attendee_one_id, :attendee_two_id, :location, :table, :time, :time_zone)
+    params.require(:game_appointment).permit(:round_id, :attendee_one_id, :attendee_two_id, :location, :table, :time)
   end
 end

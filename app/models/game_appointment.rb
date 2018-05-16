@@ -16,8 +16,6 @@ class GameAppointment < ApplicationRecord
     table can only have one game per round"}
   validates :location, presence: true
   validates :time, presence: true
-  # TODO: Remove time_zone
-  # validates :time_zone, presence: true
 
   def compare_attendees
     if self.attendee_one == self.attendee_two

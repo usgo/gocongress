@@ -40,15 +40,5 @@ RSpec.describe GameAppointment, type: :model do
       expect(@game_appointment).to_not be_valid
     end
 
-    it 'it should be required to have a time zone' do
-      @game_appointment.time_zone = nil
-      expect(@game_appointment).to_not be_valid
-    end
-
-    it 'it should be required to have a year' do
-      @game_appointment.year = nil
-      expect(@game_appointment).to_not be_valid
-    end
-
   end
 end
