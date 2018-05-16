@@ -5,7 +5,6 @@ FactoryBot.define do
     location "Building 6 Room 24"
     table "14"
     time "4:30 PM"
-    time_zone "Eastern Standard"
     year Time.now.year
     round
   end
