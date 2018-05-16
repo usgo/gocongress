@@ -63,5 +63,5 @@
 * Improve UI
 * Add edit view and action to rounds
 * make a form for adding rounds with a game
-* prevent duplicate round numbers for a tournament
+* [x] prevent duplicate round numbers for a tournament
 * [x] Remove timezone migration for game appointments
