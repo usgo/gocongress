@@ -25,8 +25,6 @@
       = time_select :game_appointment, :time
     .field
       = date_select :game_appointment, :time
-    .field
-      = f.time_zone_select :time_zone, ActiveSupport::TimeZone.all.sort, default: "Eastern Time (US & Canada)"
   = f.submit nil, :class => 'button button-large pull right save'
   = link_to t('.cancel', :default => t("helpers.links.cancel")), |
         game_appointments_path, :class => 'button'               |
