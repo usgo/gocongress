@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180322102515) do
+ActiveRecord::Schema.define(version: 20180508025356) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -265,6 +265,7 @@ ActiveRecord::Schema.define(version: 20180322102515) do
     t.string  "venue_state",        limit: 2
     t.string  "venue_zip",          limit: 10
     t.string  "venue_phone",        limit: 20
+    t.text    "refund_policy"
     t.index ["year"], name: "index_years_on_year", unique: true, using: :btree
   end
 

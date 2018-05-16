@@ -25,8 +25,8 @@ class YearsController < ApplicationController
 
   def year_record_params
     params.require(:year_record).permit(:city, :date_range, :day_off_date,
-      :ordinal_number, :registration_phase, :reply_to_email, :start_date,
-      :state, :timezone, :twitter_url, :venue_name, :venue_address,
+      :ordinal_number, :refund_policy, :registration_phase, :reply_to_email,
+      :start_date, :state, :timezone, :twitter_url, :venue_name, :venue_address,
       :venue_city, :venue_state, :venue_zip, :venue_url, :venue_phone)
   end
 end
