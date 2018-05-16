@@ -7,7 +7,7 @@
           %td.nowrap{:class => ("input" if d.present?)}
             - if d.present?
               - format = first_clndr_date ? '%-m/%-e' : '%-e'
-              = d.strftime(format)
+              %div= d.strftime(format)
               - checked = selection.dates.include?(d)
               - @cbx_name = "plans[#{plan.id}][dates][]"
               = check_box_tag @cbx_name, d.strftime('%Y-%m-%d'), checked

@@ -95,10 +95,11 @@ module ApplicationHelper
   def markdown_summary model, atr, len
     txt = model.send(atr).to_s
     smry_txt = truncate(txt, length: len, separator: ' ')
+    html = smry_txt.html_safe
     if txt.length > len
-      smry_txt += ' ' + link_to('more', model)
+      html += ' '.html_safe + link_to('more', model).html_safe
     end
-    markdown_if_present smry_txt
+    markdown(html).html_safe
   end
 
   def noun_with_article(singular, collection)
