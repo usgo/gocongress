@@ -196,10 +196,7 @@ GEM
     minitest (5.11.3)
     multi_json (1.13.1)
     multipart-post (2.0.0)
-<<<<<<< HEAD
     nenv (0.3.0)
-=======
->>>>>>> Added Game Appointments
     nio4r (2.3.0)
     nokogiri (1.8.2)
       mini_portile2 (~> 2.3.0)
