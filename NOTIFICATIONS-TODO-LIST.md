@@ -17,7 +17,7 @@
 - [ ] # write automated tests
 
 * [x] xml parsing using nokogiri
-* assign round on import
+* [x] assign round on import
 
 ### SMS Update
 
