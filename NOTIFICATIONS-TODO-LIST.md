@@ -10,13 +10,28 @@
 ### Game Appointment import
 
 * [x] xml parsing using nokogiri
-* assign round on import
+* [x] assign round on import
 
 ### SMS Update
 
 * [x] change sms-opt-in to be an attribute of attendee
-* migrate sms-plan to the attendee sms-opt-in attribute
+* [] migrate sms-plan to the attendee sms-opt-in attribute
+
+  * Here is a script to do the migration:
+
+  ```ruby
+     # select all the Attendee's with a "Yes! SMS!" plan
+     awp = Attendee.select('attendees.id, attendees.phone, attendees.local_phone').joins(:plans).where('plans.name = ?', "Yes! SMS!")
+
+     # iterate through them and set receive_sms to true
+     awp.each do |a|
+       a.update_attribute :receive_sms, true
+     end
+  ```
+
 * disable the plan
+* use git cherry-pick to create seperate branch for just the receive_sms flag
+* pr for that branch needs to have commits and migration for that field
 
 ### Views
 
@@ -61,7 +76,10 @@
 * Add an editable preview message form
 * Add tests
 * Improve UI
-* Add edit view and action to rounds
+* [x] Add edit view and action to rounds
 * make a form for adding rounds with a game
 * [x] prevent duplicate round numbers for a tournament
 * [x] Remove timezone migration for game appointments
+
+* remove sms_notifications
+* send an sms for verification on submit of attendee reg form
