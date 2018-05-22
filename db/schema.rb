@@ -168,6 +168,19 @@ ActiveRecord::Schema.define(version: 20180508025356) do
     t.datetime "updated_at"
   end
 
+<<<<<<< HEAD
+=======
+  create_table "phone_numbers", force: :cascade do |t|
+    t.string   "phone_number"
+    t.string   "pin"
+    t.boolean  "verified"
+    t.integer  "attendee_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.index ["attendee_id"], name: "index_phone_numbers_on_attendee_id", using: :btree
+  end
+
+>>>>>>> Fix merge conflict
   create_table "plan_categories", force: :cascade do |t|
     t.string   "name",                 limit: 255,                 null: false
     t.datetime "created_at"
