@@ -358,6 +358,14 @@ RSpec.describe RegistrationsController, :type => :controller do
         expect(a.reload.family_name).to eq('banana')
       end
 
+      it "can update admin fields" do
+        attrs = attendee_attributes.merge({:comment => 'banana'})
+        expect {
+          patch :update, params: { id: a.id, registration: attrs, year: a.year }
+        }.to change { a.reload.family_name }
+        expect(a.reload.comment).to eq('banana')
+      end
+
       it 'can select plan for attendee belonging to someone else' do
         plan = create :plan
         expect(a.plans).to be_empty
