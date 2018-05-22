@@ -1,0 +1,61 @@
+%h2= page_title
+
+- amnh = Attendee.model_name.human
+
+%p
+  All attendees who will not turn eighteen by
+  %span=@congress_start_date.strftime("%B %-d, %Y")
+  are considered minors, and must submit a Youth Attendance Agreement.
+
+%p
+  The checkbox to mark an attendee&rsquo;s agreement as received is at the
+  bottom of their registration form, visible only to admins.
+
+%h3 Attendees without Minor Agreements (#{@minors_without_agreements.count})
+
+%table.semantic.zebra.fullwidth
+  %thead
+    %tr
+      %th Name
+      %th Birth Date
+      %th Email
+      %th Guardian
+      %th
+  %tbody
+
+  - @minors_without_agreements.each do |minor|
+    %tr
+      %td
+        = link_to minor.full_name, edit_registration_path(minor, type: 'youth')
+      %td
+        #{minor.birth_date.strftime("%B %-d, %Y")}
+      %td
+        = minor.email
+      %td
+        = minor.guardian_full_name
+      %td
+        = link_to "Account", user_path(minor.user_id)
+
+%h3 Attendees with Minor Agreements (#{@minors_with_agreements.count})
+
+%table.semantic.zebra.fullwidth
+  %thead
+    %tr
+      %th Name
+      %th Birth Date
+      %th Email
+      %th Guardian
+      %th
+  %tbody
+  - @minors_with_agreements.each do |minor|
+    %tr
+      %td
+        = link_to minor.full_name, edit_registration_path(minor, type: 'youth')
+      %td
+        #{minor.birth_date.strftime("%B %-d, %Y")}
+      %td
+        = minor.email
+      %td
+        = minor.guardian_full_name
+      %td
+        = link_to "Account", user_path(minor.user_id)

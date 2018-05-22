@@ -21,7 +21,7 @@ class Registration
     :family_name, :gender, :given_name, :guardian_attendee_id,
     :guardian_full_name, :local_phone, :phone, :rank, :roomate_request,
     :special_request, :shirt_id, :tshirt_size, :understand_minor,
-    :will_play_in_us_open]
+    :will_play_in_us_open, :comment, :minor_agreement_received]
 
   delegate(*ATD_ATRS, to: :attendee)
   delegate :full_name, :id, :minor?, :user_id, :year, to: :attendee
@@ -55,16 +55,15 @@ class Registration
     params[:activity_ids] ||= {}
     params[:plans] ||= {}
     params[:registration] ||= {}
-    if admin?
-      params.permit!
-    else
-      params.except(:comment, :minor_agreement_received).permit!
-    end
-    p = params.to_unsafe_h
+
+    params.permit!
+    p = params.to_h
+
     @activity_selections = p[:activity_ids].map(&:to_i)
     @plan_selections = parse_plan_params(p[:plans])
     @understand_minor = p[:registration][:understand_minor]
     attendee.attributes = attendee_params(p[:registration])
+
     valid? && save
   end
 
@@ -99,7 +98,14 @@ class Registration
   private
 
   def attendee_params(params)
-    atrs = ATD_ATRS.concat(["birth_date(1i)", "birth_date(2i)", "birth_date(3i)", "user_id"])
+    if not admin?
+      # Remove admin-only permitted attributes
+      atrs = ATD_ATRS - [:comment, :minor_agreement_received]
+    else
+      atrs = ATD_ATRS
+    end
+
+    atrs = atrs.concat(["birth_date(1i)", "birth_date(2i)", "birth_date(3i)", "user_id"])
     params.slice(*atrs)
   end
 
@@ -111,7 +117,7 @@ class Registration
 
   def convert_radio_btn_params params
     normalized_params = {}
-    params.each do |key, value|  
+    params.each do |key, value|
       if key.include?("single")
         plan_id_key = params[key]["plan_id"]
         normalized_params[plan_id_key] = { "qty"=>"1" }

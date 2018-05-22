@@ -1,0 +1,43 @@
+- if @attendee.checked_in
+  %h2 #{@attendee.full_name} #{@attendee.rank_name} is checked in
+- else
+  %h2 #{page_title} #{@attendee.full_name} #{@attendee.rank_name}
+
+%table.status-table.check-in.buffer-top.buffer-bottom
+  %thead
+  %tbody
+    %tr{class: @user.balance == 0 ? 'ready' : 'not-ready'}
+      %th Account Balance
+      %td
+        = cents_to_currency @user.balance, :unit => '$', :negative_format => "(%n)"
+
+    - if @attendee.minor?
+      %tr{class: @attendee.minor_agreement_received ? 'ready' : 'not-ready'}
+        %th Minor Agreement Received
+        %td #{@attendee.minor_agreement_received ? 'Yes' : 'No'}
+
+    %tr{class: @attendee.aga_id.present? ? 'ready' : 'not-ready'}
+      %th AGA ID
+      %td
+        = @attendee.aga_id
+
+    %tr{class: @current_aga ? 'ready' : 'not-ready'}
+      %th Current AGA Member
+      %td
+        = @current_aga ? 'Yes' : 'No'
+
+
+- if not @attendee.checked_in
+  %td= button_to "Check In #{@attendee.full_name}",
+    { action: "check_in_attendee",
+      checked_in: true, id: @user.id, attendee_id: @attendee.id },
+    { disabled: @cleared, method: :patch }
+
+- else
+  %td= button_to "Check Out #{@attendee.full_name}",
+    { action: "check_in_attendee", checked_in: false, id: @user.id, attendee_id: @attendee.id },
+    method: :patch,
+    data: { :confirm => "Check #{@attendee.full_name} back out?" }
+
+%p
+  = link_to "Back to check-in list", check_in_path

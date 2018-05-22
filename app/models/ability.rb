@@ -32,6 +32,7 @@ class Ability
     # Admins and Staff share a few special abilities
     if user.admin? or user.role == 'S' then
       can :print_official_docs, User, :year => user.year
+      can :check_in, :attendee
       can :read, :report
       can :see_admin_menu, :layout
     end

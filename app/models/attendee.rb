@@ -36,6 +36,7 @@ class Attendee < ApplicationRecord
   validates :given_name,      :presence => true
   validates :guardian_full_name, :presence => { :if => :require_guardian_full_name? }
   validates :minor_agreement_received, :inclusion => {:in => [true, false]}
+  validates :checked_in, :inclusion => {:in => [true, false]}
   validates :rank,
     inclusion: {
       in: Attendee::Rank::NUMERIC_RANK_LIST,

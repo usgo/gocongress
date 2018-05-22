@@ -82,11 +82,17 @@ Gocongress::Application.routes.draw do
           end
         end
 
+        # Check attendees in to Congress when they arrive
+        get 'check-in', to: 'check_in#index'
+        get 'check-in/:id', to: 'check_in#show', as: 'check_in_attendee'
+        patch 'check-in/:id', to: 'check_in#check_in_attendee'
+
         # The "rpt" namespace has one controller for each report.
         # This replaces the deprecated reports_controller.
         namespace :rpt do
           resource :attendeeless_user_report, :only => :show
           resource :outstanding_balance_report, :only => :show
+          resource :minor_agreements_report, :only => :show
 
           # These reports support CSV format
           constraints :format => /(csv)?/ do
