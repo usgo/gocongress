@@ -23,10 +23,13 @@ FactoryBot.define do
     aga_id "12345"
     local_phone "1231231231"
   end
+
   factory :ga_attendee_two, parent: :attendee do
     receive_sms true
     aga_id "12345"
     local_phone "1231231232"
+  end
+  
   factory :teenager, :parent => :attendee do
     birth_date CONGRESS_START_DATE[Time.now.year] - 15.years
     guardian_full_name "Mother Dearest"
