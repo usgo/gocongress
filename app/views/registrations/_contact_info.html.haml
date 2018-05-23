@@ -5,13 +5,13 @@
   .field
     = f.label :receive_text_messages
     = f.radio_button :receive_sms, true, checked: true
-    Send Me Text Message Updates and Reminders
+    Send Me Text Message Notifications
     = f.radio_button :receive_sms, false, checked: false
     Don't Send Me Any Text Messages
   .field
     = f.label :local_phone
     = f.text_field :local_phone
-    %span.smalltext (phone number during the U.S. Go Congress, required to receive text messages)
+    %span.smalltext (Required to receive notifications during the Congress. Enter 10 digits with no spaces or dashes.)
   .field
     = f.label :email
     = f.text_field :email
