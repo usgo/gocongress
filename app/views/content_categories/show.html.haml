@@ -6,10 +6,23 @@
   - if can? :edit, ContentCategory
     = button_to "Edit This Category", edit_content_category_path(@content_category), :method => :get
 
+- if @content_category.table_of_contents
+  %h3
+    Table of Contents
+  %ul
+    - @contents.each do |c|
+      %li
+        = link_to c.subject, content_path(c)
+
 - @contents.each do |c|
-  %h3= c.subject
-  = markdown(c.body).html_safe
-  - if can? :manage, c
-    .row-of-buttons
-      = button_to "Edit", edit_content_path(c), :method => :get
-      = button_to "Delete", c, :method => :delete, :data => {:confirm => 'Are you sure?'}
+
+  %span.anchor{id: c.subject.parameterize}
+  %div.content-item
+    %h3
+      = c.subject
+
+    = markdown(c.body).html_safe
+    - if can? :manage, c
+      .row-of-buttons
+        = button_to "Edit", edit_content_path(c), :method => :get
+        = button_to "Delete", c, :method => :delete, :data => {:confirm => 'Are you sure?'}
