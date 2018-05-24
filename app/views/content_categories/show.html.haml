@@ -14,6 +14,8 @@
       %li
         = link_to c.subject, content_path(c)
 
+  %hr
+
 - @contents.each do |c|
 
   %span.anchor{id: c.subject.parameterize}
