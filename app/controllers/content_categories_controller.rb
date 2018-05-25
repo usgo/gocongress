@@ -47,6 +47,6 @@ protected
   private
 
   def content_category_params
-    params.require(:content_category).permit(:name)
+    params.require(:content_category).permit(:name, :table_of_contents)
   end
 end
