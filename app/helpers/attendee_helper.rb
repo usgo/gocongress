@@ -66,12 +66,17 @@ module AttendeeHelper
       Registration::PlanSelection.new(plan, 0)
   end
 
+  # Return selected plan for a given plan category
+  def plan_category_selection category
+    @registration.plan_selections.select { |ps| ps.plan.plan_category_id == category.id }
+  end
+
   def qty_field_name plan
     "plans[#{plan.id}][qty]"
   end
 
   def radio_btn_name plan
-    "plans[single_plan_cat_id:#{plan.plan_category.id}][plan_id]" 
+    "plans[single_plan_cat_id:#{plan.plan_category.id}][plan_id]"
   end
 
 end
