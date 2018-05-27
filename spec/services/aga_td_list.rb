@@ -1,30 +1,16 @@
 require_relative '../../app/services/aga_td_list'
-WebMock.disable_net_connect!(allow_localhost: true)
 
 RSpec.describe AgaTdList do
-  #TODO Just use `file_fixture` once we upgrade Rails
-  # tsv = file_fixture("tdlista.short.txt").read
-
-  tsv = ''
-  # Use a shortened version of the TD list. The full one is quite large!
-  # Also, this one won't change over time, so our examples won't go out of date.
-  IO.foreach("./spec/fixtures/files/tdlista.short.txt") do |line|
-    tsv += line
-  end
-
-  before {
-    stub_request(:get, /usgo.org/).
-      with(headers: {'Accept'=>'*/*', 'User-Agent'=>'Ruby'}).
-      to_return(status: 200, body: tsv, headers: {})
-  }
-
-  describe 'AGA TD List' do
+  describe 'AGA TD List', aga_td_list_mock: true do
     it 'returns AGA member info from TD List' do
-      #TODO Change to a different way of controlling caching in tests
       data = AgaTdList.data
 
+      # Get the number of lines in the td list fixture
+      file = "./spec/fixtures/files/tdlista.short.txt"
+      lines = File.foreach(file).count
+
       expect(data).to be_a(Hash)
-      expect(data.keys.length).to eq(tsv.split("\n").length)
+      expect(data.keys.length).to eq(lines)
     end
 
     it 'returns info for one member id' do

@@ -1,7 +1,7 @@
 require "rails_helper"
 require "controllers/rpt/shared_examples_for_reports"
 
-RSpec.describe Rpt::UsopenPlayersReportsController, :type => :controller do
+RSpec.describe Rpt::UsopenPlayersReportsController, aga_td_list_mock: true, :type => :controller do
   it_behaves_like "a report", %w[html xml]
 
   context "as an admin" do

@@ -40,17 +40,7 @@ class AgaTdList
 
   def self.fetch
     # Hit the AGA TD List for data in TSV format
-    # open("https://www.usgo.org/mm/tdlista.txt", "r:UTF-8", &:read)
-
-    # We're on a plane!
-    tsv = ''
-    # Use a shortened version of the TD list. The full one is quite large!
-    # Also, this one won't change over time, so our examples won't go out of date.
-    IO.foreach("./spec/fixtures/files/tdlista.txt") do |line|
-      tsv += line
-    end
-
-    tsv
+    open("https://www.usgo.org/mm/tdlista.txt", "r:UTF-8", &:read)
   end
 
   def self.parse(ids = nil)
