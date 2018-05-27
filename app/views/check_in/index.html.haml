@@ -26,12 +26,14 @@
             = button_to "Check In",
               { action: "check_in_attendee",
               checked_in: true, id: attendee.user.id, attendee_id: attendee.id },
-              { disabled: !cleared_to_check_in(attendee), method: :patch, class: "hide-xxs" }
+              { disabled: !cleared_to_check_in(attendee), method: :patch, class: "check-in-button",
+              data: { :confirm => "Check in #{attendee.full_name}?" }}
 
             = button_to "✔",
               { action: "check_in_attendee",
               checked_in: true, id: attendee.user.id, attendee_id: attendee.id },
-              { disabled: !cleared_to_check_in(attendee), method: :patch, class: "show-xxs" }
+              { disabled: !cleared_to_check_in(attendee), method: :patch, class: "mini-check-in-button",
+              data: { :confirm => "Check in #{attendee.full_name}?" }}
           %div.td.col-xxs-4.name
             = link_to attendee.full_name, check_in_attendee_path(attendee)
           %div.td.col-xxs-2

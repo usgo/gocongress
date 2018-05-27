@@ -869,25 +869,24 @@ $columns-total: 12;
  */
 $breakpoints: map-keys($breakpoint-stops);
 
+// For the smallest breakpoint, set any column widths to always be applicable
 $breakpoint: nth($breakpoints, 1);
-@include breakpoint("#{$breakpoint}") {
-  @include breakpoint("#{$breakpoint}") {
-    @for $i from 1 through $columns-total {
-      .col-#{$breakpoint}-#{$i} {
-        width: percentage(decimal-round($i / $columns-total, 2));
-      }
-    }
+@for $i from 1 through $columns-total {
+  .col-#{$breakpoint}-#{$i} {
+    width: percentage(decimal-round($i / $columns-total, 2));
   }
 }
 
+// For all the rest, set column widths to be applicable when the browser width
+// is that breakpoint's width or larger
 @for $i from 2 through length($breakpoints) {
   $breakpoint: nth($breakpoints, $i);
-  @debug $breakpoint;
   $previous-breakpoint: nth($breakpoints, $i - 1);
+
   @include breakpoint("gt-#{$previous-breakpoint}") {
-    @for $i from 1 through $columns-total {
-      .col-#{$breakpoint}-#{$i} {
-        width: percentage(decimal-round($i / $columns-total, 2));
+    @for $j from 1 through $columns-total {
+      .col-#{$breakpoint}-#{$j} {
+        width: percentage(decimal-round($j / $columns-total, 2));
       }
     }
   }
@@ -1092,7 +1091,6 @@ list-filter {
   }
 
   @include breakpoint(xxs) {
-    border: 10px solid purple;
     input[type="submit"] {
       font: {
         size: 12px;
@@ -1111,20 +1109,14 @@ list-filter {
         size: 12px;
       }
     }
-
-    .hide-xxs {
-      display: none;
-    } 
   }
 
-  @include breakpoint(gt-xxs) {
-    .show-xxs {
-      display: none;
-    }
+  @include breakpoint(lt-md) {
+    .check-in-button { display: none; }
   }
 
-  @include breakpoint(sm) {
-    border: 10px solid blue;
+  @include breakpoint(gt-sm) {
+    .mini-check-in-button { display: none; }
   }
 
   .row.cleared {
@@ -1138,7 +1130,7 @@ list-filter {
 
   .row.not-cleared {
     input[type="submit"] {
-      background: hsl(50, 50%, 50%);
+      background: hsl(0, 0%, 50%);
     }
   }
 
