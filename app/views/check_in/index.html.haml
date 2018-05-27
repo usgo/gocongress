@@ -34,6 +34,7 @@
               checked_in: true, id: attendee.user.id, attendee_id: attendee.id },
               { disabled: !cleared_to_check_in(attendee), method: :patch, class: "mini-check-in-button",
               data: { :confirm => "Check in #{attendee.full_name}?" }}
+
           %div.td.col-xxs-4.name
             = link_to attendee.full_name, check_in_attendee_path(attendee)
           %div.td.col-xxs-2
@@ -51,3 +52,13 @@
   %ul.checked-in-attendees
     - @checked_in_attendees.each do |attendee|
       %li= link_to attendee.full_name, check_in_attendee_path(attendee)
+
+%hr
+
+= button_to "Refresh AGA TD List",
+  { action: "refresh_aga_td_list" }, { method: :get }
+
+%p
+  By default, we cache information from the AGA TD List for 24 hours. If an
+  attendee's information has changed more recently, you may refresh the cache
+  manually.

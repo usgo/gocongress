@@ -41,3 +41,13 @@
 
 %p
   = link_to "Back to check-in list", check_in_path
+
+%hr
+
+= button_to "Refresh AGA TD List",
+  { action: "refresh_aga_td_list" }, { method: :get }
+
+%p
+  By default, we cache information from the AGA TD List for 24 hours. If an
+  attendee's information has changed more recently, you may refresh the cache
+  manually.

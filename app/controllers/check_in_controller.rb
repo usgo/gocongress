@@ -39,8 +39,13 @@ class CheckInController < ApplicationController
 
     @attendee.update(checked_in: checked_in)
 
-    # TODO: color code notice?
     redirect_to(check_in_path, :notice => "#{@attendee.full_name} has been checked #{checked_in ? "in" : "out"}.")
+  end
+
+  def refresh_aga_td_list
+    # Refresh the cache manually
+    AgaTdList.refresh()
+    redirect_back(fallback_location: check_in_path, :notice => "AGA TD List refreshed.")
   end
 
   private

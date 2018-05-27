@@ -84,6 +84,7 @@ Gocongress::Application.routes.draw do
 
         # Check attendees in to Congress when they arrive
         get 'check-in', to: 'check_in#index'
+        get 'check-in/refresh', to: 'check_in#refresh_aga_td_list'
         get 'check-in/:id', to: 'check_in#show', as: 'check_in_attendee'
         patch 'check-in/:id', to: 'check_in#check_in_attendee'
 
