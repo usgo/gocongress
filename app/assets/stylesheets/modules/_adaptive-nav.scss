@@ -1,0 +1,187 @@
+@keyframes nav-secondary {
+  0% {
+    opacity: 0;
+    transform: translateY(-1em);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.adaptive-nav {
+  position: relative;
+
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    li {
+      transition: opacity 0.2s;
+    }
+  }
+
+  > ul:first-of-type {
+    display: flex;
+
+    li {
+      flex-grow: 1;
+    }
+  }
+
+  .--hidden {
+    display: none;
+  }
+
+  // Degrade gracefully
+  &:not(.--jsified) {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .-secondary {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    animation: nav-secondary 0.2s;
+    z-index: 1;
+  }
+
+  &.--show-secondary {
+    .-primary {
+      .-more > button span {
+        transform: rotate(180deg);
+      }
+    }
+    .-secondary {
+      display: block;
+    }
+  }
+
+  .-more {
+    > button {
+      border: none;
+      white-space: nowrap;
+      font: {
+        family: "Cormorant Garamond", serif;
+      }
+      span {
+        display: inline-block;
+        transition: transform 0.2s;
+      }
+    }
+  }
+
+  li {
+    > a {
+      display: block;
+      white-space: nowrap;
+    }
+  }
+}
+
+.nav-list-main,
+.nav-admin {
+  font: {
+    family: "Cormorant Garamond", serif;
+    size: 18px;
+  }
+
+  .-secondary {
+    a {
+      text-align: left;
+    }
+  }
+
+  li {
+    > a {
+      padding: 0.5em;
+      text-align: center;
+      transition: background 0.2s, color 0.2s;
+
+      &:hover {
+        background: #fff;
+      }
+    }
+  }
+  .-more {
+    > button {
+      margin: 0;
+      outline: none;
+      padding: 0.5em;
+    }
+  }
+}
+
+.nav-list-main {
+  li {
+    background: {
+      color: hsl(0, 60%, 50%);
+    }
+
+    > a, > button {
+      color: #fff;
+    }
+
+    > a {
+      &:hover {
+        background: {
+          color: #fff;
+        }
+        color: hsl(0, 60%, 50%);
+      }
+    }
+  }
+  .-more {
+    > button {
+      &:hover {
+        background: {
+          color: hsl(0, 60%, 50%);
+        }
+      }
+
+    }
+  }
+}
+.nav-admin {
+  background: {
+    color: hsl(50, 70%, 50%);
+  }
+
+  li {
+  background: {
+    color: hsl(50, 70%, 50%);
+  }
+    > a, > button {
+      color: #fff;
+    }
+
+    > a {
+      &:hover {
+        background: {
+          color: #fff;
+        }
+        color: hsl(50, 70%, 50%);
+      }
+    }
+
+    > button {
+      color: #fff;
+      &:hover {
+        background: {
+          color: hsl(50, 70%, 50%);
+        }
+      }
+    }
+  }
+
+  .-more {
+    > button {
+      background: {
+        color: hsl(50, 70%, 50%);
+      }
+    }
+  }
+}
