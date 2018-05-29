@@ -2,6 +2,7 @@
 @import "../functions/str-split";
 @import "../functions/decimal-round";
 @import "../mixins/breakpoint";
+@import "../modules/adaptive-nav";
 @import "colonial-bullets";
 
 @import url("https://fonts.googleapis.com/css?family=Cormorant+Garamond");
@@ -33,6 +34,8 @@ body {
 }
 
 .header-logo {
+  // Prevent flickering during transitions
+  backface-visibility: hidden;
   position: absolute;
   left: 50%;
   bottom: -50px;
@@ -256,49 +259,6 @@ button,
 
   a {
     text-decoration: none;
-  }
-}
-
-.nav-list-main,
-.nav-admin {
-  font: {
-    size: 18px;
-  }
-  margin: 0;
-  padding: 0;
-  display: flex;
-  list-style: none;
-  flex-wrap: wrap;
-
-  li {
-    display: flex;
-    align-items: stretch;
-    flex: 1 1 auto;
-    text-align: center;
-
-    > a {
-      color: #fff;
-      display: block;
-      flex: 1 1 auto;
-      padding: 0.5em;
-      transition: all 0.2s;
-      &:hover {
-        background: #fff;
-        color: hsl(0, 60%, 50%);
-      }
-    }
-  }
-}
-
-.nav-list-main {
-  background: {
-    color: hsl(0, 60%, 50%);
-  }
-}
-
-.nav-admin {
-  background: {
-    color: hsl(50, 70%, 50%);
   }
 }
 

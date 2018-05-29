@@ -1,5 +1,5 @@
 .nav-container
-  .nav
+  .nav.adaptive-nav
     %ul#nav-list-main
       - if show_my_account_anchor? || @year.registration_phase == "open"
         %li#nav-registration= link_to_my_account_or_to_register
