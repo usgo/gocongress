@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180508025356) do
+ActiveRecord::Schema.define(version: 20180524165637) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -117,10 +117,11 @@ ActiveRecord::Schema.define(version: 20180508025356) do
   end
 
   create_table "content_categories", force: :cascade do |t|
-    t.integer  "year",                  null: false
-    t.string   "name",       limit: 50
+    t.integer  "year",                                         null: false
+    t.string   "name",              limit: 50
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "table_of_contents",            default: false
     t.index ["id", "year"], name: "index_content_categories_on_id_and_year", unique: true, using: :btree
   end
 
