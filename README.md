@@ -5,7 +5,6 @@ A maintainable web app for the U.S. Go Congress.
 Copyright (c) 2010-2018 American Go Association
 
 [![Code Climate](https://codeclimate.com/github/usgo/gocongress.png)](https://codeclimate.com/github/usgo/gocongress)
-[![Dependency Status](https://gemnasium.com/usgo/gocongress.svg)](https://gemnasium.com/usgo/gocongress)
 
 Contribute
 ----------
@@ -38,8 +37,8 @@ Contribute
     1. `cp .env.example .env` (see Configuration below)
     1. If all is well, `bin/rake -T` should list rake tasks
 1. Run the tests
-    1. `bin/rake db:setup`
-    1. `bin/rake db:test:prepare`
+    1. `bin/rails db:setup`
+    1. `bin/rails db:test:prepare`
     1. `bin/rspec` will run the tests.  If they
        all pass, you're good to go.
 1. Submit your contribution
