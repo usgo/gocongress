@@ -7,7 +7,7 @@ class ReportsController < ApplicationController
   def authorize_read_report() authorize! :read, :report end
 
   def atn_reg_sheets
-    @attendee_attr_names = %w[aga_id country email gender phone special_request receive_sms will_play_in_us_open].sort
+    @attendee_attr_names = %w[aga_id country email gender phone special_request receive_sms roomate_request will_play_in_us_open].sort
     if params.has_key?(:min) && params.has_key?(:max)
       @attendees = Attendee.yr(@year) \
         .where('lower(substr(family_name,1,1)) between ? and ?', params[:min], params[:max]) \
@@ -26,7 +26,7 @@ class ReportsController < ApplicationController
 
   def emails
     @atnd_email_list = ""
-    
+
     @atnd_email_list_json = Attendee.yr(@year).map{|a| {
       name: a.full_name,
       email: a.email
