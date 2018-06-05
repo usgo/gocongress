@@ -886,7 +886,31 @@ table.mini-calendar {
     padding: 3px;
   }
 }
+
 input[type="radio"] {
   margin-top: -1px;
   vertical-align: middle;
+}
+
+.statement-of-welcome {
+  @extend .fancy-border;
+  background: hsl(40, 80%, 50%);
+  color: white;
+  font: {
+    size: 18px;
+  }
+  padding: 1em;
+  position: relative;
+
+  h3 {
+    font: {
+      size: 24px;
+    }
+    margin: 0 0 0.5em;
+    text-transform: uppercase;
+  }
+
+  p {
+    margin: 0;
+  }
 }
