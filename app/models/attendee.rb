@@ -2,7 +2,7 @@ require "invoice_item"
 
 class Attendee < ApplicationRecord
   include YearlyModel
-
+  PHONE_REGEX = /\A[0-9]*/
   # Associations
   # ------------
 
@@ -35,6 +35,11 @@ class Attendee < ApplicationRecord
   validates :gender,          :inclusion => {:in => ["m","f"], :message => "is not valid"}, :presence => true
   validates :given_name,      :presence => true
   validates :guardian_full_name, :presence => { :if => :require_guardian_full_name? }
+  validates :local_phone,
+            presence: true,
+            format: { with: PHONE_REGEX, message: "must contain integers only" },
+            length: { is: 10, message: "must contain exactly 10 digits" },
+            if: Proc.new { |a| a.receive_sms }
   validates :minor_agreement_received, :inclusion => {:in => [true, false]}
   validates :rank,
     inclusion: {
@@ -42,6 +47,8 @@ class Attendee < ApplicationRecord
       message: "is not valid"
     },
     presence: true
+  validates :receive_sms, :inclusion => {
+    :in => [true, false], :message => ' - Please select yes or no'}
   validates :roomate_request, :length => {:maximum => 250}
   validates :special_request, :length => {:maximum => 250}
   validates :tshirt_size,     :inclusion => {:in => Shirt::SIZE_CODES, :message => " - Please select a size"}

@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe RegistrationsController, :type => :controller do
   render_views
-  let(:attendee_attributes) { { :birth_date => "1981-09-10", :country => "US", :email => "test@gocongress.org", :emergency_name => "Jenny", :emergency_phone => "867-5309", :family_name => "Attendee", :gender => "m", :given_name => "Test", :rank => 3, :tshirt_size => "NO", :will_play_in_us_open => false } }
+  let(:attendee_attributes) { { :birth_date => "1981-09-10", :country => "US", :email => "test@gocongress.org", :emergency_name => "Jenny", :emergency_phone => "867-5309", :family_name => "Attendee", :gender => "m", :given_name => "Test", :rank => 3, :tshirt_size => "NO", :will_play_in_us_open => false, :receive_sms => false } }
   let(:activities) { 1.upto(3).map{ create :activity } }
 
   context "as a visitor" do

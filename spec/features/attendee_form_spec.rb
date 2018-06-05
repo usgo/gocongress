@@ -26,6 +26,8 @@ RSpec.describe 'registration form', :type => :feature do
       select 1, from: 'registration_birth_date_3i'
       select 'Adult Small', from: 'registration_tshirt_size'
       select '10 kyu', from: 'registration_rank'
+      choose 'registration_receive_sms_true'
+      fill_in "Local Phone",	with: "1231231234"
       fill_in 'Email', with: 'minnie.mouse@example.com'
       select 'Aland Islands', from: 'registration_country'
       fill_in 'Emergency Contact Name', with: 'Jenny'
