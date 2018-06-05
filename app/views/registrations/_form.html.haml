@@ -20,6 +20,8 @@
   - if current_user.admin?
     = render :partial => 'admin_info', :locals => { :f => f }
 
+  = render :partial => 'code_of_conduct'
+
   %p= f.submit 'Continue'
 
 = content_for :footnote
