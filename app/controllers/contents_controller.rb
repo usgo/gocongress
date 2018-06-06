@@ -12,6 +12,14 @@ class ContentsController < ApplicationController
     @contents = @contents.yr(@year)
   end
 
+  def new
+    @selected_category_id = params[:content_category_id]
+  end
+
+  def edit
+    @selected_category_id = @content.content_category.id
+  end
+
   def create
     @content.year = @year.year
     if @content.save

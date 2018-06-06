@@ -6,7 +6,7 @@
     = f.text_field :subject
   .field
     = f.label :content_category_id
-    = f.select :content_category_id, content_category_options, :selected => @content.content_category.id
+    = f.select :content_category_id, content_category_options, :selected => @selected_category_id
   .field
     = render partial: "shared/md_area", locals: { :obj => :content, :atr => :body, :rows => 20 }
   .field
