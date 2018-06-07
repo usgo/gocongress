@@ -11,8 +11,7 @@
   %div.responsive-table.check-in-list
     %div.thead
       %div.row
-        %div.th.col-xxs-2
-        %div.th.col-xxs-4
+        %div.th.col-xxs-6
           Attendee
         %div.th.col-xxs-2
           AGA ID
@@ -21,21 +20,8 @@
 
     %div.tbody
       - @not_checked_in_attendees.each do |attendee|
-        %div{class: "row #{cleared_to_check_in(attendee) ? 'cleared' : 'not-cleared'}"}
-          %div.td.col-xxs-2
-            = button_to "Check In",
-              { action: "check_in_attendee",
-              checked_in: true, id: attendee.user.id, attendee_id: attendee.id },
-              { disabled: !cleared_to_check_in(attendee), method: :patch, class: "check-in-button",
-              data: { :confirm => "Check in #{attendee.full_name}?" }}
-
-            = button_to "✔",
-              { action: "check_in_attendee",
-              checked_in: true, id: attendee.user.id, attendee_id: attendee.id },
-              { disabled: !cleared_to_check_in(attendee), method: :patch, class: "mini-check-in-button",
-              data: { :confirm => "Check in #{attendee.full_name}?" }}
-
-          %div.td.col-xxs-4.name
+        %div{class: "row" }
+          %div.td.col-xxs-6.name
             = link_to attendee.full_name, check_in_attendee_path(attendee)
           %div.td.col-xxs-2
             - if attendee.aga_id.present?

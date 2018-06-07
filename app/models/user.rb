@@ -68,7 +68,7 @@ class User < ApplicationRecord
   end
 
   def attendee_invoice_items
-    attendees.order('created_at').map {|a| a.invoice_items}.flatten
+    attendees.includes(:plans, :activities).order('created_at').map {|a| a.invoice_items}.flatten
   end
 
   def balance

@@ -31,7 +31,7 @@
   %td= button_to "Check In #{@attendee.full_name}",
     { action: "check_in_attendee",
       checked_in: true, id: @user.id, attendee_id: @attendee.id },
-    { disabled: @cleared, method: :patch }
+    { disabled: !@cleared, method: :patch }
 
 - else
   %td= button_to "Check Out #{@attendee.full_name}",
