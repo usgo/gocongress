@@ -42,6 +42,7 @@ en:
         email: "Email Address"
         birth_date: "Birth Date"
         special_request: "Special Request"
+        receive_sms: "Receive Text Messages?"
         roomate_request: "Roommate Request"
         comment: "Comments"
         understand_minor: "Youth Attendance Agreement"

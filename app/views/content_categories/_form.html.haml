@@ -6,5 +6,9 @@
     = f.text_field :name, tab_index: 1
 
   .field
+    = f.label :table_of_contents
+    = f.check_box :table_of_contents, tab_index: 2
+
+  .field
     %label
     = f.submit 'Save'

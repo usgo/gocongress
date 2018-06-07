@@ -76,7 +76,6 @@ $(function () {
   });
 });
 
-
 /*
  * List Filter
  */
@@ -114,5 +113,97 @@ $(function () {
         }
       });
     }
+  });
+});
+
+/*
+ * Adaptive nav
+ * @see https://css-tricks.com/container-adapting-tabs-with-more-button/
+ */
+$(function () {
+  document.querySelectorAll('.adaptive-nav').forEach(function (container) {
+    var primary = container.querySelector('ul:first-of-type');
+    primary.classList.add('-primary');
+    var primaryItems = container.querySelectorAll('ul:first-of-type > li:not(.-more)')
+
+    container.classList.add('--jsified');
+
+    // insert "more" button and duplicate the list
+    primary.insertAdjacentHTML('beforeend', `
+      <li class="-more">
+        <button type="button" aria-haspopup="true" aria-expanded="false">
+          More <span>&darr;</span>
+        </button>
+        <ul class="-secondary">
+          ${primary.innerHTML}
+        </ul>
+      </li>
+    `)
+
+    var secondary = container.querySelector('.-secondary');
+    var secondaryItems = secondary.querySelectorAll('li')
+    var allItems = container.querySelectorAll('li')
+    var moreLi = primary.querySelector('.-more')
+    var moreBtn = moreLi.querySelector('button')
+
+    moreBtn.addEventListener('click', (event) => {
+      event.preventDefault()
+      container.classList.toggle('--show-secondary')
+      moreBtn.setAttribute('aria-expanded', container.classList.contains('--show-secondary'))
+    })
+
+    function doAdapt() {
+      // reveal all items for the calculation
+      allItems.forEach(function (item) {
+        item.classList.remove('--hidden')
+      });
+
+      // hide items that won't fit in the Primary
+      var stopWidth = moreBtn.offsetWidth;
+      var hiddenItems = [];
+      var primaryWidth = primary.offsetWidth;
+
+      primaryItems.forEach(function (item, i) {
+        if (primaryWidth >= stopWidth + item.offsetWidth) {
+          stopWidth += item.offsetWidth
+        } else {
+          item.classList.add('--hidden')
+          hiddenItems.push(i)
+        }
+      });
+
+      // toggle the visibility of More button and items in Secondary
+      if (!hiddenItems.length) {
+        moreLi.classList.add('--hidden');
+        container.classList.remove('--show-secondary');
+        moreBtn.setAttribute('aria-expanded', false);
+      } else {
+        secondaryItems.forEach(function (item, i) {
+          if (!hiddenItems.includes(i)) {
+            item.classList.add('--hidden')
+          }
+        });
+      }
+    }
+
+    // adapt immediately on load
+    doAdapt();
+    window.addEventListener('load', doAdapt);
+
+    // adapt on window resize
+    window.addEventListener('resize', doAdapt);
+
+    // hide Secondary on the outside click
+    document.addEventListener('click', function (e) {
+      var el = e.target;
+      while (el) {
+        if (el === secondary || el === moreBtn) {
+          return;
+        }
+        el = el.parentNode;
+      }
+      container.classList.remove('--show-secondary');
+      moreBtn.setAttribute('aria-expanded', false);
+    });
   });
 });

@@ -10,6 +10,8 @@ FactoryBot.define do
     gender 'm'
     given_name 'Amerigo'
     tshirt_size 'AL'
+    receive_sms false
+    local_phone "6122341234"
     rank 3
     will_play_in_us_open false
     year Time.now.year

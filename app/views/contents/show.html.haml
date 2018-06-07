@@ -17,5 +17,7 @@
 
 %br
 
+  = button_to "Back to #{@content.content_category.name}", content_category_path(@content.content_category), :method => :get
+
 - if can? :manage, @content
   = button_to 'Edit', edit_content_path(@content), :method => :get
