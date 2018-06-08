@@ -37,7 +37,7 @@ class CheckInController < ApplicationController
     # Convert string to a boolean
     checked_in = params[:checked_in] == 'true' ? true : false
 
-    @attendee.update(checked_in: checked_in)
+    @attendee.update_attribute(:checked_in, checked_in)
 
     redirect_to(check_in_path, :notice => "#{@attendee.full_name} has been checked #{checked_in ? "in" : "out"}.")
   end
