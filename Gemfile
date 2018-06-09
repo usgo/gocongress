@@ -64,4 +64,5 @@ group :test do
   gem 'launchy' # provides `save_and_open_page`
   gem 'rails-controller-testing'
   gem 'rb-fsevent'
+  gem 'webmock'
 end

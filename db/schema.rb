@@ -101,6 +101,7 @@ ActiveRecord::Schema.define(version: 20180524165637) do
     t.string   "emergency_name",           limit: 255
     t.string   "emergency_phone",          limit: 255
     t.boolean  "receive_sms"
+    t.boolean  "checked_in",                           default: false
     t.index ["id", "year"], name: "index_attendees_on_id_and_year", unique: true, using: :btree
     t.index ["user_id"], name: "index_attendees_on_user_id", using: :btree
   end

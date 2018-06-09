@@ -41,6 +41,7 @@ class Attendee < ApplicationRecord
             length: { is: 10, message: "must contain exactly 10 digits" },
             if: Proc.new { |a| a.receive_sms }
   validates :minor_agreement_received, :inclusion => {:in => [true, false]}
+  validates :checked_in, :inclusion => {:in => [true, false]}
   validates :rank,
     inclusion: {
       in: Attendee::Rank::NUMERIC_RANK_LIST,

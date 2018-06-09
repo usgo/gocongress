@@ -237,6 +237,12 @@ button,
   &:hover {
     background: hsl(0, 80%, 50%);
   }
+
+  &[disabled] {
+    background: hsl(0, 0, 50%);
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
 }
 
 .button-large {
@@ -418,6 +424,43 @@ fieldset {
 }
 
 table {
+  &.status-table {
+    border-collapse: collapse;
+    cell-spacing: 10px;
+
+    th, td {
+      padding: 0.5em;
+    }
+
+    th {
+      color: hsl(0, 0%, 20%);
+      font-weight: normal;
+      text-align: right;
+    }
+
+    tr {
+      &.ready {
+        $color: hsl(100, 80%, 50%);
+        th {
+          background: $color;
+        }
+        td {
+          background: lighten($color, 20%);
+        }
+      }
+
+      &.not-ready {
+        $color: hsl(50, 100%, 50%);
+        th {
+          background: $color;
+        }
+        td {
+          background: lighten($color, 10%);
+        }
+      }
+    }
+  }
+
   // TODO: Figure out what the classname "semantic" means, in this context :)
   &.semantic {
     border-collapse: collapse;
@@ -503,8 +546,19 @@ table {
     position: relative;
     @extend .fancy-border;
   }
+
   &.fullwidth {
     width: 100%;
+  }
+
+  &.zebra {
+    tr:nth-child(even) {
+      td {
+        background: {
+          color: hsl(50, 100%, 95%);
+        }
+      }
+    }
   }
 }
 
@@ -774,15 +828,61 @@ $columns-total: 12;
  * .col-${size}-${column}
  */
 $breakpoints: map-keys($breakpoint-stops);
+
+// For the smallest breakpoint, set any column widths to always be applicable
+$breakpoint: nth($breakpoints, 1);
+@for $i from 1 through $columns-total {
+  .col-#{$breakpoint}-#{$i} {
+    width: percentage(decimal-round($i / $columns-total, 2));
+  }
+}
+
+// For all the rest, set column widths to be applicable when the browser width
+// is that breakpoint's width or larger
+@for $i from 2 through length($breakpoints) {
+  $breakpoint: nth($breakpoints, $i);
+  $previous-breakpoint: nth($breakpoints, $i - 1);
+
+  @include breakpoint("gt-#{$previous-breakpoint}") {
+    @for $j from 1 through $columns-total {
+      .col-#{$breakpoint}-#{$j} {
+        width: percentage(decimal-round($j / $columns-total, 2));
+      }
+    }
+  }
+}
+
+/*
+ * Flex properties
+ *
+ * .flex-{grow|shrink}-0
+ * .flex-{grow|shrink}-1
+ * .flex-sm-{grow|shrink}-0
+ * .flex-sm-{grow|shrink}-1
+ */
+.flex-grow-0 { flex-grow: 0 }
+.flex-grow-1 { flex-grow: 1 }
+.flex-shrink-0 { flex-shrink: 0 }
+.flex-shrink-1 { flex-shrink: 1 }
+
+$breakpoints: map-keys($breakpoint-stops);
+
+$breakpoint: nth($breakpoints, 1);
+@include breakpoint("#{$breakpoint}") {
+  .flex-#{$breakpoint}-grow-0 { flex-grow: 0; }
+  .flex-#{$breakpoint}-grow-1 { flex-grow: 0; }
+  .flex-#{$breakpoint}-shrink-0 { flex-shrink: 0; }
+  .flex-#{$breakpoint}-shrink-1 { flex-shrink: 1; }
+}
+
 @for $i from 2 through length($breakpoints) {
   $breakpoint: nth($breakpoints, $i);
   $previous-breakpoint: nth($breakpoints, $i - 1);
   @include breakpoint("gt-#{$previous-breakpoint}") {
-    @for $i from 1 through $columns-total {
-      .col-#{$breakpoint}-#{$i} {
-        width: percentage(decimal-round($i / $columns-total, 2));
-      }
-    }
+    .flex-#{$breakpoint}-grow-0 { flex-grow: 0; }
+    .flex-#{$breakpoint}-grow-1 { flex-grow: 0; }
+    .flex-#{$breakpoint}-shrink-0 { flex-shrink: 0; }
+    .flex-#{$breakpoint}-shrink-1 { flex-shrink: 1; }
   }
 }
 
@@ -884,6 +984,113 @@ table.mini-calendar {
     }
     margin-top: 5px;
     padding: 3px;
+  }
+}
+
+list-filter {
+  display: flex;
+  margin-bottom: 1em;
+
+  input {
+    padding: 5px;
+    font: {
+      size: 18px;
+    }
+    margin-right: 1em;
+  }
+  button {
+
+  }
+}
+
+.hidden-by-filter {
+  display: none;
+}
+
+.responsive-table {
+  $thead-background: hsl(0, 0%, 20%);
+  $tbody-background: lighten($thead-background, 70%);
+
+  * {
+    box-sizing: border-box;
+  }
+
+  .thead {
+    background: $thead-background;
+    color: hsl(0, 0%, 80%);
+    font: {
+      size: 18px;
+    }
+  }
+
+  .th, .td {
+    align-items: center;
+    display: flex;
+    padding: 0.5em;
+  }
+
+  .tbody {
+    background: $tbody-background;
+
+    .row {
+      transition: all 0.2s;
+    }
+
+    .row:hover {
+      background: lighten($tbody-background, 5%);
+    }
+  }
+}
+
+
+.check-in-list {
+  .user {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  @include breakpoint(xxs) {
+    input[type="submit"] {
+      font: {
+        size: 12px;
+      }
+      padding: 0.4em 0.4em;
+    }
+
+    .name {
+      font: {
+        size: 14px;
+      }
+    }
+
+    .user {
+      font: {
+        size: 12px;
+      }
+    }
+  }
+
+  @include breakpoint(lt-md) {
+    .check-in-button { display: none; }
+  }
+
+  @include breakpoint(gt-sm) {
+    .mini-check-in-button { display: none; }
+  }
+
+  .row.cleared {
+    input[type="submit"] {
+      background: hsl(100, 60%, 45%);
+      &:hover {
+        background: hsl(100, 70%, 50%);
+      }
+    }
+  }
+
+  .row.not-cleared {
+    input[type="submit"] {
+      background: hsl(0, 0%, 50%);
+    }
   }
 }
 

@@ -6,7 +6,11 @@ class User < ApplicationRecord
   # Constants
   # ---------
 
-  ROLES = [['Admin','A'], ['Staff','S'], ['User','U']]
+  ROLES = [
+    ['Admin','A'],
+    ['Staff','S'],
+    ['User','U']
+  ]
 
   # In practice, we often load users based on the compound key (email,year).
   # For example, when authenticating or resetting a password.
@@ -64,7 +68,7 @@ class User < ApplicationRecord
   end
 
   def attendee_invoice_items
-    attendees.order('created_at').map {|a| a.invoice_items}.flatten
+    attendees.includes(:plans, :activities).order('created_at').map {|a| a.invoice_items}.flatten
   end
 
   def balance

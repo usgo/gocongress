@@ -1,0 +1,50 @@
+%h2= page_title
+
+%p There are #{@not_checked_in_attendees.count + @checked_in_attendees.count} total attendees registered.
+
+- if not @not_checked_in_attendees.empty?
+
+  %h3 Not Checked In (#{@not_checked_in_attendees.count})
+
+  %list-filter{data: {list: ".check-in-list", item: ".tbody > .row", value: ".name > a"}}
+
+  %div.responsive-table.check-in-list
+    %div.thead
+      %div.row
+        %div.th.col-xxs-6
+          Attendee
+        %div.th.col-xxs-2
+          AGA ID
+        %div.th.col-xxs-4
+          Registered By
+
+    %div.tbody
+      - @not_checked_in_attendees.each do |attendee|
+        %div{class: "row" }
+          %div.td.col-xxs-6.name
+            = link_to attendee.full_name, check_in_attendee_path(attendee)
+          %div.td.col-xxs-2
+            - if attendee.aga_id.present?
+              = link_to attendee.aga_id, "http://agagd.usgo.org/player/#{attendee.aga_id}/"
+          %div.td.col-xxs-4.user
+            = link_to attendee.user.email, user_path(attendee.user)
+
+- if not @checked_in_attendees.empty?
+
+  %h3 Checked In (#{@checked_in_attendees.count})
+
+  %list-filter{data: {list: ".checked-in-attendees", item: "li", value: "a"}}
+
+  %ul.checked-in-attendees
+    - @checked_in_attendees.each do |attendee|
+      %li= link_to attendee.full_name, check_in_attendee_path(attendee)
+
+%hr
+
+= button_to "Refresh AGA TD List",
+  { action: "refresh_aga_td_list" }, { method: :get }
+
+%p
+  By default, we cache information from the AGA TD List for 24 hours. If an
+  attendee's information has changed more recently, you may refresh the cache
+  manually.

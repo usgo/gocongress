@@ -22,7 +22,7 @@
       %th Flag
   %tbody
   - @players.each do |player|
-    - aga_info = @aga_member_info[player.aga_id.to_s]
+    - aga_info = @aga_member_info[player.aga_id]
     %tr
       %td
         = NameInflector.capitalize(player.given_name)

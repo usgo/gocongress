@@ -77,6 +77,46 @@ $(function () {
 });
 
 /*
+ * List Filter
+ */
+$(function () {
+  document.querySelectorAll('list-filter').forEach(function (elem) {
+    var input = document.createElement('input');
+    var clear = document.createElement('button');
+    clear.innerHTML = "Clear";
+    elem.appendChild(input);
+    elem.appendChild(clear);
+
+    var list = document.querySelector(elem.dataset.list);
+    var items = list.querySelectorAll(elem.dataset.item);
+
+    input.addEventListener('keyup', function (event) {
+      search(input.value);
+    });
+
+    clear.addEventListener('click', function (event) {
+      // TODO: Add keyup trigger
+      input.value = '';
+      search('');
+    });
+
+    function search(text) {
+      items.forEach(function (item) {
+        var value = item.querySelector(elem.dataset.value);
+
+        // TODO: Replace with fuzzy search
+        var HIDDEN = 'hidden-by-filter';
+        if (value.innerHTML.toLowerCase().search(text.toLowerCase()) === -1) {
+          item.classList.add(HIDDEN);
+        } else {
+          item.classList.remove(HIDDEN);
+        }
+      });
+    }
+  });
+});
+
+/*
  * Adaptive nav
  * @see https://css-tricks.com/container-adapting-tabs-with-more-button/
  */
