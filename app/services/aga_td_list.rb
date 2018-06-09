@@ -41,7 +41,7 @@ class AgaTdList
   def self.fetch
     # Hit the AGA TD List for data in TSV format
     begin
-      Timeout.timeout(5) do
+      Timeout.timeout(15) do
         return open("https://www.usgo.org/mm/tdlista.txt", "r:UTF-8")
       end
     rescue Timeout::Error
