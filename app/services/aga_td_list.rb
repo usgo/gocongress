@@ -40,9 +40,10 @@ class AgaTdList
 
   def self.fetch
     # Hit the AGA TD List for data in TSV format
+    file = ''
     begin
-      Timeout.timeout(15) do
-        return open("https://www.usgo.org/mm/tdlista.txt", "r:UTF-8")
+      Timeout.timeout(60) do
+        file = open("https://www.usgo.org/mm/tdlista.txt") { |f| f.read }
       end
     rescue Timeout::Error
       # Fallback in case usgo.org is down.
@@ -50,11 +51,10 @@ class AgaTdList
 
       # Use a shortened version of the TD list. The full one is quite large!
       # Also, this one won't change over time, so our examples won't go out of date.
-      IO.foreach("./spec/fixtures/files/tdlista.txt") do |line|
-        tsv += line
-      end
-      return tsv
+      file = open("./spec/fixtures/files/tdlista.txt") { |f| f.read }
     end
+
+    return file
   end
 
   def self.parse(ids = nil)
