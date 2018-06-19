@@ -61,8 +61,6 @@ class AgaTdList
     Rails.cache.fetch(CACHE_KEY, :expires_in => 24.hours) do
       parsed_aga_member_info = {}
       tsv = fetch()
-      puts "tsv?"
-      puts tsv
       tsv.each_line do |line|
         values = line.split("\t")
 

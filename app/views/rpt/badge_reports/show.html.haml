@@ -1,0 +1,13 @@
+%h2= page_title
+
+- umnh = User.model_name.human
+- amnh = Attendee.model_name.human
+- csv_path = rpt_badge_report_path + '.csv'
+
+%p Generate a CSV specifically designed for generating event badges, using data merge functionality with InDesign, another comparable piece of software, or an online print shop.
+
+%p Most of the fields are relevant for every year, but you may want to use some specific dynamic plan information for your badges (banquet, &c), in which case this generator will need some hand curation by a developer.
+
+%h3 Export to CSV
+= form_tag(csv_path, :method => :get) do
+  %p= submit_tag "Export"
