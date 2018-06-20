@@ -15,7 +15,7 @@ class TwilioTextMessenger
         body: message
       })
     rescue
-      puts 'Invalid number'
+      return 'Invalid number'
     end
 
   end
