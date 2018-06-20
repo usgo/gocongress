@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.feature 'SMS notifications', :type => :feature do
   let(:password) { 'asdfasdf' }
   let(:admin) { create :admin, :password => password }
-  let!(:tournament) { create :tournament }
+  let!(:tournament) { create :tournament, name: "US Open"}
   let!(:round_one) { create :round, tournament: tournament }
   let!(:attendee_one) { create :ga_attendee_one }
   let!(:attendee_two) { create :ga_attendee_two }
