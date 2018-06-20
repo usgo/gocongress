@@ -7,11 +7,16 @@ class TwilioTextMessenger
   end
 
   def call
-    client = Twilio::REST::Client.new
-    client.messages.create({
-      from: ENV['TWILIO_PHONE_NUMBER'],
-      to: recipient,
-      body: message
-    })
+    begin
+      client = Twilio::REST::Client.new
+      client.messages.create({
+        from: ENV['TWILIO_PHONE_NUMBER'],
+        to: recipient,
+        body: message
+      })
+    rescue
+      puts 'Invalid number'
+    end
+
   end
 end
