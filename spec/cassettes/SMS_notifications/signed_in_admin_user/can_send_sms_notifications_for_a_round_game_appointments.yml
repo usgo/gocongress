@@ -1,0 +1,141 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.twilio.com/2010-04-01/Accounts/AC68c4bca1ff6e21bbea7e22e61a6e5f36/Messages.json
+    body:
+      encoding: UTF-8
+      string: Body=US+Open%2C+Round+1%3A+Amerigo+Vespucci+%28white%29+vs.+Amerigo+Vespucci+%28black%29+at+table+14+%28Building+6+Room+24%29.+Round+1+starts+at+16%3A06+pm.&From=12028834668&To=6122035280
+    headers:
+      User-Agent:
+      - twilio-ruby/5.9.0 (ruby/x86_64-darwin17 2.4.4-p296)
+      Accept-Charset:
+      - utf-8
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept:
+      - application/json
+      Authorization:
+      - Basic QUM2OGM0YmNhMWZmNmUyMWJiZWE3ZTIyZTYxYTZlNWYzNjoyMWI3NWZhNGQ2YTI0MDFjMGYyNTExZGQ4NjQxZWVlMw==
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 201
+      message: CREATED
+    headers:
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Headers:
+      - Accept, Authorization, Content-Type, If-Match, If-Modified-Since, If-None-Match,
+        If-Unmodified-Since
+      Access-Control-Allow-Methods:
+      - GET, POST, DELETE, OPTIONS
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - ETag
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Wed, 20 Jun 2018 20:10:28 GMT
+      Strict-Transport-Security:
+      - max-age=15768000
+      Twilio-Concurrent-Requests:
+      - '1'
+      Twilio-Request-Duration:
+      - '0.122'
+      Twilio-Request-Id:
+      - RQ9c75b918d70146848fa81c96edd2b71c
+      X-Powered-By:
+      - AT-5000
+      X-Shenanigans:
+      - none
+      Content-Length:
+      - '935'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"sid": "SMcac879f2fb3a4ccba0fdee58eff25f8f", "date_created": "Wed,
+        20 Jun 2018 20:10:28 +0000", "date_updated": "Wed, 20 Jun 2018 20:10:28 +0000",
+        "date_sent": null, "account_sid": "AC68c4bca1ff6e21bbea7e22e61a6e5f36", "to":
+        "+16122035280", "from": "+12028834668", "messaging_service_sid": null, "body":
+        "Sent from your Twilio trial account - US Open, Round 1: Amerigo Vespucci
+        (white) vs. Amerigo Vespucci (black) at table 14 (Building 6 Room 24). Round
+        1 starts at 16:06 pm.", "status": "queued", "num_segments": "2", "num_media":
+        "0", "direction": "outbound-api", "api_version": "2010-04-01", "price": null,
+        "price_unit": "USD", "error_code": null, "error_message": null, "uri": "/2010-04-01/Accounts/AC68c4bca1ff6e21bbea7e22e61a6e5f36/Messages/SMcac879f2fb3a4ccba0fdee58eff25f8f.json",
+        "subresource_uris": {"media": "/2010-04-01/Accounts/AC68c4bca1ff6e21bbea7e22e61a6e5f36/Messages/SMcac879f2fb3a4ccba0fdee58eff25f8f/Media.json"}}'
+    http_version: 
+  recorded_at: Wed, 20 Jun 2018 20:10:28 GMT
+- request:
+    method: post
+    uri: https://api.twilio.com/2010-04-01/Accounts/AC68c4bca1ff6e21bbea7e22e61a6e5f36/Messages.json
+    body:
+      encoding: UTF-8
+      string: Body=US+Open%2C+Round+1%3A+Amerigo+Vespucci+%28white%29+vs.+Amerigo+Vespucci+%28black%29+at+table+14+%28Building+6+Room+24%29.+Round+1+starts+at+16%3A06+pm.&From=12028834668&To=6122035280
+    headers:
+      User-Agent:
+      - twilio-ruby/5.9.0 (ruby/x86_64-darwin17 2.4.4-p296)
+      Accept-Charset:
+      - utf-8
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept:
+      - application/json
+      Authorization:
+      - Basic QUM2OGM0YmNhMWZmNmUyMWJiZWE3ZTIyZTYxYTZlNWYzNjoyMWI3NWZhNGQ2YTI0MDFjMGYyNTExZGQ4NjQxZWVlMw==
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 201
+      message: CREATED
+    headers:
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Headers:
+      - Accept, Authorization, Content-Type, If-Match, If-Modified-Since, If-None-Match,
+        If-Unmodified-Since
+      Access-Control-Allow-Methods:
+      - GET, POST, DELETE, OPTIONS
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - ETag
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Wed, 20 Jun 2018 20:10:29 GMT
+      Strict-Transport-Security:
+      - max-age=15768000
+      Twilio-Concurrent-Requests:
+      - '1'
+      Twilio-Request-Duration:
+      - '0.089'
+      Twilio-Request-Id:
+      - RQa5a4995ef6cb45e597acbe81f27e90da
+      X-Powered-By:
+      - AT-5000
+      X-Shenanigans:
+      - none
+      Content-Length:
+      - '935'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"sid": "SMff33891db2234477b7299e6194226240", "date_created": "Wed,
+        20 Jun 2018 20:10:29 +0000", "date_updated": "Wed, 20 Jun 2018 20:10:29 +0000",
+        "date_sent": null, "account_sid": "AC68c4bca1ff6e21bbea7e22e61a6e5f36", "to":
+        "+16122035280", "from": "+12028834668", "messaging_service_sid": null, "body":
+        "Sent from your Twilio trial account - US Open, Round 1: Amerigo Vespucci
+        (white) vs. Amerigo Vespucci (black) at table 14 (Building 6 Room 24). Round
+        1 starts at 16:06 pm.", "status": "queued", "num_segments": "2", "num_media":
+        "0", "direction": "outbound-api", "api_version": "2010-04-01", "price": null,
+        "price_unit": "USD", "error_code": null, "error_message": null, "uri": "/2010-04-01/Accounts/AC68c4bca1ff6e21bbea7e22e61a6e5f36/Messages/SMff33891db2234477b7299e6194226240.json",
+        "subresource_uris": {"media": "/2010-04-01/Accounts/AC68c4bca1ff6e21bbea7e22e61a6e5f36/Messages/SMff33891db2234477b7299e6194226240/Media.json"}}'
+    http_version: 
+  recorded_at: Wed, 20 Jun 2018 20:10:29 GMT
+recorded_with: VCR 4.0.0
