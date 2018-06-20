@@ -19,7 +19,7 @@ RSpec.feature 'SMS notifications', :type => :feature do
   end
   context 'signed in admin user' do
 
-    it 'can send sms notifications for a round game appointments' do
+    it 'can send sms notifications for a round game appointments', :vcr do
       click_link "Rounds"
       click_link "Show"
       click_button "Send SMS Notifications"
