@@ -104,10 +104,7 @@ class RoundsController < ApplicationController
   end
 
   def send_notification(attendee, tournament, round, game_appointment)
-    opponent = game_appointment.attendee_one == attendee ? game_appointment.attendee_two.full_name : game_appointment.attendee_one.full_name
     recipient = "#{attendee.local_phone}"
-    # message = "Hello #{attendee.full_name}. You are scheduled to play
-    #{opponent} in #{game_appointment.location} at #{game_appointment.time}."
 
     message = ""
     message += round.notification_message + " " unless round.notification_message.blank?
@@ -121,21 +118,8 @@ class RoundsController < ApplicationController
     message += " on #{round.start_time.strftime('%B %e, %Y')}" unless round.start_time.today?
     message += "."
 
-    puts recipient
-    puts message
     TwilioTextMessenger.new(message, recipient).call
 
-    #TODO Deal with errors from invalid phone numbers
-
-    # @twilio_number = ENV['TWILIO_NUMBER']
-    # account_sid = ENV['TWILIO_ACCOUNT_SID']
-    # @client = Twilio::REST::Client.new account_sid, ENV['TWILIO_AUTH_TOKEN']
-    #
-    # message = @client.api.account.messages.create(
-    #   :from => @twilio_number,
-    #   :to => recipient,
-    #   :body => message,
-    # )
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.
