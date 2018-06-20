@@ -21,9 +21,6 @@ RSpec.configure do |config|
       to_return(status: 200, body: tsv, headers: {})
   end
 
-  config.before(:each) do
-    stub_const("Twilio::REST::Client", FakeSMS)
-  end
   config.expect_with :rspec do |expectations|
     expectations.include_chain_clauses_in_custom_matcher_descriptions = true
   end
