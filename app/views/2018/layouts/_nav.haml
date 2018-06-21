@@ -40,13 +40,15 @@
       %li= link_to "Contact / Volunteer", contacts_path
 
   - if can_see_admin_menu?
-    %ul.nav-admin
-      %li= link_to "Users", users_path
-      %li= link_to "Attendees", list_attendees_path
-      %li= link_to "Transactions", transactions_path
-      %li= link_to Activity.model_name.human.pluralize, activity_categories_path
-      %li= link_to "Content", content_categories_path
-      %li= link_to "Reports", reports_path
-      %li= link_to "Settings", edit_year_path
-      %li= link_to "Shirts", shirts_path
-      %li= link_to "SMS Notifications", sms_notifications_path
+    .nav.adaptive-nav
+      %ul.nav-admin
+        %li= link_to "Users", users_path
+        %li= link_to "Attendees", list_attendees_path
+        %li= link_to "Check In", check_in_path
+        %li= link_to "Transactions", transactions_path
+        %li= link_to Activity.model_name.human.pluralize, activity_categories_path
+        %li= link_to "Content", content_categories_path
+        %li= link_to "Reports", reports_path
+        %li= link_to "Settings", edit_year_path
+        %li= link_to "Shirts", shirts_path
+        %li= link_to "SMS Notifications", sms_notifications_path
