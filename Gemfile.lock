@@ -130,6 +130,7 @@ GEM
     i18n (1.0.0)
       concurrent-ruby (~> 1.0)
     ipaddress (0.8.3)
+    iso_country_codes (0.7.8)
     jc-validates_timeliness (3.1.1)
       timeliness (~> 0.3.7)
     jquery-rails (4.3.1)
@@ -331,6 +332,7 @@ DEPENDENCIES
   fog-aws
   haml
   haml-rails
+  iso_country_codes
   jc-validates_timeliness
   jquery-rails
   kaminari
