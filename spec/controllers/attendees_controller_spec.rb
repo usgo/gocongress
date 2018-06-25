@@ -24,6 +24,32 @@ RSpec.describe AttendeesController, :type => :controller do
         expect(response).to be_forbidden
       end
     end
+
+    describe "#vip" do
+      it "lists registered pros" do
+        a1 = create :attendee, rank: 109
+        a2 = create :attendee, rank: 108
+        # 7 dans are not pros!
+        a3 = create :attendee, rank: 7
+
+        get :vip, params: { year: Time.current.year }
+
+        expect(assigns(:attendees).count).to be(2)
+      end
+
+      it "doesn't list cancelled pros" do
+        a1 = create :attendee, rank: 109
+        # Cancelled!
+        a2 = create :attendee, rank: 108, cancelled: true
+        # 7 dans are not pros!
+        a3 = create :attendee, rank: 7
+
+        get :vip, params: { year: Time.current.year }
+
+        expect(assigns(:attendees).count).to be(1)
+      end
+  end
+
   end
 
   context "as a user" do

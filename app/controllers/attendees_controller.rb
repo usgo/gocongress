@@ -32,6 +32,10 @@ class AttendeesController < ApplicationController
   end
 
   def vip
-    @attendees = Attendee.yr(@year).where('rank >= 101').order('rank desc')
+    @attendees = Attendee
+      .yr(@year)
+      .where(:cancelled => false)
+      .where('rank >= 101')
+      .order('rank desc')
   end
 end
