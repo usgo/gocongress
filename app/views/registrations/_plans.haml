@@ -19,19 +19,25 @@
   = link_to 'registrar.', contacts_path
 
 - if @registration.plans_by_category.count > 0
-  %table.semantic.fullwidth
-    %thead
-      %tr
-        %th
-        = render :partial => "plan_categories/plan_table_common_headers"
-    %tbody
-      - @registration.plans_by_category.each do |cat, plans|
+  - @registration.plans_by_category.each do |cat, plans|
+    %table.semantic.fullwidth.buffer-bottom
+      %thead
+        %tr{ class: 'category-name' }
+          %th{:colspan => 6}= cat.name
         - if cat.show_description?
           %tr{ class: 'description' }
             %td{:colspan => 6}= markdown_if_present(cat.description)
-        - if cat.extended_description?
-          %tr{ class: 'extended-description' }
-            %td{:colspan => 6}= markdown_if_present(cat.extended_description)
+
+          - if cat.extended_description?
+            %tr{ class: 'extended-description' }
+              %td{:colspan => 6}
+                %a{:class => 'extended-description', :href => '#'} More Details &raquo;
+                %div{:class => 'extended-description-content', :style => 'display: none;'}
+                  = markdown_if_present(cat.extended_description)
+        %tr
+          %th
+            = render :partial => "plan_categories/plan_table_common_headers"
+      %tbody
         - if !cat.mandatory and cat.single
           -# Provide "No Selection" option for non-mandatory, single-value plans
           = render :partial => "plan_categories/plan_table_plan_row", :locals => { :category => cat }
@@ -42,5 +48,16 @@
             = render :partial => "plan_categories/plan_table_plan_row", :locals => { :plan => plan }
           - if plan.age_min <= 17 && plan.age_max.blank?
             = render :partial => "plan_categories/plan_table_plan_row", :locals => { :plan => plan }
+
+:javascript
+  // Provide "More details" button for extended descriptions
+  $("a.extended-description").click(function(event) {
+    event.preventDefault();
+    var $target = $(event.target);
+    var $extendedDescription = $target.next('.extended-description-content');
+
+    $target.hide();
+    $extendedDescription.fadeIn('fast');
+  });
 
 = render :partial => "plan_categories/explain_availability"
