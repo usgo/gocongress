@@ -15,10 +15,8 @@ class GameAppointment::Import
       if (appointment['roundNumber'].to_i == round.number)
         game_appointment = GameAppointment::assign_from_hash(round, appointment)
         if game_appointment.save
-          # TODO: Use this imported count somewhere
           @imported_count += 1
         else
-          # TODO: Figure out why these errors don't display
           errors.add(:base, "Line #{$.} #{game_appointment.errors.full_messages.join(",")}")
         end
       end
