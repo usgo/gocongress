@@ -62,8 +62,8 @@ class GameAppointmentsController < ApplicationController
     if @import.save
       redirect_to round_path(@round.id), notice: "Imported #{@import.imported_count} game appointments"
     else
-      flash[:alert] = "There were #{@import.errors.count} errors with your import"
-      redirect_to round_path(@round.id), notice: "There were errors with your XML file: #{@import.errors.full_messages.join(', ')}"
+      count = @import.errors.count
+      redirect_to round_path(@round.id), notice: "There were #{count} errors with your XML file: "
     end
   end
 
