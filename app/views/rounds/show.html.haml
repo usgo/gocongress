@@ -1,12 +1,18 @@
 %h2 #{@round.tournament.name}, Round #{@round.number}
 %time{datetime: @round.start_time} #{@round.start_time.strftime('%B %e, %Y at %l:%M %p')}
-%h3 Reminder Preview: This is where we can show a preview of the message and allow it to be edited?
+
 
 = form_for @round, url: { action: "update_notification_message" } do |f|
-  = f.text_area :notification_message
-  = f.submit "Update"
+  %fieldset
 
-= button_to "Send SMS Notifications", send_sms_notifications_round_path(@round)
+    .field
+      = f.label :notification_message
+      = f.text_area :notification_message, :class => 'wide', :rows => 1
+
+
+    = f.submit "Add notification message", :class => 'button button-large save'
+
+= button_to "Send SMS Notifications for all round games", send_sms_notifications_round_path(@round), :class => 'button button-large'
 %br
 %table.semantic.fullwidth.zebra
   %thead
