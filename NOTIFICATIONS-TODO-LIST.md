@@ -2,84 +2,77 @@
 
 ### Game Appointments
 
-* [x] add tournament relationship
-* [x] change opponent to reference attendee
-* [x] add round model
-* [x] tournaments have many rounds
+- [x] add tournament relationship
+- [x] change opponent to reference attendee
+- [x] add round model
+- [x] tournaments have many rounds
 
 ### Game Appointment import
 
-* [x] xml parsing using nokogiri
-* [x] assign round on import
+- [x] xml parsing using nokogiri
+- [x] assign round on import
+- [ ] send a message to bye players
+- [ ] capture error messages without cookie overflow
+      error
+- [ ] remove requiring location
+- [ ] write automated tests
 
 ### SMS Update
 
-* [x] change sms-opt-in to be an attribute of attendee
-* [] migrate sms-plan to the attendee sms-opt-in attribute
+- [x] change sms-opt-in to be an attribute of attendee
+- [x] migrate sms-plan to the attendee sms-opt-in attribute
 
-  * Here is a script to do the migration:
-
-  ```ruby
-     # select all the Attendee's with a "Yes! SMS!" plan
-     awp = Attendee.select('attendees.id, attendees.phone, attendees.local_phone').joins(:plans).where('plans.name = ?', "Yes! SMS!")
-
-     # iterate through them and set receive_sms to true
-     awp.each do |a|
-       a.update_attribute :receive_sms, true
-     end
-  ```
-
-* disable the plan
-* use git cherry-pick to create seperate branch for just the receive_sms flag
-* pr for that branch needs to have commits and migration for that field
+* [x] disable the plan
+* [x] use git cherry-pick to create seperate branch for just the receive_sms flag
+* [x] pr for that branch needs to have commits and migration for that field
 
 ### Views
 
-* [x] list appointments by round
-* [x] list of rounds by tournaments
-* preview notifications
-* [x] one button round game appointment notifications
+- [x] list appointments by round
+- [x] list of rounds by tournaments
+- preview notifications
+- [x] one button round game appointment notifications
 
 ### SMS functions
 
-* ability to send a stop sending sms message to go-congress app that turns off notifications
-* research ability to turn off sms to specific #'s
+- ability to send a stop sending sms message to go-congress app that turns off notifications
+- research ability to turn off sms to specific #'s
 
 ### User Stories
 
-* [x] A user can view and select rounds by tournament
+- [x] A user can view and select rounds by tournament
 
-  * Given: a tournament and round for that tournament
-  * When: A user navigates to the rounds_path
-  * Then: A user can see a list of rounds and select a round to view game_appointments
+  - Given: a tournament and round for that tournament
+  - When: A user navigates to the rounds_path
+  - Then: A user can see a list of rounds and select a round to view game_appointments
 
-* A user can preview game appointment sms-notification messages before sending them
+- A user can preview game appointment sms-notification messages before sending them
 
-  * Given: Game Appointments List
-  * When: A user clicks preview messages
-  * Then: The user is shown the message to be sent
+  - Given: Game Appointments List
+  - When: A user clicks preview messages
+  - Then: The user is shown the message to be sent
 
-* [x] A user can send sms notifications for a tournament round's game appointments
+- [x] A user can send sms notifications for a tournament round's game appointments
 
-  * Given: A round with several game appointments
-  * When: A user clicks "send sms notifications"
-  * Then: Texts are sent to each attendee with `receive_sms: true` with the game appointment details
+  - Given: A round with several game appointments
+  - When: A user clicks "send sms notifications"
+  - Then: Texts are sent to each attendee with `receive_sms: true` with the game appointment details
 
-* [x] A user can opt to receive sms notifications on the attendee form
-  * Given: An attendee form with a receive sms option
-  * When: The user fills out the form and checks the receive sms option
-  * Then: The receive_sms attribute is set to true and a local phone number is required
+- [x] A user can opt to receive sms notifications on the attendee form
+  - Given: An attendee form with a receive sms option
+  - When: The user fills out the form and checks the receive sms option
+  - Then: The receive_sms attribute is set to true and a local phone number is required
 
 ### Refactoring TODO's:
 
-* Move the send_sms_notifications into a workflow object
-* Add an editable preview message form
-* Add tests
-* Improve UI
-* [x] Add edit view and action to rounds
-* make a form for adding rounds with a game
-* [x] prevent duplicate round numbers for a tournament
-* [x] Remove timezone migration for game appointments
+- Move the send_sms_notifications into a workflow object
+- Add an editable preview message form
+- Add tests
+- Improve UI
+- [x] Add edit view and action to rounds
+- make a form for adding rounds with a game
+- [x] prevent duplicate round numbers for a tournament
+- [x] Remove timezone migration for game appointments
 
-* remove sms_notifications
-* send an sms for verification on submit of attendee reg form
+- remove sms_notifications
+- send an sms for verification on submit of attendee reg form
