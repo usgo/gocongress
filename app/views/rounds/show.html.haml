@@ -1,56 +1,51 @@
 %h2 #{@round.tournament.name}, Round #{@round.number}
 %time{datetime: @round.start_time} #{@round.start_time.strftime('%B %e, %Y at %l:%M %p')}
-<<<<<<< HEAD
+
+- if current_user && current_user.admin?
+  = form_for @round, url: { action: "update_notification_message" } do |f|
+    %fieldset
+
+      .field
+        = f.label :notification_message
+        = f.text_area :notification_message, :class => 'wide', :rows => 1
 
 
-= form_for @round, url: { action: "update_notification_message" } do |f|
-  %fieldset
+      = f.submit "Add notification message", :class => 'button button-large save'
 
-    .field
-      = f.label :notification_message
-      = f.text_area :notification_message, :class => 'wide', :rows => 1
-
-
-    = f.submit "Add notification message", :class => 'button button-large save'
-
-= button_to "Send SMS Notifications for all round games", send_sms_notifications_round_path(@round), :class => 'button button-large'
-=======
-%h3 Reminder Preview: This is where we can show a preview of the message and allow it to be edited?
-
-= form_for @round, url: { action: "update_notification_message" } do |f|
-  = f.text_area :notification_message
-  = f.submit "Update"
-
-= button_to "Send SMS Notifications", send_sms_notifications_round_path(@round)
->>>>>>> Change "reminder" to "notification"
+  = button_to "Send SMS Notifications for all round games", send_sms_notifications_round_path(@round), :class => 'button button-large'
 %br
 %table.semantic.fullwidth.zebra
   %thead
     %tr
       %th= GameAppointment.human_attribute_name(:table)
-      %th= GameAppointment.human_attribute_name(:attendee_one)
-      %th= GameAppointment.human_attribute_name(:attendee_two)
+      %th= GameAppointment.human_attribute_name(:white_player)
+      %th= GameAppointment.human_attribute_name(:black_player)
+      %th= GameAppointment.human_attribute_name(:handicap)
+      %th= GameAppointment.human_attribute_name(:result)
       %th= GameAppointment.human_attribute_name(:location)
   %tbody
     - @round.game_appointments.each do |game_appointment|
-      %tr
+      %tr{id: "game_appointment_#{game_appointment.id}"}
         %td= link_to game_appointment.table, edit_game_appointment_path(game_appointment)
         %td{:class => game_appointment.attendee_one.receive_sms ? "sms_enabled" : "sms_disabled" }
-          = game_appointment.attendee_one.full_name
+          = game_appointment.white_player.full_name
         %td{:class => game_appointment.attendee_two.receive_sms ? "sms_enabled" : "sms_disabled" }
-          = game_appointment.attendee_two.full_name
+          = game_appointment.black_player.full_name
+        %td= game_appointment.handicap
+        %td= game_appointment.result
         %td= game_appointment.location
 
 %br
-= button_to "Delete All", delete_all_game_appointments_round_path(@round),
-  :method => :post,
-  :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure? This will delete ALL appointments in this round.')) }
+- if current_user && current_user.admin?
+  = button_to "Delete All", delete_all_game_appointments_round_path(@round),
+    :method => :post,
+    :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure? This will delete ALL appointments in this round.')) }
 
-= form_for @import, url: import_game_appointments_path, multipart: true do |f|
-  %fieldset
-    %h2 Import Game Appointments
-    .field
-      = f.hidden_field :round, name: "game_appointment_import[round_id]", value: "#{@round.id}"
-    .field
-      = f.file_field :file
-      = f.submit "Upload"
+  = form_for @import, url: import_game_appointments_path, multipart: true do |f|
+    %fieldset
+      %h2 Import Game Appointments
+      .field
+        = f.hidden_field :round, name: "game_appointment_import[round_id]", value: "#{@round.id}"
+      .field
+        = f.file_field :file
+        = f.submit "Upload"
