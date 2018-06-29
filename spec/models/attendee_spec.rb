@@ -113,22 +113,38 @@ RSpec.describe Attendee, :type => :model do
       expect(a).to be_valid
     end
 
-    it 'Attendee required to have a local phone if receive_sms_true' do
-      a.receive_sms = true
-      a.local_phone = nil
-      expect(a).to have_error_about :local_phone
-    end
+    context 'receive_sms set to true' do
 
-    it 'Attendee local_phone only contains integers if receive_sms_true' do
-      a.receive_sms = true
-      a.local_phone = "mygreatstring"
-      expect(a).to have_error_about :local_phone
-    end
+      it 'Attendee required to have a local phone' do
+        a.receive_sms = true
+        a.local_phone = nil
+        expect(a).to have_error_about :local_phone
+      end
 
-    it 'Attendee local_phone has exactly 10 characters if receive_sms_true' do
-      a.receive_sms = true
-      a.local_phone = "1231231234568"
-      expect(a).to have_error_about :local_phone
+      it 'Attendee local_phone only contains integers' do
+        a.receive_sms = true
+        a.local_phone = "1612203r456"
+        expect(a).to have_error_about :local_phone
+      end
+
+      it 'Attendee local_phone is invalid if missing country code' do
+        a.receive_sms = true
+        a.local_phone = "6122035220" # no country code
+        expect(a).to have_error_about :local_phone
+      end
+
+      it 'Attendee local_phone is valid with international country code ' do
+        a.receive_sms = true
+        a.local_phone = "44-20718-38750" # valid number
+        expect(a).to be_valid
+      end
+
+      it 'Attendee local_phone is valid with international country code' do
+        a.receive_sms = true
+        a.local_phone = "551155256325" # example number from Twilio docs
+        expect(a).to be_valid
+      end
+
     end
 
     it 'country must be two capital lettters' do

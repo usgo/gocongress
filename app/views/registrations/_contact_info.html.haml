@@ -1,7 +1,7 @@
 %fieldset
   .field
     = f.label :phone
-    = f.text_field :phone
+    = f.telephone_field :phone
   .field
     = f.label :receive_sms, 'Text Notifications'
     %div
@@ -13,11 +13,11 @@
         Don't Send Me Any Text Messages
   .field
     = f.label :local_phone
-    = f.text_field :local_phone
+    = f.telephone_field :local_phone
     %span.smalltext (A U.S. phone number is required to receive notifications during the Congress. Enter 10 digits with no spaces or dashes. Message and data rates may apply.)
   .field
     = f.label :email
-    = f.text_field :email
+    = f.email_field :email
 
   -# ISO 3166-1 alpha-2
   .field
