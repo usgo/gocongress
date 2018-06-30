@@ -2,7 +2,6 @@ require "invoice_item"
 
 class Attendee < ApplicationRecord
   include YearlyModel
-  PHONE_REGEX = /\A[0-9]*/
   # Associations
   # ------------
 
@@ -39,7 +38,6 @@ class Attendee < ApplicationRecord
             if: Proc.new { |a| a.receive_sms },
             presence: true,
             phone: true
-
   validates :minor_agreement_received, :inclusion => {:in => [true, false]}
   validates :checked_in, :inclusion => {:in => [true, false]}
   validates :rank,

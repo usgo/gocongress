@@ -141,7 +141,13 @@ RSpec.describe Attendee, :type => :model do
 
       it 'Attendee local_phone is valid with international country code' do
         a.receive_sms = true
-        a.local_phone = "551155256325" # example number from Twilio docs
+        a.local_phone = "+551155256325" # example number from Twilio docs
+        expect(a).to be_valid
+      end
+
+      it 'Attendee local_phone is valid with international country code' do
+        a.receive_sms = true
+        a.local_phone = "+16122035280" # example number from Twilio docs
         expect(a).to be_valid
       end
 

@@ -1,7 +1,7 @@
 %fieldset
   .field
-    = f.label :phone
-    = f.telephone_field :phone
+    = f.label :phone, "Home Phone"
+    = f.telephone_field :phone, value: f.object.phone, data: { intl_phone: "true"}
   .field
     = f.label :receive_sms, 'Text Notifications'
     %div
@@ -12,9 +12,9 @@
         = f.radio_button :receive_sms, false
         Don't Send Me Any Text Messages
   .field
-    = f.label :local_phone
-    = f.telephone_field :local_phone
-    %span.smalltext (A U.S. phone number is required to receive notifications during the Congress. Enter 10 digits with no spaces or dashes. Message and data rates may apply.)
+    = f.label :local_phone, "Phone at Congress"
+    = f.telephone_field :local_phone, value: f.object.local_phone, data: { intl_phone: "true"}
+    %span.smalltext (This is the number you will receive text messsages at during the US Go Congress. Message and data rates may apply.)
   .field
     = f.label :email
     = f.email_field :email

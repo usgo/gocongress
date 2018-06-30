@@ -129,6 +129,9 @@ GEM
       ruby_parser (~> 3.5)
     i18n (1.0.0)
       concurrent-ruby (~> 1.0)
+    intl-tel-input-rails (12.3.0)
+      railties (>= 3.1)
+      sass-rails
     ipaddress (0.8.3)
     iso_country_codes (0.7.8)
     jc-validates_timeliness (3.1.1)
@@ -333,6 +336,7 @@ DEPENDENCIES
   fog-aws
   haml
   haml-rails
+  intl-tel-input-rails
   iso_country_codes
   jc-validates_timeliness
   jquery-rails

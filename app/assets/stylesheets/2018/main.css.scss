@@ -4,7 +4,7 @@
 @import "../mixins/breakpoint";
 @import "../modules/adaptive-nav";
 @import "colonial-bullets";
-
+@import "intlTelInput";
 @import url("https://fonts.googleapis.com/css?family=Cormorant+Garamond");
 
 @font-face {
@@ -46,6 +46,28 @@ body {
   }
   transform: translateX(-50%);
   z-index: 2;
+}
+
+.hide {
+  display: none;
+}
+
+.valid,
+.error {
+  margin: 0 0 1em;
+  transition: all 0.2s;
+  max-height: 30px;
+}
+.valid {
+  color: rgb(72, 224, 0);
+}
+
+.error {
+  color: red;
+}
+
+.error-border {
+  border: 1px solid #ff7c7c;
 }
 
 #header.home {
@@ -428,7 +450,8 @@ table {
     border-collapse: collapse;
     cell-spacing: 10px;
 
-    th, td {
+    th,
+    td {
       padding: 0.5em;
     }
 
@@ -497,7 +520,8 @@ table {
       }
     }
 
-    .description, .extended-description {
+    .description,
+    .extended-description {
       td {
         background: hsla(0, 0%, 100%, 0.5);
         padding: 10px 20px;
@@ -510,8 +534,6 @@ table {
           margin-bottom: 0;
         }
       }
-
-
     }
     .description {
       td {
@@ -876,29 +898,53 @@ $breakpoint: nth($breakpoints, 1);
  * .flex-sm-{grow|shrink}-0
  * .flex-sm-{grow|shrink}-1
  */
-.flex-grow-0 { flex-grow: 0 }
-.flex-grow-1 { flex-grow: 1 }
-.flex-shrink-0 { flex-shrink: 0 }
-.flex-shrink-1 { flex-shrink: 1 }
+.flex-grow-0 {
+  flex-grow: 0;
+}
+.flex-grow-1 {
+  flex-grow: 1;
+}
+.flex-shrink-0 {
+  flex-shrink: 0;
+}
+.flex-shrink-1 {
+  flex-shrink: 1;
+}
 
 $breakpoints: map-keys($breakpoint-stops);
 
 $breakpoint: nth($breakpoints, 1);
 @include breakpoint("#{$breakpoint}") {
-  .flex-#{$breakpoint}-grow-0 { flex-grow: 0; }
-  .flex-#{$breakpoint}-grow-1 { flex-grow: 0; }
-  .flex-#{$breakpoint}-shrink-0 { flex-shrink: 0; }
-  .flex-#{$breakpoint}-shrink-1 { flex-shrink: 1; }
+  .flex-#{$breakpoint}-grow-0 {
+    flex-grow: 0;
+  }
+  .flex-#{$breakpoint}-grow-1 {
+    flex-grow: 0;
+  }
+  .flex-#{$breakpoint}-shrink-0 {
+    flex-shrink: 0;
+  }
+  .flex-#{$breakpoint}-shrink-1 {
+    flex-shrink: 1;
+  }
 }
 
 @for $i from 2 through length($breakpoints) {
   $breakpoint: nth($breakpoints, $i);
   $previous-breakpoint: nth($breakpoints, $i - 1);
   @include breakpoint("gt-#{$previous-breakpoint}") {
-    .flex-#{$breakpoint}-grow-0 { flex-grow: 0; }
-    .flex-#{$breakpoint}-grow-1 { flex-grow: 0; }
-    .flex-#{$breakpoint}-shrink-0 { flex-shrink: 0; }
-    .flex-#{$breakpoint}-shrink-1 { flex-shrink: 1; }
+    .flex-#{$breakpoint}-grow-0 {
+      flex-grow: 0;
+    }
+    .flex-#{$breakpoint}-grow-1 {
+      flex-grow: 0;
+    }
+    .flex-#{$breakpoint}-shrink-0 {
+      flex-shrink: 0;
+    }
+    .flex-#{$breakpoint}-shrink-1 {
+      flex-shrink: 1;
+    }
   }
 }
 
@@ -1015,7 +1061,6 @@ list-filter {
     margin-right: 1em;
   }
   button {
-
   }
 }
 
@@ -1039,7 +1084,8 @@ list-filter {
     }
   }
 
-  .th, .td {
+  .th,
+  .td {
     align-items: center;
     display: flex;
     padding: 0.5em;
@@ -1057,7 +1103,6 @@ list-filter {
     }
   }
 }
-
 
 .check-in-list {
   .user {
@@ -1087,11 +1132,15 @@ list-filter {
   }
 
   @include breakpoint(lt-md) {
-    .check-in-button { display: none; }
+    .check-in-button {
+      display: none;
+    }
   }
 
   @include breakpoint(gt-sm) {
-    .mini-check-in-button { display: none; }
+    .mini-check-in-button {
+      display: none;
+    }
   }
 
   .row.cleared {
