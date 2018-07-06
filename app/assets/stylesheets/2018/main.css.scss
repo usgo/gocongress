@@ -1141,3 +1141,45 @@ input[type="radio"] {
 a.extended-description {
   text-decoration: none;
 }
+
+/* Make an elegant, labeled list, good for mobile views */
+table.labeled-list {
+  $color-th: hsl(0, 0%, 20%);
+  $color-td: hsl(0, 0%, 70%);
+
+  border-collapse: collapse;
+
+  th, td {
+    line-height: 1;
+    padding: 5px;
+  }
+
+  th {
+    color: $color-th;
+    font: {
+      family: boswell;
+      weight: normal;
+    }
+    text-align: right;
+  }
+
+  td {
+    color: $color-td;
+    font: {
+      size: 48px;
+    }
+    text-align: left;
+  }
+
+  .de-emphasize {
+    td {
+      color: lighten($color-td, 20%);
+    }
+  }
+
+  .total {
+    th, td {
+      border-top: 5px solid hsl(0, 0%, 20%);
+    }
+  }
+}

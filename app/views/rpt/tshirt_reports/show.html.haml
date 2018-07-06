@@ -1,0 +1,49 @@
+%h2= page_title
+
+%p T-shirt size quantities for all active attendees.
+
+%table.labeled-list
+	%tbody
+		%tr.de-emphasize
+			%th None
+			%td= @sizes['NO']
+
+		%tr
+			%th Youth Small
+			%td= @sizes['YS']
+
+		%tr
+			%th Youth Medium
+			%td= @sizes['YM']
+
+		%tr
+			%th Youth Large
+			%td= @sizes['YL']
+
+		%tr
+			%th Adult Small
+			%td= @sizes['AS']
+
+		%tr
+			%th Adult Medium
+			%td= @sizes['AM']
+
+		%tr
+			%th Adult Large
+			%td= @sizes['AL']
+
+		%tr
+			%th Adult X-Large
+			%td= @sizes['1X']
+
+		%tr
+			%th Adult XX-Large
+			%td= @sizes['2X']
+
+		%tr
+			%th Adult XXX-Large
+			%td= @sizes['3X']
+
+		%tr.total
+			%th Total Shirts
+			%td= @total_shirts

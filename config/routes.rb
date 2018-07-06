@@ -94,6 +94,7 @@ Gocongress::Application.routes.draw do
           resource :attendeeless_user_report, :only => :show
           resource :outstanding_balance_report, :only => :show
           resource :minor_agreements_report, :only => :show
+          resource :tshirt_report, :only => :show
 
           # These reports support CSV format
           constraints :format => /(csv)?/ do

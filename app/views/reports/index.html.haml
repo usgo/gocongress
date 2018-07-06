@@ -13,7 +13,6 @@
   %li= link_to "Attendees", rpt_attendee_report_path
   %li= link_to "Users with No Attendees", rpt_attendeeless_user_report_path
   %li= link_to "Minor Agreements Report", rpt_minor_agreements_report_path
-  %li= link_to "Badges", rpt_badge_report_path
 
 %h3 Plans
 %ul
@@ -34,6 +33,12 @@
 %h3 Activities
 %ul
   %li= link_to Activity.model_name.human.pluralize, activities_reports_path
+
+%h3 Items
+%ul
+  %li= link_to "Badges", rpt_badge_report_path
+  %li= link_to "T-Shirt Sizes", rpt_tshirt_report_path
+
 
 %h3 Printable Documents
 %ul
