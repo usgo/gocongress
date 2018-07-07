@@ -129,6 +129,9 @@ GEM
       ruby_parser (~> 3.5)
     i18n (1.0.0)
       concurrent-ruby (~> 1.0)
+    intl-tel-input-rails (12.3.0)
+      railties (>= 3.1)
+      sass-rails
     ipaddress (0.8.3)
     iso_country_codes (0.7.8)
     jc-validates_timeliness (3.1.1)
@@ -176,6 +179,7 @@ GEM
     parser (2.5.0.2)
       ast (~> 2.4.0)
     pg (0.21.0)
+    phonelib (0.6.22)
     powerpack (0.1.1)
     public_suffix (3.0.2)
     rack (2.0.5)
@@ -332,6 +336,7 @@ DEPENDENCIES
   fog-aws
   haml
   haml-rails
+  intl-tel-input-rails
   iso_country_codes
   jc-validates_timeliness
   jquery-rails
@@ -339,6 +344,7 @@ DEPENDENCIES
   launchy
   meta_request
   pg (< 1.0)
+  phonelib
   rails (= 5.0.7)
   rails-controller-testing
   rails_12factor
