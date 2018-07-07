@@ -14,7 +14,7 @@
   .field
     = f.label :local_phone, "Phone at Congress"
     = f.telephone_field :local_phone, value: f.object.local_phone, data: { intl_phone: "true"}
-    %span.smalltext (This is the number you will receive text messsages at during the US Go Congress. Message and data rates may apply.)
+    %span.smalltext (This is the number for receiving text messages during the US Go Congress. Message and data rates may apply.)
   .field
     = f.label :email
     = f.email_field :email
