@@ -37,7 +37,7 @@ class GameAppointment < ApplicationRecord
     game_appointment.year = round.year
 
     tournament = Tournament.find(round.tournament_id)
-    game_appointment.location = tournament.location
+    game_appointment.location = tournament.location.empty? ? "location has not been specified" : tournament.location
 
     game_appointment
   end
