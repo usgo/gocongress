@@ -64,7 +64,8 @@ class GameAppointmentsController < ApplicationController
       redirect_to round_path(@round.id), notice: "Imported #{@import.imported_count} game appointments"
     else
       count = @import.errors.count
-      redirect_to round_path(@round.id), notice: "There were #{count} errors with your XML file: "
+      error_messages = @import.errors.full_messages
+      redirect_to round_path(@round.id), notice: "There were #{count} errors with your XML file. The first five: #{error_messages.first(5)} "
     end
   end
 
