@@ -26,7 +26,7 @@ FactoryBot.define do
 
   factory :ga_attendee_two, parent: :attendee do
     receive_sms true
-    aga_id "12345"
+    aga_id "12346"
     local_phone "6122035280"
   end
 
