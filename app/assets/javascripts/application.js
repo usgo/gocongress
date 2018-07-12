@@ -15,6 +15,7 @@ only has autocomplete, datepicker, and dialog. -Jared 2012-07-09 */
 //= require svgxuse.js
 //= require intlTelInput
 //= require libphonenumber/utils
+
 /* TODO: We only need the galleria stuff on the homepage. Hiding
 this on other pages could improve page speed -Jared 2011.2.3 */
 //= require galleria/galleria-1.2.8.min.js
@@ -30,7 +31,7 @@ function intlTelFunction() {
         .text("Invalid number"),
       $validMsg = $("<span />")
         .addClass("valid hide smalltext")
-        .text("✓ Valid");
+        .html('✓&nbsp;Valid');
 
     $phoneInput.attr("name", name + "_input");
     $phoneInput.after($validMsg);
@@ -39,23 +40,52 @@ function intlTelFunction() {
     $phoneInput.intlTelInput({
       initialCountry: "auto",
       geoIpLookup: function(callback) {
+        var $this = $(this);
+
         $.get("https://ipinfo.io", function() {}, "jsonp").always(function(
           resp
         ) {
           var countryCode = resp && resp.country ? resp.country : "";
+
+          // When we get the country code, loop through all of the phone inputs
+          // and see if they have a current value, but not a country code
+          $phoneInputCollection.each(function(i, item) {
+            var $phoneInput = $(item);
+            var currentNum = $phoneInput
+              .intlTelInput('getNumber')
+              .replace(/[\(\)\-\.\+]/g, '');
+
+            var selectedCountry = $phoneInput.intlTelInput('getSelectedCountryData');
+
+            if (currentNum) {
+              // If it looks like a domestic number
+              if (currentNum.length === 10) {
+                if (!selectedCountry.length) {
+                  $phoneInput.intlTelInput('setCountry', countryCode);
+                }
+                $phoneInput.intlTelInput('setNumber', currentNum);
+              } else {
+                $phoneInput.intlTelInput('setNumber', '+' + currentNum)
+              }
+              $phoneInput.trigger('blur');
+            }
+          });
+
           callback(countryCode);
         });
       },
       hiddenInput: hiddenInputName,
       nationalMode: true,
-      formatOnInit: true,
-      separateDialCode: true
+      formatOnDisplay: true,
+      autoPlaceholder: 'polite'
     });
+
     var reset = function() {
       $errorMsg.addClass("hide");
       $validMsg.addClass("hide");
       $phoneInput.removeClass("error-border");
     };
+
     // on blur: validate
     $phoneInput.blur(function() {
       reset();
@@ -68,10 +98,12 @@ function intlTelFunction() {
         }
       }
     });
+
     // on keyup / change flag: reset
     $phoneInput.on("keyup change", reset);
   });
 }
+
 $(intlTelFunction);
 
 // check for text areas with a maxlength prop
