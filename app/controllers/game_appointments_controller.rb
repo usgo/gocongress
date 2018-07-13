@@ -3,8 +3,8 @@ class GameAppointmentsController < ApplicationController
 
   load_resource
   add_filter_to_set_resource_year
-  # authorize_resource # TODO: fix authorization to use this
-  # add_filter_restricting_resources_to_year_in_route
+  authorize_resource
+  add_filter_restricting_resources_to_year_in_route
 
   before_action :find_game_appointment , only: [:show, :edit, :update, :destroy]
 
