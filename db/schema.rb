@@ -156,7 +156,9 @@ ActiveRecord::Schema.define(version: 20180524165637) do
     t.integer  "attendee_one_id"
     t.integer  "attendee_two_id"
     t.integer  "round_id"
-    t.string   "table",           null: false
+    t.integer  "table",           null: false
+    t.string   "result"
+    t.integer  "handicap"
     t.index ["attendee_one_id"], name: "index_game_appointments_on_attendee_one_id", using: :btree
     t.index ["attendee_two_id"], name: "index_game_appointments_on_attendee_two_id", using: :btree
     t.index ["round_id"], name: "index_game_appointments_on_round_id", using: :btree
