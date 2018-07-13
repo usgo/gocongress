@@ -8,7 +8,7 @@ RSpec.describe "show tournament round pairings" do
     let!(:game_one) { create(:game_appointment, round: round) }   
     let!(:game_two) { create(:game_appointment, round: round) }   
     let!(:game_three) { create(:game_appointment, round: round) }   
-    fit "can navigate to a page showing the games for a tournament" do
+    it "can navigate to a page showing the games for a tournament" do
       round_link = "Round #{round.number}"
       visit tournament_path(tournament, year: tournament.year)
       click_on(round_link)
