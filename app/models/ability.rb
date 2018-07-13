@@ -48,7 +48,7 @@ class Ability
 
     # Guests can read public resources, but cannot write anything
     can :read, [Contact, Content, ContentCategory, Activity,
-      Shirt, Tournament, PlanCategory]
+      Shirt, Tournament, PlanCategory, Round, GameAppointment]
 
     # Guests can show (but not index) the following:
     can :show, ActivityCategory
