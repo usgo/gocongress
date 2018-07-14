@@ -63,9 +63,8 @@ class GameAppointmentsController < ApplicationController
     if @import.save
       redirect_to round_path(@round.id), notice: "Imported #{@import.imported_count} game appointments"
     else
-      count = @import.errors.count
       error_messages = @import.errors.full_messages
-      redirect_to round_path(@round.id), notice: "There were #{count} errors with your XML file. The first five: #{error_messages.first(5)} "
+      redirect_to round_path(@round.id), alert: "File Upload failed with the following errors: #{error_messages} "
     end
   end
 
