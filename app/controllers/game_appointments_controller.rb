@@ -40,7 +40,6 @@ class GameAppointmentsController < ApplicationController
         format.json { render :index, status: :ok, location: @game_appointment }
       else
         format.html { render :edit }
-        # format.json { render json: @game_appointment.errors, status: :unprocessable_entity }
 
       end
     end
