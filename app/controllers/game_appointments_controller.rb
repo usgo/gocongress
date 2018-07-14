@@ -90,6 +90,6 @@ class GameAppointmentsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def game_appointment_params
-    params.require(:game_appointment).permit(:round_id, :attendee_one_id, :attendee_two_id, :location, :table, :time)
+    params.require(:game_appointment).permit(:round_id, :attendee_one_id, :attendee_two_id, :handicap, :result, :location, :table, :time)
   end
 end
