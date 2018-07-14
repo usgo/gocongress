@@ -5,6 +5,7 @@ FactoryBot.define do
     description "blah"
     directors "blah"
     openness "O"
+    location ""
     year Time.now.year
   end
 end
