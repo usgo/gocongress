@@ -162,6 +162,13 @@ ActiveRecord::Schema.define(version: 20180524165637) do
     t.index ["attendee_one_id"], name: "index_game_appointments_on_attendee_one_id", using: :btree
     t.index ["attendee_two_id"], name: "index_game_appointments_on_attendee_two_id", using: :btree
     t.index ["round_id"], name: "index_game_appointments_on_round_id", using: :btree
+  end
+
+  create_table "jobs", force: :cascade do |t|
+    t.string   "jobname"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "plan_categories", force: :cascade do |t|
     t.string   "name",                 limit: 255,                 null: false
