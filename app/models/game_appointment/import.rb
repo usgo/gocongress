@@ -2,17 +2,22 @@ class GameAppointment::Import
   include ActiveModel::Model
   attr_accessor :file, :imported_count, :round_id
 
+  def initialize(file:, imported_count: 0, round_id:)
+    @imported_count = imported_count
+    @round_id = round_id
+    @file = file
+  end
+
   def process!
-    round = Round.find(@round_id)
+    round = Round.find(round_id)
     round_number = round.number.to_s
-    doc = Nokogiri::XML(@file)
+    doc = Nokogiri::XML(file)
 
     # Retrieve an array of appointment hashes (games by specific round) that
     # includes player information, round, table, &c
     appointments = parse_xml(doc, round_number)
     match_aga_numbers(appointments)
     return if !errors.none?
-    @imported_count = 0
     appointments.each do |appointment|
       if (appointment['roundNumber'].to_i == round.number)
         game_appointment = GameAppointment::assign_from_hash(round, appointment)
