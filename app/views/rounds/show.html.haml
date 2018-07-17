@@ -41,11 +41,11 @@
     :method => :post,
     :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure? This will delete ALL appointments in this round.')) }
 
-  = form_for @import, url: import_game_appointments_path, multipart: true do |f|
+  = form_for @import, url: import_round_path, multipart: true do |f|
     %fieldset
-      %h2 Import Game Appointments
+      %h2 Import Round
       .field
-        = f.hidden_field :round, name: "game_appointment_import[round_id]", value: "#{@round.id}"
+        = f.hidden_field :round, name: "round_import[round_id]", value: "#{@round.id}"
       .field
         = f.file_field :file
         = f.submit "Upload"

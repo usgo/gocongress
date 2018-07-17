@@ -1,9 +1,10 @@
-class GameAppointment::Import
+class Round::Import
   include ActiveModel::Model
-  attr_accessor :file, :imported_count, :round_id
+  attr_accessor :file, :imported_game_count, :imported_bye_count, :round_id
 
-  def initialize(file:, imported_count: 0, round_id:)
-    @imported_count = imported_count
+  def initialize(file:, imported_game_count: 0, imported_bye_count: 0, round_id:)
+    @imported_game_count = imported_game_count
+    @imported_bye_count = imported_bye_count
     @round_id = round_id
     @file = file
   end
@@ -15,17 +16,28 @@ class GameAppointment::Import
 
     # Retrieve an array of appointment hashes (games by specific round) that
     # includes player information, round, table, &c
-    appointments = parse_xml(doc, round_number)
+    appointments = parse_xml_for_games(doc, round_number)
+    p appointments
+    bye_appointments = parse_xml_for_byes(doc, round_number)
+    p bye_appointments
     match_aga_numbers(appointments)
     return if !errors.none?
     appointments.each do |appointment|
       if (appointment['roundNumber'].to_i == round.number)
         game_appointment = GameAppointment::assign_from_hash(round, appointment)
         if game_appointment.save
-          @imported_count += 1
+          @imported_game_count += 1
         else
           errors.add(:base, "Line #{$.} #{game_appointment.errors.full_messages.join(",")}")
         end
+      end
+    end
+    bye_appointments.each do |bye|
+      bye_appointment = ByeAppointment.assign_from_hash(round, bye)
+      if bye_appointment.save
+        @imported_bye_count += 1
+      else
+        errors.add(:base, "Line #{$.} #{bye_appointment.errors.full_messages.join("'")}")
       end
     end
   end
@@ -45,23 +57,15 @@ class GameAppointment::Import
     }.join("")
   end
 
-  def parse_xml(doc, round_number)
+  def parse_xml_for_games(doc, round_number)
     # TODO: check for errors! Right now we're assuming perfection.
 
     # Find the players in the XML import
-    players = doc.xpath("//Players/Player")
-    # Turn the players XML into an array of hashes
-    players = players.map{|n| Hash[n.keys.zip(n.values)]}
-
-    # Collect those hashes into an array with key names that match the player
-    # names in Open Gotha games
-    players = Hash[players.collect {|p| [name_to_key(p), p]}]
-
+    players = get_players(doc)
+    p players
     # Find all games for the round being imported (i.e. paired games )
-    games = doc.xpath("//Games/Game[@roundNumber=\"#{round_number}\"]")
-
-    # Turn the games XML into an array of hashes
-    games = games.map{|n| Hash[n.keys.zip(n.values)]}
+    games = get_games(doc, round_number)
+    
 
     # For each game, use the name of the black and white players to populate the
     # hash with player hashes
@@ -71,6 +75,45 @@ class GameAppointment::Import
     end
     games
   end
+
+  def parse_xml_for_byes(doc, round_number)
+    players = get_players(doc)
+    byes = get_byes(doc, round_number)
+    byes = byes.each do |bye|
+      bye[:attendee] = players[bye['player']]
+    end
+  end
+
+  def get_games(doc, round_number)
+    games = doc.xpath("//Games/Game[@roundNumber=\"#{round_number}\"]")
+
+    # Turn the games XML into an array of hashes
+    games = games.map{|n| Hash[n.keys.zip(n.values)]}
+    games
+  end
+
+  def get_byes(doc, round_number)
+    byes = doc.xpath("//ByePlayers/ByePlayer[@roundNumber=\"#{round_number}\"]")
+    byes = byes.map{|n| Hash[n.keys.zip(n.values)]}
+    byes
+  end
+  
+  
+
+  def get_players(doc)
+    players = doc.xpath("//Players/Player")
+    # Turn the players XML into an array of hashes
+    players = players.map{|n| Hash[n.keys.zip(n.values)]}
+
+    # Collect those hashes into an array with key names that match the player
+    # names in Open Gotha games
+    players = Hash[players.collect {|p| [name_to_key(p), p]}]
+
+    players
+    
+  end
+  
+  
 
   def match_aga_numbers(appointments)
     appointment_aga_numbers = gather_appoinment_aga_numbers(appointments)

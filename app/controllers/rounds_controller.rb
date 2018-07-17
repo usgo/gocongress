@@ -15,7 +15,7 @@ class RoundsController < ApplicationController
   end
 
   def show
-    @import = GameAppointment::Import.new
+    @import = Round::Import.new(file: "",round_id: -1)
   end
 
   def new
@@ -88,6 +88,17 @@ class RoundsController < ApplicationController
     end
   end
 
+  def import
+    @round = Round.find(round_import_params[:round_id])
+    @import = Round::Import.new file:  round_import_params[:file], round_id: round_import_params[:round_id]
+    if @import.save
+      redirect_to round_path(@round.id), notice: "Imported #{@import.imported_game_count} game appointments"
+    else
+      error_messages = @import.errors.full_messages
+      redirect_to round_path(@round.id), alert: "File Upload failed with the following errors: #{error_messages} "
+    end
+  end 
+
   private
 
   def find_round
@@ -99,7 +110,7 @@ class RoundsController < ApplicationController
   end
 
   def round_import_params
-    params.require(:round_import).permit(:file)
+    params.require(:round_import).permit(:file, :round_id)
   end
 
   def send_notification(attendee, tournament, round, game_appointment)

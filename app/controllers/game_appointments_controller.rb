@@ -56,18 +56,7 @@ class GameAppointmentsController < ApplicationController
       format.json { head :no_content }
     end
   end
-
-  def import
-    @round = Round.find(game_appointment_import_params[:round_id])
-    @import = GameAppointment::Import.new  game_appointment_import_params
-    if @import.save
-      redirect_to round_path(@round.id), notice: "Imported #{@import.imported_count} game appointments"
-    else
-      error_messages = @import.errors.full_messages
-      redirect_to round_path(@round.id), alert: "File Upload failed with the following errors: #{error_messages} "
-    end
-  end
-
+ 
   def send_sms
     recipient = "#{@game_appointment.attendee.phone}"
     message = "Hello #{@game_appointment.attendee.full_name}. You are scheduled to play #{@game_appointment.opponent} in #{@game_appointment.location} at #{@game_appointment.time}."
@@ -81,10 +70,6 @@ class GameAppointmentsController < ApplicationController
 
   def find_game_appointment
     @game_appointment = GameAppointment.find(params[:id])
-  end
-
-  def game_appointment_import_params
-    params.require(:game_appointment_import).permit(:file, :round_id)
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.

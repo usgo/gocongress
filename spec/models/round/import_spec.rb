@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe GameAppointment::Import, type: :model do
+RSpec.describe Round::Import, type: :model do
   # TODO import is covered by a feature test but we may want some 
   # unit tests here eventually
   describe "#process!" do
@@ -16,10 +16,10 @@ RSpec.describe GameAppointment::Import, type: :model do
       open_file = File.open("./spec/fixtures/files/sample_tournament_one.xml")
 
       round = create :round, number: 1
-      game_appointment_import = GameAppointment::Import.new(file: open_file, round_id: round.id)
+      game_appointment_import = Round::Import.new(file: open_file, round_id: round.id)
 
       game_appointment_import.process!
-      expect(game_appointment_import.imported_count).to eq 4 
+      expect(game_appointment_import.imported_game_count).to eq 4 
 
     end
     it "saves no games if there are aga numbers that don't match" do
@@ -34,10 +34,10 @@ RSpec.describe GameAppointment::Import, type: :model do
       open_file = File.open("./spec/fixtures/files/sample_tournament_one.xml")
 
       round = create :round, number: 1
-      game_appointment_import = GameAppointment::Import.new(file: open_file, round_id: round.id)
+      game_appointment_import = Round::Import.new(file: open_file, round_id: round.id)
 
       game_appointment_import.process!
-      expect(game_appointment_import.imported_count).to eq 0
+      expect(game_appointment_import.imported_game_count).to eq 0
 
     end
     

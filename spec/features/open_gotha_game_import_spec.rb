@@ -19,9 +19,10 @@ RSpec.describe "gotha tournament import", type: :feature do
     it "can import round data from Open Gotha xml file" do
 
       visit round_path(round, year: round.year)
-      attach_file("game_appointment_import[file]", Rails.root + "spec/fixtures/files/gotha_test_import.xml")
+      attach_file("round_import[file]", Rails.root + "spec/fixtures/files/gotha_test_import.xml")
       click_button "Upload"
       expect(page).to have_content 'Imported 1 game appointments'
+      expect(page).to have_content 'Imported 1 bye appointment'
     end
     
   end
