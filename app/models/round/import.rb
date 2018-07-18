@@ -126,7 +126,7 @@ class Round::Import
       if attendee_aga_numbers.include?(number)
         next
       else
-        errors.add(:base, "There are no attendee's with aga id: #{number}")
+        errors.add(:base, "There are no attendees with aga id: #{number}")
       end
     end
 
