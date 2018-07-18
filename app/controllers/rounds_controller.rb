@@ -28,8 +28,6 @@ class RoundsController < ApplicationController
   end
 
   def create
-    Time.zone = round_params[:time_zone]
-
     if @round.save
       redirect_to rounds_path, notice: 'Round was successfully created.'
     else
@@ -112,7 +110,7 @@ class RoundsController < ApplicationController
     "#{game_appointment.attendee_one.full_name} (white) vs. "\
     "#{game_appointment.attendee_two.full_name} (black) at table "\
     "#{game_appointment.table} (#{game_appointment.location}). "\
-    "Round #{round.number} starts at #{round.start_time.strftime('%H:%m %P')}"
+    "Round #{round.number} starts at #{round.start_time.strftime('%H:%M %P')}"
 
     message += " on #{round.start_time.strftime('%B %e, %Y')}" unless round.start_time.today?
     message += "."
