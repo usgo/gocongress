@@ -14,6 +14,7 @@
 
   = button_to "Send SMS Notifications for all round games", send_sms_notifications_round_path(@round), :class => 'button button-large'
 %br
+%h2 Games
 %table.semantic.fullwidth.zebra
   %thead
     %tr
@@ -49,3 +50,7 @@
       .field
         = f.file_field :file
         = f.submit "Upload"
+%h2 Bye Players:
+%ul
+  - @round.bye_appointments.each do |bye|
+    %li #{bye.attendee.full_name}, aga id: #{bye.attendee.aga_id}
