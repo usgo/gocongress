@@ -88,12 +88,12 @@ class RoundsController < ApplicationController
 
   def import
     @round = Round.find(round_import_params[:round_id])
-    @import = Round::Import.new file:  round_import_params[:file], round_id: round_import_params[:round_id]
+    @import = Round::Import.new(file: round_import_params[:file], round_id: round_import_params[:round_id])
     if @import.save
-      redirect_to round_path(@round.id), notice: "Imported #{@import.imported_game_count} game appointments"
+      redirect_to round_path(@round.id), notice: "Imported #{@import.imported_game_count} game appointments and #{@import.imported_bye_count} bye appointment(s)."
     else
       error_messages = @import.errors.full_messages
-      redirect_to round_path(@round.id), alert: "File Upload failed with the following errors: #{error_messages} "
+      redirect_to round_path(@round.id), alert: "File Upload failed with the following errors(limited to first five): #{error_messages.first(5)} "
     end
   end 
 
