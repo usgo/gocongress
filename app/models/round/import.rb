@@ -13,33 +13,32 @@ class Round::Import
     round = Round.find(round_id)
     round_number = round.number.to_s
     doc = Nokogiri::XML(file)
+    players = get_players(doc)
 
-    # Retrieve an array of appointment hashes (games by specific round) that
-    # includes player information, round, table, &c
-    appointments = parse_xml_for_games(doc, round_number)
-    p appointments
-    bye_appointments = parse_xml_for_byes(doc, round_number)
-    p bye_appointments
-    match_aga_numbers(appointments)
-    return if !errors.none?
-    appointments.each do |appointment|
-      if (appointment['roundNumber'].to_i == round.number)
-        game_appointment = GameAppointment::assign_from_hash(round, appointment)
-        if game_appointment.save
-          @imported_game_count += 1
-        else
-          errors.add(:base, "Line #{$.} #{game_appointment.errors.full_messages.join(",")}")
-        end
+    match_aga_numbers(players)
+    return if errors.any?
+
+    game_appointments = parse_xml_for_games(doc, players, round_number)
+    bye_appointments = parse_xml_for_byes(doc, players,round_number)
+
+    game_appointments.each do |appointment|
+      game_appointment = GameAppointment::assign_from_hash(round, appointment)
+      if game_appointment.save
+        @imported_game_count += 1
+      else
+        errors.add(:base, "Line #{$.} caused a game error: #{game_appointment.errors.full_messages.join(",")}")
       end
     end
+
     bye_appointments.each do |bye|
       bye_appointment = ByeAppointment.assign_from_hash(round, bye)
       if bye_appointment.save
         @imported_bye_count += 1
       else
-        errors.add(:base, "Line #{$.} #{bye_appointment.errors.full_messages.join("'")}")
+        errors.add(:base, "Line #{$.} caused a bye error: #{bye_appointment.errors.full_messages.join("'")}")
       end
     end
+
   end
 
   def save
@@ -57,16 +56,9 @@ class Round::Import
     }.join("")
   end
 
-  def parse_xml_for_games(doc, round_number)
+  def parse_xml_for_games(doc, players, round_number)
     # TODO: check for errors! Right now we're assuming perfection.
-
-    # Find the players in the XML import
-    players = get_players(doc)
-    p players
-    # Find all games for the round being imported (i.e. paired games )
     games = get_games(doc, round_number)
-    
-
     # For each game, use the name of the black and white players to populate the
     # hash with player hashes
     games = games.each do |game|
@@ -76,12 +68,12 @@ class Round::Import
     games
   end
 
-  def parse_xml_for_byes(doc, round_number)
-    players = get_players(doc)
+  def parse_xml_for_byes(doc, players, round_number)
     byes = get_byes(doc, round_number)
     byes = byes.each do |bye|
       bye[:attendee] = players[bye['player']]
     end
+    byes
   end
 
   def get_games(doc, round_number)
@@ -98,8 +90,6 @@ class Round::Import
     byes
   end
   
-  
-
   def get_players(doc)
     players = doc.xpath("//Players/Player")
     # Turn the players XML into an array of hashes
@@ -113,16 +103,14 @@ class Round::Import
     
   end
   
-  
-
-  def match_aga_numbers(appointments)
-    appointment_aga_numbers = gather_appoinment_aga_numbers(appointments)
-    if appointment_aga_numbers.include?("")
+  def match_aga_numbers(players)
+    players_aga_numbers = gather_player_aga_numbers(players)
+    if players_aga_numbers.include?("")
       errors.add(:base, "Please make sure all players in import file have aga id's and resubmit.")
       return
     end
     attendee_aga_numbers = Attendee.gather_aga_numbers
-    appointment_aga_numbers.each do |number|
+    players_aga_numbers.each do |number|
       if attendee_aga_numbers.include?(number)
         next
       else
@@ -132,10 +120,12 @@ class Round::Import
 
   end
 
-  def gather_appoinment_aga_numbers(appointments)
-    appointments.flat_map do |appointment|
-      [appointment["blackPlayer"]["agaId"].to_i, appointment["whitePlayer"]["agaId"].to_i]
+  def gather_player_aga_numbers(players)
+    player_aga_ids = []
+    players.each do |player, value|
+      player_aga_ids << value["agaId"].to_i
     end
+    player_aga_ids
   end
 
 end

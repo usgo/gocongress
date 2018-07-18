@@ -7,5 +7,6 @@ class ByeAppointment < ApplicationRecord
     bye_appointment = ByeAppointment.new
     bye_appointment.round = round
     bye_appointment.attendee = Attendee.find_by_aga_id(player["agaId"])
+    bye_appointment
   end
 end
