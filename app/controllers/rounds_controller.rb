@@ -58,18 +58,30 @@ class RoundsController < ApplicationController
   def send_sms_notifications
     tournament = Tournament.find(@round.tournament_id)
     game_appointments = @round.game_appointments
-    notifications_sent = 0
+    bye_appointments = @round.bye_appointments
+    game_notifications_sent = 0
+    bye_notifications_sent = 0
+
     game_appointments.each do |game_appointment|
       if game_appointment.attendee_one.receive_sms
-        send_notification(game_appointment.attendee_one, tournament, @round, game_appointment)
-        notifications_sent += 1
+        send_game_notification(game_appointment.attendee_one, tournament, @round, game_appointment)
+        game_notifications_sent += 1
       end
       if game_appointment.attendee_two.receive_sms
-        send_notification(game_appointment.attendee_two, tournament, @round, game_appointment)
-        notifications_sent += 1
+        send_game_notification(game_appointment.attendee_two, tournament, @round, game_appointment)
+        game_notifications_sent += 1
       end
     end
-    redirect_to round_path(@round), notice: "#{notifications_sent} #{'notification'.pluralize(notifications_sent)} sent."
+    if bye_appointments.any?
+      bye_appointments.each do |bye|
+        recipient = bye.attendee
+        if recipient.receive_sms
+          send_bye_notification(recipient, @round) 
+          bye_notifications_sent += 1
+        end
+      end
+    end
+    redirect_to round_path(@round), notice: "#{game_notifications_sent} game #{'notification'.pluralize(game_notifications_sent)} sent." + "#{bye_notifications_sent} bye #{'notification'.pluralize(bye_notifications_sent)} sent."
   end
 
   def delete_all_game_appointments
@@ -111,7 +123,7 @@ class RoundsController < ApplicationController
     params.require(:round_import).permit(:file, :round_id)
   end
 
-  def send_notification(attendee, tournament, round, game_appointment)
+  def send_game_notification(attendee, tournament, round, game_appointment)
     recipient = "#{attendee.local_phone}"
 
     message = ""
@@ -128,6 +140,18 @@ class RoundsController < ApplicationController
 
     TwilioTextMessenger.new(message, recipient).call
 
+  end
+
+  def send_bye_notification(attendee, round)
+    recipient = "#{attendee.local_phone}"
+    message = ""
+    message += round.notification_message + " " unless round.notification_message.blank?
+    message += "#{attendee.full_name} has received a bye for the #{round.tournament.name}, Round #{round.number}. "\
+    "Round #{round.number} starts at #{round.start_time.strftime('%H:%M %P')}"
+
+    message += " on #{round.start_time.strftime('%B %e, %Y')}" unless round.start_time.today?
+    message += "."
+    TwilioTextMessenger.new(message, recipient).call
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.
