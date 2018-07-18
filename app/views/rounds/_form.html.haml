@@ -9,11 +9,10 @@
     .field
       = f.label :number
       = f.text_field :number
-    = f.label :time, "Time and Date"
-    / Rails expects time_select when dealing with ActiveRecord forms
     .field
-      = time_select :round, :start_time
-    .field
+      = f.label :start_time, "Time and Date"
+      / Rails expects time_select when dealing with ActiveRecord forms
+      = time_select :round, :start_time, { ampm: true, minute_step: 15 }
       = date_select :round, :start_time
 
   = f.submit nil, :class => 'button button-large pull right save'
