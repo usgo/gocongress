@@ -36,13 +36,25 @@ Gocongress::Application.routes.draw do
 
         resources :activities, :contacts, :content_categories,
           :contents, :activity_categories, :tournaments,
-          :transactions
+          :transactions, :sms_notifications
+        resources :game_appointments do
+          member { get :send_sms }
+          collection { post :import }
+        end
+        resources :rounds do
+          member do
+            post :send_sms_notifications
+            post :delete_all_game_appointments
+            patch :update_notification_message
+          end
+          collection { post :import}
+        end
+
         resources :plans, :except => [:index]
         resources :plan_categories do
           put 'update_order', :on => :collection
         end
         resources :shirts, :except => :show
-
         # Creating and updating attendees involves a few different
         # models, not just Attendee, so it's handled by the
         # registrations controller.

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Tournament dataVersion="201">
+<Players>
+<Player agaExpirationDate="" agaId="22311" club="" country="" egfPin="" ffgLicence="" ffgLicenceStatus="" firstName="David" grade="5K" name="Nolen" participating="11111111111111111111" rank="5K" rating="1600" ratingOrigin="" registeringStatus="FIN" smmsCorrection="0"/>
+<Player agaExpirationDate="" agaId="11331" club="" country="" egfPin="" ffgLicence="" ffgLicenceStatus="" firstName="Zhaonian" grade="7D" name="Chen" participating="11111111111111111111" rank="7D" rating="2700" ratingOrigin="" registeringStatus="FIN" smmsCorrection="0"/>
+<Player agaExpirationDate="" agaId="10642" club="" country="" egfPin="" ffgLicence="" ffgLicenceStatus="" firstName="Yoshitomo" grade="1K" name="Nakata" participating="11111111111111111111" rank="1K" rating="2000" ratingOrigin="" registeringStatus="FIN" smmsCorrection="0"/>
+<Player agaExpirationDate="" agaId="7673" club="" country="" egfPin="" ffgLicence="" ffgLicenceStatus="" firstName="Eric" grade="1 PRO" name="Lui" participating="11111111111111111111" rank="99K" rating="2949" ratingOrigin="" registeringStatus="FIN" smmsCorrection="0"/>
+<Player agaExpirationDate="" agaId="23713" club="" country="" egfPin="" ffgLicence="" ffgLicenceStatus="" firstName="yuexi" grade="8K" name="liao" participating="11111111111111111111" rank="8K" rating="1300" ratingOrigin="" registeringStatus="FIN" smmsCorrection="0"/>
+<Player agaExpirationDate="" agaId="7802" club="" country="" egfPin="" ffgLicence="" ffgLicenceStatus="" firstName="Rachel" grade="9K" name="Small" participating="11111111111111111111" rank="9K" rating="1200" ratingOrigin="" registeringStatus="FIN" smmsCorrection="0"/>
+<Player agaExpirationDate="" agaId="21059" club="" country="" egfPin="" ffgLicence="" ffgLicenceStatus="" firstName="Ryan " grade="1 PRO" name="Li" participating="11111111111111111111" rank="99K" rating="2949" ratingOrigin="" registeringStatus="FIN" smmsCorrection="0"/>
+<Player agaExpirationDate="" agaId="17531" club="" country="" egfPin="" ffgLicence="" ffgLicenceStatus="" firstName="Jeremy" grade="7D" name="Chiu" participating="11111111111111111111" rank="7D" rating="2700" ratingOrigin="" registeringStatus="FIN" smmsCorrection="0"/>
+</Players>
+<Games>
+<Game blackPlayer="LIAOYUEXI" handicap="0" knownColor="true" result="RESULT_UNKNOWN" roundNumber="1" tableNumber="1" whitePlayer="LIRYAN"/>
+<Game blackPlayer="LUIERIC" handicap="0" knownColor="true" result="RESULT_UNKNOWN" roundNumber="1" tableNumber="2" whitePlayer="NAKATAYOSHITOMO"/>
+<Game blackPlayer="NOLENDAVID" handicap="0" knownColor="true" result="RESULT_UNKNOWN" roundNumber="2" whitePlayer="HENZHAONIAN"/>
+<Game blackPlayer="SMALLRACHEL" handicap="0" knownColor="true" result="RESULT_UNKNOWN" roundNumber="2" tableNumber="4" whitePlayer="CHIUJEREMY"/>
+</Games>
+<ByePlayers>
+<ByePlayer player="SHENXUEFEN" roundNumber="1"/>
+</ByePlayers>
+<TournamentParameterSet>
+<GeneralParameterSet basicTime="60" beginDate="2018-06-21" canByoYomiTime="300" complementaryTimeSystem="CANBYOYOMI" director="" endDate="2018-06-21" fischerTime="10" genMMBar="1D" genMMFloor="1D" genMMS2ValueAbsent="1" genMMS2ValueBye="2" genMMZero="1D" genNBW2ValueAbsent="0" genNBW2ValueBye="2" genRoundDownNBWMMS="true" komi="7.5" location="" name="Undefined" nbMovesCanTime="15" numberOfCategories="1" numberOfRounds="5" shortName="usopen_players_2018-06-21" size="19" stdByoYomiTime="30"/>
+<HandicapParameterSet hdBasedOnMMS="true" hdCeiling="0" hdCorrection="1" hdNoHdRankThreshold="1D"/>
+<PlacementParameterSet>
+<PlacementCriteria>
+<PlacementCriterion name="NULL" number="1"/>
+<PlacementCriterion name="NULL" number="2"/>
+<PlacementCriterion name="NULL" number="3"/>
+<PlacementCriterion name="NULL" number="4"/>
+<PlacementCriterion name="NULL" number="5"/>
+<PlacementCriterion name="NULL" number="6"/>
+</PlacementCriteria>
+</PlacementParameterSet>
+<PairingParameterSet paiBaAvoidDuplGame="500000000000000" paiBaBalanceWB="1000000" paiBaDeterministic="true" paiBaRandom="0" paiMaAdditionalPlacementCritSystem1="Rating" paiMaAdditionalPlacementCritSystem2="NULL" paiMaAvoidMixingCategories="20000000000000" paiMaCompensateDUDD="true" paiMaDUDDLowerMode="MID" paiMaDUDDUpperMode="MID" paiMaDUDDWeight="100000000" paiMaLastRoundForSeedSystem1="2" paiMaMaximizeSeeding="5000000" paiMaMinimizeScoreDifference="100000000000" paiMaSeedSystem1="SPLITANDRANDOM" paiSeAvoidSameGeo="0" paiSeBarThresholdActive="true" paiSeDefSecCrit="0" paiSeMinimizeHandicap="0" paiSeNbWinsThresholdActive="true" paiSePreferMMSDiffRatherThanSameClub="0" paiSePreferMMSDiffRatherThanSameClubsGroup="0" paiSePreferMMSDiffRatherThanSameCountry="0" paiSeRankThreshold="1D" paiStandardNX1Factor="0.5"/>
+<DPParameterSet displayClCol="true" displayCoCol="true" displayIndGamesInMatches="true" displayNPPlayers="false" displayNumCol="true" displayPlCol="true" gameFormat="full" playerSortType="name" showByePlayer="true" showNotFinallyRegisteredPlayers="true" showNotPairedPlayers="true" showNotParticipatingPlayers="false" showPlayerClub="true" showPlayerCountry="false" showPlayerGrade="true"/>
+<PublishParameterSet exportToLocalFile="true" htmlAutoScroll="false" print="true"/>
+</TournamentParameterSet>
+<TeamTournamentParameterSet>
+<TeamGeneralParameterSet teamSize="4"/>
+<TeamPlacementParameterSet>
+<PlacementCriteria>
+<PlacementCriterion name="NULL" number="1"/>
+<PlacementCriterion name="NULL" number="2"/>
+<PlacementCriterion name="NULL" number="3"/>
+<PlacementCriterion name="NULL" number="4"/>
+<PlacementCriterion name="NULL" number="5"/>
+<PlacementCriterion name="NULL" number="6"/>
+</PlacementCriteria>
+</TeamPlacementParameterSet>
+</TeamTournamentParameterSet>
+</Tournament>

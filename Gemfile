@@ -15,6 +15,7 @@ gem 'iso_country_codes'
 gem 'jc-validates_timeliness'
 gem 'jquery-rails'
 gem 'kaminari'
+gem 'nokogiri'
 gem 'pg', '< 1.0'
 gem 'phonelib'
 gem 'rails', '5.0.7'
@@ -24,6 +25,7 @@ gem 'thin'
 gem 'uglifier', '>= 1.3.0'
 gem 'redcarpet'
 gem 'unf' # <- fog <- asset_sync (http://bit.ly/17TiMjA)
+gem 'twilio-ruby'
 
 # Groups: Rails will load the group where name == Rails.env
 # http://yehudakatz.com/2010/05/09/the-how-and-why-of-bundler-groups/
@@ -51,6 +53,8 @@ group :test, :development do
 end
 
 group :development do
+  gem 'guard'
+  gem 'guard-rspec'
   gem 'haml-rails'
   gem 'meta_request'
   gem 'spring'
@@ -62,10 +66,12 @@ end
 group :test do
   gem 'capybara'
   gem 'deep_merge' # recursively merge hashes
+  gem 'database_cleaner'
   gem 'factory_bot'
   gem 'factory_bot_rails'
   gem 'launchy' # provides `save_and_open_page`
   gem 'rails-controller-testing'
   gem 'rb-fsevent'
+  gem 'vcr'
   gem 'webmock'
 end
