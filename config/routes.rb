@@ -39,10 +39,10 @@ Gocongress::Application.routes.draw do
           :transactions, :sms_notifications
         resources :game_appointments do
           member { get :send_sms }
-          collection { post :import }
         end
         resources :rounds do
           member do
+            post :import
             post :send_sms_notifications
             post :delete_all_game_appointments
             patch :update_notification_message

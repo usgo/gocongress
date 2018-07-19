@@ -3,12 +3,14 @@
 <Players>
 <Player agaExpirationDate="" agaId="12345" club="" country="" egfPin="" ffgLicence="" ffgLicenceStatus="" firstName="Jack" grade="5K" name="Smith" participating="11111111111111111111" rank="5K" rating="1600" ratingOrigin="" registeringStatus="FIN" smmsCorrection="0"/>
 <Player agaExpirationDate="" agaId="12346" club="" country="" egfPin="" ffgLicence="" ffgLicenceStatus="" firstName="Amerigo" grade="7D" name="Vespucci" participating="11111111111111111111" rank="7D" rating="2700" ratingOrigin="" registeringStatus="FIN" smmsCorrection="0"/>
+<Player agaExpirationDate="" agaId="12347" club="" country="" egfPin="" ffgLicence="" ffgLicenceStatus="" firstName="John" grade="7D" name="Thomas" participating="11111111111111111111" rank="7D" rating="2700" ratingOrigin="" registeringStatus="FIN" smmsCorrection="0"/>
 </Players>
 <Games>
 <Game blackPlayer="SMITHJACK" handicap="0" knownColor="true" result="RESULT_UNKNOWN" roundNumber="1" tableNumber="1" whitePlayer="VESPUCCIAMERIGO"/>
 </Games>
 <ByePlayers>
-<ByePlayer player="SHENXUEFEN" roundNumber="1"/>
+<ByePlayer player="THOMASJOHN" roundNumber="1"/>
+
 </ByePlayers>
 <TournamentParameterSet>
 <GeneralParameterSet basicTime="60" beginDate="2018-06-21" canByoYomiTime="300" complementaryTimeSystem="CANBYOYOMI" director="" endDate="2018-06-21" fischerTime="10" genMMBar="1D" genMMFloor="1D" genMMS2ValueAbsent="1" genMMS2ValueBye="2" genMMZero="1D" genNBW2ValueAbsent="0" genNBW2ValueBye="2" genRoundDownNBWMMS="true" komi="7.5" location="" name="Undefined" nbMovesCanTime="15" numberOfCategories="1" numberOfRounds="5" shortName="usopen_players_2018-06-21" size="19" stdByoYomiTime="30"/>

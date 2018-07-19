@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180524165637) do
+ActiveRecord::Schema.define(version: 20180717143142) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -104,6 +104,15 @@ ActiveRecord::Schema.define(version: 20180524165637) do
     t.boolean  "checked_in",                           default: false
     t.index ["id", "year"], name: "index_attendees_on_id_and_year", unique: true, using: :btree
     t.index ["user_id"], name: "index_attendees_on_user_id", using: :btree
+  end
+
+  create_table "bye_appointments", force: :cascade do |t|
+    t.integer  "round_id"
+    t.integer  "attendee_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["attendee_id"], name: "index_bye_appointments_on_attendee_id", using: :btree
+    t.index ["round_id"], name: "index_bye_appointments_on_round_id", using: :btree
   end
 
   create_table "contacts", force: :cascade do |t|
@@ -324,6 +333,8 @@ ActiveRecord::Schema.define(version: 20180524165637) do
   add_foreign_key "attendees", "attendees", column: "guardian_attendee_id", name: "fk_attendees_guardian_attendee_id_year", on_update: :cascade, on_delete: :restrict
   add_foreign_key "attendees", "shirts", name: "fk_attendees_shirt_id_year", on_update: :cascade, on_delete: :restrict
   add_foreign_key "attendees", "users", name: "fk_attendees_user_id_year", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "bye_appointments", "attendees"
+  add_foreign_key "bye_appointments", "rounds"
   add_foreign_key "contacts", "years", column: "year", primary_key: "year", name: "fk_contacts_year", on_update: :cascade, on_delete: :cascade
   add_foreign_key "contents", "content_categories", name: "fk_contents_content_category_id_year", on_update: :cascade, on_delete: :cascade
   add_foreign_key "game_appointments", "attendees", column: "attendee_one_id"

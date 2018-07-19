@@ -1,0 +1,141 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.twilio.com/2010-04-01/Accounts/AC68c4bca1ff6e21bbea7e22e61a6e5f36/Messages.json
+    body:
+      encoding: UTF-8
+      string: Body=US+Open%2C+Round+1%3A+Jack+Smith+%28white%29+vs.+Amerigo+Vespucci+%28black%29+at+table+1+%28Building+6+Room+24%29.+Round+1+starts+at+12%3A30+pm.&From=12028834668&To=%2B16122035280
+    headers:
+      User-Agent:
+      - twilio-ruby/5.9.0 (ruby/x86_64-darwin17 2.4.4-p296)
+      Accept-Charset:
+      - utf-8
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept:
+      - application/json
+      Authorization:
+      - Basic QUM2OGM0YmNhMWZmNmUyMWJiZWE3ZTIyZTYxYTZlNWYzNjoyMWI3NWZhNGQ2YTI0MDFjMGYyNTExZGQ4NjQxZWVlMw==
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 201
+      message: CREATED
+    headers:
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Headers:
+      - Accept, Authorization, Content-Type, If-Match, If-Modified-Since, If-None-Match,
+        If-Unmodified-Since
+      Access-Control-Allow-Methods:
+      - GET, POST, DELETE, OPTIONS
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - ETag
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Wed, 18 Jul 2018 19:41:21 GMT
+      Strict-Transport-Security:
+      - max-age=15768000
+      Twilio-Concurrent-Requests:
+      - '1'
+      Twilio-Request-Duration:
+      - '0.180'
+      Twilio-Request-Id:
+      - RQ59da0b0f05464c0cbfaa5ade38738329
+      X-Powered-By:
+      - AT-5000
+      X-Shenanigans:
+      - none
+      Content-Length:
+      - '890'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"sid": "SM76bc58f7308840df986173f80f1a0eaa", "date_created": "Wed,
+        18 Jul 2018 19:41:21 +0000", "date_updated": "Wed, 18 Jul 2018 19:41:21 +0000",
+        "date_sent": null, "account_sid": "AC68c4bca1ff6e21bbea7e22e61a6e5f36", "to":
+        "+16122035280", "from": "+12028834668", "messaging_service_sid": null, "body":
+        "US Open, Round 1: Jack Smith (white) vs. Amerigo Vespucci (black) at table
+        1 (Building 6 Room 24). Round 1 starts at 12:30 pm.", "status": "queued",
+        "num_segments": "1", "num_media": "0", "direction": "outbound-api", "api_version":
+        "2010-04-01", "price": null, "price_unit": "USD", "error_code": null, "error_message":
+        null, "uri": "/2010-04-01/Accounts/AC68c4bca1ff6e21bbea7e22e61a6e5f36/Messages/SM76bc58f7308840df986173f80f1a0eaa.json",
+        "subresource_uris": {"media": "/2010-04-01/Accounts/AC68c4bca1ff6e21bbea7e22e61a6e5f36/Messages/SM76bc58f7308840df986173f80f1a0eaa/Media.json"}}'
+    http_version: 
+  recorded_at: Wed, 18 Jul 2018 19:41:21 GMT
+- request:
+    method: post
+    uri: https://api.twilio.com/2010-04-01/Accounts/AC68c4bca1ff6e21bbea7e22e61a6e5f36/Messages.json
+    body:
+      encoding: UTF-8
+      string: Body=US+Open%2C+Round+1%3A+Jack+Smith+%28white%29+vs.+Amerigo+Vespucci+%28black%29+at+table+1+%28Building+6+Room+24%29.+Round+1+starts+at+12%3A30+pm.&From=12028834668&To=%2B16122035280
+    headers:
+      User-Agent:
+      - twilio-ruby/5.9.0 (ruby/x86_64-darwin17 2.4.4-p296)
+      Accept-Charset:
+      - utf-8
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept:
+      - application/json
+      Authorization:
+      - Basic QUM2OGM0YmNhMWZmNmUyMWJiZWE3ZTIyZTYxYTZlNWYzNjoyMWI3NWZhNGQ2YTI0MDFjMGYyNTExZGQ4NjQxZWVlMw==
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 201
+      message: CREATED
+    headers:
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Headers:
+      - Accept, Authorization, Content-Type, If-Match, If-Modified-Since, If-None-Match,
+        If-Unmodified-Since
+      Access-Control-Allow-Methods:
+      - GET, POST, DELETE, OPTIONS
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - ETag
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Wed, 18 Jul 2018 19:41:21 GMT
+      Strict-Transport-Security:
+      - max-age=15768000
+      Twilio-Concurrent-Requests:
+      - '1'
+      Twilio-Request-Duration:
+      - '0.118'
+      Twilio-Request-Id:
+      - RQf14df2afe9314e06a29a092165e9d562
+      X-Powered-By:
+      - AT-5000
+      X-Shenanigans:
+      - none
+      Content-Length:
+      - '890'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"sid": "SMc746a26f99af4b79803d56d6f3a8b155", "date_created": "Wed,
+        18 Jul 2018 19:41:21 +0000", "date_updated": "Wed, 18 Jul 2018 19:41:21 +0000",
+        "date_sent": null, "account_sid": "AC68c4bca1ff6e21bbea7e22e61a6e5f36", "to":
+        "+16122035280", "from": "+12028834668", "messaging_service_sid": null, "body":
+        "US Open, Round 1: Jack Smith (white) vs. Amerigo Vespucci (black) at table
+        1 (Building 6 Room 24). Round 1 starts at 12:30 pm.", "status": "queued",
+        "num_segments": "1", "num_media": "0", "direction": "outbound-api", "api_version":
+        "2010-04-01", "price": null, "price_unit": "USD", "error_code": null, "error_message":
+        null, "uri": "/2010-04-01/Accounts/AC68c4bca1ff6e21bbea7e22e61a6e5f36/Messages/SMc746a26f99af4b79803d56d6f3a8b155.json",
+        "subresource_uris": {"media": "/2010-04-01/Accounts/AC68c4bca1ff6e21bbea7e22e61a6e5f36/Messages/SMc746a26f99af4b79803d56d6f3a8b155/Media.json"}}'
+    http_version: 
+  recorded_at: Wed, 18 Jul 2018 19:41:21 GMT
+recorded_with: VCR 4.0.0
