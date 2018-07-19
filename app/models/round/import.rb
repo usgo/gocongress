@@ -19,14 +19,14 @@ class Round::Import
     return if errors.any?
 
     game_appointments = parse_xml_for_games(doc, players, round_number)
-    bye_appointments = parse_xml_for_byes(doc, players,round_number)
+    bye_appointments = parse_xml_for_byes(doc, players, round_number)
 
     game_appointments.each do |appointment|
       game_appointment = GameAppointment::assign_from_hash(round, appointment)
       if game_appointment.save
         @imported_game_count += 1
       else
-        errors.add(:base, "Line #{$.} caused a game error: #{game_appointment.errors.full_messages.join(",")}")
+        errors.add(:base, "Line #{$.} caused a game error: #{game_appointment.errors.full_messages.join(", ")}")
       end
     end
 
@@ -35,7 +35,7 @@ class Round::Import
       if bye_appointment.save
         @imported_bye_count += 1
       else
-        errors.add(:base, "Line #{$.} caused a bye error: #{bye_appointment.errors.full_messages.join("'")}")
+        errors.add(:base, "Line #{$.} caused a bye error: #{bye_appointment.errors.full_messages.join(", ")}")
       end
     end
 
