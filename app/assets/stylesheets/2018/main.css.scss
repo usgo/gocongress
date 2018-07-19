@@ -1232,3 +1232,143 @@ table.labeled-list {
     }
   }
 }
+
+.daily-schedule {
+  background: white;
+
+  table {
+    border-collapse: collapse;
+  }
+
+  &.full-screen {
+    position: absolute;
+    top: 0;
+    right: 10px;
+    bottom: 0;
+    left: 0;
+    overflow-y: scroll;
+    z-index: 100000;
+    	transition: all 2s;
+  }
+
+  thead {
+    th {
+      background-color: hsl(50, 70%, 50%);
+      color: white;
+    }
+  }
+
+  th {
+    text-align: left;
+  }
+
+  th:nth-child(1), td:nth-child(1) {
+    white-space: nowrap;
+  }
+
+  th, td {
+    line-height: 1.2;
+    padding: 0.35em 0.4em 0.25em;
+    vertical-align: top;
+  }
+
+  .time, .location, .track, .title, .description {
+    font-family: 'boswell';
+    color: hsla(0, 0%, 0%, 0.7);
+  }
+
+  .location {
+    width: 15%;
+  }
+
+  .track {
+    font-family: 'boswell';
+    white-space: nowrap;
+  }
+
+  .title {
+    font-family: 'boswell';
+  }
+
+  .description {
+    font-size: 18px;
+    width: 25%;
+  }
+
+  $tracks: (
+    tournaments: #2c67b8,
+    kyu-lectures: #3e853c,
+    dan-lectures: #d7bc4f,
+    general-lectures: #ce7034,
+    game-reviews: #583776,
+    simuls: #ab446e,
+    special-events: #b73522,
+    youth-room: #73808f,
+    teachers-workshop: #000000,
+    tournament-directors-workshop: #285081,
+    meetings: #2b5b25,
+    ejournal: #bc983f,
+    broadcast: #b05f2b,
+    meals: #7a1d12
+  );
+
+  @each $track, $color in $tracks {
+    .#{$track} {
+      background-color: transparentize($color, 0.7);
+
+      td:first-child {
+        // border-right: 10px solid $color;
+      }
+      .track {
+        background-color: $color;
+        color: hsla(0, 0%, 100%, 0.8);
+      }
+    }
+  }
+
+
+  .happening-now {
+    td:first-child {
+      border-left: 20px solid hsl(100, 50%, 50%);
+    }
+  }
+
+  .in-the-past {
+    display: none;
+  }
+
+  .meter {
+    &:before {
+      background: hsl(0, 0%, 50%);
+      content: '';
+      position: fixed;
+      right: 0;
+      bottom: 0;
+      width: 10px;
+      // height: 100%;
+      animation: {
+        name: elapse;
+        duration: 20s;
+        iteration-count: 1;
+        timing-function: linear;
+      }
+    }
+
+    background: white;
+    position: fixed;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 10px;
+    box-sizing: border-box;
+  }
+
+  @keyframes elapse {
+    0% {
+      height: 100%;
+    }
+    100% {
+      height: 0;
+    }
+  }
+}

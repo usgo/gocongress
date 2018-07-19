@@ -303,3 +303,84 @@ $(function() {
     });
   });
 });
+
+$(document).ready(function () {
+  if (window.location.search === '?kiosk') {
+    displayDailySchedule();
+  }
+});
+
+function displayDailySchedule() {
+  var $schedule = $('.daily-schedule').first();
+  $('body').css('overflow', 'hidden');
+
+  $schedule.addClass('full-screen');
+
+  var viewport = $schedule[0];
+  var viewportHeight = viewport.clientHeight;
+  var schedule = viewport.querySelector('table');
+  var pause = 20000;
+  var currentPage = 1;
+  var meter = document.createElement('div');
+  viewport.appendChild(meter);
+  $(meter).addClass('meter');
+
+  var pager = setInterval(nextPage, pause);
+
+  function nextPage() {
+    meter.remove();
+    viewport.appendChild(meter);
+    const contentHeight = schedule.clientHeight;
+    const pages = Math.ceil(contentHeight / viewportHeight);
+
+    // Stop paging if the display isn't long enough to require it
+    if (pages < 2) {
+      clearInterval(pager);
+      meter.remove();
+      return;
+    }
+
+    filterPastEvents();
+
+    var scrollAmount = (contentHeight / pages) * currentPage;
+    $(viewport).animate({
+      scrollTop: scrollAmount
+    }, 1000);
+    currentPage += 1;
+
+    if (currentPage >= pages) {
+      currentPage = 0;
+    }
+  }
+
+  function filterPastEvents() {
+    var events = schedule.querySelector('tbody').querySelectorAll('tr');
+
+    events.forEach(function (event) {
+      var $event = $(event);
+      var time = event.querySelector('.time').innerHTML.split(' - ');
+      var startTime = time[0];
+      var endTime = time[1];
+      startTime =  new Date(todayWithoutTime() + startTime);
+      endTime = new Date(todayWithoutTime() + endTime);
+      var now = new Date();
+
+      if (startTime < now && endTime > now) {
+        $event.addClass('happening-now');
+      } else if (startTime < now && endTime < now) {
+        $event.removeClass('happening-now');
+        $event.addClass('in-the-past');
+      } else {
+        $event.removeClass('happening-now');
+        $event.removeClass('in-the-past');
+      }
+    })
+  }
+
+  function todayWithoutTime() {
+  	var today = new Date();
+  	return ((today.getMonth() + 1) + '-' + today.getDate() + '-' +  today.getFullYear()) + ' ';
+  }
+
+  filterPastEvents();
+}
