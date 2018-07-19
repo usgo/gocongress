@@ -1,0 +1,20 @@
+= form_for @round, :html => { :class => "form-horizontal round" } do |f|
+  = render :partial => "shared/error_messages", :locals => { :resource => @round }
+  
+  %fieldset
+    .field
+      = f.label :tournament_id
+      = f.collection_select(:tournament_id, Tournament.this_year, :id, :name)
+  %fieldset
+    .field
+      = f.label :number
+      = f.text_field :number
+    .field
+      = f.label :start_time, "Time and Date"
+      / Rails expects time_select when dealing with ActiveRecord forms
+      = time_select :round, :start_time, { ampm: true, minute_step: 15 }
+      = date_select :round, :start_time
+
+  = f.submit nil, :class => 'button button-large pull right save'
+  = link_to t('.cancel', :default => t("helpers.links.cancel")), |
+        rounds_path, :class => 'button'               |

@@ -1,0 +1,33 @@
+= form_for @game_appointment, :html => { :class => "form-horizontal game_appointment" } do |f|
+  = render :partial => "shared/error_messages", :locals => { :resource => @game_appointment }
+
+  %fieldset
+    .field
+      = f.label :round
+      = f.collection_select(:round_id, Round.all, :id, :number)
+    .field
+      = f.label :white_player
+      = f.collection_select(:attendee_one_id, Attendee.order('family_name ASC').all, :id, :full_name)
+    .field
+      = f.label :black_player
+      = f.collection_select(:attendee_two_id, Attendee.order('family_name ASC').all, :id, :full_name)
+    .field
+      = f.label :handicap
+      = f.number_field :handicap
+    .field
+      = f.label :result
+      = f.text_field :result
+    .field
+      = f.label :table
+      = f.number_field :table
+
+  %fieldset
+    = f.label :time, "Time and Date"
+    / Rails expects time_select when dealing with ActiveRecord forms
+    .field
+      = time_select :game_appointment, :time
+    .field
+      = date_select :game_appointment, :time
+  = f.submit nil, :class => 'button button-large pull right save'
+  = link_to t('.cancel', :default => t("helpers.links.cancel")), |
+        game_appointments_path, :class => 'button'               |

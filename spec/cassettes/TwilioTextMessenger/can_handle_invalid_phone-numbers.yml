@@ -1,0 +1,61 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.twilio.com/2010-04-01/Accounts/AC68c4bca1ff6e21bbea7e22e61a6e5f36/Messages.json
+    body:
+      encoding: UTF-8
+      string: Body=this+is+a+test+message&From=12028834668&To=1231231234
+    headers:
+      User-Agent:
+      - twilio-ruby/5.9.0 (ruby/x86_64-darwin17 2.4.4-p296)
+      Accept-Charset:
+      - utf-8
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept:
+      - application/json
+      Authorization:
+      - Basic QUM2OGM0YmNhMWZmNmUyMWJiZWE3ZTIyZTYxYTZlNWYzNjoyMWI3NWZhNGQ2YTI0MDFjMGYyNTExZGQ4NjQxZWVlMw==
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 400
+      message: BAD REQUEST
+    headers:
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Headers:
+      - Accept, Authorization, Content-Type, If-Match, If-Modified-Since, If-None-Match,
+        If-Unmodified-Since
+      Access-Control-Allow-Methods:
+      - GET, POST, DELETE, OPTIONS
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - ETag
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Fri, 13 Jul 2018 17:34:47 GMT
+      Twilio-Request-Duration:
+      - '0.059'
+      Twilio-Request-Id:
+      - RQ1fcf55318ae84e349e24267132267f5c
+      X-Powered-By:
+      - AT-5000
+      X-Shenanigans:
+      - none
+      Content-Length:
+      - '198'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"code": 21212, "message": "The ''From'' number 12028834668 is not
+        a valid phone number, shortcode, or alphanumeric sender ID.", "more_info":
+        "https://www.twilio.com/docs/errors/21212", "status": 400}'
+    http_version: 
+  recorded_at: Fri, 13 Jul 2018 17:34:47 GMT
+recorded_with: VCR 4.0.0

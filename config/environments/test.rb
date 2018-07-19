@@ -3,6 +3,7 @@ Gocongress::Application.configure do
 
   config.cache_store = :null_store
 
+  config.active_record.migration_error = false
   config.eager_load = false
 
   # The test environment is used exclusively to run your application's

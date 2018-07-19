@@ -1,5 +1,8 @@
 class Tournament < ApplicationRecord
   include YearlyModel
+  has_many :rounds, dependent: :destroy
+
+  has_many :game_appointments
 
   # Openness Types:
   # Open - All attendees can sign up
@@ -12,6 +15,7 @@ class Tournament < ApplicationRecord
   validates :location, :length => {:maximum => 50}
 
   # Scopes, and class methods that act like scopes
+  scope :this_year, -> { where(year: "#{Year.last.year}")}
   scope :nav_menu, -> { where(:show_in_nav_menu => true) }
   def self.openness(o) where(:openness => o) end
 

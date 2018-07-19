@@ -146,6 +146,30 @@ ActiveRecord::Schema.define(version: 20180524165637) do
     t.index ["id", "year"], name: "index_events_on_id_and_year", unique: true, using: :btree
   end
 
+  create_table "game_appointments", force: :cascade do |t|
+    t.string   "location"
+    t.datetime "time"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.string   "time_zone"
+    t.integer  "year"
+    t.integer  "attendee_one_id"
+    t.integer  "attendee_two_id"
+    t.integer  "round_id"
+    t.integer  "table",           null: false
+    t.string   "result"
+    t.integer  "handicap"
+    t.index ["attendee_one_id"], name: "index_game_appointments_on_attendee_one_id", using: :btree
+    t.index ["attendee_two_id"], name: "index_game_appointments_on_attendee_two_id", using: :btree
+    t.index ["round_id"], name: "index_game_appointments_on_round_id", using: :btree
+  end
+
+  create_table "jobs", force: :cascade do |t|
+    t.string   "jobname"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "plan_categories", force: :cascade do |t|
     t.string   "name",                 limit: 255,                 null: false
     t.datetime "created_at"
@@ -183,6 +207,17 @@ ActiveRecord::Schema.define(version: 20180524165637) do
     t.index ["plan_category_id"], name: "index_plans_on_plan_category_id", using: :btree
   end
 
+  create_table "rounds", force: :cascade do |t|
+    t.integer  "tournament_id"
+    t.integer  "number"
+    t.datetime "start_time",           null: false
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+    t.integer  "year"
+    t.text     "notification_message"
+    t.index ["tournament_id"], name: "index_rounds_on_tournament_id", using: :btree
+  end
+
   create_table "shirts", force: :cascade do |t|
     t.integer  "year",                                    null: false
     t.string   "name",        limit: 40,                  null: false
@@ -195,6 +230,14 @@ ActiveRecord::Schema.define(version: 20180524165637) do
     t.index ["hex_triplet", "year"], name: "index_shirts_on_hex_triplet_and_year", unique: true, using: :btree
     t.index ["id", "year"], name: "index_shirts_on_id_and_year", unique: true, using: :btree
     t.index ["name", "year"], name: "index_shirts_on_name_and_year", unique: true, using: :btree
+  end
+
+  create_table "sms_notifications", force: :cascade do |t|
+    t.string   "to"
+    t.string   "from"
+    t.text     "message"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "tournaments", force: :cascade do |t|
@@ -283,8 +326,12 @@ ActiveRecord::Schema.define(version: 20180524165637) do
   add_foreign_key "attendees", "users", name: "fk_attendees_user_id_year", on_update: :cascade, on_delete: :cascade
   add_foreign_key "contacts", "years", column: "year", primary_key: "year", name: "fk_contacts_year", on_update: :cascade, on_delete: :cascade
   add_foreign_key "contents", "content_categories", name: "fk_contents_content_category_id_year", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "game_appointments", "attendees", column: "attendee_one_id"
+  add_foreign_key "game_appointments", "attendees", column: "attendee_two_id"
+  add_foreign_key "game_appointments", "rounds"
   add_foreign_key "plan_categories", "events", name: "fk_plan_categories_event_id_year", on_update: :cascade, on_delete: :cascade
   add_foreign_key "plans", "plan_categories", name: "fk_plans_plan_category_id_year", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "rounds", "tournaments"
   add_foreign_key "transactions", "users", column: "updated_by_user_id", name: "fk_transactions_updated_by_user_id_year", on_update: :cascade, on_delete: :nullify
   add_foreign_key "transactions", "users", name: "fk_transactions_user_id_year", on_update: :cascade, on_delete: :restrict
 end

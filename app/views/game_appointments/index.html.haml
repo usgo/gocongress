@@ -1,0 +1,30 @@
+- model_class = GameAppointment
+
+.page-header
+  %h2= t '.title', :default => model_class.model_name.human.pluralize.titleize
+%table.semantic.fullwidth
+  %thead
+    %tr
+      %th= model_class.human_attribute_name(:id)
+      %th= model_class.human_attribute_name(:attendee_one)
+      %th= model_class.human_attribute_name(:attendee_two)
+      %th= model_class.human_attribute_name(:time)
+      %th= model_class.human_attribute_name(:created_at)
+      %th= t '.actions', :default => t("helpers.actions")
+  %tbody
+    - @game_appointments.each do |game_appointment|
+      %tr
+        %td= link_to game_appointment.id, game_appointment_path(game_appointment)
+        %td= game_appointment.attendee_one.full_name
+        %td= game_appointment.attendee_two.full_name
+        %td= game_appointment.time
+        %td= l game_appointment.created_at
+        %td
+          = link_to "Edit", edit_game_appointment_path(game_appointment)
+          = link_to "Delete",                                           |
+            game_appointment_path(game_appointment),                     |
+            :method => :delete,                                          |
+            :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },  |
+            :class => 'btn btn-xs btn-danger'                            |
+          = link_to "Send SMS", send_sms_game_appointment_path(game_appointment.id)
+= link_to "New", new_game_appointment_path, :class => 'button'

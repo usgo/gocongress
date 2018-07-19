@@ -9,6 +9,7 @@ class Attendee < ApplicationRecord
 
   has_many :attendee_plans, :dependent => :destroy
   has_many :plans, :through => :attendee_plans
+  has_many :game_appointments
 
   has_many :attendee_activities, :dependent => :destroy
   has_many :activities, :through => :attendee_activities
@@ -61,9 +62,13 @@ class Attendee < ApplicationRecord
   # user should be saved first.
   validates_presence_of :user
 
+  # Scopes
+  # =============
+  scope :current_year, -> { where(year: Time.now.year) }
+
   # Class Methods
   # =============
-
+  
   def self.adults year
     where('birth_date < ?', CONGRESS_START_DATE[year.to_i] - 18.years)
   end
@@ -81,6 +86,13 @@ class Attendee < ApplicationRecord
     end
   end
 
+  def self.gather_aga_numbers
+    aga_ids = []
+    Attendee.current_year.find_each do |attendee|
+      aga_ids.push(attendee.aga_id)
+    end
+    aga_ids.compact
+  end
   # Using a subquery in the where clause is performant up to about
   # one thousand records.  -Jared 2012-05-13
   def self.with_at_least_one_plan
