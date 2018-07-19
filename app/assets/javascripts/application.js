@@ -321,22 +321,22 @@ function displayDailySchedule() {
   var schedule = viewport.querySelector('table');
   var pause = 20000;
   var currentPage = 1;
-  var meter = document.createElement('div');
-  viewport.appendChild(meter);
-  $(meter).addClass('meter');
+  // var meter = document.createElement('div');
+  // viewport.appendChild(meter);
+  // $(meter).addClass('meter');
 
   var pager = setInterval(nextPage, pause);
 
   function nextPage() {
-    meter.remove();
-    viewport.appendChild(meter);
+    // meter.remove();
+    // viewport.appendChild(meter);
     const contentHeight = schedule.clientHeight;
     const pages = Math.ceil(contentHeight / viewportHeight);
 
     // Stop paging if the display isn't long enough to require it
     if (pages < 2) {
       clearInterval(pager);
-      meter.remove();
+      // meter.remove();
       return;
     }
 
