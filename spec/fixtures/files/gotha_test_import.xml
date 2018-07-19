@@ -10,6 +10,7 @@
 </Games>
 <ByePlayers>
 <ByePlayer player="THOMASJOHN" roundNumber="1"/>
+
 </ByePlayers>
 <TournamentParameterSet>
 <GeneralParameterSet basicTime="60" beginDate="2018-06-21" canByoYomiTime="300" complementaryTimeSystem="CANBYOYOMI" director="" endDate="2018-06-21" fischerTime="10" genMMBar="1D" genMMFloor="1D" genMMS2ValueAbsent="1" genMMS2ValueBye="2" genMMZero="1D" genNBW2ValueAbsent="0" genNBW2ValueBye="2" genRoundDownNBWMMS="true" komi="7.5" location="" name="Undefined" nbMovesCanTime="15" numberOfCategories="1" numberOfRounds="5" shortName="usopen_players_2018-06-21" size="19" stdByoYomiTime="30"/>

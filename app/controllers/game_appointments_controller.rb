@@ -40,7 +40,6 @@ class GameAppointmentsController < ApplicationController
         format.json { render :index, status: :ok, location: @game_appointment }
       else
         format.html { render :edit }
-        # format.json { render json: @game_appointment.errors, status: :unprocessable_entity }
 
       end
     end
@@ -56,7 +55,7 @@ class GameAppointmentsController < ApplicationController
       format.json { head :no_content }
     end
   end
- 
+
   def send_sms
     recipient = "#{@game_appointment.attendee.phone}"
     message = "Hello #{@game_appointment.attendee.full_name}. You are scheduled to play #{@game_appointment.opponent} in #{@game_appointment.location} at #{@game_appointment.time}."
@@ -71,6 +70,7 @@ class GameAppointmentsController < ApplicationController
   def find_game_appointment
     @game_appointment = GameAppointment.find(params[:id])
   end
+
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def game_appointment_params
