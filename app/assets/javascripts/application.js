@@ -311,6 +311,7 @@ $(document).ready(function () {
 });
 
 function displayDailySchedule() {
+  $('html, body').css('cursor', 'none');
   var $schedule = $('.daily-schedule').first();
   $('body').css('overflow', 'hidden');
 
