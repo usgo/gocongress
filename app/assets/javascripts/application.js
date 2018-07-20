@@ -321,11 +321,28 @@ function displayDailySchedule() {
   var schedule = viewport.querySelector('table');
   var pause = 20000;
   var currentPage = 1;
+
+  var clock = document.createElement('div');
+  viewport.appendChild(clock);
+  $(clock).addClass('clock');
   // var meter = document.createElement('div');
   // viewport.appendChild(meter);
   // $(meter).addClass('meter');
 
+  var ticker = setInterval(tick, 1000)
   var pager = setInterval(nextPage, pause);
+
+  function tick() {
+    var now = new Date();
+    var options = {
+      hour: 'numeric',
+      minute: 'numeric',
+      hour12: true
+    };
+    var timeString = now.toLocaleString('en-US', options);
+
+    clock.innerHTML = timeString;
+  }
 
   function nextPage() {
     // meter.remove();
