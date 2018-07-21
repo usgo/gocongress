@@ -330,8 +330,9 @@ function displayDailySchedule() {
   // viewport.appendChild(meter);
   // $(meter).addClass('meter');
 
-  var ticker = setInterval(tick, 1000)
+  var ticker = setInterval(tick, 1000);
   var pager = setInterval(nextPage, pause);
+  var tocker = setInterval(filterPastEvents, 1000 * 60);
 
   function tick() {
     var now = new Date();
@@ -357,8 +358,6 @@ function displayDailySchedule() {
       // meter.remove();
       return;
     }
-
-    filterPastEvents();
 
     var scrollAmount = (contentHeight / pages) * currentPage;
     $(viewport).animate({
