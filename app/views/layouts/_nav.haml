@@ -1,34 +1,37 @@
 .nav-container
-  .nav.adaptive-nav
-    %ul#nav-list-main
-      - if show_my_account_anchor? || @year.registration_phase == "open"
-        %li#nav-registration= link_to_my_account_or_to_register
-      - if current_user.nil?
-        %li= link_to "Sign In", new_user_session_path
-      - else
-        %li= link_to "Sign Out", destroy_user_session_path, :method => :delete
-      - if @year.year >= 2016
-        %li= link_to "Mailing List", "http://eepurl.com/bC8CBX"
+  - if @year.year == 2018
+    .nav.adaptive-nav
+  - else
+    .nav
+      %ul#nav-list-main
+        - if show_my_account_anchor? || @year.registration_phase == "open"
+          %li#nav-registration= link_to_my_account_or_to_register
+        - if current_user.nil?
+          %li= link_to "Sign In", new_user_session_path
+        - else
+          %li= link_to "Sign Out", destroy_user_session_path, :method => :delete
+        - if @year.year >= 2016
+          %li= link_to "Mailing List", "http://eepurl.com/bC8CBX"
 
-      -# Tournaments
-      - @tournaments_for_nav_menu.each do |t|
-        %li= link_to t.name, t
-      %li
-        - tournaments_plural_phrase = @tournaments_for_nav_menu.empty? ? "Tournaments" : "All Tournaments"
-        = link_to tournaments_plural_phrase, tournaments_path
+        -# Tournaments
+        - @tournaments_for_nav_menu.each do |t|
+          %li= link_to t.name, t
+        %li
+          - tournaments_plural_phrase = @tournaments_for_nav_menu.empty? ? "Tournaments" : "All Tournaments"
+          = link_to tournaments_plural_phrase, tournaments_path
 
-      -# Activities
-      - @activity_categories_for_menu.each do |c|
-        %li= link_to c.name, c
+        -# Activities
+        - @activity_categories_for_menu.each do |c|
+          %li= link_to c.name, c
 
-      %li= link_to "Who is Coming?", attendees_path
-      %li= link_to "Pros", vip_attendees_path
-      %li= link_to "Costs", costs_path
-      - @content_categories_for_menu.each do |c|
-        %li= link_to c.name, c
-      - if @year.year == 2016
-        %li= link_to "Schedule", "http://live.gocongress.org/"
-      %li= link_to "Contact / Volunteer", contacts_path
+        %li= link_to "Who is Coming?", attendees_path
+        %li= link_to "Pros", vip_attendees_path
+        %li= link_to "Costs", costs_path
+        - @content_categories_for_menu.each do |c|
+          %li= link_to c.name, c
+        - if @year.year == 2016
+          %li= link_to "Schedule", "http://live.gocongress.org/"
+        %li= link_to "Contact / Volunteer", contacts_path
 
 - if can_see_admin_menu?
   .nav-container-admin
