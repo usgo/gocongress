@@ -1,4 +1,4 @@
-# Seed the years, bypassing mass assignment security.
+# Seed the years.
 Year.create!(
   {
     city:                  'Santa Barbara',
@@ -119,5 +119,20 @@ Year.create!(
     state:                 'VA',
     timezone:              'Eastern Time (US & Canada)',
     year:                  2018
+  }
+)
+
+Year.create!(
+  {
+    city:                  'Madison',
+    date_range:            'July 13 - 20',
+    day_off_date:          Date.new(2019, 7, 17),
+    ordinal_number:        35,
+    registration_phase:    'closed',
+    reply_to_email:        'webmaster@gocongress.org',
+    start_date:            Date.new(2019, 7, 13),
+    state:                 'WI',
+    timezone:              'Central Time (US & Canada)',
+    year:                  2019
   }
 )
