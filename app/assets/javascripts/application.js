@@ -320,7 +320,7 @@ function displayDailySchedule() {
   var viewport = $schedule[0];
   var viewportHeight = viewport.clientHeight;
   var schedule = viewport.querySelector('table');
-  var pause = 20000;
+  var pause = 30000;
   var currentPage = 1;
 
   var clock = document.createElement('div');
