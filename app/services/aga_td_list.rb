@@ -23,7 +23,7 @@ class AgaTdList
   end
 
   def self.current(id)
-    ['Full', 'Youth', 'Life'].include? data(id)[:membership_status]
+    current_as_of(id, Date.today)
   end
 
   def self.current_as_of(id, date)
