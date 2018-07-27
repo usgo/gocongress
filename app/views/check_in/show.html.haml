@@ -51,3 +51,11 @@
   By default, we cache information from the AGA TD List for 24 hours. If an
   attendee's information has changed more recently, you may refresh the cache
   manually.
+
+%hr
+
+- if not @attendee.checked_in and !@cleared
+  %td= button_to "Check In #{@attendee.full_name}, Despite Not Being Cleared",
+    { action: "check_in_attendee",
+      checked_in: true, id: @user.id, attendee_id: @attendee.id },
+    { method: :patch }

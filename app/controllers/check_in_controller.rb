@@ -56,7 +56,7 @@ class CheckInController < ApplicationController
     cleared = true
 
     # Check for outstanding balance
-    if (attendee.user.balance != 0)
+    if (attendee.user.balance > 0)
       cleared = false
     end
 
