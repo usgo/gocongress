@@ -8,7 +8,7 @@ CONGRESS_YEAR = 2018
 # LATEST_YEAR is usually the same as CONGRESS_YEAR,
 # or if we are planning a year ahead but haven't rolled
 # it out yet, then LATEST_YEAR may == CONGRESS_YEAR + 1
-LATEST_YEAR = 2018
+LATEST_YEAR = 2019
 
 # CONGRESS_START_DATE is the first day of the congress
 # For now, keep this a constant so that the attendee model
@@ -23,7 +23,8 @@ CONGRESS_START_DATE = {
   2015 => Date.civil(2015, 8, 1),
   2016 => Date.civil(2016, 7, 30),
   2017 => Date.civil(2017, 8, 5),
-  2018 => Date.civil(2018, 7, 21)
+  2018 => Date.civil(2018, 7, 21),
+  2019 => Date.civil(2019, 7, 13)
 }
 
 # DAY_OFF_DATE - The go congress traditionally has one "day off".
@@ -37,7 +38,8 @@ DAY_OFF_DATE = {
   2015 => Date.civil(2015, 8, 5),
   2016 => Date.civil(2016, 8, 3),
   2017 => Date.civil(2017, 8, 9),
-  2018 => Date.civil(2018, 7, 25)
+  2018 => Date.civil(2018, 7, 25),
+  2019 => Date.civil(2019, 7, 17)
 }
 
 # EMAIL_REGEX used to validate all email addresses, according to
