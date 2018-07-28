@@ -370,7 +370,6 @@ DEPENDENCIES
   cancancan (~> 1.9)
   capybara
   database_cleaner
-  daemons
   deep_merge
   devise
   dotenv-rails
