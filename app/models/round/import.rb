@@ -23,7 +23,9 @@ class Round::Import
 
     game_appointments.each do |appointment|
       game_appointment = GameAppointment::assign_from_hash(round, appointment)
-      if game_appointment.save
+      if !game_appointment
+        errors.add(:base, "Line #{$.} caused a game error.")
+      elsif game_appointment.save
         @imported_game_count += 1
       else
         errors.add(:base, "Line #{$.} caused a game error: #{game_appointment.errors.full_messages.join(", ")}")
@@ -89,7 +91,7 @@ class Round::Import
     byes = byes.map{|n| Hash[n.keys.zip(n.values)]}
     byes
   end
-  
+
   def get_players(doc)
     players = doc.xpath("//Players/Player")
     # Turn the players XML into an array of hashes
@@ -100,15 +102,16 @@ class Round::Import
     players = Hash[players.collect {|p| [name_to_key(p), p]}]
 
     players
-    
+
   end
-  
+
   def match_aga_numbers(players)
     players_aga_numbers = gather_player_aga_numbers(players)
     if players_aga_numbers.include?("")
-      errors.add(:base, "Please make sure all players in import file have aga id's and resubmit.")
+      errors.add(:base, "Please make sure all players in import file have AGA IDs and resubmit.")
       return
     end
+
     attendee_aga_numbers = Attendee.gather_aga_numbers
     players_aga_numbers.each do |number|
       if attendee_aga_numbers.include?(number)

@@ -95,7 +95,7 @@ GEM
     factory_bot_rails (4.8.2)
       factory_bot (~> 4.8.2)
       railties (>= 3.0.0)
-    faraday (0.15.0)
+    faraday (0.15.2)
       multipart-post (>= 1.2, < 3)
     ffi (1.9.18)
     fog-aws (2.0.0)
@@ -330,7 +330,7 @@ GEM
     thread_safe (0.3.6)
     tilt (2.0.8)
     timeliness (0.3.8)
-    twilio-ruby (5.9.0)
+    twilio-ruby (5.11.1)
       faraday (~> 0.9)
       jwt (>= 1.5, <= 2.5)
       nokogiri (>= 1.6, < 2.0)
@@ -416,4 +416,4 @@ RUBY VERSION
    ruby 2.4.4p296
 
 BUNDLED WITH
-   1.16.1
+   1.16.3

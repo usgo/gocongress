@@ -15,15 +15,23 @@ class GameAppointment < ApplicationRecord
     table can only have one game per round"}
   validates :location, presence: true
   validates :time, presence: true
-  validate :attendees_play_one_game_per_round, unless: Proc.new { |a| a.round == nil }
+  # Temporarily removed -- has performance issues
+  # validate :attendees_play_one_game_per_round, unless: Proc.new { |a| a.round == nil }
   validate :compare_attendees
-    
+
   def self.assign_from_hash(round, appointment)
     white = appointment['whitePlayer']
     black = appointment['blackPlayer']
+
+    if (!white or !black)
+      # If we weren't able to find the white or black player, don't keep trying
+      # to create a game appointment.
+      return
+    end
+
     game_appointment = GameAppointment.new
-    game_appointment.white_player = Attendee.find_by_aga_id(white['agaId'])
-    game_appointment.black_player = Attendee.find_by_aga_id(black['agaId'])
+    game_appointment.white_player = Attendee.current_year.find_by_aga_id(white['agaId'])
+    game_appointment.black_player = Attendee.current_year.find_by_aga_id(black['agaId'])
     game_appointment.round = round
     game_appointment.table = appointment['tableNumber'].to_i
     game_appointment.time = round.start_time

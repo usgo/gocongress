@@ -311,6 +311,7 @@ $(document).ready(function () {
 });
 
 function displayDailySchedule() {
+  $('html, body').css('cursor', 'none');
   var $schedule = $('.daily-schedule').first();
   $('body').css('overflow', 'hidden');
 
@@ -319,28 +320,44 @@ function displayDailySchedule() {
   var viewport = $schedule[0];
   var viewportHeight = viewport.clientHeight;
   var schedule = viewport.querySelector('table');
-  var pause = 20000;
+  var pause = 30000;
   var currentPage = 1;
-  var meter = document.createElement('div');
-  viewport.appendChild(meter);
-  $(meter).addClass('meter');
 
+  var clock = document.createElement('div');
+  viewport.appendChild(clock);
+  $(clock).addClass('clock');
+  // var meter = document.createElement('div');
+  // viewport.appendChild(meter);
+  // $(meter).addClass('meter');
+
+  var ticker = setInterval(tick, 1000);
   var pager = setInterval(nextPage, pause);
+  var tocker = setInterval(filterPastEvents, 1000 * 60);
+
+  function tick() {
+    var now = new Date();
+    var options = {
+      hour: 'numeric',
+      minute: 'numeric',
+      hour12: true
+    };
+    var timeString = now.toLocaleString('en-US', options);
+
+    clock.innerHTML = timeString;
+  }
 
   function nextPage() {
-    meter.remove();
-    viewport.appendChild(meter);
+    // meter.remove();
+    // viewport.appendChild(meter);
     const contentHeight = schedule.clientHeight;
     const pages = Math.ceil(contentHeight / viewportHeight);
 
     // Stop paging if the display isn't long enough to require it
     if (pages < 2) {
       clearInterval(pager);
-      meter.remove();
+      // meter.remove();
       return;
     }
-
-    filterPastEvents();
 
     var scrollAmount = (contentHeight / pages) * currentPage;
     $(viewport).animate({

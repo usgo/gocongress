@@ -42,12 +42,13 @@ RSpec.describe AgaTdList do
     end
 
     it 'returns whether a member is a current AGA member' do
-      # Life member
+      # Current members
       expect(AgaTdList.current(1062)).to be true
-      # Full member
       expect(AgaTdList.current(18202)).to be true
-      # Expired member
+      expect(AgaTdList.current(1310)).to be true
+      # Expired members
       expect(AgaTdList.current(11955)).to be false
+      expect(AgaTdList.current(8217)).to be false
       # AGA ID doesn't exist
       expect(AgaTdList.current(11231412341231)).to be false
     end

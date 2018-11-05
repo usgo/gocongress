@@ -1237,18 +1237,21 @@ table.labeled-list {
   background: white;
 
   table {
+    background: white;
     border-collapse: collapse;
+    width: 100%;
   }
 
   &.full-screen {
     position: absolute;
     top: 0;
-    right: 10px;
+    right: 0;
     bottom: 0;
     left: 0;
     overflow-y: scroll;
     z-index: 100000;
-    	transition: all 2s;
+
+    background-image: linear-gradient(to top, #30cfd0 0%, #330867 100%);
   }
 
   thead {
@@ -1370,5 +1373,17 @@ table.labeled-list {
     100% {
       height: 0;
     }
+  }
+
+  .clock {
+    color: hsla(0, 0%, 0%, 0.5);
+    font: {
+      family: 'boswell';
+      size: 60px;
+    }
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    padding: 0.5em 1em;
   }
 }

@@ -7,10 +7,10 @@
       = f.collection_select(:round_id, Round.all, :id, :number)
     .field
       = f.label :white_player
-      = f.collection_select(:attendee_one_id, Attendee.order('family_name ASC').all, :id, :full_name)
+      = f.collection_select(:attendee_one_id, Attendee.current_year.order('family_name ASC').all, :id, :full_name)
     .field
       = f.label :black_player
-      = f.collection_select(:attendee_two_id, Attendee.order('family_name ASC').all, :id, :full_name)
+      = f.collection_select(:attendee_two_id, Attendee.current_year.order('family_name ASC').all, :id, :full_name)
     .field
       = f.label :handicap
       = f.number_field :handicap

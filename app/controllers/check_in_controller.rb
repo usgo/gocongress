@@ -56,20 +56,23 @@ class CheckInController < ApplicationController
     cleared = true
 
     # Check for outstanding balance
-    if (attendee.user.balance != 0)
+    if (attendee.user.balance > 0)
       cleared = false
     end
 
-    # Check for AGA ID
-    if (!attendee.aga_id)
-      #TODO Check for validity?
-      cleared = false
+    if attendee.will_play_in_us_open
+      # Check for AGA ID
+      if (!attendee.aga_id)
+        #TODO Check for validity?
+        cleared = false
+      end
     end
 
     # Check for current AGA Membership
-    if (!AgaTdList.current(attendee.aga_id))
-      cleared = false
-    end
+    # Deactivated due to AGA Membership issues!
+    # if (!AgaTdList.current(attendee.aga_id))
+    #   cleared = false
+    # end
 
     # Check for minor_agreement_received
     if (attendee.minor?)
