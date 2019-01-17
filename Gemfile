@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '2.4.4'
+ruby '2.4.5'
 
 gem 'asset_sync'
 gem 'authorizenet'
