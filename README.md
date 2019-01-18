@@ -2,7 +2,7 @@ Gocongress
 ==========
 
 A maintainable web app for the U.S. Go Congress.
-Copyright (c) 2010-2018 American Go Association
+Copyright (c) 2010-2019 American Go Association
 
 [![Code Climate](https://codeclimate.com/github/usgo/gocongress.png)](https://codeclimate.com/github/usgo/gocongress)
 
@@ -26,7 +26,7 @@ Contribute
         - macs come with [JavaScriptCore][20] (part of webkit)
         - linux or mac: [node][11] (`apt-get nodejs`)
     1. Install ruby [gems][21] using [bundler][12]
-        1. `gem install bundler`
+        1. `gem install bundler --version '1.17'`
         1. `bundle install`
         1. If a gem fails to install, it may be missing native libraries
             1. [nokogiri][17] needs libxml2 and libxslt
