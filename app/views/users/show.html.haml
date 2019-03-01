@@ -17,10 +17,11 @@
           - if can? :edit, @user
             %td.smalltext= link_to 'Edit', edit_user_path(@user)
 
-.right-column
-  %h2 Balance
-  = render :partial => 'shared/balance', :locals => {:user => @user, :show_detail_links => true}
-  %p= button_to "Make a Payment", pay_user_path(@user), :method => "get"
+- if current_user_is_admin?
+  .right-column
+    %h2 Balance
+    = render :partial => 'shared/balance', :locals => {:user => @user, :show_detail_links => true}
+    %p= button_to "Make a Payment", pay_user_path(@user), :method => "get"
 
 %h2 Attendees
 - if @user.attendees.empty?
