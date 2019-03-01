@@ -28,7 +28,10 @@
 
         %li= link_to "Who is Coming?", attendees_path
         %li= link_to "Pros", vip_attendees_path
-        %li= link_to "Costs", costs_path
+        - if @year.year == 2019 && current_user_is_admin?
+          %li= link_to "Costs", costs_path
+        - if @year.year != 2019
+          %li= link_to "Costs", costs_path
         - @content_categories_for_menu.each do |c|
           %li= link_to c.name, c
         - if @year.year == 2016
