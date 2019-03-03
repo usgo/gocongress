@@ -11,11 +11,15 @@ class PlanCategoriesController < ApplicationController
   before_action :expose_plans, :only => [:show, :update]
 
   def index
-    categories = @plan_categories.joins(:event).yr(@year).order('ordinal')
-    @plan_categories_by_event = categories \
-      .select("plan_categories.*, events.name as event_name") \
-      .group_by {|c| c.event_name}
-    @show_order_fields = can?(:update, PlanCategory) && categories.count > 1
+    if @year.year != 2019 || current_user_is_admin?
+      categories = @plan_categories.joins(:event).yr(@year).order('ordinal')
+      @plan_categories_by_event = categories \
+        .select("plan_categories.*, events.name as event_name") \
+        .group_by {|c| c.event_name}
+      @show_order_fields = can?(:update, PlanCategory) && categories.count > 1
+    else
+      redirect_to year_path
+    end
   end
 
   def show

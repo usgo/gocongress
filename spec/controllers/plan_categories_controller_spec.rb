@@ -31,7 +31,11 @@ RSpec.describe PlanCategoriesController, :type => :controller do
   describe "#index" do
     it "allows visitors" do
       get :index, params: { year: cat.year }
-      expect(response).to be_success
+      if cat.year == 2019
+        expect(response.status).to eq(302)
+      else
+        expect(response).to be_success
+      end
       expect(assigns(:plan_categories)).not_to be_empty
     end
   end

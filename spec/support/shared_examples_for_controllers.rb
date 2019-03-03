@@ -27,7 +27,11 @@ RSpec.shared_examples "an admin controller" do |model_name|
       render_views
       it "succeeds" do
         get :index, params: { year: year }
-        expect(response).to be_successful
+        if model_name == :plan_category && year == 2019
+          expect(response.status).to eq(302)
+        else
+          expect(response).to be_successful
+        end
       end
     end
     describe "create" do
