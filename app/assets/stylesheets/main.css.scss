@@ -1,3 +1,4 @@
+@import "intlTelInput";
 @import "mixins";
 
 /* Configuration: Layout */
@@ -365,6 +366,29 @@ fieldset.wordy-questions .aligned-with-input { margin-left: 355px !important; }
     padding-top: 5px;
     vertical-align: middle;
     width: 350px;
+}
+
+.error {
+  color: red;
+}
+
+.error-border {
+  border: 1px solid #ff7c7c;
+}
+
+.hide {
+  display: none;
+}
+
+.valid {
+  color: rgb(72, 224, 0);
+}
+
+.valid,
+.error {
+  margin: 0 0 1em;
+  transition: all 0.2s;
+  max-height: 30px;
 }
 
 /* Transaction List */
