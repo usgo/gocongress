@@ -20,7 +20,7 @@ class Registration
     :birth_date, :country, :email, :emergency_name, :emergency_phone,
     :family_name, :gender, :given_name, :guardian_attendee_id,
     :guardian_full_name, :local_phone, :phone, :rank, :receive_sms, :roomate_request,
-    :special_request, :shirt_id, :tshirt_size, :understand_minor,
+    :special_request, :shirt_id, :state, :tshirt_size, :understand_minor,
     :will_play_in_us_open, :comment, :minor_agreement_received]
 
   delegate(*ATD_ATRS, to: :attendee)

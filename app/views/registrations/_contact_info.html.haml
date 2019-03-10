@@ -18,7 +18,9 @@
   .field
     = f.label :email
     = f.email_field :email
-
+  .field
+    = f.label :state
+    = f.select :state, STATES, { :include_blank => true }
   -# ISO 3166-1 alpha-2
   .field
     = f.label :country
