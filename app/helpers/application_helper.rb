@@ -33,7 +33,7 @@ module ApplicationHelper
     if show_my_account_anchor?
       path = user_path id: current_user.id, year: current_user.year
       link_to "My Account", path
-    elsif @year.registration_phase == "open"
+    elsif @year.registration_phase == "open" && @year.year != 2019
       link_to "Start Here", new_user_registration_path
     end
   end

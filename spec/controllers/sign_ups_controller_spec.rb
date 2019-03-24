@@ -14,7 +14,11 @@ RSpec.describe SignUpsController, :type => :controller do
   describe '#new' do
     it 'should succeed' do
       get :new, params: { :year => year }
-      assert_response :success
+      if year == 2019
+        assert_redirected_to year_path
+      else
+        assert_response :success
+      end
     end
   end
 
@@ -27,10 +31,17 @@ RSpec.describe SignUpsController, :type => :controller do
         year: year }}
 
       it "succeeds" do
-        expect {
-          post :create, params: { user: attrs, year: year }
-        }.to change { User.count }.by(+1)
-        expect(response).to redirect_to user_path(User.last)
+        if year == 2019
+          expect {
+            post :create, params: { user: attrs, year: year }
+          }.to change { User.count }.by(0)
+          expect(response).to redirect_to year_path
+        else
+          expect {
+            post :create, params: { user: attrs, year: year }
+          }.to change { User.count }.by(+1)
+          expect(response).to redirect_to user_path(User.last)
+        end
       end
     end
 
@@ -53,16 +64,26 @@ RSpec.describe SignUpsController, :type => :controller do
 
       it "shows the form again" do
         attempt_to_create_invalid_user
-        expect(response).to be_success
-        expect(response).to render_template("new")
+        if year == 2019
+          expect(response.status).to eq(302)
+        else
+          expect(response).to be_success
+          expect(response).to render_template("new")
+        end
       end
     end
 
     it "raises error if role parameter is present" do
       u = user_attributes.merge(role: 'A')
-      expect {
-        post :create, params: { user: u, year: year }
-      }.to raise_error(ActionController::UnpermittedParameters)
+      if year == 2019
+        expect {
+          post :create, params: { user: u, year: year }
+        }.to change { User.count }.by(0)
+      else
+        expect {
+          post :create, params: { user: u, year: year }
+        }.to raise_error(ActionController::UnpermittedParameters)
+      end
     end
   end
 end
