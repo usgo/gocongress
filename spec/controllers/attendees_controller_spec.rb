@@ -34,7 +34,11 @@ RSpec.describe AttendeesController, :type => :controller do
 
         get :vip, params: { year: Time.current.year }
 
-        expect(assigns(:attendees).count).to be(2)
+        if Time.current.year == 2019
+          expect(response.status).to eq(302)
+        else
+          expect(assigns(:attendees).count).to be(2)
+        end
       end
 
       it "doesn't list cancelled pros" do
@@ -46,7 +50,11 @@ RSpec.describe AttendeesController, :type => :controller do
 
         get :vip, params: { year: Time.current.year }
 
-        expect(assigns(:attendees).count).to be(1)
+        if Time.current.year == 2019
+          expect(response.status).to eq(302)
+        else
+          expect(assigns(:attendees).count).to be(1)
+        end
       end
   end
 
