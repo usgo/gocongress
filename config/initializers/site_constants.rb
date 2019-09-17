@@ -24,7 +24,7 @@ CONGRESS_START_DATE = {
   2016 => Date.civil(2016, 7, 30),
   2017 => Date.civil(2017, 8, 5),
   2018 => Date.civil(2018, 7, 21),
-  2019 => Date.civil(2019, 7, 13)
+  2019 => Date.civil(2019, 7, 13),
   2020 => Date.civil(2019, 8, 1)
 }
 
