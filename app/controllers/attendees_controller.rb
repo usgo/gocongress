@@ -11,6 +11,10 @@ class AttendeesController < ApplicationController
 
   def index
     @who_is_coming = Attendee::WhoIsComing.new @year, params[:sort], params[:direction]
+
+    # Allow individual years to provide alternative, hard-coded lists of who's coming if they don't
+    # use the Congress website for registration.
+    render :template => "attendees/#{@year.year}/index" rescue render :template => "attendees/index"
   end
 
   def list
