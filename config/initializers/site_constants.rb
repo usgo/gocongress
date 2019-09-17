@@ -25,7 +25,7 @@ CONGRESS_START_DATE = {
   2017 => Date.civil(2017, 8, 5),
   2018 => Date.civil(2018, 7, 21),
   2019 => Date.civil(2019, 7, 13),
-  2020 => Date.civil(2019, 8, 1)
+  2020 => Date.civil(2020, 8, 1)
 }
 
 # DAY_OFF_DATE - The go congress traditionally has one "day off".
@@ -41,7 +41,7 @@ DAY_OFF_DATE = {
   2017 => Date.civil(2017, 8, 9),
   2018 => Date.civil(2018, 7, 25),
   2019 => Date.civil(2019, 7, 17),
-  2020 => Date.civil(2019, 8, 5)
+  2020 => Date.civil(2020, 8, 5)
 }
 
 # EMAIL_REGEX used to validate all email addresses, according to
