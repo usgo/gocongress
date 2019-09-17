@@ -40,7 +40,7 @@ DAY_OFF_DATE = {
   2016 => Date.civil(2016, 8, 3),
   2017 => Date.civil(2017, 8, 9),
   2018 => Date.civil(2018, 7, 25),
-  2019 => Date.civil(2019, 7, 17)
+  2019 => Date.civil(2019, 7, 17),
   2020 => Date.civil(2019, 8, 5)
 }
 
