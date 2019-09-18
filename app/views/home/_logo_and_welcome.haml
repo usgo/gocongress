@@ -26,7 +26,14 @@
     = @year.ordinal_number.ordinalize
     Annual U.S. Go Congress
   %p
-    - if @year.year >= 2016
+    - if @year.year = 2020
+      It&rsquo;s time once again for Colorado to host the US Go Congress,
+      which we have done every ten years since 1990! This time around we are
+      pulling out all the stops and holding Congress in what we feel may be
+      the most beautiful location ever. The YMC Camp at Estes Park is the
+      perfect place for both players and non-players, young and old alike.
+      It&rsquo;s an ideal vacation destination.
+    - elsif @year.year >= 2016
       The U.S. Go Congress is the largest go activity in the United States. It
       happens once a year and spans one week. Events include the U.S. Open, the
       largest annual go tournament in the U.S., professional lectures and game

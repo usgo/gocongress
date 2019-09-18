@@ -136,3 +136,18 @@ Year.create!(
     year:                  2019
   }
 )
+
+Year.create!(
+  {
+    city:                  'Estes Park',
+    date_range:            'August 1 - 9',
+    day_off_date:          Date.new(2020, 8, 5),
+    ordinal_number:        36,
+    registration_phase:    'closed',
+    reply_to_email:        'webmaster@gocongress.org',
+    start_date:            Date.new(2020, 8, 1),
+    state:                 'CO',
+    timezone:              'Mountain Time (US & Canada)',
+    year:                  2020
+  }
+)
