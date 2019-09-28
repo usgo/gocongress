@@ -9,6 +9,10 @@ module ApplicationHelper
     File.file?(File.join(Rails.root, 'app', 'assets', subdirectory, filename))
   end
 
+  def asset_exists?(path)
+    Rails.application.assets.resolve(path).present? 
+  end
+
   # When you want to use `button_to` but your url has a query string
   # https://github.com/rails/rails/issues/2158
   def button_to_get text, url, id, css_class = nil

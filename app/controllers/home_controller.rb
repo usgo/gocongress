@@ -1,5 +1,5 @@
 class HomeController < ApplicationController
-  rescue_from  ActionView::MissingTemplate, :with => :missing_template
+  rescue_from ActionView::MissingTemplate, :with => :missing_template
   rescue_from ActionController::UnknownFormat, :with => :missing_template
 
   def index

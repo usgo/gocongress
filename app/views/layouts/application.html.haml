@@ -6,13 +6,7 @@
     -#
       %meta{:content => "http:#{asset_path("logo/usgc/#{@logo_file}")}", :property => "og:image"}
     %meta{:name => "viewport", :content => "width=device-width, initial-scale=1.0"}
-    %meta{:property => "og:title", :content => "U.S. Go Congress #{@year.year}"}
-    %meta{:property => "og:description", :content => "2018's annual Go Congress will be held in Williamsburg, Virginia from July 21 – 28, hosted by the National Go Center."}
-    %meta{:property => "og:image", :content => image_path('2018/og-image.png')}
-    %meta{:property => "og:image:type", :content => "image/png"}
-    %meta{:property => "og:image:alt", :content => "The 2018 Go Congress Logo, a badass eagle with a shield that has a go game on it"}
-    %meta{:property => "og:image:width", :content => "1156"}
-    %meta{:property => "og:image:height", :content => "308"}
+    = render '/layouts/og_image'
     = favicon_link_tag "favicon.png"
     %title
       U.S. Go Congress
