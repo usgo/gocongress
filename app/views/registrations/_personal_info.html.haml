@@ -10,10 +10,15 @@
     %span.smalltext Hide name on the "Who&#39;s Coming" list
   .field
     = f.label :gender, 'Gender'
-    = f.radio_button :gender, 'm'
-    Male &nbsp;&nbsp;
-    = f.radio_button :gender, 'f'
-    Female
+    %label 
+      = f.radio_button :gender, 'm'
+      Male &nbsp;&nbsp;
+    %label 
+      = f.radio_button :gender, 'f'
+      Female
+    %label 
+      = f.radio_button :gender, 'o'
+      Other
   .field
     = f.label :birth_date, 'Birth date'
     - if params[:type] == "adult"

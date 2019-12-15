@@ -2,7 +2,20 @@ require "rails_helper"
 
 RSpec.describe RegistrationsController, :type => :controller do
   render_views
-  let(:attendee_attributes) { { :birth_date => "1981-09-10", :country => "US", :email => "test@gocongress.org", :emergency_name => "Jenny", :emergency_phone => "867-5309", :family_name => "Attendee", :gender => "m", :given_name => "Test", :rank => 3, :tshirt_size => "NO", :will_play_in_us_open => false, :receive_sms => false } }
+  let(:attendee_attributes) {{
+    :birth_date => "1981-09-10",
+    :country => "US",
+    :email => "test@gocongress.org",
+    :emergency_name => "Jenny",
+    :emergency_phone => "867-5309", 
+    :family_name => "Attendee",
+    :gender => "m",
+    :given_name => "Test",
+    :rank => 3,
+    :tshirt_size => "NO",
+    :will_play_in_us_open => false,
+    :receive_sms => false
+  }}
   let(:activities) { 1.upto(3).map{ create :activity } }
 
   context "as a visitor" do
@@ -72,6 +85,15 @@ RSpec.describe RegistrationsController, :type => :controller do
           post :create, params: { registration: a, user_id: user_two.id, year: user_two.year }
         }.not_to change { Attendee.count }
         expect(response).to be_forbidden
+      end
+
+      it "accepts m, f, and o for gender" do
+        attrs = attendee_attributes.merge(:user_id => user.id)
+        attrs[:gender] = "o"
+        expect {
+          post :create, params: { registration: attrs, user_id: user.id, year: user.year }
+        }.to change{ Attendee.count }
+        expect(assigns(:registration).errors).to_not include(:gender)
       end
 
       it "given invalid attributes it does not create attendee" do

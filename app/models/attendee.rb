@@ -32,7 +32,7 @@ class Attendee < ApplicationRecord
   validates :emergency_name,  :presence => true
   validates :emergency_phone, :presence => true
   validates :family_name,     :presence => true
-  validates :gender,          :inclusion => {:in => ["m","f"], :message => "is not valid"}, :presence => true
+  validates :gender,          :inclusion => {:in => ["m","f","o"], :message => "is not valid"}, :presence => true
   validates :given_name,      :presence => true
   validates :guardian_full_name, :presence => { :if => :require_guardian_full_name? }
   validates :local_phone,

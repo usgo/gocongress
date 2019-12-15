@@ -18,6 +18,9 @@
       %label
         = f.radio_button :gender, 'f'
         Female
+      %label
+        = f.radio_button :gender, 'o'
+        Other
   .field
     = f.label :birth_date, 'Birth date'
     - if params[:type] == "adult"
