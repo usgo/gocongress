@@ -98,7 +98,7 @@ GEM
       railties (>= 3.0.0)
     faraday (0.15.4)
       multipart-post (>= 1.2, < 3)
-    ffi (1.9.18)
+    ffi (1.9.24)
     fog-aws (3.3.0)
       fog-core (~> 2.1)
       fog-json (~> 1.1)
@@ -382,7 +382,7 @@ DEPENDENCIES
   exception_notification
   factory_bot
   factory_bot_rails
-  ffi (= 1.9.18)
+  ffi (= 1.9.24)
   fog-aws
   guard
   guard-rspec
