@@ -5,9 +5,16 @@
 #header-container
   #header
     #usgc-title-container
-      %h1= link_to "#{@year.year} U.S. Go Congress", year_path
+      %h1
+        = link_to "#{@year.year} U.S. Go Congress", year_path
     #usgc-when-where-container
       = @congress_city + ', ' + @congress_state
+      &bull;
       = @congress_date_range + ','
       = @year.year
-    %div{:style => "clear:both;"}
+
+    -# .header-logo
+      -# = link_to year_path do
+      -#   - f = "logo/usgc/#{@logo_file}"
+      -#   - if image_file?(f)
+      -#     = image_tag "logo/usgc/#{@logo_file}", :class => 'usgc-logo'

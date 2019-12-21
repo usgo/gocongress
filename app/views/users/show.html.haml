@@ -55,8 +55,8 @@
           - else
             %td= button_to "Cancel", { action: "cancel_attendee", id: @user.id, attendee_id: a.id }, method: :patch, data: { confirm: "Plan selections will be removed.  Are you sure?" }
 
-= button_to_get 'Add Adult Attendee', new_registration_path(user_id: @user.id, type: 'adult'), 'add_adult_attendee_btn'
-= button_to_get 'Add Youth Attendee', new_registration_path(user_id: @user.id, type: 'youth'), 'add_youth_attendee_btn'
+= button_to_get 'Add Adult Attendee (18 years and up)', new_registration_path(user_id: @user.id, type: 'adult'), 'add_adult_attendee_btn'
+= button_to_get 'Add Youth Attendee (under 18 years old)', new_registration_path(user_id: @user.id, type: 'youth'), 'add_youth_attendee_btn'
 
 %h3 Regarding Large Groups
 %p

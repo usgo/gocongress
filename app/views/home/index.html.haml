@@ -1,9 +1,11 @@
-#gallery-column
-  = render 'slideshow'
-  = render 'addresses'
-  = render "#{@year.year}/home/app" rescue nil
+= render 'addresses'
+= render "#{@year.year}/home/app" rescue nil
 = render "#{@year.year}/home/logo_and_welcome" rescue render 'logo_and_welcome'
-- if @year.year >= 2016
-  = render "#{@year.year}/home/mailing_list" rescue render 'mailing_list'
-= render @contents
+
+%div.homepage-secondary
+  #gallery-column
+    = render 'slideshow'
+  - if @year.year >= 2016
+    = render "#{@year.year}/home/mailing_list" rescue render 'mailing_list'
+  = render @contents
 = render 'past_years'

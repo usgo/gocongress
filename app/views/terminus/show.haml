@@ -8,9 +8,9 @@
   You may register as many people as you want on the same account.
   Bring the whole family!
 .floating-padded-line-item
-  = button_to_get 'Add Adult Attendee', new_registration_path(user_id: @user.id, type: 'adult'), 'add_adult_attendee_btn', 'button-emphasis'
+  = button_to_get 'Add Adult Attendee (18 years old and up)', new_registration_path(user_id: @user.id, type: 'adult'), 'add_adult_attendee_btn', 'button-emphasis'
 .floating-padded-line-item
-  = button_to_get 'Add Youth Attendee', new_registration_path(user_id: @user.id, type: 'youth'), 'add_youth_attendee_btn', 'button-emphasis'
+  = button_to_get 'Add Youth Attendee (under 18 years old) ', new_registration_path(user_id: @user.id, type: 'youth'), 'add_youth_attendee_btn', 'button-emphasis'
 - if @year.year != 2019
   .floating-padded-line-item
     = button_to "Make a Payment", pay_user_path(@user), :method => "get", :class => 'button-emphasis'

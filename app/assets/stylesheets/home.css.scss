@@ -1,19 +1,46 @@
 .homepage {
-  .content {
+  .logo-welcome-container {
+    overflow: hidden;
+    margin-bottom: $spacing-unit * 2;
+  }
 
+  .homepage-secondary {
+    background: transparentize($main-bg-color, 0.8);
+    margin: $spacing-unit * -1;
+    padding: $spacing-unit;
+  }
+
+  .content {
     /* homepage overrides default padding so that the gallery will
     float snugly in the top right */
-    padding: 0px 0px 20px 0px;
-    width: 900px;
-    p, h2, h3, h4, h5 { padding: 0.5em; }
+    // padding: $spacing-unit;
+    // width: 900px;
+    p,
+    h2,
+    h3,
+    h4,
+    h5 {
+      padding: 0.5em 0;
+    }
+
+    .usgc-logo {
+      float: left;
+      margin-bottom: $spacing-unit;
+      margin-right: $spacing-unit;
+      width: 200px;
+    }
 
     /* Curving the text around the logo */
-    .curvy-text-container { padding-top: 10px; position: relative; }
+    .curvy-text-container {
+      padding-top: 10px;
+      padding-left: 150px;
+      position: relative;
+    }
     .curvy-text-container #usgc-logo {
       &.circular-logo {
         position: absolute;
-        left: -140px;
-        top: 10px;
+        left: $spacing-unit / 2 * -1;
+        top: $spacing-unit / 2 * -1;
         width: 300px;
       }
       &.rectangular-logo {
@@ -25,21 +52,32 @@
         width: auto;
       }
     }
-    .curvy-text-container .curvy-spacer { clear: left; float: left; height: 19px; }
-    .curvy-text-container p { padding: 0.5em; text-align: justify; }
-
-    /* Misc. */
-    &.past-years { padding: 3px 0px 0px 0px; }
+    .curvy-text-container .curvy-spacer {
+      clear: left;
+      float: left;
+      height: 19px;
+    }
+    .curvy-text-container p {
+      padding: 0.5em;
+      text-align: justify;
+    }
   }
 }
 
 /* Slideshow */
 #gallery-column {
-  float:right;
-  padding-left: 20px;
-  padding-bottom: 20px;
+  clear: right;
+  float: right;
+  // margin-top: $spacing-unit * -1;
+  // margin-right: $spacing-unit * -1;
+  border-radius: 15px;
+  margin-left: $spacing-unit;
+  // margin-bottom: $spacing-unit;
+  margin-top: $spacing-unit * 2 * -1;
+  overflow: hidden;
   position: relative;
   z-index: 1; // everything else will be on 0
+
   #below-gallery {
     padding: 0px;
     text-align: right;
@@ -59,10 +97,10 @@ IE. This may be due to how IE applies styles when a <link> element
 referencing the galleria theme is added at runtime by JS, but I am
 not certain. -Jared 2012-05-31 */
 .galleria-stage {
-  bottom:0px !important;
-  left:0px !important;
-  right:0px !important;
-  top:0px !important;
+  bottom: 0px !important;
+  left: 0px !important;
+  right: 0px !important;
+  top: 0px !important;
 }
 
 /* Slideshow captions */
@@ -78,7 +116,8 @@ not certain. -Jared 2012-05-31 */
   background-color: rgba(0, 0, 0, 0.5) !important;
   display: block !important;
 }
-.galleria-info-title, .galleria-info-description {
+.galleria-info-title,
+.galleria-info-description {
   display: inline !important;
 }
 .galleria-info-description {

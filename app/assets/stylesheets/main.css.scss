@@ -1,18 +1,54 @@
+@import "variables";
 @import "intlTelInput";
 @import "mixins";
+@import url("https://fonts.googleapis.com/css?family=Cabin|Josefin+Sans|Open+Sans|Titillium+Web&display=swap");
 
+@import "scaffold";
+@import "home";
+@import "tables";
+@import "jquery_ui_tweaks";
+@import "_shirt_colors";
+
+/* Color for specific years */ // &.year2011 {
+//   $main-bg-color: #ff9b05;
+//   $nav-bg-color: #0071bc;
+// }
+// &.year2012 {
+//   $main-bg-color: #453775;
+//   $nav-bg-color: #8d7ac9;
+// }
+// &.year2013 {
+//   $main-bg-color: #333;
+//   $nav-bg-color: #555;
+//   $admin-nav-bg-color: #777;
+// }
+// &.year2015 {
+//   $main-bg-color: #2c3243;
+//   $nav-bg-color: #32394c;
+// }
+// &.year2019 {
+//   $main-bg-color: #000000;
+//   $nav-bg-color: #8ca5ff;
+// }
+// &.year2020 {
+// }
 /* Configuration: Layout */
 $content_width: 880px;
 
 /* Basic element styling (no classes yet) */
-* { margin: 0px; padding: 0px; }
+* {
+  margin: 0px;
+  padding: 0px;
+}
 
 body {
   background-color: white;
-  margin-bottom: 1em;
+  color: #555;
 }
 
-hr { margin: 1em 0em 1em 0em; }
+hr {
+  margin: 1em 0em 1em 0em;
+}
 blockquote {
   font-size: 14px;
   font-style: oblique;
@@ -32,12 +68,17 @@ legend {
   font-weight: bold;
   padding: 1em 0em 0.25em 0em;
 }
-input[type="submit"], input[type="button"] { cursor: pointer; }
+input[type="submit"],
+input[type="button"] {
+  cursor: pointer;
+}
 
 /* Some jQuery UI widgets, like datepicker, are installed as direct
 children of the document body.  Their styles will be based off of
 the body, eg. font-size in ems. */
-body { font-size: 11px; }
+body {
+  font-size: 11px;
+}
 
 /* `.body-container` is a direct child of `body`.  These styles will
 apply to just about everything except jQuery UI widgets (see note
@@ -45,32 +86,83 @@ above).  Although there is only one `.body-container` we use a class
 because an id would have too much priority, and would override
 things like `.nav li` */
 .body-container {
-
   /* Font Families */
-  h1, h2, h3, h4, h5, h6, legend, th { font-family: Helvetica, sans-serif; }
-  body, td, p, span, div, li, hr, blockquote { font-family: Times, serif; }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  legend,
+  th {
+    font-family: $emphasis-font;
+  }
+  body,
+  td,
+  p,
+  span,
+  div,
+  li,
+  hr,
+  blockquote {
+    font-family: $primary-font;
+  }
 
   /* Basic font sizing */
-  font-size: 14px;
-  h1 { font-size: 32px; }
-  h2 { font-size: 24px; }
-  h3 { font-size: 18px; }
-  p, span, div { font-size: 16px; }
-  .smalltext { font-size: 12px; }
+  font-size: 18px;
+
+  h1 {
+    font-size: 48px;
+  }
+  h2 {
+    font-size: 36px;
+  }
+  h3 {
+    font-size: 24px;
+  }
+  p,
+  span,
+  div {
+    font-size: 18px;
+  }
+  .smalltext {
+    font-size: 14px;
+  }
 }
 
 /* Truly basic classes that could apply anywhere -Jared 12/30/10 */
-.clear { clear: both; }
-.fullwidth { width: 100%; }
-.inline { display: inline; }
-.inline-children { display: inline; * { display: inline;} }
-th { text-align: left; }
-th.row { vertical-align: top; }
-table .numeric { text-align: right; }
-img.thin-border { border: 1px solid black; }
-.initially_hidden { display: none; }
+.clear {
+  clear: both;
+}
+.fullwidth {
+  width: 100%;
+}
+.inline {
+  display: inline;
+}
+.inline-children {
+  display: inline;
+  * {
+    display: inline;
+  }
+}
+th {
+  text-align: left;
+}
+th.row {
+  vertical-align: top;
+}
+table .numeric {
+  text-align: right;
+}
+img.thin-border {
+  border: 1px solid black;
+}
+.initially_hidden {
+  display: none;
+}
 .hardwrap {
-	/* These are technically the same, but use both */
+  /* These are technically the same, but use both */
   overflow-wrap: break-word;
   word-wrap: break-word;
 
@@ -88,146 +180,227 @@ img.thin-border { border: 1px solid black; }
 }
 
 /* Basic shortcuts: alignment */
-.align-center { text-align: center; }
-.align-right { text-align: right; }
-.float-left { float: left; }
-.float-right { float: right; }
-.valign-middle { vertical-align: middle; }
-.valign-top { vertical-align: top; }
+.align-center {
+  text-align: center;
+}
+.align-right {
+  text-align: right;
+}
+.float-left {
+  float: left;
+}
+.float-right {
+  float: right;
+}
+.valign-middle {
+  vertical-align: middle;
+}
+.valign-top {
+  vertical-align: top;
+}
 
 /* Common margin shortcuts */
-.push-top { margin-top: 20px; }
-.push-bottom { margin-bottom: 20px; }
-.push-left { margin-left: 20px; }
-.push-right { margin-right: 20px; }
+.push-top {
+  margin-top: 20px;
+}
+.push-bottom {
+  margin-bottom: 20px;
+}
+.push-left {
+  margin-left: 20px;
+}
+.push-right {
+  margin-right: 20px;
+}
 
 /* Use this class to pad flow elements (eg. div, form) -Jared 4/9/11 */
-.flow-padding { padding: 8px 0px; }
+.flow-padding {
+  padding: 8px 0px;
+}
 
 /* Symetrical two column layout */
-.left-column, .right-column {
+.left-column,
+.right-column {
   @include box-sizing(border-box);
   display: inline-block;
   vertical-align: top;
   width: 438px;
 }
-.left-column { padding-right: 5px; }
-.right-column { padding-left: 5px; }
+.left-column {
+  padding-right: 5px;
+}
+.right-column {
+  padding-left: 5px;
+}
 
 /* Asymetrical two column layout (two-thirds / one-third) */
-.asymetrical-columns .left-column { display: inline-block; padding-right: 32px; width: 60%; vertical-align: top; }
-.asymetrical-columns .right-column { display: inline-block; width: 30%; vertical-align: top; }
+.asymetrical-columns .left-column {
+  display: inline-block;
+  padding-right: 32px;
+  width: 60%;
+  vertical-align: top;
+}
+.asymetrical-columns .right-column {
+  display: inline-block;
+  width: 30%;
+  vertical-align: top;
+}
 
 /* A horizontal line of stuff, each one floated left with
 some padding between each -Jared 2012-05-30 */
-.floating-padded-line-item { float: left; padding: 1em 2em 1em 0em; }
+.floating-padded-line-item {
+  float: left;
+  padding: 1em 2em 1em 0em;
+}
 
 /* Remove the default border on anchored images */
 /* I hope this works as well as the img.border attribute -Jared 11/29/10 */
-a img { border: none; }
+a img {
+  border: none;
+}
 
 /* Definition lists */
-dt { clear: left; float: left; padding-right: 1em; font-weight: bold; }
-dd { float: left; }
+dt {
+  clear: left;
+  float: left;
+  padding-right: 1em;
+  font-weight: bold;
+}
+dd {
+  float: left;
+}
 
 /* Header */
 body {
-
   /* Default color */
-  #header-container { background-color: #333; }
 
-  /* Color for specific years */
-  &.year2011 #header-container { background-color: #FF9B05; }
-  &.year2012 #header-container { background-color: #453775; }
-  &.year2013 #header-container { background-color: #333; }
-  &.year2015 #header-container { background-color: #2C3243; }
-  &.year2019 #header-container { background-color: #000000; }
+  #header-container {
+    background-color: $main-bg-color;
+  }
 }
-#header { margin: 0 auto; padding: 8px 0px 5px 0px; width: 900px; }
+#header {
+  margin: 0 auto;
+  padding: $spacing-unit $spacing-unit $spacing-unit / 2;
+  display: flex;
+  align-items: flex-end;
+}
 
-#usgc-title-container { float: left; }
+#usgc-title-container {
+  margin-right: auto;
+  flex-grow: 1;
+}
 #usgc-title-container h1 {
   font-size: 32px;
-  line-height: 33px;
+  font-weight: bold;
   color: white;
-  text-shadow: 0px 0px 5px black;
+  padding-top: 0.2em;
 }
-#usgc-title-container a { color: white; text-decoration: none; }
+#usgc-title-container a {
+  color: white;
+  text-decoration: none;
+}
+
+.header-logo {
+  width: $logo-width;
+  position: absolute;
+  top: ($spacing-unit / 4);
+  right: ($spacing-unit / 2);
+  z-index: 10;
+
+  img {
+    position: relative;
+    width: 100%;
+  }
+}
 
 #usgc-when-where-container {
   color: white;
-  float: right;
   font-family: Helvetica, sans-serif;
   font-size: 20px;
-  line-height: 23px;
-  margin-top: 10px;
-  text-align: right;
-  text-shadow: 0px 0px 5px black;
+  // margin-right: $logo-width;
+  // line-height: 32px;
 }
 
 /* Nav menu */
-.nav-container-admin { background-color: #64AEDE; }
-body {
-
-  /* Default color */
-  .nav-container { background-color: #555; }
-
-  /* Color for specific years */
-  &.year2011 .nav-container { background-color: #0071BC; }
-  &.year2012 .nav-container { background-color: #8D7AC9; }
-  &.year2013 {
-    .nav-container { background-color: #555; }
-    .nav-container-admin { background-color: #777; }
-  }
-  &.year2015 .nav-container { background-color: #32394c; }
-  &.year2019 .nav-container { background-color: #8ca5ff; }
-}
-
-.nav {
-  margin: 0px;
-  padding: 3px 0px;
-  text-align: center;
-
+.nav-container-admin {
+  background-color: $admin-nav-bg-color;
   li {
-    display: inline-block;
-    font-family: Helvetica, sans-serif;
-    font-size: 14px;
-    font-weight: bold;
-    line-height: 25px;
-    list-style: none;
-    padding: 3px 20px;
-    text-align: center;
-    text-shadow: 1px 1px 2px black;
-    &#nav-admin-title { text-shadow: none; }
-    &#nav-registration a { color: #FF2; }
     a {
-      color: white;
-      text-decoration: none;
-      &:hover { text-decoration: underline; }
+      &:hover {
+        background-color: $admin-nav-bg-highlight-color !important;
+      }
     }
   }
 }
-#nav-list-main { margin:0 auto; max-width: $content_width; }
+body {
+  /* Default color */
+  .nav-container {
+    background-color: $nav-bg-color;
+  }
+}
+
+.nav {
+  margin: {
+    top: 0;
+    right: $spacing-unit;
+    bottom: 0;
+    left: $spacing-unit - 10px;
+  }
+  // padding: 3px 0px;
+  // text-align: center;
+
+  li {
+    display: inline-block;
+    font-family: $primary-font;
+    font-size: 14px;
+    font-weight: bold;
+    list-style: none;
+    // text-align: center;
+    &#nav-admin-title {
+      padding: 5px 10px;
+    }
+    &#nav-registration a {
+      color: #ff2;
+    }
+    a {
+      display: inline-block;
+      padding: 5px $spacing-unit / 3;
+      color: $nav-link-color;
+      line-height: 25px;
+      text-decoration: none;
+      background-color: transparent;
+      transition: background-color 0.2s;
+      &:hover {
+        background-color: $nav-bg-highlight-color;
+      }
+    }
+  }
+}
+#nav-list-main {
+  margin: 0 auto;
+  // max-width: $content_width;
+}
 
 /* Secondary navigation */
-.pagination-controls { float: right; }
-.pagination-controls nav { display: inline; }
+.pagination-controls {
+  float: right;
+}
+.pagination-controls nav {
+  display: inline;
+}
 
 /* Main content area */
 .content {
-  border-left: 1px solid #AAA;
-  border-right: 1px solid #AAA;
-  border-bottom: 1px solid #AAA;
   margin: 0 auto;
-  padding: 10px;
-  width: $content_width;
+  padding: $spacing-unit;
+  // width: $content_width;
 
   /* Drawing extra attention to various things */
   .notice {
     background-image: url("/assets/icons/attention.png");
     background-repeat: no-repeat;
     background-position: 5px;
-    border: 1px dashed #FF9B05;
+    border: 1px dashed #ff9b05;
     margin: 0.5em 0em;
     min-height: 30px;
     padding-left: 52px;
@@ -243,27 +416,63 @@ body {
   }
 
   .button-emphasis {
-    color: #0071BC;
+    color: #0071bc;
     font-size: 20px;
-    }
+  }
 }
 
 /* Basic styling for elements in the main content area.
 Also applies to contents of dialogs. */
-.content, .dialog {
-  h1, h2, h3, h4, h5, h6 { padding: 1em 0em 0.5em 0em; }
-  dl, p { padding: 0.5em 0em; }
-  ul { margin-left: 20px; padding: 0.5em 0em 0.5em 0em; }
-  li { margin-left: 10px; }
-  table.semantic li { margin-left: 25px; }
+.content,
+.dialog {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    padding: 0.5em 0em;
+  }
+  dl,
+  p {
+    padding: 0.5em 0em;
+  }
+  ul {
+    margin-left: 20px;
+    padding: 0.5em 0em 0.5em 0em;
+  }
+  li {
+    margin-left: 10px;
+  }
+  table.semantic li {
+    margin-left: 25px;
+  }
   &.past-years {
-    padding: 3px 10px 0px 10px;
-    p, a { font-family: Helvetica, sans-serif; }
-    a { padding-right: 10px; }
+    color: white;
+    background-color: $nav-bg-color;
+    padding: 0 $spacing-unit;
+    p {
+      padding: 0 !important;
+      margin: 0;
+    }
+    a {
+      display: inline-block;
+      background-color: transparent;
+      color: white;
+      // padding-right: 10px;
+      padding: 10px;
+      transition: background-color 0.2s;
+      text-decoration: none;
+      &:hover {
+        background-color: $nav-bg-highlight-color;
+      }
+    }
   }
 
   /* Nested lists look better without padding */
-  ul li ul { padding: 0px; }
+  ul li ul {
+    padding: 0px;
+  }
 }
 
 /* Horizontal row of buttons.  Pad the same as a paragraph,
@@ -271,8 +480,13 @@ except when following an h2, then pad half as much on top as
 normal. -Jared 2012-06-10 */
 .row-of-buttons {
   padding: 0.5em 0em;
-  h2 + & { padding: 0.25em 0em 0.5em 0em; }
-  form, div { display: inline; }
+  h2 + & {
+    padding: 0.25em 0em 0.5em 0em;
+  }
+  form,
+  div {
+    display: inline;
+  }
 }
 
 div.download-pdf {
@@ -281,13 +495,13 @@ div.download-pdf {
   background-position: 5px;
   min-height: 40px;
   padding-left: 45px;
-  }
+}
 div.download-pdf a {
   line-height: 40px;
-  }
+}
 
 .noscript-warning {
-  background-color: #C00;
+  background-color: #c00;
   color: White;
   padding: 5px;
   text-align: center;
@@ -295,25 +509,49 @@ div.download-pdf a {
 }
 
 /* Rails flashes */
-.flash { padding: 5px 10px; }
-.flash-alert { background-color: Yellow; }
-.flash-notice { background-color: LightGreen; }
+.flash {
+  margin-right: $logo-width;
+  padding: 5px 10px;
+}
+.flash-alert {
+  background-color: Yellow;
+}
+.flash-notice {
+  background-color: LightGreen;
+}
 
 /* Form validation errors */
-#error_explanation h2 { font-size: 16px; }
-#error_explanation ul li { font-size: 16px; }
+#error_explanation h2 {
+  font-size: 16px;
+}
+#error_explanation ul li {
+  font-size: 16px;
+}
 
 /* Forms */
-div.inputform { margin: 1em; }
-div.inputform table tbody td { padding-bottom: 0.25em; }
-div.inputform table tbody th { text-align: left; padding-right: 1em; vertical-align: top; }
+div.inputform {
+  margin: 1em;
+}
+div.inputform table tbody td {
+  padding-bottom: 0.25em;
+}
+div.inputform table tbody th {
+  text-align: left;
+  padding-right: 1em;
+  vertical-align: top;
+}
 
 /* Blocks that float on the right */
-.vertical-form-instructions { clear: right; float:right; margin-right: 20px; width: 375px; }
+.vertical-form-instructions {
+  clear: right;
+  float: right;
+  margin-right: 20px;
+  width: 375px;
+}
 .callout {
   border-left: 1px dotted gray;
   clear: right;
-  float:right;
+  float: right;
   padding: 0px 20px;
   text-align: justify;
   width: 250px;
@@ -321,51 +559,88 @@ div.inputform table tbody th { text-align: left; padding-right: 1em; vertical-al
 
 /* Railsy forms -Jared 12/15/10 */
 /* Note the fixed width labels */
-div.field { display: block; padding: 5px 0px; margin: 0px; }
-div.field_with_errors { background-color:white; display: inline; padding: 0; }
-div.field_with_errors input { background-color:white; }
-div.field label, div.field_with_errors label {
-  display:inline-block;
-  text-align:left;
+div.field {
+  display: block;
+  padding: 5px 0px;
+  margin: 0px;
+}
+div.field_with_errors {
+  background-color: white;
+  display: inline;
+  padding: 0;
+}
+div.field_with_errors input {
+  background-color: white;
+}
+div.field label,
+div.field_with_errors label {
+  display: inline-block;
+  text-align: left;
   width: 150px;
   vertical-align: top;
-  &.wide { width: auto; }
+  &.wide {
+    width: auto;
   }
-div.field textarea.wide { width: 650px; }
-div.field label.inline-label { width: auto; }
-
+}
+div.field textarea.wide {
+  width: 650px;
+}
+div.field label.inline-label {
+  width: auto;
+}
 
 div.field {
-
   /* Checkbox Lists */
-  .cbx-list { display: inline-block; }
-  .cbx-list label { padding-left: 1em; width: auto; vertical-align: baseline; }
+  .cbx-list {
+    display: inline-block;
+  }
+  .cbx-list label {
+    padding-left: 1em;
+    width: auto;
+    vertical-align: baseline;
+  }
 
   /* Date and time inputs */
   .datetime-fields {
     display: inline-block;
-    .datetime-field { margin-bottom: 5px; }
-    label { width: 60px; }
+    .datetime-field {
+      margin-bottom: 5px;
+    }
+    label {
+      width: 60px;
+    }
   }
 }
 
 /* Horizontally aligning stuff with inputs */
-fieldset .aligned-with-input { margin-left: 155px; }
-.content ul.aligned-with-input { margin-left: 155px; }
+fieldset .aligned-with-input {
+  margin-left: 155px;
+}
+.content ul.aligned-with-input {
+  margin-left: 155px;
+}
 
 /* Some forms need wider labels -Jared 1/8/11 */
-fieldset.wider-labels label { width: 200px; }
-fieldset.wider-labels .aligned-with-input { margin-left: 205px !important; }
-fieldset.wordy-questions label { width: 350px; }
-fieldset.wordy-questions .aligned-with-input { margin-left: 355px !important; }
+fieldset.wider-labels label {
+  width: 200px;
+}
+fieldset.wider-labels .aligned-with-input {
+  margin-left: 205px !important;
+}
+fieldset.wordy-questions label {
+  width: 350px;
+}
+fieldset.wordy-questions .aligned-with-input {
+  margin-left: 355px !important;
+}
 
 /* Specific stuff on the registration form */
 #liability-release-instructions {
-    display: inline-block;
-    padding-left: 10px;
-    padding-top: 5px;
-    vertical-align: middle;
-    width: 350px;
+  display: inline-block;
+  padding-left: 10px;
+  padding-top: 5px;
+  vertical-align: middle;
+  width: 350px;
 }
 
 .error {
@@ -400,16 +675,65 @@ fieldset.wordy-questions .aligned-with-input { margin-left: 355px !important; }
 /* Footer */
 #footer {
   margin: 0 auto;
-  padding-top: 5px;
-  width: 900px;
+  // padding-top: 5px;
+  // width: 900px;
+  padding: $spacing-unit;
 }
 #site-credit {
   color: #333;
-  font-size: 10px;
+  font-size: 14px;
   text-align: left;
-  a { color: #333; }
+  a {
+    color: #333;
+  }
 }
 
 #sponsors {
   float: right;
+}
+
+input[type="submit"],
+input[type="button"],
+button,
+.button {
+  $color: #eee;
+  background: $button-bg;
+  border: 0;
+  color: $color;
+  cursor: pointer;
+  display: inline-block;
+  font: {
+    // size: 18px;
+  }
+  padding: 5px 10px;
+  position: relative;
+  text-decoration: none;
+  transition: all 0.2s;
+
+  &:visited {
+    color: $color;
+  }
+
+  &:hover {
+    background: $button-bg-highlight;
+  }
+
+  &[disabled] {
+    background: hsl(0, 0, 50%);
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+}
+
+.button-large {
+  font: {
+    size: 36px;
+  }
+}
+
+input {
+  font: {
+    size: 18px;
+  }
+  padding: 5px;
 }
