@@ -1,13 +1,20 @@
 .homepage {
   .logo-welcome-container {
     overflow: hidden;
-    margin-bottom: $spacing-unit * 2;
+    margin-bottom: $spacing-unit;
   }
 
   .homepage-secondary {
     background: transparentize($main-bg-color, 0.8);
-    margin: $spacing-unit * -1;
+    margin: {
+      right: $spacing-unit * -1;
+      left: $spacing-unit * -1;
+    }
     padding: $spacing-unit;
+
+    .addresses {
+      margin-bottom: 1em;
+    }
   }
 
   .content {
@@ -27,7 +34,20 @@
       float: left;
       margin-bottom: $spacing-unit;
       margin-right: $spacing-unit;
-      width: 200px;
+
+      img {
+        width: 300px;
+      }
+
+      @include breakpoint(lt-sm) {
+        float: none;
+        margin: 0;
+        text-align: center;
+
+        img {
+          width: 75%;
+        }
+      }
     }
 
     /* Curving the text around the logo */
@@ -71,12 +91,24 @@
   // margin-top: $spacing-unit * -1;
   // margin-right: $spacing-unit * -1;
   border-radius: 15px;
+  margin-bottom: $spacing-unit;
   margin-left: $spacing-unit;
   // margin-bottom: $spacing-unit;
   margin-top: $spacing-unit * 2 * -1;
   overflow: hidden;
   position: relative;
   z-index: 1; // everything else will be on 0
+
+  @include breakpoint(lt-sm) {
+    display: inline-block;
+    float: none;
+    margin: {
+      top: 0;
+      right: auto;
+      left: auto;
+    }
+    max-width: 100%;
+  }
 
   #below-gallery {
     padding: 0px;

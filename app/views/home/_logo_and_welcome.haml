@@ -1,21 +1,20 @@
 %div.logo-welcome-container
-  = link_to year_path do
-    - f = "logo/usgc/#{@logo_file}"
-    - if image_file?(f)
-      = image_tag "logo/usgc/#{@logo_file}", :class => 'usgc-logo'
+  %div.usgc-logo
+    = link_to year_path do
+      - f = "logo/usgc/#{@logo_file}"
+      - if image_file?(f)
+        = image_tag "logo/usgc/#{@logo_file}"
 
   %div
     
   - if @upcoming
     %h2
-      Join us for the
-      = @year.ordinal_number.ordinalize
-      Annual U.S. Go Congress
+      Join us for the #{@year.ordinal_number.ordinalize}&nbsp;Annual
+      U.S.&nbsp;Go&nbsp;Congress
   - else
     %h2
-      The 
-      = @year.ordinal_number.ordinalize
-      Annual U.S. Go Congress
+      The #{@year.ordinal_number.ordinalize}&nbsp;Annual
+      U.S.&nbsp;Go&nbsp;Congress
 
   %p
     - if @year.year == 2020
