@@ -28,6 +28,7 @@ table.lightweight {
     padding: 0em 1em;
   }
   th {
+    font-weight: bold;
     padding: 0em 1em 0em 0em;
   }
   &.top-headed th,
@@ -79,6 +80,11 @@ table.semantic {
   }
   th {
     background-color: $box-bg-dark;
+    color: darken($box-bg-dark, 20%);
+
+    a {
+      color: darken($box-bg-dark, 20%);
+    }
   }
   tr.lesser-header th {
     background-color: $box-bg-dark;

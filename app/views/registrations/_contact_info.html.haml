@@ -4,13 +4,12 @@
     = f.telephone_field :phone, value: f.object.phone, data: { intl_phone: "true"}
   .field
     = f.label :receive_sms, 'Text Notifications'
-    %div
-      %label
-        = f.radio_button :receive_sms, true, checked: (params[:receive_sms] == nil ? true : params[:receive_sms])
-        Send Me Text Message Notifications &nbsp;&nbsp;
-      %label
-        = f.radio_button :receive_sms, false
-        Don't Send Me Any Text Messages
+    %label
+      = f.radio_button :receive_sms, true, checked: (params[:receive_sms] == nil ? true : params[:receive_sms])
+      Send Me Text Message Notifications
+    %label
+      = f.radio_button :receive_sms, false
+      Don&rsquo;t Send Me Any Text Messages
   .field
     = f.label :local_phone, "Phone at Congress"
     = f.telephone_field :local_phone, value: f.object.local_phone, data: { intl_phone: "true"}

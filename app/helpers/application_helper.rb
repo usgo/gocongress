@@ -61,10 +61,12 @@ module ApplicationHelper
   end
 
   def link_to_liability_release()
-    if @year.year != 2016
+    if @year.year != 2016 && @year.year != 2020
       link_to "Youth Attendance Agreement",
         asset_path("liability_release/USGC#{@year.year}-Liability-Release.pdf"),
         :target => '_blank'
+    elsif @year.year == 2020
+      link_to "Youth Attendance Agreement", "/2020/content_categories/68"
     else
       "Youth Attendance Agreement"
     end

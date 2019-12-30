@@ -1,28 +1,41 @@
 %fieldset
-  .field
-    = f.label :rank, 'Estimated Rank'
-    = f.select :rank, Attendee::Rank::RANKS, :include_blank => 'Select Estimated Rank'
-    %span.smalltext
-      = link_to 'What is my AGA rank?', '#', :id => 'open_dialog_rank'
+  .field.flex
+    %div.field-key
+      = f.label :rank, 'Estimated Rank'
 
-  .field
-    = f.label :aga_id, 'AGA ID'
-    = f.number_field :aga_id, :size => 8, :min => 1, :step => 1
-    %span.smalltext
-      No
-      = link_to 'AGA ID?', '#', :id => 'open_dialog_aga_id'
-      &nbsp; Leave it blank.
+    %div.field-value
+      = f.select :rank, Attendee::Rank::RANKS, :include_blank => 'Select Estimated Rank'
+      %span.smalltext
+        = link_to 'What is my AGA rank?', '#', :id => 'open_dialog_rank'
 
-  .field
-    = f.label :will_play_in_us_open
-    = f.radio_button :will_play_in_us_open, true
-    Yes
-    %span.smalltext
-      (Please contact the US Open TD at
-      = mail_to "usopen@gocongress.org"
-      if your estimated rank is different from your AGA rank.)
-    = f.radio_button :will_play_in_us_open, false
-    No
+  .field.flex
+    %div.field-key
+      = f.label :aga_id, 'AGA ID'
+
+    %div.field-value
+      = f.number_field :aga_id, :size => 8, :min => 1, :step => 1
+
+      %div.field-help-text
+        No
+        = link_to 'AGA ID?', '#', :id => 'open_dialog_aga_id'
+        &nbsp; Leave it blank.
+
+  .field.flex
+    %div.field-key
+      = f.label :will_play_in_us_open
+
+    %div.field-value
+      %label
+        = f.radio_button :will_play_in_us_open, true
+        Yes
+      %label
+        = f.radio_button :will_play_in_us_open, false
+        No
+
+      %div.field-help-text
+        (Please contact the US Open TD at
+        = mail_to "usopen@gocongress.org"
+        if your estimated rank is different from your AGA rank.)
 
 .dialog#dialog_aga_id{:title => "What is an AGA ID?"}
   %p
@@ -36,7 +49,7 @@
 .dialog#dialog_rank{:title => "What is my AGA Rank?"}
   %p
     If you have played in AGA tournaments, you can look up your rank
-    = link_to 'here.', 'http://usgo.org/ratings/RatingsQuery.php', :target => '_blank'
+    = link_to 'here.', 'http://usgo.org/search-ratings', :target => '_blank'
   %p
     If you are not sure of your AGA rating or
     rank, but know your rating from another system, please consult

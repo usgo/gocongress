@@ -4,10 +4,18 @@
     - if image_file?(f)
       = image_tag "logo/usgc/#{@logo_file}", :class => 'usgc-logo'
 
-  %h2
-    Join us for the
-    = @year.ordinal_number.ordinalize
-    Annual U.S. Go Congress
+  %div
+    
+  - if @upcoming
+    %h2
+      Join us for the
+      = @year.ordinal_number.ordinalize
+      Annual U.S. Go Congress
+  - else
+    %h2
+      The 
+      = @year.ordinal_number.ordinalize
+      Annual U.S. Go Congress
 
   %p
     - if @year.year == 2020

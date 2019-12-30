@@ -63,7 +63,7 @@ class UsersController < ApplicationController
   def show
     @attendees = @user.attendees.order(:created_at)
     @has_minor_attendee = @attendees.map(&:minor?).include?(true)
-    @start_date = CONGRESS_START_DATE[@year.year].to_formatted_s(:long)
+    @start_date = CONGRESS_START_DATE[@year.year].to_formatted_s(:long_ordinal)
   end
 
   def pay
