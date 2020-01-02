@@ -144,6 +144,17 @@ not certain. -Jared 2012-05-31 */
   top: auto !important;
   width: 100% !important;
 }
+
+.galleria-counter {
+  top: 0;
+  right: 0;
+  bottom: auto;
+  left: auto;
+  background: black;
+  padding: 10px;
+  border-bottom-left-radius: 5px;
+}
+
 .galleria-info-text {
   background-color: rgba(0, 0, 0, 0.5) !important;
   display: block !important;
