@@ -827,3 +827,7 @@ select {
 .buffer-bottom {
   margin-bottom: $spacing-unit * 2 !important;
 }
+
+.updated {
+  color: hsl(0, 0%, 70%);
+}

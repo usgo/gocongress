@@ -5,9 +5,7 @@
     %time{ datetime: @content.created_at }= @content.created_at.strftime('%B %d, %Y')
 
     - if @content.updated_at?
-      %svg.icon.icon-A.content-bullet.medium
-        %use{:'xlink:href' => image_path('colonial-bullets/symbol-defs.svg') + '#icon-A'}
-
+      &bull;
       %span{ class: 'updated' }
         Last updated
         %time{ datetime: @content.updated_at }= time_ago_in_words(@content.updated_at)
