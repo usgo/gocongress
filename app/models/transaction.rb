@@ -76,6 +76,7 @@ class Transaction < ApplicationRecord
   scope :sales, -> { where(trantype: 'S') }
 
   def self.create_from_stripe_webhook data
+    puts "---CREATING TRANSACTION FROM STRIPE WEBHOOK---"
     user = User.find(data.metadata.user_id)
     t = new
     t.trantype = 'S' # Sale
@@ -86,6 +87,7 @@ class Transaction < ApplicationRecord
     t.gwtranid = data.id
     t.receipt_url = data.receipt_url
     t.gwdate = Date.current
+    puts t.inspect
     t.save!
   end
 
