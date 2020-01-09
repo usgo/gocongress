@@ -68,7 +68,7 @@ class UsersController < ApplicationController
 
   def pay
     authorize! :update, @user
-    @form_action = new_payment_url(new_payment_url_options)
+    @form_action = new_payment_url()
   end
 
   def invoice

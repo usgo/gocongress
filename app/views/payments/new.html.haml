@@ -1,23 +1,110 @@
-- authnet_form_url = AuthorizeNet::SIM::Transaction::Gateway::LIVE
+%script(src="https://js.stripe.com/v3/")
 
-= form_for :sim_transaction, :url => authnet_form_url do |f|
-  = sim_fields(@sim_transaction)
+%h2 Payment Information
+%table.lightweight.lightly-spaced-rows
+  %tbody
+    %tr
+      %th Amount
+      %td= number_to_currency(@amount)
 
-  %h2 Payment Information
-  %table.lightweight.lightly-spaced-rows
-    %tbody
-      %tr
-        %th Amount
-        %td= number_to_currency(@amount)
-      %tr
-        %th Credit Card Number
-        %td= text_field_tag 'x_card_num', dev? ? '4111 1111 1111 1111' : nil
-      %tr
-        %th Expiration Date (MMYY)
-        %td= text_field_tag 'x_exp_date', dev? ? '1120' : '', :size => 4
-      %tr
-        %th Card Code
-        %td= text_field_tag 'x_card_code', dev? ? '123' : '', :size => 3
-      %tr
-        %th
-        %td= submit_tag('Finish', data: { disable_with: 'Please wait...' })
+// Elements will create input elements here
+%div.stripe-payment
+  %div#card-element
+
+// We'll put the error messages in this element
+%div#card-errors(role="alert")
+
+%button#submit-payment Submit Payment
+
+%div#card-success(role="alert")
+
+:javascript
+
+  const stripe = Stripe('pk_test_RdsjiuvRPJfnXTfAlkJXUheP00jM50aEjd');
+  const elements = stripe.elements();
+
+  // Set up Stripe.js and Elements to use in checkout form
+  const style = {
+    base: {
+        color: "#666",
+        fontWeight: 500,
+        fontFamily: "Open Sans, sans-serif",
+        fontSize: "16px",
+        fontSmoothing: "antialiased",
+
+        "::placeholder": {
+          color: "#999"
+        }
+      },
+      invalid: {
+        color: "#E25950"
+      }
+  };
+
+  // Create card input
+  const card = elements.create("card", { style: style });
+  card.mount("#card-element");
+
+  // Catch errors
+  card.addEventListener('change', ({error}) => {
+    const displayError = document.getElementById('card-errors');
+    if (error) {
+      displayError.textContent = error.message;
+    } else {
+      displayError.textContent = '';
+    }
+  });
+
+  // Submit payment to Stripe
+  const submitButton = document.getElementById('submit-payment');
+
+  submitButton.addEventListener('click', function(event) {
+    disableForm();
+    stripe.confirmCardPayment('#{@client_secret}', {
+      payment_method: {
+        card: card,
+        billing_details: {
+          email: '#{@user.email}'
+        }
+      }
+    }).then(function(result) {
+      console.log('result', result);
+      if (result.error) {
+        const displayError = document.getElementById('card-errors');
+        displayError.textContent = result.error.message;
+        // Show error to your customer (e.g., insufficient funds)
+
+        enableForm();
+        console.log(result.error.message);
+      } else {
+        // The payment has been processed!
+        if (result.paymentIntent.status === 'succeeded') {
+          finalizeForm();
+        }
+      }
+    });
+  });
+
+  const stripeForm = document.querySelector('.stripe-payment');
+
+  function disableForm() {
+    submitButton.disabled = true;
+    submitButton.textContent = 'Submitting...'
+    stripeForm.classList.add('disabled');
+  }
+
+  function enableForm() {
+    submitButton.disabled = false;
+    submitButton.textContent = 'Submit'
+    stripeForm.classList.remove('disabled');
+  }
+
+  function finalizeForm() {
+    const displaySuccess = document.getElementById('card-success');
+    displaySuccess.innerHTML = `
+      <p>You have successfully submitted your payment!</p>
+      <p>(It may take up to a minute or two for your payment to show up on your account page.)</p>
+      <p><a href="#{user_path(@user)}">← Back to My Account</a></p>
+    `
+    submitButton.textContent = 'Success!'
+  }

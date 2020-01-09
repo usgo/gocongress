@@ -108,20 +108,6 @@ RSpec.describe Transaction, :type => :model do
           expect(txn.errors).to include(:gwtranid)
           expect(txn.errors[:gwtranid]).to include("can't be blank")
         end
-
-        it "validates gwtranid numericality" do
-          txn.gwtranid = "lOOOO"
-          expect(txn).not_to be_valid
-          expect(txn.errors).to include(:gwtranid)
-          expect(txn.errors[:gwtranid]).to include("is not a number")
-        end
-
-        it "validates gwtranid numeric range maximum" do
-          txn.gwtranid = 9223372036854775808
-          expect(txn).not_to be_valid
-          expect(txn.errors).to include(:gwtranid)
-          expect(txn.errors[:gwtranid]).to include("must be less than 9223372036854775807")
-        end
       end
     end
   end

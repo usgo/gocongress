@@ -19,14 +19,14 @@
         %th Payment Amount
         %td.align-right
           $
-          %input.align-right{ :type => "text", :size => "6", :name => "amount", :id => "amount" }
+          %input.align-right{ :type => "text", :size => "6", :name => "amount", :id => "amount", :value => cents_to_currency(@user.balance, unit: '') }
       %tr
         %th
         %td.align-right
           %br
           %input{ :type => "submit", :name => "submit", :value => "Continue" }
 
-- if @year.refund_policy
+- if @year.refund_policy.present?
   %h3 Refund Policy
   %p= @year.refund_policy
 

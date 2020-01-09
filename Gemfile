@@ -3,6 +3,8 @@ ruby '2.4.5'
 
 gem 'asset_sync'
 gem 'authorizenet'
+gem 'stripe'
+gem 'stripe_event'
 gem 'bluecloth', require: 'tilt/bluecloth'
 gem 'cancancan', '~> 1.9'
 gem 'devise'

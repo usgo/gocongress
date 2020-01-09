@@ -37,14 +37,7 @@ class Transaction < ApplicationRecord
   with_options :if => :is_gateway_transaction? do |gwt|
     gwt.validates :gwdate, :presence => true
     gwt.validates_date :gwdate
-
-    # Now that we've switched to authorize.net, we no longer
-    # validate the uniqueness of `gwtranid`.  This is because when
-    # the account is in "test" mode, the returned transaction id is
-    # always zero. -Jared 2013-04-06
-    gwt.validates :gwtranid, \
-      :presence => true, \
-      :numericality => { :less_than => 9223372036854775807 }
+    gwt.validates :gwtranid, :presence => true
   end
 
   # gwdate and gwtranid are only allowed for gateway tranactions, eg. sales
@@ -82,15 +75,16 @@ class Transaction < ApplicationRecord
   scope :refunds, -> { where(trantype: 'R') }
   scope :sales, -> { where(trantype: 'S') }
 
-  def self.create_from_authnet_sim_response rsp
-    user = User.find(rsp.customer_id) # x_cust_id
+  def self.create_from_stripe_webhook data
+    user = User.find(data.metadata.user_id)
     t = new
     t.trantype = 'S' # Sale
     t.instrument = 'C' # Card
     t.user = user
     t.year = user.year
-    t.amount = (rsp.fields[:amount].to_f * 100).round # convert to cents
-    t.gwtranid = rsp.transaction_id # x_trans_id
+    t.amount = data.amount
+    t.gwtranid = data.id
+    t.receipt_url = data.receipt_url
     t.gwdate = Date.current
     t.save!
   end

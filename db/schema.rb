@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190310143048) do
+ActiveRecord::Schema.define(version: 20200109171328) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -267,7 +267,7 @@ ActiveRecord::Schema.define(version: 20190310143048) do
   create_table "transactions", force: :cascade do |t|
     t.integer  "user_id",                        null: false
     t.string   "trantype",           limit: 1,   null: false
-    t.bigint   "gwtranid"
+    t.string   "gwtranid"
     t.date     "gwdate"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -277,6 +277,7 @@ ActiveRecord::Schema.define(version: 20190310143048) do
     t.string   "instrument",         limit: 1
     t.integer  "year",                           null: false
     t.integer  "amount",                         null: false
+    t.string   "receipt_url"
     t.index ["user_id"], name: "index_transactions_on_user_id", using: :btree
     t.index ["year", "created_at"], name: "index_transactions_on_year_and_created_at", using: :btree
   end

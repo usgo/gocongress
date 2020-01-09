@@ -26,7 +26,11 @@
     %td= @transaction.check_number
   %tr
     %th= trl_attr 'transaction', 'gwtranid'
-    %td= @transaction.gwtranid
+    %td
+      - if @transaction.receipt_url.present?
+        %a(href="#{@transaction.receipt_url}")= @transaction.gwtranid
+      - else
+        = @transaction.gwtranid
     %td.smalltext Unique ID from payment gateway
   %tr
     %th= trl_attr 'transaction', 'gwdate'

@@ -1,0 +1,8 @@
+== Credit Card Test Numbers
+
+There are several test cards you can use in test mode to make sure this integration is ready. Use them with any CVC, postal code, and future expiration date.
+
+NUMBER	DESCRIPTION
+4242424242424242	Succeeds and immediately processes the payment.
+4000002500003155	Requires authentication. Stripe will trigger a modal asking for the customer to authenticate.
+4000000000009995	Always fails with a decline code of insufficient_funds.

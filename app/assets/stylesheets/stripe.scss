@@ -1,0 +1,27 @@
+.stripe-payment {
+  background-color: hsl(0, 0%, 70%);
+  max-width: 500px;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+#card-element {
+  background-color: white;
+  padding: 10px;
+  border-radius: 3px;
+}
+
+#card-errors {
+  color: hsl(0, 50%, 50%);
+  padding: 15px;
+  margin-bottom: 0.5em;
+}
+
+#card-success {
+  color: hsl(100, 50%, 50%);
+  padding: 15px 0;
+}
+
+#submit-payment {
+  padding: 0.5em 1em;
+}
