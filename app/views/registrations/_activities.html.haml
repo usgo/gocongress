@@ -1,35 +1,35 @@
--# raise "Activities undefined" if @activities.nil?
+- if @registration.activities.any?
 
-- mnh = Activity.model_name.human
-- mnhp = mnh.pluralize
+  - mnh = Activity.model_name.human
+  - mnhp = mnh.pluralize
 
-%h3= mnhp
+  %h3= mnhp
 
-%p
-  Prices and times are subject to change.
-  Questions? Contact the
-  = link_to "registrar.", contacts_path
+  %p
+    Prices and times are subject to change.
+    Questions? Contact the
+    = link_to "registrar.", contacts_path
 
-%table.semantic.zebra.fullwidth
-  %thead
-    %th
-    %th Date
-    %th{:colspan => 2}= mnh
-    %th= trl_attr 'activity', 'leave_time'
-    %th= trl_attr 'activity', 'return_time'
-    %th.numeric Price
-  %tbody
-    - @registration.activities.each do |a|
-      - checked = @registration.activity_selections.include?(a.id)
-      %tr{:class => (a.disabled? ? 'disabled' : nil)}
-        %td.align-center
-          = check_box_tag :activity_ids, a.id, checked, :name => 'activity_ids[]'
-        %td= a.leave_time.to_date.to_formatted_s(:dow_month_day)
-        %td
-          = link_to_if a.url.present?, a.name, a.url
-          %br
-          = link_to_tel a.phone
-        %td= markdown_summary a, :notes, 170
-        %td= a.leave_time.to_formatted_s(:american)
-        %td= a.return_time.to_formatted_s(:american) if a.return_time.present?
-        %td.numeric= a.price_for_display
+  %table.semantic.zebra.fullwidth
+    %thead
+      %th
+      %th Date
+      %th{:colspan => 2}= mnh
+      %th= trl_attr 'activity', 'leave_time'
+      %th= trl_attr 'activity', 'return_time'
+      %th.numeric Price
+    %tbody
+      - @registration.activities.each do |a|
+        - checked = @registration.activity_selections.include?(a.id)
+        %tr{:class => (a.disabled? ? 'disabled' : nil)}
+          %td.align-center
+            = check_box_tag :activity_ids, a.id, checked, :name => 'activity_ids[]'
+          %td= a.leave_time.to_date.to_formatted_s(:dow_month_day)
+          %td
+            = link_to_if a.url.present?, a.name, a.url
+            %br
+            = link_to_tel a.phone
+          %td= markdown_summary a, :notes, 170
+          %td= a.leave_time.to_formatted_s(:american)
+          %td= a.return_time.to_formatted_s(:american) if a.return_time.present?
+          %td.numeric= a.price_for_display
