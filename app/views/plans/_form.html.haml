@@ -63,7 +63,7 @@
     %p Certain plans are intended for youth, for teens, or for adults.
     .field
       = f.label :age_min
-      = f.number_field :age_min, size: 3
+      = f.number_field :age_min, size: 3, min: 0, value: 0
     .field
       = f.label :age_max
       = f.number_field :age_max, size: 3
