@@ -8,6 +8,7 @@ class PaymentsController < ApplicationController
     intent = Stripe::PaymentIntent.create({
       amount: (@amount * 100).to_i,
       currency: 'usd',
+      receipt_email: @user.email,
       metadata: {
         user_id: @user.id
       }
