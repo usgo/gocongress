@@ -314,6 +314,8 @@ GEM
       sprockets (>= 2.8, < 4.0)
       sprockets-rails (>= 2.0, < 4.0)
       tilt (>= 1.1, < 3)
+    sassc (2.2.1)
+      ffi (~> 1.9)
     sexp_processor (4.11.0)
     shellany (0.0.1)
     spring (2.0.2)
@@ -412,7 +414,7 @@ DEPENDENCIES
   responders (~> 2.0)
   rspec-rails
   rubocop
-  sass-rails
+  sassc
   spring
   spring-commands-rspec
   stripe
@@ -426,7 +428,7 @@ DEPENDENCIES
   webmock
 
 RUBY VERSION
-   ruby 2.4.5p335
+   ruby 2.5.7p206
 
 BUNDLED WITH
-   1.17.0
+   2.1.4
