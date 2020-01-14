@@ -16,13 +16,13 @@ RSpec.describe Attendee::WhoIsComing, :type => :model do
       expect(Attendee::WhoIsComing.new(a.year).attendees).not_to include(a)
     end
 
-    it 'excludes attendees under thirteen' do
+    it 'excludes attendees under eighteen' do
       p1 = create :plan, price: 10000
 
       u = create :user
       adult = create :attendee, user: u
-      old_enough = create :teenager, user: u, birth_date: CONGRESS_START_DATE[Time.now.year] - 14.years
-      not_old_enough = create :teenager, user: u, birth_date: CONGRESS_START_DATE[Time.now.year] - 12.years
+      old_enough = create :teenager, user: u, birth_date: CONGRESS_START_DATE[Time.now.year] - 18.years - 1.days
+      not_old_enough = create :teenager, user: u, birth_date: CONGRESS_START_DATE[Time.now.year] - 17.years
       child = create :child, user: u
 
       # Give the attendees a plan

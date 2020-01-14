@@ -33,8 +33,8 @@ where attendees.year = :year and attendees.cancelled = false
   -- credits minus debits must be at least $70
   and coalesce(credits.total, 0) - coalesce(debits.total, 0) >= 7000
 
-  -- exclude attendees under thirteen
-  and attendees.birth_date < (:congress_start_date::date - interval '13 years')
+  -- exclude attendees under eighteen
+  and attendees.birth_date < (:congress_start_date::date - interval '18 years')
 
   -- exclude cancelled attendees
   and not exists (
