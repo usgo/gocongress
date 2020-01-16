@@ -31,7 +31,7 @@ function intlTelFunction() {
         .text("Invalid number"),
       $validMsg = $("<span />")
         .addClass("valid hide smalltext")
-        .html('✓&nbsp;Valid');
+        .html("✓&nbsp;Valid");
 
     $phoneInput.attr("name", name + "_input");
     $phoneInput.after($validMsg);
@@ -42,42 +42,64 @@ function intlTelFunction() {
       geoIpLookup: function(callback) {
         var $this = $(this);
 
-        $.get("https://ipinfo.io", function() {}, "jsonp").always(function(
-          resp
-        ) {
-          var countryCode = resp && resp.country ? resp.country : "";
+        // Try to get IP Info from localStorage, so we don't unnecessarily ping
+        // the provider, which has monthly rate limiting
+
+        const ipInfo = localStorage.getItem("countryCodeInfo");
+
+        const handleCountryCode = response => {
+          const countryCode =
+            response && response.country ? response.country : "";
 
           // When we get the country code, loop through all of the phone inputs
           // and see if they have a current value, but not a country code
           $phoneInputCollection.each(function(i, item) {
-            var $phoneInput = $(item);
-            var currentNum = $phoneInput
-              .intlTelInput('getNumber')
-              .replace(/[\(\)\-\.\+]/g, '');
+            const $phoneInput = $(item);
 
-            var selectedCountry = $phoneInput.intlTelInput('getSelectedCountryData');
+            const currentNum = $phoneInput
+              .intlTelInput("getNumber")
+              .replace(/[\(\)\-\.\+]/g, "");
+
+            const selectedCountry = $phoneInput.intlTelInput(
+              "getSelectedCountryData"
+            );
 
             if (currentNum) {
               // If it looks like a domestic number
               if (currentNum.length === 10) {
                 if (!selectedCountry.length) {
-                  $phoneInput.intlTelInput('setCountry', countryCode);
+                  $phoneInput.intlTelInput("setCountry", countryCode);
                 }
-                $phoneInput.intlTelInput('setNumber', currentNum);
+                $phoneInput.intlTelInput("setNumber", currentNum);
               } else {
-                $phoneInput.intlTelInput('setNumber', '+' + currentNum)
+                $phoneInput.intlTelInput("setNumber", "+" + currentNum);
               }
-              $phoneInput.trigger('blur');
+              $phoneInput.trigger("blur");
             }
           });
 
           callback(countryCode);
-        });
+        };
+
+        if (ipInfo) {
+          $(() => {
+            handleCountryCode(JSON.parse(ipInfo));
+          });
+        } else {
+          $.get(
+            "https://ipinfo.io?token=684cae1e9b5454",
+            function() {},
+            "jsonp"
+          ).always(response => {
+            localStorage.setItem("countryCodeInfo", JSON.stringify(response));
+            handleCountryCode(response);
+          });
+        }
       },
       hiddenInput: hiddenInputName,
       nationalMode: true,
       formatOnDisplay: true,
-      autoPlaceholder: 'polite'
+      autoPlaceholder: "polite"
     });
 
     var reset = function() {
@@ -93,6 +115,15 @@ function intlTelFunction() {
         if ($phoneInput.intlTelInput("isValidNumber")) {
           $validMsg.removeClass("hide");
         } else {
+          const selectedCountry = $phoneInput.intlTelInput(
+            "getSelectedCountryData"
+          );
+          if (selectedCountry) {
+            $errorMsg.text("Invalid phone number");
+          } else {
+            $errorMsg.text("Please select a country for this number");
+          }
+
           $phoneInput.addClass("error-border");
           $errorMsg.removeClass("hide");
         }
@@ -304,28 +335,28 @@ $(function() {
   });
 });
 
-$(document).ready(function () {
-  if (window.location.search === '?kiosk') {
+$(document).ready(function() {
+  if (window.location.search === "?kiosk") {
     displayDailySchedule();
   }
 });
 
 function displayDailySchedule() {
-  $('html, body').css('cursor', 'none');
-  var $schedule = $('.daily-schedule').first();
-  $('body').css('overflow', 'hidden');
+  $("html, body").css("cursor", "none");
+  var $schedule = $(".daily-schedule").first();
+  $("body").css("overflow", "hidden");
 
-  $schedule.addClass('full-screen');
+  $schedule.addClass("full-screen");
 
   var viewport = $schedule[0];
   var viewportHeight = viewport.clientHeight;
-  var schedule = viewport.querySelector('table');
+  var schedule = viewport.querySelector("table");
   var pause = 30000;
   var currentPage = 1;
 
-  var clock = document.createElement('div');
+  var clock = document.createElement("div");
   viewport.appendChild(clock);
-  $(clock).addClass('clock');
+  $(clock).addClass("clock");
   // var meter = document.createElement('div');
   // viewport.appendChild(meter);
   // $(meter).addClass('meter');
@@ -337,11 +368,11 @@ function displayDailySchedule() {
   function tick() {
     var now = new Date();
     var options = {
-      hour: 'numeric',
-      minute: 'numeric',
+      hour: "numeric",
+      minute: "numeric",
       hour12: true
     };
-    var timeString = now.toLocaleString('en-US', options);
+    var timeString = now.toLocaleString("en-US", options);
 
     clock.innerHTML = timeString;
   }
@@ -360,9 +391,12 @@ function displayDailySchedule() {
     }
 
     var scrollAmount = (contentHeight / pages) * currentPage;
-    $(viewport).animate({
-      scrollTop: scrollAmount
-    }, 1000);
+    $(viewport).animate(
+      {
+        scrollTop: scrollAmount
+      },
+      1000
+    );
     currentPage += 1;
 
     if (currentPage >= pages) {
@@ -371,32 +405,40 @@ function displayDailySchedule() {
   }
 
   function filterPastEvents() {
-    var events = schedule.querySelector('tbody').querySelectorAll('tr');
+    var events = schedule.querySelector("tbody").querySelectorAll("tr");
 
-    events.forEach(function (event) {
+    events.forEach(function(event) {
       var $event = $(event);
-      var time = event.querySelector('.time').innerHTML.split(' - ');
+      var time = event.querySelector(".time").innerHTML.split(" - ");
       var startTime = time[0];
       var endTime = time[1];
-      startTime =  new Date(todayWithoutTime() + startTime);
+      startTime = new Date(todayWithoutTime() + startTime);
       endTime = new Date(todayWithoutTime() + endTime);
       var now = new Date();
 
       if (startTime < now && endTime > now) {
-        $event.addClass('happening-now');
+        $event.addClass("happening-now");
       } else if (startTime < now && endTime < now) {
-        $event.removeClass('happening-now');
-        $event.addClass('in-the-past');
+        $event.removeClass("happening-now");
+        $event.addClass("in-the-past");
       } else {
-        $event.removeClass('happening-now');
-        $event.removeClass('in-the-past');
+        $event.removeClass("happening-now");
+        $event.removeClass("in-the-past");
       }
-    })
+    });
   }
 
   function todayWithoutTime() {
-  	var today = new Date();
-  	return ((today.getMonth() + 1) + '-' + today.getDate() + '-' +  today.getFullYear()) + ' ';
+    var today = new Date();
+    return (
+      today.getMonth() +
+      1 +
+      "-" +
+      today.getDate() +
+      "-" +
+      today.getFullYear() +
+      " "
+    );
   }
 
   filterPastEvents();

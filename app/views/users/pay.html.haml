@@ -19,7 +19,7 @@
         %th Payment Amount
         %td.align-right
           $
-          %input.align-right{ :type => "text", :size => "6", :name => "amount", :id => "amount", :value => cents_to_currency(@user.balance, unit: '') }
+          %input.align-right{ :type => "text", :size => "8", :name => "amount", :id => "amount", :value => cents_to_currency(@user.balance, unit: '') }
       %tr
         %th
         %td.align-right
@@ -35,6 +35,12 @@
 :javascript
 
   // Check the payment amount, and warn people who overpay
+
+  const isValidAmount = amount => {
+    console.log('amount', amount.replace(',', ''));
+    return /^\$?[0-9]+(\.[0-9][0-9])?$/.test(amount.replace(',', ''));
+  }
+
   function confirmAmount() {
 
     // Get amount field via jquery
@@ -42,10 +48,10 @@
     if (a.length !== 1) { return true; }
 
     // Validate numeric
-    if (isNaN(a.val())) {
+    if (!isValidAmount(a.val())) {
       alert("Please enter a numeric payment amount");
       return false;
-      }
+    }
 
     // Get user balance via interpolation
     var b = parseFloat('#{@user.balance}');

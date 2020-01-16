@@ -436,7 +436,8 @@ body {
   }
 
   .button-emphasis {
-    color: #0071bc;
+    color: white;
+    background-color: $button-bg-emphasis;
     font-size: 20px;
   }
 }
@@ -832,4 +833,8 @@ select {
 
 .updated {
   color: hsl(0, 0%, 70%);
+}
+
+.intl-tel-input {
+  margin-right: 10px;
 }

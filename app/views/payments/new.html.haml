@@ -20,7 +20,7 @@
 
 :javascript
 
-  const stripe = Stripe('pk_test_RdsjiuvRPJfnXTfAlkJXUheP00jM50aEjd');
+  const stripe = Stripe('#{STRIPE_PUBLISHABLE_KEY}');
   const elements = stripe.elements();
 
   // Set up Stripe.js and Elements to use in checkout form

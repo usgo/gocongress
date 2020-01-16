@@ -3,11 +3,12 @@ class PaymentsController < ApplicationController
 
   def new
     @user = current_user
-    @amount = params[:amount].to_f
+    @amount = params[:amount].gsub(/,/, '').to_f
 
     intent = Stripe::PaymentIntent.create({
       amount: (@amount * 100).to_i,
       currency: 'usd',
+      receipt_email: @user.email,
       metadata: {
         user_id: @user.id
       }
