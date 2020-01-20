@@ -36,7 +36,7 @@ Gocongress::Application.routes.draw do
           :path => 'sign_ups'
 
         resources :activities, :contacts, :content_categories,
-          :contents, :activity_categories, :tournaments,
+          :contents, :activity_categories,
           :transactions, :sms_notifications
         resources :game_appointments do
           member { get :send_sms }
@@ -53,6 +53,9 @@ Gocongress::Application.routes.draw do
 
         resources :plans, :except => [:index]
         resources :plan_categories do
+          put 'update_order', :on => :collection
+        end
+        resources :tournaments do
           put 'update_order', :on => :collection
         end
         resources :shirts, :except => :show
