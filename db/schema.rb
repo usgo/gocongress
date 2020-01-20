@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200109171328) do
+ActiveRecord::Schema.define(version: 20200120003843) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -261,6 +261,7 @@ ActiveRecord::Schema.define(version: 20200109171328) do
     t.integer  "year",                                         null: false
     t.string   "location",         limit: 50
     t.boolean  "show_in_nav_menu",             default: false, null: false
+    t.integer  "ordinal",                      default: 1,     null: false
     t.index ["id", "year"], name: "index_tournaments_on_id_and_year", unique: true, using: :btree
   end
 
