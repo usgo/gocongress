@@ -19,6 +19,13 @@ RSpec.describe 'tournaments', :type => :feature do
     fill_in "ordinals[#{tournament1.id}]", with: 2
     fill_in "ordinals[#{tournament2.id}]", with: 1
     click_button 'Update Order'
+
     expect(page).to have_text 'Order updated'
+
+    # Use "reload" to check the updated attributes of objects
+    # @see https://stackoverflow.com/a/38164881/399077
+    expect(tournament1.reload.ordinal).to be 2
+    expect(tournament2.reload.ordinal).to be 1
+
   end
 end
