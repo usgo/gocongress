@@ -9,7 +9,9 @@ class TournamentsController < ApplicationController
 
   # Actions
   def index
-    @tournaments = @tournaments.yr(@year).order('lower(name)')
+    # Eventually we can order tournaments just by ordinal
+    @tournaments = @tournaments.yr(@year).order('ordinal', 'lower(name)')
+    @show_order_fields = can?(:update, Tournament) && @tournaments.count > 1
   end
 
   def create
@@ -27,6 +29,13 @@ class TournamentsController < ApplicationController
     else
       render :action => "edit"
     end
+  end
+
+  def update_order
+    (params[:ordinals] || {}).each do |id, ord|
+      Tournament.yr(@year).find(id).update_attributes!(:ordinal => ord)
+    end
+    redirect_to tournaments_path, :notice => 'Order updated.'
   end
 
   def destroy

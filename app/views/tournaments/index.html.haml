@@ -15,22 +15,34 @@
 - if @tournaments.size == 0
   %p There are no tournaments yet.
 - else
-  %table.semantic.fullwidth
-    %thead
-      %tr
-        %th Name
-        %th Open?
-        %th Director(s)
-        %th Eligibility
-        - if current_user_is_admin?
-          %th{ :colspan => 2 }
-    %tbody
-      - @tournaments.each do |t|
+  = form_tag(update_order_tournaments_path, :method => :put) do
+
+    %table.semantic.fullwidth
+      %thead
         %tr
-          %td= link_to t.name, t
-          %td= t.get_openness_type_name
-          %td= t.directors
-          %td= t.eligible
+          - if @show_order_fields
+            %th Order
+          %th Name
+          %th Open?
+          %th Director(s)
+          %th Eligibility
           - if current_user_is_admin?
-            %td= link_to 'Edit', edit_tournament_path(t)
-            %td= link_to_destroy(t)
+            %th{ :colspan => 2 }
+      %tbody
+        - @tournaments.each do |t|
+          %tr
+            - if @show_order_fields
+              %td= number_field_tag "ordinals[#{t.id}]", t.ordinal, :min => 1, :step => 1, :size => 2
+            %td= link_to t.name, t
+            %td= t.get_openness_type_name
+            %td= t.directors
+            %td= t.eligible
+            - if current_user_is_admin?
+              %td= link_to 'Edit', edit_tournament_path(t)
+              %td= link_to_destroy(t)
+
+    %br
+
+    - if @show_order_fields
+      %div= submit_tag 'Update Order'
+    %br
