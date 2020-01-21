@@ -17,8 +17,13 @@ RSpec.describe 'tournaments', :type => :feature do
     visit tournaments_path(year: admin.year)
     expect(page).to have_text 'Order'
     fill_in "ordinals[#{tournament1.id}]", with: 2
-    fill_in "ordinals[#{tournament2.id}]", with: 1
+    fill_in "ordinals[#{tournament2.id}]", with: 3
     click_button 'Update Order'
     expect(page).to have_text 'Order updated'
+    
+    tournament1.reload
+    tournament2.reload
+    expect(tournament1.ordinal).to eq(2)
+    expect(tournament2.ordinal).to eq(3)
   end
 end
