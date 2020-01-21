@@ -20,7 +20,7 @@ RSpec.describe 'tournaments', :type => :feature do
     fill_in "ordinals[#{tournament2.id}]", with: 3
     click_button 'Update Order'
     expect(page).to have_text 'Order updated'
-    
+
     tournament1.reload
     tournament2.reload
     expect(tournament1.ordinal).to eq(2)
