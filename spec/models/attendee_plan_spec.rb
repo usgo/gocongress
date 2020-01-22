@@ -27,7 +27,8 @@ RSpec.describe AttendeePlan, :type => :model do
     let(:dates) { (5..7).map { |d| Date.new(2013, 8, d) } }
 
     it 'includes dates' do
-      ap = create :attendee_plan
+      p = create :plan
+      ap = create :attendee_plan, plan: p
       dates.each { |d| ap.dates.create!(_date: d) }
       ps = ap.to_plan_selection
       expect(ps.dates).to match_array(dates)

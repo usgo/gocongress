@@ -3,30 +3,32 @@ require "rails_helper"
 RSpec.describe Plan, :type => :model do
   it_behaves_like "a yearly model"
 
+  let(:cat) { create :plan_category }
+
   it "has valid factories" do
-    expect(build(:plan)).to be_valid
-    expect(build(:plan_which_needs_staff_approval)).to be_valid
+    expect(build(:plan, :plan_category => cat)).to be_valid
+    expect(build(:plan_which_needs_staff_approval, :plan_category => cat)).to be_valid
   end
 
   describe '#valid?' do
     it 'requires a nonzero inventory' do
-      expect(build(:plan, inventory: 0)).not_to be_valid
+      expect(build(:plan, :plan_category => cat, inventory: 0)).not_to be_valid
     end
 
     it 'requires a positive max qty' do
-      expect(build(:plan, :max_quantity => 2)).to be_valid
-      expect(build(:plan, :max_quantity => 1)).to be_valid
-      expect(build(:plan, :max_quantity => 0)).to have_error_about :max_quantity
-      expect(build(:plan, :max_quantity => -1)).to have_error_about :max_quantity
+      expect(build(:plan, :plan_category => cat, :max_quantity => 2)).to be_valid
+      expect(build(:plan, :plan_category => cat, :max_quantity => 1)).to be_valid
+      expect(build(:plan, :plan_category => cat, :max_quantity => 0)).to have_error_about :max_quantity
+      expect(build(:plan, :plan_category => cat, :max_quantity => -1)).to have_error_about :max_quantity
     end
 
     it 'cannot both be daily and need staff approval' do
-      expect(build(:plan_which_needs_staff_approval, daily: true)).to \
+      expect(build(:plan_which_needs_staff_approval, :plan_category => cat, daily: true)).to \
         have_error_about :daily
     end
 
     it 'cannot both be daily and have a max qty other than one' do
-      expect(build(:plan, daily: true, max_quantity: 2)).to \
+      expect(build(:plan, :plan_category => cat, daily: true, max_quantity: 2)).to \
         have_error_about :max_quantity
     end
   end

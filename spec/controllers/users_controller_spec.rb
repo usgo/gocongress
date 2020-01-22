@@ -66,7 +66,8 @@ RSpec.describe UsersController, :type => :controller do
     describe "#cancel_attendee" do
       it "can cancel attendee" do
         a = create :attendee, user_id: user.id
-        create :attendee_plan, attendee_id: a.id
+        p = create :plan
+        create :attendee_plan, attendee_id: a.id, plan: p
         sign_in user
         patch :cancel_attendee, params: { attendee_id: a.id, id: user.id, year: user.year }
         expect(a.reload.cancelled).to eq(true)
@@ -262,7 +263,8 @@ RSpec.describe UsersController, :type => :controller do
 
     it "can cancel attendee" do
       a = create :attendee, user_id: user.id
-      create :attendee_plan, attendee_id: a.id
+      p = create :plan
+      create :attendee_plan, plan: p, attendee_id: a.id
       patch :cancel_attendee, params: { attendee_id: a.id, id: user.id, year: user.year }
       expect(a.reload.cancelled).to eq(true)
       expect(a.attendee_plans.count).to eq(0)
