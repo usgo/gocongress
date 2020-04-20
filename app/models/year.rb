@@ -1,6 +1,6 @@
 class Year < ApplicationRecord
 
-  REG_PHASES = %w[closed open complete]
+  REG_PHASES = %w[closed open complete canceled]
 
   # Validations
   # -----------
@@ -10,7 +10,7 @@ class Year < ApplicationRecord
     wo.validates :date_range
     wo.validates :day_off_date
     wo.validates :ordinal_number, :numericality => { :only_integer => true, :minimum => 27 }
-    wo.validates :registration_phase, :inclusion => { :in => %w(closed open complete) }
+    wo.validates :registration_phase, :inclusion => { :in => %w(closed open complete canceled) }
     wo.validates :reply_to_email
     wo.validates :start_date
     wo.validates :state

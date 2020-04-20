@@ -3,6 +3,9 @@
 - if @year.registration_phase == "closed"
   %p Registration for the #{@year.year} Go Congress has not yet begun.
 
+- elsif @year.registration_phase == "canceled"
+  %p The #{@year.year} Go Congress has been canceled.
+
 - else
   - if @who_is_coming.count > 0
     %p

@@ -2,6 +2,9 @@
   .noscript-warning
     %h3 You're <em>really</em> going to want Javascript to fill out this form.
 
+- if @year.registration_phase == "canceled"
+  = render :partial => 'canceled'
+
 = form_for(@registration) do |f|
   = f.hidden_field :user_id
   = hidden_field_tag 'type', params[:type]
@@ -22,7 +25,10 @@
 
   = render :partial => 'code_of_conduct'
 
-  %p= f.submit 'Continue'
+  - if @year.registration_phase == "canceled" && !current_user_is_admin?
+    = render :partial => 'canceled'
+  - else
+    %p= f.submit 'Continue'
 
 = content_for :footnote
 
