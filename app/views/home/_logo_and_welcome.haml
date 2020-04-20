@@ -7,7 +7,10 @@
 
   %div
     
-  - if @upcoming
+  - if @year.year == 2020
+    %h2
+      The 2020 Go Congress has been Canceled
+  - elsif @upcoming
     %h2
       Join us for the #{@year.ordinal_number.ordinalize}&nbsp;Annual
       U.S.&nbsp;Go&nbsp;Congress
@@ -16,14 +19,26 @@
       The #{@year.ordinal_number.ordinalize}&nbsp;Annual
       U.S.&nbsp;Go&nbsp;Congress
 
+  - if @year.year == 2020
+    %p.covid19-update
+      The 2020 U.S. Go Congress has been canceled due to the ongoing
+      coronavirus pandemic. We hope to reschedule the event in Estes Park
+      again in a future year. For attendees who already paid, you will
+      automatically receive a full refund.
+
+      -# We are closely monitoring the COVID-19 situation. At this
+      -# moment, we still plan to hold the congress as planned. A definitive update
+      -# will be sent out in&nbsp;April.
+
   %p
     - if @year.year == 2020
-      It&rsquo;s time once again for Colorado to host the US Go Congress,
-      which we have done every ten years since 1990! This time around we are
-      aiming high and holding Congress in what we feel may be
-      the most beautiful location ever. The YMCA Camp at Estes Park is the
-      perfect place for both players and non-players, young and old alike.
-      It&rsquo;s an ideal vacation destination.
+      -# It&rsquo;s time once again for Colorado to host the US Go Congress,
+      -# which we have done every ten years since 1990! This time around we are
+      -# aiming high and holding Congress in what we feel may be
+      -# the most beautiful location ever. The YMCA Camp at Estes Park is the
+      -# perfect place for both players and non-players, young and old alike.
+      -# It&rsquo;s an ideal vacation destination.
+
     - elsif @year.year >= 2016
       The U.S. Go Congress is the largest go activity in the United States. It
       happens once a year and spans one week. Events include the U.S. Open, the
@@ -58,8 +73,3 @@
       activities from morning to midnight. Come for the Go, come for the
       camaraderie of old friends, come for the relaxing mountain air. Whatever
       your reason, we are looking forward to seeing you there.
-
-  %p.covid19-update
-    We are closely monitoring the COVID-19 situation. At this
-    moment, we still plan to hold the congress as planned. A definitive update
-    will be sent out in&nbsp;April.
