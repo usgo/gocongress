@@ -1,4 +1,6 @@
 = render "#{@year.year}/home/app" rescue nil
+- if @year.year == 2020
+  = render @contents
 = render "#{@year.year}/home/logo_and_welcome" rescue render 'logo_and_welcome'
 
 %div.homepage-secondary
@@ -7,5 +9,6 @@
   = render 'addresses'
   - if @year.year >= 2016
     = render "#{@year.year}/home/mailing_list" rescue render 'mailing_list'
-  = render @contents
+  - if @year.year != 2020
+    = render @contents
 = render 'past_years'
