@@ -8,8 +8,9 @@
       %h1
         = link_to "#{@year.year} U.S. Go Congress", year_path
     #usgc-when-where-container
-      = @congress_city + ', ' + @congress_state
-      &bull;
+      - if @year.year != 2020
+        = @congress_city + ', ' + @congress_state
+        &bull;
       = @congress_date_range + ','
       = @year.year
 
