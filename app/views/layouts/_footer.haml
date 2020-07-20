@@ -9,6 +9,7 @@
     - @year.sponsors.each do |name,url|
       %a{:href => url}= image_tag "sponsors/#{name}.jpg"
   #site-credit
-    All times are #{Time.zone}
-    %br
+    - if @year.year != 2020
+      All times are #{Time.zone}
+      %br
     Content &copy; #{@year.year} U.S. Go Congress
