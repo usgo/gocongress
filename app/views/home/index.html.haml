@@ -1,5 +1,10 @@
 = render "#{@year.year}/home/app" rescue nil
 - if @year.year == 2020
+  %div.egc-logo
+    = link_to year_path do
+      - f = "logo/usgc/2020e.png"
+      - if image_file?(f)
+        = image_tag "logo/usgc/2020e.png"
   = render @contents
 = render "#{@year.year}/home/logo_and_welcome" rescue render 'logo_and_welcome'
 
