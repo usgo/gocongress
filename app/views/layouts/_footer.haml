@@ -8,6 +8,8 @@
   #sponsors
     - @year.sponsors.each do |name,url|
       %a{:href => url}= image_tag "sponsors/#{name}.jpg"
+    - if @year.year == 2020
+      %a{:href => "http://agfgo.org"}= image_tag "sponsors/AGF-logo-small.gif", size: "48"
   #site-credit
     - if @year.year != 2020
       All times are #{Time.zone}
