@@ -44,6 +44,8 @@ class Year < ApplicationRecord
 
   def sponsors
     s = sponsors_by_year[self.year]
+    s = [:aga] if s.nil?
+
     all_sponsors.reject{|k,v| !s.include?(k)}
   end
 
@@ -73,14 +75,7 @@ private
     {
       2011 => [:aga, :kaba, :kgs],
       2012 => [:aga, :agf, :confucius, :jpga, :kaba, :pandanet, :slate_and_shell, :tygem],
-      2013 => [],
-      2014 => [:aga],
-      2015 => [:aga],
-      2016 => [:aga],
-      2017 => [:aga],
-      2018 => [:aga],
-      2019 => [:aga],
-      2020 => [:aga],
+      2020 => [:aga, :agf]
     }
   end
 

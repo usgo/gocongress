@@ -151,3 +151,18 @@ Year.create!(
     year:                  2020
   }
 )
+
+Year.create!(
+  {
+    city:                  'Your City',
+    date_range:            'July 17 - 24',
+    day_off_date:          Date.new(2021, 7, 21),
+    ordinal_number:        37,
+    registration_phase:    'closed',
+    reply_to_email:        'webmaster@gocongress.org',
+    start_date:            Date.new(2021, 7, 17),
+    state:                 'Your State',
+    timezone:              'Eastern Time (US & Canada)',
+    year:                  2021
+  }
+)

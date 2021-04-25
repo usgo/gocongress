@@ -30,6 +30,7 @@ gem 'redcarpet'
 gem 'unf' # <- fog <- asset_sync (http://bit.ly/17TiMjA)
 gem 'twilio-ruby'
 gem 'prettier'
+gem 'mini_magick'
 
 # Groups: Rails will load the group where name == Rails.env
 # http://yehudakatz.com/2010/05/09/the-how-and-why-of-bundler-groups/
