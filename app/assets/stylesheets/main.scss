@@ -761,9 +761,25 @@ fieldset.wordy-questions .aligned-with-input {
 /* Footer */
 #footer {
   margin: 0 auto;
-  // padding-top: 5px;
-  // width: 900px;
-  padding: $spacing-unit;
+  padding: ($spacing-unit / 2) $spacing-unit;
+  display: flex;
+
+  .copyright {
+    align-self: center;
+    flex: {
+      grow: 1;
+      shrink: 0;
+      basis: auto;
+    }
+  }
+
+  .sponsors {
+    flex: {
+      grow: 0;
+      shrink: 1;
+      basis: auto;
+    }
+  }
 }
 
 #site-credit {
@@ -773,10 +789,6 @@ fieldset.wordy-questions .aligned-with-input {
   a {
     color: #333;
   }
-}
-
-#sponsors {
-  float: right;
 }
 
 input[type="submit"],
