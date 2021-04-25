@@ -1,18 +1,8 @@
-- if @year.year == 2020
-  - if asset_exists? "2020e/og-image.png"
-    %meta{:property => "og:title", :content => "e-Go Congress #{@year.year}"}
-    %meta{:property => "og:description", :content => "The #{@year.year} e-Go Congress will be held online from #{@congress_date_range}."}
-    %meta{:property => "og:image", :content => image_path("2020e/og-image.png")}
-    %meta{:property => "og:image:type", :content => "image/png"}
-    %meta{:property => "og:image:alt", :content => "The #{@year.year} e-Go Congress logo"}
-    %meta{:property => "og:image:width", :content => "4000"}
-    %meta{:property => "og:image:height", :content => "4000"}
-- else
-  - if asset_exists? "#{@year.year}/og-image.png"
-    %meta{:property => "og:title", :content => "U.S. Go Congress #{@year.year}"}
-    %meta{:property => "og:description", :content => "The #{@year.year} U.S. Go Congress will be held in #{@congress_city}, #{@congress_state} from #{@congress_date_range}."}
-    %meta{:property => "og:image", :content => image_path("#{@year.year}/og-image.png")}
-    %meta{:property => "og:image:type", :content => "image/png"}
-    %meta{:property => "og:image:alt", :content => "The #{@year.year} U.S. Go Congress logo"}
-    %meta{:property => "og:image:width", :content => "1156"}
-    %meta{:property => "og:image:height", :content => "308"}
+- if defined?(@og_image)
+  %meta{:property => "og:title", :content => "U.S. Go Congress #{@year.year}"}
+  %meta{:property => "og:description", :content => "The #{@year.year} U.S. Go Congress will be held in #{@congress_city}, #{@congress_state} from #{@congress_date_range}."}
+  %meta{:property => "og:image", :content => image_path(@og_image[:path])}
+  %meta{:property => "og:image:type", :content => "image/png"}
+  %meta{:property => "og:image:alt", :content => "The #{@year.year} U.S. Go Congress logo"}
+  %meta{:property => "og:image:width", :content => @og_image[:width]}
+  %meta{:property => "og:image:height", :content => @og_image[:height]}
