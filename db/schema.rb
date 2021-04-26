@@ -305,14 +305,14 @@ ActiveRecord::Schema.define(version: 20210426141815) do
   end
 
   create_table "years", force: :cascade do |t|
-    t.string  "city",               limit: 255,             null: false
+    t.string  "city",               limit: 255
     t.string  "date_range",         limit: 255,             null: false
     t.date    "day_off_date",                               null: false
     t.integer "ordinal_number",                             null: false
     t.string  "registration_phase", limit: 255,             null: false
     t.string  "reply_to_email",     limit: 255,             null: false
     t.date    "start_date",                                 null: false
-    t.string  "state",              limit: 255,             null: false
+    t.string  "state",              limit: 255
     t.string  "timezone",           limit: 255,             null: false
     t.string  "twitter_url",        limit: 255
     t.integer "year",                                       null: false
