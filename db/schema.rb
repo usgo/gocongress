@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200120003843) do
+ActiveRecord::Schema.define(version: 20210426141815) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -305,17 +305,17 @@ ActiveRecord::Schema.define(version: 20200120003843) do
   end
 
   create_table "years", force: :cascade do |t|
-    t.string  "city",               limit: 255, null: false
-    t.string  "date_range",         limit: 255, null: false
-    t.date    "day_off_date",                   null: false
-    t.integer "ordinal_number",                 null: false
-    t.string  "registration_phase", limit: 255, null: false
-    t.string  "reply_to_email",     limit: 255, null: false
-    t.date    "start_date",                     null: false
-    t.string  "state",              limit: 255, null: false
-    t.string  "timezone",           limit: 255, null: false
+    t.string  "city",               limit: 255
+    t.string  "date_range",         limit: 255,             null: false
+    t.date    "day_off_date",                               null: false
+    t.integer "ordinal_number",                             null: false
+    t.string  "registration_phase", limit: 255,             null: false
+    t.string  "reply_to_email",     limit: 255,             null: false
+    t.date    "start_date",                                 null: false
+    t.string  "state",              limit: 255
+    t.string  "timezone",           limit: 255,             null: false
     t.string  "twitter_url",        limit: 255
-    t.integer "year",                           null: false
+    t.integer "year",                                       null: false
     t.string  "venue_url",          limit: 255
     t.string  "venue_name",         limit: 255
     t.string  "venue_address",      limit: 255
@@ -324,6 +324,7 @@ ActiveRecord::Schema.define(version: 20200120003843) do
     t.string  "venue_zip",          limit: 10
     t.string  "venue_phone",        limit: 20
     t.text    "refund_policy"
+    t.integer "event_type",                     default: 0
     t.index ["year"], name: "index_years_on_year", unique: true, using: :btree
   end
 
