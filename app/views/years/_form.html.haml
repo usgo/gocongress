@@ -7,6 +7,9 @@
 
   %h3 Location
   %fieldset
+    .field 
+      = f.label :event_type
+      = f.select :event_type, options_for_select(Year.event_types.map {|key, value| [key.titleize, Year.event_types.key(value)]}, @year.event_type)
     .field
       = f.label :city
       = f.text_field :city

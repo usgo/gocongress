@@ -8,7 +8,7 @@
       %h1
         = link_to "#{@year.year} U.S. Go Congress", year_path
     #usgc-when-where-container
-      - if @year.year != 2020
+      - if @year.event_type == 'in-person'
         = @congress_city + ', ' + @congress_state
         &bull;
       = @congress_date_range + ','
