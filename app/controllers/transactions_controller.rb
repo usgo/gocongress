@@ -46,7 +46,7 @@ class TransactionsController < ApplicationController
   def update
     @email_picker_value = params[:user_email]
 
-    if @transaction.update_attributes(transaction_params)
+    if @transaction.update(transaction_params)
       redirect_to(@transaction, :notice => 'Transaction updated.')
     else
       render :action => "edit"

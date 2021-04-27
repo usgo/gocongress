@@ -24,7 +24,7 @@ class TournamentsController < ApplicationController
   end
 
   def update
-    if @tournament.update_attributes!(tournament_params)
+    if @tournament.update!(tournament_params)
       redirect_to tournament_path(@tournament), :notice => 'Tournament updated.'
     else
       render :action => "edit"
@@ -33,7 +33,7 @@ class TournamentsController < ApplicationController
 
   def update_order
     (params[:ordinals] || {}).each do |id, ord|
-      Tournament.yr(@year).find(id).update_attributes!(:ordinal => ord)
+      Tournament.yr(@year).find(id).update!(:ordinal => ord)
     end
     redirect_to tournaments_path, :notice => 'Order updated.'
   end

@@ -37,7 +37,7 @@ class ActivityCategoriesController < ApplicationController
   end
 
   def update
-    if @activity_category.update_attributes!(activity_category_params)
+    if @activity_category.update!(activity_category_params)
       redirect_to activity_category_path(@activity_category), :notice => 'Category updated.'
     else
       render :action => "edit"

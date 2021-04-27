@@ -21,7 +21,7 @@ class ShirtsController < ApplicationController
   end
 
   def update
-    if @shirt.update_attributes!(shirt_params)
+    if @shirt.update!(shirt_params)
       redirect_to shirts_path, :notice => 'Shirt updated'
     else
       render :action => "edit"

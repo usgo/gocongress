@@ -20,7 +20,7 @@ class ActivitiesController < ApplicationController
   end
 
   def update
-    if @activity.update_attributes!(activity_params)
+    if @activity.update!(activity_params)
       redirect_to @activity, :notice => "#{Activity.model_name.human} updated"
     else
       render :action => "edit"

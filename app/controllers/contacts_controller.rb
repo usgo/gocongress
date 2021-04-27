@@ -22,7 +22,7 @@ class ContactsController < ApplicationController
   end
 
   def update
-    if @contact.update_attributes!(contact_params)
+    if @contact.update!(contact_params)
       redirect_to contacts_path, :notice => 'Contact updated'
     else
       render :action => "edit"

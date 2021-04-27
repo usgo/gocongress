@@ -115,7 +115,7 @@ class User < ApplicationRecord
       params.delete(:password)
       params.delete(:password_confirmation) if params[:password_confirmation].blank?
     end
-    update_attributes!(params)
+    update!(params)
   end
 
 private

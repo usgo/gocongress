@@ -30,7 +30,7 @@ class ContentsController < ApplicationController
   end
 
   def update
-    if @content.update_attributes!(content_params)
+    if @content.update!(content_params)
       redirect_to(@content, :notice => 'Content updated.')
     else
       render :action => "edit"

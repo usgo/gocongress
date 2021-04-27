@@ -32,7 +32,7 @@ class PlansController < ApplicationController
 
   def update
     @plan_categories = categories_for_select
-    if @plan.update_attributes!(plan_params)
+    if @plan.update!(plan_params)
       redirect_to plan_category_path(@plan.plan_category), :notice => 'Plan updated.'
     else
       render :action => "edit"

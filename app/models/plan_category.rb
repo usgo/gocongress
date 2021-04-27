@@ -76,7 +76,7 @@ class PlanCategory < ApplicationRecord
     return unless ordering.present?
     ordering.each do |plan_id, ordinal|
       if ordinal.to_i > 0
-        plans.find(plan_id).update_attributes!(:cat_order => ordinal)
+        plans.find(plan_id).update!(:cat_order => ordinal)
       end
     end
   end

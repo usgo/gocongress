@@ -39,7 +39,7 @@ class PlanCategoriesController < ApplicationController
     if params[:commit] == 'Update Order'
       @plan_category.reorder_plans(params[:plan_order])
     else
-      unless @plan_category.update_attributes!(plan_category_params)
+      unless @plan_category.update!(plan_category_params)
         render :action => "edit" and return
       end
     end
@@ -50,7 +50,7 @@ class PlanCategoriesController < ApplicationController
 
   def update_order
     (params[:ordinals] || {}).each do |id, ord|
-      PlanCategory.yr(@year).find(id).update_attributes!(:ordinal => ord)
+      PlanCategory.yr(@year).find(id).update!(:ordinal => ord)
     end
     redirect_to plan_categories_path, :notice => 'Order updated.'
   end
