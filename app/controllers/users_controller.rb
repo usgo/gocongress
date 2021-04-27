@@ -57,7 +57,7 @@ class UsersController < ApplicationController
     else
       sort_order = "role = 'A' desc, role = 'S' desc"
     end
-    @users = @users.yr(@year).order(sort_order).includes(:attendees)
+    @users = @users.yr(@year).order(Arel.sql(sort_order)).includes(:attendees)
   end
 
   def show
@@ -97,7 +97,7 @@ class UsersController < ApplicationController
     end
 
     # Update mass-assignable attributes. update_with_password() performs
-    # some extra validation before calling update_attributes
+    # some extra validation before calling update
     if @user.update_with_password(user_params)
 
       # When changing our own password, refresh session credentials
