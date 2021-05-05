@@ -17,7 +17,7 @@ en:
         notes: "Notes"
         leave_time: "Leave"
         return_time: "Return"
-        url: 'Website'
+        url: "Website"
       attendee:
         address_1: "Address Line 1"
         address_2: "Address Line 2"
@@ -46,7 +46,7 @@ en:
         roomate_request: "Roommate Request"
         comment: "Comments"
         understand_minor: "Youth Attendance Agreement"
-        will_play_in_us_open: "Will play in US Open?"
+        will_play_in_us_open: "Will play in U.S. Open?"
       contact:
         title: "Title"
         email: "Email"

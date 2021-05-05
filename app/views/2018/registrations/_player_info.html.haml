@@ -6,14 +6,6 @@
       = link_to 'What is my AGA rank?', '#', :id => 'open_dialog_rank'
 
   .field
-    = f.label :aga_id, 'AGA ID'
-    = f.number_field :aga_id, :size => 8, :min => 1, :step => 1
-    %span.smalltext
-      No
-      = link_to 'AGA ID?', '#', :id => 'open_dialog_aga_id'
-      &nbsp; Leave it blank.
-
-  .field
     = f.label :will_play_in_us_open
     %div
       %label

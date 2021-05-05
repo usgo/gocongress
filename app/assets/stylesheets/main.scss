@@ -178,9 +178,11 @@ table .numeric {
 img.thin-border {
   border: 1px solid black;
 }
-.initially_hidden {
+
+.initially-hidden {
   display: none;
 }
+
 .hardwrap {
   /* These are technically the same, but use both */
   overflow-wrap: break-word;
@@ -488,6 +490,10 @@ Also applies to contents of dialogs. */
         background-color: $nav-bg-highlight-color;
       }
     }
+
+    + #footer {
+      border-top: 0;
+    }
   }
 
   /* Nested lists look better without padding */
@@ -760,6 +766,7 @@ fieldset.wordy-questions .aligned-with-input {
 
 /* Footer */
 #footer {
+  border-top: 1em solid $nav-bg-color;
   margin: 0 auto;
   padding: ($spacing-unit / 2) $spacing-unit;
   display: flex;
@@ -801,9 +808,6 @@ button,
   color: $color;
   cursor: pointer;
   display: inline-block;
-  font: {
-    // size: 18px;
-  }
   padding: 5px 10px;
   position: relative;
   text-decoration: none;
@@ -850,4 +854,45 @@ select {
 
 .intl-tel-input {
   margin-right: 10px;
+}
+
+#aga_member_search {
+  .search-input {
+    label {
+      font-weight: bold;
+    }
+    margin: 1em 0;
+  }
+}
+
+#aga_member_search {
+  .search-results {
+    margin-bottom: 1em;
+
+    table {
+      border-collapse: collapse;
+    }
+
+    .search-result {
+      background: #eee;
+      &:hover {
+        background: hsl(50, 100%, 80%);
+      }
+
+      cursor: pointer;
+
+      td {
+        padding: 0.5em;
+      }
+
+      .aga-id {
+        opacity: 0.5;
+        text-align: right;
+      }
+
+      .full-name {
+        font-weight: bold;
+      }
+    }
+  }
 }
