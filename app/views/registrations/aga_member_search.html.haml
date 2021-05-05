@@ -4,8 +4,9 @@
     %p If this attendee is an AGA Member, please locate their member record using the search below. You can search by name or by ID.
 
     %div.search-input
-      %label{ :for => "aga_member_search_input" } Search:
-      %input{ :autofocus => true, :placeholder => "Go Seigen" }
+      %label{ :for => "aga_member_search_input" }
+        Search:
+      %input#aga_member_search_input{ :autofocus => true, :placeholder => "Go Seigen" }
 
       %p.initially-hidden.searching-message Searching&hellip;
 
