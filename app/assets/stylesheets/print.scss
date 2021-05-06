@@ -1,12 +1,20 @@
 /* Color scheme */
-$dark-orange: #FF9B05;
-$dark-blue: #0071BC;
-$light-blue: #64AEDE;
+$dark-orange: #ff9b05;
+$dark-blue: #0071bc;
+$light-blue: #64aede;
 
 /* Basic element styling (no classes yet) */
-* { margin: 0pt; padding: 0pt; }
-body { background-color: white; margin: 20pt; }
-hr { margin: 1em 0em 1em 0em; }
+* {
+  margin: 0pt;
+  padding: 0pt;
+}
+body {
+  background-color: white;
+  margin: 20pt;
+}
+hr {
+  margin: 1em 0em 1em 0em;
+}
 blockquote {
   font-size: 14pt;
   font-style: oblique;
@@ -22,44 +30,112 @@ legend {
   font-weight: bold;
   padding: 1em 0em 0.25em 0em;
 }
-input[type="submit"], input[type="button"] { cursor: pointer; }
+input[type="submit"],
+input[type="button"] {
+  cursor: pointer;
+}
 
 /* Font Families */
-h1, h2, h3, h4, h5, h6, legend, th { font-family: Helvetica, sans-serif; }
-body, td, p, span, div, li, hr, blockquote { font-family: Times, serif; }
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+legend,
+th {
+  font-family: Helvetica, sans-serif;
+}
+body,
+td,
+p,
+span,
+div,
+li,
+hr,
+blockquote {
+  font-family: Times, serif;
+}
 
 /* Basic font sizing */
-h1 { font-size: 18pt; }
-h2 { font-size: 14pt; }
-h3 { font-size: 12pt; }
-p, span, div, th, td { font-size: 9pt; }
+h1 {
+  font-size: 18pt;
+}
+h2 {
+  font-size: 14pt;
+}
+h3 {
+  font-size: 12pt;
+}
+p,
+span,
+div,
+th,
+td {
+  font-size: 9pt;
+}
 
 /* Truly basic classes that could apply anywhere -Jared 12/30/10 */
-.fullwidth { width: 100%; }
-.inline { display: inline; }
-.smalltext { font-size: 12pt; }
-th { text-align: left; }
-th.row { vertical-align: top; }
-table .numeric { text-align: right; }
-.align-center { text-align: center; }
-.align-right { text-align: right; }
-img.thin-border { border: 1pt solid black; }
-.initially_hidden { display: none; }
-.clear { clear: both; }
-.page-break-after { page-break-after: always; }
+.fullwidth {
+  width: 100%;
+}
+.inline {
+  display: inline;
+}
+.smalltext {
+  font-size: 12pt;
+}
+th {
+  text-align: left;
+}
+th.row {
+  vertical-align: top;
+}
+table .numeric {
+  text-align: right;
+}
+.align-center {
+  text-align: center;
+}
+.align-right {
+  text-align: right;
+}
+img.thin-border {
+  border: 1pt solid black;
+}
+.initially-hidden {
+  display: none;
+}
+.clear {
+  clear: both;
+}
+.page-break-after {
+  page-break-after: always;
+}
 
 /* Use this class to pad flow elements (eg. div, form) -Jared 4/9/11 */
-.flow-padding { padding: 8pt 0pt; }
+.flow-padding {
+  padding: 8pt 0pt;
+}
 
 /* Print-specific styles */
-p, table, h2 { padding: 0.5em 0em; }
-td, th { padding-right: 1em; }
+p,
+table,
+h2 {
+  padding: 0.5em 0em;
+}
+td,
+th {
+  padding-right: 1em;
+}
 .narrow-column {
   display: inline-block;
   padding: 0pt 20pt 0pt 0pt;
   vertical-align: top;
   width: 100pt;
-  h2 { padding: 20pt 0pt 0pt 10pt;}
+  h2 {
+    padding: 20pt 0pt 0pt 10pt;
+  }
 }
 .wide-column {
   display: inline-block;
@@ -67,14 +143,23 @@ td, th { padding-right: 1em; }
   width: 415pt;
 }
 tr.total {
-  th, td {
+  th,
+  td {
     border-top: 1px solid black;
     padding-top: 0.25em;
   }
 }
-.logo { float: left; padding-right: 20pt; }
-.registration-sheet { page-break-after: always; }
+.logo {
+  float: left;
+  padding-right: 20pt;
+}
+.registration-sheet {
+  page-break-after: always;
+}
 
 /* Paper size is US Letter Portraint with half-inch gutters */
 /* 7.5 inches = 540 PostScript points */
-.paper-size-is-letter { overflow:hidden; width: 540pt; }
+.paper-size-is-letter {
+  overflow: hidden;
+  width: 540pt;
+}

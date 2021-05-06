@@ -8,7 +8,6 @@
 = form_for(@registration) do |f|
   = f.hidden_field :user_id
   = hidden_field_tag 'type', params[:type]
-
   = render :partial => 'shared/error_messages', :locals => { :resource => @registration }
   = render :partial => "/#{@year.year}/registrations/personal_info", :locals => { :f => f } rescue render :partial => 'personal_info', :locals => { :f => f }
   = render :partial => "/#{@year.year}/registrations/shirt_info", :locals => { :f => f } rescue render :partial => 'shirt_info', :locals => { :f => f }

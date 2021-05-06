@@ -8,21 +8,11 @@
       %span.smalltext
         = link_to 'What is my AGA rank?', '#', :id => 'open_dialog_rank'
 
-  .field.flex
-    %div.field-key
-      = f.label :aga_id, 'AGA ID'
-
-    %div.field-value
-      = f.number_field :aga_id, :size => 8, :min => 1, :step => 1
-
-      %div.field-help-text
-        No
-        = link_to 'AGA ID?', '#', :id => 'open_dialog_aga_id'
-        &nbsp; Leave it blank.
+  = hidden_field_tag :aga_id
 
   .field.flex
     %div.field-key
-      = f.label :will_play_in_us_open
+      = f.label :will_play_in_us_open, trl_attr(:attendee, :will_play_in_us_open)
 
     %div.field-value
       %label

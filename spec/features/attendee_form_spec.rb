@@ -11,12 +11,19 @@ RSpec.describe 'registration form', :type => :feature do
     click_button 'Sign in'
     expect(page).to have_content('My Account')
     visit new_registration_path(year: user.year, user_id: user.id, type: 'adult')
-    expect(page).to have_content('First Attendee')
-    expect(page).to have_selector('form')
+    expect(page).to have_content('AGA Membership')
   end
 
   context 'new' do
+    it 'allows user to skip Member search' do
+      click_link 'This attendee is not an AGA member'
+      expect(page).to have_content('First Attendee')
+      expect(page).to have_selector('form')
+    end
+
     it 'saves a new attendee' do
+      click_link 'This attendee is not an AGA member'
+
       fill_in 'Given Name', with: 'Minnie'
       fill_in 'Family Name', with: 'Mouse'
       choose 'registration_gender_f'
@@ -38,12 +45,15 @@ RSpec.describe 'registration form', :type => :feature do
     end
 
     it 'shows errors when form is invalid' do
+      click_link 'This attendee is not an AGA member'
       fill_in 'Given Name', with: 'Minnie'
       click_button 'Continue'
       expect(page).to have_selector '#error_explanation'
       expect(page).to have_content "Family name can't be blank"
     end
+
     it 'shows errors when receive_sms_true and local phone is missing' do
+      click_link 'This attendee is not an AGA member'
       fill_in 'Given Name', with: 'Minnie'
       fill_in 'Family Name', with: 'Mouse'
       choose 'registration_gender_f'

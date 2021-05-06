@@ -1,0 +1,92 @@
+%fieldset
+  %div#aga_member_search
+    %h3 AGA Membership
+    %p If this attendee is an AGA Member, please locate their member record using the search below. You can search by name or by ID.
+
+    %div.search-input
+      %label{ :for => "aga_member_search_input" }
+        Search:
+      %input#aga_member_search_input{ :autofocus => true, :placeholder => "Go Seigen" }
+
+      %p.initially-hidden.searching-message Searching&hellip;
+
+    %div.search-results
+
+  %div#not_an_aga_member
+    %p
+      = link_to "This attendee is not an AGA member", url_for(request.params.merge({:aga_id => 'none'})), class: 'button'
+    %div.help-text
+      %p AGA Membership is required to play in AGA tournaments, but not for other Congress activities.
+      %p You can #{link_to "join the AGA", "https://www.usgo.org/members/join"} or manage your membership at the #{link_to "AGA Members / Chapters Area", "https://www.usgo.org/members"}.
+
+
+:javascript
+  const memberSearch = document.getElementById('aga_member_search');
+  const searchResultsContainer = memberSearch.querySelector('.search-results');
+  const input = memberSearch.querySelector('input');
+  const searchingMessage = memberSearch.querySelector('.searching-message');
+  console.log('searchingMessage', searchingMessage)
+
+  // A generic debouncer
+  let debounceTimeout;
+  const debounce = (fn, ms = 100) => {
+    clearTimeout(debounceTimeout);
+    debounceTimeout = setTimeout(fn, ms)
+  }
+
+  // Search the AGA Members app for either a name or ID
+  const searchMembers = async () => {
+    if (!input.value) {
+      return;
+    }
+
+    const url = `/api/mm/members/${encodeURIComponent(input.value)}`;
+    const options = {
+      method: 'GET'
+    };
+
+    const response = await fetch(url, options);
+    const { payload } = await response.json();
+
+    const results = payload.rows || [payload.row];
+
+    if (results.length) {
+      displayResults(results)
+    }
+  }
+
+  const displayResults = results => {
+    displaySearchingMessage(false);
+    searchResultsContainer.innerHTML = '';
+    const searchResultsTable = document.createElement('table');
+
+    results.forEach(result => {
+      const row = document.createElement('tr');
+      row.classList.add('search-result');
+      row.innerHTML = [
+        `<td class="aga-id">${result.member_id}</td>`,
+        `<td class="full-name">${result.full_name}</td>`,
+        `<td class="rating">${result.rating ? `Rating: ${result.rating}`: ''}</td>`
+      ].join('');
+
+      row.addEventListener('click', () => selectResult(result.member_id))
+      searchResultsTable.appendChild(row);
+      searchResultsContainer.appendChild(searchResultsTable);
+    });
+  }
+
+  const selectResult = memberId => {
+    // Append the selected memberId to the current URL, so the router will take
+    // us to the next step
+    window.location.href += `&aga_id=${memberId}`
+  }
+
+  // Toggle a "searching" message to make clear that something is happening once
+  // a user types
+  const displaySearchingMessage = (state = true) => {
+    searchingMessage.classList.toggle('initially-hidden', !state);
+  }
+
+  input.addEventListener('keyup', () => debounce(searchMembers, 500));
+
+  input.addEventListener('keypress', displaySearchingMessage);

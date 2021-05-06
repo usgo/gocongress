@@ -5,6 +5,9 @@ Gocongress::Application.routes.draw do
   mount StripeEvent::Engine, at: '/stripe-webhooks'
 
 
+  # proxy
+  get 'api/mm/members/:search', to: 'api#search_members'
+
 
   # Put the root route at the top so that it is matched quickly
   root :to => "home#index", :via => :get

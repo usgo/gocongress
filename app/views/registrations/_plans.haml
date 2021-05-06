@@ -15,8 +15,7 @@
   Mark the checkboxes (#{disabled_checkbox})
   below #{" or enter quantities" if @registration.show_quantity_instructions}.
 
-  Questions? Contact the
-  = link_to 'registrar.', contacts_path
+  Questions? Contact the #{link_to 'registrar', contacts_path}.
 
 - if @registration.plans_by_category.count > 0
   - @registration.plans_by_category.each do |cat, plans|
