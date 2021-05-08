@@ -20,4 +20,10 @@ class ApiController < ApplicationController
 
     render json: result
   end
+
+  # Convert markdown into html
+  def markdown
+    html = helpers.markdown(params['markdown'])
+    render json: { html: html }
+  end
 end

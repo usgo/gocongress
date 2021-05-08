@@ -7,6 +7,7 @@ Gocongress::Application.routes.draw do
 
   # proxy
   get 'api/mm/members/:search', to: 'api#search_members'
+  post 'api/markdown', to: 'api#markdown'
 
 
   # Put the root route at the top so that it is matched quickly
@@ -100,6 +101,8 @@ Gocongress::Application.routes.draw do
               :user_invoices
           end
         end
+
+        resources :editable_texts
 
         # Check attendees in to Congress when they arrive
         get 'check-in', to: 'check_in#index'

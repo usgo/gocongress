@@ -1,0 +1,78 @@
+// Place all the styles related to the EditableTexts controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: https://sass-lang.com/
+
+.editable-text {
+  margin-top: 2em;
+
+  h3 {
+    background: transparentize($nav-bg-color, 0.3);
+    padding: 0.5rem 1rem !important;
+    margin-bottom: 0.5rem;
+
+    a {
+      color: #eee;
+      text-decoration: none;
+
+      &:hover {
+        color: $link-color;
+      }
+    }
+  }
+
+  .field {
+    display: flex;
+    margin-bottom: 1rem;
+  }
+
+  .markdown {
+    display: flex;
+    flex-direction: column;
+
+    label {
+      color: #999 !important;
+      display: block !important;
+      padding: 0 0 0 1rem !important;
+      text-transform: uppercase;
+      width: auto !important;
+      text-align: left !important;
+      margin-bottom: 0.5rem;
+    }
+  }
+
+  textarea,
+  .preview-panel {
+    box-sizing: border-box;
+    flex-grow: 1;
+    padding: 1rem;
+  }
+
+  .preview-panel {
+    border: 1px dashed #333;
+    :first-child {
+      margin-top: 0;
+      padding-top: 0;
+    }
+  }
+
+  .preview {
+    position: relative;
+
+    &:before {
+      color: #999;
+      content: "Preview";
+      display: block;
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      padding-left: 1rem;
+    }
+
+    margin-left: 1rem;
+  }
+
+  [type="submit"] {
+    margin-left: auto;
+    margin-bottom: 2rem;
+  }
+}

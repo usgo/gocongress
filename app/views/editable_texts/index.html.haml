@@ -1,0 +1,32 @@
+%h2 Editable Text
+
+%p Many sections of website text can be customized; in fact, it&rsquo;s encouraged. It shows that your year&rsquo;s Congress is unique. All text uses #{link_to "Markdown", "https://daringfireball.net/projects/markdown/"}.
+
+%fieldset.markdown-preview.editable-text
+  = form_for @editable_text do |f|
+    %h3
+      = link_to "Welcome", root_path
+    .field
+      %div.markdown
+        = f.label :welcome, "Markdown"
+        = f.text_area :welcome
+    = f.submit 'Save'
+
+  = form_for @editable_text do |f|
+    %h3
+      = link_to "Professionals", attendees_path + '/vip'
+    .field
+      %div.markdown
+        = f.label :attendees_vip, "Markdown"
+        = f.text_area :attendees_vip
+    = f.submit 'Save'
+
+  = form_for @editable_text do |f|
+    %h3
+      = link_to "Volunteers", :contacts
+    .field
+      %div.markdown
+        = f.label :volunteers, "Markdown"
+        = f.text_area :volunteers
+
+    = f.submit 'Save'

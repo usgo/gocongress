@@ -15,6 +15,7 @@ only has autocomplete, datepicker, and dialog. -Jared 2012-07-09 */
 //= require svgxuse.js
 //= require intlTelInput
 //= require libphonenumber/utils
+//= require editable_texts
 
 /* TODO: We only need the galleria stuff on the homepage. Hiding
 this on other pages could improve page speed -Jared 2011.2.3 */
@@ -22,7 +23,7 @@ this on other pages could improve page speed -Jared 2011.2.3 */
 function intlTelFunction() {
   var $phoneInputCollection = $(`[data-intl-phone="true"]`);
 
-  $phoneInputCollection.each(function(i, item) {
+  $phoneInputCollection.each(function (i, item) {
     var $phoneInput = $(item),
       name = $phoneInput.attr("name"),
       hiddenInputName = name,
@@ -39,7 +40,7 @@ function intlTelFunction() {
 
     $phoneInput.intlTelInput({
       initialCountry: "auto",
-      geoIpLookup: function(callback) {
+      geoIpLookup: function (callback) {
         var $this = $(this);
 
         // Try to get IP Info from localStorage, so we don't unnecessarily ping
@@ -47,13 +48,13 @@ function intlTelFunction() {
 
         const ipInfo = localStorage.getItem("countryCodeInfo");
 
-        const handleCountryCode = response => {
+        const handleCountryCode = (response) => {
           const countryCode =
             response && response.country ? response.country : "";
 
           // When we get the country code, loop through all of the phone inputs
           // and see if they have a current value, but not a country code
-          $phoneInputCollection.each(function(i, item) {
+          $phoneInputCollection.each(function (i, item) {
             const $phoneInput = $(item);
 
             const currentNum = $phoneInput
@@ -88,9 +89,9 @@ function intlTelFunction() {
         } else {
           $.get(
             "https://ipinfo.io?token=684cae1e9b5454",
-            function() {},
+            function () {},
             "jsonp"
-          ).always(response => {
+          ).always((response) => {
             localStorage.setItem("countryCodeInfo", JSON.stringify(response));
             handleCountryCode(response);
           });
@@ -99,17 +100,17 @@ function intlTelFunction() {
       hiddenInput: hiddenInputName,
       nationalMode: true,
       formatOnDisplay: true,
-      autoPlaceholder: "polite"
+      autoPlaceholder: "polite",
     });
 
-    var reset = function() {
+    var reset = function () {
       $errorMsg.addClass("hide");
       $validMsg.addClass("hide");
       $phoneInput.removeClass("error-border");
     };
 
     // on blur: validate
-    $phoneInput.blur(function() {
+    $phoneInput.blur(function () {
       reset();
       if ($.trim($phoneInput.val())) {
         if ($phoneInput.intlTelInput("isValidNumber")) {
@@ -138,8 +139,8 @@ function intlTelFunction() {
 $(intlTelFunction);
 
 // check for text areas with a maxlength prop
-$(function() {
-  document.querySelectorAll("textarea[maxlength]").forEach(elem => {
+$(function () {
+  document.querySelectorAll("textarea[maxlength]").forEach((elem) => {
     if (!elem.getAttribute("maxLength")) {
       return;
     }
@@ -148,23 +149,24 @@ $(function() {
     counter.className = "textarea-maxlength-counter";
     elem.parentNode.appendChild(counter);
 
-    elem.addEventListener("keydown", event => {
+    elem.addEventListener("keydown", (event) => {
       updateCounter(elem, counter);
     });
-    elem.addEventListener("keyup", event => {
+    elem.addEventListener("keyup", (event) => {
       updateCounter(elem, counter);
     });
   });
 
   function updateCounter(elem, counter) {
-    counter.innerHTML = `Characters left: ${elem.maxLength -
-      elem.value.length}`;
+    counter.innerHTML = `Characters left: ${
+      elem.maxLength - elem.value.length
+    }`;
   }
 });
 
 // Add a separator control for email lists
-$(function() {
-  document.querySelectorAll("[data-email-list]").forEach(elem => {
+$(function () {
+  document.querySelectorAll("[data-email-list]").forEach((elem) => {
     var separator = document.createElement("div");
     var glueLabel = document.createElement("span");
     var glueInput = document.createElement("input");
@@ -179,17 +181,17 @@ $(function() {
     elem.parentNode.insertBefore(separator, elem);
 
     // Select all on focus
-    glueInput.addEventListener("focus", function(event) {
+    glueInput.addEventListener("focus", function (event) {
       event.target.setSelectionRange(0, this.value.length);
     });
 
     // Update the email list whenever the value changes
-    glueInput.addEventListener("keyup", function(event) {
+    glueInput.addEventListener("keyup", function (event) {
       var char = event.target.value;
       var json = elem.dataset.json;
 
       elem.value = JSON.parse(elem.dataset.json)
-        .map(attendee => `"${attendee.name}" <${attendee.email}>`)
+        .map((attendee) => `"${attendee.name}" <${attendee.email}>`)
         .join(char + " ");
     });
   });
@@ -198,8 +200,8 @@ $(function() {
 /*
  * List Filter
  */
-$(function() {
-  document.querySelectorAll("list-filter").forEach(function(elem) {
+$(function () {
+  document.querySelectorAll("list-filter").forEach(function (elem) {
     var input = document.createElement("input");
     var clear = document.createElement("button");
     clear.innerHTML = "Clear";
@@ -209,18 +211,18 @@ $(function() {
     var list = document.querySelector(elem.dataset.list);
     var items = list.querySelectorAll(elem.dataset.item);
 
-    input.addEventListener("keyup", function(event) {
+    input.addEventListener("keyup", function (event) {
       search(input.value);
     });
 
-    clear.addEventListener("click", function(event) {
+    clear.addEventListener("click", function (event) {
       // TODO: Add keyup trigger
       input.value = "";
       search("");
     });
 
     function search(text) {
-      items.forEach(function(item) {
+      items.forEach(function (item) {
         var value = item.querySelector(elem.dataset.value);
 
         // TODO: Replace with fuzzy search
@@ -239,8 +241,8 @@ $(function() {
  * Adaptive nav
  * @see https://css-tricks.com/container-adapting-tabs-with-more-button/
  */
-$(function() {
-  document.querySelectorAll(".adaptive-nav").forEach(function(container) {
+$(function () {
+  document.querySelectorAll(".adaptive-nav").forEach(function (container) {
     var primary = container.querySelector("ul:first-of-type");
     primary.classList.add("-primary");
     var primaryItems = container.querySelectorAll(
@@ -270,7 +272,7 @@ $(function() {
     var moreLi = primary.querySelector(".-more");
     var moreBtn = moreLi.querySelector("button");
 
-    moreBtn.addEventListener("click", event => {
+    moreBtn.addEventListener("click", (event) => {
       event.preventDefault();
       container.classList.toggle("--show-secondary");
       moreBtn.setAttribute(
@@ -281,7 +283,7 @@ $(function() {
 
     function doAdapt() {
       // reveal all items for the calculation
-      allItems.forEach(function(item) {
+      allItems.forEach(function (item) {
         item.classList.remove("--hidden");
       });
 
@@ -290,7 +292,7 @@ $(function() {
       var hiddenItems = [];
       var primaryWidth = primary.offsetWidth;
 
-      primaryItems.forEach(function(item, i) {
+      primaryItems.forEach(function (item, i) {
         if (primaryWidth >= stopWidth + item.offsetWidth) {
           stopWidth += item.offsetWidth;
         } else {
@@ -305,7 +307,7 @@ $(function() {
         container.classList.remove("--show-secondary");
         moreBtn.setAttribute("aria-expanded", false);
       } else {
-        secondaryItems.forEach(function(item, i) {
+        secondaryItems.forEach(function (item, i) {
           if (!hiddenItems.includes(i)) {
             item.classList.add("--hidden");
           }
@@ -321,7 +323,7 @@ $(function() {
     window.addEventListener("resize", doAdapt);
 
     // hide Secondary on the outside click
-    document.addEventListener("click", function(e) {
+    document.addEventListener("click", function (e) {
       var el = e.target;
       while (el) {
         if (el === secondary || el === moreBtn) {
@@ -335,7 +337,7 @@ $(function() {
   });
 });
 
-$(document).ready(function() {
+$(document).ready(function () {
   if (window.location.search === "?kiosk") {
     displayDailySchedule();
   }
@@ -370,7 +372,7 @@ function displayDailySchedule() {
     var options = {
       hour: "numeric",
       minute: "numeric",
-      hour12: true
+      hour12: true,
     };
     var timeString = now.toLocaleString("en-US", options);
 
@@ -393,7 +395,7 @@ function displayDailySchedule() {
     var scrollAmount = (contentHeight / pages) * currentPage;
     $(viewport).animate(
       {
-        scrollTop: scrollAmount
+        scrollTop: scrollAmount,
       },
       1000
     );
@@ -407,7 +409,7 @@ function displayDailySchedule() {
   function filterPastEvents() {
     var events = schedule.querySelector("tbody").querySelectorAll("tr");
 
-    events.forEach(function(event) {
+    events.forEach(function (event) {
       var $event = $(event);
       var time = event.querySelector(".time").innerHTML.split(" - ");
       var startTime = time[0];
