@@ -10,12 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20210426141815) do
+ActiveRecord::Schema.define(version: 20210506021835) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "activities", force: :cascade do |t|
+  create_table "activities", id: :bigserial, force: :cascade do |t|
     t.string   "name",                 limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -35,14 +35,14 @@ ActiveRecord::Schema.define(version: 20210426141815) do
     t.index ["year", "leave_time"], name: "index_activities_on_year_and_start", using: :btree
   end
 
-  create_table "activity_categories", force: :cascade do |t|
+  create_table "activity_categories", id: :bigserial, force: :cascade do |t|
     t.string  "name",        limit: 25,  null: false
     t.integer "year",                    null: false
     t.string  "description", limit: 500
     t.index ["id", "year"], name: "uniq_activity_categories_on_id_and_year", unique: true, using: :btree
   end
 
-  create_table "attendee_activities", force: :cascade do |t|
+  create_table "attendee_activities", id: :bigserial, force: :cascade do |t|
     t.integer  "attendee_id", null: false
     t.integer  "activity_id", null: false
     t.datetime "created_at"
@@ -52,12 +52,12 @@ ActiveRecord::Schema.define(version: 20210426141815) do
     t.index ["attendee_id", "activity_id"], name: "uniq_attendee_activity", unique: true, using: :btree
   end
 
-  create_table "attendee_plan_dates", force: :cascade do |t|
+  create_table "attendee_plan_dates", id: :bigserial, force: :cascade do |t|
     t.date    "_date",            null: false
     t.integer "attendee_plan_id"
   end
 
-  create_table "attendee_plans", force: :cascade do |t|
+  create_table "attendee_plans", id: :bigserial, force: :cascade do |t|
     t.integer  "attendee_id",             null: false
     t.integer  "plan_id",                 null: false
     t.datetime "created_at"
@@ -67,7 +67,7 @@ ActiveRecord::Schema.define(version: 20210426141815) do
     t.index ["attendee_id", "plan_id"], name: "uniq_attendee_plan", unique: true, using: :btree
   end
 
-  create_table "attendees", force: :cascade do |t|
+  create_table "attendees", id: :bigserial, force: :cascade do |t|
     t.string   "given_name",               limit: 255,                 null: false
     t.string   "family_name",              limit: 255,                 null: false
     t.string   "gender",                   limit: 1
@@ -107,7 +107,7 @@ ActiveRecord::Schema.define(version: 20210426141815) do
     t.index ["user_id"], name: "index_attendees_on_user_id", using: :btree
   end
 
-  create_table "bye_appointments", force: :cascade do |t|
+  create_table "bye_appointments", id: :bigserial, force: :cascade do |t|
     t.integer  "round_id"
     t.integer  "attendee_id"
     t.datetime "created_at",  null: false
@@ -116,7 +116,7 @@ ActiveRecord::Schema.define(version: 20210426141815) do
     t.index ["round_id"], name: "index_bye_appointments_on_round_id", using: :btree
   end
 
-  create_table "contacts", force: :cascade do |t|
+  create_table "contacts", id: :bigserial, force: :cascade do |t|
     t.integer  "year",                    null: false
     t.string   "title",       limit: 50,  null: false
     t.string   "given_name",  limit: 50,  null: false
@@ -128,7 +128,7 @@ ActiveRecord::Schema.define(version: 20210426141815) do
     t.datetime "updated_at",              null: false
   end
 
-  create_table "content_categories", force: :cascade do |t|
+  create_table "content_categories", id: :bigserial, force: :cascade do |t|
     t.integer  "year",                                         null: false
     t.string   "name",              limit: 50
     t.datetime "created_at"
@@ -137,7 +137,7 @@ ActiveRecord::Schema.define(version: 20210426141815) do
     t.index ["id", "year"], name: "index_content_categories_on_id_and_year", unique: true, using: :btree
   end
 
-  create_table "contents", force: :cascade do |t|
+  create_table "contents", id: :bigserial, force: :cascade do |t|
     t.text     "body",                            null: false
     t.string   "subject",             limit: 255, null: false
     t.datetime "expires_at"
@@ -150,13 +150,22 @@ ActiveRecord::Schema.define(version: 20210426141815) do
     t.index ["year", "show_on_homepage", "expires_at"], name: "index_contents_on_year_and_show_on_homepage_and_expires_at", using: :btree
   end
 
-  create_table "events", force: :cascade do |t|
+  create_table "editable_texts", force: :cascade do |t|
+    t.integer  "year"
+    t.string   "welcome"
+    t.string   "volunteers"
+    t.string   "attendees_vip"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  create_table "events", id: :bigserial, force: :cascade do |t|
     t.integer "year",             null: false
     t.string  "name", limit: 255, null: false
     t.index ["id", "year"], name: "index_events_on_id_and_year", unique: true, using: :btree
   end
 
-  create_table "game_appointments", force: :cascade do |t|
+  create_table "game_appointments", id: :bigserial, force: :cascade do |t|
     t.string   "location"
     t.datetime "time"
     t.datetime "created_at",      null: false
@@ -174,13 +183,13 @@ ActiveRecord::Schema.define(version: 20210426141815) do
     t.index ["round_id"], name: "index_game_appointments_on_round_id", using: :btree
   end
 
-  create_table "jobs", force: :cascade do |t|
+  create_table "jobs", id: :bigserial, force: :cascade do |t|
     t.string   "jobname"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "plan_categories", force: :cascade do |t|
+  create_table "plan_categories", id: :bigserial, force: :cascade do |t|
     t.string   "name",                 limit: 255,                 null: false
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -195,7 +204,7 @@ ActiveRecord::Schema.define(version: 20210426141815) do
     t.index ["id", "year"], name: "index_plan_categories_on_id_and_year", unique: true, using: :btree
   end
 
-  create_table "plans", force: :cascade do |t|
+  create_table "plans", id: :bigserial, force: :cascade do |t|
     t.string   "name",                 limit: 50,                 null: false
     t.integer  "age_min",                                         null: false
     t.integer  "age_max"
@@ -217,7 +226,7 @@ ActiveRecord::Schema.define(version: 20210426141815) do
     t.index ["plan_category_id"], name: "index_plans_on_plan_category_id", using: :btree
   end
 
-  create_table "rounds", force: :cascade do |t|
+  create_table "rounds", id: :bigserial, force: :cascade do |t|
     t.integer  "tournament_id"
     t.integer  "number"
     t.datetime "start_time",           null: false
@@ -228,7 +237,7 @@ ActiveRecord::Schema.define(version: 20210426141815) do
     t.index ["tournament_id"], name: "index_rounds_on_tournament_id", using: :btree
   end
 
-  create_table "shirts", force: :cascade do |t|
+  create_table "shirts", id: :bigserial, force: :cascade do |t|
     t.integer  "year",                                    null: false
     t.string   "name",        limit: 40,                  null: false
     t.string   "hex_triplet", limit: 6,                   null: false
@@ -242,7 +251,7 @@ ActiveRecord::Schema.define(version: 20210426141815) do
     t.index ["name", "year"], name: "index_shirts_on_name_and_year", unique: true, using: :btree
   end
 
-  create_table "sms_notifications", force: :cascade do |t|
+  create_table "sms_notifications", id: :bigserial, force: :cascade do |t|
     t.string   "to"
     t.string   "from"
     t.text     "message"
@@ -250,7 +259,7 @@ ActiveRecord::Schema.define(version: 20210426141815) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "tournaments", force: :cascade do |t|
+  create_table "tournaments", id: :bigserial, force: :cascade do |t|
     t.string   "name",             limit: 50,                  null: false
     t.string   "eligible",         limit: 255,                 null: false
     t.text     "description",                                  null: false
@@ -265,7 +274,7 @@ ActiveRecord::Schema.define(version: 20210426141815) do
     t.index ["id", "year"], name: "index_tournaments_on_id_and_year", unique: true, using: :btree
   end
 
-  create_table "transactions", force: :cascade do |t|
+  create_table "transactions", id: :bigserial, force: :cascade do |t|
     t.integer  "user_id",                        null: false
     t.string   "trantype",           limit: 1,   null: false
     t.string   "gwtranid"
@@ -283,7 +292,7 @@ ActiveRecord::Schema.define(version: 20210426141815) do
     t.index ["year", "created_at"], name: "index_transactions_on_year_and_created_at", using: :btree
   end
 
-  create_table "users", force: :cascade do |t|
+  create_table "users", id: :bigserial, force: :cascade do |t|
     t.string   "email",                  limit: 255, default: "",  null: false
     t.string   "encrypted_password",     limit: 128, default: "",  null: false
     t.string   "reset_password_token",   limit: 255
@@ -304,7 +313,7 @@ ActiveRecord::Schema.define(version: 20210426141815) do
     t.index ["year"], name: "index_users_on_year", using: :btree
   end
 
-  create_table "years", force: :cascade do |t|
+  create_table "years", id: :bigserial, force: :cascade do |t|
     t.string  "city",               limit: 255
     t.string  "date_range",         limit: 255,             null: false
     t.date    "day_off_date",                               null: false

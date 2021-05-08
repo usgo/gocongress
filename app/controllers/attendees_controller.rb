@@ -36,14 +36,10 @@ class AttendeesController < ApplicationController
   end
 
   def vip
-    if @year.year != 2019 || current_user_is_admin?
-      @attendees = Attendee
-        .yr(@year)
-        .where(:cancelled => false)
-        .where('rank >= 101')
-        .order('rank desc')
-    else
-      redirect_to year_path
-    end
+    @attendees = Attendee
+      .yr(@year)
+      .where(:cancelled => false)
+      .where('rank >= 101')
+      .order('rank desc')
   end
 end

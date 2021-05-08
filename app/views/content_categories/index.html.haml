@@ -1,4 +1,12 @@
+- if can? :manage, EditableText
+  %h2 Editable Text
+  %ul
+    %li
+      = link_to "View and edit website text", editable_texts_path  
+
 %h2 Content Categories
+
+
 
 - if can? :create, ContentCategory
   .flow-padding= button_to 'New Category', new_content_category_path, :method => "get"

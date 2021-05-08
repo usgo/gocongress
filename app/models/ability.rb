@@ -5,7 +5,7 @@ class Ability
   # when the cancan syntax does not allow the symbol :all
   # For example, when applying conditions, eg. :year
   ALL_RESOURCES = [Activity, ActivityCategory, Attendee,
-    Contact, Content, ContentCategory, Event, GameAppointment,
+    Contact, Content, ContentCategory, EditableText, Event, GameAppointment,
     PlanCategory, Plan, Round, Shirt, SmsNotification, Transaction, Tournament,
     User, Year]
 
