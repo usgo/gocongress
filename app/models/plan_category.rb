@@ -60,7 +60,7 @@ class PlanCategory < ApplicationRecord
 
   def destroy
     if attendee_count > 0
-      raise ActiveRecord::DeleteRestrictionError, \
+      raise ActiveRecord::DeleteRestrictionError \
         "Cannot delete, has attendees"
     end
     super
@@ -76,7 +76,7 @@ class PlanCategory < ApplicationRecord
     return unless ordering.present?
     ordering.each do |plan_id, ordinal|
       if ordinal.to_i > 0
-        plans.find(plan_id).update!(:cat_order => ordinal)
+        plans.find(plan_id).update(:cat_order => ordinal)
       end
     end
   end

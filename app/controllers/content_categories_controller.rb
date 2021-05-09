@@ -31,7 +31,7 @@ class ContentCategoriesController < ApplicationController
   end
 
   def update
-    if @content_category.update!(content_category_params)
+    if @content_category.update(content_category_params)
       redirect_to(@content_category, :notice => 'Category updated.')
     else
       render :action => "edit"
