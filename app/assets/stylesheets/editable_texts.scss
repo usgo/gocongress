@@ -25,6 +25,11 @@
     margin-bottom: 1rem;
   }
 
+  .markdown,
+  .preview {
+    flex: 1;
+  }
+
   .markdown {
     display: flex;
     flex-direction: column;
