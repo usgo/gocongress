@@ -23,7 +23,9 @@ RSpec.describe PlanCategory, :type => :model do
 
   describe "#destroy" do
     it "raises an error if an attendee has selected one of its plans" do
-      expect { cat.destroy }.to raise_error(ActiveRecord::DeleteRestrictionError)
+      cat.destroy
+      expect(cat).not_to be_destroyed
+      expect(cat.errors[:base]).to include("Cannot delete, has attendees")
     end
   end
 
