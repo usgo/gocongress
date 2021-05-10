@@ -39,7 +39,7 @@ class PlanCategoriesController < ApplicationController
     if params[:commit] == 'Update Order'
       @plan_category.reorder_plans(params[:plan_order])
     else
-      unless @plan_category.update!(plan_category_params)
+      unless @plan_category.update(plan_category_params)
         render :action => "edit" and return
       end
     end
@@ -50,16 +50,15 @@ class PlanCategoriesController < ApplicationController
 
   def update_order
     (params[:ordinals] || {}).each do |id, ord|
-      PlanCategory.yr(@year).find(id).update!(:ordinal => ord)
+      PlanCategory.yr(@year).find(id).update(:ordinal => ord)
     end
     redirect_to plan_categories_path, :notice => 'Order updated.'
   end
 
   def destroy
-    begin
-      @plan_category.destroy
+    if @plan_category.destroy
       flash[:notice] = 'Category deleted.'
-    rescue ActiveRecord::DeleteRestrictionError
+    else
       flash[:alert] = "Cannot delete the '#{@plan_category.name}' category
         because its plans have already been selected by attendees."
     end

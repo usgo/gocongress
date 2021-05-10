@@ -8,7 +8,7 @@ class YearsController < ApplicationController
   before_action :expose_reg_phase_opts
 
   def update
-    if @year.update!(year_record_params)
+    if @year.update(year_record_params)
       redirect_to(edit_year_path, :notice => 'Settings updated')
     else
       render :action => "edit"

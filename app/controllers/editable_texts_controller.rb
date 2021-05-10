@@ -7,7 +7,6 @@ class EditableTextsController < ApplicationController
   def update
     @editable_text = EditableText.find(params[:id])
     if @editable_text.update editable_text_params
-      puts editable_text_params
       redirect_to(editable_texts_path, :notice => 'Editable text updated.')
     else
       render :action => "index"

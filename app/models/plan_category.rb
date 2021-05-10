@@ -1,6 +1,8 @@
 class PlanCategory < ApplicationRecord
   include YearlyModel
 
+  before_destroy :check_attendees, prepend: true
+
   belongs_to :event
   has_many :plans
 
@@ -58,12 +60,11 @@ class PlanCategory < ApplicationRecord
     plans.joins(:attendees).count
   end
 
-  def destroy
+  def check_attendees
     if attendee_count > 0
-      raise ActiveRecord::DeleteRestrictionError, \
-        "Cannot delete, has attendees"
+      errors.add :base, "Cannot delete, has attendees"
+      throw(:abort)
     end
-    super
   end
 
   def next_reg_form_category(attendee, events)
@@ -76,7 +77,7 @@ class PlanCategory < ApplicationRecord
     return unless ordering.present?
     ordering.each do |plan_id, ordinal|
       if ordinal.to_i > 0
-        plans.find(plan_id).update!(:cat_order => ordinal)
+        plans.find(plan_id).update(:cat_order => ordinal)
       end
     end
   end
