@@ -32,6 +32,9 @@ a pull request is a great way to become part of the team.
    1. Install a js runtime
       - macs come with [JavaScriptCore][20] (part of webkit)
       - linux or mac: [node][11] (`apt-get nodejs`)
+   1. Install [ImageMagick][22] CLI
+      - eg. `brew install imagemagick`
+      - Make sure CLI tools are on your PATH with eg. `which convert`
    1. Install ruby [gems][21] using [bundler][12]
       1. `gem install bundler --version '1.17'`
       1. `bundle install`
@@ -46,8 +49,7 @@ a pull request is a great way to become part of the team.
 1. Run the tests
    1. `bin/rails db:setup`
    1. `bin/rails db:test:prepare`
-   1. `bin/rspec` will run the tests. If they
-      all pass, you're good to go.
+   1. `bin/rake` will run the tests. If they all pass, you're good to go.
 1. Submit your contribution
    1. Write a [spec][7] that describes your contribution
    1. Push your changes to your [fork][8] on github
@@ -109,3 +111,4 @@ Special thanks to Rex Cristal, for taking over maintenance of the site from
 [19]: http://www.postgresql.org/docs/9.4/interactive/user-manag.html
 [20]: http://trac.webkit.org/wiki/JavaScriptCore
 [21]: http://guides.rubygems.org/
+[22]: https://imagemagick.org/
