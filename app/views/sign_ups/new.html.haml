@@ -3,7 +3,7 @@
 - if @year.registration_phase == "closed"
   %p
     Registration for the #{@year.year} Go Congress will open soon! We are finalizing
-    the prices and other information and then we'll be ready to accept your
+    the prices and other information and then we’ll be ready to accept your
     registration. Thanks for your interest.
 
 - elsif @year.registration_phase == "complete"
@@ -11,7 +11,7 @@
     Registration for the #{@year.year} Go Congress is complete.
     Thanks for coming!
 
-- elseif @year.registration_phase == "canceled"
+- elsif @year.registration_phase == "canceled"
   %p
     The #{@year.year} Go Congress has been canceled.
 
@@ -54,7 +54,7 @@
     %fieldset
       .field
         = f.label :email
-        = f.text_field :email, :tabindex => 1
+        = f.email_field :email, :tabindex => 1
       .field
         = f.label :password, 'Choose a Password'
         = f.password_field :password, :size => 10, :tabindex => 2
