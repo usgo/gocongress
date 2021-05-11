@@ -1,0 +1,24 @@
+- if @registration.tournaments.any?
+
+  - mnh = Tournament.model_name.human
+  - mnhp = mnh.pluralize
+
+  %h3= mnhp
+
+  %p
+    Prices and times are subject to change.
+    Questions? Contact the #{link_to "registrar", contacts_path}.
+
+  %table.semantic.zebra.fullwidth
+    %thead
+      %th
+      %th Date
+      %th{:colspan => 2}= mnh
+    %tbody
+      - @registration.tournaments.each do |t|
+        - checked = @registration.tournament_selections.include?(t.id)
+        %tr
+          %td.align-center
+            = check_box_tag "tournaments_#{t.id}", t.id, checked, :name => 'tournament_ids[]'
+          %td
+            = label "tournaments", t.id, t.name

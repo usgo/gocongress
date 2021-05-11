@@ -2,6 +2,9 @@ class Tournament < ApplicationRecord
   include YearlyModel
   has_many :rounds, dependent: :destroy
 
+  has_many :attendee_tournaments, :dependent => :destroy
+  has_many :attendees, :through => :attendee_tournaments
+
   has_many :game_appointments
 
   # Openness Types:

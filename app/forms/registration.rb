@@ -8,7 +8,7 @@ class Registration
   include ActionView::Helpers::TranslationHelper
 
   attr_reader :activity_selections, :attendee, :current_user,
-    :plan_selections, :understand_minor
+    :plan_selections, :tournament_selections, :understand_minor
 
   # Use MinorAgreementValidator (found in lib/) to require that understand_minor
   # be checked if the attendee will not be 18 before the first day of the Congress.
@@ -33,10 +33,15 @@ class Registration
     @errors = ActiveModel::Errors.new(self)
     @activity_selections = attendee.activity_ids
     @plan_selections = attendee.plan_selections
+    @tournament_selections = attendee.tournament_ids
   end
 
   def activities
     Activity.yr(year).order(:leave_time, :name)
+  end
+
+  def tournaments
+    Tournament.yr(year).order('ordinal', 'lower(name)')
   end
 
   def guardian_name
@@ -55,11 +60,13 @@ class Registration
     params[:activity_ids] ||= {}
     params[:plans] ||= {}
     params[:registration] ||= {}
+    params[:tournament_ids] ||= {}
 
     params.permit!
     p = params.to_h
 
     @activity_selections = p[:activity_ids].map(&:to_i)
+    @tournament_selections = p[:tournament_ids].map(&:to_i)
     @plan_selections = parse_plan_params(p[:plans])
     @understand_minor = p[:registration][:understand_minor]
     attendee.attributes = attendee_params(p[:registration])
@@ -162,6 +169,7 @@ class Registration
   def save
     attendee.save!
     persist_activities
+    persist_tournaments
     persist_plans
     true
   end
@@ -190,6 +198,10 @@ class Registration
 
   def persist_activities
     @attendee.activity_ids = @activity_selections
+  end
+  
+  def persist_tournaments
+    @attendee.tournament_ids = @tournament_selections
   end
 
   def persisted_plan_selections

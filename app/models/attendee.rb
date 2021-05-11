@@ -14,6 +14,9 @@ class Attendee < ApplicationRecord
   has_many :attendee_activities, :dependent => :destroy
   has_many :activities, :through => :attendee_activities
 
+  has_many :attendee_tournaments, :dependent => :destroy
+  has_many :tournaments, :through => :attendee_tournaments
+
   belongs_to :guardian,
     class_name: "Attendee",
     foreign_key: "guardian_attendee_id",

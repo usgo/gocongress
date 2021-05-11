@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20210506021835) do
+ActiveRecord::Schema.define(version: 20210511150029) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -65,6 +65,15 @@ ActiveRecord::Schema.define(version: 20210506021835) do
     t.integer  "quantity",    default: 1, null: false
     t.integer  "year",                    null: false
     t.index ["attendee_id", "plan_id"], name: "uniq_attendee_plan", unique: true, using: :btree
+  end
+
+  create_table "attendee_tournaments", force: :cascade do |t|
+    t.integer  "attendee_id"
+    t.integer  "tournament_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.index ["attendee_id"], name: "index_attendee_tournaments_on_attendee_id", using: :btree
+    t.index ["tournament_id"], name: "index_attendee_tournaments_on_tournament_id", using: :btree
   end
 
   create_table "attendees", id: :bigserial, force: :cascade do |t|
@@ -343,6 +352,8 @@ ActiveRecord::Schema.define(version: 20210506021835) do
   add_foreign_key "attendee_plan_dates", "attendee_plans", name: "fk_attendee_plan_dates_attendee_plan_id", on_update: :cascade, on_delete: :cascade
   add_foreign_key "attendee_plans", "attendees", name: "fk_attendee_plans_attendee_id_year", on_update: :cascade, on_delete: :cascade
   add_foreign_key "attendee_plans", "plans", name: "fk_attendee_plans_plan_id_year", on_update: :cascade, on_delete: :restrict
+  add_foreign_key "attendee_tournaments", "attendees"
+  add_foreign_key "attendee_tournaments", "tournaments"
   add_foreign_key "attendees", "attendees", column: "guardian_attendee_id", name: "fk_attendees_guardian_attendee_id_year", on_update: :cascade, on_delete: :restrict
   add_foreign_key "attendees", "shirts", name: "fk_attendees_shirt_id_year", on_update: :cascade, on_delete: :restrict
   add_foreign_key "attendees", "users", name: "fk_attendees_user_id_year", on_update: :cascade, on_delete: :cascade
