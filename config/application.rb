@@ -1,16 +1,16 @@
-require File.expand_path('../boot', __FILE__)
+require_relative 'boot'
+
 require 'rails/all'
 
-# Require nokogiri first, before other gems, in case another gem tries
-# to load a different version of `libxml` than nokogiri was built
-# against. (http://bit.ly/19NHX1L) This prevents the warning "Nokogiri
-# was built against LibXML version x.x.x, but has dynamically loaded
-# y.y.y" -Jared 2013
-require 'nokogiri'
-Bundler.require(:default, Rails.env)
+# Require the gems listed in Gemfile, including any gems
+# you've limited to :test, :development, or :production.
+Bundler.require(*Rails.groups)
 
 module Gocongress
   class Application < Rails::Application
+    # Initialize configuration defaults for originally generated Rails version.
+    config.load_defaults '5.1'
+
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.

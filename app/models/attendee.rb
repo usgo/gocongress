@@ -14,13 +14,16 @@ class Attendee < ApplicationRecord
   has_many :attendee_activities, :dependent => :destroy
   has_many :activities, :through => :attendee_activities
 
-  belongs_to :guardian, :class_name => "Attendee",
-    :foreign_key => "guardian_attendee_id"
-  has_many :minors, :class_name => "Attendee",
-    :foreign_key => "guardian_attendee_id",
-    :dependent => :restrict_with_exception
+  belongs_to :guardian,
+    class_name: "Attendee",
+    foreign_key: "guardian_attendee_id",
+    optional: true
+  has_many :minors,
+    class_name: "Attendee",
+    foreign_key: "guardian_attendee_id",
+    dependent: :restrict_with_exception
 
-  belongs_to :shirt
+  belongs_to :shirt, optional: true
 
   # Validations
   # -----------
@@ -68,7 +71,7 @@ class Attendee < ApplicationRecord
 
   # Class Methods
   # =============
-  
+
   def self.adults year
     where('birth_date < ?', CONGRESS_START_DATE[year.to_i] - 18.years)
   end
