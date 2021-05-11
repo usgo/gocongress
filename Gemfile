@@ -20,7 +20,7 @@ gem 'kaminari'
 gem 'nokogiri'
 gem 'pg', '< 1.0'
 gem 'phonelib'
-gem 'rails', '5.0.7.2'
+gem 'rails', '5.1.7'
 gem 'responders', '~> 2.0'
 gem 'sassc-rails' # see https://github.com/sass/sassc-rails/issues/114
 gem 'sprockets', '~> 3.7.2' # see https://github.com/rails/sprockets/issues/632

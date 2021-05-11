@@ -1,8 +1,8 @@
-# Load the rails application
-require File.expand_path('../application', __FILE__)
+# Load the Rails application.
+require_relative 'application'
 
 # Initialize the rails application
-Gocongress::Application.initialize!
+Rails.application.initialize!
 
 # Times are always stored in the database in UTC.  However, Rails allows
 # us to set a "display timezone".  Our default display timezone will be
