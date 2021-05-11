@@ -10,7 +10,11 @@ module ApplicationHelper
   end
 
   def asset_exists?(path)
-    Rails.application.assets.resolve(path).present? 
+    if Rails.env.production?  
+      Rails.application.assets_manifest.find_sources(path) != nil
+    else
+      Rails.application.assets.find_asset(path) != nil
+    end
   end
 
   # When you want to use `button_to` but your url has a query string
