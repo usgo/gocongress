@@ -1,5 +1,15 @@
 inherit_from: .rubocop_todo.yml
 
+AllCops:
+  Exclude:
+    - bin/*
+  NewCops: enable
+  SuggestExtensions: false
+
+Layout/LineLength:
+  Exclude:
+    - db/schema.rb
+
 # Not useful compared to e.g. `Metrics/AbcSize`
 Metrics/BlockLength:
   Enabled: false
@@ -8,9 +18,6 @@ Metrics/BlockLength:
 Metrics/ClassLength:
   Enabled: false
 
-Metrics/LineLength:
-  Exclude:
-    - db/schema.rb
 
 # Not useful compared to e.g. `Metrics/AbcSize`
 Metrics/MethodLength:

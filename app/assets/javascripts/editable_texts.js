@@ -1,3 +1,4 @@
+alert("YAY!");
 document.addEventListener("DOMContentLoaded", function () {
   const markdownPreviewAreas = document.querySelectorAll(".markdown-preview");
 
@@ -35,6 +36,6 @@ const displayPreview = async (text, elem) => {
     body: JSON.stringify({ markdown: text }),
   });
 
-  const { html } = await response.json();
-  elem.innerHTML = html;
+  const json = await response.json();
+  elem.innerHTML = json.html;
 };
