@@ -34,7 +34,7 @@ class ApplicationController < ActionController::Base
     og_image_path = "#{@year.year}/og-image.png"
 
     if helpers.asset_exists? og_image_path
-      image = MiniMagick::Image.open(Rails.application.assets.resolve(og_image_path))
+      image = MiniMagick::Image.open(helpers.get_full_path_to_asset(og_image_path))
       @og_image = {
         :path => og_image_path,
         :width => image[:width],

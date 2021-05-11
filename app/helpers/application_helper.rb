@@ -17,6 +17,15 @@ module ApplicationHelper
     end
   end
 
+  def get_full_path_to_asset(filename)
+    manifest_file = Rails.application.assets_manifest.assets[filename]
+    if manifest_file
+      File.join(Rails.application.assets_manifest.directory, manifest_file)
+    else
+      Rails.application.assets&.[](filename)&.filename
+    end
+  end
+
   # When you want to use `button_to` but your url has a query string
   # https://github.com/rails/rails/issues/2158
   def button_to_get text, url, id, css_class = nil
