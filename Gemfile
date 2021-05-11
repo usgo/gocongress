@@ -64,7 +64,7 @@ group :development do
   gem 'meta_request'
   gem 'spring'
   gem 'spring-commands-rspec'
-  gem 'web-console', '~> 3.0'
+  gem 'web-console'
   gem 'rb-readline'
 end
 

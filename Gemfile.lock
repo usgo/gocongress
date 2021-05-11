@@ -435,7 +435,7 @@ DEPENDENCIES
   uglifier (>= 1.3.0)
   unf
   vcr
-  web-console (~> 3.0)
+  web-console
   webmock
 
 RUBY VERSION
