@@ -61,7 +61,7 @@ RSpec.shared_examples "an admin controller" do |model_name|
     describe "show" do
       it "succeeds" do
         get :show, params: { year: resource.year, id: resource.id }
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(assigns(model_name)).to eq(resource)
       end
     end
@@ -123,7 +123,7 @@ RSpec.shared_examples "an admin controller" do |model_name|
     describe "show" do
       it "succeeds" do
         get :show, params: { year: resource.year, id: resource.id }
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(assigns(model_name)).to eq(resource)
       end
     end

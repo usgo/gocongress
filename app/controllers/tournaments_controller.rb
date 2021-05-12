@@ -10,7 +10,7 @@ class TournamentsController < ApplicationController
   # Actions
   def index
     # Eventually we can order tournaments just by ordinal
-    @tournaments = @tournaments.yr(@year).order('ordinal', 'lower(name)')
+    @tournaments = @tournaments.yr(@year).order(:ordinal, :name)
     @show_order_fields = can?(:update, Tournament) && @tournaments.count > 1
   end
 

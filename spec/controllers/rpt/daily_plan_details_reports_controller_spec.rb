@@ -13,7 +13,7 @@ RSpec.describe Rpt::DailyPlanDetailsReportsController, :type => :controller do
 
       it "succeeds" do
         get :show, params: { year: Date.current.year }
-        expect(response).to be_success
+        expect(response).to be_successful
       end
     end
 
@@ -23,7 +23,7 @@ RSpec.describe Rpt::DailyPlanDetailsReportsController, :type => :controller do
         allow(DailyPlanDetailsExporter).to receive(:new) { exporter }
         expect(exporter).to receive(:to_csv)
         get :show, format: 'csv', params: { year: Date.current.year }
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(response.content_type).to eq('text/csv')
       end
     end

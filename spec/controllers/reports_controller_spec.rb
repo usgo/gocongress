@@ -10,13 +10,13 @@ RSpec.describe ReportsController, :type => :controller do
     # The following reports take no paramters, and only respond to html
     %w[index invoices emails activities].each do |r|
       get r, params: { year: admin.year }
-      expect(response).to be_success
+      expect(response).to be_successful
     end
 
     # These reports take a min and max parameter
     %w[atn_reg_sheets user_invoices].each do |r|
       get r, params: { year: admin.year, min: 'a', max: 'z' }
-      expect(response).to be_success
+      expect(response).to be_successful
     end
   end
 
@@ -25,7 +25,7 @@ RSpec.describe ReportsController, :type => :controller do
       a = create :attendee
       sign_in admin
       get :atn_reg_sheets, params: { year: admin.year, min: 'a', max: 'z' }
-      expect(response).to be_success
+      expect(response).to be_successful
       expect(assigns(:attendees)).to eq([a])
       expect(assigns(:attendee_attr_names)).not_to be_empty
     end

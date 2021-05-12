@@ -301,7 +301,7 @@ RSpec.describe RegistrationsController, :type => :controller do
             it "should not allow attendee to select the disabled plan" do
               patch_update plan
               expect(attendee.reload.plans).not_to include(plan)
-              expect(response).to be_success
+              expect(response).to be_successful
               expect(response).to render_template(:edit)
             end
           end
@@ -317,7 +317,7 @@ RSpec.describe RegistrationsController, :type => :controller do
           it "does not allow them to deselect the plan" do
             patch :update, params: { year: attendee.year, id: attendee.id, :"plan_#{plan2.id}_qty" => 1 }
             expect(attendee.reload.plans).to eq([plan])
-            expect(response).to be_success
+            expect(response).to be_successful
             expect(response).to render_template(:edit)
           end
         end

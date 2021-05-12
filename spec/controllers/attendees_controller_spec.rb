@@ -99,7 +99,7 @@ RSpec.describe AttendeesController, :type => :controller do
       it "shows individual registration sheet" do
         a = create :attendee
         get :print_summary, params: { id: a.id, year: a.year }
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(assigns(:attendee)).to eq(a)
         expect(assigns(:attendee_attr_names)).not_to be_empty
       end
