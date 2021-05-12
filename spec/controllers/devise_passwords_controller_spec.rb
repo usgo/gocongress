@@ -37,7 +37,7 @@ RSpec.describe Devise::PasswordsController, :type => :controller do
     it "pw reset form has both year and email" do
       u = create :user
       get :new, params: { year: u.year }
-      expect(response).to be_success
+      expect(response).to be_successful
       assert_select "input[name*=email]"
       assert_select 'input[name*=year][value=?]', u.year.to_s
     end

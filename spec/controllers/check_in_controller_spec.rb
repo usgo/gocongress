@@ -24,7 +24,7 @@ RSpec.describe CheckInController, :type => :controller do
 
       it "is accessible" do
         get :index, params: { year: staff.year }
-        expect(response).to be_success
+        expect(response).to be_successful
       end
 
       it "can't view check in list of attendees from another year" do
@@ -36,7 +36,7 @@ RSpec.describe CheckInController, :type => :controller do
         u = create :user
         a = create :attendee, user_id: u.id
         get :show, params: { year: staff.year, id: a.id }
-        expect(response).to be_success
+        expect(response).to be_successful
       end
 
       it "can check in and out attendees" do
@@ -62,7 +62,7 @@ RSpec.describe CheckInController, :type => :controller do
 
       it "is accessible" do
         get :index, params: { year: admin.year }
-        expect(response).to be_success
+        expect(response).to be_successful
       end
 
       it "can't view check in list of attendees from another year" do

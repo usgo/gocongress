@@ -19,7 +19,7 @@ RSpec.describe Rpt::CostSummaryReportsController, :type => :controller do
     it "succeeds, renders csv" do
       sign_in staff
       get :show, format: 'csv', params: { year: staff.year }
-      expect(response).to be_success
+      expect(response).to be_successful
       expect(response.content_type).to eq('text/csv')
     end
   end

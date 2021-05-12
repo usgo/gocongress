@@ -40,7 +40,7 @@ RSpec.describe Rpt::TransactionReportsController, :type => :controller do
 
       sign_in staff
       get :show, format: 'csv', params: { year: y }
-      expect(response).to be_success
+      expect(response).to be_successful
       ary = CSV.parse response.body
       expect(ary.size).to eq(6)
     end
@@ -49,7 +49,7 @@ RSpec.describe Rpt::TransactionReportsController, :type => :controller do
       t = create :tr_sale
       sign_in staff
       get :show, format: 'csv', params: { year: Time.current.year }
-      expect(response).to be_success
+      expect(response).to be_successful
       ary = CSV.parse response.body
       expect(ary[0]).to include 'user_id'
       expect(ary[1][ary[0].index 'user_id']).to eq(t.user_id.to_s)

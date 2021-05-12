@@ -6,7 +6,7 @@ RSpec.describe HomeController, :type => :controller do
 
     it "succeeds" do
       get :index
-      expect(response).to be_success
+      expect(response).to be_successful
     end
 
     it "responds with 406 (Not Acceptable) when format is incorrect" do

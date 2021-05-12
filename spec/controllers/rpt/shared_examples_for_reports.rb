@@ -10,7 +10,7 @@ RSpec.shared_examples "a report" do |format_array|
       sign_in admin
       format_array.each do |f|
         get :show, format: f, params: { year: admin.year }
-        expect(response).to be_success
+        expect(response).to be_successful
       end
     end
   end
@@ -20,7 +20,7 @@ RSpec.shared_examples "a report" do |format_array|
     sign_in staff
     format_array.each do |f|
       get :show, format: f, params: { year: staff.year }
-      expect(response).to be_success
+      expect(response).to be_successful
     end
   end
 

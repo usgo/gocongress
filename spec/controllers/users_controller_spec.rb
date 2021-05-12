@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.shared_examples "successful get" do |action|
   it "succeeds" do
     get action, params: { year: user.year, id: user.id }
-    expect(response).to be_success
+    expect(response).to be_successful
   end
 end
 
@@ -231,7 +231,7 @@ RSpec.describe UsersController, :type => :controller do
     describe '#index' do
       it 'succeeds' do
         get :index, params: { year: year }
-        expect(response).to be_success
+        expect(response).to be_successful
       end
     end
 
@@ -273,7 +273,7 @@ RSpec.describe UsersController, :type => :controller do
 
     it 'can get #new' do
       get :new, params: { year: year }
-      expect(response).to be_success
+      expect(response).to be_successful
     end
 
     it 'can #create' do
@@ -300,7 +300,7 @@ RSpec.describe UsersController, :type => :controller do
     it 'can #index' do
       user # eager creation
       get :index, params: { year: year }
-      expect(response).to be_success
+      expect(response).to be_successful
     end
 
     it 'can #print_cost_summary' do

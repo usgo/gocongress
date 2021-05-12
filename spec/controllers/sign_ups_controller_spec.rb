@@ -67,7 +67,7 @@ RSpec.describe SignUpsController, :type => :controller do
         if year == 2019
           expect(response.status).to eq(302)
         else
-          expect(response).to be_success
+          expect(response).to be_successful
           expect(response).to render_template("new")
         end
       end

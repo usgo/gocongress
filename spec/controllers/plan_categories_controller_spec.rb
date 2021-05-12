@@ -34,7 +34,7 @@ RSpec.describe PlanCategoriesController, :type => :controller do
       if cat.year == 2019
         expect(response.status).to eq(302)
       else
-        expect(response).to be_success
+        expect(response).to be_successful
       end
       expect(assigns(:plan_categories)).not_to be_empty
     end
@@ -43,7 +43,7 @@ RSpec.describe PlanCategoriesController, :type => :controller do
   describe "#show" do
     it "allows visitors" do
       get :show, params: { id: cat.id, year: cat.year }
-      expect(response).to be_success
+      expect(response).to be_successful
       expect(assigns(:plan_category)).not_to be_nil
     end
 
