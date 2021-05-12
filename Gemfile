@@ -30,6 +30,10 @@ gem 'twilio-ruby'
 gem 'prettier'
 gem 'mini_magick'
 
+group :development do
+  gem 'listen'
+end
+
 # rspec-rails wants to be in the :development group
 # to "expose generators and rake tasks"
 group :test, :development do
