@@ -3,6 +3,7 @@ ruby '2.5.7'
 
 gem 'asset_sync'
 gem 'authorizenet'
+gem 'bootsnap', require: false
 gem 'stripe'
 gem 'stripe_event'
 gem 'cancancan'
@@ -20,7 +21,7 @@ gem 'nokogiri'
 gem 'pg'
 gem 'phonelib'
 gem 'puma' # Heroku+Puma docs: https://bit.ly/3blHFc7
-gem 'rails', '5.1.7'
+gem 'rails', '~> 5.2.6'
 gem 'sassc-rails' # see https://github.com/sass/sassc-rails/issues/114
 gem 'sprockets', '< 4' # v4 has multiple issues
 gem 'uglifier'
