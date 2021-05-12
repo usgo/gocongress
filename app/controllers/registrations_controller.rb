@@ -14,7 +14,7 @@ class RegistrationsController < ApplicationController
       action = "#{params[:aga_id]}?api_key=#{ENV['AGA_MEMBERS_API_KEY']}"
 
       begin
-        buffer = open("#{apiUrl}#{action}").read
+        buffer = URI.open("#{apiUrl}#{action}").read
         result = JSON.parse(buffer)
 
         if result['success']
