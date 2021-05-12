@@ -4,8 +4,6 @@
 .sass-cache
 config/database.yml
 db/*.sqlite3
-log/*.log
-tmp
 config/usgc_env.rb
 coverage.data
 coverage
@@ -15,3 +13,12 @@ coverage
 spec/examples.txt
 public/assets
 .vscode/settings.json
+
+# Ignore all logfiles and tempfiles.
+log/*
+tmp/*
+# Preserve directory/files needed for puma
+# @see https://www.alanvardy.com/post/puma-server-not-loading
+tmp/pids/*
+!tmp/pids
+!tmp/pids/.keep
