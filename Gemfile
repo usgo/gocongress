@@ -18,7 +18,7 @@ gem 'jc-validates_timeliness'
 gem 'jquery-rails'
 gem 'kaminari'
 gem 'nokogiri'
-gem 'pg', '< 1.0'
+gem 'pg'
 gem 'phonelib'
 gem 'puma' # Heroku+Puma docs: https://bit.ly/3blHFc7
 gem 'rails', '5.1.7'
