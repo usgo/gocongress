@@ -1,5 +1,4 @@
 module ApplicationHelper
-
   def anyone_signed_in?
     # See /lib/devise/controllers/helpers.rb
     signed_in?(nil)
@@ -10,10 +9,10 @@ module ApplicationHelper
   end
 
   def asset_exists?(path)
-    if Rails.env.production?  
-      Rails.application.assets_manifest.find_sources(path) != nil
+    if Rails.env.production?
+      !Rails.application.assets_manifest.find_sources(path).nil?
     else
-      Rails.application.assets.find_asset(path) != nil
+      !Rails.application.assets.find_asset(path).nil?
     end
   end
 
