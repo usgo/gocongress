@@ -34,6 +34,9 @@ class Registration
     @activity_selections = attendee.activity_ids
     @plan_selections = attendee.plan_selections
     @tournament_selections = attendee.tournament_ids
+    print("\n\n---\n")
+    puts @tournament_selections
+    print("\n---\n\n")
   end
 
   def activities
@@ -67,6 +70,9 @@ class Registration
 
     @activity_selections = p[:activity_ids].map(&:to_i)
     @tournament_selections = p[:tournament_ids].map(&:to_i)
+    print("\n\n***\n")
+    puts @tournament_selections
+    print("\n***\n\n")
     @plan_selections = parse_plan_params(p[:plans])
     @understand_minor = p[:registration][:understand_minor]
     attendee.attributes = attendee_params(p[:registration])
