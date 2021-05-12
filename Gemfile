@@ -57,17 +57,6 @@ group :test, :development do
   gem 'rubocop'
 end
 
-group :development do
-  gem 'guard'
-  gem 'guard-rspec'
-  gem 'haml-rails'
-  gem 'meta_request'
-  gem 'spring'
-  gem 'spring-commands-rspec'
-  gem 'web-console'
-  gem 'rb-readline'
-end
-
 group :test do
   gem 'capybara'
   gem 'deep_merge' # recursively merge hashes
