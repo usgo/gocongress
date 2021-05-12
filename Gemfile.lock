@@ -345,7 +345,6 @@ DEPENDENCIES
   rails-controller-testing
   rb-fsevent
   redcarpet
-  responders (~> 2.0)
   rspec-rails
   rubocop
   sassc-rails
