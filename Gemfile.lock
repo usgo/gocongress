@@ -52,7 +52,6 @@ GEM
       nokogiri (~> 1.6, >= 1.6.4)
       roxml (>= 3.3.1)
     bcrypt (3.1.16)
-    bluecloth (2.2.0)
     builder (3.2.4)
     cancancan (3.2.1)
     capybara (3.35.3)
@@ -316,7 +315,6 @@ PLATFORMS
 DEPENDENCIES
   asset_sync
   authorizenet
-  bluecloth
   cancancan
   capybara
   database_cleaner
