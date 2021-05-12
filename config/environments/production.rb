@@ -16,7 +16,8 @@ Rails.application.configure do
   config.consider_all_requests_local       = false
   config.action_controller.perform_caching = true
 
-  # Asset sync
+  # We deploy our assets to S3 to reduce load on the app. See the related
+  # `public_file_server.enabled` setting below, which should be false.
   config.action_controller.asset_host = "//#{ENV['FOG_DIRECTORY']}.s3.amazonaws.com"
 
   # Attempt to read encrypted secrets from `config/secrets.yml.enc`.

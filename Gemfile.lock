@@ -353,7 +353,6 @@ DEPENDENCIES
   stripe_event
   twilio-ruby
   uglifier
-  unf
   vcr
   webmock
 

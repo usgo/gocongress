@@ -26,7 +26,6 @@ gem 'sassc-rails' # see https://github.com/sass/sassc-rails/issues/114
 gem 'sprockets', '< 4' # v4 has multiple issues
 gem 'uglifier'
 gem 'redcarpet'
-gem 'unf' # <- fog <- asset_sync (http://bit.ly/17TiMjA)
 gem 'twilio-ruby'
 gem 'prettier'
 gem 'mini_magick'
