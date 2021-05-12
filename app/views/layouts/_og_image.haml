@@ -1,6 +1,6 @@
 - if defined?(@og_image)
   %meta{:property => "og:title", :content => "U.S. Go Congress #{@year.year}"}
-  %meta{:property => "og:description", :content => "The #{@year.year} U.S. Go Congress will be held in #{@congress_city}, #{@congress_state} from #{@congress_date_range}."}
+  %meta{:property => "og:description", :content => og_description}
   %meta{:property => "og:image", :content => image_path(@og_image[:path])}
   %meta{:property => "og:image:type", :content => "image/png"}
   %meta{:property => "og:image:alt", :content => "The #{@year.year} U.S. Go Congress logo"}
