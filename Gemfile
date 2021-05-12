@@ -24,8 +24,8 @@ gem 'puma' # Heroku+Puma docs: https://bit.ly/3blHFc7
 gem 'rails', '5.1.7'
 gem 'responders', '~> 2.0'
 gem 'sassc-rails' # see https://github.com/sass/sassc-rails/issues/114
-gem 'sprockets', '~> 3.7.2' # see https://github.com/rails/sprockets/issues/632
-gem 'uglifier', '>= 1.3.0'
+gem 'sprockets', '< 4' # v4 has multiple issues
+gem 'uglifier'
 gem 'redcarpet'
 gem 'unf' # <- fog <- asset_sync (http://bit.ly/17TiMjA)
 gem 'twilio-ruby'

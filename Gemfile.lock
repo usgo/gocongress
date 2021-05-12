@@ -349,11 +349,11 @@ DEPENDENCIES
   rspec-rails
   rubocop
   sassc-rails
-  sprockets (~> 3.7.2)
+  sprockets (< 4)
   stripe
   stripe_event
   twilio-ruby
-  uglifier (>= 1.3.0)
+  uglifier
   unf
   vcr
   webmock
