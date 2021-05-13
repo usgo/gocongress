@@ -3,9 +3,10 @@ require_relative 'shared/notifier'
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
-  # We deploy our assets to S3 to reduce load on the app. See the related
+  # We serve our assets through Cloudfront to reduce load time for users. This
+  # way, assets are cached on edge locations throughout the world. See the
   # `public_file_server.enabled` setting below, which should be false.
-  config.action_controller.asset_host = "//#{ENV['FOG_DIRECTORY']}.s3.amazonaws.com"
+  config.action_controller.asset_host = ENV['CLOUDFRONT_ENDPOINT']
 
   # Attempt to read encrypted secrets from `config/secrets.yml.enc`.
   # Requires an encryption key in `ENV["RAILS_MASTER_KEY"]` or
