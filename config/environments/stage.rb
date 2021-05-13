@@ -10,7 +10,7 @@ Gocongress::Application.configure do
   config.action_controller.perform_caching = true
 
   # Asset sync
-  config.action_controller.asset_host = "//#{ENV['FOG_DIRECTORY']}.s3.amazonaws.com"
+  config.action_controller.asset_host = ENV['CLOUDFRONT_ENDPOINT']
 
   # Disable Rails's static asset server
   config.serve_static_files = false

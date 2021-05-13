@@ -1,7 +1,6 @@
 source 'https://rubygems.org'
 ruby '2.7.3'
 
-gem 'asset_sync'
 gem 'authorizenet'
 gem 'bootsnap', require: false
 gem 'stripe'
@@ -10,7 +9,6 @@ gem 'cancancan'
 gem 'devise'
 gem 'exception_notification'
 gem 'ffi'
-gem 'fog-aws'
 gem 'haml'
 gem 'intl-tel-input-rails'
 gem 'iso_country_codes'
