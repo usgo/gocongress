@@ -29,6 +29,7 @@ gem 'redcarpet'
 gem 'twilio-ruby'
 gem 'prettier'
 gem 'mini_magick'
+gem 'net-telnet'
 
 group :development do
   gem 'listen'

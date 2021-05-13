@@ -182,6 +182,7 @@ GEM
     msgpack (1.4.2)
     multi_json (1.15.0)
     multipart-post (2.1.1)
+    net-telnet (0.2.0)
     nio4r (2.5.7)
     nokogiri (1.11.3)
       mini_portile2 (~> 2.5.0)
@@ -350,6 +351,7 @@ DEPENDENCIES
   launchy
   listen
   mini_magick
+  net-telnet
   nokogiri
   pg
   phonelib
@@ -374,4 +376,4 @@ RUBY VERSION
    ruby 2.7.3p183
 
 BUNDLED WITH
-   1.17.0
+   2.1.4
