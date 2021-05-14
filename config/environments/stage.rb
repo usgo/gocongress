@@ -9,7 +9,6 @@ Gocongress::Application.configure do
   config.consider_all_requests_local       = false
   config.action_controller.perform_caching = true
 
-  # Asset sync
   config.action_controller.asset_host = ENV['CLOUDFRONT_ENDPOINT']
 
   # Disable Rails's static asset server

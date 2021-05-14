@@ -3,11 +3,6 @@ require_relative 'shared/notifier'
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
-  # We serve our assets through Cloudfront to reduce load time for users. This
-  # way, assets are cached on edge locations throughout the world. See the
-  # `public_file_server.enabled` setting below, which should be false.
-  config.action_controller.asset_host = ENV['CLOUDFRONT_ENDPOINT']
-
   # Attempt to read encrypted secrets from `config/secrets.yml.enc`.
   # Requires an encryption key in `ENV["RAILS_MASTER_KEY"]` or
   # `config/secrets.yml.key`.
@@ -47,10 +42,10 @@ Rails.application.configure do
   # `config.assets.precompile` and `config.assets.version` have moved to config/initializers/assets.rb
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
-  # config.action_controller.asset_host = 'http://assets.example.com'
+  config.action_controller.asset_host = ENV['CLOUDFRONT_ENDPOINT']
 
   # Specifies the header that your server uses for sending files.
-  config.action_dispatch.x_sendfile_header = nil # for Heroku
+  config.action_dispatch.x_sendfile_header = 'X-Sendfile' unless config.public_file_server.enabled
   # config.action_dispatch.x_sendfile_header = 'X-Sendfile' # for Apache
   # config.action_dispatch.x_sendfile_header = 'X-Accel-Redirect' # for NGINX
 
