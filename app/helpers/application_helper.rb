@@ -9,11 +9,7 @@ module ApplicationHelper
   end
 
   def asset_exists?(path)
-    if Rails.env.production?
-      !Rails.application.assets_manifest.find_sources(path).nil?
-    else
-      !Rails.application.assets.find_asset(path).nil?
-    end
+    !Rails.application.assets.find_asset(path).nil?
   end
 
   def get_full_path_to_asset(filename)
