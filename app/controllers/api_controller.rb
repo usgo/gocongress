@@ -30,7 +30,7 @@ class ApiController < ApplicationController
 
   # Use telnet to access Pandanet to get member information
   def pandanet_username
-    server = Net::Telnet::new("Host" => "igs.joyjoy.net", "Port" => 7777, "Timeout" => 10, "Prompt" => /#> /)
+    server = Net::Telnet.new("Host" => "igs.joyjoy.net", "Port" => 7777, "Timeout" => 10, "Prompt" => /#> /)
     server.login(ENV['PANDANET_USERNAME'], ENV['PANDANET_PASSWORD'])
     
     server.cmd("stats #{params['username']}") do |result|
@@ -56,7 +56,7 @@ class ApiController < ApplicationController
 
   # Use KGS's archives page to see if a username exists
   def kgs_username
-    document = Nokogiri::HTML.parse(URI.open("http://gokgs.com/gameArchives.jsp?user=#{params["username"]}"))
+    document = Nokogiri::HTML.parse(URI.open("http://gokgs.com/gameArchives.jsp?user=#{params['username']}"))
     result = document.css("p")[0]
 
     if result.text.starts_with?("Sorry, there are no games")

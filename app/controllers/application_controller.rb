@@ -119,7 +119,7 @@ protected
   end
 
   def event_title
-    "The #{@year.year} U.S. #{"e-" if @year.event_type == "online"}Go Congress"
+    "The #{@year.year} U.S. #{'e-' if @year.event_type == 'online'}Go Congress"
   end
 
   # Construct a useful og_description that will be visible whenever URLs are shared on social media
@@ -137,7 +137,6 @@ protected
 
     return description
   end
-
 
   def current_user_is_admin?
     current_user.present? && current_user.admin?
