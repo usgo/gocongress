@@ -3,7 +3,7 @@ require 'mini_magick'
 class ApplicationController < ActionController::Base
   protect_from_forgery
   helper_method :current_user_is_admin?, :page_title,
-    :can_see_admin_menu?, :show_my_account_anchor?, :og_description
+    :can_see_admin_menu?, :show_my_account_anchor?
 
   # set_year_from_params() should run first because it
   # defines @year which other methods depend on.
@@ -11,7 +11,7 @@ class ApplicationController < ActionController::Base
   before_action :set_yearly_vars
   before_action :set_display_timezone
   before_action :set_logo_file
-  before_action :set_og_image
+  before_action :set_og_data
 
   # When running functional tests or controller specs,
   # default_url_options() is called before callbacks, so we do not
@@ -29,18 +29,8 @@ class ApplicationController < ActionController::Base
     @logo_file = logo_file(@year)
   end
 
-  # Set up an Open Graph image for sharing on social media
-  def set_og_image
-    og_image_path = "#{@year.year}/og-image.png"
-
-    if helpers.asset_exists? og_image_path
-      image = MiniMagick::Image.open(helpers.get_full_path_to_asset(og_image_path))
-      @og_image = {
-        :path => og_image_path,
-        :width => image[:width],
-        :height => image[:height]
-      }
-    end
+  def set_og_data
+    @og_data = OpenGraphData.new(@year)
   end
 
   def set_year_from_params
@@ -116,26 +106,6 @@ protected
     else
       return human_controller_name.titleize + ' ' + human_action_name
     end
-  end
-
-  def event_title
-    "The #{@year.year} U.S. #{'e-' if @year.event_type == 'online'}Go Congress"
-  end
-
-  # Construct a useful og_description that will be visible whenever URLs are shared on social media
-  def og_description
-    location = @year.event_type == "in-person" ? "#{@congress_city}, #{@congress_state}" : ""
-
-    if @year.registration_phase == "canceled"
-      description = event_title + " has been canceled."
-    elsif @year.registration_phase == "complete"
-      description = event_title + " took place #{"in #{location} " unless location.empty?}from #{@congress_date_range}."
-    else
-      description = event_title + " will " + (location.empty? ? "take place" : "be held in #{location},")
-      description += " from #{@congress_date_range}."
-    end
-
-    return description
   end
 
   def current_user_is_admin?
