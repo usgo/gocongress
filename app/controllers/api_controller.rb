@@ -32,7 +32,7 @@ class ApiController < ApplicationController
   def pandanet_username
     server = Net::Telnet.new("Host" => "igs.joyjoy.net", "Port" => 7777, "Timeout" => 10, "Prompt" => /#> /)
     server.login(ENV['PANDANET_USERNAME'], ENV['PANDANET_PASSWORD'])
-    
+
     server.cmd("stats #{params['username']}") do |result|
       if result.start_with?("Cannot find player.")
         render json: '{"error": "not_found"}', status: :not_found
