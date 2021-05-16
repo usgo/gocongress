@@ -36,6 +36,7 @@ end
 # rspec-rails wants to be in the :development group
 # to "expose generators and rake tasks"
 group :test, :development do
+  gem 'byebug'
   gem 'dotenv-rails'
   gem 'rspec-rails'
   gem 'rubocop'
