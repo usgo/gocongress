@@ -6,6 +6,9 @@ AllCops:
   NewCops: enable
   SuggestExtensions: false
 
+Layout/FirstHashElementIndentation:
+  EnforcedStyle: consistent
+
 Layout/LineLength:
   Exclude:
     - db/schema.rb
