@@ -141,6 +141,13 @@ things like `.nav li` */
   h3 {
     font-size: 24px;
   }
+
+  h1,
+  h2,
+  h3 {
+    line-height: 1;
+  }
+
   p,
   span,
   div {
@@ -306,18 +313,30 @@ body {
   padding: $spacing-unit $spacing-unit $spacing-unit / 2;
   display: flex;
   align-items: flex-end;
+
+  @include breakpoint(lt-sm) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }
 
 #usgc-title-container {
   margin-right: auto;
   flex-grow: 1;
 }
+
 #usgc-title-container h1 {
   font-size: 32px;
   font-weight: bold;
   color: white;
+  line-height: 1;
   padding-top: 0.2em;
+
+  @include breakpoint(lt-sm) {
+    margin-bottom: 0.5em;
+  }
 }
+
 #usgc-title-container a {
   color: white;
   text-decoration: none;
@@ -340,24 +359,34 @@ body {
   color: white;
   font-family: Helvetica, sans-serif;
   font-size: 20px;
-  // margin-right: $logo-width;
-  // line-height: 32px;
 }
 
 /* Nav menu */
 .nav-container-admin {
   background-color: $admin-nav-bg-color;
-  li {
-    a {
-      &:hover {
-        background-color: $admin-nav-bg-highlight-color !important;
+
+  .-secondary {
+    background-color: $admin-nav-bg-color;
+  }
+
+  .nav {
+    button {
+      background-color: $admin-nav-bg-color;
+    }
+
+    li {
+      a {
+        &:hover {
+          background-color: $admin-nav-bg-highlight-color !important;
+        }
       }
     }
   }
 }
 body {
   /* Default color */
-  .nav-container {
+  .nav-container,
+  .-secondary {
     background-color: $nav-bg-color;
   }
 }
@@ -372,11 +401,20 @@ body {
   // padding: 3px 0px;
   // text-align: center;
 
-  li {
-    display: inline-block;
+  li,
+  button {
     font-family: $primary-font;
     font-size: 14px;
     font-weight: bold;
+  }
+
+  button {
+    background: $nav-bg-color;
+    line-height: 25px;
+  }
+
+  li {
+    display: inline-block;
     list-style: none;
     // text-align: center;
     &#nav-admin-title {
@@ -475,6 +513,28 @@ Also applies to contents of dialogs. */
     color: white;
     background-color: $nav-bg-color;
     padding: 0 $spacing-unit;
+
+    @include breakpoint(lt-md) {
+      p {
+        font-size: 14px;
+      }
+    }
+
+    [name="year-navigation"] {
+      display: none;
+      font-size: 14px;
+      margin: 0.5em;
+      @include breakpoint(lt-md) {
+        display: inline-block;
+      }
+    }
+
+    .year-list {
+      @include breakpoint(lt-md) {
+        display: none;
+      }
+    }
+
     p {
       padding: 0 !important;
       margin: 0;
@@ -767,6 +827,12 @@ fieldset.wordy-questions .aligned-with-input {
 
 /* Footer */
 #footer {
+  @include breakpoint(lt-sm) {
+    div {
+      font-size: 14px;
+    }
+  }
+
   border-top: 1em solid $nav-bg-color;
   margin: 0 auto;
   padding: ($spacing-unit / 2) $spacing-unit;
@@ -776,9 +842,10 @@ fieldset.wordy-questions .aligned-with-input {
     align-self: center;
     flex: {
       grow: 1;
-      shrink: 0;
+      shrink: 1;
       basis: auto;
     }
+    padding-right: $spacing-unit;
   }
 
   .sponsors {
@@ -787,15 +854,6 @@ fieldset.wordy-questions .aligned-with-input {
       shrink: 1;
       basis: auto;
     }
-  }
-}
-
-#site-credit {
-  color: #333;
-  font-size: 14px;
-  text-align: left;
-  a {
-    color: #333;
   }
 }
 

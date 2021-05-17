@@ -6,10 +6,14 @@
       - else
         Other
       Years: &nbsp;
-      = link_to 2006, "http://www.trianglegoclub.org/gocongress06"
-      // 2007 - Was on old.usgo.org, no longer exists
-      // 2008 - Not sure, we never had a link to it?
-      // 2009-10 - Was on old.usgo.org, no longer exists
-      - @years.each do |y|
-        - if y != @year.year
-          = link_to y, "/#{y}"
+      %span.year-list
+        = link_to 2006, "http://www.trianglegoclub.org/gocongress06"
+        // 2007 - Was on old.usgo.org, no longer exists
+        // 2008 - Not sure, we never had a link to it?
+        // 2009-10 - Was on old.usgo.org, no longer exists
+        - @years.each do |y|
+          - if y != @year.year
+            = link_to y, "/#{y}"
+
+      = select_tag 'year-navigation', options_for_select(@years.each.reverse_each(), @year.year),
+        :onchange => 'window.location.pathname = this.value'
