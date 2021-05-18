@@ -14,7 +14,7 @@ class RegistrationsController < ApplicationController
       action = "#{params[:aga_id]}?api_key=#{ENV['AGA_MEMBERS_API_KEY']}"
 
       begin
-        buffer = open("#{apiUrl}#{action}").read
+        buffer = URI.open("#{apiUrl}#{action}").read
         result = JSON.parse(buffer)
 
         if result['success']
@@ -30,7 +30,6 @@ class RegistrationsController < ApplicationController
           attendee.birth_date = i['dob']
           attendee.aga_id = i['member_id']
           attendee.phone = i['phone']
-          attendee.local_phone = i['phone']
           attendee.email = i['email']
           attendee.state = i['state']
 

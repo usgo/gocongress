@@ -26,7 +26,7 @@
     display: flex;
 
     li {
-      flex-grow: 1;
+      flex-grow: 0;
     }
   }
 
@@ -64,12 +64,10 @@
     > button {
       border: none;
       white-space: nowrap;
-      font: {
-        family: "Cormorant Garamond", serif;
-      }
       span {
         display: inline-block;
         transition: transform 0.2s;
+        font-size: 12px;
       }
     }
   }
@@ -121,7 +119,8 @@
       color: hsl(0, 60%, 50%);
     }
 
-    > a, > button {
+    > a,
+    > button {
       color: #fff;
     }
 
@@ -141,7 +140,6 @@
           color: hsl(0, 60%, 50%);
         }
       }
-
     }
   }
 }
@@ -151,10 +149,11 @@
   }
 
   li {
-  background: {
-    color: hsl(50, 70%, 50%);
-  }
-    > a, > button {
+    background: {
+      color: hsl(50, 70%, 50%);
+    }
+    > a,
+    > button {
       color: #fff;
     }
 

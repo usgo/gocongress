@@ -41,7 +41,7 @@ class Attendee < ApplicationRecord
   validates :gender,          :inclusion => {:in => ["m","f","o"], :message => "is not valid"}, :presence => true
   validates :given_name,      :presence => true
   validates :guardian_full_name, :presence => { :if => :require_guardian_full_name? }
-  validates :local_phone,
+  validates :phone,
             if: Proc.new { |a| a.receive_sms },
             presence: true,
             phone: true

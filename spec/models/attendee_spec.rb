@@ -115,39 +115,39 @@ RSpec.describe Attendee, :type => :model do
 
     context 'receive_sms set to true' do
 
-      it 'Attendee required to have a local phone' do
+      it 'Attendee required to have a phone' do
         a.receive_sms = true
-        a.local_phone = nil
-        expect(a).to have_error_about :local_phone
+        a.phone = nil
+        expect(a).to have_error_about :phone
       end
 
-      it 'Attendee local_phone only contains integers' do
+      it 'Attendee phone only contains integers' do
         a.receive_sms = true
-        a.local_phone = "1612203r456"
-        expect(a).to have_error_about :local_phone
+        a.phone = "1612203r456"
+        expect(a).to have_error_about :phone
       end
 
-      it 'Attendee local_phone is invalid if missing country code' do
+      it 'Attendee phone is invalid if missing country code' do
         a.receive_sms = true
-        a.local_phone = "6122035220" # no country code
-        expect(a).to have_error_about :local_phone
+        a.phone = "6122035220" # no country code
+        expect(a).to have_error_about :phone
       end
 
-      it 'Attendee local_phone is valid with international country code ' do
+      it 'Attendee phone is valid with international country code ' do
         a.receive_sms = true
-        a.local_phone = "44-20718-38750" # valid number
+        a.phone = "44-20718-38750" # valid number
         expect(a).to be_valid
       end
 
-      it 'Attendee local_phone is valid with international country code' do
+      it 'Attendee phone is valid with international country code' do
         a.receive_sms = true
-        a.local_phone = "+551155256325" # example number from Twilio docs
+        a.phone = "+551155256325" # example number from Twilio docs
         expect(a).to be_valid
       end
 
-      it 'Attendee local_phone is valid with international country code' do
+      it 'Attendee phone is valid with international country code' do
         a.receive_sms = true
-        a.local_phone = "+16122035280" # example number from Twilio docs
+        a.phone = "+16122035280" # example number from Twilio docs
         expect(a).to be_valid
       end
 

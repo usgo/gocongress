@@ -1,7 +1,11 @@
 %fieldset
-  .field
-    = f.label :emergency_name, 'Emergency Contact Name'
-    = f.text_field :emergency_name
-  .field
-    = f.label :emergency_phone, 'Emergency Contact Phone'
-    = f.telephone_field :emergency_phone, value: f.object.emergency_phone, data: { intl_phone: "true"}
+  .field.flex
+    %div.field-key
+      = f.label :emergency_name, trl_attr(:attendee, :emergency_name) + ' *'
+    %div.field-value
+      = f.text_field :emergency_name
+  .field.flex
+    %div.field-key
+      = f.label :emergency_phone, trl_attr(:attendee, :emergency_phone) + ' *'
+    %div.field-value
+      = f.telephone_field :emergency_phone, value: f.object.emergency_phone, data: { intl_phone: "true"}

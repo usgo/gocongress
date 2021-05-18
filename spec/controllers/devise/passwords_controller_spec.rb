@@ -12,14 +12,14 @@ RSpec.describe Devise::PasswordsController, :type => :controller do
   describe '#new' do
     it "succeeds" do
       get :new, params: { year: year }
-      expect(response).to be_success
+      expect(response).to be_successful
     end
   end
 
   describe '#create' do
     it "succeeds" do
       post :create, params: { year: year, user: { email: 'lalalalala' } }
-      expect(response).to be_success
+      expect(response).to be_successful
     end
   end
 end

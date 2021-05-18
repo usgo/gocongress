@@ -4,7 +4,6 @@ en:
       registration:
         guardian_full_name: "Guardian Name"
         liability_release: "Youth Attendance Agreement"
-        local_phone: "Local Phone"
   activerecord:
     attributes:
       activity:
@@ -25,7 +24,7 @@ en:
         airport_arrival: "Arrival Time of Inbound Flight"
         airport_arrival_flight: "Flight Number of Inbound Flight"
         airport_departure: "Departure Time of Outbound Flight"
-        anonymous: "Anonymous"
+        anonymous: "Stay Anonymous?"
         city: "City"
         country: "Country"
         created_at: "Registration Date"
@@ -38,7 +37,7 @@ en:
         state: "State/Province"
         tshirt_size: "T-Shirt Size"
         zip: "Zip/Postal Code"
-        rank: "Rating"
+        rank: "Rank"
         email: "Email Address"
         birth_date: "Birth Date"
         special_request: "Special Request"
@@ -47,6 +46,8 @@ en:
         comment: "Comments"
         understand_minor: "Youth Attendance Agreement"
         will_play_in_us_open: "Will play in U.S. Open?"
+        emergency_name: "Emergency Contact Name"
+        emergency_phone: "Emergency Contact Phone"
       contact:
         title: "Title"
         email: "Email"

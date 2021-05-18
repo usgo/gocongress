@@ -11,7 +11,7 @@ class ApplicationController < ActionController::Base
   before_action :set_yearly_vars
   before_action :set_display_timezone
   before_action :set_logo_file
-  before_action :set_og_image
+  before_action :set_og_data
 
   # When running functional tests or controller specs,
   # default_url_options() is called before callbacks, so we do not
@@ -29,18 +29,8 @@ class ApplicationController < ActionController::Base
     @logo_file = logo_file(@year)
   end
 
-  # Set up an Open Graph image for sharing on social media
-  def set_og_image
-    og_image_path = "#{@year.year}/og-image.png"
-
-    if helpers.asset_exists? og_image_path
-      image = MiniMagick::Image.open(Rails.application.assets.resolve(og_image_path))
-      @og_image = {
-        :path => og_image_path,
-        :width => image[:width],
-        :height => image[:height]
-      }
-    end
+  def set_og_data
+    @og_data = OpenGraphData.new(@year)
   end
 
   def set_year_from_params

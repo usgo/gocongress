@@ -124,7 +124,7 @@ class RoundsController < ApplicationController
   end
 
   def send_game_notification(attendee, tournament, round, game_appointment)
-    recipient = "#{attendee.local_phone}"
+    recipient = "#{attendee.phone}"
 
     message = ""
     message += round.notification_message + " " unless round.notification_message.blank?
@@ -143,7 +143,7 @@ class RoundsController < ApplicationController
   end
 
   def send_bye_notification(attendee, round)
-    recipient = "#{attendee.local_phone}"
+    recipient = "#{attendee.phone}"
     message = ""
     message += round.notification_message + " " unless round.notification_message.blank?
     message += "#{attendee.full_name} has received a bye for the #{round.tournament.name}, Round #{round.number}. "\

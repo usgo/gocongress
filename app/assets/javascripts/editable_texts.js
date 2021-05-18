@@ -1,4 +1,3 @@
-alert("YAY!");
 document.addEventListener("DOMContentLoaded", function () {
   const markdownPreviewAreas = document.querySelectorAll(".markdown-preview");
 

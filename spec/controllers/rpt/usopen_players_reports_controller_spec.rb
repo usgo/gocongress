@@ -13,7 +13,7 @@ RSpec.describe Rpt::UsopenPlayersReportsController, aga_td_list_mock: true, :typ
     describe "#show" do
       it "succeeds" do
         get :show, params: { year: Date.current.year }
-        expect(response).to be_success
+        expect(response).to be_successful
       end
 
       it "only shows who are signed up to play in the open and haven't cancelled" do

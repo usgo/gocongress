@@ -7,6 +7,8 @@ Gocongress::Application.routes.draw do
 
   # proxy
   get 'api/mm/members/:search', to: 'api#search_members'
+  get 'api/pandanet/:username', to: 'api#pandanet_username'
+  get 'api/kgs/:username', to: 'api#kgs_username'
   post 'api/markdown', to: 'api#markdown'
 
 

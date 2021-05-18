@@ -4,20 +4,39 @@ class Ability
   # Define an array of all resource classes, to be used
   # when the cancan syntax does not allow the symbol :all
   # For example, when applying conditions, eg. :year
-  ALL_RESOURCES = [Activity, ActivityCategory, Attendee,
-    Contact, Content, ContentCategory, EditableText, Event, GameAppointment,
-    PlanCategory, Plan, Round, Shirt, SmsNotification, Transaction, Tournament,
-    User, Year]
+  ALL_RESOURCES = [
+    Activity,
+    ActivityCategory,
+    Attendee,
+    Contact,
+    Content,
+    ContentCategory,
+    EditableText,
+    Event,
+    GameAppointment,
+    Plan,
+    PlanCategory,
+    Round,
+    Shirt,
+    SmsNotification,
+    Tournament,
+    Transaction,
+    User,
+    Year
+  ]
 
   def initialize(user)
+    # Guests can read public resources, but cannot write anything
+    can :read, [Contact, Content, ContentCategory, Activity,
+      Shirt, Tournament, PlanCategory, Round, GameAppointment]
 
-    # If there is no user logged in, instantiate a guest user.
-    # Be sure to set the role to the empty string, or else
-    # ActiveRecord will use the database default, which is 'U'!
-    if user.nil?
-      user = User.new
-      user.role = '' # we cannot pass role to new() because role is attr_protected
-    end
+    # Guests can show (but not index) the following:
+    can :show, ActivityCategory
+    can :show, Plan, :disabled => false
+    can :show, Plan, :show_disabled => true
+
+    # That's the end of guest permissions.
+    return if user.nil?
 
     # Admins can do anything in their own year
     if user.admin? then
@@ -45,19 +64,10 @@ class Ability
       can :manage, Attendee, :user_id => user.id
       cannot :list, Attendee if user.role == 'U'
     end
-
-    # Guests can read public resources, but cannot write anything
-    can :read, [Contact, Content, ContentCategory, Activity,
-      Shirt, Tournament, PlanCategory, Round, GameAppointment]
-
-    # Guests can show (but not index) the following:
-    can :show, ActivityCategory
-    can :show, Plan, :disabled => false
-    can :show, Plan, :show_disabled => true
   end
 
   # `explain_denial` provides a friendly "access denied" message
-  def self.explain_denial authenticated, action, plural_model
+  def self.explain_denial(authenticated, action, plural_model)
     (authenticated ? 'You are signed in, but' : 'You are not signed in, so of course') +
     ' you do not have permission to ' + explain_action(action) + ' ' +
     singularize_if(plural_model, [:destroy, :show].include?(action)) + '.'

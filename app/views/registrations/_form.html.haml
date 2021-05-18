@@ -5,6 +5,8 @@
 - if @year.registration_phase == "canceled"
   = render :partial => 'canceled'
 
+%p All fields marked with * are required.
+
 = form_for(@registration) do |f|
   = f.hidden_field :user_id
   = hidden_field_tag 'type', params[:type]

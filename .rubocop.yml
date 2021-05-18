@@ -6,6 +6,9 @@ AllCops:
   NewCops: enable
   SuggestExtensions: false
 
+Layout/FirstHashElementIndentation:
+  EnforcedStyle: consistent
+
 Layout/LineLength:
   Exclude:
     - db/schema.rb
@@ -25,4 +28,8 @@ Metrics/MethodLength:
 
 # Not useful compared to e.g. `Metrics/AbcSize`
 Metrics/ModuleLength:
+  Enabled: false
+
+# Use a meaningful delimiter for e.g. SQL. Otherwise, not important.
+Naming/HeredocDelimiterNaming:
   Enabled: false

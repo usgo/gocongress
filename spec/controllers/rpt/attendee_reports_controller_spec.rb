@@ -14,7 +14,7 @@ RSpec.describe Rpt::AttendeeReportsController, :type => :controller do
       shirt = create :shirt, :name => 'Cras vel arcu tellus, quis sodales sem'
       atnd = create :attendee, :shirt => shirt
       get :show, format: 'csv', params: { year: atnd.year }
-      expect(response).to be_success
+      expect(response).to be_successful
       ary = CSV.parse response.body
       expect(ary.size).to eq(2)
       expect(ary[0]).not_to include 'shirt_id'

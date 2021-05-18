@@ -3,8 +3,6 @@
   %head
     %meta{:charset => 'UTF8'}
     %meta{:content => "text/html", "http-equiv" => "Content-Type"}/
-    -#
-      %meta{:content => "http:#{asset_path("logo/usgc/#{@logo_file}")}", :property => "og:image"}
     %meta{:name => "viewport", :content => "width=device-width, initial-scale=1.0"}
     = render '/layouts/og_image'
     = favicon_link_tag "favicon.png"
@@ -16,7 +14,7 @@
 
     = csrf_meta_tag
     = javascript_include_tag :application
-    = stylesheet_link_tag asset_exists?("#{@year.year}/application") ? "#{@year.year}/application" : :application
+    = stylesheet_link_tag "#{@year.year}/application" rescue stylesheet_link_tag :application
     = stylesheet_link_tag '//ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/themes/ui-lightness/jquery-ui.css'
     - if Rails.env.production?
       = render 'shared/google_analytics'

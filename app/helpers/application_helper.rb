@@ -1,5 +1,4 @@
 module ApplicationHelper
-
   def anyone_signed_in?
     # See /lib/devise/controllers/helpers.rb
     signed_in?(nil)
@@ -7,10 +6,6 @@ module ApplicationHelper
 
   def asset_file?(subdirectory, filename)
     File.file?(File.join(Rails.root, 'app', 'assets', subdirectory, filename))
-  end
-
-  def asset_exists?(path)
-    Rails.application.assets.resolve(path).present? 
   end
 
   # When you want to use `button_to` but your url has a query string
@@ -61,8 +56,10 @@ module ApplicationHelper
   end
 
   def link_to_liability_release()
-    if @year.year != 2016 && @year.year != 2020
+    if @year.event_type == "in-person"
       link_to "Youth Attendance Agreement",
+        # This very particularly named file is a bit of an invisible requirement.
+        # TODO: Improve how this is managed.
         asset_path("liability_release/USGC#{@year.year}-Liability-Release.pdf"),
         :target => '_blank'
     elsif @year.year == 2020

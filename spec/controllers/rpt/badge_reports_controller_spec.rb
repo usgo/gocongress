@@ -18,7 +18,7 @@ RSpec.describe Rpt::BadgeReportsController, aga_td_list_mock: true, :type => :co
     it "succeeds, renders csv" do
       sign_in staff
       get :show, format: 'csv', params: { year: staff.year }
-      expect(response).to be_success
+      expect(response).to be_successful
       expect(response.content_type).to eq('text/csv')
     end
 
@@ -45,7 +45,7 @@ RSpec.describe Rpt::BadgeReportsController, aga_td_list_mock: true, :type => :co
 
       sign_in staff
       get :show, format: 'csv', params: { year: y }
-      expect(response).to be_success
+      expect(response).to be_successful
       ary = CSV.parse response.body
       expect(ary.size).to eq(4)
     end
