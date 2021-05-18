@@ -33,7 +33,7 @@ RSpec.describe 'registration form', :type => :feature do
       select 'Adult Small', from: 'registration_tshirt_size'
       select '10 kyu', from: 'registration_rank'
       choose 'registration_receive_sms_true'
-      fill_in "Phone at Congress", with: "16122035280"
+      fill_in "Phone", with: "16122035280", :match => :prefer_exact
       fill_in 'Email', with: 'minnie.mouse@example.com'
       select 'Aland Islands', from: 'registration_country'
       fill_in 'Emergency Contact Name', with: 'Jenny'
@@ -52,7 +52,7 @@ RSpec.describe 'registration form', :type => :feature do
       expect(page).to have_content "Family name can't be blank"
     end
 
-    it 'shows errors when receive_sms_true and local phone is missing' do
+    it 'shows errors when receive_sms_true and phone is missing' do
       click_link 'This attendee is not an AGA member'
       fill_in 'Given Name', with: 'Minnie'
       fill_in 'Family Name', with: 'Mouse'
@@ -71,7 +71,7 @@ RSpec.describe 'registration form', :type => :feature do
       choose 'registration_will_play_in_us_open_true'
       click_button 'Continue'
       expect(page).to have_selector '#error_explanation'
-      expect(page).to have_content "Local Phone can't be blank"
+      expect(page).to have_content "Phone can't be blank"
     end
   end
 
