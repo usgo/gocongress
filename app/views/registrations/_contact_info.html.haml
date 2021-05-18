@@ -1,26 +1,37 @@
 %fieldset
   .field
-    = f.label :phone, "Home Phone"
+    = f.label :phone, trl_attr(:attendee, :phone) + ' *'
     = f.telephone_field :phone, value: f.object.phone, data: { intl_phone: "true"}
-  .field
-    = f.label :receive_sms, 'Text Notifications'
-    %label
-      = f.radio_button :receive_sms, true, checked: (params[:receive_sms] == nil ? true : params[:receive_sms])
-      Send Me Text Message Notifications
-    %label
-      = f.radio_button :receive_sms, false
-      Don&rsquo;t Send Me Any Text Messages
-  .field
-    = f.label :local_phone, "Phone at Congress"
-    = f.telephone_field :local_phone, value: f.object.local_phone, data: { intl_phone: "true"}
-    %span.smalltext (This is the number for receiving text messages, including pairings, during the US Go Congress. Message and data rates may apply.)
-  .field
-    = f.label :email
-    = f.email_field :email
-  .field
-    = f.label :state
-    = f.select :state, STATES, { :include_blank => true }
+
+  .field.flex
+    %div.field-key
+      = f.label :receive_sms, trl_attr(:attendee, :receive_sms) + ' *'
+    
+    %div.field-value
+      %ul.radio
+        %li
+          %label
+            = f.radio_button :receive_sms, true, checked: (params[:receive_sms] == nil ? true : params[:receive_sms])
+            Send Me Text Message Notifications
+        %li
+          %label
+            = f.radio_button :receive_sms, false
+            Don&rsquo;t Send Me Any Text Messages
+      .field-help-text You can opt out of these at any time. Message and data rates may apply.
+
+  .field.flex
+    %div.field-key
+      = f.label :email, trl_attr(:attendee, :email) + ' *'
+    %div.field-value
+      = f.email_field :email
+  .field.flex
+    %div.field-key
+      = f.label :state
+    %div.field-value
+      = f.select :state, STATES, { :include_blank => true }
   -# ISO 3166-1 alpha-2
-  .field
-    = f.label :country
-    = f.select :country, COUNTRIES, { :include_blank => true }
+  .field.flex
+    %div.field-key
+      = f.label :country, trl_attr(:attendee, :country) + ' *'
+    %div.field-value
+      = f.select :country, COUNTRIES, { :include_blank => true }
