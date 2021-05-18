@@ -1,18 +1,18 @@
 %fieldset
   .field.flex
     %div.field-key
-      = f.label :rank, 'Estimated Rank'
+      = f.label :rank, trl_attr(:attendee, :rank) + ' *'
 
     %div.field-value
       = f.select :rank, Attendee::Rank::RANKS, :include_blank => 'Select Estimated Rank'
-      %span.smalltext
+      .field-help-text
         = link_to 'What is my AGA rank?', '#', :id => 'open_dialog_rank'
 
   = hidden_field_tag :aga_id
 
   .field.flex
     %div.field-key
-      = f.label :will_play_in_us_open, trl_attr(:attendee, :will_play_in_us_open)
+      = f.label :will_play_in_us_open, trl_attr(:attendee, :will_play_in_us_open) + ' *'
 
     %div.field-value
       %label
@@ -23,9 +23,8 @@
         No
 
       %div.field-help-text
-        (Please contact the US Open TD at
-        = mail_to "usopen@gocongress.org"
-        if your estimated rank is different from your AGA rank.)
+        Please #{link_to 'contact the U.S. Open tournament director', contacts_path}
+        if your estimated rank is different from your AGA rank.
 
 .dialog#dialog_aga_id{:title => "What is an AGA ID?"}
   %p

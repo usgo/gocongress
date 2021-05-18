@@ -30,7 +30,6 @@ class RegistrationsController < ApplicationController
           attendee.birth_date = i['dob']
           attendee.aga_id = i['member_id']
           attendee.phone = i['phone']
-          attendee.local_phone = i['phone']
           attendee.email = i['email']
           attendee.state = i['state']
 

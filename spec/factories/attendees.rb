@@ -11,7 +11,7 @@ FactoryBot.define do
     given_name { 'Amerigo' }
     tshirt_size { 'AL' }
     receive_sms { false }
-    local_phone { "6122341234" }
+    phone { "6122341234" }
     rank { 3 }
     will_play_in_us_open { false }
     year { Time.now.year }
@@ -23,13 +23,13 @@ FactoryBot.define do
     family_name { "Smith" }
     given_name { "Jack" }
     aga_id { "12345" }
-    local_phone { "+16122035280" }
+    phone { "+16122035280" }
   end
 
   factory :ga_attendee_two, parent: :attendee do
     receive_sms { true }
     aga_id { "12346" }
-    local_phone { "+16122035280" }
+    phone { "+16122035280" }
   end
 
   factory :teenager, :parent => :attendee do

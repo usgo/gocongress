@@ -1,8 +1,10 @@
 %fieldset
   .field
-    = f.label :tshirt_size
+    = f.label :tshirt_size, trl_attr(:attendee, :tshirt_size) + ' *'
     = f.select :tshirt_size, Shirt::SIZES, :include_blank => ''
-  .field
-    = f.label :shirt_id, 'Shirt Style'
-    = ShirtMenu.to_html(f, @year, @registration.shirt_id)
-    %span.smalltext= link_to 'Details', shirts_path, :target => '_blank'
+
+  -if !ShirtMenu.shirts(@year, @registration.shirt_id).empty?
+    .field
+      = f.label :shirt_id, 'Shirt Style'
+      = ShirtMenu.to_html(f, @year, @registration.shirt_id)
+      %span.smalltext= link_to 'Details', shirts_path, :target => '_blank'

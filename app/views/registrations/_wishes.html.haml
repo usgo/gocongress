@@ -1,8 +1,17 @@
 %h3 Requests
 %fieldset
-  .field
-    = f.label :roomate_request
-    = f.text_field :roomate_request
-  .field
-    = f.label :special_request
-    = f.text_area :special_request
+  - if @year.event_type == "in-person"
+    .field.flex
+      %div.field-key
+        = f.label :roomate_request
+      %div.field-value
+        = f.text_field :roomate_request
+  .field.flex
+    %div.field-key
+      = f.label :special_request, trl_attr(:attendee, :special_request)
+    %div.field-value
+      = f.text_area :special_request
+      .field-help-text
+        Are there any special requests we should know about?
+
+

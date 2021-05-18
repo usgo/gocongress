@@ -650,7 +650,7 @@ div.inputform table tbody th {
 div.field {
   display: block;
   padding: 5px 0px;
-  margin: 0px;
+  margin: 0 0 1em;
 }
 div.field_with_errors {
   background-color: white;
@@ -673,6 +673,7 @@ div.field_with_errors input {
   }
   width: 150px;
   text-align: right;
+  flex-shrink: 0;
 }
 
 .field-value {
@@ -751,6 +752,13 @@ div.field {
     padding-left: 1em;
     width: auto;
     vertical-align: baseline;
+  }
+
+  /* Radio lists */
+  .radio {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
   }
 
   /* Date and time inputs */
