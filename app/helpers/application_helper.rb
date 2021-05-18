@@ -56,8 +56,10 @@ module ApplicationHelper
   end
 
   def link_to_liability_release()
-    if @year.year != 2016 && @year.year != 2020
+    if @year.event_type == "in-person"
       link_to "Youth Attendance Agreement",
+        # This very particularly named file is a bit of an invisible requirement.
+        # TODO: Improve how this is managed.
         asset_path("liability_release/USGC#{@year.year}-Liability-Release.pdf"),
         :target => '_blank'
     elsif @year.year == 2020

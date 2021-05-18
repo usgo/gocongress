@@ -32,15 +32,19 @@
       = f.date_select :birth_date, :start_year => @year.year, :end_year => @year.year - 18, :include_blank => true
     %span.smalltext (to identify minors)
   - if params[:type] == "youth"
-    .field
-      = f.label :understand_minor, 'Youth Attendance Agreement<br />(for minors)'.html_safe
-      = f.check_box :understand_minor, class: "valign-middle"
-      %div#liability-release-instructions.smalltext
-        I understand that if this attendee will not be at least 18 years old on
-        = @year.start_date.to_formatted_s(:long)
-        then I must submit the #{link_to_liability_release} to the
-        = link_to 'registrar.', contacts_path, :target => '_blank'
-    .field
-      = f.label :guardian_full_name, 'Guardian Name<br />(for minors)'.html_safe
-      = f.text_field :guardian_full_name
-      %span.smalltext Attending adult responsible for minor
+    - if @year.event_type == "in-person"
+      .field
+        = f.label :understand_minor, 'Youth Attendance Agreement<br />(for minors) *'.html_safe
+        = f.check_box :understand_minor, class: "valign-middle"
+        %div#liability-release-instructions.smalltext
+          I understand that if this attendee will not be at least 18 years old on
+          = @year.start_date.to_formatted_s(:long)
+          then I must submit the #{link_to_liability_release} to the
+          = link_to 'registrar.', contacts_path, :target => '_blank'
+      .field
+        = f.label :guardian_full_name, 'Guardian Name *<br />(for minors)'.html_safe
+        = f.text_field :guardian_full_name
+        %span.smalltext Attending adult responsible for minor
+    - else
+      = f.hidden_field(:understand_minor, :value => true)
+      = f.hidden_field(:guardian_full_name, :value => 'N/A')
