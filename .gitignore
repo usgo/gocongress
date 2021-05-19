@@ -2,6 +2,7 @@
 .bundle
 .env
 .sass-cache
+.notes
 config/database.yml
 db/*.sqlite3
 config/usgc_env.rb
