@@ -65,21 +65,44 @@
       
   %h3 Miscellaneous
   %fieldset
-    .field
-      = f.label :ordinal_number
-      = f.number_field :ordinal_number, :size => 3
-      %span.smalltext eg. enter 28 for the 28th congress
-    .field
-      = f.label :reply_to_email
-      = f.text_field :reply_to_email
-      %span.smalltext for automatic email sent by the website
-    .field
-      = f.label :twitter_url
-      = f.text_field :twitter_url
-    .field
-      = f.label :registration_phase
-      = f.select :registration_phase, @reg_phase_opts
-      %span.smalltext Plan categories are fixed during the registration period.
+    .field.flex
+      %div.field-key
+        = f.label :ordinal_number
+      %div.field-value
+        = f.number_field :ordinal_number, :size => 3
+        %div.field-help-text eg. enter 28 for the 28th congress
+
+    .field.flex
+      %div.field-key
+        = f.label :reply_to_email
+      %div.field-value
+        = f.text_field :reply_to_email
+        %div.field-help-text for automatic email sent by the website
+    
+    .field.flex
+      %div.field-key
+        = f.label :mailing_list_link
+      %div.field-value
+        = f.text_field :mailing_list_link
+        %div.field-help-text
+          The &ldquo;subscribe&rdquo; link for the mailing list for this year&rsquo;s
+          Congress. There is a mailing list that carries over from year to year
+          hosted on #{link_to "MailChimp", "https://mailchimp.com/"}. Please
+          contact the #{link_to "Congress webmaster", "mailto:webmaster@gocongress.org"}
+          to get access.
+
+    .field.flex
+      %div.field-key
+        = f.label :twitter_url
+      %div.field-value
+        = f.text_field :twitter_url
+
+    .field.flex
+      %div.field-key
+        = f.label :registration_phase
+      %div.field-value
+        = f.select :registration_phase, @reg_phase_opts
+        %div.field-help-text Plan categories are fixed during the registration period.
 
   %fieldset
     .field

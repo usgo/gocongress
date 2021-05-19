@@ -27,6 +27,7 @@ class Year < ApplicationRecord
   def init
     # Set default values
     self.event_type ||=:'in-person'
+    self.mailing_list_link ||=:'http://eepurl.com/bC8CBX'
   end
 
   def is_online?

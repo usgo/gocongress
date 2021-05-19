@@ -16,6 +16,7 @@
     = javascript_include_tag :application
     = stylesheet_link_tag "#{@year.year}/application" rescue stylesheet_link_tag :application
     = stylesheet_link_tag '//ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/themes/ui-lightness/jquery-ui.css'
+    = render '/layouts/mail_chimp'
     - if Rails.env.production?
       = render 'shared/google_analytics'
 
