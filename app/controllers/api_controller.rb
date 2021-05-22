@@ -16,7 +16,11 @@ class ApiController < ApplicationController
       action = "all?query=#{ERB::Util.url_encode('type != chapter ')}#{params[:search]}&limit=10&api_key=#{ENV['AGA_MEMBERS_API_KEY']}"
     end
 
-    buffer = URI.open("#{api_url}#{action}").read
+    buffer = URI.open(
+      "#{api_url}#{action}",
+      read_timeout: GENERIC_READ_TIMEOUT,
+      open_timeout: GENERIC_OPEN_TIMEOUT
+    ).read
     result = JSON.parse(buffer)
 
     render json: result
@@ -56,7 +60,14 @@ class ApiController < ApplicationController
 
   # Use KGS's archives page to see if a username exists
   def kgs_username
-    document = Nokogiri::HTML.parse(URI.open("http://gokgs.com/gameArchives.jsp?user=#{params['username']}"))
+    url = "http://gokgs.com/gameArchives.jsp?user=#{params['username']}"
+    document = Nokogiri::HTML.parse(
+      URI.open(
+        url,
+        read_timeout: GENERIC_READ_TIMEOUT,
+        open_timeout: GENERIC_OPEN_TIMEOUT
+      ).read
+    )
     result = document.css("p")[0]
 
     if result.text.starts_with?("Sorry, there are no games")

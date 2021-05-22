@@ -20,7 +20,11 @@ module AGA
         action = "#{params[:aga_id]}?api_key=#{ENV['AGA_MEMBERS_API_KEY']}"
 
         begin
-          buffer = URI.open("#{api_url}#{action}").read
+          buffer = URI.open(
+            "#{api_url}#{action}",
+            read_timeout: GENERIC_READ_TIMEOUT,
+            open_timeout: GENERIC_OPEN_TIMEOUT
+          ).read
           result = JSON.parse(buffer)
 
           if result['success']
@@ -52,7 +56,7 @@ module AGA
               end
             end
           end
-        rescue OpenURI::HTTPError => e
+        rescue Timeout::Error, OpenURI::HTTPError => e
           # No worries! We just won't pre-fill any values.
           ::Rails.logger.error(e)
         end
