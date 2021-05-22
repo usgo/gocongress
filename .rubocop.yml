@@ -33,3 +33,11 @@ Metrics/ModuleLength:
 # Use a meaningful delimiter for e.g. SQL. Otherwise, not important.
 Naming/HeredocDelimiterNaming:
   Enabled: false
+
+# Concerns:
+# 1. In 0.52.0, this complains about `strftime('%x')`. Annotating tokens in
+#    e.g. strftime would just be duplicating documentation.
+# 2. Annotating tokens in long format strings could make such lines very long.
+# 3. Annotation is not necessary in format strings with small numbers of tokens.
+Style/FormatStringToken:
+  Enabled: false
