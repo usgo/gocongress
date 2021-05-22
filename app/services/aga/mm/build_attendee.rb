@@ -16,12 +16,12 @@ module AGA
         attendee.year = @year.year
 
         # Get member info from the API
-        api_url = "https://www.usgo.org/mm/api/members/"
+        api_url_prefix = "https://www.usgo.org/mm/api/members/"
         action = "#{params[:aga_id]}?api_key=#{ENV['AGA_MEMBERS_API_KEY']}"
+        url = "#{api_url_prefix}#{action}"
 
         begin
-          buffer = URI.open(
-            "#{api_url}#{action}",
+          buffer = URI.parse(url).open(
             read_timeout: GENERIC_READ_TIMEOUT,
             open_timeout: GENERIC_OPEN_TIMEOUT
           ).read

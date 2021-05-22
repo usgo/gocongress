@@ -8,16 +8,14 @@ class ApiController < ApplicationController
   # username validity was sanctioned by members of those organizations.
 
   def search_members
-    api_url = "https://www.usgo.org/mm/api/members/"
-
+    api_url_prefix = "https://www.usgo.org/mm/api/members/"
     if !!(params[:search] =~ /^[1-9]+[0-9]*$/)
       action = "#{params[:search]}?api_key=#{ENV['AGA_MEMBERS_API_KEY']}"
     else
       action = "all?query=#{ERB::Util.url_encode('type != chapter ')}#{params[:search]}&limit=10&api_key=#{ENV['AGA_MEMBERS_API_KEY']}"
     end
-
-    buffer = URI.open(
-      "#{api_url}#{action}",
+    url = "#{api_url_prefix}#{action}"
+    buffer = URI.parse(url).open(
       read_timeout: GENERIC_READ_TIMEOUT,
       open_timeout: GENERIC_OPEN_TIMEOUT
     ).read
@@ -62,8 +60,7 @@ class ApiController < ApplicationController
   def kgs_username
     url = "http://gokgs.com/gameArchives.jsp?user=#{params['username']}"
     document = Nokogiri::HTML.parse(
-      URI.open(
-        url,
+      URI.parse(url).open(
         read_timeout: GENERIC_READ_TIMEOUT,
         open_timeout: GENERIC_OPEN_TIMEOUT
       ).read

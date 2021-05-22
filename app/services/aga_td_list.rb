@@ -42,8 +42,7 @@ class AgaTdList
     # Hit the AGA TD List for data in TSV format
     file = ''
     begin
-      file = URI.open(
-        "https://www.usgo.org/mm/tdlista.txt",
+      file = URI.parse("https://www.usgo.org/mm/tdlista.txt").open(
         read_timeout: 10,
         open_timeout: GENERIC_OPEN_TIMEOUT
       ) { |f| f.read }

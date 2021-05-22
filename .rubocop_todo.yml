@@ -725,12 +725,6 @@ Security/Eval:
   Exclude:
     - 'Rakefile'
 
-# Offense count: 2
-Security/Open:
-  Exclude:
-    - 'app/controllers/api_controller.rb'
-    - 'app/services/aga/mm/build_attendee.rb'
-
 # Offense count: 3
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle.
