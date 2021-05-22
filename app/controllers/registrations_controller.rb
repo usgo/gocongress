@@ -2,58 +2,15 @@ class RegistrationsController < ApplicationController
   before_action :require_authentication, :except => [:index, :vip]
 
   def new
-    attendee = Attendee.new
-    attendee.user = User.find(params[:user_id] || current_user.id)
-    attendee.year = @year.year
+    user = User.find(params[:user_id] || current_user.id)
+    aga_id = params[:aga_id].presence
+    attendee = build_attendee(user, aga_id)
     @registration = Registration.new(current_user, attendee)
-    expose_legacy_form_vars # TODO: don't!
-
-    if params.has_key?(:aga_id)
-      # Get member info from the API
-      apiUrl = "https://www.usgo.org/mm/api/members/"
-      action = "#{params[:aga_id]}?api_key=#{ENV['AGA_MEMBERS_API_KEY']}"
-
-      begin
-        buffer = URI.open("#{apiUrl}#{action}").read
-        result = JSON.parse(buffer)
-
-        if result['success']
-          # Pre-fill attendee values with AGA Member Info
-          i = result['payload']['row']
-          attendee.given_name = i['given_names']
-          attendee.family_name = i['family_name']
-
-          # Grab the first letter of gender
-          # Ex: 'female' => 'f'
-          attendee.gender = i['gender'][0] rescue ''
-
-          attendee.birth_date = i['dob']
-          attendee.aga_id = i['member_id']
-          attendee.phone = i['phone']
-          attendee.email = i['email']
-          attendee.state = i['state']
-
-          # Minimum rating is -30 (30k)
-          attendee.rank = [i['rating'].to_i, -30].max.to_s
-
-          if (i['country'] == 'USA')
-            attendee.country = 'US'
-          else
-            # Try to get the country code from the site constants
-            found = COUNTRIES.detect {|country| country[0] == i['country']}
-            if found
-              attendee.country = found[1]
-            end
-          end
-        end
-
-        rescue OpenURI::HTTPError
-          # No worries! We just won't pre-fill any values.
-      end
-
-      render :new
-    else
+    if aga_id.nil?
       render :aga_member_search
+    else
+      expose_legacy_form_vars # TODO: don't!
+      render :new
     end
   end
 
@@ -96,6 +53,16 @@ class RegistrationsController < ApplicationController
   end
 
   private
+
+  # `aga_id` will be nil on the first visit to `#new`. Next, either they enter
+  # an integer id, or they click "not an AGA member" and thus 'none'.
+  def build_attendee(user, aga_id)
+    if aga_id.nil? || aga_id == 'none'
+      Attendee.new(user: user, year: @year.year)
+    else
+      AGA::MM::BuildAttendee.new(user, @year, aga_id.to_i).build
+    end
+  end
 
   def expose_legacy_form_vars
     @plan_calendar = PlanCalendar.range_to_matrix(AttendeePlanDate.valid_range(@year))
