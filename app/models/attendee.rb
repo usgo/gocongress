@@ -29,8 +29,8 @@ class Attendee < ApplicationRecord
   # Validations
   # -----------
 
-  validates :birth_date,      :presence => true
-  validates_date :birth_date, :after => Date.civil(1900,1,1), :allow_blank => false
+  validates :birth_date, presence: true
+  validate :birth_date_is_modern
   validates :country,         :format => {:with => /\A[A-Z]{2}\z/}, :presence => true
   validates :email,           :presence => true
   validates :emergency_name,  :presence => true
@@ -251,10 +251,15 @@ class Attendee < ApplicationRecord
 
 private
 
+  def birth_date_is_modern
+    if birth_date.present? && birth_date.year < 1900
+      errors.add(:birth_date, 'cannot precede 1900')
+    end
+  end
+
   # Minors are required to have a guardian.  To safely invoke
   # minor?(), we must first check that birth_date is present.
   def require_guardian_full_name?
     birth_date.present? && minor?
   end
-
 end

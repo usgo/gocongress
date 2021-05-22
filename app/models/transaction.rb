@@ -36,7 +36,6 @@ class Transaction < ApplicationRecord
   # Certain attributes apply only to gateway transaction types (eg. Sale)
   with_options :if => :is_gateway_transaction? do |gwt|
     gwt.validates :gwdate, :presence => true
-    gwt.validates_date :gwdate
     gwt.validates :gwtranid, :presence => true
   end
 
