@@ -12,6 +12,7 @@ Layout/FirstHashElementIndentation:
 Layout/LineLength:
   Exclude:
     - db/schema.rb
+  Max: 200
 
 # Not useful compared to e.g. `Metrics/AbcSize`
 Metrics/BlockLength:
