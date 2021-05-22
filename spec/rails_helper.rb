@@ -1,8 +1,13 @@
 ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../../config/environment', __FILE__)
-if Rails.env.production?
-  abort("The Rails environment is running in production mode!")
+
+# If someone is running the test suite in the wrong env, we want to catch that
+# very early, before any damage can be done. A `before(:suite)` hook might be
+# too late.
+unless Rails.env.test?
+  abort format('Invalid env. for tests: %s', Rails.env)
 end
+
 require 'spec_helper'
 require 'rspec/rails'
 require 'capybara/rspec'
@@ -15,6 +20,11 @@ RSpec.configure do |config|
   config.include Devise::Test::ControllerHelpers, type: :controller
   config.include Devise::Test::IntegrationHelpers, type: :request
   config.include FactoryBot::Syntax::Methods
+  config.before(:suite) do
+    if Year.find_by(year: CONGRESS_YEAR).nil?
+      abort format('Year not found: %d: Try db:test:prepare', CONGRESS_YEAR)
+    end
+  end
 end
 
 # TODO: use rspec helper method instead of global method
