@@ -37,7 +37,7 @@ class ApplicationController < ActionController::Base
     year = extract_year_from_params
     @year = Year.where(year: year).first
     unless @year.present?
-      raise_routing_error("Year not found: #{year}: Try test:prepare")
+      raise_routing_error("Year not found: #{year}")
     end
   end
 

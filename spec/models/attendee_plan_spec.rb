@@ -52,6 +52,13 @@ RSpec.describe AttendeePlan, :type => :model do
       p = create :plan, :max_quantity => 1
       ap = AttendeePlan.new :plan_id => p.id, :quantity => p.max_quantity + 1, :attendee_id => a.id
       expect(ap).not_to be_valid
+      expect(ap.errors[:base]).to eq([
+        format(
+          'The maximum quantity of %s per attendee is %d',
+          p.name.pluralize.downcase,
+          p.max_quantity
+        )
+      ])
     end
 
     it "quantity cannot exceed available inventory" do

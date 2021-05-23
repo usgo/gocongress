@@ -12,6 +12,10 @@ Layout/FirstHashElementIndentation:
 Layout/LineLength:
   Exclude:
     - db/schema.rb
+  Max: 200
+
+Layout/MultilineMethodCallIndentation:
+  EnforcedStyle: indented
 
 # Not useful compared to e.g. `Metrics/AbcSize`
 Metrics/BlockLength:
@@ -20,7 +24,6 @@ Metrics/BlockLength:
 # Not useful compared to e.g. `Metrics/AbcSize`
 Metrics/ClassLength:
   Enabled: false
-
 
 # Not useful compared to e.g. `Metrics/AbcSize`
 Metrics/MethodLength:
@@ -32,4 +35,17 @@ Metrics/ModuleLength:
 
 # Use a meaningful delimiter for e.g. SQL. Otherwise, not important.
 Naming/HeredocDelimiterNaming:
+  Enabled: false
+
+# Concerns:
+# 1. In 0.52.0, this complains about `strftime('%x')`. Annotating tokens in
+#    e.g. strftime would just be duplicating documentation.
+# 2. Annotating tokens in long format strings could make such lines very long.
+# 3. Annotation is not necessary in format strings with small numbers of tokens.
+Style/FormatStringToken:
+  Enabled: false
+
+# Use `x > 0` because it is more specific than `x.positive?`.
+# However, `x.zero?` is acceptable because it is specific enough.
+Style/NumericPredicate:
   Enabled: false

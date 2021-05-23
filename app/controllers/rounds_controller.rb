@@ -2,7 +2,7 @@ class RoundsController < ApplicationController
   include YearlyController
   load_resource
   add_filter_to_set_resource_year
-  authorize_resource 
+  authorize_resource
   add_filter_restricting_resources_to_year_in_route
 
   before_action :find_round , only: [:show, :edit, :update, :destroy]
@@ -76,12 +76,21 @@ class RoundsController < ApplicationController
       bye_appointments.each do |bye|
         recipient = bye.attendee
         if recipient.receive_sms
-          send_bye_notification(recipient, @round) 
+          send_bye_notification(recipient, @round)
           bye_notifications_sent += 1
         end
       end
     end
-    redirect_to round_path(@round), notice: "#{game_notifications_sent} game #{'notification'.pluralize(game_notifications_sent)} sent." + "#{bye_notifications_sent} bye #{'notification'.pluralize(bye_notifications_sent)} sent."
+    redirect_to(
+      round_path(@round),
+      notice: format(
+        "%d game %s sent. %d bye %s sent.",
+        game_notifications_sent,
+        'notification'.pluralize(game_notifications_sent),
+        bye_notifications_sent,
+        'notification'.pluralize(bye_notifications_sent)
+      )
+    )
   end
 
   def delete_all_game_appointments
@@ -100,14 +109,32 @@ class RoundsController < ApplicationController
 
   def import
     @round = Round.find(round_import_params[:round_id])
-    @import = Round::Import.new(file: round_import_params[:file], round_id: round_import_params[:round_id])
+    @import = Round::Import.new(
+      file: round_import_params[:file],
+      round_id: round_import_params[:round_id]
+    )
     if @import.save
-      redirect_to round_path(@round.id), notice: "Imported #{@import.imported_game_count} game #{'appointment'.pluralize(@import.imported_game_count)}. Imported #{@import.imported_bye_count} bye #{'appointment'.pluralize(@import.imported_bye_count)}."
+      redirect_to(
+        round_path(@round.id),
+        notice: format(
+          "Imported %d game %s. Imported %d bye %s.",
+          @import.imported_game_count,
+          'appointment'.pluralize(@import.imported_game_count),
+          @import.imported_bye_count,
+          'appointment'.pluralize(@import.imported_bye_count)
+        )
+      )
     else
       error_messages = @import.errors.full_messages
-      redirect_to round_path(@round.id), alert: "File Upload failed with the following errors(limited to first five): #{error_messages.first(5)} "
+      redirect_to(
+        round_path(@round.id),
+        alert: format(
+          "File Upload failed with the following errors (limited to first five): %s",
+          error_messages.first(5)
+        )
+      )
     end
-  end 
+  end
 
   private
 

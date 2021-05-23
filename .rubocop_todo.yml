@@ -627,7 +627,9 @@ Lint/UselessAssignment:
 # Offense count: 38
 # Configuration parameters: IgnoredMethods, CountRepeatedAttributes.
 Metrics/AbcSize:
-  Max: 62
+  Exclude:
+    - db/migrate/*
+  Max: 52 # Goal: the default, 17
 
 # Offense count: 1
 # Configuration parameters: CountBlocks.
@@ -722,12 +724,6 @@ Naming/VariableNumber:
 Security/Eval:
   Exclude:
     - 'Rakefile'
-
-# Offense count: 2
-Security/Open:
-  Exclude:
-    - 'app/controllers/api_controller.rb'
-    - 'app/controllers/registrations_controller.rb'
 
 # Offense count: 3
 # Cop supports --auto-correct.
@@ -1260,7 +1256,7 @@ Style/RescueModifier:
   Exclude:
     - 'app/controllers/application_controller.rb'
     - 'app/controllers/attendees_controller.rb'
-    - 'app/controllers/registrations_controller.rb'
+    - 'app/services/aga/mm/build_attendee.rb'
     - 'db/migrate/20120128045830_alter_evtprice.rb'
 
 # Offense count: 1
@@ -1416,10 +1412,3 @@ Style/ZeroLengthPredicate:
     - 'app/models/registration/plan_selection.rb'
     - 'app/presenters/shirt_menu.rb'
     - 'script/hamlize.rb'
-
-# Offense count: 40
-# Cop supports --auto-correct.
-# Configuration parameters: AutoCorrect, AllowHeredoc, AllowURI, URISchemes, IgnoreCopDirectives, IgnoredPatterns.
-# URISchemes: http, https
-Layout/LineLength:
-  Max: 473

@@ -358,3 +358,9 @@ STATES = [
   ['Wisconsin', 'WI'],
   ['Wyoming', 'WY']
 ].freeze
+
+# Default timeouts for the network connections we open (MM, KGS, etc.) All
+# network operations should have specific and thoughtful timeouts. Certain APIs
+# will likely have different timeouts, but these are reasonable defaults.
+GENERIC_OPEN_TIMEOUT = 3 # seconds
+GENERIC_READ_TIMEOUT = 3
