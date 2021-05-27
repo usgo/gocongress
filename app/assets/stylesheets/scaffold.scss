@@ -4,7 +4,8 @@ pre {
   font-size: 11px;
 }
 
-div.field { }
+div.field {
+}
 
 div.actions {
   margin-bottom: 10px;
@@ -15,14 +16,15 @@ div.actions {
 }
 
 .field_with_errors {
-  padding: 2px;
-  background-color: red;
-  display: table;
+  // border: 2px solid red;
+  // padding: 2px;
+  // background-color: red;
+  // display: table;
 }
 
 #error_explanation {
   width: 425px;
-  border: 2px solid #C00;
+  border: 2px solid #c00;
   padding: 7px;
   padding-bottom: 0;
   margin-bottom: 20px;

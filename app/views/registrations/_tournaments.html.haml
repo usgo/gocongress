@@ -5,20 +5,88 @@
 
   %h3= mnhp
 
-  %p
-    Prices and times are subject to change.
-    Questions? Contact the #{link_to "registrar", contacts_path}.
+  -# %p
+  -#   Prices and times are subject to change.
+  -#   Questions? Contact the #{link_to "registrar", contacts_path}.
 
-  %table.semantic.zebra.fullwidth
-    %thead
-      %th
-      %th Date
-      %th{:colspan => 2}= mnh
-    %tbody
-      - @registration.tournaments.each do |t|
-        - checked = @registration.tournament_selections.include?(t.id)
-        %tr
-          %td.align-center
+  - @registration.tournaments.each do |t|
+    - checked = @registration.tournament_selections.include?(t.id)
+
+    %div.tournament-registration
+      %div.name
+        %label
+          %h4 
             = check_box_tag "tournaments_#{t.id}", t.id, checked, :name => 'tournament_ids[]'
-          %td
-            = label "tournaments", t.id, t.name
+            -# = label "tournaments", t.id, t.name
+            = t.name
+
+      %div.information
+        - if t.is_online?
+          %div.server
+            %p.heading Server
+            %p
+              = t.server_name
+              %br
+              = f.text_field :"username_#{t.server}", { :id => nil, :class => "registration_username_#{t.server}", :placeholder => "username"}
+        
+
+        %div.location
+          %p.heading Location
+          %p
+            = t.location
+
+        %div.eligible
+          %p.heading Eligibility
+          %p
+            = t.eligible
+
+        %div.directors
+          %p.heading Director(s)
+          %p
+            = t.directors
+
+      %div.description
+        = t.description
+
+  :javascript
+    // Link inputs for the same servers together, so that when you fill out one it syncs all the others
+    const usernameInputs = document.querySelectorAll("[class^='registration_username']");
+
+    const validateUsername = async event => {
+      const server = event.target.className.split('_').pop();
+      const username = event.target.value;
+      console.log('validate this username', server, username)
+      const status = document.createElement('div');
+      status.classList.add('status');
+      event.target.after(status);
+      status.innerText = 'Validating...';
+
+      if (server === 'kgs') {
+        const url = `/api/kgs/${encodeURIComponent(username)}`;
+        const options = {
+          method: 'GET'
+        };
+
+        const response = await fetch(url, options);
+        const valid = await response.json();
+        console.log('valid', valid);
+      } else if (server === 'igs') {
+
+      } else if (server === 'ogs') {
+
+      }
+    }
+    
+    const updateOtherInputs = event => {
+      const server = event.target.className.split('_').pop();
+      const otherInputs = Array.from(usernameInputs)
+        .filter(input => input.className.split('_').pop() === server && input !== event.target)
+
+      otherInputs.forEach(input => input.value = event.target.value)
+      console.log('otherInputs', otherInputs)
+    };
+
+    usernameInputs.forEach(usernameInput => {
+      usernameInput.addEventListener('keyup', updateOtherInputs);
+      usernameInput.addEventListener('keyup', debounce(validateUsername, 500));
+    });

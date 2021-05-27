@@ -2,6 +2,7 @@ require "invoice_item"
 
 class Attendee < ApplicationRecord
   include YearlyModel
+
   # Associations
   # ------------
 
@@ -62,6 +63,23 @@ class Attendee < ApplicationRecord
     :in => [true, false], :message => ' - Please select yes or no'}
   validates_numericality_of :aga_id, :only_integer => true, :allow_nil => true, :message => "id is not a number"
 
+  username_message = " - One of the tournaments you selected needs your %{attribute}."
+  validates :username_kgs, :presence => { :if => Proc.new { |x| in_tournament?("kgs") }, :message => username_message }
+  validates :username_igs, :presence => { :if => Proc.new { |x| in_tournament?("igs") }, :message => username_message }
+  validates :username_ogs, :presence => { :if => Proc.new { |x| in_tournament?("ogs") }, :message => username_message }
+  # validates :username_kgs, :presence => { :if => lambda { |o|
+  #   print("\n\n%%%%%%%%%%%%%%%%%%%%CHECKING 4 SERVER%%%%%%%%%\n\n")
+  #   puts self.given_name
+  #   puts self.rank
+  #   puts self.tournament_ids.inspect
+  #   result = in_tournament?
+  #   print("These should be my selected tournaments")
+  #   puts(result)
+  #   print("\n----\n\n")
+  #   # return in_tournament?
+  #   return result
+  # }}
+
   # Attendee must always have a user.  We validate the presence of
   # the user, rather than the user_id, so that models can be
   # instantiated in any order.  When the models are saved, the
@@ -74,6 +92,22 @@ class Attendee < ApplicationRecord
 
   # Class Methods
   # =============
+  def in_tournament? server_name
+    print("\n\n%%%%%%%%%%%%%%%%%%%%CHECKING 4 SERVER%%%%%%%%%\n\n")
+    puts server_name
+    # puts attendee.inspect
+    print("These should be my selected tournaments")
+    # puts selected_ids.inspect
+    tournaments = Tournament.yr(year).where(:registration_sign_up => true).order('ordinal')
+    # puts tournaments.inspect
+    # puts tournaments.map { |t| t.id }.inspect
+    print("\n------DEBUG OVR-------\n\n")
+
+    selected_tournaments = tournaments.select { |t| self.tournament_ids.include? t.id }
+    print("\n\n---SELECTED TOURNAMENTS---\n\n")
+    puts(selected_tournaments.inspect)
+    selected_tournaments.any? { |t| t.server == server_name }
+  end
 
   def self.adults year
     where('birth_date < ?', CONGRESS_START_DATE[year.to_i] - 18.years)

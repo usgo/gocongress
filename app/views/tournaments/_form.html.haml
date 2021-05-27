@@ -2,32 +2,89 @@
   = render :partial => "shared/error_messages", :locals => { :resource => @tournament }
 
   %fieldset
-    .field
-      = f.label :name
-      = f.text_field :name
-    .field
-      = f.label :openness
-      = f.select :openness, Tournament::OPENNESS_TYPES
-    .field
-      = f.label :location
-      = f.text_field :location
-      %p.smalltext.aligned-with-input
-        Include room number, if applicable
-    .field
-      = f.label :eligible
-      = f.text_field :eligible
-    .field
-      = f.label :directors
-      = f.text_field :directors
-    .field
+    .field.flex
+      %div.field-key
+        = f.label :name
+      %div.field-value
+        = f.text_field :name
+
+    .field.flex
+      %div.field-key
+        = f.label :event_type
+      %div.field-value
+        = f.select :event_type, options_for_select(Tournament.event_types.map {|key, value| [key.titleize, Tournament.event_types.key(value)]}, @tournament.event_type)
+
+    .field.flex
+      %div.field-key
+        = f.label :server
+      %div.field-value
+        = f.select :server, options_from_collection_for_select(*@tournament.server_options, @tournament.server)
+
+    .field.flex
+      %div.field-key
+        = f.label :openness
+      %div.field-value
+        = f.select :openness, Tournament::OPENNESS_TYPES
+
+    .field.flex
+      %div.field-key
+        = f.label :registration_sign_up
+      %div.field-value
+        %label
+          = f.check_box :registration_sign_up
+          %div.field-help-text
+            Allow attendees to sign up for this tournament during registration?
+
+    .field.flex
+      %div.field-key
+        = f.label :location
+      %div.field-value
+        = f.text_field :location
+        %div.field-help-text
+          Include room number, if applicable
+
+    .field.flex
+      %div.field-key
+        = f.label :eligible
+      %div.field-value
+        = f.text_field :eligible
+
+    .field.flex
+      %div.field-key
+        = f.label :directors
+      %div.field-value
+        = f.text_field :directors
+
+    .field.flex
       = render partial: "shared/md_area", locals: { :obj => :tournament, :atr => :description }
-    .field
-      = f.label :show_in_nav_menu
-      = f.check_box :show_in_nav_menu
-      %span.smalltext
-        Highlight this particular tournament by showing it in the
-        navigation menu at the top of the page
+
+    .field.flex
+      %div.field-key
+        = f.label :show_in_nav_menu
+      %div.field-value
+        %label
+          = f.check_box :show_in_nav_menu
+          %div.field-help-text
+            Highlight this particular tournament by showing it in the
+            navigation menu at the top of the page
 
   %br
   .actions
     = f.submit 'Save'
+
+    :javascript
+      const eventTypeInput = document.querySelector('#tournament_event_type');
+      const serverInput = document.querySelector('#tournament_server');
+
+      const onEventTypeChange = value => {
+        showServer(value === 'online')
+      }
+
+      const showServer = (state = true) => {
+        const serverInputContainer = serverInput.closest('.field');
+        console.log(serverInputContainer)
+        serverInputContainer.classList.toggle('hide', !state);
+      }
+
+      eventTypeInput.addEventListener('change', event => onEventTypeChange(event.target.value)); 
+      onEventTypeChange(eventTypeInput.value);

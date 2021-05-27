@@ -1,39 +1,24 @@
 %fieldset
-  .field.flex
-    %div.field-key
-      = f.label :rank, trl_attr(:attendee, :rank) + ' *'
-
-    %div.field-value
-      = f.select :rank, Attendee::Rank::RANKS, :include_blank => 'Select Estimated Rank'
-      .field-help-text
-        = link_to 'What is my AGA rank?', '#', :id => 'open_dialog_rank'
+  = render :layout => 'shared/field',
+  :locals => { :field => f, :attribute => :rank, :required => true } do
+    = f.select :rank, Attendee::Rank::RANKS, :include_blank => 'Select Estimated Rank'
+    .field-help-text
+      = link_to 'What is my AGA rank?', '#', :id => 'open_dialog_rank'
 
   = hidden_field_tag :aga_id
 
-  .field.flex
-    %div.field-key
-      = f.label :will_play_in_us_open, trl_attr(:attendee, :will_play_in_us_open) + ' *'
+  = render :layout => 'shared/field',
+  :locals => { :field => f, :attribute => :will_play_in_us_open, :required => true } do
+    %label
+      = f.radio_button :will_play_in_us_open, true
+      Yes
+    %label
+      = f.radio_button :will_play_in_us_open, false
+      No
 
-    %div.field-value
-      %label
-        = f.radio_button :will_play_in_us_open, true
-        Yes
-      %label
-        = f.radio_button :will_play_in_us_open, false
-        No
-
-      %div.field-help-text
-        Please #{link_to 'contact the U.S. Open tournament director', contacts_path}
-        if your estimated rank is different from your AGA rank.
-
-.dialog#dialog_aga_id{:title => "What is an AGA ID?"}
-  %p
-    Each AGA member is assigned an identification number.  Only AGA members
-    may participate in AGA tournaments.
-  %p
-    If you are not currently an AGA member, please visit the
-    = link_to "American Go Association", "http://www.usgo.org", :target => '_blank'
-    website and join before coming to the #{@year.year} U.S. Go Congress.
+    %div.field-help-text
+      Please #{link_to 'contact the U.S. Open tournament director', contacts_path}
+      if your estimated rank is different from your AGA rank.
 
 .dialog#dialog_rank{:title => "What is my AGA Rank?"}
   %p

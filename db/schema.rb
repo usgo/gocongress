@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_19_162112) do
+ActiveRecord::Schema.define(version: 2021_05_19_170253) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -113,6 +113,9 @@ ActiveRecord::Schema.define(version: 2021_05_19_162112) do
     t.boolean "receive_sms"
     t.boolean "checked_in", default: false
     t.string "state", limit: 2
+    t.string "username_kgs"
+    t.string "username_igs"
+    t.string "username_ogs"
     t.index ["id", "year"], name: "index_attendees_on_id_and_year", unique: true
     t.index ["user_id"], name: "index_attendees_on_user_id"
   end
@@ -281,6 +284,11 @@ ActiveRecord::Schema.define(version: 2021_05_19_162112) do
     t.string "location", limit: 50
     t.boolean "show_in_nav_menu", default: false, null: false
     t.integer "ordinal", default: 1, null: false
+    t.boolean "registration_sign_up"
+    t.integer "event_type"
+    t.string "server"
+    t.integer "min_rank"
+    t.integer "max_rank"
     t.index ["id", "year"], name: "index_tournaments_on_id_and_year", unique: true
   end
 

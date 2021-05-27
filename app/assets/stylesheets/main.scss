@@ -652,17 +652,23 @@ div.field {
   padding: 5px 0px;
   margin: 0 0 1em;
 }
-div.field_with_errors {
-  background-color: white;
-  display: inline;
-  padding: 0;
-}
-div.field_with_errors input {
-  background-color: white;
-}
 
 .field.flex {
   display: flex;
+  margin-bottom: 1em;
+  flex-wrap: wrap;
+
+  &.field_with_errors {
+    border: 2px dotted red;
+    border-radius: 5px;
+  }
+}
+
+.field-errors {
+  color: red;
+  margin-left: 160px;
+  padding-bottom: 10px;
+  width: 100%;
 }
 
 .field-key {
@@ -674,6 +680,15 @@ div.field_with_errors input {
   width: 150px;
   text-align: right;
   flex-shrink: 0;
+
+  .field_with_errors {
+    color: red;
+  }
+
+  &.required label::after {
+    // Non-breaking space + asterisk
+    content: "\00a0*";
+  }
 }
 
 .field-value {
@@ -698,13 +713,11 @@ div.field_with_errors input {
     font: {
       size: 14px;
     }
-    margin: {
-      top: 0.5em;
-      bottom: 1em;
-    }
+    line-height: 2;
   }
 }
 
+/*
 div.field:not(.flex) label:first-child,
 div.field_with_errors label:first-child {
   color: hsl(0, 0%, 50%);
@@ -718,6 +731,7 @@ div.field_with_errors label:first-child {
     width: auto;
   }
 }
+*/
 
 div.field label:not(:first-child) {
   align-items: center;
@@ -813,7 +827,7 @@ fieldset.wordy-questions .aligned-with-input {
 }
 
 .hide {
-  display: none;
+  display: none !important;
 }
 
 .valid {
@@ -961,5 +975,68 @@ select {
         font-weight: bold;
       }
     }
+  }
+}
+
+.tournament-registration {
+  margin-bottom: $spacing-unit;
+
+  .name {
+    background-color: $box-bg-light;
+    label {
+      display: block;
+      padding: $spacing-unit / 2;
+    }
+
+    [type="checkbox"] {
+      margin-right: 0.5em;
+    }
+
+    h4 {
+      padding: 0;
+    }
+  }
+
+  .information {
+    display: flex;
+    padding: $spacing-unit / 2;
+
+    @include breakpoint(lt-sm) {
+      flex-direction: column;
+    }
+
+    .heading {
+      font-weight: bold;
+      margin: 0;
+      padding: 0;
+    }
+
+    .heading + p {
+      padding-top: 0;
+    }
+
+    > * {
+      flex: 1 0 0;
+      padding-right: $spacing-unit / 2;
+      &:last-child {
+        padding-right: 0;
+      }
+    }
+  }
+
+  .description {
+    padding: $spacing-unit / 2;
+    padding-top: 0;
+  }
+}
+
+.administration {
+  border: 5px solid $admin-nav-bg-color;
+  padding: $spacing-unit / 2;
+  margin: $spacing-unit 0;
+}
+
+[class^="registration_username"] {
+  &.validating {
   }
 }

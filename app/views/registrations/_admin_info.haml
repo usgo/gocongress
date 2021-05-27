@@ -1,11 +1,16 @@
-%h3 Administration*
-%fieldset
-  .field
-    = f.label :minor_agreement_received
-    = f.check_box :minor_agreement_received
-  .field
-    = f.label :comment
-    = f.text_area :comment, {:class => "inline", :rows => 3 }
+%div.administration
+  %h3 Administration
+  %p.field-help-text
+    Only admins see this section.
 
-- content_for :footnote do
-  %p.smalltext * Only admins see this section.
+  %fieldset
+    = render :layout => 'shared/field',
+    :locals => { :field => f, :attribute => :minor_agreement_received } do
+      = f.check_box :minor_agreement_received
+
+    = render :layout => 'shared/field',
+    :locals => { :field => f, :attribute => :comment } do
+      = f.text_area :comment, {:class => "inline", :rows => 3 }
+
+  - content_for :footnote do
+    %p.smalltext * Only admins see this section.

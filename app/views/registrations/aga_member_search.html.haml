@@ -27,13 +27,6 @@
   const searchingMessage = memberSearch.querySelector('.searching-message');
   console.log('searchingMessage', searchingMessage)
 
-  // A generic debouncer
-  let debounceTimeout;
-  const debounce = (fn, ms = 100) => {
-    clearTimeout(debounceTimeout);
-    debounceTimeout = setTimeout(fn, ms)
-  }
-
   // Search the AGA Members app for either a name or ID
   const searchMembers = async () => {
     if (!input.value) {

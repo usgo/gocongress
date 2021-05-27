@@ -1,63 +1,53 @@
 %fieldset
 
-  .field.flex.required
-    %div.field-key
-      %label Name *
-    %div.field-value
-      = f.text_field :given_name, :placeholder => 'Given Name', :size => 15, :required => true
-      = f.text_field :alternate_name, :placeholder => '(Alternate Name)', :size => 15
-      = f.text_field :family_name, :placeholder => 'Family Name', :size => 15, :required => true
+  = render :layout => 'shared/field',
+  :locals => { :field => f, :attribute => :name, :required => true } do
+    = f.text_field :given_name, :placeholder => 'Given Name', :size => 15, :required => true
+    = f.text_field :alternate_name, :placeholder => '(Alternate Name)', :size => 15
+    = f.text_field :family_name, :placeholder => 'Family Name', :size => 15, :required => true
 
-  .field.flex
-    %div.field-key
-      = f.label :anonymous, trl_attr(:attendee, :anonymous)
 
-    %div.field-value
-      %label
-        = f.check_box :anonymous
-        Hide name on the &ldquo;Who&rsquo;s Coming&rdquo; list.
+  = render :layout => 'shared/field',
+  :locals => { :field => f, :attribute => :anonymous } do
+    %label
+      = f.check_box :anonymous
+      %div.field-help-text Hide name on the #{link_to 'Who is Coming?', :attendees} list.
 
-  .field.flex
-    %div.field-key
-      = f.label :gender, 'Gender *'
-    %div.field-value
-      %label 
-        = f.radio_button :gender, 'm', :required => true
-        Male
-      %label 
-        = f.radio_button :gender, 'f', :required => true
+  = render :layout => 'shared/field',
+  :locals => { :field => f, :attribute => :gender, :required => true} do
+    %label 
+      = f.radio_button :gender, 'm', :required => true
+      Male
+    %label 
+      = f.radio_button :gender, 'f', :required => true
+      Female
+    %label 
+      = f.radio_button :gender, 'o', :required => true
+      Other
 
-        Female
-      %label 
-        = f.radio_button :gender, 'o', :required => true
-
-        Other
-
-  .field.flex
-    %div.field-key
-      = f.label :birth_date, 'Birth date *'
-    %div.field-value
-      - if params[:type] == "adult"
-        = f.date_select :birth_date, :start_year => @year.year - 18, :end_year => 1900, :include_blank => true
-      - else
-        = f.date_select :birth_date, :start_year => @year.year, :end_year => @year.year - 18, :include_blank => true
-
-      .field-help-text To identify minors.
+  = render :layout => 'shared/field',
+  :locals => { :field => f, :attribute => :birth_date, :required => true,
+  :help_text => "To identify minors." } do
+    - if params[:type] == "adult"
+      = f.date_select :birth_date, :start_year => @year.year - 18, :end_year => 1900, :include_blank => true
+    - else
+      = f.date_select :birth_date, :start_year => @year.year, :end_year => @year.year - 18, :include_blank => true
 
   - if params[:type] == "youth"
     - if @year.event_type == "in-person"
-      .field
-        = f.label :understand_minor, 'Youth Attendance Agreement<br />(for minors) *'.html_safe
+      = render :layout => 'shared/field',
+      :locals => { :field => f, :attribute => :understand_minor, :required => true, } do
         = f.check_box :understand_minor, class: "valign-middle"
         %div#liability-release-instructions.smalltext
           I understand that if this attendee will not be at least 18 years old on
           = @year.start_date.to_formatted_s(:long)
           then I must submit the #{link_to_liability_release} to the
           = link_to 'registrar.', contacts_path, :target => '_blank'
-      .field
-        = f.label :guardian_full_name, 'Guardian Name *<br />(for minors)'.html_safe
-        = f.text_field :guardian_full_name
-        %span.smalltext Attending adult responsible for minor
+
+      = render :partial => 'shared/field',
+      :locals => { :field => f, :attribute => :guardian_full_name, :required => true,
+      :help_text => "Attending adult responsible for minor"}
+
     - else
       = f.hidden_field(:understand_minor, :value => true)
       = f.hidden_field(:guardian_full_name, :value => 'N/A')

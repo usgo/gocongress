@@ -1,37 +1,28 @@
 %fieldset
-  .field
-    = f.label :phone, trl_attr(:attendee, :phone) + ' *'
+  = render :layout => 'shared/field',
+  :locals => { :field => f, :attribute => :phone, :required => true } do
     = f.telephone_field :phone, value: f.object.phone, data: { intl_phone: "true"}
 
-  .field.flex
-    %div.field-key
-      = f.label :receive_sms, trl_attr(:attendee, :receive_sms) + ' *'
-    
-    %div.field-value
-      %ul.radio
-        %li
-          %label
-            = f.radio_button :receive_sms, true, checked: (params[:receive_sms] == nil ? true : params[:receive_sms])
-            Send Me Text Message Notifications
-        %li
-          %label
-            = f.radio_button :receive_sms, false
-            Don&rsquo;t Send Me Any Text Messages
-      .field-help-text You can opt out of these at any time. Message and data rates may apply.
+  = render :layout => 'shared/field',
+  :locals => { :field => f, :attribute => :receive_sms, :required => true } do
+    %ul.radio
+      %li
+        %label
+          = f.radio_button :receive_sms, true, checked: (params[:receive_sms] == nil ? true : params[:receive_sms])
+          Send Me Text Message Notifications
+      %li
+        %label
+          = f.radio_button :receive_sms, false
+          Don&rsquo;t Send Me Any Text Messages
+    .field-help-text You can opt out of these at any time. Message and data rates may apply.
 
-  .field.flex
-    %div.field-key
-      = f.label :email, trl_attr(:attendee, :email) + ' *'
-    %div.field-value
-      = f.email_field :email
-  .field.flex
-    %div.field-key
-      = f.label :state
-    %div.field-value
-      = f.select :state, STATES, { :include_blank => true }
-  -# ISO 3166-1 alpha-2
-  .field.flex
-    %div.field-key
-      = f.label :country, trl_attr(:attendee, :country) + ' *'
-    %div.field-value
-      = f.select :country, COUNTRIES, { :include_blank => true }
+  = render :partial => 'shared/field',
+  :locals => { :field => f, :attribute => :email, :required => true, :type => 'email' }
+
+  = render :layout => 'shared/field',
+  :locals => { :field => f, :attribute => :state } do
+    = f.select :state, STATES, { :include_blank => true }
+
+  = render :layout => 'shared/field',
+  :locals => { :field => f, :attribute => :country, :required => true } do
+    = f.select :country, COUNTRIES, { :include_blank => true }
