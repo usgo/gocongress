@@ -55,6 +55,11 @@ RSpec.describe "API", type: :request do
 
     describe "GET KGS Username" do
       it "returns a 200 status code for a username that does exist" do
+        skip <<-EOS.squish.freeze
+          Intermittently failing with "OpenURI::HTTPError: 503". We should
+          rewrite this test to avoid actual network operations, by using
+          rspec-mocks, or more advanced techniques like webmock or vcr.
+        EOS
         get "/api/kgs/cloudbrows", :params => {}
 
         expect(response).to have_http_status(:ok)
