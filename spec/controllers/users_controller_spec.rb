@@ -169,13 +169,17 @@ RSpec.describe UsersController, :type => :controller do
         }.to_not change { user.reload.role }
       end
 
-      it 'user can update own email address' do
-        sign_in user
-        new_email = 'derp' + user.email
-        attrs = user_attributes.merge(email: new_email)
-        expect {
+      context 'when updating own email address' do
+        it 'is saved in the unconfirmed_email column' do
+          email1 = user.email
+          email2 = 'derp' + email1
+          sign_in user
+          attrs = user_attributes.merge(email: email2)
           patch :update, params: { id: user.id, user: attrs, year: user.year }
-        }.to change { user.reload.email }
+          user.reload
+          expect(user.email).to eq(email1)
+          expect(user.unconfirmed_email).to eq(email2)
+        end
       end
     end
   end

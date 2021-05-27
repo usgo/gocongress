@@ -4,6 +4,14 @@ RSpec.describe 'passwords', :type => :feature do
   let(:password) { 'asdfasdf' }
   let(:user) { create :user, :password => password }
 
+  before do
+    ActiveJob::Base.queue_adapter.perform_enqueued_jobs = true
+  end
+
+  after do
+    ActiveJob::Base.queue_adapter.perform_enqueued_jobs = false
+  end
+
   it 'sends reset password instructions and changes password' do
     visit new_user_session_path(year: user.year)
     click_link 'Forgot your password?'

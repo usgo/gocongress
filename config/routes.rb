@@ -37,9 +37,31 @@ Gocongress::Application.routes.draw do
 
         get 'costs' => 'plan_categories#index'
 
+        # ## Devise routes
+        #
+        # It's a bit confusing that `sign_ups` is both the name of our
+        # `Devise::RegistrationsController` controller, and a routing path, as
+        # in `/sign_ups/confirmations`. We might want to consider the following
+        # configuration, which is more traditional:
+        #
+        # ```
+        # devise_for :users,
+        #   controllers: {
+        #     confirmations: 'users/confirmations',
+        #     registrations: 'users/registrations'
+        #   }
+        # ```
+        #
+        # This would pose a new problem, however. We would have both a
+        # `users/registrations` controller, and a `registrations` controller.
+        # This is probably why we adopted the term "sign ups" in the first
+        # place.
         devise_for :users,
-          :controllers => { :registrations => "sign_ups" },
-          :path => 'sign_ups'
+          controllers: {
+            confirmations: 'users/confirmations',
+            registrations: "sign_ups"
+          },
+          path: 'sign_ups'
 
         resources :activities, :contacts, :content_categories,
           :contents, :activity_categories,

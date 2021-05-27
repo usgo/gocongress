@@ -25,12 +25,17 @@ module Gocongress
     # action_mailer
     # -------------
 
+    config.action_mailer.default_options = {
+      from: ENV.fetch('USGC_MAIL_FROM')
+    }
+
     # action_mailer's default_url_options should not be confused with
-    # ActionController#default_url_options().  Unlike in ActionController, we
+    # ActionController#default_url_options(). Unlike in ActionController, we
     # can only set static values here, and we can only use what's available
-    # during initialization.  Specifically, this means that we cannot specify
-    # a deafult year, as we do in ActionController.  -Jared 2012-01-18
+    # during initialization. Specifically, this means that we cannot specify a
+    # default year, as we do in ActionController.
     config.action_mailer.default_url_options = { :host => "www.gocongress.org" }
+
     config.action_mailer.delivery_method = :smtp
     config.action_mailer.smtp_settings = {
       :address => "smtp.gmail.com",

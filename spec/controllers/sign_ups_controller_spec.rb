@@ -15,6 +15,7 @@ RSpec.describe SignUpsController, :type => :controller do
     it 'should succeed' do
       get :new, params: { :year => year }
       if year == 2019
+        # TODO: This branch is unreachable and so can be deleted
         assert_redirected_to year_path
       else
         assert_response :success
@@ -24,24 +25,24 @@ RSpec.describe SignUpsController, :type => :controller do
 
   describe "#create" do
     context "given a valid attributes" do
-      let(:attrs) {{
-        email: 'example@example.com',
-        password: 'asdfasdf',
-        password_confirmation: 'asdfasdf',
-        year: year }}
-
-      it "succeeds" do
-        if year == 2019
-          expect {
-            post :create, params: { user: attrs, year: year }
-          }.to change { User.count }.by(0)
-          expect(response).to redirect_to year_path
-        else
-          expect {
-            post :create, params: { user: attrs, year: year }
-          }.to change { User.count }.by(+1)
-          expect(response).to redirect_to user_path(User.last)
-        end
+      it "succeeds, sends confirmation instructions" do
+        attrs = {
+          email: 'example@example.com',
+          password: 'asdfasdf',
+          password_confirmation: 'asdfasdf',
+          year: year
+        }
+        expect {
+          post :create, params: { user: attrs, year: year }
+        }.to(
+          change { User.count }.by(+1).and(
+            have_enqueued_mail(Devise::Mailer, 'confirmation_instructions')
+          )
+        )
+        expect(flash[:notice]).to start_with(
+          'A message with a confirmation link has been sent'
+        )
+        expect(response).to redirect_to(year_path)
       end
     end
 
@@ -65,6 +66,7 @@ RSpec.describe SignUpsController, :type => :controller do
       it "shows the form again" do
         attempt_to_create_invalid_user
         if year == 2019
+          # TODO: This branch is unreachable and so can be deleted
           expect(response.status).to eq(302)
         else
           expect(response).to be_successful
@@ -76,6 +78,7 @@ RSpec.describe SignUpsController, :type => :controller do
     it "raises error if role parameter is present" do
       u = user_attributes.merge(role: 'A')
       if year == 2019
+        # TODO: This branch is unreachable and so can be deleted
         expect {
           post :create, params: { user: u, year: year }
         }.to change { User.count }.by(0)
