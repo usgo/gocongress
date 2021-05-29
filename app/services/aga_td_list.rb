@@ -42,17 +42,20 @@ class AgaTdList
     # Hit the AGA TD List for data in TSV format
     file = ''
     begin
-      Timeout.timeout(60) do
-        file = URI.open("https://www.usgo.org/mm/tdlista.txt") { |f| f.read }
-      end
-    rescue Timeout::Error
-      # Fallback in case usgo.org is down.
-      # Update this file as close to the beginning of Congress as possible.
-      ::Rails.logger.error 'Failed to get tdlist, falling back to fixture'
+      file = URI.parse("https://www.usgo.org/mm/tdlista.txt").open(
+        read_timeout: 10,
+        open_timeout: GENERIC_OPEN_TIMEOUT
+      ) { |f| f.read }
+    rescue Timeout::Error => e
+      ::Rails.logger.warn(
+        format('Failed to get tdlist, falling back to fixture: %s', e)
+      )
 
-      # Use a shortened version of the TD list. The full one is quite large!
-      # Also, this one won't change over time, so our examples won't go out of date.
-      file = URI.open("./spec/fixtures/files/tdlista.txt") { |f| f.read }
+      # Fallback in case usgo.org is down. Update this file as close to the
+      # beginning of Congress as possible. Use a shortened version of the TD
+      # list. The full one is quite large! Also, this one won't change over
+      # time, so our examples won't go out of date.
+      file = File.read("./spec/fixtures/files/tdlista.txt")
     end
 
     return file

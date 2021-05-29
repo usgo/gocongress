@@ -102,7 +102,6 @@ RSpec.describe User, :type => :model do
   end
 
   describe "#get_invoice_total" do
-
     it "equals the sum of invoice items" do
       user = build :user
       allow(user).to receive(:invoice_items) {[
@@ -113,33 +112,25 @@ RSpec.describe User, :type => :model do
     end
 
     it "increases when plan with qty is added" do
-      skip <<-EOS.squish
-        Fails randomly, perhaps a third of the time, both locally and in CI.
-        TODO: investigate and improve test
-      EOS
-
       attendee = create :attendee
       user = attendee.user
       total_before = user.get_invoice_total
-
-      # add a plan with qty > 1 to attendee
-      p = create :plan, :max_quantity => 10 + rand(10)
-      qty = 1 + rand(p.max_quantity)
-      ap = AttendeePlan.new :plan_id => p.id, :quantity => qty
-      user.attendees.first.attendee_plans << ap
+      plan = create :plan, max_quantity: 3
+      qty = plan.max_quantity - 1
+      ap = AttendeePlan.new :plan_id => plan.id, :quantity => qty
+      attendee.attendee_plans << ap
 
       # assert that user's inv. item total increases by price * qty
-      expected = (total_before + qty * p.price).to_f
+      expected = (total_before + qty * plan.price).to_f
       actual = user.get_invoice_total.to_f
       expect(actual).to be_within(0.001).of(expected)
 
-      # change plan qty by 1, assert that invoice total changes by price
-      expected = user.get_invoice_total + p.price
+      # increment plan qty by 1, assert that invoice total changes by price
+      expected = user.get_invoice_total + plan.price
       ap.quantity += 1
-      ap.save
+      ap.save!
       expect(user.get_invoice_total).to be_within(0.001).of(expected)
     end
-
   end
 
   describe '#destroy' do

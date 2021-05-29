@@ -14,7 +14,8 @@
 
   %div#not_an_aga_member
     %p
-      = link_to "This attendee is not an AGA member", url_for(request.params.merge({:aga_id => 'none'})), class: 'button'
+      = link_to "This attendee is not an AGA member",
+        url_for(request.params.merge({:aga_id => 'none'})), class: 'button'
     %div.help-text
       %p AGA Membership is required to play in AGA tournaments, but not for other Congress activities.
       %p You can #{link_to "join the AGA", "https://www.usgo.org/members/join"} or manage your membership at the #{link_to "AGA Members / Chapters Area", "https://www.usgo.org/members"}.
