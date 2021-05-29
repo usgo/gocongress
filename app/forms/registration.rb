@@ -71,7 +71,6 @@ class Registration
     @tournament_selections = p[:tournament_ids].map(&:to_i)
     persist_tournaments
 
-
     @plan_selections = parse_plan_params(p[:plans])
     @understand_minor = p[:registration][:understand_minor]
     attendee.attributes = attendee_params(p[:registration])

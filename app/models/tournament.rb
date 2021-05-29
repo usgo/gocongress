@@ -42,8 +42,8 @@ class Tournament < ApplicationRecord
 
   def init
     # Set default values
-    self.registration_sign_up ||=:false
-    self.event_type ||=:'in-person'
+    self.registration_sign_up ||= false
+    self.event_type ||= :'in-person'
   end
 
   def self.openness(o) where(:openness => o) end
@@ -67,7 +67,7 @@ class Tournament < ApplicationRecord
     SERVERS[self.server.to_sym][:name]
   end
 
-  def is_online?
+  def online?
     event_type == :online.to_s
   end
 end

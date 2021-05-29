@@ -63,7 +63,9 @@ class Attendee < ApplicationRecord
     :in => [true, false], :message => ' - Please select yes or no'}
   validates_numericality_of :aga_id, :only_integer => true, :allow_nil => true, :message => "id is not a number"
 
+  # rubocop:disable Style/FormatStringToken 
   username_message = " - One of the tournaments you selected needs your %{attribute}."
+  # rubocop:enable Style/FormatStringToken 
   validates :username_kgs, :presence => { :if => Proc.new { |x| in_tournament?("kgs") }, :message => username_message }
   validates :username_igs, :presence => { :if => Proc.new { |x| in_tournament?("igs") }, :message => username_message }
   validates :username_ogs, :presence => { :if => Proc.new { |x| in_tournament?("ogs") }, :message => username_message }

@@ -10,14 +10,14 @@ class Year < ApplicationRecord
 
   with_options({:presence => true}) do |wo|
     wo.validates :event_type
-    wo.validates :city, unless: :is_online?
+    wo.validates :city, unless: :online?
     wo.validates :date_range
     wo.validates :day_off_date
     wo.validates :ordinal_number, :numericality => { :only_integer => true, :minimum => 27 }
     wo.validates :registration_phase, :inclusion => { :in => %w(closed open complete canceled) }
     wo.validates :reply_to_email
     wo.validates :start_date
-    wo.validates :state, unless: :is_online?
+    wo.validates :state, unless: :online?
     wo.validates :timezone
     wo.validates :year, :numericality => { :only_integer => true, :minimum => 2011, :maximum => 2100 }
   end
@@ -30,7 +30,7 @@ class Year < ApplicationRecord
     self.mailing_list_link ||=:'http://eepurl.com/bC8CBX'
   end
 
-  def is_online?
+  def online?
     event_type == :online.to_s
   end
 
