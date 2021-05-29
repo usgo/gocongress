@@ -71,9 +71,6 @@ class Registration
     @tournament_selections = p[:tournament_ids].map(&:to_i)
     persist_tournaments
 
-    print("\n\n*** TOURNAMENT SELECTIONS ***\n")
-    puts @tournament_selections
-    print("\n***\n\n")
 
     @plan_selections = parse_plan_params(p[:plans])
     @understand_minor = p[:registration][:understand_minor]

@@ -24,9 +24,6 @@ class TournamentsController < ApplicationController
   end
 
   def update
-    print("\n------------\n")
-    puts @tournament.inspect
-    print("\n------------\n")
     if @tournament.update(tournament_params)
       redirect_to tournament_path(@tournament), :notice => 'Tournament updated.'
     else

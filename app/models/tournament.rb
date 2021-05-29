@@ -68,10 +68,6 @@ class Tournament < ApplicationRecord
   end
 
   def is_online?
-    print("\n^#^^^^^^^\n")
-    print(event_type)
-    print(self.inspect)
-    print("\n^^^^^^^^^\n")
     event_type == :online.to_s
   end
 end

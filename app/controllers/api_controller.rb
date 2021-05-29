@@ -56,7 +56,6 @@ class ApiController < ApplicationController
 
   # Use KGS's archives page to see if a username exists
   def kgs_username
-    print("\n\n-----#{params['username']}------\n\n")
     document = Nokogiri::HTML.parse(URI.open("http://gokgs.com/gameArchives.jsp?user=#{params['username']}"))
     result = document.css("p")[0]
 
