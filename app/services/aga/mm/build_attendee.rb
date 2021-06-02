@@ -17,7 +17,7 @@ module AGA
 
         # Get member info from the API
         api_url_prefix = "https://www.usgo.org/mm/api/members/"
-        action = "#{params[:aga_id]}?api_key=#{ENV['AGA_MEMBERS_API_KEY']}"
+        action = "#{@aga_id}?api_key=#{ENV['AGA_MEMBERS_API_KEY']}"
         url = "#{api_url_prefix}#{action}"
 
         begin

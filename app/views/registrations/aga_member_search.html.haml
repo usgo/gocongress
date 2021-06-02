@@ -26,7 +26,6 @@
   const searchResultsContainer = memberSearch.querySelector('.search-results');
   const input = memberSearch.querySelector('input');
   const searchingMessage = memberSearch.querySelector('.searching-message');
-  console.log('searchingMessage', searchingMessage)
 
   // Search the AGA Members app for either a name or ID
   const searchMembers = async () => {
@@ -81,6 +80,6 @@
     searchingMessage.classList.toggle('initially-hidden', !state);
   }
 
-  input.addEventListener('keyup', () => debounce(searchMembers, 500));
+  input.addEventListener('keyup', debounce(searchMembers, 500));
 
   input.addEventListener('keypress', displaySearchingMessage);

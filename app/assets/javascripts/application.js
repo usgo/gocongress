@@ -447,12 +447,12 @@ function displayDailySchedule() {
 }
 
 // A generic debouncer
-const debounce = (callback, wait = 100) => {
-  let timeoutId = null;
-  return (...args) => {
-    window.clearTimeout(timeoutId);
-    timeoutId = window.setTimeout(() => {
-      callback.apply(null, args);
+function debounce(func, wait = 100) {
+  let timeout;
+  return function (...args) {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => {
+      func.apply(this, args);
     }, wait);
   };
-};
+}
