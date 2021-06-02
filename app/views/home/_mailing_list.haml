@@ -4,10 +4,6 @@
   - else
     Mailing List
 %p
-  Be among the first to know when registration is open! For the latest updates
-  and announcements, please
-  - if @year.year == 2019
-    = link_to "subscribe", "http://eepurl.com/dCcejX"
-  - else
-    = link_to "subscribe", "http://eepurl.com/bC8CBX"
-  to the U.S. Go Congress mailing list.
+  Be among the first to know when registration is open! 
+  = link_to "Subscribe", @year.mailing_list_link
+  to the U.S. Go Congress mailing list for the latest updates and announcements.

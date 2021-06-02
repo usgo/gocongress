@@ -5,11 +5,13 @@
 
 - rows ||= 5
 
-%label{ :for => obj.to_s + '_' + atr.to_s}
-  = atr.to_s.titleize
-  %br
-  %span.smalltext
-    You can format the text (bold, etc.) with
-    %a{ :href => 'https://daringfireball.net/projects/markdown/syntax', :target => '_blank' } Markdown.
+%div.field-key
+  %label{ :for => obj.to_s + '_' + atr.to_s}
+    = atr.to_s.titleize
+    %br
+    %span.smalltext
+      You can format the text (bold, etc.) with
+      %a{ :href => 'https://daringfireball.net/projects/markdown/syntax', :target => '_blank' } Markdown.
 
-= text_area obj, atr, { maxlength: defined?(maximum_length) ? maximum_length : "", :class => 'wide', :rows => rows }
+%div.field-value
+  = text_area obj, atr, { maxlength: defined?(maximum_length) ? maximum_length : "", :class => 'wide', :rows => rows }

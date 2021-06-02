@@ -4,13 +4,7 @@
   %p Registration for the #{@year.year} Go Congress has not yet begun.
 
 - elsif @year.registration_phase == "canceled"
-  - if @year.year == 2020
-    %p
-      The 2020 U.S. Go Congress in Estes Park has been canceled. The 2020 e-Go
-      Congress does not have a public attendee list here, but we look forward to
-      seeing you!
-  - else
-    %p The #{@year.year} Go Congress has been canceled.
+  %p The #{@year.year} Go Congress has been canceled.
 
 - else
   - if @who_is_coming.count > 0

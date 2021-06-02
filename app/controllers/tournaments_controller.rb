@@ -47,6 +47,6 @@ class TournamentsController < ApplicationController
 
   def tournament_params
     params.require(:tournament).permit(:description, :directors, :eligible,
-      :location, :name, :openness, :show_in_nav_menu)
+      :location, :name, :openness, :show_in_nav_menu, :registration_sign_up, :event_type, :server, :min_rank, :max_rank)
   end
 end

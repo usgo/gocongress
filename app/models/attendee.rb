@@ -15,6 +15,9 @@ class Attendee < ApplicationRecord
   has_many :attendee_activities, :dependent => :destroy
   has_many :activities, :through => :attendee_activities
 
+  has_many :attendee_tournaments, :dependent => :destroy
+  has_many :tournaments, :through => :attendee_tournaments
+
   belongs_to :guardian,
     class_name: "Attendee",
     foreign_key: "guardian_attendee_id",
@@ -60,6 +63,13 @@ class Attendee < ApplicationRecord
     :in => [true, false], :message => ' - Please select yes or no'}
   validates_numericality_of :aga_id, :only_integer => true, :allow_nil => true, :message => "id is not a number"
 
+  # rubocop:disable Style/FormatStringToken 
+  username_message = " - One of the tournaments you selected needs your %{attribute}."
+  # rubocop:enable Style/FormatStringToken 
+  validates :username_kgs, :presence => { :if => Proc.new { |x| in_tournament?("kgs") }, :message => username_message }
+  validates :username_igs, :presence => { :if => Proc.new { |x| in_tournament?("igs") }, :message => username_message }
+  validates :username_ogs, :presence => { :if => Proc.new { |x| in_tournament?("ogs") }, :message => username_message }
+
   # Attendee must always have a user.  We validate the presence of
   # the user, rather than the user_id, so that models can be
   # instantiated in any order.  When the models are saved, the
@@ -72,6 +82,14 @@ class Attendee < ApplicationRecord
 
   # Class Methods
   # =============
+
+  # Check to see if an attendee is signed up for a tournament that takes place
+  # on a server, so that we can require the relevant username in that case
+  def in_tournament? server_name
+    tournaments = Tournament.yr(year).where(:registration_sign_up => true).order('ordinal')
+    selected_tournaments = tournaments.select { |t| self.tournament_ids.include? t.id }
+    selected_tournaments.any? { |t| t.server == server_name }
+  end
 
   def self.adults year
     where('birth_date < ?', CONGRESS_START_DATE[year.to_i] - 18.years)

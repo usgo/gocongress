@@ -1,0 +1,16 @@
+- required = false if local_assigns[:required].nil?
+- help_text = "" if local_assigns[:help_text].nil?
+- type = "text" if local_assigns[:type].nil?
+.field.flex{ :class => @registration.errors[attribute].any? ? "field_with_errors" : ""}
+  - if @registration.errors[attribute]
+    %div.field-errors
+      - @registration.errors[attribute].each do |error|
+        = trl_attr(:attendee, attribute) + ' ' + error
+
+  %div.field-key{ :class => required ? "required" : "not-required" }
+    = field.label attribute, trl_attr(:attendee, attribute)
+  %div.field-value
+    = yield.presence || field.text_field(attribute, :required => required, :type => type)
+    - if !help_text.blank?
+      %div.field-help-text
+        = help_text.html_safe
