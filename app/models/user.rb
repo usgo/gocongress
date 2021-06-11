@@ -18,9 +18,19 @@ class User < ApplicationRecord
 
   # Devise modules: Do not use :validatable now that
   # the email uniqueness validation has a year scope
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable,
-         {:authentication_keys => PRACTICAL_KEY, :reset_password_keys => PRACTICAL_KEY}
+  devise(
+    :database_authenticatable,
+    :confirmable,
+    :registerable,
+    :recoverable,
+    :rememberable,
+    :trackable,
+    {
+      authentication_keys: PRACTICAL_KEY,
+      reconfirmable: true,
+      reset_password_keys: PRACTICAL_KEY
+    }
+  )
 
   has_many :transactions, :dependent => :destroy
 
@@ -118,7 +128,17 @@ class User < ApplicationRecord
     update(params)
   end
 
-private
+  protected
+
+  # Send Devise mail via ActiveJob.
+  # https://github.com/heartcombo/devise#activejob-integration
+  #
+  # @override `Devise::Models::Authenticatable#send_devise_notification`
+  def send_devise_notification(notification, *args)
+    devise_mailer.send(notification, self, *args).deliver_later
+  end
+
+  private
 
   # Password is validated when first creating the user record,
   # or if the password is being changed.

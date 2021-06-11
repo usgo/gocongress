@@ -45,6 +45,10 @@ Naming/HeredocDelimiterNaming:
 Style/FormatStringToken:
   Enabled: false
 
+Style/NumericLiterals:
+  Exclude:
+    - db/schema.rb
+
 # Use `x > 0` because it is more specific than `x.positive?`.
 # However, `x.zero?` is acceptable because it is specific enough.
 Style/NumericPredicate:

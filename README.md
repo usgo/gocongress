@@ -65,7 +65,13 @@ loaded by the `dotenv` gem.
 For local development, `cp .env.example .env` to get started.
 For `stage` and `production` use [heroku config][2].
 
-## Email for gocongress.org
+## Email
+
+### Sent by Rails
+
+See doc/smtp.md
+
+### Received by gocongress.org staff
 
 Email for accounts in the gocongress.org domain is managed through
 Google Apps. steve.colburn@usgo.org has access to manage these accounts.

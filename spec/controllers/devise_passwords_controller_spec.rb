@@ -5,6 +5,11 @@ RSpec.describe Devise::PasswordsController, :type => :controller do
 
   before do
     @request.env["devise.mapping"] = Devise.mappings[:user]
+    ActiveJob::Base.queue_adapter.perform_enqueued_jobs = true
+  end
+
+  after do
+    ActiveJob::Base.queue_adapter.perform_enqueued_jobs = false
   end
 
   describe '#create' do

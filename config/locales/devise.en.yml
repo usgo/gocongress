@@ -22,7 +22,7 @@ en:
       updated: 'Your password was changed. You are now signed in.'
     confirmations:
       send_instructions: 'You will receive an email with instructions about how to confirm your account in a few minutes.'
-      confirmed: 'Your account was confirmed. You are now signed in.'
+      confirmed: 'Thank you for confirming your email address. You may now sign in.'
     sign_ups:
       user:
         signed_up: ''

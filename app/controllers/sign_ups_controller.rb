@@ -2,9 +2,15 @@ class SignUpsController < Devise::RegistrationsController
   before_action :remove_year_from_params, :except => [:create]
   before_action :assert_year_matches_route
   before_action :redirect_to_year_path
-  after_action :send_welcome_email, :only => [:create]
 
   protected
+
+  # The path used after sign up for inactive accounts. In our case, that means
+  # accounts that need to confirm their email address .. which is all of them.
+  # Everyone has to confirm their address. Everyone starts out "inactive".
+  def after_inactive_sign_up_path_for(_resource)
+    year_path
+  end
 
   # We `remove_year_from_params` on all actions except create.
   # This allows us to leave user.year attr_accessible, which is very
@@ -44,12 +50,4 @@ class SignUpsController < Devise::RegistrationsController
   def params_contains_user_attr(attribute)
     params.key?(:user) && params[:user].key?(attribute)
   end
-
-  # If the new user was created, send a welcome email.
-  def send_welcome_email
-    return if params[:user][:email].blank?
-    user = User.yr(@year).where(email: params[:user][:email]).first
-    UserMailer.welcome_email(user).deliver_later if user.present?
-  end
-
 end

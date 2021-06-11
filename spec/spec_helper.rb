@@ -37,4 +37,13 @@ RSpec.configure do |config|
   config.example_status_persistence_file_path = "spec/examples.txt"
   config.order = :random
   Kernel.srand config.seed
+
+  config.before do
+    # Clear the job queue before each test. I have no idea why `rspec-rails`
+    # doesn't do this automatically. I have to do the same thing in my main
+    # project at work.
+    queue_adapter = ActiveJob::Base.queue_adapter
+    queue_adapter.enqueued_jobs.clear
+    queue_adapter.performed_jobs.clear
+  end
 end
