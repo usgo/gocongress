@@ -45,6 +45,8 @@ module Pandanet
     # Info:  <None>
     # Defaults (help defs):  time 90, size 19, byo-yomi time 10, byo-yomi stones 25
     # ```
+    #
+    # @return [nil | Stats]
     def stats(username)
       # Debugging tip: add the "Output_log" option.
       server = Net::Telnet.new(
@@ -65,7 +67,7 @@ module Pandanet
       server.cmd("quit")
       server.close
 
-      stats_result
+      Stats.parse(username, stats_result)
     end
   end
 end

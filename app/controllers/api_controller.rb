@@ -34,19 +34,10 @@ class ApiController < ApplicationController
   def pandanet_username
     username = params.fetch('username')
     stats = Pandanet::Client.new.stats(username)
-    if stats.start_with?("Cannot find player.")
+    if stats.nil?
       render json: '{"error": "not_found"}', status: :not_found
     else
-      rating = stats.match(/Rating:\s*([1-9][0-9]?[dk])/)[1]
-      rank = stats.match(/Rank:\s*([1-9][0-9]?[dk])/)[1]
-      country = stats.match(/Country:\s*([A-Za-z]+)/)[1]
-      player_information = {
-        :username => username,
-        :rating => rating,
-        :rank => rank,
-        :country => country
-      }
-      render json: player_information
+      render json: stats.to_h
     end
   end
 
