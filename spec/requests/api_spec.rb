@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe "API", type: :request do
@@ -34,17 +36,39 @@ RSpec.describe "API", type: :request do
 
     describe "GET Pandanet Username" do
       it "returns member info for a username that exists" do
-        skip 'Test fails with Net::ReadTimeout. Temporarily skip until a solution is found'
+        mock_client = instance_double(::Pandanet::Client)
+        allow(::Pandanet::Client).to receive(:new).and_return(mock_client)
+        mock_stats = <<~EOS
+          Player:      cloudbrows
+          Game:        go (1)
+          Language:    default
+          Rating:      1d    0
+          Rated Games:      0
+          Rank:  1d  29
+          Wins:         0
+          Losses:       0
+          Last Access(GMT):   (Not on)    Sat May 29 13:56:48 2021
+          Last Access(local): (Not on)    Sat May 29 22:56:48 2021
+          Address:  panda@.us
+          Country:  USA
+          Community:  -
+          Reg date: Mon Jan  1 00:00:00 1900
+          Info:  <None>
+          Defaults (help defs):  time 90, size 19, byo-yomi time 10, byo-yomi stones 25
+        EOS
+        allow(mock_client).to(receive(:stats).and_return(mock_stats))
 
         get "/api/pandanet/cloudbrows", :params => {}
         parsed_body = JSON.parse(response.body)
 
-        expect(parsed_body["rating"]).to be_a(String)
-        expect(parsed_body["rating"]).not_to be_falsey
+        expect(parsed_body["rating"]).to eq('1d')
       end
 
       it "returns an error for a username that doesn't exist" do
-        skip 'Test fails with Net::ReadTimeout. Temporarily skip until a solution is found'
+        mock_client = instance_double(::Pandanet::Client)
+        allow(::Pandanet::Client).to receive(:new).and_return(mock_client)
+        mock_stats = 'Cannot find player.'
+        allow(mock_client).to(receive(:stats).and_return(mock_stats))
 
         get "/api/pandanet/nosanepersonchoosethisname", :params => {}
         parsed_body = JSON.parse(response.body)
