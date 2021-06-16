@@ -1,20 +1,21 @@
 %fieldset
-  = render :layout => 'shared/field',
-  :locals => { :field => f, :attribute => :phone, :required => true } do
-    = f.telephone_field :phone, value: f.object.phone, data: { intl_phone: "true"}
+  - unless @year.online?
+    = render :layout => 'shared/field',
+    :locals => { :field => f, :attribute => :phone, :required => true } do
+      = f.telephone_field :phone, value: f.object.phone, data: { intl_phone: "true"}
 
-  = render :layout => 'shared/field',
-  :locals => { :field => f, :attribute => :receive_sms, :required => true } do
-    %ul.radio
-      %li
-        %label
-          = f.radio_button :receive_sms, true, checked: (params[:receive_sms] == nil ? true : params[:receive_sms])
-          Send Me Text Message Notifications
-      %li
-        %label
-          = f.radio_button :receive_sms, false
-          Don&rsquo;t Send Me Any Text Messages
-    .field-help-text You can opt out of these at any time. Message and data rates may apply.
+    = render :layout => 'shared/field',
+    :locals => { :field => f, :attribute => :receive_sms, :required => true } do
+      %ul.radio
+        %li
+          %label
+            = f.radio_button :receive_sms, true, checked: (params[:receive_sms] == nil ? true : params[:receive_sms])
+            Send Me Text Message Notifications
+        %li
+          %label
+            = f.radio_button :receive_sms, false
+            Don&rsquo;t Send Me Any Text Messages
+      .field-help-text You can opt out of these at any time. Message and data rates may apply.
 
   = render :partial => 'shared/field',
   :locals => { :field => f, :attribute => :email, :required => true, :type => 'email' }

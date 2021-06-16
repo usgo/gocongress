@@ -1,6 +1,6 @@
 %noscript
   .noscript-warning
-    %h3 GoCongress.org works best with Javascript enabled
+    %h3 GoCongress.org works best with JavaScript enabled
 
 #header-container
   #header
@@ -8,14 +8,8 @@
       %h1
         = link_to "#{@year.year} U.S. #{@year.event_type == 'online' ? 'e-' : ''}Go Congress", year_path
     #usgc-when-where-container
-      - if @year.event_type == 'in-person'
+      - if @year.in_person?
         = @congress_city + ', ' + @congress_state
         &bull;
       = @congress_date_range + ','
       = @year.year
-
-    -# .header-logo
-      -# = link_to year_path do
-      -#   - f = "logo/usgc/#{@logo_file}"
-      -#   - if image_file?(f)
-      -#     = image_tag "logo/usgc/#{@logo_file}", :class => 'usgc-logo'

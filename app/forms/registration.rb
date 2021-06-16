@@ -203,7 +203,7 @@ class Registration
   def persist_activities
     @attendee.activity_ids = @activity_selections
   end
-  
+
   def persist_tournaments
     @attendee.tournament_ids = @tournament_selections
   end

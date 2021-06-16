@@ -56,7 +56,7 @@ module ApplicationHelper
   end
 
   def link_to_liability_release()
-    if @year.event_type == "in-person"
+    if @year.in_person?
       link_to "Youth Attendance Agreement",
         # This very particularly named file is a bit of an invisible requirement.
         # TODO: Improve how this is managed.

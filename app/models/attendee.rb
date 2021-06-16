@@ -3,6 +3,14 @@ require "invoice_item"
 class Attendee < ApplicationRecord
   include YearlyModel
 
+  # Attributes
+  # ----------
+
+  # The default of `receive_sms` is `false` because this and other phone-related
+  # form fields are only shown for in-person years. In an online year, `false`
+  # is the reasonable default.
+  attribute :receive_sms, :boolean, default: false
+
   # Associations
   # ------------
 
@@ -36,16 +44,18 @@ class Attendee < ApplicationRecord
   validate :birth_date_is_modern
   validates :country,         :format => {:with => /\A[A-Z]{2}\z/}, :presence => true
   validates :email,           :presence => true
-  validates :emergency_name,  :presence => true
-  validates :emergency_phone, :presence => true
+  with_options(presence: { if: ->(atd) { atd.year_record.in_person? } }) do
+    validates :emergency_name
+    validates :emergency_phone
+  end
   validates :family_name,     :presence => true
   validates :gender,          :inclusion => {:in => ["m","f","o"], :message => "is not valid"}, :presence => true
   validates :given_name,      :presence => true
   validates :guardian_full_name, :presence => { :if => :require_guardian_full_name? }
   validates :phone,
-            if: Proc.new { |a| a.receive_sms },
-            presence: true,
-            phone: true
+    if: ->(atd) { atd.receive_sms && atd.year_record&.in_person? },
+    presence: true,
+    phone: true
   validates :minor_agreement_received, :inclusion => {:in => [true, false]}
   validates :checked_in, :inclusion => {:in => [true, false]}
   validates :rank,

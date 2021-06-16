@@ -15,13 +15,13 @@
 
   = render :layout => 'shared/field',
   :locals => { :field => f, :attribute => :gender, :required => true} do
-    %label 
+    %label
       = f.radio_button :gender, 'm', :required => true
       Male
-    %label 
+    %label
       = f.radio_button :gender, 'f', :required => true
       Female
-    %label 
+    %label
       = f.radio_button :gender, 'o', :required => true
       Other
 
@@ -34,7 +34,7 @@
       = f.date_select :birth_date, :start_year => @year.year, :end_year => @year.year - 18, :include_blank => true
 
   - if params[:type] == "youth"
-    - if @year.event_type == "in-person"
+    - if @year.in_person?
       = render :layout => 'shared/field',
       :locals => { :field => f, :attribute => :understand_minor, :required => true, } do
         = f.check_box :understand_minor, class: "valign-middle"

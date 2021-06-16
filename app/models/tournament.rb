@@ -12,9 +12,9 @@ class Tournament < ApplicationRecord
   # Invitational - Admins select certain attendees
   OPENNESS_TYPES = [['Open','O'], ['Invitational','I']]
 
-  enum event_type: [:'in-person', :online]
+  enum event_type: [:in_person, :online]
 
-  SERVERS = { 
+  SERVERS = {
     :kgs => {
       :name => "KGS Go Server",
       :url => "http://gokgs.com/"
@@ -43,7 +43,7 @@ class Tournament < ApplicationRecord
   def init
     # Set default values
     self.registration_sign_up ||= false
-    self.event_type ||= :'in-person'
+    self.event_type ||= :in_person
   end
 
   def self.openness(o) where(:openness => o) end
@@ -65,9 +65,5 @@ class Tournament < ApplicationRecord
 
   def server_name
     SERVERS[self.server.to_sym][:name]
-  end
-
-  def online?
-    event_type == :online.to_s
   end
 end

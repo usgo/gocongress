@@ -15,7 +15,8 @@
   = render :partial => "/#{@year.year}/registrations/shirt_info", :locals => { :f => f } rescue render :partial => 'shirt_info', :locals => { :f => f }
   = render :partial => "/#{@year.year}/registrations/player_info", :locals => { :f => f } rescue render :partial => 'player_info', :locals => { :f => f }
   = render :partial => 'contact_info', :locals => { :f => f }
-  = render :partial => 'emergency_info', :locals => { :f => f }
+  - unless @year.online?
+    = render :partial => 'emergency_info', :locals => { :f => f }
   = render :partial => 'plans', :locals => { :f => f }
   = render :partial => 'wishes', :locals => { :f => f }
   = render :partial => 'tournaments', :locals => { :f => f }

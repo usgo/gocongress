@@ -1,6 +1,6 @@
 %h3 Requests
 %fieldset
-  - if @year.event_type == "in-person"
+  - if @year.in_person?
     .field.flex
       %div.field-key
         = f.label :roomate_request

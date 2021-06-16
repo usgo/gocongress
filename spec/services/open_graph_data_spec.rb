@@ -7,6 +7,7 @@ RSpec.describe OpenGraphData do
     context 'with in-person event' do
       it 'includes city' do
         year = Year.new(
+          event_type: 'in_person',
           year: 777,
           city: 'Xanadu',
           state: 'Yes',
