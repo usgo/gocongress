@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :year do
-    event_type { 'in-person'}
+    event_type { 'in_person' }
     year { Date.current.year }
     city { 'Black Mountain' }
     date_range { 'August 4 - 12' }

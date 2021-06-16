@@ -1,5 +1,5 @@
 / Virtual and physical addresses
-- if @year.event_type == 'in-person' || @year.twitter_url.present? || @year.facebook_url.present?
+- if @year.in_person? || @year.twitter_url.present? || @year.facebook_url.present?
   .addresses
     - if @year.twitter_url.present?
       %a.float-left{:href => @year.twitter_url}

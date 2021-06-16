@@ -1,7 +1,7 @@
 class Year < ApplicationRecord
   after_initialize :init
 
-  enum event_type: [:'in-person', :online]
+  enum event_type: [:in_person, :online]
 
   REG_PHASES = %w[closed open complete canceled]
 
@@ -26,12 +26,8 @@ class Year < ApplicationRecord
 
   def init
     # Set default values
-    self.event_type ||=:'in-person'
+    self.event_type ||= :in_person
     self.mailing_list_link ||=:'http://eepurl.com/bC8CBX'
-  end
-
-  def online?
-    event_type == :online.to_s
   end
 
   def circular_logo?

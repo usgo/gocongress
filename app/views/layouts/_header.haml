@@ -8,7 +8,7 @@
       %h1
         = link_to "#{@year.year} U.S. #{@year.event_type == 'online' ? 'e-' : ''}Go Congress", year_path
     #usgc-when-where-container
-      - if @year.event_type == 'in-person'
+      - if @year.in_person?
         = @congress_city + ', ' + @congress_state
         &bull;
       = @congress_date_range + ','

@@ -14,7 +14,7 @@ class OpenGraphData
   end
 
   def description
-    location = @year.event_type == "in-person" ? "#{@city}, #{@state}" : ""
+    location = @year.in_person? ? "#{@city}, #{@state}" : ""
     case @year.registration_phase
     when "canceled"
       description = event_title + " has been canceled."

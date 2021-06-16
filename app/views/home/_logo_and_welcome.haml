@@ -6,13 +6,13 @@
         = image_tag "logo/usgc/#{@logo_file}"
 
   %div
-    
+
   - if @year.registration_phase == 'canceled'
     %h2
       The #{@year} Go Congress has been Canceled
   - elsif @upcoming
     %h2
-      - if @year.event_type == 'in-person'
+      - if @year.in_person?
         Join us for the #{@year.ordinal_number.ordinalize}&nbsp;Annual U.S.&nbsp;Go&nbsp;Congress
       - else
         Join us for the #{@year} e-Go Congress
