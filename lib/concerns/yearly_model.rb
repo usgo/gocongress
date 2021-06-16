@@ -1,8 +1,6 @@
 module YearlyModel
   extend ActiveSupport::Concern
 
-  # The contents of included() will be run when YearlyModel is
-  # include()d in the model, thanks to ActiveSupport::Concern
   included do
     # TODO: replace all `year` columns that reference `years.year` with
     # `year_id` columns that reference `years.id`. This is the Rails convention,
@@ -18,10 +16,7 @@ module YearlyModel
       :presence => true
   end
 
-  # Methods in this "sub-module" will become class methods in whatever
-  # class YearlyModel is mixed into.
   module ClassMethods
-
     # `yr` is a common shortcut to limit query to current year.
     # The argument is an instance or subclass of Integer, or
     # an instance of the Year model.
@@ -36,8 +31,4 @@ module YearlyModel
       where(:year => y)
     end
   end
-
-  # instance methods can be added here, eg.
-  # def forty_two() 42 end
-  # there is no need for a "sub-module" as with ClassMethods
 end
