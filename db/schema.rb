@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_26_231226) do
+ActiveRecord::Schema.define(version: 2021_06_16_023945) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -147,6 +147,8 @@ ActiveRecord::Schema.define(version: 2021_05_26_231226) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean "table_of_contents", default: false
+    t.integer "ordinal", default: 1, null: false
+    t.string "url"
     t.index ["id", "year"], name: "index_content_categories_on_id_and_year", unique: true
   end
 
