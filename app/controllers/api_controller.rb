@@ -32,28 +32,13 @@ class ApiController < ApplicationController
 
   # Use telnet to access Pandanet to get member information
   def pandanet_username
-    server = Net::Telnet.new("Host" => "igs.joyjoy.net", "Port" => 7777, "Timeout" => 10, "Prompt" => /#> /)
-    server.login(ENV['PANDANET_USERNAME'], ENV['PANDANET_PASSWORD'])
-
-    server.cmd("stats #{params['username']}") do |result|
-      if result.start_with?("Cannot find player.")
-        render json: '{"error": "not_found"}', status: :not_found
-      else
-        rating = result.match(/Rating:\s*([1-9][0-9]?[dk])/)[1]
-        rank = result.match(/Rank:\s*([1-9][0-9]?[dk])/)[1]
-        country = result.match(/Country:\s*([A-Za-z]+)/)[1]
-        player_information = {
-          :username => params['username'],
-          :rating => rating,
-          :rank => rank,
-          :country => country
-        }
-        render json: player_information
-      end
+    username = params.fetch('username')
+    stats = Pandanet::Client.new.stats(username)
+    if stats.nil?
+      render json: '{"error": "not_found"}', status: :not_found
+    else
+      render json: stats.to_h
     end
-
-    server.cmd("quit")
-    server.close
   end
 
   # Use KGS's archives page to see if a username exists
