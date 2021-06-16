@@ -692,6 +692,8 @@ div.field {
 }
 
 .field-value {
+  flex: 1 1 0%;
+
   label {
     align-items: center;
     display: inline-flex;
@@ -704,6 +706,10 @@ div.field {
     [type="checkbox"] {
       margin-right: 5px;
     }
+  }
+
+  [type="text"] {
+    min-width: 300px;
   }
 }
 

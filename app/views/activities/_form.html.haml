@@ -4,51 +4,77 @@
   = render :partial => "shared/error_messages", :locals => { :resource => @activity }
 
   %fieldset
-    .field
-      = f.label :name, mnh
-      = f.text_field :name
-    .field
-      = f.label :activity_category_id
-      = f.select :activity_category_id, activity_category_options
-    .field
-      = f.label :price
-      = number_field_for_cents f, :price, @activity.price
-    .field
-      = f.label :price_varies
-      = f.check_box :price_varies
-      %span.smalltext Show "Varies" instead of price
-    .field
-      = f.label :location, "Location"
-      = f.text_field :location
-      %p.smalltext.aligned-with-input
-        Include room number, if applicable
-    .field
-      = f.label :url
-      = f.text_field :url
-    .field
-      = f.label :phone
-      = f.text_field :phone
-    .field
+    .field.flex
+      .field-key
+        = f.label :name, mnh
+      .field-value
+        = f.text_field :name
+
+    .field.flex
+      .field-key
+        = f.label :activity_category_id
+      .field-value
+        = f.select :activity_category_id, activity_category_options
+
+    .field.flex
+      .field-key
+        = f.label :price
+      .field-value
+        = number_field_for_cents f, :price, @activity.price
+
+    .field.flex
+      .field-key
+        = f.label :price_varies
+      .field-value
+        = f.check_box :price_varies
+        .field-help-text Show "Varies" instead of price
+
+    .field.flex
+      .field-key
+        = f.label :location, "Location"
+      .field-value
+        = f.text_field :location
+        .field-help-text Include room number, if applicable
+
+    .field.flex
+      .field-key
+        = f.label :url
+      .field-value
+        = f.text_field :url
+
+    .field.flex
+      .field-key
+        = f.label :phone
+      .field-value
+        = f.text_field :phone
+
+    .field.flex
       = render partial: "shared/md_area", locals: { :obj => :activity, :atr => :notes}
-    .field
-      = f.label :disabled
-      = f.check_box :disabled
-      %span.smalltext
-        Attendees cannot add or remove disabled
-        = mnh.pluralize.downcase
+
+    .field.flex
+      .field-key
+        = f.label :disabled
+      .field-value
+        = f.check_box :disabled
+        .field-help-text
+          Attendees cannot add or remove disabled
+          = mnh.pluralize.downcase
 
   %h3 Schedule
   %fieldset
-    .field
-      = f.label :leave_time
-      = f.datetime_select :leave_time, start_year: @year.year.to_i, end_year: @year.year.to_i, minute_step: 5
-      %br
-      %span.smalltext.aligned-with-input 24-hour time, please
-    .field
-      = f.label :return_time
-      = f.time_select :return_time, minute_step: 5
-      %br
-      %span.smalltext.aligned-with-input 24-hour time
+    .field.flex
+      .field-key
+        = f.label :leave_time
+      .field-value
+        = f.datetime_select :leave_time, start_year: @year.year.to_i, end_year: @year.year.to_i, minute_step: 5
+        .field-help-text 24-hour time, please
+
+    .field.flex
+      .field-key
+        = f.label :return_time
+      .field-value
+        = f.time_select :return_time, minute_step: 5
+        .field-help-text 24-hour time
 
   %fieldset
     .field

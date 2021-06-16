@@ -7,61 +7,102 @@
 
   %h3 Location
   %fieldset
-    .field 
-      = f.label :event_type
-      = f.select :event_type, options_for_select(Year.event_types.map {|key, value| [key.titleize, Year.event_types.key(value)]}, @year.event_type)
-    .field
-      = f.label :city
-      = f.text_field :city
-    .field
-      = f.label :state
-      = f.text_field :state
-    .field
-      = f.label :timezone
-      = f.time_zone_select :timezone
+    .field.flex
+      .field-key
+        = f.label :event_type
+      .field-value
+        = f.select :event_type, options_for_select(Year.event_types.map {|key, value| [key.titleize, Year.event_types.key(value)]}, @year.event_type)
+
+    .field.flex
+      .field-key
+        = f.label :city
+      .field-value
+        = f.text_field :city
+
+    .field.flex
+      .field-key
+        = f.label :state
+      .field-value
+        = f.text_field :state
+
+    .field.flex
+      .field-key
+        = f.label :timezone
+      .field-value
+        = f.time_zone_select :timezone
 
   %h3 Dates
   %fieldset
-    .field
-      = f.label :start_date
-      = f.date_select :start_date
-    .field
-      = f.label :day_off_date
-      = f.date_select :day_off_date
-    .field
-      = f.label :date_range
-      = f.text_field :date_range
-      %span.smalltext eg. August 4 - 12
+    .field.flex
+      .field-key
+        = f.label :start_date
+      .field-value
+        = f.date_select :start_date
+
+    .field.flex
+      .field-key
+        = f.label :day_off_date
+      .field-value
+        = f.date_select :day_off_date
+
+    .field.flex
+      .field-key
+        = f.label :date_range
+      .field-value
+        = f.text_field :date_range
+        .field-help-text eg. August 4 - 12
 
   %h3 Venue
   %fieldset
-    .field
-      = f.label :venue_name
-      = f.text_field :venue_name
-    .field
-      = f.label :venue_address
-      = f.text_field :venue_address
-    .field
-      = f.label :venue_city
-      = f.text_field :venue_city
-    .field
-      = f.label :venue_state
-      = f.text_field :venue_state, :size => 2
-    .field
-      = f.label :venue_zip
-      = f.text_field :venue_zip, :size => 10
-    .field
-      = f.label :venue_url
-      = f.text_field :venue_url
-    .field
-      = f.label :venue_phone
-      = f.text_field :venue_phone, :size => 20
+    .field.flex
+      .field-key
+        = f.label :venue_name
+      .field-value
+        = f.text_field :venue_name
+
+    .field.flex
+      .field-key
+        = f.label :venue_address
+      .field-value
+        = f.text_field :venue_address
+
+    .field.flex
+      .field-key
+        = f.label :venue_city
+      .field-value
+        = f.text_field :venue_city
+
+    .field.flex
+      .field-key
+        = f.label :venue_state
+      .field-value
+        = f.text_field :venue_state, :size => 2
+
+    .field.flex
+      .field-key
+        = f.label :venue_zip
+      .field-value
+        = f.text_field :venue_zip, :size => 10
+
+    .field.flex
+      .field-key
+        = f.label :venue_url
+      .field-value
+        = f.text_field :venue_url
+
+    .field.flex
+      .field-key
+        = f.label :venue_phone
+      .field-value
+        = f.text_field :venue_phone, :size => 20
 
   %h3 Policies
   %fieldset
-    .field
-      = f.label :refund_policy
-      = f.text_area :refund_policy
+    .field.flex
+      .field-key
+        = f.label :refund_policy
+      .field-value
+        = f.text_area :refund_policy
       
   %h3 Miscellaneous
   %fieldset

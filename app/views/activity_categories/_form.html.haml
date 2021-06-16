@@ -2,10 +2,12 @@
   = render :partial => "shared/error_messages", :locals => { :resource => @activity_category }
 
   %fieldset
-    .field
-      = f.label :name, "Category Name"
-      = f.text_field :name
-    .field
+    .field.flex
+      .field-key
+        = f.label :name, "Category Name"
+      .field-value
+        = f.text_field :name
+    .field.flex
       = render partial: "shared/md_area", locals: { :obj => :activity_category, :atr => :description}
 
   %br

@@ -2,71 +2,107 @@
   = render :partial => "shared/error_messages", :locals => { :resource => @plan }
 
   %fieldset
-    .field
-      = f.label :name
-      = f.text_field :name
-    .field
-      = f.label :plan_category_id
-      = f.select :plan_category_id, @plan_categories
-    .field
+    .field.flex
+      .field-key
+        = f.label :name
+      .field-value
+        = f.text_field :name
+
+    .field.flex
+      .field-key
+        = f.label :plan_category_id
+      .field-value
+        = f.select :plan_category_id, @plan_categories
+
+    .field.flex
       = render partial: "shared/md_area", locals: { :obj => :plan, :atr => :description }
-    .field
-      = f.label :inventory
-      = f.text_field :inventory, :size => 3
-      %span.smalltext
-        Useful for room plans with limited availability.
-        Leave blank if unlimited.
-    .field
-      = f.label :max_quantity
-      = f.text_field :max_quantity, :size => 3
-      %span.smalltext
-        How many should each
-        %strong attendee
-        be allowed to purchase?
-    .field
-      = f.label :disabled
-      = f.check_box :disabled
-      %span.smalltext
-        = Attendee.model_name.human.pluralize
-        cannot select this
-        = Plan.model_name.human.downcase
-    .field
-      = f.label :show_disabled
-      = f.check_box :show_disabled
-      %span.smalltext
-        = Attendee.model_name.human.pluralize
-        can see this plan even if it is disabled
+
+    .field.flex
+      .field-key
+        = f.label :inventory
+      .field-value
+        = f.text_field :inventory, :size => 3
+        .field-help-text
+          Useful for room plans with limited availability.
+          Leave blank if unlimited.
+
+    .field.flex
+      .field-key
+        = f.label :max_quantity
+      .field-value
+        = f.text_field :max_quantity, :size => 3
+        .field-help-text
+          How many should each
+          %strong attendee
+          be allowed to purchase?
+
+    .field.flex
+      .field-key
+        = f.label :disabled
+      .field-value
+        = f.check_box :disabled
+        .field-help-text
+          = Attendee.model_name.human.pluralize
+          cannot select this
+          = Plan.model_name.human.downcase
+
+    .field.flex
+      .field-key
+        = f.label :show_disabled
+      .field-value
+        = f.check_box :show_disabled
+        .field-help-text
+          = Attendee.model_name.human.pluralize
+          can see this plan even if it is disabled
 
   %fieldset
     %legend Price
-    .field
-      = f.label :price
-      = number_field_for_cents f, :price, @plan.price
-    .field
-      = f.label :daily
-      = f.check_box :daily
-      %span.smalltext The price is a daily rate.
-    .field
-      = f.label :needs_staff_approval
-      = f.check_box :needs_staff_approval, :style => "vertical-align: top; margin-top: 2px;"
-      %span.smalltext{:style => "display: inline-block; padding: 3px 0px 0px 0px; width: 375px;"}
-        Selectable, but not purchaseable through the website. "Contact the
-        Registrar" will be shown instead of the price. Price must be zero.
-    .field
-      = f.label :n_a
-      = f.check_box :n_a
-      %span.smalltext
-        "N/A" will be shown instead of "Free" if the price is zero.
+
+    .field.flex
+      .field-key
+        = f.label :price
+      .field-value
+        = number_field_for_cents f, :price, @plan.price
+
+    .field.flex
+      .field-key
+        = f.label :daily
+      .field-value
+        = f.check_box :daily
+        .field-help-text The price is a daily rate.
+
+    .field.flex
+      .field-key
+        = f.label :needs_staff_approval
+      .field-value
+        = f.check_box :needs_staff_approval, :style => "vertical-align: top; margin-top: 2px;"
+        .field-help-text{:style => "display: inline-block; padding: 3px 0px 0px 0px; width: 375px;"}
+          Selectable, but not purchaseable through the website. "Contact the
+          Registrar" will be shown instead of the price. Price must be zero.
+
+    .field.flex
+      .field-key
+        = f.label :n_a
+      .field-value
+        = f.check_box :n_a
+        .field-help-text
+          "N/A" will be shown instead of "Free" if the price is zero.
 
   %fieldset
     %legend Attendee Age Requirements
     %p Certain plans are intended for youth, for teens, or for adults.
-    .field
-      = f.label :age_min
-      = f.number_field :age_min, size: 3, min: 0, value: 0
-    .field
-      = f.label :age_max
-      = f.number_field :age_max, size: 3
-      %span.smalltext (optional)
+
+    .field.flex
+      .field-key
+        = f.label :age_min
+      .field-value
+        = f.number_field :age_min, size: 3, min: 0, value: 0
+      
+    .field.flex
+      .field-key
+        = f.label :age_max
+      .field-value
+        = f.number_field :age_max, size: 3
+        .field-help-text (optional)
 
   = f.submit 'Save', :class => 'button button-large pull-right save'

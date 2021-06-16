@@ -2,37 +2,55 @@
   = render :partial => "shared/error_messages", :locals => { :resource => @plan_category }
 
   %fieldset
-    .field
-      = f.label trl_attr 'plan_category', 'name'
-      = f.text_field :name
-    .field
-      = f.label :event_id
-      = f.select :event_id, @events_for_select
-    .field
-      = render partial: "shared/md_area", locals: { :obj => :plan_category, :atr => :description, maximum_length: @max_description_length }
-    .field
-      = render partial: "shared/md_area", locals: { :obj => :plan_category, :atr => :extended_description, rows: 30 }
-    .field
-      = f.label :show_description
-      = f.check_box :show_description
-      %span.smalltext
-        = Attendee.model_name.human.pluralize
-        can see the description on the registration form.
-    .field
-      = f.label :mandatory
-      -# TODO: Figure out why this bug causes a mis-matched for attribute
-      -#= f.label trl_attr 'plan_category', 'mandatory'
-      = f.check_box :mandatory
-      %span.smalltext
-        = Attendee.model_name.human.pluralize
-        must select at least one
-        = Plan.model_name.human.downcase + ' in this category.'
-    .field
-      = f.label :single
-      = f.check_box :single
-      %span.smalltext
-        = Attendee.model_name.human.pluralize
-        must select exactly one
-        = Plan.model_name.human.downcase + ' in this category.'
+    .field.flex
+      .field-key
+        = f.label trl_attr 'plan_category', 'name'
+      .field-value
+        = f.text_field :name
 
-  = f.submit 'Save', :class => 'button button-large pull-right save'
+    .field.flex
+      .field-key
+        = f.label :event_id
+      .field-value
+        = f.select :event_id, @events_for_select
+
+    .field.flex
+      = render partial: "shared/md_area", locals: { :obj => :plan_category, :atr => :description, maximum_length: @max_description_length }
+
+    .field.flex
+      = render partial: "shared/md_area", locals: { :obj => :plan_category, :atr => :extended_description, rows: 30 }
+
+    .field.flex
+      .field-key
+        = f.label :show_description
+      .field-value
+        = f.check_box :show_description
+        .field-help-text
+          = Attendee.model_name.human.pluralize
+          can see the description on the registration form.
+
+    .field.flex
+      .field-key
+        = f.label :mandatory
+      .field-value
+        -# TODO: Figure out why this bug causes a mis-matched for attribute
+        -#= f.label trl_attr 'plan_category', 'mandatory'
+        = f.check_box :mandatory
+        .field-help-text
+          = Attendee.model_name.human.pluralize
+          must select at least one
+          = Plan.model_name.human.downcase + ' in this category.'
+
+    .field.flex
+      .field-key
+        = f.label :single
+      .field-value
+        = f.check_box :single
+        .field-help-text
+          = Attendee.model_name.human.pluralize
+          must select exactly one
+          = Plan.model_name.human.downcase + ' in this category.'
+
+  = f.submit 'Save', :class => 'button save'
+  %br
+  %br
