@@ -12,8 +12,11 @@
       There are #{ @who_is_coming.count } people registered, including
       #{@who_is_coming.kyu_count} kyu players, #{@who_is_coming.dan_count} dan
       players, and #{pluralize(@who_is_coming.pro_count, 'pro')}.
-      Also, #{@who_is_coming.unregistered_count} other people have not finished
-      their registration.
+
+      - if @who_is_coming.unregistered_count > 0
+        :plain
+          Also, #{@who_is_coming.unregistered_count} other people have not finished
+          their registration.
       
       - if @year.event_type == "in-person"
         :plain
