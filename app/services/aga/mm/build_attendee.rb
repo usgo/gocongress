@@ -37,11 +37,11 @@ module AGA
             # Ex: 'female' => 'f'
             attendee.gender = i['gender'][0] rescue ''
 
-            attendee.birth_date = i['dob']
+            # attendee.birth_date = i['dob']
             attendee.aga_id = i['member_id']
-            attendee.phone = i['phone']
-            attendee.email = i['email']
-            attendee.state = i['state']
+            # attendee.phone = i['phone']
+            # attendee.email = i['email']
+            # attendee.state = i['state']
 
             # Minimum rating is -30 (30k)
             attendee.rank = [i['rating'].to_i, -30].max.to_s
