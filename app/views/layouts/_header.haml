@@ -1,6 +1,6 @@
 %noscript
   .noscript-warning
-    %h3 GoCongress.org works best with Javascript enabled
+    %h3 GoCongress.org works best with JavaScript enabled
 
 #header-container
   #header
@@ -13,9 +13,3 @@
         &bull;
       = @congress_date_range + ','
       = @year.year
-
-    -# .header-logo
-      -# = link_to year_path do
-      -#   - f = "logo/usgc/#{@logo_file}"
-      -#   - if image_file?(f)
-      -#     = image_tag "logo/usgc/#{@logo_file}", :class => 'usgc-logo'
