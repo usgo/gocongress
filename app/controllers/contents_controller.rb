@@ -51,7 +51,7 @@ class ContentsController < ApplicationController
   private
 
   def content_params
-    params.require(:content).permit(:body, :content_category_id, :expires_at,
+    params.require(:content).permit(:body, :content_category_id, :ordinal, :expires_at,
       :show_on_homepage, :subject)
   end
 end

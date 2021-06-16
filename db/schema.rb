@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_16_023945) do
+ActiveRecord::Schema.define(version: 2021_06_16_193834) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -161,6 +161,7 @@ ActiveRecord::Schema.define(version: 2021_06_16_023945) do
     t.datetime "updated_at"
     t.integer "year", null: false
     t.integer "content_category_id", null: false
+    t.integer "ordinal", default: 1, null: false
     t.index ["content_category_id"], name: "index_contents_on_content_category_id"
     t.index ["year", "show_on_homepage", "expires_at"], name: "index_contents_on_year_and_show_on_homepage_and_expires_at"
   end
