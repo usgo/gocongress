@@ -41,7 +41,7 @@
             = t.directors
 
       %div.description
-        = t.description
+        = markdown(t.description).html_safe
 
   :javascript
     // Extract the server name from a string like this: registration[username_ogs]
