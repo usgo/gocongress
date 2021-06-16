@@ -1,17 +1,5 @@
 %h2 Sign In
 
-%p.vertical-form-instructions
-  %strong Trouble signing in?
-  %br
-  = link_to "Forgot your password?", new_password_path(resource_name), :tabindex => 5
-
-- if @year.registration_phase == 'open'
-  %p.vertical-form-instructions
-    %strong No account yet for #{@year.year}?
-    %br
-    Please
-    = link_to "start here.", new_user_registration_path, :tabindex => 6
-    Sorry, you cannot use an account from a previous year.
 
 = form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f|
 
@@ -20,16 +8,40 @@
   = hidden_field_tag 'user[year]', @year.year
 
   %fieldset
-    .field
-      = f.label :email
-      = f.text_field :email, :tabindex => 1
-    .field
-      = f.label :password
-      = f.password_field :password, :tabindex => 2
+    .field.flex
+      %div.field-key
+        = f.label :email
+      %div.field-value
+        = f.text_field :email, :tabindex => 1
+
+    .field.flex
+      %div.field-key
+        = f.label :password
+      %div.field-value
+        = f.password_field :password, :tabindex => 2
+
     - if devise_mapping.rememberable?
-      .field
-        = f.label :remember_me
-        = f.check_box :remember_me, :tabindex => 3
-    .field
-      %label
-      = f.submit "Sign in", :tabindex => 4
+      .field.flex
+        %div.field-key
+          = f.label :remember_me
+        %div.field-value
+          = f.check_box :remember_me, :tabindex => 3
+
+    .field.flex
+      %div.field-value
+        %label
+        = f.submit "Sign in", :tabindex => 4
+
+%p
+  %strong Trouble signing in?
+  %br
+  = link_to "Forgot your password?", new_password_path(resource_name), :tabindex => 5
+
+- if @year.registration_phase == 'open'
+  %p
+    %strong No account yet for #{@year.year}?
+    %br
+    Please
+    = link_to "start here!", new_user_registration_path, :tabindex => 6
+
+    %p (Sorry, you cannot use an account from a previous year.)

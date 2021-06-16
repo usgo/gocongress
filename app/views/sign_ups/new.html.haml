@@ -16,7 +16,43 @@
     The #{@year.year} Go Congress has been canceled.
 
 - else
-  .vertical-form-instructions
+
+  = form_for(resource, :as => resource_name, :url => user_registration_path) do |f|
+
+    -# For new registrations, we need to set the user's year before
+    -# validation, but because we are using Devise
+    -# RegistrationsController we can't exactly add a before_filter.
+    -# If we do not specify a year before validation, then
+    -# validations like the uniqueness check on email will use a
+    -# null year, thus making the validation pointless.
+    = hidden_field_tag "user[year]", @year.year
+
+    = render :partial => "shared/error_messages", :locals => { :resource => resource }
+
+    %fieldset
+      .field.flex
+        %div.field-key
+          = f.label :email
+        %div.field-value
+          = f.email_field :email, :tabindex => 1
+
+      .field.flex
+        %div.field-key
+          = f.label :password, 'Choose a Password'
+        %div.field-value
+          = f.password_field :password, :size => 10, :tabindex => 2
+
+      .field.flex
+        %div.field-key
+          = f.label :password_confirmation, 'Confirm Password'
+        %div.field-value
+          = f.password_field :password_confirmation, :size => 10, :tabindex => 3
+
+      .field.flex
+        %div.field-value
+          = f.submit "Continue", :tabindex => 4
+
+  %div
 
     - events = events_beside_congress
     - unless events.empty?
@@ -38,29 +74,3 @@
       %br/
       In that case, please
       = link_to "sign in.", new_user_session_path
-
-  = form_for(resource, :as => resource_name, :url => user_registration_path) do |f|
-
-    -# For new registrations, we need to set the user's year before
-    -# validation, but because we are using Devise
-    -# RegistrationsController we can't exactly add a before_filter.
-    -# If we do not specify a year before validation, then
-    -# validations like the uniqueness check on email will use a
-    -# null year, thus making the validation pointless.
-    = hidden_field_tag "user[year]", @year.year
-
-    = render :partial => "shared/error_messages", :locals => { :resource => resource }
-
-    %fieldset
-      .field
-        = f.label :email
-        = f.email_field :email, :tabindex => 1
-      .field
-        = f.label :password, 'Choose a Password'
-        = f.password_field :password, :size => 10, :tabindex => 2
-      .field
-        = f.label :password_confirmation, 'Confirm Password'
-        = f.password_field :password_confirmation, :size => 10, :tabindex => 3
-      .field
-        = label '', ''
-        = f.submit "Continue", :tabindex => 4
