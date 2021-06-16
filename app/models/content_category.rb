@@ -6,4 +6,8 @@ class ContentCategory < ApplicationRecord
   def contents_chronological
     contents.order('created_at desc')
   end
+
+  def contents_ordinal
+    contents.order('ordinal, subject')
+  end
 end

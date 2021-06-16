@@ -1,20 +1,39 @@
 = form_for @content do |f|
   = render :partial => "shared/error_messages", :locals => { :resource => @content }
 
-  .field
-    = f.label :subject
-    = f.text_field :subject
-  .field
-    = f.label :content_category_id
-    = f.select :content_category_id, content_category_options, :selected => @selected_category_id
-  .field
+  .field.flex
+    %div.field-key
+      = f.label :subject
+    %div.field-value
+      = f.text_field :subject
+
+  .field.flex
+    %div.field-key
+      = f.label :content_category_id
+    %div.field-value
+      = f.select :content_category_id, content_category_options, :selected => @selected_category_id
+
+  .field.flex 
+    %div.field-key
+      = f.label :ordinal
+    %div.field-value
+      = f.number_field :ordinal
+      %div.field-help-text You can explicitly control the order of this content within its content category's list, if needed.
+
+  .field.flex
     = render partial: "shared/md_area", locals: { :obj => :content, :atr => :body, :rows => 20 }
-  .field
-    = f.label :expires_at
-    = f.datetime_select :expires_at, :include_blank => true
-  .field
-    = f.label :show_on_homepage
-    = f.check_box :show_on_homepage
+
+  .field.flex
+    %div.field-key
+      = f.label :expires_at
+    %div.field-value
+      = f.datetime_select :expires_at, :include_blank => true
+
+  .field.flex
+    %div.field-key
+      = f.label :show_on_homepage
+    %div.field-value
+      = f.check_box :show_on_homepage
 
   .field
     %label

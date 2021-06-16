@@ -1087,3 +1087,18 @@ select {
     opacity: 1;
   }
 }
+
+.preview {
+  position: relative;
+
+  &:before {
+    color: #999;
+    content: "Preview";
+    display: block;
+    font-weight: bold;
+    margin: 1rem 0 0.5rem;
+    text-transform: uppercase;
+  }
+
+  margin-left: 1rem;
+}

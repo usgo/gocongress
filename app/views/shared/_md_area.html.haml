@@ -1,7 +1,7 @@
-/ Parameters:
-/ obj - a symbol naming an activerecord model
-/ atr - a symbol naming an attribute of said model
-/ rows - number of rows for textarea
+-# / Parameters:
+-# / obj - a symbol naming an activerecord model
+-# / atr - a symbol naming an attribute of said model
+-# / rows - number of rows for textarea
 
 - rows ||= 5
 
@@ -13,5 +13,7 @@
       You can format the text (bold, etc.) with
       %a{ :href => 'https://daringfireball.net/projects/markdown/syntax', :target => '_blank' } Markdown.
 
-%div.field-value
-  = text_area obj, atr, { maxlength: defined?(maximum_length) ? maximum_length : "", :class => 'wide', :rows => rows }
+.field-value
+  .markdown-preview
+    .markdown
+      = text_area obj, atr, { maxlength: defined?(maximum_length) ? maximum_length : "", :class => 'wide', :rows => rows }
