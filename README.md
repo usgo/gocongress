@@ -3,7 +3,6 @@
 A maintainable web app for the U.S. Go Congress.
 Copyright (c) 2010-2021 American Go Association
 
-[![Build Status](https://travis-ci.org/usgo/gocongress.svg?branch=master)](https://travis-ci.org/usgo/gocongress)
 [![Maintainability](https://api.codeclimate.com/v1/badges/7cd3a1aa0823c9d00c0c/maintainability)](https://codeclimate.com/github/usgo/gocongress/maintainability)
 
 ## Support
