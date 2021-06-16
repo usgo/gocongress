@@ -29,7 +29,10 @@
       - if @year.year != 2019 || current_user_is_admin?
         %li= link_to "Costs", costs_path
       - @content_categories_for_menu.each do |c|
-        %li= link_to c.name, c
+        - if c.url
+          %li= link_to c.name, c.url
+        - else
+          %li= link_to c.name, c
       - if @year.year == 2016
         %li= link_to "Schedule", "http://live.gocongress.org/"
       %li= link_to "Contact / Volunteer", contacts_path

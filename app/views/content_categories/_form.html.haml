@@ -1,13 +1,33 @@
 = form_for @content_category do |f|
   = render :partial => "shared/error_messages", :locals => { :resource => @content_category }
 
-  .field
-    = f.label :name
-    = f.text_field :name, tab_index: 1
+  .field.flex
+    %div.field-key
+      = f.label :name
+    %div.field-value
+      = f.text_field :name
 
-  .field
-    = f.label :table_of_contents
-    = f.check_box :table_of_contents, tab_index: 2
+  .field.flex
+    %div.field-key
+      = f.label :table_of_contents
+    %div.field-value
+      = f.check_box :table_of_contents
+
+  .field.flex
+    %div.field-key
+      = f.label :ordinal
+    %div.field-value
+      = f.text_field :ordinal
+      %div.field-help-text
+        You may set an ordinal value to explicitly order content items in the navigation bar.
+
+  .field.flex
+    %div.field-key
+      = f.label :url
+    %div.field-value
+      = f.text_field :url, { :placeholder => "http://www.someurl.com"}
+      %div.field-help-text
+        If a URL is present, this content category will exist only as a link in the header. It will display no other content.
 
   .field
     %label
