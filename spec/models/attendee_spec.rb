@@ -104,7 +104,7 @@ RSpec.describe Attendee, :type => :model do
 
   describe "#valid?" do
     let(:plan) { create :plan, inventory: 42, max_quantity: 999 }
-    let(:a) { build :attendee }
+    let(:a) { build :attendee, year: 2020 }
 
     it 'Attendee must indicate whether or not they will play in the US Open' do
       a.will_play_in_us_open = nil

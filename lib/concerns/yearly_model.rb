@@ -4,6 +4,15 @@ module YearlyModel
   # The contents of included() will be run when YearlyModel is
   # include()d in the model, thanks to ActiveSupport::Concern
   included do
+    # TODO: replace all `year` columns that reference `years.year` with
+    # `year_id` columns that reference `years.id`. This is the Rails convention,
+    # and it would allow this association to be named `year` instead of
+    # `year_record`.
+    belongs_to :year_record,
+      class_name: 'Year',
+      foreign_key: 'year',
+      primary_key: 'year'
+
     validates :year,
       :numericality => {:only_integer => true, :greater_than => 2010, :less_than => 2100},
       :presence => true
