@@ -2,8 +2,12 @@
 %p
   You have
   = pluralize(@user.attendees.count, 'attendee')
-  on your account.  When you're done adding attendees, make a
-  payment. Registration is not complete until paid.
+  on your account.
+  
+  - if @user.balance > 0
+    :plain
+      When you’re done adding attendees, make a payment. Registration is not complete until paid.
+
 %p
   You may register as many people as you want on the same account.
   Bring the whole family!
@@ -11,7 +15,8 @@
   = button_to_get 'Add Adult Attendee (18 years old and up)', new_registration_path(user_id: @user.id, type: 'adult'), 'add_adult_attendee_btn', 'button-emphasis'
 .floating-padded-line-item
   = button_to_get 'Add Youth Attendee (under 18 years old) ', new_registration_path(user_id: @user.id, type: 'youth'), 'add_youth_attendee_btn', 'button-emphasis'
-- if @year.year != 2019
+
+- if @user.balance > 0
   .floating-padded-line-item
     = button_to "Make a Payment", pay_user_path(@user), :method => "get", :class => 'button-emphasis'
     %p{ style: "width: 175px;"}

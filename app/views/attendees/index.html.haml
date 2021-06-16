@@ -13,9 +13,14 @@
       #{@who_is_coming.kyu_count} kyu players, #{@who_is_coming.dan_count} dan
       players, and #{pluralize(@who_is_coming.pro_count, 'pro')}.
       Also, #{@who_is_coming.unregistered_count} other people have not finished
-      their registration.  A payment of at least $70 must be made before
-      attendees of an account can appear on this list.  Attendees under the age
-      of eighteen (18) will not appear on this list.
+      their registration.
+      
+      - if @year.event_type == "in-person"
+        :plain
+          A payment of at least $70 must be made before attendees of an account
+          can appear on this list.
+      
+      Attendees under the age of eighteen (18) will not appear on this list.
 
     - unless anyone_signed_in?
       %p
@@ -40,4 +45,4 @@
             %td= a.created_at.to_date.to_formatted_s(:rfc822)
   - else
     %p
-      This list is currently not available.
+      Coming soon!

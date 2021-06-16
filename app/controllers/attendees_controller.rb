@@ -10,7 +10,7 @@ class AttendeesController < ApplicationController
   PER_PAGE = 200
 
   def index
-    @who_is_coming = Attendee::WhoIsComing.new @year, params[:sort], params[:direction]
+    @who_is_coming = Attendee::WhoIsComing.new @year, @year.event_type, params[:sort], params[:direction]
 
     # Allow individual years to provide alternative, hard-coded lists of who's coming if they don't
     # use the Congress website for registration.

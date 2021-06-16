@@ -12,8 +12,9 @@ class Attendee::WhoIsComing
 
   attr_reader :attendees
 
-  def initialize year, sort = nil, direction = 'asc'
+  def initialize year, event_type = 'in-person', sort = nil, direction = 'asc'
     @year = year
+    @event_type = event_type
     @sort = sort
     @direction = direction
     @attendees = find_attendees
@@ -68,6 +69,7 @@ class Attendee::WhoIsComing
   def find_attendees
     qry_params = {
       year: @year.to_i,
+      event_type: @event_type,
       congress_start_date: CONGRESS_START_DATE[@year.to_i]
     }
     Attendee.find_by_sql [attendees_qry(order_clause), qry_params]

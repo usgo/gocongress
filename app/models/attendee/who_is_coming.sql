@@ -26,23 +26,25 @@ left join (
 ) plan_count on plan_count.attendee_id = attendees.id
 
 where attendees.year = :year and attendees.cancelled = false
+  and (:event_type like 'online' or (
 
-  -- must have at least one plan
-  and plan_count.n > 0
+    -- must have at least one plan
+    plan_count.n > 0
 
-  -- credits minus debits must be at least $70
-  and coalesce(credits.total, 0) - coalesce(debits.total, 0) >= 7000
+    -- credits minus debits must be at least $70
+    and coalesce(credits.total, 0) - coalesce(debits.total, 0) >= 7000
 
-  -- exclude attendees under eighteen
-  and attendees.birth_date < (:congress_start_date::date - interval '18 years')
+    -- exclude attendees under eighteen
+    and attendees.birth_date < (:congress_start_date::date - interval '18 years')
 
-  -- exclude cancelled attendees
-  and not exists (
-    select ap.attendee_id
-    from attendee_plans ap
-    inner join plans p on p.id = ap.plan_id
-    where attendees.id = ap.attendee_id
-      and ap.year = :year
-      and p.year = :year
-      and p.description like 'Cancellation'
-  )
+    -- exclude cancelled attendees
+    and not exists (
+      select ap.attendee_id
+      from attendee_plans ap
+      inner join plans p on p.id = ap.plan_id
+      where attendees.id = ap.attendee_id
+        and ap.year = :year
+        and p.year = :year
+        and p.description like 'Cancellation'
+    )
+  ))

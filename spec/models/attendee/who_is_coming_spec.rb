@@ -103,6 +103,19 @@ RSpec.describe Attendee::WhoIsComing, :type => :model do
       ).to match_array(['u1a', 'u2a', 'u3a', 'u3b', 'u4a', 'u4b', 'u6a'])
     end
 
+    it 'returns all attendees of users for an online congress, regardless of payment status' do
+      year = build :year, event_type: 'online'
+      csd = CONGRESS_START_DATE[year]
+
+      u1 = create :user
+      create :attendee, user: u1, given_name: 'u1a'
+      create :attendee, user: u1, given_name: 'u1b'
+
+      expect(
+        Attendee::WhoIsComing.new(year.year, year.event_type).attendees.map(&:given_name)
+      ).to match_array(['u1a', 'u1b'])
+    end
+
     it 'excludes cancelled attendees from unregistered count' do
       a = create :attendee
       cancelled_attendee = create :attendee, cancelled: true

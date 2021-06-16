@@ -21,7 +21,7 @@
   %h2 Balance
   = render :partial => 'shared/balance', :locals => {:user => @user, :show_detail_links => true}
 
-  - if @year.registration_phase != "canceled" || @user.admin?
+  - if (@year.registration_phase != "canceled" || @user.admin?) && @user.balance > 0
     %p= button_to "Make a Payment", pay_user_path(@user), :method => "get"
 
 %h2 Attendees
