@@ -678,7 +678,6 @@ div.field {
     right: 10px;
   }
   width: 150px;
-  text-align: right;
   flex-shrink: 0;
 
   .field_with_errors {
@@ -708,7 +707,8 @@ div.field {
     }
   }
 
-  [type="text"] {
+  [type="text"],
+  [type="password"] {
     min-width: 300px;
   }
 }
