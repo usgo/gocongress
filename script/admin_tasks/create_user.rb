@@ -1,7 +1,7 @@
 # Create new users for local development
 require 'colorize'
 u = User.new
-u.email	= "nate.eagle@usgo.org"
+u.email	= "admin@localhost.local"
 u.password = "foofighters"
 u.password_confirmation	= "foofighters"
 u.year = 2021
