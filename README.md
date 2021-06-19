@@ -7,7 +7,7 @@ Copyright (c) 2010-2021 American Go Association
 
 ## Support
 
-[Nate Eagle](mailto:nate.eagle@nationalgocenter.org) is the current U.S. Go
+[Nate Eagle](mailto:nate.eagle@usgo.org) is the current U.S. Go
 Congress webmaster. You can email him or create an issue here with any
 questions, concerns, or feedback. Contributions to the site are welcome and
 encouraged: if you know some Ruby, JavaScript, or even just HTML/CSS, creating
@@ -45,6 +45,14 @@ a pull request is a great way to become part of the team.
       1. `cp config/database.example.yml config/database.yml`
    1. `cp .env.example .env` (see Configuration below)
    1. If all is well, `bin/rake -T` should list rake tasks
+1. Run the App locally
+   1. Create a new admin user for yourself by editing `/script/admin_tasks/create_user.rb`
+   1. Change the email & password values to something of your liking
+   1. Run the script: `rails runner script/admin_tasks/create_user.rb`
+   1. Run the app: `rails server`
+   1. Open the app in your browser: `http://localhost:3000`
+   1. Make sure you can log in with your local user
+   1. Do some developing!
 1. Run the tests
    1. `bin/rails db:setup`
    1. `bin/rails db:test:prepare`
@@ -84,6 +92,8 @@ Jared Beck who both provided mentoring and assistance for the 2015 site.
 Special thanks to Rex Cristal, for taking over maintenance of the site from
 2015 – 2019!
 
+- 2021: Jared Beck, Michael Hiiva, Nate Eagle, Steve Colburn
+- 2020: Rex Cristal, Lisa Scott
 - 2019: Gregory Steltenpohl, Nate Eagle, Steve Colburn, Lisa Scott, Dave Weimer
 - 2018: Nate Eagle, Joel Cahalan, Steve Colburn, Andrew Jackson
 - 2017: Andrew Jackson, Jared Beck, Steve Colburn, Lisa Scott, Ted Terpstra, Les Lanphear

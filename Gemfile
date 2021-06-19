@@ -6,6 +6,7 @@ gem 'bootsnap', require: false
 gem 'stripe'
 gem 'stripe_event'
 gem 'cancancan'
+gem 'colorize'
 gem 'devise'
 gem 'exception_notification'
 gem 'ffi'
