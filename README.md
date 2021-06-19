@@ -51,7 +51,7 @@ a pull request is a great way to become part of the team.
    1. Run the script: `rails runner script/admin_tasks/create_user.rb`
    1. Run the app: `rails server`
    1. Open the app in your browser: `http://localhost:3000`
-   1. Make sure you can log in with your local user
+   1. Sign In with username: `admin@localhost.local` and password: `foofighters`.
    1. Do some developing!
 1. Run the tests
    1. `bin/rails db:setup`
