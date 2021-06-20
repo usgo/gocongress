@@ -39,7 +39,7 @@ validates :inventory,
   :numericality => {
     :only_integer => true, :greater_than => 0, :allow_nil => true,
     :message => " should be greater than 0 or left blank if unlimited"
-    }
+  }
 
 validates_each :inventory do |record, attr, value|
   cnt = record.attendees.where(cancelled: false).count

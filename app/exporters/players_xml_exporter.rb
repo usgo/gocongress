@@ -17,16 +17,15 @@ class PlayersXmlExporter
 
   def self.render_player(player, aga_info)
 		xmlTag = {
-			agaExpirationDate: aga_info[:expires],
-			agaId: player.aga_id,
-			firstName: player.given_name,
-			name: player.family_name,
-			grade: open_gotha_rank(player.rank_name),
-			rank: open_gotha_rank(player.rank_name),
-			rating: open_gotha_rating(player.rank),
-			club: aga_info[:club]
+			 agaExpirationDate: aga_info[:expires],
+			 agaId: player.aga_id,
+			 firstName: player.given_name,
+			 name: player.family_name,
+			 grade: open_gotha_rank(player.rank_name),
+			 rank: open_gotha_rank(player.rank_name),
+			 rating: open_gotha_rating(player.rank),
+			 club: aga_info[:club]
 		}
-
 		str = ""
 		xmlTag.each do |attribute, value|
 			str += "#{attribute}=\"#{value}\" "
