@@ -16,8 +16,8 @@ class Transaction < ApplicationRecord
 	# Instruments
 	INSTRUMENTS = [['Card','C'], ['Cash','S'], ['Check','K']]
 
-  # Validations
-  # -----------
+ # Validations
+ # -----------
 
 	validates_presence_of :trantype, :amount
 	validates :updated_by_user, :presence => true, :on => :update

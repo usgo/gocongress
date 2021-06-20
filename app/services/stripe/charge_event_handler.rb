@@ -8,12 +8,12 @@ module Stripe
                 # handle the json parsing error here
                 raise # re-raise the exception to return a 500 error to stripe
             rescue NoMethodError => e
-                #code to run when handling an unknown event
+              #code to run when handling an unknown event
             end
         end
 
         def handle_charge_failed(event)
-            # Placeholder for handling failed charges
+          # Placeholder for handling failed charges
         end
 
         def handle_charge_succeeded(event)
