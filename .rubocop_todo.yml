@@ -20,25 +20,6 @@ Layout/IndentationConsistency:
     - 'db/migrate/20101221001516_devise_create_users.rb'
     - 'db/migrate/20110108005150_alter_attendee_dot_minor_agreement_received.rb'
 
-# Offense count: 75
-# Cop supports --auto-correct.
-# Configuration parameters: IndentationWidth, EnforcedStyle.
-# SupportedStyles: spaces, tabs
-Layout/IndentationStyle:
-  Exclude:
-    - 'app/exporters/players_xml_exporter.rb'
-    - 'app/helpers/application_helper.rb'
-    - 'app/models/transaction.rb'
-    - 'db/migrate/20101221001516_devise_create_users.rb'
-    - 'db/migrate/20101221013502_alter_is_admin_not_null.rb'
-    - 'db/migrate/20101231033000_alter_user_dot_is_admin_set_default.rb'
-    - 'db/migrate/20101231034243_drop_user_full_name.rb'
-    - 'db/migrate/20110107215000_drop_primary_attendee_id_from_user.rb'
-    - 'db/migrate/20110108005150_alter_attendee_dot_minor_agreement_received.rb'
-    - 'db/migrate/20110108232354_add_congresses_attended_to_attendee.rb'
-    - 'db/migrate/20110119233914_alter_transactions.rb'
-    - 'db/migrate/20121216081949_alter_attendees_remove_congresses_attended.rb'
-
 # Offense count: 88
 # Cop supports --auto-correct.
 # Configuration parameters: Width, IgnoredPatterns.

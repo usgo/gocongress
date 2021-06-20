@@ -41,11 +41,11 @@ module ApplicationHelper
     '<input type="checkbox" disabled="disabled" />'.html_safe
   end
 
-	# `trl_attr` is slightly more convenient than
-	# Model.human_attribute_name("attr")
-	def trl_attr ( modelname, attributename )
-		translate "activerecord.attributes." + modelname.to_s + "." + attributename.to_s
-	end
+  # `trl_attr` is slightly more convenient than
+  # Model.human_attribute_name("attr")
+  def trl_attr ( modelname, attributename )
+    translate "activerecord.attributes." + modelname.to_s + "." + attributename.to_s
+  end
 
   # An English list is comma delimited, and the final element
   # is prepended with a word like 'and'.

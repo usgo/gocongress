@@ -7,20 +7,20 @@ class Transaction < ApplicationRecord
   # The admin who last updated this transaction
   belongs_to :updated_by_user, :class_name => "User"
 
-	# Transaction Types:
-	# Comp - Admin reduces total cost for a User (eg. a VIP)
-	# Refund - Admin has sent a refund check to a User who overpaid
-	# Sale - User makes a payment
-	TRANTYPES = [['Comp','C'], ['Comp (AGF)', 'A'], ['Comp (Pro)', 'P'], ['Refund','R'], ['Sale','S']]
+  # Transaction Types:
+  # Comp - Admin reduces total cost for a User (eg. a VIP)
+  # Refund - Admin has sent a refund check to a User who overpaid
+  # Sale - User makes a payment
+  TRANTYPES = [['Comp','C'], ['Comp (AGF)', 'A'], ['Comp (Pro)', 'P'], ['Refund','R'], ['Sale','S']]
 
-	# Instruments
-	INSTRUMENTS = [['Card','C'], ['Cash','S'], ['Check','K']]
+  # Instruments
+  INSTRUMENTS = [['Card','C'], ['Cash','S'], ['Check','K']]
 
- # Validations
- # -----------
+  # Validations
+  # -----------
 
-	validates_presence_of :trantype, :amount
-	validates :updated_by_user, :presence => true, :on => :update
+  validates_presence_of :trantype, :amount
+  validates :updated_by_user, :presence => true, :on => :update
 
   validates_presence_of :instrument, :if => :requires_instrument?
   validates_inclusion_of :instrument,
@@ -29,10 +29,10 @@ class Transaction < ApplicationRecord
   validates_length_of :instrument, :is => 1, :if => :requires_instrument?
   validates_inclusion_of :instrument, :in => INSTRUMENTS.flatten, :if => :requires_instrument?
 
-	validates_length_of :trantype, :is => 1
+  validates_length_of :trantype, :is => 1
   validates_inclusion_of :trantype, :in => TRANTYPES.flatten
 
-	validates_numericality_of :amount, greater_than: 0, only_integer: true
+  validates_numericality_of :amount, greater_than: 0, only_integer: true
 
   # Certain attributes apply only to gateway transaction types (eg. Sale)
   with_options :if => :is_gateway_transaction? do |gwt|
@@ -54,7 +54,7 @@ class Transaction < ApplicationRecord
     o.validates_inclusion_of :gwtranid
   end
 
-	validates_numericality_of :check_number, :greater_than => 0, :if => :requires_check_number?
+  validates_numericality_of :check_number, :greater_than => 0, :if => :requires_check_number?
 
   # Only refunds may have a check number
   validates_inclusion_of :check_number,
@@ -103,7 +103,7 @@ class Transaction < ApplicationRecord
   end
 
   def get_trantype_name
-  	trantype_name = ''
+    trantype_name = ''
     TRANTYPES.each { |t| if (t[1] == self.trantype) then trantype_name = t[0] end }
     if trantype_name.empty? then raise "assertion failed: invalid trantype" end
     return trantype_name
