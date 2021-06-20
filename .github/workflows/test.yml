@@ -21,6 +21,26 @@ jobs:
 
   gha-job-usgc-test:
     name: Test
+    env:
+      # Do not put secrets here! Use [Repository Secrets](https://bit.ly/3cW7pwx)
+      # Also, tests should not make actual network connections, so it's OK
+      # to use "redacted" for most of these.
+      AGA_MEMBERS_API_KEY: redacted
+      ASSET_SYNC_EXISTING_REMOTE_FILES: redacted
+      AWS_ACCESS_KEY_ID: redacted
+      AWS_SECRET_ACCESS_KEY: redacted
+      DEVISE_SECRET_KEY: redacted
+      FOG_DIRECTORY: redacted
+      FOG_PROVIDER: redacted
+      GMAIL_SMTP_PASSWORD: redacted
+      GMAIL_SMTP_USER: webmaster@gocongress.org
+      SECRET_KEY_BASE: redacted
+      STRIPE_PUBLISHABLE_KEY: redacted
+      STRIPE_SECRET_KEY: redacted
+      STRIPE_SIGNING_SECRET: redacted
+      PANDANET_USERNAME: redacted
+      PANDANET_PASSWORD: redacted
+      USGC_MAIL_FROM: webmaster@gocongress.org
     runs-on: ubuntu-18.04
     services:
       gha-service-usgc-postgres:
