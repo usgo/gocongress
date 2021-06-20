@@ -104,10 +104,12 @@ RSpec.describe User, :type => :model do
   describe "#get_invoice_total" do
     it "equals the sum of invoice items" do
       user = build :user
-      allow(user).to receive(:invoice_items) {[
-        InvoiceItem.new("Baubles", "John", 1.5, 2),
-        InvoiceItem.new("Trinkets", "Jane", -0.75, 1)
-      ]}
+      allow(user).to(
+        receive(:invoice_items).and_return([
+          InvoiceItem.new("Baubles", "John", 1.5, 2),
+          InvoiceItem.new("Trinkets", "Jane", -0.75, 1)
+        ])
+      )
       expect(user.get_invoice_total).to eq(2.25)
     end
 

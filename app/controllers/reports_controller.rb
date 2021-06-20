@@ -30,7 +30,8 @@ class ReportsController < ApplicationController
     @atnd_email_list_json = Attendee.yr(@year).map{|a| {
       name: a.full_name,
       email: a.email
-    }}.to_json
+    }
+    }.to_json
 
     Attendee.yr(@year).each { |a|
       @atnd_email_list += "\"#{a.full_name}\" <#{a.email}>, "

@@ -16,15 +16,6 @@ Bundler/OrderedGems:
 
 # Offense count: 4
 # Cop supports --auto-correct.
-Layout/BlockEndNewline:
-  Exclude:
-    - 'app/controllers/reports_controller.rb'
-    - 'spec/controllers/registrations_controller_spec.rb'
-    - 'spec/controllers/sign_ups_controller_spec.rb'
-    - 'spec/models/user_spec.rb'
-
-# Offense count: 4
-# Cop supports --auto-correct.
 Layout/CommentIndentation:
   Exclude:
     - 'app/controllers/registrations_controller.rb'
