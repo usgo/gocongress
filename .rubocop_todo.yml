@@ -6,22 +6,6 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 21
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, IndentationWidth.
-# SupportedStyles: aligned, indented, indented_relative_to_receiver
-Layout/MultilineMethodCallIndentation:
-  Exclude:
-    - 'app/controllers/attendees_controller.rb'
-    - 'app/controllers/check_in_controller.rb'
-    - 'app/controllers/plan_categories_controller.rb'
-    - 'app/controllers/reports_controller.rb'
-    - 'app/controllers/rpt/minor_agreements_reports_controller.rb'
-    - 'app/controllers/rpt/usopen_players_reports_controller.rb'
-    - 'app/controllers/sign_ups_controller.rb'
-    - 'app/forms/registration.rb'
-    - 'app/models/plan_category.rb'
-
 # Offense count: 2
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, IndentationWidth.
