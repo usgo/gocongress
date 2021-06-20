@@ -1,0 +1,74 @@
+name: gha-workflow-usgc-test
+on: [push, pull_request]
+jobs:
+
+  # Linting is a separate job, primary because it only needs to be done once,
+  # and secondarily because jobs are performed concurrently.
+  gha-job-usgc-lint:
+    name: Lint
+    runs-on: ubuntu-18.04
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v2
+      - name: Setup ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          # See "Lowest supported ruby version" in CONTRIBUTING.md
+          ruby-version: '2.5'
+      - name: Bundle
+        run: |
+          gem install bundler
+          bundle install --jobs 4 --retry 3
+      - name: Lint
+        run: bundle exec rubocop
+
+  gha-job-usgc-test:
+    name: Test
+    runs-on: ubuntu-18.04
+    services:
+      gha-service-usgc-postgres:
+        env:
+          POSTGRES_PASSWORD: asdfasdf
+        image: postgres
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v2
+      - name: Setup ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+      - name: Bundle
+        run: |
+          gem install bundler
+          bundle install --jobs 4 --retry 3
+      - name: Create postgres database
+        run: |
+          createdb \
+            --host=$POSTGRES_HOST \
+            --port=$POSTGRES_PORT \
+            --username=postgres \
+            usgc_test
+        env:
+          PGPASSWORD: asdfasdf
+          POSTGRES_HOST: localhost
+          POSTGRES_PORT: 5432
+
+      # Finally run the tests. We use `rake install_database_yml spec` instead
+      # of `rake` (default) because the default includes rubocop, which we run
+      # (once) as a separate job. See above.
+      - name: Test
+        run: bundle exec rake install_database_yml spec
+        env:
+          BACKTRACE: 1
+          USGC_CI_DATABASE: usgc_test
+          USGC_CI_DB_USER: postgres
+          USGC_CI_DB_PASSWORD: asdfasdf
+          USGC_CI_DB_HOST: 127.0.0.1
+          USGC_CI_DB_PORT: 5432
