@@ -6,20 +6,6 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 54
-# Cop supports --auto-correct.
-# Configuration parameters: AllowForAlignment, AllowBeforeTrailingComments, ForceEqualSignAlignment.
-Layout/ExtraSpacing:
-  Exclude:
-    - 'bin/setup'
-    - 'config.ru'
-    - 'config/environments/test.rb'
-    - 'db/migrate/20110119231451_create_transactions.rb'
-    - 'db/migrate/20120318224832_create_years.rb'
-    - 'db/schema.rb'
-    - 'script/rails'
-    - 'spec/factories/activities.rb'
-
 # Offense count: 4
 # Cop supports --auto-correct.
 # Configuration parameters: IndentationWidth.
