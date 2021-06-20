@@ -3,8 +3,6 @@ ruby '2.7.3'
 
 gem 'authorizenet'
 gem 'bootsnap', require: false
-gem 'stripe'
-gem 'stripe_event'
 gem 'cancancan'
 gem 'colorize'
 gem 'devise'
@@ -15,19 +13,21 @@ gem 'intl-tel-input-rails'
 gem 'iso_country_codes'
 gem 'jquery-rails'
 gem 'kaminari'
+gem 'mini_magick'
+gem 'net-telnet'
 gem 'nokogiri'
 gem 'pg'
 gem 'phonelib'
+gem 'prettier'
 gem 'puma' # Heroku+Puma docs: https://bit.ly/3blHFc7
 gem 'rails', '~> 5.2.6'
+gem 'redcarpet'
 gem 'sassc-rails' # see https://github.com/sass/sassc-rails/issues/114
 gem 'sprockets', '< 4' # v4 has multiple issues
-gem 'uglifier'
-gem 'redcarpet'
+gem 'stripe'
+gem 'stripe_event'
 gem 'twilio-ruby'
-gem 'prettier'
-gem 'mini_magick'
-gem 'net-telnet'
+gem 'uglifier'
 
 group :development do
   gem 'listen'
@@ -44,8 +44,8 @@ end
 
 group :test do
   gem 'capybara'
-  gem 'deep_merge' # recursively merge hashes
   gem 'database_cleaner'
+  gem 'deep_merge' # recursively merge hashes
   gem 'factory_bot'
   gem 'factory_bot_rails'
   gem 'launchy' # provides `save_and_open_page`
