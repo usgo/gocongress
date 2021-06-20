@@ -1,5 +1,5 @@
 name: gha-workflow-usgc-test
-on: [push, pull_request]
+on: [pull_request]
 jobs:
   gha-job-usgc-test:
     name: Test
@@ -58,6 +58,5 @@ jobs:
         run: |
           bundle install --deployment --jobs 4 --retry 3
           cp config/database.ci.yml config/database.yml
-          bundle exec rails db:create
-          bundle exec rails db:migrate
+          bundle exec rails db:setup
           bundle exec rake
