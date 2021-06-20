@@ -77,11 +77,11 @@ jobs:
           POSTGRES_HOST: localhost
           POSTGRES_PORT: 5432
 
-      # Finally run the tests. We use `rake install_database_yml spec` instead
-      # of `rake` (default) because the default includes rubocop, which we run
-      # (once) as a separate job. See above.
+      # Finally run the tests. We run `rspec` instead of `rake` because the
+      # later includes rubocop, which we run (once) as a separate job. See
+      # above.
       - name: Test
-        run: bundle exec rake install_database_yml spec
+        run: bundle exec rspec
         env:
           BACKTRACE: 1
           USGC_CI_DATABASE: usgc_test
