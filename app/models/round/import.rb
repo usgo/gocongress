@@ -40,7 +40,6 @@ class Round::Import
         errors.add(:base, "Line #{$.} caused a bye error: #{bye_appointment.errors.full_messages.join(", ")}")
       end
     end
-
   end
 
   def save
@@ -49,12 +48,13 @@ class Round::Import
   end
 
   private
+
   # OpenGotha has the player names for games as strings with all letters
   # capitalized and spaces stripped
   # e.g. Nate Eagle -> EAGLENATE
   def name_to_key(player)
-    [player['name'], player['firstName']].map {
-      |name| name.upcase.gsub(/\s+/, "")
+    [player['name'], player['firstName']].map { |name|
+      name.upcase.gsub(/\s+/, "")
     }.join("")
   end
 
@@ -82,27 +82,26 @@ class Round::Import
     games = doc.xpath("//Games/Game[@roundNumber=\"#{round_number}\"]")
 
     # Turn the games XML into an array of hashes
-    games = games.map{|n| Hash[n.keys.zip(n.values)]}
+    games = games.map { |n| Hash[n.keys.zip(n.values)] }
     games
   end
 
   def get_byes(doc, round_number)
     byes = doc.xpath("//ByePlayers/ByePlayer[@roundNumber=\"#{round_number}\"]")
-    byes = byes.map{|n| Hash[n.keys.zip(n.values)]}
+    byes = byes.map { |n| Hash[n.keys.zip(n.values)] }
     byes
   end
 
   def get_players(doc)
     players = doc.xpath("//Players/Player")
     # Turn the players XML into an array of hashes
-    players = players.map{|n| Hash[n.keys.zip(n.values)]}
+    players = players.map { |n| Hash[n.keys.zip(n.values)] }
 
     # Collect those hashes into an array with key names that match the player
     # names in Open Gotha games
-    players = Hash[players.collect {|p| [name_to_key(p), p]}]
+    players = Hash[players.collect { |p| [name_to_key(p), p] }]
 
     players
-
   end
 
   def match_aga_numbers(players)
@@ -120,7 +119,6 @@ class Round::Import
         errors.add(:base, "There are no attendees with aga id: #{number}")
       end
     end
-
   end
 
   def gather_player_aga_numbers(players)
@@ -130,5 +128,4 @@ class Round::Import
     end
     player_aga_ids
   end
-
 end

@@ -1,7 +1,6 @@
 require "rails_helper"
 
 RSpec.describe AttendeesCsvExporter do
-
   describe "#attendee_array" do
     let(:atnd) { create :attendee }
     let(:ary) { AttendeesCsvExporter.attendee_array(atnd) }

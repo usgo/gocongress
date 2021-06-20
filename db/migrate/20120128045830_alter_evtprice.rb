@@ -1,5 +1,4 @@
 class AlterEvtprice < ActiveRecord::Migration
-
   class Event < ActiveRecord::Base
   end
 

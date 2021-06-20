@@ -1,5 +1,4 @@
 class AttendeesCsvExporter
-
   # Order of columns must match `header_array`
   def self.attendee_array atnd
     [
@@ -44,7 +43,7 @@ class AttendeesCsvExporter
   end
 
   def self.plan_names year
-    plans(year).map{ |p| "Plan: " + safe_for_csv(p.name)}
+    plans(year).map { |p| "Plan: " + safe_for_csv(p.name) }
   end
 
   def self.safe_for_csv(str)

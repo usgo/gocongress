@@ -4,7 +4,7 @@ class AddYearToTransactions < ActiveRecord::Migration
     Transaction.update_all :year => 2011
     change_column :transactions, :year, :integer, :null => false
   end
-  
+
   def down
     remove_column :transactions, :year
   end

@@ -7,7 +7,7 @@ class AddYearToPlans < ActiveRecord::Migration
     change_column :plans, :year, :integer, :null => false
     change_column :plan_categories, :year, :integer, :null => false
   end
-  
+
   def down
     remove_column :plan, :year
     remove_column :plan_categories, :year

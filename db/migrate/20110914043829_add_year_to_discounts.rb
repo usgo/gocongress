@@ -4,7 +4,7 @@ class AddYearToDiscounts < ActiveRecord::Migration
     Discount.update_all :year => 2011
     change_column :discounts, :year, :integer, :null => false
   end
-  
+
   def down
     remove_column :discounts, :year
   end

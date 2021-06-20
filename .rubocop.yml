@@ -6,6 +6,15 @@ AllCops:
   NewCops: enable
   SuggestExtensions: false
 
+Layout/ArgumentAlignment:
+  EnforcedStyle: with_fixed_indentation
+
+Layout/EmptyLineAfterGuardClause:
+  Enabled: false
+
+Layout/FirstArrayElementIndentation:
+  EnforcedStyle: consistent
+
 Layout/FirstHashElementIndentation:
   EnforcedStyle: consistent
 

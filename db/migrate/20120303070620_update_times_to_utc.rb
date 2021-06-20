@@ -1,5 +1,4 @@
 class UpdateTimesToUtc < ActiveRecord::Migration
-
   # The current times in the database are saved in local time.
   # We currently perform no translation for display purposes.
   # However, we will begin translating for display, so we need
@@ -20,8 +19,8 @@ class UpdateTimesToUtc < ActiveRecord::Migration
     ts_cols.each do |table, cols|
       cols.each do |col|
         model_class = table.to_s.singularize.camelize.constantize
-        model_class.send :update_all, "#{col} = #{col} #{operator} interval '7 hours'", {:year => 2011}
-        model_class.send :update_all, "#{col} = #{col} #{operator} interval '4 hours'", {:year => 2012}
+        model_class.send :update_all, "#{col} = #{col} #{operator} interval '7 hours'", { :year => 2011 }
+        model_class.send :update_all, "#{col} = #{col} #{operator} interval '4 hours'", { :year => 2012 }
       end
     end
 
@@ -110,4 +109,3 @@ end
 #  content_categories   | created_at          | timestamp
 #  content_categories   | updated_at          | timestamp
 #
-

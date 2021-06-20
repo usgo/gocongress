@@ -1,5 +1,4 @@
 class AlterEventsDepartTime < ActiveRecord::Migration
-
   class Event < ActiveRecord::Base
   end
 
@@ -7,7 +6,6 @@ class AlterEventsDepartTime < ActiveRecord::Migration
     add_column :events, :depart_time, :time
     Event.reset_column_information
     Event.to_a.each do |e|
-
       # Does evtdeparttime, the poorly-conceived string,
       # contain a useful time, eg. 11:30 PM?
       rematches = e.evtdeparttime.match('^(\d{1,2}):(\d{2})[ ]?(am|pm|AM|PM)')

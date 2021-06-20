@@ -27,10 +27,12 @@ class ReportsController < ApplicationController
   def emails
     @atnd_email_list = ""
 
-    @atnd_email_list_json = Attendee.yr(@year).map{|a| {
-      name: a.full_name,
-      email: a.email
-    }}.to_json
+    @atnd_email_list_json = Attendee.yr(@year).map { |a|
+      {
+        name: a.full_name,
+        email: a.email
+      }
+    }.to_json
 
     Attendee.yr(@year).each { |a|
       @atnd_email_list += "\"#{a.full_name}\" <#{a.email}>, "
@@ -39,21 +41,20 @@ class ReportsController < ApplicationController
 
   def activities
     @activities = Activity.yr(@year).order :leave_time
-    @activities_by_date = @activities.group_by {|activity| activity.leave_time.to_date}
+    @activities_by_date = @activities.group_by { |activity| activity.leave_time.to_date }
   end
 
   def user_invoices
     min = params[:min].downcase
     max = params[:max].downcase
-    [min, max].each{ |m| raise "Invalid param" unless ("a".."z").cover?(m) }
+    [min, max].each { |m| raise "Invalid param" unless ("a".."z").cover?(m) }
     @users = User.yr(@year).email_range(min, max).order(:email).to_a
     render :layout => "print"
   end
 
-protected
+  protected
 
   def page_title
     human_action_name.singularize + ' ' + human_controller_name
   end
-
 end

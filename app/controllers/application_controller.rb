@@ -17,7 +17,7 @@ class ApplicationController < ActionController::Base
   # default_url_options() is called before callbacks, so we do not
   # depend on @year being defined yet, and we extract the year
   # directly from the params hash.
-  def default_url_options options={}
+  def default_url_options options = {}
     { :year => extract_year_from_params }
   end
 
@@ -63,11 +63,11 @@ class ApplicationController < ActionController::Base
     render_access_denied
   end
 
-protected
+  protected
 
   def human_action_name
     a = action_name.to_sym
-    h = {:index => 'list', :new => 'create'}
+    h = { :index => 'list', :new => 'create' }
     n = h.has_key?(a) ? h[a] : action_name
     n.titleize
   end
@@ -149,7 +149,7 @@ protected
     render 'home/access_denied', :status => :forbidden
   end
 
-  def raise_routing_error message='Not Found'
+  def raise_routing_error message = 'Not Found'
     raise ActionController::RoutingError.new message
   end
 
@@ -160,5 +160,4 @@ protected
   def show_my_account_anchor?
     current_user.present? && current_user.year == @year.year
   end
-
 end

@@ -2,21 +2,23 @@ require "rails_helper"
 
 RSpec.describe RegistrationsController, :type => :controller do
   render_views
-  let(:attendee_attributes) {{
-    :birth_date => "1981-09-10",
-    :country => "US",
-    :email => "test@gocongress.org",
-    :emergency_name => "Jenny",
-    :emergency_phone => "867-5309", 
-    :family_name => "Attendee",
-    :gender => "m",
-    :given_name => "Test",
-    :rank => 3,
-    :tshirt_size => "NO",
-    :will_play_in_us_open => false,
-    :receive_sms => false
-  }}
-  let(:activities) { 1.upto(3).map{ create :activity } }
+  let(:attendee_attributes) {
+    {
+      :birth_date => "1981-09-10",
+      :country => "US",
+      :email => "test@gocongress.org",
+      :emergency_name => "Jenny",
+      :emergency_phone => "867-5309",
+      :family_name => "Attendee",
+      :gender => "m",
+      :given_name => "Test",
+      :rank => 3,
+      :tshirt_size => "NO",
+      :will_play_in_us_open => false,
+      :receive_sms => false
+    }
+  }
+  let(:activities) { 1.upto(3).map { create :activity } }
 
   context "as a visitor" do
     describe "#create" do
@@ -25,7 +27,7 @@ RSpec.describe RegistrationsController, :type => :controller do
         attrs = attributes_for :attendee, :user => u
         expect {
           post :create, params: { registration: attrs, user_id: u.id, year: u.year }
-        }.to_not change{ Attendee.count }
+        }.to_not change { Attendee.count }
         expect(response).to be_forbidden
       end
     end
@@ -63,7 +65,7 @@ RSpec.describe RegistrationsController, :type => :controller do
       end
 
       it "fails without any attributes" do
-        attrs = {:user_id => user.id}
+        attrs = { :user_id => user.id }
         expect {
           post :create, params: { registration: attrs, user_id: user.id, year: user.year }
         }.to_not change { Attendee.count }
@@ -92,7 +94,7 @@ RSpec.describe RegistrationsController, :type => :controller do
         attrs[:gender] = "o"
         expect {
           post :create, params: { registration: attrs, user_id: user.id, year: user.year }
-        }.to change{ Attendee.count }
+        }.to change { Attendee.count }
         expect(assigns(:registration).errors).to_not include(:gender)
       end
 
@@ -101,7 +103,7 @@ RSpec.describe RegistrationsController, :type => :controller do
         attrs[:gender] = "zzzz" # invalid, obviously
         expect {
           post :create, params: { registration: attrs, user_id: user.id, year: user.year }
-        }.to_not change{ Attendee.count }
+        }.to_not change { Attendee.count }
         expect(assigns(:registration).errors).to include(:gender)
       end
 
@@ -113,7 +115,7 @@ RSpec.describe RegistrationsController, :type => :controller do
         attrs[:understand_minor] = true
         expect {
           post :create, params: { registration: attrs, user_id: user.id, year: user.year }
-        }.to change{ Attendee.count }.by(+1)
+        }.to change { Attendee.count }.by(+1)
       end
 
       context 'plans' do
@@ -121,20 +123,20 @@ RSpec.describe RegistrationsController, :type => :controller do
           plan = create :plan
           expect {
             post :create, params: { registration: attendee_attributes, plans: { plan.id.to_s => { 'qty' => 1 } }, user_id: user.id, year: user.year }
-          }.to change{ plan.attendees.count }.by(+1)
+          }.to change { plan.attendees.count }.by(+1)
         end
 
         it "saves selected dates for a daily-rate plan" do
           plan = create :plan, daily: true
           min_date = AttendeePlanDate.minimum(2013)
-          dates = (min_date..min_date + 2.days).map{|d| d.strftime('%Y-%m-%d')}
-          plan_params = { plan.id.to_s => { 'qty' => 1, 'dates' => dates }}
+          dates = (min_date..min_date + 2.days).map { |d| d.strftime('%Y-%m-%d') }
+          plan_params = { plan.id.to_s => { 'qty' => 1, 'dates' => dates } }
           expect {
             post :create, params: { registration: attendee_attributes, plans: plan_params, user_id: user.id, year: user.year }
-          }.to change{ AttendeePlanDate.count }.by(dates.length)
+          }.to change { AttendeePlanDate.count }.by(dates.length)
           expect(plan.attendee_plans.count).to eq(1)
           expect(plan.attendee_plans.first.dates.map(&:_date)).to eq( \
-            dates.map{|d| Date.parse(d)}
+            dates.map { |d| Date.parse(d) }
           )
         end
       end
@@ -158,7 +160,8 @@ RSpec.describe RegistrationsController, :type => :controller do
         attendee.plans << plan
         expect(attendee.get_plan_qty(plan.id)).to eq(1)
 
-        plan2 = create :plan, :disabled => true, \
+        plan2 = create :plan,
+          :disabled => true,
           :name => "Plan Deux", :plan_category => plan.plan_category
 
         get :edit, params: { id: attendee.id, year: attendee.year }
@@ -178,7 +181,6 @@ RSpec.describe RegistrationsController, :type => :controller do
     end
 
     describe "#update" do
-
       def patch_update attendee_attrs = {}, opts = {}
         patch :update, params: opts.merge(registration: attendee_attrs, id: attendee.id, year: attendee.year)
       end
@@ -242,7 +244,7 @@ RSpec.describe RegistrationsController, :type => :controller do
 
         it "updates associated plans" do
           expect { patch_update plan }.to \
-            change{ attendee.plans.count }.from(0).to(1)
+            change { attendee.plans.count }.from(0).to(1)
           expect(attendee.plans).to include(plan)
         end
 
@@ -373,7 +375,7 @@ RSpec.describe RegistrationsController, :type => :controller do
       end
 
       it 'can update attendee of any user' do
-        attrs = attendee_attributes.merge({:family_name => 'banana'})
+        attrs = attendee_attributes.merge({ :family_name => 'banana' })
         expect {
           patch :update, params: { id: a.id, registration: attrs, year: a.year }
         }.to change { a.reload.family_name }
@@ -381,7 +383,7 @@ RSpec.describe RegistrationsController, :type => :controller do
       end
 
       it "can update admin fields" do
-        attrs = attendee_attributes.merge({:comment => 'banana'})
+        attrs = attendee_attributes.merge({ :comment => 'banana' })
         expect {
           patch :update, params: { id: a.id, registration: attrs, year: a.year }
         }.to change { a.reload.family_name }
@@ -413,7 +415,7 @@ RSpec.describe RegistrationsController, :type => :controller do
   end
 
   def params_for_plan plan, qty
-    { 'plans' => { plan.id.to_s => { 'qty' => qty }}}
+    { 'plans' => { plan.id.to_s => { 'qty' => qty } } }
   end
 
   def update_activities attendee, activities

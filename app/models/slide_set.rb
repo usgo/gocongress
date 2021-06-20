@@ -11,13 +11,12 @@ class SlideSet
   # that the view helper expects.
   def slides_as_arrays
     return [] if @slides.nil?
-    @slides.map{ |s| [ s["title"], s["subtitle"] ] }
+    @slides.map { |s| [s["title"], s["subtitle"]] }
   end
 
-private
+  private
 
   def slides_dir(year)
     File.join(Rails.root, "app", "assets", "images", "slideshow", year.to_s)
   end
-
 end

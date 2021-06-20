@@ -22,9 +22,11 @@ RSpec.describe ActivityCategoriesController, :type => :controller do
     it "succeeds" do
       sign_in create :admin
       expect {
-        patch :update, params: { year: activity_category.year,
-          id: activity_category.id, activity_category: { name: "Activity" } }
-      }.to change{ activity_category.reload.name }.to("Activity")
+        patch :update, params: {
+          year: activity_category.year,
+          id: activity_category.id, activity_category: { name: "Activity" }
+        }
+      }.to change { activity_category.reload.name }.to("Activity")
     end
   end
 end

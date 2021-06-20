@@ -8,12 +8,12 @@ class Activity < ApplicationRecord
 
   validates :activity_category, :presence => true
   validates_presence_of :leave_time, :name, :return_time
-  validates :location, :length => {:maximum => 50}
+  validates :location, :length => { :maximum => 50 }
   validates :notes, :length => {
     :maximum => 2000,
     :message => "are too long (maximum is 2000 characters)"
   }
-  validates :phone, :length => {:maximum => 20}
+  validates :phone, :length => { :maximum => 20 }
   validates :price, :numericality => {
     :equal_to => 0,
     :if => :price_varies?,
@@ -21,11 +21,13 @@ class Activity < ApplicationRecord
       set the price to 0, so that this #{model_name.human.downcase}
       will not show up on invoices."
   }
-  validates :url, :length => {:maximum => 200},
+  validates :url,
+    :length => { :maximum => 200 },
     :format => {
       :with => /\Ahttps?:\/{2}/,
       :allow_blank => true,
-      :message => "must begin with protocol, eg. http://"}
+      :message => "must begin with protocol, eg. http://"
+    }
 
   scope :disabled, -> { where(disabled: true) }
 

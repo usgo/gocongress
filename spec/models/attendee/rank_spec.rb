@@ -1,7 +1,6 @@
 require "rails_helper"
 
 RSpec.describe Attendee::Rank, :type => :model do
-
   describe '#name' do
     def nym(r) Attendee::Rank.new(r).name end
 

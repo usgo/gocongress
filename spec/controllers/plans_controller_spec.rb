@@ -42,13 +42,13 @@ RSpec.describe PlansController, :type => :controller do
       plan.attendees << create(:attendee)
       expect {
         delete :destroy, params: { year: plan.year, id: plan.id }
-      }.to_not change{ Plan.count }
+      }.to_not change { Plan.count }
       expect(flash[:alert]).to eq('Cannot delete plan because attendees have already selected it.')
       expect(response).to redirect_to(plan_path(plan))
     end
 
     it 'can update max quantity' do
-      new_max_quantity = 100+rand(10)
+      new_max_quantity = 100 + rand(10)
       expect(plan.max_quantity).not_to eq(new_max_quantity)
       attrs = plan_attributes.merge(max_quantity: new_max_quantity)
       patch :update, params: { id: plan.id, plan: attrs, year: plan.year }

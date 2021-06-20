@@ -5,8 +5,8 @@ class Rpt::OutstandingBalanceReportsController < Rpt::AbstractReportController
     @users = User.yr(@year).includes([
       {
         :attendees => [
-          {:attendee_activities => :activity},
-          {:attendee_plans => :plan}
+          { :attendee_activities => :activity },
+          { :attendee_plans => :plan }
         ]
       }
     ]).to_a

@@ -36,8 +36,8 @@ RSpec.describe DailyPlanDetailsExporter do
           [a2.user_id, a2.id, a2.family_name, a2.given_name, a2.alternate_name, p1.name, 0, 1] + zeros,
           [a1.user_id, a1.id, a1.family_name, a1.given_name, a1.alternate_name, p2.name, 1, 0] + zeros,
           [a2.user_id, a2.id, a2.family_name, a2.given_name, a2.alternate_name, p2.name, 0, 1] + zeros
-        ])
+        ]
+      )
     end
   end
 end
-

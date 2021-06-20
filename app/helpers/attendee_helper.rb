@@ -1,5 +1,4 @@
 module AttendeeHelper
-
   def plan_selection_inputs plan
     selection = plan_selection(plan)
     if plan.daily?
@@ -12,8 +11,10 @@ module AttendeeHelper
   end
 
   def plan_date_fields plan, selection
-    render :partial => 'shared/plan_date_fields',
-      :locals => {plan: plan, selection: selection}
+    render(
+      :partial => 'shared/plan_date_fields',
+      :locals => { plan: plan, selection: selection }
+    )
   end
 
   def plan_cbx plan, selection
@@ -78,5 +79,4 @@ module AttendeeHelper
   def radio_btn_name plan
     "plans[single_plan_cat_id:#{plan.plan_category.id}][plan_id]"
   end
-
 end

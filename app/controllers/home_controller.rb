@@ -17,7 +17,7 @@ class HomeController < ApplicationController
     raise "Intentional error to test runtime exception notification"
   end
 
-protected
+  protected
 
   def page_title
     human_action_name

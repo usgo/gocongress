@@ -1,5 +1,4 @@
 class Insert2013CongressEvent < ActiveRecord::Migration
-
   EVENT_NAME = 'Congress'
 
   class Event < ActiveRecord::Base

@@ -12,9 +12,11 @@ RSpec.describe ContactsController, :type => :controller do
     it "succeeds" do
       sign_in create :admin
       expect {
-        patch :update, params: { year: contact.year, id: contact.id,
-          contact: { list_order: 1 } }
-      }.to change{ contact.reload.list_order }.to(1)
+        patch :update, params: {
+          year: contact.year, id: contact.id,
+          contact: { list_order: 1 }
+        }
+      }.to change { contact.reload.list_order }.to(1)
     end
   end
 end

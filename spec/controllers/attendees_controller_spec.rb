@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe AttendeesController, :type => :controller do
   render_views
-  let(:activities) { 1.upto(3).map{ create :activity } }
+  let(:activities) { 1.upto(3).map { create :activity } }
 
   context "as a visitor" do
     describe "#index" do
@@ -56,8 +56,7 @@ RSpec.describe AttendeesController, :type => :controller do
           expect(assigns(:attendees).count).to be(1)
         end
       end
-  end
-
+    end
   end
 
   context "as a user" do

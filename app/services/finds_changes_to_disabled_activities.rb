@@ -1,5 +1,4 @@
 class FindsChangesToDisabledActivities
-
   attr_reader :before, :after
 
   def initialize(before, after)

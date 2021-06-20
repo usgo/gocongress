@@ -1,5 +1,4 @@
 RSpec.shared_examples "a report" do |format_array|
-
   # We want to test our views, but for spec performance we
   # only render_views once
   context "with render_views" do
@@ -39,5 +38,4 @@ RSpec.shared_examples "a report" do |format_array|
     get :show, params: { year: 2011 }
     expect(response.status).to eq(403)
   end
-
 end

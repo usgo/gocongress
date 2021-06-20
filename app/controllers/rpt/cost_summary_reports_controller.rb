@@ -1,5 +1,4 @@
 class Rpt::CostSummaryReportsController < Rpt::AbstractReportController
-
   def show
     respond_to do |format|
       format.html do
@@ -18,5 +17,4 @@ class Rpt::CostSummaryReportsController < Rpt::AbstractReportController
   def csv_filename
     "usgc_cost_summaries_#{Date.current.strftime("%Y-%m-%d")}.csv"
   end
-
 end

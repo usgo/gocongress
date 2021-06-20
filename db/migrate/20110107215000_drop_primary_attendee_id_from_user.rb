@@ -4,6 +4,6 @@ class DropPrimaryAttendeeIdFromUser < ActiveRecord::Migration
   end
 
   def self.down
-	  add_column :users, :primary_attendee_id, :integer
+    add_column :users, :primary_attendee_id, :integer
   end
 end

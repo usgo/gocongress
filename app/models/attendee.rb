@@ -42,22 +42,22 @@ class Attendee < ApplicationRecord
 
   validates :birth_date, presence: true
   validate :birth_date_is_modern
-  validates :country,         :format => {:with => /\A[A-Z]{2}\z/}, :presence => true
+  validates :country,         :format => { :with => /\A[A-Z]{2}\z/ }, :presence => true
   validates :email,           :presence => true
   with_options(presence: { if: ->(atd) { atd.year_record.in_person? } }) do
     validates :emergency_name
     validates :emergency_phone
   end
   validates :family_name,     :presence => true
-  validates :gender,          :inclusion => {:in => ["m","f","o"], :message => "is not valid"}, :presence => true
+  validates :gender,          :inclusion => { :in => ["m", "f", "o"], :message => "is not valid" }, :presence => true
   validates :given_name,      :presence => true
   validates :guardian_full_name, :presence => { :if => :require_guardian_full_name? }
   validates :phone,
     if: ->(atd) { atd.receive_sms && atd.year_record&.in_person? },
     presence: true,
     phone: true
-  validates :minor_agreement_received, :inclusion => {:in => [true, false]}
-  validates :checked_in, :inclusion => {:in => [true, false]}
+  validates :minor_agreement_received, :inclusion => { :in => [true, false] }
+  validates :checked_in, :inclusion => { :in => [true, false] }
   validates :rank,
     inclusion: {
       in: Attendee::Rank::NUMERIC_RANK_LIST,
@@ -65,12 +65,14 @@ class Attendee < ApplicationRecord
     },
     presence: true
   validates :receive_sms, :inclusion => {
-    :in => [true, false], :message => ' - Please select yes or no'}
-  validates :roomate_request, :length => {:maximum => 250}
-  validates :special_request, :length => {:maximum => 250}
-  validates :tshirt_size,     :inclusion => {:in => Shirt::SIZE_CODES, :message => " - Please select a size"}
+    :in => [true, false], :message => ' - Please select yes or no'
+  }
+  validates :roomate_request, :length => { :maximum => 250 }
+  validates :special_request, :length => { :maximum => 250 }
+  validates :tshirt_size,     :inclusion => { :in => Shirt::SIZE_CODES, :message => " - Please select a size" }
   validates :will_play_in_us_open, :inclusion => {
-    :in => [true, false], :message => ' - Please select yes or no'}
+    :in => [true, false], :message => ' - Please select yes or no'
+  }
   validates_numericality_of :aga_id, :only_integer => true, :allow_nil => true, :message => "id is not a number"
 
   username_message = " - One of the tournaments you selected needs your %{attribute}."
@@ -123,6 +125,7 @@ class Attendee < ApplicationRecord
     end
     aga_ids.compact
   end
+
   # Using a subquery in the where clause is performant up to about
   # one thousand records.  -Jared 2012-05-13
   def self.with_at_least_one_plan
@@ -226,18 +229,18 @@ class Attendee < ApplicationRecord
   end
 
   def plans_as_invoice_items
-    plans_to_invoice.map{ |ap| ap.to_invoice_item(full_name, attendee_alternate_name) }
+    plans_to_invoice.map { |ap| ap.to_invoice_item(full_name, attendee_alternate_name) }
   end
 
   def plans_to_invoice
-    attendee_plans.select{ |ap| ap.show_on_invoice? }
+    attendee_plans.select { |ap| ap.show_on_invoice? }
   end
 
   def populate_atrs_for_new_form
     self.email = user.email
     ufac = user.first_atnd_created
     if ufac.present?
-      ['country','phone'].each do |f|
+      ['country', 'phone'].each do |f|
         self[f] = ufac[f]
       end
     end
@@ -275,7 +278,7 @@ class Attendee < ApplicationRecord
     user.try(:paid_deposit)
   end
 
-private
+  private
 
   def birth_date_is_modern
     if birth_date.present? && birth_date.year < 1900

@@ -1,5 +1,4 @@
 module PostgresMigrationHelpers
-
   def add_pg_check_constraint table, expression
     cns_name = ck_constraint_name(table, expression)
     execute %{
@@ -9,7 +8,7 @@ module PostgresMigrationHelpers
     }
   end
 
-  def add_pg_foreign_key(from_table, from_columns, to_table, to_columns, on_delete="cascade", matchtype="full")
+  def add_pg_foreign_key(from_table, from_columns, to_table, to_columns, on_delete = "cascade", matchtype = "full")
     cns_name = fk_constraint_name(from_table, from_columns)
 
     execute %{alter table #{from_table}

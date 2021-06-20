@@ -18,8 +18,8 @@ class YearsController < ApplicationController
   private
 
   def expose_reg_phase_opts
-    @reg_phase_opts = Year::REG_PHASES.each_with_index.map do |p,i|
-      [(i+1).to_s + ". " + p.capitalize, p]
+    @reg_phase_opts = Year::REG_PHASES.each_with_index.map do |p, i|
+      [(i + 1).to_s + ". " + p.capitalize, p]
     end
   end
 

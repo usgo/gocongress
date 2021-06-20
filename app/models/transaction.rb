@@ -7,31 +7,32 @@ class Transaction < ApplicationRecord
   # The admin who last updated this transaction
   belongs_to :updated_by_user, :class_name => "User"
 
-	# Transaction Types:
-	# Comp - Admin reduces total cost for a User (eg. a VIP)
-	# Refund - Admin has sent a refund check to a User who overpaid
-	# Sale - User makes a payment
-	TRANTYPES = [['Comp','C'], ['Comp (AGF)', 'A'], ['Comp (Pro)', 'P'], ['Refund','R'], ['Sale','S']]
+  # Transaction Types:
+  # Comp - Admin reduces total cost for a User (eg. a VIP)
+  # Refund - Admin has sent a refund check to a User who overpaid
+  # Sale - User makes a payment
+  TRANTYPES = [['Comp', 'C'], ['Comp (AGF)', 'A'], ['Comp (Pro)', 'P'], ['Refund', 'R'], ['Sale', 'S']]
 
-	# Instruments
-	INSTRUMENTS = [['Card','C'], ['Cash','S'], ['Check','K']]
+  # Instruments
+  INSTRUMENTS = [['Card', 'C'], ['Cash', 'S'], ['Check', 'K']]
 
   # Validations
   # -----------
 
-	validates_presence_of :trantype, :amount
-	validates :updated_by_user, :presence => true, :on => :update
+  validates_presence_of :trantype, :amount
+  validates :updated_by_user, :presence => true, :on => :update
 
   validates_presence_of :instrument, :if => :requires_instrument?
-  validates_inclusion_of :instrument, :in => [nil, ''], :if => :forbids_instrument?, \
+  validates_inclusion_of :instrument,
+    :in => [nil, ''], :if => :forbids_instrument?, \
     :message => "must be blank.  (Not applicable for selected transaction type)"
   validates_length_of :instrument, :is => 1, :if => :requires_instrument?
   validates_inclusion_of :instrument, :in => INSTRUMENTS.flatten, :if => :requires_instrument?
 
-	validates_length_of :trantype, :is => 1
+  validates_length_of :trantype, :is => 1
   validates_inclusion_of :trantype, :in => TRANTYPES.flatten
 
-	validates_numericality_of :amount, greater_than: 0, only_integer: true
+  validates_numericality_of :amount, greater_than: 0, only_integer: true
 
   # Certain attributes apply only to gateway transaction types (eg. Sale)
   with_options :if => :is_gateway_transaction? do |gwt|
@@ -53,10 +54,11 @@ class Transaction < ApplicationRecord
     o.validates_inclusion_of :gwtranid
   end
 
-	validates_numericality_of :check_number, :greater_than => 0, :if => :requires_check_number?
+  validates_numericality_of :check_number, :greater_than => 0, :if => :requires_check_number?
 
   # Only refunds may have a check number
-  validates_inclusion_of :check_number, :unless => :requires_check_number?, \
+  validates_inclusion_of :check_number,
+    :unless => :requires_check_number?, \
     :allow_nil => false, :allow_blank => false, :in => [nil, ''], \
     :message => "must be blank.  (Only applicable for Refunds)"
 
@@ -64,13 +66,13 @@ class Transaction < ApplicationRecord
   # the transaction form has an email field to select the user.
   validates :user, :presence => { :message => " email address is blank
     or incorrect.  Please make sure to enter the email address of the
-    correct user account."}
+    correct user account." }
 
   # Scopes
   # ------
 
   scope :comps, -> { where(trantype: ['C', 'A', 'P']) }
-  scope :for_payment_history, -> { where(:trantype => ['S','R']) }
+  scope :for_payment_history, -> { where(:trantype => ['S', 'R']) }
   scope :refunds, -> { where(trantype: 'R') }
   scope :sales, -> { where(trantype: 'S') }
 
@@ -89,8 +91,11 @@ class Transaction < ApplicationRecord
   end
 
   def requires_instrument?() %w[C A P].exclude?(trantype) end
+
   def forbids_instrument?() %w[C A P].include?(trantype) end
+
   def is_gateway_transaction?() trantype == 'S' and instrument == 'C' end
+
   def requires_check_number?() instrument == 'K' end
 
   def description
@@ -98,7 +103,7 @@ class Transaction < ApplicationRecord
   end
 
   def get_trantype_name
-  	trantype_name = ''
+    trantype_name = ''
     TRANTYPES.each { |t| if (t[1] == self.trantype) then trantype_name = t[0] end }
     if trantype_name.empty? then raise "assertion failed: invalid trantype" end
     return trantype_name

@@ -9,7 +9,7 @@ FactoryBot.define do
   end
 
   factory :activity_category do
-    name   { "Activities" }
-    year    { Time.now.year }
+    name { "Activities" }
+    year { Time.now.year }
   end
 end

@@ -12,7 +12,8 @@ module ApplicationHelper
   # https://github.com/rails/rails/issues/2158
   def button_to_get text, url, id, css_class = nil
     render :partial => 'shared/button_to_get', :locals => {
-      :btn_txt => text, :btn_url => url, :btn_id => id, :btn_class => css_class}
+      :btn_txt => text, :btn_url => url, :btn_id => id, :btn_class => css_class
+    }
   end
 
   def cents_for_currency_field x
@@ -41,11 +42,11 @@ module ApplicationHelper
     '<input type="checkbox" disabled="disabled" />'.html_safe
   end
 
-	# `trl_attr` is slightly more convenient than
-	# Model.human_attribute_name("attr")
-	def trl_attr ( modelname, attributename )
-		translate "activerecord.attributes." + modelname.to_s + "." + attributename.to_s
-	end
+  # `trl_attr` is slightly more convenient than
+  # Model.human_attribute_name("attr")
+  def trl_attr(modelname, attributename)
+    translate "activerecord.attributes." + modelname.to_s + "." + attributename.to_s
+  end
 
   # An English list is comma delimited, and the final element
   # is prepended with a word like 'and'.

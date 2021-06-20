@@ -46,4 +46,3 @@ class DailyPlanDetailsExporter < Exporter
     [header] + crosstab(run_query)
   end
 end
-

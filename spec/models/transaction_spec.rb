@@ -65,12 +65,12 @@ RSpec.describe Transaction, :type => :model do
 
     context "comp" do
       it "must not have a gwtranid" do
-        t = build :tr_comp, {gwtranid: 12897}
+        t = build :tr_comp, { gwtranid: 12897 }
         expect(t).not_to be_valid
       end
 
       it "must not have a gwdate" do
-        t = build :tr_comp, {gwdate: Time.now.to_date}
+        t = build :tr_comp, { gwdate: Time.now.to_date }
         expect(t).not_to be_valid
       end
 
@@ -85,7 +85,6 @@ RSpec.describe Transaction, :type => :model do
           expect(t).not_to be_valid
         end
       end
-
     end
 
     context "sale" do

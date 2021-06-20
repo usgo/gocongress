@@ -1,5 +1,4 @@
 class Rpt::DailyPlanDetailsReportsController < Rpt::AbstractReportController
-
   def show
     respond_to do |format|
       format.html do

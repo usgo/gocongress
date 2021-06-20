@@ -4,6 +4,6 @@ class AlterAttendeesRemoveCongressesAttended < ActiveRecord::Migration
   end
 
   def down
-  	add_column :attendees, :congresses_attended, :integer
+    add_column :attendees, :congresses_attended, :integer
   end
 end

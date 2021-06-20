@@ -1,5 +1,4 @@
 FactoryBot.define do
-
   # The `:base_transaction` represents the attributes
   # common to all other factories.  It does not have enough
   # attributes to be valid, but that's ok because we never use
@@ -46,5 +45,4 @@ FactoryBot.define do
     day = rand(27) + 1
     Time.utc(Time.now.year, month, day)
   end
-
 end

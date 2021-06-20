@@ -1,5 +1,4 @@
 FactoryBot.define do
-
   factory :attendee do
     birth_date { "1981-09-10" }
     country { 'JP' }

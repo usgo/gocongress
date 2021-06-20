@@ -1,5 +1,4 @@
 class PlanCalendar
-
   # Given a range of dates, `range_to_matrix` returns a matrix
   # representing a calendar; rows are weeks and cells are days.
   # Cells in the range contain dates, and cells outside the

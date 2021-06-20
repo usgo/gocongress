@@ -13,7 +13,7 @@ class CreateYears < ActiveRecord::Migration
       t.string   :state,                :null => false
       t.string   :timezone,             :null => false
       t.string   :twitter_url
-      t.integer  :year,                 :null => false
+      t.integer  :year, :null => false
     end
 
     add_index :years, :year, :unique => true

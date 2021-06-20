@@ -76,5 +76,4 @@ RSpec.describe Purchasable, :type => :model do
       end
     end
   end
-
 end

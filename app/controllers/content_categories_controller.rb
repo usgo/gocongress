@@ -38,7 +38,7 @@ class ContentCategoriesController < ApplicationController
     end
   end
 
-protected
+  protected
 
   def page_title
     action_name == "show" ? @content_category.name : super

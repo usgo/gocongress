@@ -2,7 +2,6 @@ require "rails_helper"
 require "cancan/matchers"
 
 RSpec.describe Ability, :type => :model do
-
   context 'staff' do
     let(:staff) { build :staff }
     subject { Ability.new(staff) }
@@ -14,7 +13,7 @@ RSpec.describe Ability, :type => :model do
   end
 
   describe ".explain_denial" do
-    let(:coin_toss) { [true,false].sample }
+    let(:coin_toss) { [true, false].sample }
     it "says you are authenticated" do
       msg = Ability.explain_denial true, :foo, "bar"
       expect(msg).to include 'You are signed in'

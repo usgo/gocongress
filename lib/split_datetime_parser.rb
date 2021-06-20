@@ -1,5 +1,4 @@
 module SplitDatetimeParser
-
   # Given a hash and a prefix, `parse_split_datetime_params`
   # will attempt to find *prefix*_date and *prefix*_time in the
   # hash, combine them, and return an instance of
@@ -40,5 +39,4 @@ module SplitDatetimeParser
 
   class SplitDatetimeParserException < RuntimeError
   end
-
 end

@@ -1,5 +1,4 @@
 class BadgeCsvExporter
-
   # Order of columns must match `header_array`
   def self.attendee_array atnd
     # Get AGA Info from TD List
@@ -12,7 +11,7 @@ class BadgeCsvExporter
 
       # Change "non-player" to blank for the purpose of badges
       atnd.rank_name === "Non-player" ? "" : atnd.rank_name,
-      
+
       atnd.user_email,
       atnd.aga_id,
       aga_info[:club],
@@ -93,7 +92,7 @@ class BadgeCsvExporter
   end
 
   def self.plan_names year
-    plans(year).map{ |p|
+    plans(year).map { |p|
       # Turn plan names like "Yes 1st" to "plan_yes-1st"
       "plan_" + safe_for_csv(p.name).parameterize
     }

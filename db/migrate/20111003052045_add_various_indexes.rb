@@ -1,7 +1,7 @@
 class AddVariousIndexes < ActiveRecord::Migration
   def up
     # The following indexes are for performance.  Some of these indexes
-    # will not be useful immediately, especially those whose first 
+    # will not be useful immediately, especially those whose first
     # column is year.  However, as years go by and the database grows,
     # they should become useful (year's selectivity will increase).
     add_index :users, :year

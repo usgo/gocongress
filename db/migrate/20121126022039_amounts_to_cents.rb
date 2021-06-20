@@ -1,5 +1,4 @@
 class AmountsToCents < ActiveRecord::Migration
-
   # Represent all currency values in cents instead of dollars.
   # This migration uses some feature which may be specific to
   # Postgres, eg. `alter table rename column`

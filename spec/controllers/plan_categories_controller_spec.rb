@@ -5,7 +5,7 @@ RSpec.describe PlanCategoriesController, :type => :controller do
 
   it_behaves_like "an admin controller", :plan_category do
     let(:event) { create :event }
-    let(:extra_params_for_create) { {:plan_category => {:event_id => event.id, :name => "Plan Category"}} }
+    let(:extra_params_for_create) { { :plan_category => { :event_id => event.id, :name => "Plan Category" } } }
     let(:updateable_attribute) { :description }
   end
 
@@ -22,7 +22,7 @@ RSpec.describe PlanCategoriesController, :type => :controller do
         sign_in create(:admin)
         expect {
           delete :destroy, params: { id: cat.id, year: cat.year }
-        }.to_not change{ PlanCategory.count }
+        }.to_not change { PlanCategory.count }
         expect(flash[:alert]).to include "Cannot delete the '#{cat.name}' category"
       end
     end
@@ -68,7 +68,7 @@ RSpec.describe PlanCategoriesController, :type => :controller do
       cat = create(:plan_category)
       create(:plan, name: 'Apples', cat_order: 1, plan_category: cat)
       create(:plan, name: 'Oranges', cat_order: 2, plan_category: cat)
-      patch :update, params: { year: cat.year, id: cat.id, plan_order: [2,1], plan_category: { event_id: event.id, name: "Plan Category" } }
+      patch :update, params: { year: cat.year, id: cat.id, plan_order: [2, 1], plan_category: { event_id: event.id, name: "Plan Category" } }
       expect(response).to redirect_to cat
       expect(cat.plans.order(:cat_order).map(&:name)).to match_array(['Oranges', 'Apples'])
     end

@@ -12,8 +12,8 @@ RSpec.describe User, :type => :model do
   describe "#amount_paid" do
     it "equals the total of sales minus the total of refunds" do
       user = create :user
-      sales = 1.upto(3).map{ create :tr_sale, user_id: user.id }
-      refunds = 1.upto(3).map{ create :tr_refund, user_id: user.id }
+      sales = 1.upto(3).map { create :tr_sale, user_id: user.id }
+      refunds = 1.upto(3).map { create :tr_refund, user_id: user.id }
       sale_total = sales.map(&:amount).reduce(:+)
       refund_total = refunds.map(&:amount).reduce(:+)
       expect(user.amount_paid).to eq(sale_total - refund_total)
@@ -82,7 +82,7 @@ RSpec.describe User, :type => :model do
 
     it "is invalid if email is not unique" do
       extant = create :user, :email => "John@example.com"
-      user = build :user, {email: extant.email, year: extant.year}
+      user = build :user, { email: extant.email, year: extant.year }
       expect(user).not_to be_valid
       expect(user.errors).to include(:email)
     end
@@ -104,10 +104,12 @@ RSpec.describe User, :type => :model do
   describe "#get_invoice_total" do
     it "equals the sum of invoice items" do
       user = build :user
-      allow(user).to receive(:invoice_items) {[
-        InvoiceItem.new("Baubles", "John", 1.5, 2),
-        InvoiceItem.new("Trinkets", "Jane", -0.75, 1)
-      ]}
+      allow(user).to(
+        receive(:invoice_items).and_return([
+          InvoiceItem.new("Baubles", "John", 1.5, 2),
+          InvoiceItem.new("Trinkets", "Jane", -0.75, 1)
+        ])
+      )
       expect(user.get_invoice_total).to eq(2.25)
     end
 
@@ -140,7 +142,7 @@ RSpec.describe User, :type => :model do
       num_attendees.times do |t|
         user.attendees << create(:attendee, :user => user)
       end
-      expect { user.destroy }.to change{ Attendee.count }.by(-1 * num_attendees)
+      expect { user.destroy }.to change { Attendee.count }.by(-1 * num_attendees)
       expect(Attendee.where(:user_id => user.id)).to be_empty
     end
   end

@@ -2,7 +2,6 @@
 namespace :attendees do
   desc "Migrate sms plans to receive_sms attribute for attendees"
   task migrate_sms_plans: :environment do
-
     attendees_with_sms_plans = Attendee.select('attendees.id, attendees.phone, attendees.local_phone, attendees.receive_sms').joins(:plans).where('plans.name = ?', "Yes! SMS!")
 
     puts <<-TEXT

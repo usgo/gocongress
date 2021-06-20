@@ -28,7 +28,7 @@ class Ability
   def initialize(user)
     # Guests can read public resources, but cannot write anything
     can :read, [Contact, Content, ContentCategory, Activity,
-      Shirt, Tournament, PlanCategory, Round, GameAppointment]
+                Shirt, Tournament, PlanCategory, Round, GameAppointment]
 
     # Guests can show (but not index) the following:
     can :show, ActivityCategory
@@ -69,19 +69,18 @@ class Ability
   # `explain_denial` provides a friendly "access denied" message
   def self.explain_denial(authenticated, action, plural_model)
     (authenticated ? 'You are signed in, but' : 'You are not signed in, so of course') +
-    ' you do not have permission to ' + explain_action(action) + ' ' +
-    singularize_if(plural_model, [:destroy, :show].include?(action)) + '.'
+      ' you do not have permission to ' + explain_action(action) + ' ' +
+      singularize_if(plural_model, [:destroy, :show].include?(action)) + '.'
   end
 
   private
 
   def self.explain_action act
-    explanations = {destroy: 'delete this', index: 'list', show: 'see this'}
+    explanations = { destroy: 'delete this', index: 'list', show: 'see this' }
     return explanations[act.to_sym] || act.to_s
   end
 
   def self.singularize_if plural, bool
     bool ? plural.singularize : plural
   end
-
 end

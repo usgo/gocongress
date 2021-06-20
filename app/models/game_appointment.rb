@@ -12,7 +12,7 @@ class GameAppointment < ApplicationRecord
   validates :attendee_two, presence: true
   validates :round, presence: true
   validates :table, presence: true, uniqueness: { scope: :round, message: "a
-    table can only have one game per round"}
+    table can only have one game per round" }
   validates :location, presence: true
   validates :time, presence: true
   # Temporarily removed -- has performance issues
@@ -65,5 +65,4 @@ class GameAppointment < ApplicationRecord
       end
     end
   end
-
 end

@@ -6,7 +6,6 @@
 # syntax highlighting. -Jared 2013-03-21
 
 class Attendee::WhoIsComing
-
   DEFAULT_ORDER = 'rank = 0, rank desc'
   SORTABLE_COLUMNS = %w[given_name family_name rank created_at country]
 
@@ -25,15 +24,15 @@ class Attendee::WhoIsComing
   end
 
   def pro_count
-    @attendees.select{|a| a.get_rank.pro?}.count
+    @attendees.select { |a| a.get_rank.pro? }.count
   end
 
   def dan_count
-    @attendees.select{|a| a.get_rank.dan?}.count
+    @attendees.select { |a| a.get_rank.dan? }.count
   end
 
   def kyu_count
-    @attendees.select{|a| a.get_rank.kyu?}.count
+    @attendees.select { |a| a.get_rank.kyu? }.count
   end
 
   def opposite_direction
@@ -90,5 +89,4 @@ class Attendee::WhoIsComing
   def sort_unsafe_for_anon? sort
     %w[given_name family_name country].include?(sort)
   end
-
 end

@@ -7,12 +7,10 @@
 # @see https://dev.to/jsrn/whats-tripping-up-uglifier-3j94
 #
 Dir["app/assets/javascripts/**/*.js"].each do |file_name|
-  
-    # ... run it through the uglifier on its own...
-    print "."
-    Uglifier.new(harmony: true).compile(File.read(file_name))
+  # ... run it through the uglifier on its own...
+  print "."
+  Uglifier.new(harmony: true).compile(File.read(file_name))
 rescue StandardError => e
-    # ... and tell us when there's a problem!
-    puts "\nError compiling #{file_name}: #{e}\n"
-  
+  # ... and tell us when there's a problem!
+  puts "\nError compiling #{file_name}: #{e}\n"
 end

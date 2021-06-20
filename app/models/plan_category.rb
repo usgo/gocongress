@@ -7,13 +7,14 @@ class PlanCategory < ApplicationRecord
   has_many :plans
 
   validates :event, :presence => true
-  validates :name, :presence => true,
+  validates :name,
+    :presence => true,
     :uniqueness => {
       :scope => :year,
       :case_sensitive => false,
       :message => "with that name already exists"
     }
-  validates :description, :length => {maximum: 200}
+  validates :description, :length => { maximum: 200 }
 
   # Scopes
   # ----------------
@@ -106,5 +107,4 @@ class PlanCategory < ApplicationRecord
 
     ordering_errors
   end
-
 end

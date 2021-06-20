@@ -1,27 +1,26 @@
 class Rpt::TransactionReportsController < Rpt::AbstractReportController
+  def show
+    @transactions = Transaction.yr(@year)
 
-def show
-  @transactions = Transaction.yr(@year)
+    respond_to do |format|
+      format.html do
+        @sales = @transactions.sales
+        @comps = @transactions.comps
+        @refunds = @transactions.refunds
 
-  respond_to do |format|
-    format.html do
-      @sales = @transactions.sales
-      @comps = @transactions.comps
-      @refunds = @transactions.refunds
+        @sales_sum = @sales.sum(:amount)
+        @comps_sum = @comps.sum(:amount)
+        @refunds_sum = @refunds.sum(:amount)
 
-      @sales_sum = @sales.sum(:amount)
-      @comps_sum = @comps.sum(:amount)
-      @refunds_sum = @refunds.sum(:amount)
+        @net_income = @sales_sum - @refunds_sum
+      end
 
-      @net_income = @sales_sum - @refunds_sum
-    end
-
-    format.csv do
-      csv = transactions_to_csv(@transactions)
-      send_data csv, filename: csv_filename, type: 'text/csv'
+      format.csv do
+        csv = transactions_to_csv(@transactions)
+        send_data csv, filename: csv_filename, type: 'text/csv'
+      end
     end
   end
-end
 
   private
 
@@ -40,7 +39,7 @@ end
 
   def csv_header_row
     ['Created', 'Type', 'Amount', 'user_id', 'User', 'GW Tran. ID',
-      'Check No.', 'Last Updated By', 'Updated', 'GW Date', 'Comment']
+     'Check No.', 'Last Updated By', 'Updated', 'GW Date', 'Comment']
   end
 
   def transaction_to_array(t)

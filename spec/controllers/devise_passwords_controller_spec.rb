@@ -20,7 +20,6 @@ RSpec.describe Devise::PasswordsController, :type => :controller do
     end
 
     it "creates a token for the correct user" do
-
       # Create two users with the same email address, but different years.
       user2011 = create :user, :email => "jared@jaredbeck.com", :year => 2011
       user2012 = create :user, :email => "jared@jaredbeck.com", :year => 2012

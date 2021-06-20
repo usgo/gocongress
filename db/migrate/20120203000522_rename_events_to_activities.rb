@@ -1,6 +1,5 @@
 class RenameEventsToActivities < ActiveRecord::Migration
   def change
-
     # tables
     rename_table :event_categories, :activity_categories
     rename_table :events, :activities

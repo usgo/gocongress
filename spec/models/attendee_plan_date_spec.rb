@@ -1,13 +1,11 @@
 require "rails_helper"
 
 RSpec.describe AttendeePlanDate, :type => :model do
-
   it 'has a valid factory' do
     expect(build(:attendee_plan_date)).to be_valid
   end
 
   describe '#valid?' do
-
     it 'requires an AttendeePlan' do
       expect(subject).to have_error_about :attendee_plan
     end

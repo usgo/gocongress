@@ -14,9 +14,5 @@ RSpec.describe Round, type: :model do
   it 'a round is not valid with the same number and tournament' do
     expect(@round_one).to be_valid
     expect(@round_two).to_not be_valid
-
   end
-
-
-
 end

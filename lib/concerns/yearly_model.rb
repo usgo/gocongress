@@ -12,7 +12,7 @@ module YearlyModel
       primary_key: 'year'
 
     validates :year,
-      :numericality => {:only_integer => true, :greater_than => 2010, :less_than => 2100},
+      :numericality => { :only_integer => true, :greater_than => 2010, :less_than => 2100 },
       :presence => true
   end
 
