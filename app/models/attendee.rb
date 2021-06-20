@@ -275,7 +275,7 @@ class Attendee < ApplicationRecord
     user.try(:paid_deposit)
   end
 
-private
+  private
 
   def birth_date_is_modern
     if birth_date.present? && birth_date.year < 1900

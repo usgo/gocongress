@@ -18,7 +18,7 @@ def show
   end
 end
 
-private
+  private
 
 def csv_filename
   "usgc_attendees_#{Time.current.strftime("%Y-%m-%d")}.csv"

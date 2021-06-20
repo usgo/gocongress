@@ -14,7 +14,7 @@ class SlideSet
     @slides.map{ |s| [ s["title"], s["subtitle"] ] }
   end
 
-private
+  private
 
   def slides_dir(year)
     File.join(Rails.root, "app", "assets", "images", "slideshow", year.to_s)

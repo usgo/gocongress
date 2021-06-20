@@ -28,6 +28,6 @@ def show
   end
 end
 
-private
+  private
 
 end

@@ -29,7 +29,7 @@ def self_promoter(player, rating)
   return player.rank > rating
 end
 
-private
+  private
 
 def xml_filename
   "usopen_players_#{Time.current.strftime("%Y-%m-%d")}.xml"

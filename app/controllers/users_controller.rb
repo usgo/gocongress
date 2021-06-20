@@ -116,7 +116,7 @@ class UsersController < ApplicationController
     render :layout => 'print'
   end
 
-protected
+  protected
 
   def remove_year_from_params
     # Leaving user.year accessible and just removing it on all actions
@@ -128,7 +128,7 @@ protected
     end
   end
 
-private
+  private
 
   def new_payment_url_options
     subdom = Rails.env.production? ? 'gocongress' : 'gocongress-dev'

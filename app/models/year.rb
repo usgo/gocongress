@@ -65,7 +65,7 @@ class Year < ApplicationRecord
     self.year.to_s
   end
 
-private
+  private
 
   def all_sponsors
     {

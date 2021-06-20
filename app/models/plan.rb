@@ -117,7 +117,7 @@ def inventory_available(excluded_attendee=nil)
   c - n > inventory ? 0 : inventory + n - c
 end
 
-private
+  private
 
 def attendee_plans_except(atnd=nil)
   if atnd.nil? || atnd.new_record?

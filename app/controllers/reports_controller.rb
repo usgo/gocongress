@@ -50,7 +50,7 @@ class ReportsController < ApplicationController
     render :layout => "print"
   end
 
-protected
+  protected
 
   def page_title
     human_action_name.singularize + ' ' + human_controller_name

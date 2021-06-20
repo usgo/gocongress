@@ -63,7 +63,7 @@ class ApplicationController < ActionController::Base
     render_access_denied
   end
 
-protected
+  protected
 
   def human_action_name
     a = action_name.to_sym
