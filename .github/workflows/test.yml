@@ -1,0 +1,63 @@
+name: gha-workflow-usgc-test
+on: [pull_request]
+jobs:
+  gha-job-usgc-test:
+    name: Test
+    env:
+      # Do not put secrets here! Use [Repository Secrets](https://bit.ly/3cW7pwx)
+      # Also, tests should not make actual network connections, so it's OK
+      # to use "redacted" for most of these.
+      AGA_MEMBERS_API_KEY: redacted
+      ASSET_SYNC_EXISTING_REMOTE_FILES: redacted
+      AWS_ACCESS_KEY_ID: redacted
+      AWS_SECRET_ACCESS_KEY: redacted
+      DEVISE_SECRET_KEY: redacted
+      FOG_DIRECTORY: redacted
+      FOG_PROVIDER: redacted
+      GMAIL_SMTP_PASSWORD: redacted
+      GMAIL_SMTP_USER: webmaster@gocongress.org
+      SECRET_KEY_BASE: redacted
+      STRIPE_PUBLISHABLE_KEY: redacted
+      STRIPE_SECRET_KEY: redacted
+      STRIPE_SIGNING_SECRET: redacted
+      PANDANET_USERNAME: redacted
+      PANDANET_PASSWORD: redacted
+      USGC_MAIL_FROM: webmaster@gocongress.org
+    runs-on: ubuntu-18.04
+    services:
+      gha-service-usgc-postgres:
+        env:
+          POSTGRES_PASSWORD: asdfasdf
+        image: postgres
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v2
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+      - name: Bundle
+        run: |
+          gem install bundler
+          bundle config set --local deployment 'true'
+          bundle install --jobs 4 --retry 3
+      - name: Install Node
+        uses: actions/setup-node@v1
+      - name: Test
+        env:
+          BACKTRACE: 1
+          RAILS_ENV: test
+          USGC_CI_DATABASE: usgc_test
+          USGC_CI_DB_USER: postgres
+          USGC_CI_DB_PASSWORD: asdfasdf
+          USGC_CI_DB_HOST: 127.0.0.1
+          USGC_CI_DB_PORT: 5432
+        run: |
+          cp config/database.ci.yml config/database.yml
+          bundle exec rails db:setup
+          bundle exec rake

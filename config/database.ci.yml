@@ -1,0 +1,11 @@
+test:
+  adapter: postgresql
+  database: <%= ENV.fetch('USGC_CI_DATABASE') %>
+  username: <%= ENV.fetch('USGC_CI_DB_USER') %>
+  password: <%= ENV.fetch('USGC_CI_DB_PASSWORD') %>
+  host: <%= ENV.fetch('USGC_CI_DB_HOST') %>
+  min_messages: WARNING
+  pool: 5
+  port: <%= ENV.fetch('USGC_CI_DB_PORT') %>
+  protocol: TCP
+  timeout: 5000

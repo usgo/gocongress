@@ -2,7 +2,11 @@ inherit_from: .rubocop_todo.yml
 
 AllCops:
   Exclude:
-    - bin/*
+    - '.git/**/*'
+    - 'bin/**/*'
+    - 'node_modules/**/*'
+    - 'tmp/**/*'
+    - 'vendor/**/*'
   NewCops: enable
   SuggestExtensions: false
 
