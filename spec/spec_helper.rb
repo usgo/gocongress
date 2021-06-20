@@ -16,9 +16,9 @@ RSpec.configure do |config|
       tsv += line
 
     end
-    stub_request(:get, "https://www.usgo.org/mm/tdlista.txt").
-      with(headers: {'Accept'=>'*/*', 'User-Agent'=>'Ruby'}).
-      to_return(status: 200, body: tsv, headers: {})
+    stub_request(:get, "https://www.usgo.org/mm/tdlista.txt")
+      .with(headers: {'Accept'=>'*/*', 'User-Agent'=>'Ruby'})
+      .to_return(status: 200, body: tsv, headers: {})
   end
 
   config.expect_with :rspec do |expectations|
