@@ -180,7 +180,6 @@ RSpec.describe RegistrationsController, :type => :controller do
     end
 
     describe "#update" do
-
       def patch_update attendee_attrs = {}, opts = {}
         patch :update, params: opts.merge(registration: attendee_attrs, id: attendee.id, year: attendee.year)
       end

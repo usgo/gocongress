@@ -47,7 +47,6 @@ RSpec.describe SignUpsController, :type => :controller do
     end
 
     context "given an invalid user" do
-
       def attempt_to_create_invalid_user
         post :create, params: { user: invalid_user_attributes, year: year }
       end

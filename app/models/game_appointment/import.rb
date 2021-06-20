@@ -31,6 +31,7 @@ class GameAppointment::Import
   end
 
   private
+
   # OpenGotha has the player names for games as strings with all letters
   # capitalized and spaces stripped
   # e.g. Nate Eagle -> EAGLENATE
@@ -81,7 +82,6 @@ class GameAppointment::Import
         errors.add(:base, "There are no attendees with aga id: #{number}")
       end
     end
-
   end
 
   def gather_appoinment_aga_numbers(appointments)
@@ -89,5 +89,4 @@ class GameAppointment::Import
       [appointment["blackPlayer"]["agaId"].to_i, appointment["whitePlayer"]["agaId"].to_i]
     end
   end
-
 end

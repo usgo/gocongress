@@ -120,5 +120,4 @@ class AttendeePlan < ApplicationRecord
   def inventory_available_to_this_attendee
     plan.inventory_available(attendee)
   end
-
 end

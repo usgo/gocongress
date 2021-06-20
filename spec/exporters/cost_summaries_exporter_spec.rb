@@ -2,7 +2,6 @@ require "csv"
 require "rails_helper"
 
 RSpec.describe CostSummariesExporter do
-
   let(:year) { Date.current.year }
   let(:ex) { CostSummariesExporter.new(year) }
   let(:p1) { create :plan, name: 'Plan A', max_quantity: 10 }

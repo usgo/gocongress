@@ -2,7 +2,6 @@ require "rails_helper"
 
 RSpec.describe Attendee::WhoIsComing, :type => :model do
   describe '#attendees' do
-
     it 'excludes attendees with zero plans' do
       a = create :attendee
       expect(Attendee::WhoIsComing.new(a.year).attendees).not_to include(a)

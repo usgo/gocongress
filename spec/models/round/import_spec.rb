@@ -22,7 +22,6 @@ RSpec.describe Round::Import, type: :model do
       game_appointment_import.process!
       expect(game_appointment_import.imported_game_count).to eq 4 
       expect(game_appointment_import.imported_bye_count).to eq 1 
-
     end
     it "saves no games if there are aga numbers that don't match" do
       create :attendee, aga_id: 99999
@@ -41,7 +40,6 @@ RSpec.describe Round::Import, type: :model do
       game_appointment_import.process!
       expect(game_appointment_import.imported_game_count).to eq 0
       expect(game_appointment_import.imported_bye_count).to eq 0
-
     end
     
   end

@@ -35,7 +35,6 @@ class PlanCategoriesController < ApplicationController
   end
 
   def update
-
     if params[:commit] == 'Update Order'
       @plan_category.reorder_plans(params[:plan_order])
     else

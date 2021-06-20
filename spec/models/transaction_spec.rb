@@ -85,7 +85,6 @@ RSpec.describe Transaction, :type => :model do
           expect(t).not_to be_valid
         end
       end
-
     end
 
     context "sale" do

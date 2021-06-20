@@ -126,5 +126,4 @@ def attendee_plans_except(atnd=nil)
     attendee_plans.where('attendee_id <> ?', atnd.id)
   end
 end
-
 end

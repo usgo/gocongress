@@ -36,7 +36,6 @@ RSpec.describe AttendeePlan, :type => :model do
   end
 
   describe "#valid?" do
-
     it "has minimum quantity of one" do
       ap = build :attendee_plan, :quantity => 0
       expect(ap).not_to be_valid
@@ -82,7 +81,6 @@ RSpec.describe AttendeePlan, :type => :model do
     end
 
     context 'daily-rate plans' do
-
       it 'for daily-rate plans it is ok to specify dates' do
         p = create :plan, daily: true
         expect(build_with_dates(p)).to be_valid
@@ -97,6 +95,5 @@ RSpec.describe AttendeePlan, :type => :model do
         build :attendee_plan, plan: plan, dates: [build(:attendee_plan_date)]
       end
     end
-
   end
 end

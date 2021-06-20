@@ -1,5 +1,4 @@
 class Invoice::Invoice
-
   def initialize items
     @items = items
   end

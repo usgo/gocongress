@@ -6,7 +6,6 @@
 # -Jared Beck 2013-06-07
 #
 class Puller
-
   def initialize args
     die(usage) unless args.length == 2
     @app_name = args[0]

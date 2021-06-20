@@ -3,7 +3,6 @@
 # abstraction to pass between eg. AttendeesController and
 # Registration. -Jared 2012-10-07
 class Registration::PlanSelection
-
   attr_reader :plan, :qty, :dates
 
   def initialize plan, qty, dates = nil
@@ -56,5 +55,4 @@ class Registration::PlanSelection
   def self.parse_dates dates
     dates.respond_to?(:map) ? dates.map { |d| Date.parse(d) } : nil
   end
-
 end

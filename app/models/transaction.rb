@@ -89,8 +89,11 @@ class Transaction < ApplicationRecord
   end
 
   def requires_instrument?() %w[C A P].exclude?(trantype) end
+
   def forbids_instrument?() %w[C A P].include?(trantype) end
+
   def is_gateway_transaction?() trantype == 'S' and instrument == 'C' end
+
   def requires_check_number?() instrument == 'K' end
 
   def description

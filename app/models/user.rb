@@ -145,5 +145,4 @@ class User < ApplicationRecord
   def validate_password?
     new_record? || password.present? || password_confirmation.present?
   end
-
 end

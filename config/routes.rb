@@ -1,16 +1,13 @@
 Gocongress::Application.routes.draw do
-
   # TODO: Find a permanent home for these payment routes
   match '/payments/new', :to => 'payments#new', :as => 'new_payment', :via => [:get]
   mount StripeEvent::Engine, at: '/stripe-webhooks'
-
 
   # proxy
   get 'api/mm/members/:search', to: 'api#search_members'
   get 'api/pandanet/:username', to: 'api#pandanet_username'
   get 'api/kgs/:username', to: 'api#kgs_username'
   post 'api/markdown', to: 'api#markdown'
-
 
   # Put the root route at the top so that it is matched quickly
   root :to => "home#index", :via => :get
@@ -20,7 +17,6 @@ Gocongress::Application.routes.draw do
   # but it makes my routes file way too ugly, even if I use
   # with_options().  This constraint has the same effect.
   constraints :format => // do
-
     get "home/access_denied"
 
     # kaboom is an intentional error to test runtime exception notification
@@ -28,10 +24,8 @@ Gocongress::Application.routes.draw do
 
     # these routes support multiple years with a year scope
     scope ":year" do
-
       # :year must be numeric
       constraints :year => /\d+/ do
-
         get 'edit' => 'years#edit', :as => :edit_year
         patch '' => 'years#update', :as => :update_year
 
@@ -161,9 +155,7 @@ Gocongress::Application.routes.draw do
         # but perhaps it can be combined with the other `root`
         # at the top of the file?
         root :to => 'home#index', :as => :year, :via => :get
-
       end # end constraint
     end # end scope
   end # end constraint
-
 end

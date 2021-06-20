@@ -1,5 +1,4 @@
 class Rpt::BadgeReportsController < Rpt::AbstractReportController
-
 def show
   @attendees = Attendee.yr(@year).with_planlessness('planful'.to_sym)
   respond_to do |format|
@@ -19,5 +18,4 @@ end
 def csv_filename
   "usgc_badges_#{Time.current.strftime("%Y-%m-%d")}.csv"
 end
-
 end

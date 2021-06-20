@@ -57,7 +57,6 @@ RSpec.describe AttendeesController, :type => :controller do
         end
       end
     end
-
   end
 
   context "as a user" do

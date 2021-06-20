@@ -83,5 +83,4 @@ class AgaTdList
       parsed_aga_member_info
     end
   end
-
 end

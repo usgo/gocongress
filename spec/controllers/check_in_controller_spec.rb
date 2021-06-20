@@ -51,7 +51,6 @@ RSpec.describe CheckInController, :type => :controller do
         a.reload
         expect(a.checked_in).to be(false)
       end
-
     end
 
     context "as an admin" do
@@ -69,7 +68,6 @@ RSpec.describe CheckInController, :type => :controller do
         get :index, params: { year: admin.year - 1 }
         expect(response.code.to_i).to eq(403)
       end
-
     end
   end
 end

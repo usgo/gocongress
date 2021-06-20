@@ -1,5 +1,4 @@
 module NameInflector
-
   # Prefixes with mandatory succeeding capitals, eg.
   # the O' in O'Brian is always capitalized.
   MANDPREF = ["o'"]

@@ -1,5 +1,4 @@
 module AttendeeHelper
-
   def plan_selection_inputs plan
     selection = plan_selection(plan)
     if plan.daily?
@@ -78,5 +77,4 @@ module AttendeeHelper
   def radio_btn_name plan
     "plans[single_plan_cat_id:#{plan.plan_category.id}][plan_id]"
   end
-
 end

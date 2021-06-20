@@ -106,5 +106,4 @@ class PlanCategory < ApplicationRecord
 
     ordering_errors
   end
-
 end

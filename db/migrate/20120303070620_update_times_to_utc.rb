@@ -1,5 +1,4 @@
 class UpdateTimesToUtc < ActiveRecord::Migration
-
   # The current times in the database are saved in local time.
   # We currently perform no translation for display purposes.
   # However, we will begin translating for display, so we need

@@ -160,5 +160,4 @@ class ApplicationController < ActionController::Base
   def show_my_account_anchor?
     current_user.present? && current_user.year == @year.year
   end
-
 end

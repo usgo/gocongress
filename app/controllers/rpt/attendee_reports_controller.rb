@@ -1,5 +1,4 @@
 class Rpt::AttendeeReportsController < Rpt::AbstractReportController
-
 def show
   @attendees = Attendee.yr(@year).with_planlessness(planlessness)
   respond_to do |format|
@@ -28,5 +27,4 @@ def planlessness
   p = params[:planlessness]
   %w[all planful planless].include?(p) ? p.to_sym : :all
 end
-
 end

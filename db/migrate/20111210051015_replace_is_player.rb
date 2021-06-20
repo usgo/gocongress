@@ -7,16 +7,19 @@ class ReplaceIsPlayer < ActiveRecord::Migration
     include YearlyModel
     has_many :plans
   end
+
   class Plan < ActiveRecord::Base
     include YearlyModel
     has_many :attendee_plans, :dependent => :destroy
     has_many :attendees, :through => :attendee_plans
   end
+
   class AttendeePlan < ActiveRecord::Base
     include YearlyModel
     belongs_to :attendee
     belongs_to :plan
   end
+
   class Attendee < ActiveRecord::Base
     include YearlyModel
     has_many :attendee_plans, :dependent => :destroy
@@ -24,7 +27,6 @@ class ReplaceIsPlayer < ActiveRecord::Migration
   end
   
   def up
-
     # In order to drop attendees.is_player, we must first migrate
     # data from 2011, by creating plans and assigning attendees.
     # This effort is not necessary in 2012, because we have no

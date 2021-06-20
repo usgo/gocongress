@@ -1,5 +1,4 @@
 class AttendeesCsvExporter
-
   # Order of columns must match `header_array`
   def self.attendee_array atnd
     [

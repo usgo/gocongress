@@ -123,6 +123,7 @@ class Attendee < ApplicationRecord
     end
     aga_ids.compact
   end
+
   # Using a subquery in the where clause is performant up to about
   # one thousand records.  -Jared 2012-05-13
   def self.with_at_least_one_plan

@@ -1,6 +1,5 @@
 # Export Players XML for OpenGotha import
 class PlayersXmlExporter
-
 	def self.open_gotha_rank(rank_name)
 		open_gotha_rank = rank_name.gsub(/ kyu/, 'K').gsub(/ dan/, 'D')
 	end
@@ -28,7 +27,6 @@ class PlayersXmlExporter
 			club: aga_info[:club]
 		}
 
-
 		str = ""
 		xmlTag.each do |attribute, value|
 			str += "#{attribute}=\"#{value}\" "
@@ -51,5 +49,4 @@ class PlayersXmlExporter
 		</Tournament>
 		EOF
   end
-
 end

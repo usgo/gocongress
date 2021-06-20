@@ -52,5 +52,4 @@ class RestoreAllFKC
       puts e.inspect
     end
   end
-
 end

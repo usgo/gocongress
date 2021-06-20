@@ -2,7 +2,6 @@ module YearlyController
   extend ActiveSupport::Concern
 
   module ClassMethods
-
     # Instead of adding the callbacks using `included()`, make the
     # controller class explicitly add them.  This is less mysterious
     # and helps the controller class to adjust the order of callbacks,
@@ -14,7 +13,6 @@ module YearlyController
     def add_filter_to_set_resource_year
       before_action :set_resource_year_from_route, :only => [:create, :new]
     end
-
   end
 
   # Public Instance Methods
@@ -36,7 +34,6 @@ module YearlyController
   # happen. Barring a badly generated URL, the user would have to
   # edit the URL manually, changing the year or the resource id.
   def ensure_rsrc_year_matches_route_year
-
     # If there's no :id parameter, then skip this validation.
     return if params[:id].blank?
 
@@ -75,5 +72,4 @@ module YearlyController
     # it should always come from the route.
     ivar.year = @year.year
   end
-
 end

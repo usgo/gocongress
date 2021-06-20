@@ -1,5 +1,4 @@
 module PostgresMigrationHelpers
-
   def add_pg_check_constraint table, expression
     cns_name = ck_constraint_name(table, expression)
     execute %{

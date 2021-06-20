@@ -2,7 +2,6 @@ require 'webmock/rspec'
 WebMock.disable_net_connect!(allow_localhost: true)
 
 RSpec.configure do |config|
-
   # Stub requests to the AGA TD List, which is a large file we don't want to
   # hit unnecessarily
   config.before(:each, aga_td_list_mock: true) do
@@ -14,7 +13,6 @@ RSpec.configure do |config|
     # Also, this one won't change over time, so our examples won't go out of date.
     IO.foreach("./spec/fixtures/files/tdlista.short.txt") do |line|
       tsv += line
-
     end
     stub_request(:get, "https://www.usgo.org/mm/tdlista.txt")
       .with(headers: {'Accept'=>'*/*', 'User-Agent'=>'Ruby'})

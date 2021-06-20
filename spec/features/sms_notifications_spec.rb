@@ -20,7 +20,6 @@ RSpec.feature 'SMS notifications', :type => :feature do
     expect(page).to have_selector 'h2', :text => 'SMS Notifications'
   end
   context 'signed in admin user' do
-
     it 'can send sms notifications for a round game and bye appointments', :vcr do
       click_link "Rounds"
       click_link "Show"

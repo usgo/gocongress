@@ -1,5 +1,4 @@
 class BadgeCsvExporter
-
   # Order of columns must match `header_array`
   def self.attendee_array atnd
     # Get AGA Info from TD List

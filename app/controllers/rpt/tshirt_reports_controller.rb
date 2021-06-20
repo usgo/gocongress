@@ -1,5 +1,4 @@
 class Rpt::TshirtReportsController < Rpt::AbstractReportController
-
 def show
   @attendees = Attendee.yr(@year).with_planlessness('planful'.to_sym)
 
@@ -20,7 +19,6 @@ def show
     end
   end
 
-
   respond_to do |format|
     format.html do
       render :show
@@ -29,5 +27,4 @@ def show
 end
 
   private
-
 end

@@ -1,5 +1,4 @@
 class Rpt::MinorAgreementsReportsController < Rpt::AbstractReportController
-
 def show
   @minors_without_agreements = Attendee.yr(@year)
     .where(
@@ -14,5 +13,4 @@ def show
 
   @congress_start_date = CONGRESS_START_DATE[@year.to_i]
 end
-
 end

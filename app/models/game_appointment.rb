@@ -65,5 +65,4 @@ class GameAppointment < ApplicationRecord
       end
     end
   end
-
 end

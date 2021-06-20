@@ -1,5 +1,4 @@
 class CostSummariesExporter < Exporter
-
   HEADER = %w[user_id user_email attendee_id given_name
               family_name alternate_name plan_name price quantity]
 

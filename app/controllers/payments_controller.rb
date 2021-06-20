@@ -16,5 +16,4 @@ class PaymentsController < ApplicationController
 
     @client_secret = intent.client_secret
   end
-
 end

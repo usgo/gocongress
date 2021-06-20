@@ -1,5 +1,4 @@
 class Rpt::TransactionReportsController < Rpt::AbstractReportController
-
 def show
   @transactions = Transaction.yr(@year)
 

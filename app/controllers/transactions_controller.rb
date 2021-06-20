@@ -87,5 +87,4 @@ class TransactionsController < ApplicationController
     email_array.join(',')
   end
   helper_method :user_email_list
-
 end

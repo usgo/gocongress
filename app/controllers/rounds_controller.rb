@@ -166,7 +166,6 @@ class RoundsController < ApplicationController
     message += "."
 
     TwilioTextMessenger.new(message, recipient).call
-
   end
 
   def send_bye_notification(attendee, round)

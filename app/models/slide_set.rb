@@ -19,5 +19,4 @@ class SlideSet
   def slides_dir(year)
     File.join(Rails.root, "app", "assets", "images", "slideshow", year.to_s)
   end
-
 end

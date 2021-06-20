@@ -88,5 +88,4 @@ class Year < ApplicationRecord
       2020 => [:aga, :agf]
     }
   end
-
 end

@@ -2,7 +2,6 @@ require "rails_helper"
 require "cancan/matchers"
 
 RSpec.describe Ability, :type => :model do
-
   context 'staff' do
     let(:staff) { build :staff }
     subject { Ability.new(staff) }

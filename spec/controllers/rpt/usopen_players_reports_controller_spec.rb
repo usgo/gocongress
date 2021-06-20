@@ -36,7 +36,6 @@ RSpec.describe Rpt::UsopenPlayersReportsController, aga_td_list_mock: true, :typ
         get :show, params: { year: Time.now.year }
         expect(assigns.keys).to include('aga_member_info')
       end
-
     end
   end
 end

@@ -21,5 +21,4 @@ module DollarController
       params[cnsd][atr] = (dollars * 100).round
     end
   end
-
 end

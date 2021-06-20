@@ -33,7 +33,6 @@ RSpec.describe ReportsController, :type => :controller do
 
   describe "#user_invoices" do
     it "filters users alphabeticaly by name" do
-
       # Sign in as an admin whose email starts
       # with Z, ie. not in the range we'll be testing below.
       admin = create :admin, email: 'zhivago@example.com'

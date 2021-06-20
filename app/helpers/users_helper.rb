@@ -1,5 +1,4 @@
 module UsersHelper
-
   def role_emphasis_class user
     if user.admin?
       'emphasis-strong'
@@ -17,5 +16,4 @@ module UsersHelper
       "#{page}: #{user.email}"
     end
   end
-
 end

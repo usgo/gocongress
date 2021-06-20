@@ -28,5 +28,4 @@ RSpec.describe "gotha tournament import", type: :feature do
   end
   
   
-
 end

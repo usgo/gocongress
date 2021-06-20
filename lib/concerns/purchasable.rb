@@ -1,7 +1,6 @@
 # A model is `purchasable` if it has a `price` and attendees
 # can select it and pay for it.
 module Purchasable
-
   # http://api.rubyonrails.org/classes/ActiveSupport/Concern.html
   extend ActiveSupport::Concern
 
@@ -54,5 +53,4 @@ module Purchasable
       return basic_msg + suggestion
     end
   end
-
 end

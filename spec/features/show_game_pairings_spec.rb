@@ -2,7 +2,6 @@ require "rails_helper"
 
 RSpec.describe "show tournament round pairings" do
   context "Any vistor to the website" do
-
     let(:tournament) { create :tournament }
     let(:round) { create :round, tournament: tournament }
     let!(:game_one) { create(:game_appointment, round: round) }   

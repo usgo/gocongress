@@ -114,7 +114,6 @@ RSpec.describe Attendee, :type => :model do
     end
 
     context 'receive_sms set to true' do
-
       it 'Attendee required to have a phone' do
         a.receive_sms = true
         a.phone = nil
@@ -150,7 +149,6 @@ RSpec.describe Attendee, :type => :model do
         a.phone = "+16122035280" # example number from Twilio docs
         expect(a).to be_valid
       end
-
     end
 
     it 'country must be two capital lettters' do

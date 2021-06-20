@@ -40,7 +40,6 @@ class Round::Import
         errors.add(:base, "Line #{$.} caused a bye error: #{bye_appointment.errors.full_messages.join(", ")}")
       end
     end
-
   end
 
   def save
@@ -49,6 +48,7 @@ class Round::Import
   end
 
   private
+
   # OpenGotha has the player names for games as strings with all letters
   # capitalized and spaces stripped
   # e.g. Nate Eagle -> EAGLENATE
@@ -102,7 +102,6 @@ class Round::Import
     players = Hash[players.collect {|p| [name_to_key(p), p]}]
 
     players
-
   end
 
   def match_aga_numbers(players)
@@ -120,7 +119,6 @@ class Round::Import
         errors.add(:base, "There are no attendees with aga id: #{number}")
       end
     end
-
   end
 
   def gather_player_aga_numbers(players)
@@ -130,5 +128,4 @@ class Round::Import
     end
     player_aga_ids
   end
-
 end

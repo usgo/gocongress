@@ -9,7 +9,6 @@ RSpec.describe Registration do
 
   describe '#submit' do
     context "not an admin" do
-
       it "requires minors to agree to fill out the liability release" do
         attendee.birth_date = 5.years.ago
         r = Registration.new user, attendee

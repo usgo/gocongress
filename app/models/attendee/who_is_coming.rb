@@ -6,7 +6,6 @@
 # syntax highlighting. -Jared 2013-03-21
 
 class Attendee::WhoIsComing
-
   DEFAULT_ORDER = 'rank = 0, rank desc'
   SORTABLE_COLUMNS = %w[given_name family_name rank created_at country]
 
@@ -90,5 +89,4 @@ class Attendee::WhoIsComing
   def sort_unsafe_for_anon? sort
     %w[given_name family_name country].include?(sort)
   end
-
 end

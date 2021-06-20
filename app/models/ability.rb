@@ -83,5 +83,4 @@ class Ability
   def self.singularize_if plural, bool
     bool ? plural.singularize : plural
   end
-
 end

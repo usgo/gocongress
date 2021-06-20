@@ -86,7 +86,6 @@ class UsersController < ApplicationController
   end
 
   def update
-
     # Which view did we come from?
     params[:page] ||= 'edit'
 

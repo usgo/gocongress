@@ -17,6 +17,5 @@ class TwilioTextMessenger
     rescue
       return 'Invalid number'
     end
-
   end
 end

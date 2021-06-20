@@ -1,5 +1,4 @@
 class Attendee::Rank
-
   # Constant array of integer ranks and corresponding rank names
   # The highest official amateur dan rank in the AGA is 7 dan
   RANKS = []
@@ -32,5 +31,4 @@ class Attendee::Rank
   def kyu?
     (-30..-1).include?(@n)
   end
-
 end

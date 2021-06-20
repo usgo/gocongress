@@ -34,5 +34,4 @@ end
 def xml_filename
   "usopen_players_#{Time.current.strftime("%Y-%m-%d")}.xml"
 end
-
 end

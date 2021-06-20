@@ -64,13 +64,13 @@ class GameAppointmentsController < ApplicationController
   end
 
   private
+
   # Use callbacks to share common setup or constraints between actions.
   # See above ---> before_action :set_appointment, only: [:show, :edit, :update, :destroy]
 
   def find_game_appointment
     @game_appointment = GameAppointment.find(params[:id])
   end
-
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def game_appointment_params
