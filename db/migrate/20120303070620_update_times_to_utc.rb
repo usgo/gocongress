@@ -109,4 +109,3 @@ end
 #  content_categories   | created_at          | timestamp
 #  content_categories   | updated_at          | timestamp
 #
-

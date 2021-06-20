@@ -40,4 +40,3 @@ RSpec.describe DailyPlanDetailsExporter do
     end
   end
 end
-
