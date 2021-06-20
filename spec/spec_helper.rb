@@ -5,7 +5,7 @@ RSpec.configure do |config|
   # Stub requests to the AGA TD List, which is a large file we don't want to
   # hit unnecessarily
   config.before(:each, aga_td_list_mock: true) do
-    #TODO Just use `file_fixture` once we upgrade Rails
+    # TODO Just use `file_fixture` once we upgrade Rails
     # tsv = file_fixture("tdlista.short.txt").read
 
     tsv = ''

@@ -63,7 +63,7 @@ class CheckInController < ApplicationController
     if attendee.will_play_in_us_open
       # Check for AGA ID
       if (!attendee.aga_id)
-        #TODO Check for validity?
+        # TODO Check for validity?
         cleared = false
       end
     end
