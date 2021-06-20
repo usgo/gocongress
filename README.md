@@ -46,12 +46,10 @@ a pull request is a great way to become part of the team.
    1. `cp .env.example .env` (see Configuration below)
    1. If all is well, `bin/rake -T` should list rake tasks
 1. Run the App locally
-   1. Create a new admin user for yourself by editing `/script/admin_tasks/create_user.rb`
-   1. Change the email & password values to something of your liking
    1. Run the script: `rails runner script/admin_tasks/create_user.rb`
    1. Run the app: `rails server`
    1. Open the app in your browser: `http://localhost:3000`
-   1. Make sure you can log in with your local user
+   1. Sign In with username: `admin@localhost.local` and password: `foofighters`.
    1. Do some developing!
 1. Run the tests
    1. `bin/rails db:setup`
