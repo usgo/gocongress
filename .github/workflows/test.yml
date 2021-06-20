@@ -12,9 +12,6 @@ jobs:
         uses: actions/checkout@v2
       - name: Setup ruby
         uses: ruby/setup-ruby@v1
-        with:
-          # See "Lowest supported ruby version" in CONTRIBUTING.md
-          ruby-version: '2.5'
       - name: Bundle
         run: |
           gem install bundler
