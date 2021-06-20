@@ -1,5 +1,4 @@
 module HomeHelper
-  
   def slideshow_image_tag(i)
     # img title becomes div.galleria-info-title
     # img alt becomes div.galleria-info-description
@@ -9,5 +8,4 @@ module HomeHelper
     slide_path = File.join("slideshow", @year.year.to_s, slide_filename)
     return image_tag slide_path, :title => slide_title, :alt => slide_author
   end
-  
 end

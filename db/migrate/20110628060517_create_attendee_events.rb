@@ -5,7 +5,7 @@ class CreateAttendeeEvents < ActiveRecord::Migration
       t.integer :event_id, :null => false
       t.timestamps
     end
-    
+
     add_index :attendee_events, \
       [:attendee_id, :event_id], \
       { :name => :uniq_attendee_event, :unique => true }

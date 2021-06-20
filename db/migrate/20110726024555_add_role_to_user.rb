@@ -7,7 +7,7 @@ class AddRoleToUser < ActiveRecord::Migration
     raise "counts do not match" if count_admins_before != count_admins_after
     remove_column :users, :is_admin
   end
-  
+
   def down
     raise IrreversibleMigration
   end

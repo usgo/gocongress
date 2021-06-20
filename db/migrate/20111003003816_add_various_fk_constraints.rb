@@ -4,7 +4,6 @@ class AddVariousFkConstraints < ActiveRecord::Migration
   extend PostgresMigrationHelpers
 
   def self.up
-    
     # The following FK constraints ensure that related objects have the same
     # year.  The unique indexes make said constraints meaningful, besides
     # being required by postgres.

@@ -4,7 +4,7 @@ class CreateRounds < ActiveRecord::Migration[5.0]
       t.references :tournament, foreign_key: true
       t.integer :number
       t.datetime :start_time, null: false
-      
+
       t.timestamps
     end
   end

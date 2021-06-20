@@ -11,7 +11,7 @@ class BadgeCsvExporter
 
       # Change "non-player" to blank for the purpose of badges
       atnd.rank_name === "Non-player" ? "" : atnd.rank_name,
-      
+
       atnd.user_email,
       atnd.aga_id,
       aga_info[:club],

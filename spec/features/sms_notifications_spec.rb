@@ -9,7 +9,7 @@ RSpec.feature 'SMS notifications', :type => :feature do
   let!(:attendee_two) { create :ga_attendee_two }
   let!(:attendee_three) { create :ga_attendee_two, given_name: "Underhill"}
   let!(:game_appointment_one) { create :game_appointment, round: round_one, attendee_one: attendee_one, attendee_two: attendee_two }
-  let!(:bye_appointment) { create :bye_appointment, round: round_one, attendee: attendee_three } 
+  let!(:bye_appointment) { create :bye_appointment, round: round_one, attendee: attendee_three }
 
   before(:each) do
     visit new_user_session_path(year: admin.year)

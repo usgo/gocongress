@@ -42,8 +42,8 @@ RSpec.describe ActivitiesController, :type => :controller do
             leave_time: DateTime.current + 2.days,
             name: "Activity",
             price: 1,
-            return_time: Time.current + 3.days 
-          } 
+            return_time: Time.current + 3.days
+          }
         }
         expect(response.status).to eq(403)
       end

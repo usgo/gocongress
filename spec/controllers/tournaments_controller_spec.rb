@@ -35,7 +35,7 @@ RSpec.describe TournamentsController, :type => :controller do
       expect {
         patch :update, params: {
           year: tnm.year, id: tnm.id,
-          tournament: { name: '9x9' } 
+          tournament: { name: '9x9' }
         }
       }.to change{ tnm.reload.name }.to('9x9')
     end

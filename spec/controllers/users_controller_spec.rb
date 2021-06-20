@@ -339,7 +339,7 @@ RSpec.describe UsersController, :type => :controller do
           patch :update, params: {
             id: user.id,
             user: { password: new_pw },
-            year: user.year 
+            year: user.year
           }
         }.to change { user.reload.encrypted_password }
       end

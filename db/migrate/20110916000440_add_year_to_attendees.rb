@@ -7,7 +7,7 @@ class AddYearToAttendees < ActiveRecord::Migration
     change_column :attendees, :year, :integer, :null => false
     change_column :users, :year, :integer, :null => false
   end
-  
+
   def down
     remove_column :attendees, :year
     remove_column :users, :year

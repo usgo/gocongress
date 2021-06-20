@@ -13,7 +13,7 @@ class EditableTextsController < ApplicationController
     end
   end
 
-  private 
+  private
 
   def editable_text_params
     params.require(:editable_text).permit(:welcome, :volunteers, :attendees_vip)
