@@ -17,12 +17,12 @@ class Registration
   # `ATD_ATRS` is an array of *permitted* attendee attributes.
   # Forbidden attributes, like `year`, are omitted.
   ATD_ATRS = [:aga_id, :alternate_name, :anonymous,
-    :birth_date, :country, :email, :emergency_name, :emergency_phone,
-    :family_name, :gender, :given_name, :guardian_attendee_id,
-    :guardian_full_name, :phone, :rank, :receive_sms, :roomate_request,
-    :special_request, :shirt_id, :state, :tshirt_size, :understand_minor,
-    :will_play_in_us_open, :comment, :minor_agreement_received, :username_kgs,
-    :username_igs, :username_ogs]
+              :birth_date, :country, :email, :emergency_name, :emergency_phone,
+              :family_name, :gender, :given_name, :guardian_attendee_id,
+              :guardian_full_name, :phone, :rank, :receive_sms, :roomate_request,
+              :special_request, :shirt_id, :state, :tshirt_size, :understand_minor,
+              :will_play_in_us_open, :comment, :minor_agreement_received, :username_kgs,
+              :username_igs, :username_ogs]
 
   delegate(*ATD_ATRS, to: :attendee)
   delegate :full_name, :id, :minor?, :user_id, :year, to: :attendee

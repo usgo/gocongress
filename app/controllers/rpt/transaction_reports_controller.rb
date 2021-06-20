@@ -40,7 +40,7 @@ end
 
   def csv_header_row
     ['Created', 'Type', 'Amount', 'user_id', 'User', 'GW Tran. ID',
-      'Check No.', 'Last Updated By', 'Updated', 'GW Date', 'Comment']
+     'Check No.', 'Last Updated By', 'Updated', 'GW Date', 'Comment']
   end
 
   def transaction_to_array(t)

@@ -14,18 +14,6 @@ Bundler/OrderedGems:
   Exclude:
     - 'Gemfile'
 
-# Offense count: 12
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, IndentationWidth.
-# SupportedStyles: with_first_element, with_fixed_indentation
-Layout/ArrayAlignment:
-  Exclude:
-    - 'app/controllers/rpt/transaction_reports_controller.rb'
-    - 'app/exporters/cost_summaries_exporter.rb'
-    - 'app/forms/registration.rb'
-    - 'app/models/ability.rb'
-    - 'spec/controllers/rpt/transaction_reports_controller_spec.rb'
-
 # Offense count: 2
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyleAlignWith.
