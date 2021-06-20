@@ -65,12 +65,14 @@ class Attendee < ApplicationRecord
     },
     presence: true
   validates :receive_sms, :inclusion => {
-    :in => [true, false], :message => ' - Please select yes or no'}
+    :in => [true, false], :message => ' - Please select yes or no'
+  }
   validates :roomate_request, :length => {:maximum => 250}
   validates :special_request, :length => {:maximum => 250}
   validates :tshirt_size,     :inclusion => {:in => Shirt::SIZE_CODES, :message => " - Please select a size"}
   validates :will_play_in_us_open, :inclusion => {
-    :in => [true, false], :message => ' - Please select yes or no'}
+    :in => [true, false], :message => ' - Please select yes or no'
+  }
   validates_numericality_of :aga_id, :only_integer => true, :allow_nil => true, :message => "id is not a number"
 
   username_message = " - One of the tournaments you selected needs your %{attribute}."

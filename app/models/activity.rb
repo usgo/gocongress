@@ -26,7 +26,8 @@ class Activity < ApplicationRecord
     :format => {
       :with => /\Ahttps?:\/{2}/,
       :allow_blank => true,
-      :message => "must begin with protocol, eg. http://"}
+      :message => "must begin with protocol, eg. http://"
+    }
 
   scope :disabled, -> { where(disabled: true) }
 

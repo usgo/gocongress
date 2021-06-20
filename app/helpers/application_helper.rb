@@ -12,7 +12,8 @@ module ApplicationHelper
   # https://github.com/rails/rails/issues/2158
   def button_to_get text, url, id, css_class = nil
     render :partial => 'shared/button_to_get', :locals => {
-      :btn_txt => text, :btn_url => url, :btn_id => id, :btn_class => css_class}
+      :btn_txt => text, :btn_url => url, :btn_id => id, :btn_class => css_class
+    }
   end
 
   def cents_for_currency_field x
