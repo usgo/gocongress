@@ -8,12 +8,6 @@
 
 # Offense count: 1
 # Cop supports --auto-correct.
-Layout/RescueEnsureAlignment:
-  Exclude:
-    - 'app/controllers/registrations_controller.rb'
-
-# Offense count: 1
-# Cop supports --auto-correct.
 Layout/SpaceAfterColon:
   Exclude:
     - 'db/migrate/20110719022229_migrate_us_open_attendees.rb'
