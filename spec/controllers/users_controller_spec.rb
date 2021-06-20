@@ -336,9 +336,11 @@ RSpec.describe UsersController, :type => :controller do
       it "can change a user password" do
         new_pw = 'greeblesnarf'
         expect {
-          patch :update, params: { id: user.id,
+          patch :update, params: {
+            id: user.id,
             user: { password: new_pw },
-            year: user.year }
+            year: user.year 
+          }
         }.to change { user.reload.encrypted_password }
       end
 

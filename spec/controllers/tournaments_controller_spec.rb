@@ -33,8 +33,10 @@ RSpec.describe TournamentsController, :type => :controller do
     it "succeeds" do
       sign_in create :admin
       expect {
-        patch :update, params: { year: tnm.year, id: tnm.id,
-          tournament: { name: '9x9' } }
+        patch :update, params: {
+          year: tnm.year, id: tnm.id,
+          tournament: { name: '9x9' } 
+        }
       }.to change{ tnm.reload.name }.to('9x9')
     end
   end

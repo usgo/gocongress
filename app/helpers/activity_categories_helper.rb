@@ -1,7 +1,8 @@
 module ActivityCategoriesHelper
   def button_to_delete cat
     button_to "Delete this Category",
-      cat, :method => "delete",
+      cat,
+      :method => "delete",
       :data => {:confirm => 'Delete this category and all activities in it? Are you sure?'}
   end
 

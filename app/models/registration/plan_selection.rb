@@ -37,8 +37,10 @@ class Registration::PlanSelection
 
   # Gotcha: Notice that dates are not included.
   def to_attendee_plan attendee
-    AttendeePlan.new(:attendee => attendee,
-      :plan_id => @plan.id, :quantity => @qty, :year => attendee.year)
+    AttendeePlan.new(
+      :attendee => attendee,
+      :plan_id => @plan.id, :quantity => @qty, :year => attendee.year
+    )
   end
 
   private

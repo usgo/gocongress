@@ -21,7 +21,8 @@ class Activity < ApplicationRecord
       set the price to 0, so that this #{model_name.human.downcase}
       will not show up on invoices."
   }
-  validates :url, :length => {:maximum => 200},
+  validates :url,
+    :length => {:maximum => 200},
     :format => {
       :with => /\Ahttps?:\/{2}/,
       :allow_blank => true,

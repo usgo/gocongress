@@ -23,7 +23,8 @@ class Transaction < ApplicationRecord
 	validates :updated_by_user, :presence => true, :on => :update
 
   validates_presence_of :instrument, :if => :requires_instrument?
-  validates_inclusion_of :instrument, :in => [nil, ''], :if => :forbids_instrument?, \
+  validates_inclusion_of :instrument,
+    :in => [nil, ''], :if => :forbids_instrument?, \
     :message => "must be blank.  (Not applicable for selected transaction type)"
   validates_length_of :instrument, :is => 1, :if => :requires_instrument?
   validates_inclusion_of :instrument, :in => INSTRUMENTS.flatten, :if => :requires_instrument?
@@ -56,7 +57,8 @@ class Transaction < ApplicationRecord
 	validates_numericality_of :check_number, :greater_than => 0, :if => :requires_check_number?
 
   # Only refunds may have a check number
-  validates_inclusion_of :check_number, :unless => :requires_check_number?, \
+  validates_inclusion_of :check_number,
+    :unless => :requires_check_number?, \
     :allow_nil => false, :allow_blank => false, :in => [nil, ''], \
     :message => "must be blank.  (Only applicable for Refunds)"
 

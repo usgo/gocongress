@@ -160,7 +160,8 @@ RSpec.describe RegistrationsController, :type => :controller do
         attendee.plans << plan
         expect(attendee.get_plan_qty(plan.id)).to eq(1)
 
-        plan2 = create :plan, :disabled => true, \
+        plan2 = create :plan,
+          :disabled => true,
           :name => "Plan Deux", :plan_category => plan.plan_category
 
         get :edit, params: { id: attendee.id, year: attendee.year }

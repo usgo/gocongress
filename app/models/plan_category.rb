@@ -7,7 +7,8 @@ class PlanCategory < ApplicationRecord
   has_many :plans
 
   validates :event, :presence => true
-  validates :name, :presence => true,
+  validates :name,
+    :presence => true,
     :uniqueness => {
       :scope => :year,
       :case_sensitive => false,
