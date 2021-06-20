@@ -1,5 +1,11 @@
 %h2 All Attendees
 
+%p 
+  There are
+  %strong
+    = @attendees.count < 10 ? @attendees.count.humanize : @attendees.count
+  total attendees.
+
 .pagination-controls= paginate @attendees
 
 = form_tag(atn_reg_sheets_reports_path, :method => :get) do

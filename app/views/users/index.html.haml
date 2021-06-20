@@ -12,6 +12,20 @@
   can see anything.
   Do not promote too many of either.
 
+%p
+  There are
+  %strong
+    = @users.count < 10 ? @users.count.humanize : @users.count
+  user#{@users.count != 1 ? "s" : ""} registered, with
+  %strong
+    - attendees = @users.reduce(0) { |sum, user| sum + user.attendees.count}
+    = attendees < 10 ? attendees.humanize : attendees
+  attendee#{attendees != 1 ? "s" : ""}.
+  %strong
+    - incomplete = @users.reduce(0) { |sum, user| user.attendees.count > 0 ? sum : sum + 1 }
+    = incomplete < 10 ? incomplete.humanize.capitalize() : incomplete
+  user account#{incomplete != 1 ? "s do" : " does"} not yet have any registered attendees.
+
 - if can? :create, User
   .row-of-buttons
     = button_to 'New User', new_user_path, :method => 'get'
@@ -22,7 +36,9 @@
       %th= link_to "Role", :sort => :role
       %th= link_to "Email", :sort => :email, :drn => params[:drn] == "asc" ? :desc : :asc
       %th Attendees
-      %th # Attendees
+      %th 
+        - drn = (params[:sort] == 'num_attendees' && params[:drn] == "asc") ? :desc : :asc
+        = link_to "# Attendees", :sort => 'num_attendees', :drn => drn
       - [:created_at, :current_sign_in_at].each do |a|
         %th
           - drn = (params[:sort] == a.to_s && params[:drn] == "asc") ? :desc : :asc

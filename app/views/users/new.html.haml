@@ -4,15 +4,21 @@
   = render :partial => "shared/error_messages", :locals => { :resource => @user }
 
   %fieldset
-    .field
-      = f.label :email
-      = f.text_field :email, :tabindex => 1
-    .field
-      = f.label :password, 'Choose a Password'
-      = f.password_field :password, :size => 10, :tabindex => 2
-    .field
-      = f.label :password_confirmation, 'Confirm Password'
-      = f.password_field :password_confirmation, :size => 10, :tabindex => 3
+    .field.flex
+      .field-key
+        = f.label :email
+      .field-value
+        = f.text_field :email, :tabindex => 1
+    .field.flex
+      .field-key
+        = f.label :password, 'Choose a Password'
+      .field-value
+        = f.password_field :password, :size => 10, :tabindex => 2
+    .field.flex
+      .field-key
+        = f.label :password_confirmation, 'Confirm Password'
+      .field-value
+        = f.password_field :password_confirmation, :size => 10, :tabindex => 3
   %br
   .actions
     = f.submit
