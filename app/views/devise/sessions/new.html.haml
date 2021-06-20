@@ -9,12 +9,16 @@
 
   %fieldset
     .field.flex
+      %div.field-key
+        = f.label :email
       %div.field-value
-        = f.text_field :email, :tabindex => 1, :placeholder => 'Email'
+        = f.text_field :email, :tabindex => 1
 
     .field.flex
+      %div.field-key
+        = f.label :password
       %div.field-value
-        = f.password_field :password, :tabindex => 2, :placeholder => 'Password'
+        = f.password_field :password, :tabindex => 2
 
     - if devise_mapping.rememberable?
       .field.flex
