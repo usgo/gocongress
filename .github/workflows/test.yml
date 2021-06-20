@@ -39,31 +39,25 @@ jobs:
     steps:
       - name: Checkout source
         uses: actions/checkout@v2
-      - name: Setup ruby
+      - name: Setup Ruby
         uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: ${{ matrix.ruby }}
-      - name: Bundle
+      - name: Update Bundler
         run: |
           gem install bundler
-          bundle install --jobs 4 --retry 3
-      - name: Create postgres database
-        run: |
-          createdb \
-            --host=$POSTGRES_HOST \
-            --port=$POSTGRES_PORT \
-            --username=postgres \
-            usgc_test
-        env:
-          PGPASSWORD: asdfasdf
-          POSTGRES_HOST: localhost
-          POSTGRES_PORT: 5432
-      - name: Rake
-        run: bundle exec rake
+      - name: Install Node
+        uses: actions/setup-node@v1
+      - name: Set up Rails application
         env:
           BACKTRACE: 1
+          RAILS_ENV: test
           USGC_CI_DATABASE: usgc_test
           USGC_CI_DB_USER: postgres
           USGC_CI_DB_PASSWORD: asdfasdf
           USGC_CI_DB_HOST: 127.0.0.1
           USGC_CI_DB_PORT: 5432
+        run: |
+          bundle install --deployment --jobs 4 --retry 3
+          cp config/database.ci.yml config/database.yml
+          bundle exec rails db:create
+          bundle exec rails db:migrate
+          bundle exec rake
