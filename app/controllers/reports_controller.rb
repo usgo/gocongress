@@ -27,10 +27,11 @@ class ReportsController < ApplicationController
   def emails
     @atnd_email_list = ""
 
-    @atnd_email_list_json = Attendee.yr(@year).map{|a| {
-      name: a.full_name,
-      email: a.email
-    }
+    @atnd_email_list_json = Attendee.yr(@year).map{|a| 
+      {
+        name: a.full_name,
+        email: a.email
+      }
     }.to_json
 
     Attendee.yr(@year).each { |a|

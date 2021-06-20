@@ -36,8 +36,8 @@ class GameAppointment::Import
   # capitalized and spaces stripped
   # e.g. Nate Eagle -> EAGLENATE
   def name_to_key(player)
-    [player['name'], player['firstName']].map {
-      |name| name.upcase.gsub(/\s+/, "")
+    [player['name'], player['firstName']].map { |name|
+      name.upcase.gsub(/\s+/, "")
     }.join("")
   end
 
