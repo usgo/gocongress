@@ -3,11 +3,11 @@ require "rails_helper"
 RSpec.describe "gotha tournament import", type: :feature do
   let(:password) { 'asdfasdf' }
   let(:admin) { create :admin, :password => password }
-  let!(:tournament) { create :tournament, name: "US Open"}
+  let!(:tournament) { create :tournament, name: "US Open" }
   let!(:round) { create :round, tournament: tournament, number: 1 }
   let!(:ga_attendee_one) { create :ga_attendee_one }
   let!(:ga_attendee_two) { create :ga_attendee_two }
-  let!(:attendee_three) { create :ga_attendee_two, family_name: "Thomas", given_name: "John", aga_id: "12347"}
+  let!(:attendee_three) { create :ga_attendee_two, family_name: "Thomas", given_name: "John", aga_id: "12347" }
 
   context "signed in admin" do
     before do

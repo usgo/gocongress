@@ -92,7 +92,7 @@ class BadgeCsvExporter
   end
 
   def self.plan_names year
-    plans(year).map{ |p|
+    plans(year).map { |p|
       # Turn plan names like "Yes 1st" to "plan_yes-1st"
       "plan_" + safe_for_csv(p.name).parameterize
     }

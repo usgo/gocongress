@@ -1,6 +1,6 @@
 namespace :app do
   desc 'Grant admin privileges to the specified user'
-  task :grant_admin, [:email] => :environment do |t,args|
+  task :grant_admin, [:email] => :environment do |t, args|
     user = User.where(email: args[:email]).first
 
     raise "Unknown email #{args[:email]}" unless user

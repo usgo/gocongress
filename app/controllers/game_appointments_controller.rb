@@ -6,7 +6,7 @@ class GameAppointmentsController < ApplicationController
   authorize_resource
   add_filter_restricting_resources_to_year_in_route
 
-  before_action :find_game_appointment , only: [:show, :edit, :update, :destroy]
+  before_action :find_game_appointment, only: [:show, :edit, :update, :destroy]
 
   def index
     @game_appointments = GameAppointment.all

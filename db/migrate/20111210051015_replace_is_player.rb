@@ -45,8 +45,8 @@ class ReplaceIsPlayer < ActiveRecord::Migration
 
     # The new registration category will have two records:
     plan_specs = []
-    plan_specs << {stem: "Player", price: 375}
-    plan_specs << {stem: "Non-Player", price: 75}
+    plan_specs << { stem: "Player", price: 375 }
+    plan_specs << { stem: "Non-Player", price: 75 }
     plan_specs.each do |p|
       plan_name = "#{p[:stem]} Registration"
       cat.plans.create(
@@ -74,7 +74,7 @@ class ReplaceIsPlayer < ActiveRecord::Migration
     end
 
     # Check that the count of assigned plans matches the count of 2011 attendees
-    plan_count = cat.plans.map{|p| p.attendees.count}.reduce(:+)
+    plan_count = cat.plans.map { |p| p.attendees.count }.reduce(:+)
     unless plan_count == Attendee.yr(2011).count
       raise "Expected #{Attendee.yr(2011).count} plans to be assigned, found #{plan_count}"
     end

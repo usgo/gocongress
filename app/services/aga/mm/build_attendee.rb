@@ -50,7 +50,7 @@ module AGA
               attendee.country = 'US'
             else
               # Try to get the country code from the site constants
-              found = COUNTRIES.detect {|country| country[0] == i['country']}
+              found = COUNTRIES.detect { |country| country[0] == i['country'] }
               if found
                 attendee.country = found[1]
               end

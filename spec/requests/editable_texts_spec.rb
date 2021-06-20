@@ -3,8 +3,8 @@ year = Date.today.year
 
 RSpec.describe "EditableTexts", type: :request do
   context "as a user" do
-    let(:user) { create :user}
-    before { sign_in user}
+    let(:user) { create :user }
+    before { sign_in user }
 
     describe "GET editable_texts/" do
       it "is forbidden" do

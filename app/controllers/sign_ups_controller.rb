@@ -34,7 +34,7 @@ class SignUpsController < Devise::RegistrationsController
 
   def events_beside_congress
     Event.yr(@year).order(:name)
-      .select{|e| !e.name.downcase.include? "congress"}
+      .select { |e| !e.name.downcase.include? "congress" }
       .map(&:name)
   end
   helper_method :events_beside_congress

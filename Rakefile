@@ -30,7 +30,7 @@ namespace :db do
       puts "using all defined active_record models"
       classes = []
       Dir.glob(Rails.root.to_s + '/app/models/*.rb').each { |file| require file }
-      ActiveRecord::Base.subclasses.select { |c|c.base_class == c}.sort_by(&:name).each do |klass|
+      ActiveRecord::Base.subclasses.select { |c| c.base_class == c }.sort_by(&:name).each do |klass|
         classes << klass
       end
     end

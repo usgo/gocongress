@@ -20,13 +20,13 @@ RSpec.describe TransactionsController, :type => :controller do
     it "will not create the transaction" do
       expect {
         post :create, params: { year: user.year, user_email: bad_email, transaction: transaction_attributes }
-      }.to_not change{ Transaction.count }
+      }.to_not change { Transaction.count }
       expect(response).to render_template :new
     end
 
     it "will not update the transaction" do
       t = create :tr_sale
-      expect { patch_update(t, bad_email) }.to_not change{ t.user.email }
+      expect { patch_update(t, bad_email) }.to_not change { t.user.email }
       expect(response).to render_template :edit
     end
   end

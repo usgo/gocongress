@@ -71,7 +71,7 @@ class TransactionsController < ApplicationController
   # attributes from the params hash
   def sanitize_params
     if params[:transaction].present?
-      %w[user_id year].each{ |atr| params[:transaction].delete(atr) }
+      %w[user_id year].each { |atr| params[:transaction].delete(atr) }
     end
   end
 
@@ -83,7 +83,7 @@ class TransactionsController < ApplicationController
   # View Helpers
 
   def user_email_list
-    email_array = User.yr(@year).order('lower(email)').collect {|u| [u.email] }
+    email_array = User.yr(@year).order('lower(email)').collect { |u| [u.email] }
     email_array.join(',')
   end
   helper_method :user_email_list

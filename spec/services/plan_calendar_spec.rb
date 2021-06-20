@@ -1,7 +1,7 @@
 require_relative '../../app/services/plan_calendar'
 
 RSpec.describe PlanCalendar do
-  let(:range) { (Date.new(2013, 8, 2) .. Date.new(2013, 8, 12)) }
+  let(:range) { (Date.new(2013, 8, 2)..Date.new(2013, 8, 12)) }
 
   describe '.range_to_matrix' do
     it 'returns a matrix representing a calendar' do

@@ -24,15 +24,15 @@ class Attendee::WhoIsComing
   end
 
   def pro_count
-    @attendees.select{|a| a.get_rank.pro?}.count
+    @attendees.select { |a| a.get_rank.pro? }.count
   end
 
   def dan_count
-    @attendees.select{|a| a.get_rank.dan?}.count
+    @attendees.select { |a| a.get_rank.dan? }.count
   end
 
   def kyu_count
-    @attendees.select{|a| a.get_rank.kyu?}.count
+    @attendees.select { |a| a.get_rank.kyu? }.count
   end
 
   def opposite_direction

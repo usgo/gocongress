@@ -27,7 +27,7 @@ class ReportsController < ApplicationController
   def emails
     @atnd_email_list = ""
 
-    @atnd_email_list_json = Attendee.yr(@year).map{|a|
+    @atnd_email_list_json = Attendee.yr(@year).map { |a|
       {
         name: a.full_name,
         email: a.email
@@ -41,13 +41,13 @@ class ReportsController < ApplicationController
 
   def activities
     @activities = Activity.yr(@year).order :leave_time
-    @activities_by_date = @activities.group_by {|activity| activity.leave_time.to_date}
+    @activities_by_date = @activities.group_by { |activity| activity.leave_time.to_date }
   end
 
   def user_invoices
     min = params[:min].downcase
     max = params[:max].downcase
-    [min, max].each{ |m| raise "Invalid param" unless ("a".."z").cover?(m) }
+    [min, max].each { |m| raise "Invalid param" unless ("a".."z").cover?(m) }
     @users = User.yr(@year).email_range(min, max).order(:email).to_a
     render :layout => "print"
   end

@@ -37,7 +37,7 @@ RSpec.describe TournamentsController, :type => :controller do
           year: tnm.year, id: tnm.id,
           tournament: { name: '9x9' }
         }
-      }.to change{ tnm.reload.name }.to('9x9')
+      }.to change { tnm.reload.name }.to('9x9')
     end
   end
 end

@@ -11,7 +11,7 @@ RSpec.describe Rpt::TransactionReportsController, :type => :controller do
     get :show, format: 'html', params: { year: staff.year }
     expected_assigns = %w[transactions sales comps refunds
                           sales_sum comps_sum refunds_sum net_income]
-    expected_assigns.each{ |v|
+    expected_assigns.each { |v|
       expect(assigns(v.to_sym)).not_to be_nil
     }
   end
@@ -21,7 +21,7 @@ RSpec.describe Rpt::TransactionReportsController, :type => :controller do
 
     # create transactions in different years
     1.upto(3) { create(:tr_sale, year: Time.now.year - 1) }
-    this_year_sales = 1.upto(3).map{ create(:tr_sale) }
+    this_year_sales = 1.upto(3).map { create(:tr_sale) }
     expected_sales_count = this_year_sales.count
     expected_sum = this_year_sales.map(&:amount).reduce(:+)
 

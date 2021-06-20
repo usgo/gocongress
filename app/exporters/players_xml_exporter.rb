@@ -34,7 +34,7 @@ class PlayersXmlExporter
   end
 
   def self.render_players(players, aga_info)
-    players = players.map {|player| render_player(player, aga_info[player.aga_id.to_s] || {})}
+    players = players.map { |player| render_player(player, aga_info[player.aga_id.to_s] || {}) }
     players.join("\n\t\t")
   end
 

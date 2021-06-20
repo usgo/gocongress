@@ -12,6 +12,6 @@ class Content < ApplicationRecord
   scope :homepage, -> { where(show_on_homepage: true) }
   scope :newest_first, -> { order("created_at desc") }
   scope :unexpired, lambda {
-    where("expires_at is null or expires_at > ?", Time.zone.now )
+    where("expires_at is null or expires_at > ?", Time.zone.now)
   }
 end

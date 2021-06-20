@@ -76,7 +76,7 @@ class Ability
   private
 
   def self.explain_action act
-    explanations = {destroy: 'delete this', index: 'list', show: 'see this'}
+    explanations = { destroy: 'delete this', index: 'list', show: 'see this' }
     return explanations[act.to_sym] || act.to_s
   end
 

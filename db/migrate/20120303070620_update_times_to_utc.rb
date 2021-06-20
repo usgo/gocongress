@@ -19,8 +19,8 @@ class UpdateTimesToUtc < ActiveRecord::Migration
     ts_cols.each do |table, cols|
       cols.each do |col|
         model_class = table.to_s.singularize.camelize.constantize
-        model_class.send :update_all, "#{col} = #{col} #{operator} interval '7 hours'", {:year => 2011}
-        model_class.send :update_all, "#{col} = #{col} #{operator} interval '4 hours'", {:year => 2012}
+        model_class.send :update_all, "#{col} = #{col} #{operator} interval '7 hours'", { :year => 2011 }
+        model_class.send :update_all, "#{col} = #{col} #{operator} interval '4 hours'", { :year => 2012 }
       end
     end
 

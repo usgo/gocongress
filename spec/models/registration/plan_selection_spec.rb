@@ -21,8 +21,8 @@ RSpec.describe Registration::PlanSelection, :type => :model do
       result = subject.parse_params(plan_parms, plans)
       expect(result.count).to eq(plans.count)
       expect(result.map(&:plan)).to match_array(plans)
-      expect(result.map{|s| s.qty}).to match_array([0,1,2,13])
-      daily_plan_sln = result.select{|s| s.plan.id == daily_plan.id}.first
+      expect(result.map { |s| s.qty }).to match_array([0, 1, 2, 13])
+      daily_plan_sln = result.select { |s| s.plan.id == daily_plan.id }.first
       parsed_dates = dates.map { |d| Date.parse(d) }
       expect(daily_plan_sln.dates).to match_array(parsed_dates)
       expect(result).to match_array([

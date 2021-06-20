@@ -42,22 +42,22 @@ class Attendee < ApplicationRecord
 
   validates :birth_date, presence: true
   validate :birth_date_is_modern
-  validates :country,         :format => {:with => /\A[A-Z]{2}\z/}, :presence => true
+  validates :country,         :format => { :with => /\A[A-Z]{2}\z/ }, :presence => true
   validates :email,           :presence => true
   with_options(presence: { if: ->(atd) { atd.year_record.in_person? } }) do
     validates :emergency_name
     validates :emergency_phone
   end
   validates :family_name,     :presence => true
-  validates :gender,          :inclusion => {:in => ["m","f","o"], :message => "is not valid"}, :presence => true
+  validates :gender,          :inclusion => { :in => ["m", "f", "o"], :message => "is not valid" }, :presence => true
   validates :given_name,      :presence => true
   validates :guardian_full_name, :presence => { :if => :require_guardian_full_name? }
   validates :phone,
     if: ->(atd) { atd.receive_sms && atd.year_record&.in_person? },
     presence: true,
     phone: true
-  validates :minor_agreement_received, :inclusion => {:in => [true, false]}
-  validates :checked_in, :inclusion => {:in => [true, false]}
+  validates :minor_agreement_received, :inclusion => { :in => [true, false] }
+  validates :checked_in, :inclusion => { :in => [true, false] }
   validates :rank,
     inclusion: {
       in: Attendee::Rank::NUMERIC_RANK_LIST,
@@ -67,9 +67,9 @@ class Attendee < ApplicationRecord
   validates :receive_sms, :inclusion => {
     :in => [true, false], :message => ' - Please select yes or no'
   }
-  validates :roomate_request, :length => {:maximum => 250}
-  validates :special_request, :length => {:maximum => 250}
-  validates :tshirt_size,     :inclusion => {:in => Shirt::SIZE_CODES, :message => " - Please select a size"}
+  validates :roomate_request, :length => { :maximum => 250 }
+  validates :special_request, :length => { :maximum => 250 }
+  validates :tshirt_size,     :inclusion => { :in => Shirt::SIZE_CODES, :message => " - Please select a size" }
   validates :will_play_in_us_open, :inclusion => {
     :in => [true, false], :message => ' - Please select yes or no'
   }
@@ -229,18 +229,18 @@ class Attendee < ApplicationRecord
   end
 
   def plans_as_invoice_items
-    plans_to_invoice.map{ |ap| ap.to_invoice_item(full_name, attendee_alternate_name) }
+    plans_to_invoice.map { |ap| ap.to_invoice_item(full_name, attendee_alternate_name) }
   end
 
   def plans_to_invoice
-    attendee_plans.select{ |ap| ap.show_on_invoice? }
+    attendee_plans.select { |ap| ap.show_on_invoice? }
   end
 
   def populate_atrs_for_new_form
     self.email = user.email
     ufac = user.first_atnd_created
     if ufac.present?
-      ['country','phone'].each do |f|
+      ['country', 'phone'].each do |f|
         self[f] = ufac[f]
       end
     end

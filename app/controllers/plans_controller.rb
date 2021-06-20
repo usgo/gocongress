@@ -54,7 +54,7 @@ class PlansController < ApplicationController
   private
 
   def categories_for_select
-    PlanCategory.yr(@year).order(:name).to_a.map {|c| [c.name, c.id]}
+    PlanCategory.yr(@year).order(:name).to_a.map { |c| [c.name, c.id] }
   end
 
   def plan_params

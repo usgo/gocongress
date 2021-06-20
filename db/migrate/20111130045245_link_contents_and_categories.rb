@@ -9,8 +9,8 @@ class LinkContentsAndCategories < ActiveRecord::Migration
 
     # .. so let's make an Announcements category for 2011
     # and a FAQ category for 2012 ..
-    ann = ContentCategory.create!( year: 2011, name: 'Announcements' )
-    faq = ContentCategory.create!( year: 2012, name: 'FAQ' )
+    ann = ContentCategory.create!(year: 2011, name: 'Announcements')
+    faq = ContentCategory.create!(year: 2012, name: 'FAQ')
 
     # .. assign content to their categories ..
     Content.update_all "content_category_id = #{ann.id}", "year = 2011"

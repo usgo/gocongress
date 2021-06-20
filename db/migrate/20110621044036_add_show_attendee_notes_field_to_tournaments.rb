@@ -1,6 +1,6 @@
 class AddShowAttendeeNotesFieldToTournaments < ActiveRecord::Migration
   def self.up
-    add_column :tournaments, :show_attendee_notes_field, :boolean, {:null=>false, :default=>false}
+    add_column :tournaments, :show_attendee_notes_field, :boolean, { :null => false, :default => false }
   end
 
   def self.down

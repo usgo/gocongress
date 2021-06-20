@@ -20,7 +20,7 @@ class AttendeePlan < ApplicationRecord
   end
 
   validates :quantity,
-    :numericality => {:only_integer => true, :greater_than_or_equal_to => 1}
+    :numericality => { :only_integer => true, :greater_than_or_equal_to => 1 }
 
   validates_each :quantity do |model, atr, value|
     model.validate_against_max_quantity
@@ -58,11 +58,11 @@ class AttendeePlan < ApplicationRecord
   end
 
   def plan_dates
-    dates.map {|d| d._date.strftime("%-m/%-d") }
+    dates.map { |d| d._date.strftime("%-m/%-d") }
   end
 
   def show_on_invoice?
-    ! plan.needs_staff_approval?
+    !plan.needs_staff_approval?
   end
 
   # Optimization: Avoid a query by passing

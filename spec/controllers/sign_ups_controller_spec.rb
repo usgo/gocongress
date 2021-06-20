@@ -54,7 +54,7 @@ RSpec.describe SignUpsController, :type => :controller do
       it "does not create a user" do
         expect {
           attempt_to_create_invalid_user
-        }.to_not change{ User.count }
+        }.to_not change { User.count }
       end
 
       it "does not sign in a user" do

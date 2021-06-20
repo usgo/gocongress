@@ -66,21 +66,21 @@ RSpec.describe Attendee, :type => :model do
 
     it "does not include plans that need staff approval" do
       p = create :plan_which_needs_staff_approval
-      expect { a.plans << p }.to_not change{a.invoice_items.count}
+      expect { a.plans << p }.to_not change { a.invoice_items.count }
     end
 
     it "includes applicable plans" do
       p = create :plan
-      expect { a.plans << p }.to change{a.invoice_items.count}.by(1)
+      expect { a.plans << p }.to change { a.invoice_items.count }.by(1)
     end
 
     it "includes activities" do
       v = create :activity
-      expect { a.activities << v }.to change{a.invoice_items.count}.by(1)
+      expect { a.activities << v }.to change { a.invoice_items.count }.by(1)
     end
 
     def descriptions_of invoice_items
-      invoice_items.map{|i| i.description}
+      invoice_items.map { |i| i.description }
     end
   end
 

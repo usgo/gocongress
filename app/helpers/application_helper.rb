@@ -44,7 +44,7 @@ module ApplicationHelper
 
   # `trl_attr` is slightly more convenient than
   # Model.human_attribute_name("attr")
-  def trl_attr ( modelname, attributename )
+  def trl_attr(modelname, attributename)
     translate "activerecord.attributes." + modelname.to_s + "." + attributename.to_s
   end
 

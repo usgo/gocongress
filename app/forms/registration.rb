@@ -131,7 +131,7 @@ class Registration
     params.each do |key, value|
       if key.include?("single")
         plan_id_key = params[key]["plan_id"]
-        normalized_params[plan_id_key] = { "qty"=>"1" }
+        normalized_params[plan_id_key] = { "qty" => "1" }
       else
         normalized_params[key] = value
       end
@@ -146,7 +146,7 @@ class Registration
     return @_plans if @_plans.present?
     @_plans = all_plans.to_a
     unless admin?
-      @_plans.delete_if {|p| p.disabled? && !@attendee.has_plan?(p) && !p.show_disabled?}
+      @_plans.delete_if { |p| p.disabled? && !@attendee.has_plan?(p) && !p.show_disabled? }
     end
     @_plans
   end
@@ -179,7 +179,7 @@ class Registration
   end
 
   def selected_dates plan
-    ps = @plan_selections.find {|s| s.plan.id == plan.id}
+    ps = @plan_selections.find { |s| s.plan.id == plan.id }
     ps.nil? ? [] : ps.dates
   end
 
@@ -215,11 +215,11 @@ class Registration
   end
 
   def selected_plan_categories plan_selections
-    plan_selections.select{|s| s.qty > 0}.map(&:plan).map(&:plan_category)
+    plan_selections.select { |s| s.qty > 0 }.map(&:plan).map(&:plan_category)
   end
 
   def selected_plan_count(category, selections)
-    selections.count {|s| s.plan.plan_category_id == category.id}
+    selections.count { |s| s.plan.plan_category_id == category.id }
   end
 
   def single_plan_categories

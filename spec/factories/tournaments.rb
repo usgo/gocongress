@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :tournament do
-    sequence(:name) { |n| "Tournament #{n}"}
+    sequence(:name) { |n| "Tournament #{n}" }
     event_type { 'in_person' }
     eligible { "blah" }
     description { "blah" }

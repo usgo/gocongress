@@ -5,7 +5,7 @@ class RoundsController < ApplicationController
   authorize_resource
   add_filter_restricting_resources_to_year_in_route
 
-  before_action :find_round , only: [:show, :edit, :update, :destroy]
+  before_action :find_round, only: [:show, :edit, :update, :destroy]
 
   def index
     @rounds = Round.order('rounds.number ASC').all
@@ -15,7 +15,7 @@ class RoundsController < ApplicationController
   end
 
   def show
-    @import = Round::Import.new(file: "",round_id: -1)
+    @import = Round::Import.new(file: "", round_id: -1)
   end
 
   def new

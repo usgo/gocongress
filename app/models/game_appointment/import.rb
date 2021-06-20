@@ -47,17 +47,17 @@ class GameAppointment::Import
     # Find the players in the XML import
     players = doc.xpath("//Players/Player")
     # Turn the players XML into an array of hashes
-    players = players.map{|n| Hash[n.keys.zip(n.values)]}
+    players = players.map { |n| Hash[n.keys.zip(n.values)] }
 
     # Collect those hashes into an array with key names that match the player
     # names in Open Gotha games
-    players = Hash[players.collect {|p| [name_to_key(p), p]}]
+    players = Hash[players.collect { |p| [name_to_key(p), p] }]
 
     # Find all games for the round being imported (i.e. paired games )
     games = doc.xpath("//Games/Game[@roundNumber=\"#{round_number}\"]")
 
     # Turn the games XML into an array of hashes
-    games = games.map{|n| Hash[n.keys.zip(n.values)]}
+    games = games.map { |n| Hash[n.keys.zip(n.values)] }
 
     # For each game, use the name of the black and white players to populate the
     # hash with player hashes

@@ -70,7 +70,7 @@ Gocongress::Application.routes.draw do
             post :delete_all_game_appointments
             patch :update_notification_message
           end
-          collection { post :import}
+          collection { post :import }
         end
 
         resources :plans, :except => [:index]

@@ -11,7 +11,7 @@ class SlideSet
   # that the view helper expects.
   def slides_as_arrays
     return [] if @slides.nil?
-    @slides.map{ |s| [ s["title"], s["subtitle"] ] }
+    @slides.map { |s| [s["title"], s["subtitle"]] }
   end
 
   private

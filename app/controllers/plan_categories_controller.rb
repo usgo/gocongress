@@ -15,7 +15,7 @@ class PlanCategoriesController < ApplicationController
       categories = @plan_categories.joins(:event).yr(@year).order('ordinal')
       @plan_categories_by_event = categories \
         .select("plan_categories.*, events.name as event_name") \
-        .group_by {|c| c.event_name}
+        .group_by { |c| c.event_name }
       @show_order_fields = can?(:update, PlanCategory) && categories.count > 1
     else
       redirect_to year_path
@@ -67,11 +67,11 @@ class PlanCategoriesController < ApplicationController
   private
 
   def max_description_length
-    @max_description_length = PlanCategory.validators_on( :description ).first.options[:maximum]
+    @max_description_length = PlanCategory.validators_on(:description).first.options[:maximum]
   end
 
   def events_for_select
-    @events_for_select = Event.yr(@year).alphabetical.to_a.map {|e| [e.name, e.id]}
+    @events_for_select = Event.yr(@year).alphabetical.to_a.map { |e| [e.name, e.id] }
   end
 
   def expose_plans

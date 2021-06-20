@@ -8,7 +8,7 @@ class Year < ApplicationRecord
   # Validations
   # -----------
 
-  with_options({:presence => true}) do |wo|
+  with_options({ :presence => true }) do |wo|
     wo.validates :event_type
     wo.validates :city, unless: :online?
     wo.validates :date_range
@@ -27,7 +27,7 @@ class Year < ApplicationRecord
   def init
     # Set default values
     self.event_type ||= :in_person
-    self.mailing_list_link ||=:'http://eepurl.com/bC8CBX'
+    self.mailing_list_link ||= :'http://eepurl.com/bC8CBX'
   end
 
   def circular_logo?
@@ -56,7 +56,7 @@ class Year < ApplicationRecord
     s = sponsors_by_year[self.year]
     s = [:aga] if s.nil?
 
-    all_sponsors.reject{|k,v| !s.include?(k)}
+    all_sponsors.reject { |k, v| !s.include?(k) }
   end
 
   def to_i() year end

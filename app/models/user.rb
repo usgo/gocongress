@@ -7,14 +7,14 @@ class User < ApplicationRecord
   # ---------
 
   ROLES = [
-    ['Admin','A'],
-    ['Staff','S'],
-    ['User','U']
+    ['Admin', 'A'],
+    ['Staff', 'S'],
+    ['User', 'U']
   ]
 
   # In practice, we often load users based on the compound key (email,year).
   # For example, when authenticating or resetting a password.
-  PRACTICAL_KEY = [:email,:year]
+  PRACTICAL_KEY = [:email, :year]
 
   # Devise modules: Do not use :validatable now that
   # the email uniqueness validation has a year scope
@@ -49,7 +49,7 @@ class User < ApplicationRecord
 
   validates :password,
     :presence => true,
-    :length => {:minimum => 6},
+    :length => { :minimum => 6 },
     :confirmation => true,
     :if => :validate_password?
 
@@ -78,7 +78,7 @@ class User < ApplicationRecord
   end
 
   def attendee_invoice_items
-    attendees.includes(:plans, :activities).order('created_at').map {|a| a.invoice_items}.flatten
+    attendees.includes(:plans, :activities).order('created_at').map { |a| a.invoice_items }.flatten
   end
 
   def balance
@@ -86,7 +86,7 @@ class User < ApplicationRecord
   end
 
   def comp_invoice_items
-    transactions.comps.map {|t| t.to_invoice_item}
+    transactions.comps.map { |t| t.to_invoice_item }
   end
 
   def first_atnd_created
@@ -114,13 +114,13 @@ class User < ApplicationRecord
   end
 
   def role_name
-    ROLES.select{|r| r[1] == role}.first[0]
+    ROLES.select { |r| r[1] == role }.first[0]
   end
 
   # Override the built-in devise method update_with_password()
   # so that we don't need current_password
   # Credit: Carlos Antonio da Silva
-  def update_with_password(params={})
+  def update_with_password(params = {})
     if params[:password].blank?
       params.delete(:password)
       params.delete(:password_confirmation) if params[:password_confirmation].blank?

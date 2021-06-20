@@ -11,10 +11,10 @@ class Transaction < ApplicationRecord
   # Comp - Admin reduces total cost for a User (eg. a VIP)
   # Refund - Admin has sent a refund check to a User who overpaid
   # Sale - User makes a payment
-  TRANTYPES = [['Comp','C'], ['Comp (AGF)', 'A'], ['Comp (Pro)', 'P'], ['Refund','R'], ['Sale','S']]
+  TRANTYPES = [['Comp', 'C'], ['Comp (AGF)', 'A'], ['Comp (Pro)', 'P'], ['Refund', 'R'], ['Sale', 'S']]
 
   # Instruments
-  INSTRUMENTS = [['Card','C'], ['Cash','S'], ['Check','K']]
+  INSTRUMENTS = [['Card', 'C'], ['Cash', 'S'], ['Check', 'K']]
 
   # Validations
   # -----------
@@ -66,13 +66,13 @@ class Transaction < ApplicationRecord
   # the transaction form has an email field to select the user.
   validates :user, :presence => { :message => " email address is blank
     or incorrect.  Please make sure to enter the email address of the
-    correct user account."}
+    correct user account." }
 
   # Scopes
   # ------
 
   scope :comps, -> { where(trantype: ['C', 'A', 'P']) }
-  scope :for_payment_history, -> { where(:trantype => ['S','R']) }
+  scope :for_payment_history, -> { where(:trantype => ['S', 'R']) }
   scope :refunds, -> { where(trantype: 'R') }
   scope :sales, -> { where(trantype: 'S') }
 

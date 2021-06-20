@@ -14,7 +14,7 @@ class PlanCategory < ApplicationRecord
       :case_sensitive => false,
       :message => "with that name already exists"
     }
-  validates :description, :length => {maximum: 200}
+  validates :description, :length => { maximum: 200 }
 
   # Scopes
   # ----------------

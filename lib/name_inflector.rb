@@ -12,7 +12,7 @@ module NameInflector
 
   def self.capitalize(name)
     if name.include? "-"
-      name.split("-").map{ |n| capitalize_name(n) }.join("-")
+      name.split("-").map { |n| capitalize_name(n) }.join("-")
     else
       capitalize_name(name)
     end
@@ -49,18 +49,18 @@ module NameInflector
   end
 
   def self.longest_matching_prefix(prefixes, string)
-    matches = prefixes.select{|p| string.downcase.start_with?(p)}
+    matches = prefixes.select { |p| string.downcase.start_with?(p) }
     return nil if matches.empty?
     longest = ""
-    matches.each {|m| longest = m if m.length > longest.length }
+    matches.each { |m| longest = m if m.length > longest.length }
     return longest
   end
 
   def self.longest_matching_suffix(suffixes, string)
-    matches = suffixes.select{|s| string.downcase.end_with?(s)}
+    matches = suffixes.select { |s| string.downcase.end_with?(s) }
     return nil if matches.empty?
     longest = ""
-    matches.each {|m| longest = m if m.length > longest.length }
+    matches.each { |m| longest = m if m.length > longest.length }
     return longest
   end
 

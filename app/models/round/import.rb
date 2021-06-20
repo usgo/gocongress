@@ -82,24 +82,24 @@ class Round::Import
     games = doc.xpath("//Games/Game[@roundNumber=\"#{round_number}\"]")
 
     # Turn the games XML into an array of hashes
-    games = games.map{|n| Hash[n.keys.zip(n.values)]}
+    games = games.map { |n| Hash[n.keys.zip(n.values)] }
     games
   end
 
   def get_byes(doc, round_number)
     byes = doc.xpath("//ByePlayers/ByePlayer[@roundNumber=\"#{round_number}\"]")
-    byes = byes.map{|n| Hash[n.keys.zip(n.values)]}
+    byes = byes.map { |n| Hash[n.keys.zip(n.values)] }
     byes
   end
 
   def get_players(doc)
     players = doc.xpath("//Players/Player")
     # Turn the players XML into an array of hashes
-    players = players.map{|n| Hash[n.keys.zip(n.values)]}
+    players = players.map { |n| Hash[n.keys.zip(n.values)] }
 
     # Collect those hashes into an array with key names that match the player
     # names in Open Gotha games
-    players = Hash[players.collect {|p| [name_to_key(p), p]}]
+    players = Hash[players.collect { |p| [name_to_key(p), p] }]
 
     players
   end

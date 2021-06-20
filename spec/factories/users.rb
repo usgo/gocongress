@@ -1,5 +1,5 @@
 FactoryBot.define do
-  sequence(:random_email) {|n| "test#{n}@example.com" }
+  sequence(:random_email) { |n| "test#{n}@example.com" }
 
   factory :user do
     confirmed_at { ::Time.zone.local(2020, 1, 1, 0, 0, 0) }
