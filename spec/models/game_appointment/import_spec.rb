@@ -5,6 +5,6 @@ RSpec.describe GameAppointment::Import, type: :model do
   # unit tests here eventually
   xdescribe "#process!" do
       
-    end
+  end
     
 end

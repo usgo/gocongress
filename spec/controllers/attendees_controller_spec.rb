@@ -56,7 +56,7 @@ RSpec.describe AttendeesController, :type => :controller do
           expect(assigns(:attendees).count).to be(1)
         end
       end
-  end
+    end
 
   end
 
