@@ -16,7 +16,7 @@
           %tr
             %td.valign-middle.align-center= check_box_tag 'attendee_ids[]', attendee.id
             - if attendee.cancelled?
-              %td= link_to "#{attendee.family_name}, #{attendee.given_name} (Cancelled)", print_summary_for_attendee_path(attendee)
+              %td= link_to "#{attendee.family_name}, #{attendee.given_name} (Canceled)", print_summary_for_attendee_path(attendee)
             - else
               %td= link_to "#{attendee.family_name}, #{attendee.given_name}", print_summary_for_attendee_path(attendee)
             %td= attendee.alternate_name

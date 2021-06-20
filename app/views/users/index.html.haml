@@ -39,7 +39,7 @@
           - attendees.each_with_index do |atn, ix|
             - a = atn.full_name
             - a += ' (' + atn.alternate_name + ')' if atn.alternate_name.present?
-            - a += ' (Cancelled)' if atn.cancelled?
+            - a += ' (Canceled)' if atn.cancelled?
             = link_to a, print_summary_for_attendee_path(atn)
             = "*" if ix == 0 && attendees.length > 1
             %br

@@ -41,7 +41,7 @@
       - for a in @attendees
         %tr
           - if a.cancelled?
-            %td= a.full_name + ' (Cancelled)'
+            %td= a.full_name + ' (Canceled)'
           - else
             - if a.age_in_years >= 18
               %td= link_to a.full_name, edit_registration_path(a, type: 'adult')
