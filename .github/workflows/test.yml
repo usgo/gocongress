@@ -1,24 +1,6 @@
 name: gha-workflow-usgc-test
 on: [push, pull_request]
 jobs:
-
-  # Linting is a separate job, primary because it only needs to be done once,
-  # and secondarily because jobs are performed concurrently.
-  gha-job-usgc-lint:
-    name: Lint
-    runs-on: ubuntu-18.04
-    steps:
-      - name: Checkout source
-        uses: actions/checkout@v2
-      - name: Setup ruby
-        uses: ruby/setup-ruby@v1
-      - name: Bundle
-        run: |
-          gem install bundler
-          bundle install --jobs 4 --retry 3
-      - name: Lint
-        run: bundle exec rubocop
-
   gha-job-usgc-test:
     name: Test
     env:
@@ -76,12 +58,8 @@ jobs:
           PGPASSWORD: asdfasdf
           POSTGRES_HOST: localhost
           POSTGRES_PORT: 5432
-
-      # Finally run the tests. We run `rspec` instead of `rake` because the
-      # later includes rubocop, which we run (once) as a separate job. See
-      # above.
-      - name: Test
-        run: bundle exec rspec
+      - name: Rake
+        run: bundle exec rake
         env:
           BACKTRACE: 1
           USGC_CI_DATABASE: usgc_test
