@@ -5,21 +5,6 @@
     %span.smalltext
       = link_to 'What is my AGA rank?', '#', :id => 'open_dialog_rank'
 
-  .field
-    = f.label :will_play_in_us_open
-    %div
-      %label
-        = f.radio_button :will_play_in_us_open, true
-        Yes
-      %label
-        = f.radio_button :will_play_in_us_open, false
-        No
-  .field
-    %span.smalltext
-      (Please contact the US Open TD at
-      = link_to 'US Open Tournament Director', contacts_path, :target => '_blank'
-      if your estimated rank is different from your AGA rank.)
-
 .dialog#dialog_aga_id{:title => "What is an AGA ID?"}
   %p
     Each AGA member is assigned an identification number.  Only AGA members

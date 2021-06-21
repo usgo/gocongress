@@ -10,7 +10,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_16_193834) do
+ActiveRecord::Schema.define(version: 2021_06_21_132952) do
+
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -100,7 +101,6 @@ ActiveRecord::Schema.define(version: 2021_06_16_193834) do
     t.datetime "airport_arrival"
     t.string "airport_arrival_flight", limit: 255
     t.datetime "airport_departure"
-    t.boolean "will_play_in_us_open"
     t.integer "guardian_attendee_id"
     t.integer "shirt_id"
     t.string "guardian_full_name", limit: 255
