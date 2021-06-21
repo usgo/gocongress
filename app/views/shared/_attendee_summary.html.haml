@@ -8,7 +8,7 @@
     %h1 Attendee Registration Sheet
     %p Please verify all information.
     - if attendee.cancelled?
-      %h2= "#{attendee.family_name}, #{attendee.given_name}#{attendee.attendee_alternate_name} (Cancelled)"
+      %h2= "#{attendee.family_name}, #{attendee.given_name}#{attendee.attendee_alternate_name} (Canceled)"
     - else
       %h2= "#{attendee.family_name}, #{attendee.given_name}#{attendee.attendee_alternate_name}"
 
