@@ -4,7 +4,6 @@ ruby '2.7.3'
 gem 'authorizenet'
 gem 'bootsnap', require: false
 gem 'cancancan'
-gem 'colorize'
 gem 'devise'
 gem 'exception_notification'
 gem 'ffi'
@@ -31,7 +30,9 @@ gem 'twilio-ruby'
 gem 'uglifier'
 
 group :development do
+  gem 'colorize'
   gem 'listen'
+  gem 'tty-prompt'
 end
 
 # rspec-rails wants to be in the :development group
