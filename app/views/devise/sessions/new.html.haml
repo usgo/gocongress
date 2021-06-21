@@ -8,13 +8,13 @@
   = hidden_field_tag 'user[year]', @year.year
 
   %fieldset
-    .field.flex
+    .field
       %div.field-key
         = f.label :email
       %div.field-value
         = f.text_field :email, :tabindex => 1
 
-    .field.flex
+    .field
       %div.field-key
         = f.label :password
       %div.field-value
