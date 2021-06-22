@@ -14,7 +14,6 @@ RSpec.describe RegistrationsController, :type => :controller do
       :given_name => "Test",
       :rank => 3,
       :tshirt_size => "NO",
-      :will_play_in_us_open => false,
       :receive_sms => false
     }
   }

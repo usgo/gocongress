@@ -106,13 +106,6 @@ RSpec.describe Attendee, :type => :model do
     let(:plan) { create :plan, inventory: 42, max_quantity: 999 }
     let(:a) { build :attendee, year: 2020 }
 
-    it 'Attendee must indicate whether or not they will play in the US Open' do
-      a.will_play_in_us_open = nil
-      expect(a).to have_error_about(:will_play_in_us_open)
-      a.will_play_in_us_open = false
-      expect(a).to be_valid
-    end
-
     context 'receive_sms set to true' do
       it 'Attendee required to have a phone' do
         a.receive_sms = true

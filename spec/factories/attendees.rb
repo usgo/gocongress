@@ -12,7 +12,6 @@ FactoryBot.define do
     receive_sms { false }
     phone { "6122341234" }
     rank { 3 }
-    will_play_in_us_open { false }
     year { Time.now.year }
     association :user, :factory => :user, :strategy => :build
   end

@@ -70,9 +70,6 @@ class Attendee < ApplicationRecord
   validates :roomate_request, :length => { :maximum => 250 }
   validates :special_request, :length => { :maximum => 250 }
   validates :tshirt_size,     :inclusion => { :in => Shirt::SIZE_CODES, :message => " - Please select a size" }
-  validates :will_play_in_us_open, :inclusion => {
-    :in => [true, false], :message => ' - Please select yes or no'
-  }
   validates_numericality_of :aga_id, :only_integer => true, :allow_nil => true, :message => "id is not a number"
 
   username_message = " - One of the tournaments you selected needs your %{attribute}."
@@ -95,10 +92,18 @@ class Attendee < ApplicationRecord
 
   # Check to see if an attendee is signed up for a tournament that takes place
   # on a server, so that we can require the relevant username in that case
-  def in_tournament? server_name
+  def in_tournament? server_name = nil
     tournaments = Tournament.yr(year).where(:registration_sign_up => true).order('ordinal')
     selected_tournaments = tournaments.select { |t| self.tournament_ids.include? t.id }
-    selected_tournaments.any? { |t| t.server == server_name }
+    if server_name
+      # If a server is specified, return whether the attendee has signed up for
+      # any tournament on that server
+      return selected_tournaments.any? { |t| t.server == server_name }
+    else
+      # If no server is specified, return whether the attendee has signed up for
+      # any tournament at all
+      return !selected_tournaments.empty?
+    end
   end
 
   def self.adults year

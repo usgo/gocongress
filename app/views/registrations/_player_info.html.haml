@@ -7,19 +7,6 @@
 
   = hidden_field_tag :aga_id
 
-  = render :layout => 'shared/field',
-  :locals => { :field => f, :attribute => :will_play_in_us_open, :required => true } do
-    %label
-      = f.radio_button :will_play_in_us_open, true
-      Yes
-    %label
-      = f.radio_button :will_play_in_us_open, false
-      No
-
-    %div.field-help-text
-      Please #{link_to 'contact the U.S. Open tournament director', contacts_path}
-      if your estimated rank is different from your AGA rank.
-
 .dialog#dialog_rank{:title => "What is my AGA Rank?"}
   %p
     If you have played in AGA tournaments, you can look up your rank
