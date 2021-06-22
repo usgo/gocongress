@@ -1,0 +1,40 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://www.usgo.org/mm/api/members/18202?api_key=redacted
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 22 Jun 2021 02:25:40 GMT
+      Server:
+      - Apache/2.4.29 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Content-Length:
+      - '883'
+      Content-Type:
+      - application/json
+    body:
+      encoding: UTF-8
+      string: '{"success":true,"message":"","payload":{"resource":"member","id":"18202","row":{"member_id":"18202","full_name":"Eagle,
+        Nathanael","given_names":"Nathanael","family_name":"Eagle","type":"full","status":"accepted","renewal_due":"2026-06-09","join_date":"2010-06-09","dob":"1981-05-06","gender":"male","age":"40","tags":"sent_card","address1":"1507
+        Trinidad Ave NE","address2":"","city":"Washington","state":"DC","zip":"20002","country":"USA","region":"Eastern","phone":"7032546437","phone2":"","email":"nate@nateeagle.com","email2":"","citizen":"1","citizen_type":"US
+        citizen","chapter_id":"15456","occupation":"Web Designer","notes":"","dues_last_paid":"2021-05-05
+        19:08:39","last_changed":"2021-06-16 13:05:07","rating":"1.33491","rating_updated":"2019-12-14","sigma":"0.29756","tournaments":"33","games":"95","last_tourney":"Lunar
+        New Year 2020","last_tourney_date":"2019-12-14"}}}'
+  recorded_at: Tue, 22 Jun 2021 02:25:40 GMT
+recorded_with: VCR 6.0.0

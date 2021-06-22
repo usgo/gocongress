@@ -1,0 +1,39 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://gokgs.com/gameArchives.jsp?user=nosanepersonchoosethisname
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: ''
+    headers:
+      Set-Cookie:
+      - JSESSIONID=48C857C978FFC470DAA84E42C4AEA9E5; Path=/; HttpOnly
+      Content-Type:
+      - text/html;charset=UTF-8
+      Content-Language:
+      - en-US
+      Content-Length:
+      - '1067'
+      Date:
+      - Tue, 22 Jun 2021 02:29:06 GMT
+      Via:
+      - 1.1 google
+    body:
+      encoding: UTF-8
+      string: |-
+        <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+        <html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"><meta language="en-US"><link href="/kgsMain.css" rel="stylesheet" type="text/css"><title>KGS Game Archives</title><meta http-equiv="Content-Style-Type" content="text/css"><link rel="SHORTCUT ICON" href="//files.gokgs.com/images/favicon.ico"></head><body><h1>KGS Game Archives</h1><p>Sorry, there are no games in the archives for user nosanepersonchoosethisname. Please try another search.</p><form accept-charset="UTF-8" method="get" action="gameArchives.jsp"><p>Enter a user here to view their games: <input maxlength="20" value="nosanepersonchoosethisname" name="user" type="text"><br><input value="y" name="oldAccounts" type="checkbox">Include expired and guest accounts? <input value="See games" type="submit"></p></form><div><hr style="clear: both"><p class="block"><a href="/"><img alt="KGS" src="https://files.gokgs.com/images/kgsIcon.png" height="31" width="88"></a></p></div></body></html>
+  recorded_at: Tue, 22 Jun 2021 02:29:06 GMT
+recorded_with: VCR 6.0.0

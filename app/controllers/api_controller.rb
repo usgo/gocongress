@@ -1,12 +1,11 @@
 require 'open-uri'
 
+# Our API controller provides endpoints that proxy to a number of external
+# APIs and services, some more official than others.
+#
+# Please note that our use of Pandanet and KGS in unorthodox ways to get
+# username validity was sanctioned by members of those organizations.
 class ApiController < ApplicationController
-  # Our API controller provides endpoints that proxy to a number of external
-  # APIs and services, some more official than others.
-  #
-  # Please note that our use of Pandanet and KGS in unorthodox ways to get
-  # username validity was sanctioned by members of those organizations.
-
   def search_members
     api_url_prefix = "https://www.usgo.org/mm/api/members/"
     if !!(params[:search] =~ /^[1-9]+[0-9]*$/)

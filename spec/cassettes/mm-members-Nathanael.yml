@@ -1,0 +1,40 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://www.usgo.org/mm/api/members/all?api_key=redacted&limit=10&query=type%20!=%20chapter%20Nathanael
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 22 Jun 2021 02:26:24 GMT
+      Server:
+      - Apache/2.4.29 (Ubuntu)
+      Access-Control-Allow-Origin:
+      - "*"
+      Content-Length:
+      - '636'
+      Content-Type:
+      - application/json
+    body:
+      encoding: UTF-8
+      string: '{"success":true,"message":"","payload":{"resource":"members","query":"group
+        = all type != chapter (member_id = Nathanael or family_name: Nathanael or
+        given_names: Nathanael)","sort_by":null,"limit":"10","offset":0,"count":3,"total":3,"rows":[{"member_id":"18202","full_name":"Eagle,
+        Nathanael","renewal_due":"2026-06-09","type":"full","rating":"1.33491"},{"member_id":"12278","full_name":"Adams,
+        Nathanael","renewal_due":"2004-11-20","type":"full","rating":null},{"member_id":"16499","full_name":"Lewis,
+        Nathanael","renewal_due":"2010-04-04","type":"youth","rating":"-20.95055"}],"select":"member_id,full_name,renewal_due,type,rating"}}'
+  recorded_at: Tue, 22 Jun 2021 02:26:24 GMT
+recorded_with: VCR 6.0.0
