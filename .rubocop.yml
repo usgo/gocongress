@@ -50,6 +50,11 @@ Metrics/ModuleLength:
 Naming/HeredocDelimiterNaming:
   Enabled: false
 
+# Single-letter names are OK. For example, `x` and `y` are reasonable parameter
+# names if you're working with Cartesian points.
+Naming/MethodParameterName:
+  MinNameLength: 1
+
 # Concerns:
 # 1. In 0.52.0, this complains about `strftime('%x')`. Annotating tokens in
 #    e.g. strftime would just be duplicating documentation.
