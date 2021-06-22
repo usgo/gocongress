@@ -118,7 +118,6 @@ GEM
       temple (>= 0.8.0)
       tilt
     hashdiff (1.0.1)
-    humanize (2.5.1)
     i18n (1.8.10)
       concurrent-ruby (~> 1.0)
     intl-tel-input-rails (12.3.0)
@@ -330,7 +329,6 @@ DEPENDENCIES
   factory_bot_rails
   ffi
   haml
-  humanize
   intl-tel-input-rails
   iso_country_codes
   jquery-rails
@@ -364,4 +362,4 @@ RUBY VERSION
    ruby 2.7.3p183
 
 BUNDLED WITH
-   2.2.16
+   2.2.20

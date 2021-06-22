@@ -1,10 +1,8 @@
 %h2 All Attendees
 
-%p 
-  There are
-  %strong
-    = @attendees.count < 10 ? @attendees.count.humanize : @attendees.count
-  total attendees.
+%p
+  There #{@attendees.length == 1 ? 'is' : 'are'}
+  %strong= usgc_pluralize(@attendees.length, 'total attendee') + '.'
 
 .pagination-controls= paginate @attendees
 
