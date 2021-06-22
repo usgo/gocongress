@@ -6,13 +6,9 @@ RSpec.describe "API", type: :request do
   context "as javascript" do
     describe "GET AGA Member Search" do
       it "returns a list of members for a text search" do
-        skip <<-EOS
-          Fails on CI. Probably because it makes an actual network connection
-          and thus depends on something like AGA_MEMBERS_API_KEY. Temporarily
-          skipping while we find a solution.
-        EOS
-
-        get "/api/mm/members/Nathanael", :params => {}
+        VCR.use_cassette('mm-members-Nathanael', match_requests_on: [:host, :path]) do
+          get "/api/mm/members/Nathanael", :params => {}
+        end
         parsed_body = JSON.parse(response.body)
 
         expect(parsed_body["success"]).to be true
@@ -20,13 +16,9 @@ RSpec.describe "API", type: :request do
       end
 
       it "returns a specific member for an ID" do
-        skip <<-EOS
-          Fails on CI. Probably because it makes an actual network connection
-          and thus depends on something like AGA_MEMBERS_API_KEY. Temporarily
-          skipping while we find a solution.
-        EOS
-
-        get "/api/mm/members/18202", :params => {}
+        VCR.use_cassette('mm-members-18202', match_requests_on: [:host, :path]) do
+          get "/api/mm/members/18202", :params => {}
+        end
         parsed_body = JSON.parse(response.body)
 
         expect(parsed_body["success"]).to be true
@@ -75,19 +67,16 @@ RSpec.describe "API", type: :request do
 
     describe "GET KGS Username" do
       it "returns a 200 status code for a username that does exist" do
-        skip <<-EOS.squish.freeze
-          Intermittently failing with "OpenURI::HTTPError: 503". We should
-          rewrite this test to avoid actual network operations, by using
-          rspec-mocks, or more advanced techniques like webmock or vcr.
-        EOS
-        get "/api/kgs/cloudbrows", :params => {}
-
+        VCR.use_cassette('kgs-cloudbrows') do
+          get "/api/kgs/cloudbrows", :params => {}
+        end
         expect(response).to have_http_status(:ok)
       end
 
       it "returns a 404 status code for a username that doesn't exist" do
-        get "/api/kgs/nosanepersonchoosethisname", :params => {}
-
+        VCR.use_cassette("kgs-nosanepersonchoosethisname") do
+          get "/api/kgs/nosanepersonchoosethisname", :params => {}
+        end
         expect(response).to have_http_status(:not_found)
       end
     end

@@ -6,5 +6,9 @@ VCR.configure do |c|
   c.hook_into :webmock
   c.configure_rspec_metadata!
   c.ignore_localhost = true
-  c.allow_http_connections_when_no_cassette = true
+
+  # Please, let's not allow actual HTTP connections ever again. They make the
+  # test suite slow and unreliable. Please write your tests to use VCR, plain
+  # WebMock, or just rspec-mocks.
+  c.allow_http_connections_when_no_cassette = false
 end
