@@ -27,8 +27,12 @@
   %li= link_to "Transactions", rpt_transaction_report_path
 
 %h3 Tournaments
-%ul
-  %li= link_to "U.S. Open Players Report", rpt_usopen_players_report_path
+- if @tournaments.size == 0
+  %p There are no tournament reports yet.
+- else
+  %ul
+    - @tournaments.each do |t|
+      %li= t.name
 
 %h3 Activities
 %ul

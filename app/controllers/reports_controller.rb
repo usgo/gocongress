@@ -1,6 +1,10 @@
 class ReportsController < ApplicationController
   include YearlyController
 
+  def index
+    @tournaments = Tournament.yr(@year).order(:ordinal, :name)
+  end
+
   # Callbacks
   before_action :deny_users_from_wrong_year
   before_action :authorize_read_report
