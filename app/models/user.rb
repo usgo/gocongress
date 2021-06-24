@@ -60,8 +60,14 @@ class User < ApplicationRecord
     where("(select count(*) from attendees a where a.user_id = users.id) = 0")
   }
 
+  # Class Methods
+  # -------------
   def self.email_range min, max
     where('lower(substr(email, 1, 1)) between ? and ?', min, max)
+  end
+
+  def self.confirmed
+    where.not(:confirmed_at => nil)
   end
 
   # Instance Methods
