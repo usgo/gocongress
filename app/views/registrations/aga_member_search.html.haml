@@ -45,7 +45,14 @@
 
     if (results.length) {
       displayResults(results)
+    } else {
+      displayNoResults();
     }
+  }
+
+  const displayNoResults = results => {
+    displaySearchingMessage(false);
+    searchResultsContainer.innerHTML = 'No results found.';
   }
 
   const displayResults = results => {
@@ -77,6 +84,7 @@
   // Toggle a "searching" message to make clear that something is happening once
   // a user types
   const displaySearchingMessage = (state = true) => {
+    searchResultsContainer.innerHTML = '';
     searchingMessage.classList.toggle('initially-hidden', !state);
   }
 
