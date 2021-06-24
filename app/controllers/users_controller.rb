@@ -57,7 +57,7 @@ class UsersController < ApplicationController
     else
       sort_order = "role = 'A' desc, role = 'S' desc"
     end
-    @users = @users.yr(@year).order(Arel.sql(sort_order)).includes(:attendees)
+    @users = @users.yr(@year).confirmed.order(Arel.sql(sort_order)).includes(:attendees)
   end
 
   def show
