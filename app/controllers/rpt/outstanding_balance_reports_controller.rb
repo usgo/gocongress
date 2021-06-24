@@ -2,7 +2,7 @@ class Rpt::OutstandingBalanceReportsController < Rpt::AbstractReportController
   def show
     # When generating invoices for multiple users, the `includes`
     # can really speed things up.
-    @users = User.yr(@year).includes([
+    @users = User.yr(@year).confirmed.includes([
       {
         :attendees => [
           { :attendee_activities => :activity },

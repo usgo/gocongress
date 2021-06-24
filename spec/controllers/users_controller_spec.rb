@@ -11,7 +11,13 @@ RSpec.describe UsersController, :type => :controller do
   render_views
 
   let(:user) { create :user }
-  let(:user_attributes) { { :email => "test@example.com", :password => "password", :password_confirmation => "password" } }
+  let(:user_attributes) {
+    {
+      :email => "test@example.com",
+      :password => "password",
+      :password_confirmation => "password"
+    }
+  }
   let(:wrong_year) { user.year - 1 }
   let(:year) { Time.zone.now.year }
 
