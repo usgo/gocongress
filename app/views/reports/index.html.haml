@@ -32,7 +32,7 @@
 - else
   %ul
     - @tournaments.each do |t|
-      %li= t.name
+      %li= link_to t.name, rpt_tournament_reports_path(id: t.id)
 
 %h3 Activities
 %ul
