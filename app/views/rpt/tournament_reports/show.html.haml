@@ -1,0 +1,28 @@
+%h2= @page_title
+
+- amnh = Attendee.model_name.human
+- xml_path = rpt_tournament_reports_path + '.xml'
+
+= form_tag(xml_path, :method => :get) do
+  %p.pull-right= submit_tag "Export"
+
+%p
+  There are
+  = pluralize(@players.count, amnh.downcase)
+  registered to play in the U.S. Open.
+
+%table.player-list
+  %thead
+    %tr
+      %th Player Name
+  %tbody
+  - @players.each do |player|
+    %tr
+      %td
+        = NameInflector.capitalize(player.given_name)
+        = NameInflector.capitalize(player.family_name)
+
+%h3 Export to XML
+%p Import into OpenGotha by selecting <strong>Tournament &rarr; Import &hellip; &rarr; Import Tournament From XML File</strong>.
+= form_tag(xml_path, :method => :get) do
+  %p= submit_tag "Export"
