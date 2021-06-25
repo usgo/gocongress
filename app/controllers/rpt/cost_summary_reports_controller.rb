@@ -2,7 +2,7 @@ class Rpt::CostSummaryReportsController < Rpt::AbstractReportController
   def show
     respond_to do |format|
       format.html do
-        @user_count = User.yr(@year).count
+        @user_count = User.yr(@year).confirmed.count
         @attendee_count = Attendee.yr(@year).count
       end
       format.csv do
