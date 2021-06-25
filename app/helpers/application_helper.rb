@@ -114,4 +114,8 @@ module ApplicationHelper
     v = cents_for_currency_field(cents)
     builder.number_field atr, min: 0, size: 5, step: 0.01, value: v
   end
+
+  def slugify str, separator = '-'
+    str.downcase.strip.gsub(' ', separator).gsub(/[^\w-]/, '')
+  end
 end
