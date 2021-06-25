@@ -82,7 +82,8 @@ class UsersController < ApplicationController
 
   # edit form is meant for admins only, hence the custom cancan action name
   def edit
-    authorize! :admin_edit, @user
+    @attendee = Attendee.find(params[:id])
+    authorize! :admin_edit, @attendee
   end
 
   def update
