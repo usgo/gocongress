@@ -147,7 +147,7 @@ Gocongress::Application.routes.draw do
           end
 
           constraints :format => /(xml)?/ do
-            resource :usopen_players_report, :only => :show
+            get 'tournament/:id', to: 'tournament_reports#show', as: 'tournament_reports'
           end
         end
 
