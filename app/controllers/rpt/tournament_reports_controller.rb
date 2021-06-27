@@ -25,7 +25,7 @@ class Rpt::TournamentReportsController < Rpt::AbstractReportController
 
   def self_promoter(player, rating)
     rating = rating.to_f
-    rating = player.rank < 1 ? rating.ceil() : rating.floor()
+    rating = player.rank < 1 ? rating.ceil : rating.floor
 
     return player.rank > rating
   end
