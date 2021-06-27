@@ -1,4 +1,6 @@
 class AttendeeTournament < ApplicationRecord
+  include YearlyModel
+
   belongs_to :attendee
   belongs_to :tournament
 

@@ -5,7 +5,7 @@
     .field-help-text
       = link_to 'What is my AGA rank?', '#', :id => 'open_dialog_rank'
 
-  = hidden_field_tag :aga_id
+  = hidden_field_tag :aga_id, @registration.aga_id
 
 .dialog#dialog_rank{:title => "What is my AGA Rank?"}
   %p

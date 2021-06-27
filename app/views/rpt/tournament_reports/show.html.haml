@@ -1,18 +1,17 @@
--#%h2= page_title
-%h2 U.S. Open Players Report
+%h2= @page_title
 
 - amnh = Attendee.model_name.human
-- xml_path = rpt_usopen_players_report_path + '.xml'
+- xml_path = rpt_tournament_reports_path + '.xml'
 
 = form_tag(xml_path, :method => :get) do
   %p.pull-right= submit_tag "Export"
 
 %p
   There are
-  = pluralize(@players.count, amnh.downcase)
+  = usgc_pluralize(@players.count, amnh.downcase)
   registered to play in the U.S. Open.
 
-%table.player-list
+%table.player-list.semantic
   %thead
     %tr
       %th Player Name
@@ -29,13 +28,13 @@
         = NameInflector.capitalize(player.family_name)
         - if player.aga_id
           (#{link_to "#{player.aga_id}", "http://agagd.usgo.org/player/#{player.aga_id}"})
-      %td= player.rank_name
-      %td= aga_info ? aga_info[:rating] : '-'
-      %td= aga_info ? aga_info[:last_rated_on] : '-'
-      %td
-        - if aga_info
-          - if self_promoter(player, aga_info[:rating])
-            Self-promoted
+        %td= player.rank_name
+        %td= aga_info ? aga_info[:rating] : '-'
+        %td= aga_info ? aga_info[:last_rated_on] : '-'
+        %td
+          - if aga_info
+            - if self_promoter(player, aga_info[:rating])
+              Self-promoted
 
 %h3 Export to XML
 %p Import into OpenGotha by selecting <strong>Tournament &rarr; Import &hellip; &rarr; Import Tournament From XML File</strong>.
