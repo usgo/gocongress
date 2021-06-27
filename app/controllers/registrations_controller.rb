@@ -15,9 +15,9 @@ class RegistrationsController < ApplicationController
   end
 
   def create
-    attendee = Attendee.new
-    attendee.user = User.find(params[:user_id] || current_user.id)
-    attendee.year = @year.year
+    user = User.find(params[:user_id] || current_user.id)
+    aga_id = params[:aga_id].presence
+    attendee = build_attendee(user, aga_id)
     authorize! :create, attendee
     @registration = Registration.new(current_user, attendee)
     expose_legacy_form_vars # TODO: don't!
