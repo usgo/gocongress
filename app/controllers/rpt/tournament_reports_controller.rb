@@ -1,6 +1,8 @@
 require 'open-uri'
 
 class Rpt::TournamentReportsController < Rpt::AbstractReportController
+  helper_method :self_promoter
+
   def show
     @tournament = Tournament.yr(@year).find(params[:id])
     @page_title = @tournament.name
@@ -19,6 +21,13 @@ class Rpt::TournamentReportsController < Rpt::AbstractReportController
         send_data xml, filename: xml_filename, type: 'text/xml'
       end
     end
+  end
+
+  def self_promoter(player, rating)
+    rating = rating.to_f
+    rating = player.rank < 1 ? rating.ceil() : rating.floor()
+
+    return player.rank > rating
   end
 
   def xml_filename
