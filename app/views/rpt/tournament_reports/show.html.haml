@@ -9,7 +9,7 @@
 %p
   There are
   = usgc_pluralize(@players.count, amnh.downcase)
-  registered to play in the U.S. Open.
+  registered to play in the #{@tournament.name} tournament.
 
 %table.player-list.semantic
   %thead
