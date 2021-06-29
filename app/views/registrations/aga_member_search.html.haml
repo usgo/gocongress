@@ -42,6 +42,12 @@
     const response = await fetch(url, options);
     const { payload } = await response.json();
 
+    // Make sure the payload is not null that there is a connection to the API.
+    if (null === payload) {
+      displayConnectionError()
+      return;
+    }
+
     const results = payload.rows || [payload.row];
 
     if (results.length) {
@@ -49,6 +55,11 @@
     } else {
       displayNoResults();
     }
+  }
+
+  const displayConnectionError = () => {
+      displaySearchingMessage(false);
+      searchResultsContainer.innerHTML = 'Cannot Connect to the API.';
   }
 
   const displayNoResults = results => {
