@@ -4,6 +4,8 @@
       All times are #{Time.zone}
       %br
     Content &copy; #{@year.year} U.S. Go Congress
+  .github
+    %a{:href => "https://github.com/usgo/gocongress/"}= image_tag "logo/social/GitHub-Mark-32px.png"
   .sponsors
     - @year.sponsors.each do |name,url|
       %a{:href => url}= image_tag "sponsors/#{name}.jpg"

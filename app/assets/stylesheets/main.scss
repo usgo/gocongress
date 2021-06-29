@@ -883,6 +883,13 @@ fieldset.wordy-questions .aligned-with-input {
       basis: auto;
     }
   }
+
+  .github {
+    display: flex;
+    padding: 0 ($spacing-unit / 2);
+    align-items: center;
+    justify-content: center;
+  }
 }
 
 input[type="submit"],
