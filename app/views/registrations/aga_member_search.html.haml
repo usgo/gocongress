@@ -30,6 +30,7 @@
   // Search the AGA Members app for either a name or ID
   const searchMembers = async () => {
     if (!input.value) {
+      displaySearchingMessage(false);
       return;
     }
 
