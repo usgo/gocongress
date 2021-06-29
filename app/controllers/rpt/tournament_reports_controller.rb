@@ -7,7 +7,7 @@ class Rpt::TournamentReportsController < Rpt::AbstractReportController
     @tournament = Tournament.yr(@year).find(params[:id])
     @page_title = @tournament.name
 
-    @players = @tournament.attendees
+    @players = @tournament.attendees.where(:cancelled => false)
 
     @aga_member_info = AgaTdList.data
 
