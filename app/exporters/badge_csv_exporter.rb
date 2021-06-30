@@ -2,7 +2,7 @@ class BadgeCsvExporter
   # Order of columns must match `header_array`
   def self.attendee_array atnd
     # Get AGA Info from TD List
-    aga_info = AgaTdList.data(atnd.aga_id)
+    aga_info = AGATDList.data(atnd.aga_id)
 
     [
       atnd.alternate_name,

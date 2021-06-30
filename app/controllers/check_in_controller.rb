@@ -22,8 +22,8 @@ class CheckInController < ApplicationController
 
   def show
     @attendee = Attendee.yr(@year).find(params[:id])
-    @aga_info = AgaTdList.data(@attendee.aga_id)
-    @current_aga = AgaTdList.current(@attendee.aga_id)
+    @aga_info = AGATDList.data(@attendee.aga_id)
+    @current_aga = AGATDList.current(@attendee.aga_id)
     @user = @attendee.user
 
     @balance = @user.balance
@@ -44,7 +44,7 @@ class CheckInController < ApplicationController
 
   def refresh_aga_td_list
     # Refresh the cache manually
-    AgaTdList.refresh()
+    AGATDList.refresh()
     redirect_back(fallback_location: check_in_path, :notice => "AGA TD List refreshed.")
   end
 
@@ -70,7 +70,7 @@ class CheckInController < ApplicationController
 
     # Check for current AGA Membership
     # Deactivated due to AGA Membership issues!
-    # if (!AgaTdList.current(attendee.aga_id))
+    # if (!AGATDList.current(attendee.aga_id))
     #   cleared = false
     # end
 

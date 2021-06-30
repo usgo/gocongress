@@ -13,4 +13,5 @@
 ActiveSupport::Inflector.inflections(:en) do |inflect|
   inflect.acronym 'AGA' # American Go Association
   inflect.acronym 'MM' # Membership Manager
+  inflect.acronym 'TD' # Tournament Director
 end
