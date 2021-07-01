@@ -162,8 +162,21 @@
       otherInputs.forEach(input => input.value = event.target.value)
     };
 
+    // Select this tournament, if it's not already selected. Typing a username
+    // indicates a desire to be part of it!
+    const selectThisTournament = event => {
+      const tournament = event.currentTarget.closest('.tournament-registration');
+      const checkbox = tournament.querySelector('[type="checkbox"]');
+      if (!checkbox.checked) {
+        checkbox.checked = true;
+      }
+    }
+
     usernameInputs.forEach(usernameInput => {
-      usernameInput.addEventListener('keyup', updateOtherInputs);
-      // Make sure not to fire requests to validating servers to frequently
-      usernameInput.addEventListener('keyup', debounce(validateUsername, 500));
+      usernameInput.addEventListener('keyup', event => {
+        selectThisTournament(event);
+        updateOtherInputs(event);
+        // Make sure not to fire requests to validating servers to frequently
+        debounce(validateUsername, 500)(event);
+      });
     });
