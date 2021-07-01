@@ -26,16 +26,19 @@ left join (
 ) plan_count on plan_count.attendee_id = attendees.id
 
 where attendees.year = :year and attendees.cancelled = false
-  and (:event_type like 'online' or (
+  and (
+    (
+    -- Online Congresses:
+      :event_type like 'online'
+    ) or (
+
+    -- In-person Congresses:
 
     -- must have at least one plan
     plan_count.n > 0
 
     -- credits minus debits must be at least $70
     and coalesce(credits.total, 0) - coalesce(debits.total, 0) >= 7000
-
-    -- exclude attendees under eighteen
-    and attendees.birth_date < (:congress_start_date::date - interval '18 years')
 
     -- exclude cancelled attendees
     and not exists (

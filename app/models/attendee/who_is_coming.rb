@@ -5,13 +5,14 @@
 # query that runs in ~8ms. I put the SQL in a separate file for
 # syntax highlighting. -Jared 2013-03-21
 
-class Attendee::WhoIsComing
+class Attendee::WhoIsComing < ApplicationController
   DEFAULT_ORDER = 'rank = 0, rank desc'
   SORTABLE_COLUMNS = %w[given_name family_name rank created_at country]
 
   attr_reader :attendees
 
   def initialize year, event_type = 'in-person', sort = nil, direction = 'asc'
+    super()
     @year = year
     @event_type = event_type
     @sort = sort
@@ -41,6 +42,32 @@ class Attendee::WhoIsComing
 
   def unregistered_count
     Attendee.yr(@year).count - @attendees.count - Attendee.yr(@year).attendee_cancelled.count
+  end
+
+  def minor_count
+    @attendees.select(&:minor?).length
+  end
+
+  def public_list
+    @attendees.reject(&:minor?)
+  end
+
+  def summary_sentence
+    # Construct a summary sentence with correct grammar and punctuation for a
+    # list with a variable number of items.
+    summary_components = [
+      "There are #{helpers.usgc_pluralize(count,
+        '')} people registered, including "\
+      + helpers.usgc_pluralize(kyu_count, 'kyu player'),
+      helpers.usgc_pluralize(dan_count, 'dan player'),
+      helpers.usgc_pluralize(minor_count, 'minor') + ' (not listed below)'
+    ]
+
+    if pro_count > 0
+      summary_components.push(ActionController::Base.helpers.usgc_pluralize(pro_count, 'pro'))
+    end
+
+    summary_components.to_sentence + '.'
   end
 
   private

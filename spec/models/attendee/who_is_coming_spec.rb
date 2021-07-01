@@ -15,7 +15,7 @@ RSpec.describe Attendee::WhoIsComing, :type => :model do
       expect(Attendee::WhoIsComing.new(a.year).attendees).not_to include(a)
     end
 
-    it 'excludes attendees under eighteen' do
+    it 'excludes attendees under eighteen from the public list' do
       p1 = create :plan, price: 10000
 
       u = create :user
@@ -31,10 +31,22 @@ RSpec.describe Attendee::WhoIsComing, :type => :model do
       child.plans << p1
 
       create :tr_sale, amount: 40000, user: u
-      # Include the adult
-      expect(Attendee::WhoIsComing.new(adult.year).attendees).to include(adult, old_enough)
-      # Exclude the children
-      expect(Attendee::WhoIsComing.new(adult.year).attendees).not_to include(not_old_enough, child)
+
+      # Regular list includes the adult
+      expect(Attendee::WhoIsComing.new(adult.year, 'in-person').attendees).to include(adult, old_enough)
+      expect(Attendee::WhoIsComing.new(adult.year, 'online').attendees).to include(adult, old_enough)
+
+      # Public list includes the adult
+      expect(Attendee::WhoIsComing.new(adult.year, 'in-person').public_list).to include(adult, old_enough)
+      expect(Attendee::WhoIsComing.new(adult.year, 'online').public_list).to include(adult, old_enough)
+
+      # Regular list includes the minors
+      expect(Attendee::WhoIsComing.new(adult.year, 'in-person').attendees).to include(not_old_enough, child)
+      expect(Attendee::WhoIsComing.new(adult.year, 'online').attendees).to include(not_old_enough, child)
+
+      # Public list EXCLUDES the minors
+      expect(Attendee::WhoIsComing.new(adult.year, 'in-person').public_list).not_to include(not_old_enough, child)
+      expect(Attendee::WhoIsComing.new(adult.year, 'online').public_list).not_to include(not_old_enough, child)
     end
 
     it 'returns attendees of users that paid at least $70 and have at least one plan' do

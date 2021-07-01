@@ -9,21 +9,17 @@
 - else
   - if @who_is_coming.count > 0
     %p
-      There are #{ @who_is_coming.count } people registered, including
-      #{@who_is_coming.kyu_count} kyu players, #{@who_is_coming.dan_count} dan
-      players, and #{pluralize(@who_is_coming.pro_count, 'pro')}.
+      = @who_is_coming.summary_sentence
 
       - if @who_is_coming.unregistered_count > 0
         :plain
-          Also, #{@who_is_coming.unregistered_count} other people have not finished
+          Also, #{usgc_pluralize(@who_is_coming.unregistered_count)} other people have not finished
           their registration.
       
       - if @year.event_type == "in-person"
         :plain
           A payment of at least $70 must be made before attendees of an account
           can appear on this list.
-      
-      Attendees under the age of eighteen (18) will not appear on this list.
 
     - unless anyone_signed_in?
       %p
@@ -38,7 +34,7 @@
             - drn = (c == params[:sort]) ? @who_is_coming.opposite_direction : :asc
             %th= link_to trl_attr(:attendee, c), :sort => c, :direction => drn
       %tbody
-        - @who_is_coming.attendees.each_with_index do |a,i|
+        - @who_is_coming.public_list.each_with_index do |a,i|
           %tr{:class => if a.anonymous then "understated" end }
             %td= i + 1
             %td= a.given_name_anonymized
