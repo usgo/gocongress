@@ -12,6 +12,7 @@ en:
       locked: 'Your account is locked.'
       invalid: 'Invalid email or password.  Or perhaps you are trying to use an account from last year?'
       invalid_token: 'Invalid authentication token.'
+      not_found_in_database: 'Invalid email or password.  Or perhaps you are trying to use an account from last year?'
       timeout: 'Your session expired, please sign in again to continue.'
       inactive: 'Your account was not activated yet.'
     sessions:
