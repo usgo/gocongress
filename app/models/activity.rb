@@ -9,10 +9,6 @@ class Activity < ApplicationRecord
   validates :activity_category, :presence => true
   validates_presence_of :leave_time, :name, :return_time
   validates :location, :length => { :maximum => 50 }
-  validates :notes, :length => {
-    :maximum => 2000,
-    :message => "are too long (maximum is 2000 characters)"
-  }
   validates :phone, :length => { :maximum => 20 }
   validates :price, :numericality => {
     :equal_to => 0,

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_30_025357) do
+ActiveRecord::Schema.define(version: 2021_07_01_195219) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,7 +20,7 @@ ActiveRecord::Schema.define(version: 2021_06_30_025357) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "leave_time"
-    t.string "notes", limit: 2000
+    t.text "notes"
     t.time "return_time"
     t.integer "year", null: false
     t.string "location", limit: 50
