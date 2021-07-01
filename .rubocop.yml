@@ -4,6 +4,7 @@ AllCops:
   Exclude:
     - '.git/**/*'
     - 'bin/**/*'
+    - db/schema.rb
     - 'node_modules/**/*'
     - 'tmp/**/*'
     - 'vendor/**/*'
@@ -62,6 +63,10 @@ Naming/MethodParameterName:
 # 3. Annotation is not necessary in format strings with small numbers of tokens.
 Style/FormatStringToken:
   Enabled: false
+
+Style/GlobalStdStream:
+  Exclude:
+    - config/environments/production.rb
 
 Style/NumericLiterals:
   Exclude:

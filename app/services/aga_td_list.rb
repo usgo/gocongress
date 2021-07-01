@@ -1,6 +1,6 @@
 require 'open-uri'
 
-class AgaTdList
+class AGATDList
   CACHE_KEY = 'aga_td_list'
 
   def self.data(ids = nil)

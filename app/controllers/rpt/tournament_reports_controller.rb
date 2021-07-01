@@ -9,7 +9,7 @@ class Rpt::TournamentReportsController < Rpt::AbstractReportController
 
     @players = @tournament.attendees.where(:cancelled => false)
 
-    @aga_member_info = AgaTdList.data
+    @aga_member_info = AGATDList.data
 
     respond_to do |format|
       format.html do
