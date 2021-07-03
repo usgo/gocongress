@@ -16,6 +16,7 @@ only has autocomplete, datepicker, and dialog. -Jared 2012-07-09 */
 //= require intlTelInput
 //= require libphonenumber/utils
 //= require editable_texts
+//= require email_lists
 
 /* TODO: We only need the galleria stuff on the homepage. Hiding
 this on other pages could improve page speed -Jared 2011.2.3 */

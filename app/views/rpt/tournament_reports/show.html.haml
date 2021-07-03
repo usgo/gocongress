@@ -40,3 +40,8 @@
 %p Import into OpenGotha by selecting <strong>Tournament &rarr; Import &hellip; &rarr; Import Tournament From XML File</strong>.
 = form_tag(xml_path, :method => :get) do
   %p= submit_tag "Export"
+
+%h3 Registered Attendee Emails
+.email-list
+  %textarea#attendee_emails{:'data-emails' => @players.map { |p| p.formatted_email }.join(', ')}
+    = @players.map { |p| p.formatted_email }.join(', ')
