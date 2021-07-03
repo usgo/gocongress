@@ -225,6 +225,10 @@ class Attendee < ApplicationRecord
     respect_anonymity ? anonymize(name) : name
   end
 
+  def formatted_email
+    "\"#{self.full_name}\" <#{self.email}>"
+  end
+
   def plan_count
     plans.count
   end

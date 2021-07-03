@@ -1,0 +1,33 @@
+// Place all the styles related to the EditableTexts controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: https://sass-lang.com/
+
+.email-list {
+  width: 100%;
+  max-width: 600px;
+  textarea {
+    box-sizing: border-box;
+    height: 200px;
+    width: 100%;
+  }
+
+  .controls {
+    display: flex;
+  }
+
+  .separator-control {
+    margin-right: auto;
+    input {
+      width: 25px;
+    }
+  }
+
+  button {
+    &.copied {
+      background-color: green;
+      &:after {
+        content: ' ✓'
+      }
+    }
+  }
+}
