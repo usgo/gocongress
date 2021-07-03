@@ -27,7 +27,9 @@ function setUpEmailList(list) {
   separatorInput.addEventListener("keyup", () => {
     textarea.value = textarea.dataset.emails.replace(
       /, /g,
-      separatorInput.value
+      // The "replace" unescapes the newline separator so that \n can be used to
+      // put emails on their own lines
+      separatorInput.value.replace(/\\n/g, "\n")
     );
   });
 
