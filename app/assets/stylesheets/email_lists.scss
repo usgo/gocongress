@@ -30,4 +30,11 @@
       }
     }
   }
+
+  .help-text {
+    margin: 1em 0;
+    code {
+      color: hsl(300, 100%, 50%);
+    }
+  }
 }

@@ -49,5 +49,11 @@ function setUpEmailList(list) {
   controls.appendChild(separatorControl);
   controls.appendChild(copyButton);
 
+  const helpText = document.createElement("div");
+  helpText.classList.add("help-text");
+  helpText.innerHTML =
+    "Use the separator to control how the list is formatted; email clients differ in what they need. You can also use <code>\\n</code> to separate each email with a new line.";
+
   list.appendChild(controls);
+  list.appendChild(helpText);
 }
