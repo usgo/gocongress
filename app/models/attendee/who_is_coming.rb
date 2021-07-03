@@ -64,7 +64,7 @@ class Attendee::WhoIsComing < ApplicationController
     ]
 
     if pro_count > 0
-      summary_components.push(ActionController::Base.helpers.usgc_pluralize(pro_count, 'pro'))
+      summary_components.push(helpers.usgc_pluralize(pro_count, 'pro'))
     end
 
     summary_components.to_sentence + '.'
