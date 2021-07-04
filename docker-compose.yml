@@ -1,0 +1,64 @@
+version: "3.9"
+
+services:
+  _postgres_app_database: &postgres_app_database
+    image: postgres:9.4.4
+    environment:
+      POSTGRES_USER: gocongress_app
+      POSTGRES_PASSWORD: gocongress
+  _postgres_test_database: &postgres_test_database
+    image: postgres:9.4.4
+    environment:
+      POSTGRES_USER: gocongress_test
+      POSTGRES_PASSWORD: gocongress
+  app:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+      args:
+        RUBY_VERSION: '2.7.3'
+        BUNDLER_VERSION: '2.20.20'
+    environment:
+      DATABASE_HOST: app_database
+      DATABASE_NAME: gocongress_app
+      DATABASE_USER: gocongress_app
+      DATABASE_PASSWORD: gocongress
+      DATABASE_POOL_SIZE: 5
+      DATABASE_TIMEOUT: 5000
+    command: bash -c "bundle exec rails db:environment:set RAILS_ENV=development && bundle exec rake db:setup && bundle exec rails server -b '0.0.0.0'"
+    volumes: 
+      - .:/app
+    ports:
+      - "3000:3000"
+    depends_on:
+      - app_database
+  app_database:
+    <<: *postgres_app_database
+    volumes:
+      - app_database_volume:/var/lib/postgresql/data
+  test:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+      args:
+        RUBY_VERSION: '2.7.3'
+        BUNDLER_VERSION: '2.20.20'
+    environment:
+      DATABASE_HOST: test_database
+      DATABASE_NAME: gocongress_test
+      DATABASE_USER: gocongress_test
+      DATABASE_PASSWORD: gocongress
+      DATABASE_POOL_SIZE: 5
+      DATABASE_TIMEOUT: 5000
+    command: bash -c "bundle exec rake db:setup && bundle exec rake db:test:prepare"
+    volumes: 
+      - .:/app
+    depends_on:
+      - test_database
+  test_database:
+    <<: *postgres_test_database
+    volumes:
+      - test_database_volume:/var/lib/postgresql/data
+volumes:
+  app_database_volume:
+  test_database_volume:
