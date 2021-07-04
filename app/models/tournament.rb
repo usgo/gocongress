@@ -64,6 +64,6 @@ class Tournament < ApplicationRecord
   end
 
   def server_name
-    SERVERS[self.server.to_sym][:name]
+    self.server ? SERVERS[self.server.to_sym][:name] : ""
   end
 end
