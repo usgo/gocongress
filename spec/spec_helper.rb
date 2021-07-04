@@ -1,4 +1,5 @@
 require 'simplecov'
+SimpleCov.minimum_coverage 81
 SimpleCov.start 'rails'
 
 require 'webmock/rspec'
