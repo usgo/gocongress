@@ -17,44 +17,23 @@ a pull request is a great way to become part of the team.
 
 1. Prerequisites
    1. Linux (eg. [Ubuntu][15] 16.04+) or Mac OS 10.8+
+   1. Docker and Docker Compose Installed (see [Getting Started with Docker][23] for detailed instructions)
    1. Proficiency with [git][13] and [sql][14]
    1. Read [Getting Started with Rails][16]
    1. [Fork and clone][8] this github repo
-1. Install the Ruby version specified in `.ruby-version`.
-   - Use [rbenv][9] or [compile from source][10]
-1. Install [PostgreSQL 9.4.4+][5]
-   1. Practice connecting using the command-line client, `psql`
-      - ["permission denied"][3]
-      - [Client Connection Problems][4]
-   1. Make sure you have a [role][19] that can create tables
-1. App dependencies
-   1. Install a js runtime
-      - macs come with [JavaScriptCore][20] (part of webkit)
-      - linux or mac: [node][11] (`apt-get nodejs`)
-   1. Install [ImageMagick][22] CLI
-      - eg. `brew install imagemagick`
-      - Make sure CLI tools are on your PATH with eg. `which convert`
-   1. Install ruby [gems][21] using [bundler][12]
-      1. `gem install bundler --version '1.17'`
-      1. `bundle install`
-      1. If a gem fails to install, it may be missing native libraries
-         1. [nokogiri][17] needs libxml2 and libxslt
-         1. [pg][18] needs libpq-dev
 1. App configuration
    1. [Configure rails to talk to your database][6]
       1. `cp config/database.example.yml config/database.yml`
    1. `cp .env.example .env` (see Configuration below)
-   1. If all is well, `bin/rake -T` should list rake tasks
+   1. If all is well, `docker-compose run test rake -T` should list rake tasks
 1. Run the App locally
-   1. Run the script and answer the prompts: `rails runner script/admin_tasks/create_user.rb`
-   1. Run the app: `rails server`
+   1. Run the script and answer the prompts: `./script/admin_tasks/create_user_with_docker.rb`
+   1. Run the app: `docker-compose up app`
    1. Open the app in your browser: `http://localhost:3000`
    1. Sign in using the email and password you provided for your new user
    1. Do some developing!
 1. Run the tests
-   1. `bin/rails db:setup`
-   1. `bin/rails db:test:prepare`
-   1. `bin/rake` will run the tests. If they all pass, you're good to go.
+   1. `docker-compose run test rake` will run the tests. If they all pass, you're good to go.
 1. Submit your contribution
    1. Write a [spec][7] that describes your contribution
    1. Push your changes to your [fork][8] on github
@@ -125,3 +104,4 @@ Special thanks to Rex Cristal, for taking over maintenance of the site from
 [20]: http://trac.webkit.org/wiki/JavaScriptCore
 [21]: http://guides.rubygems.org/
 [22]: https://imagemagick.org/
+[23]: https://docs.docker.com/get-docker/
