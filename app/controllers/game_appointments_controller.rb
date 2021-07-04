@@ -10,7 +10,6 @@ class GameAppointmentsController < ApplicationController
 
   def index
     @game_appointments = GameAppointment.all
-    @import = GameAppointment::Import.new
     if @game_appointments.length.zero?
       flash[:alert] = 'You have no game appointments. Create one now to get started.'
     end
