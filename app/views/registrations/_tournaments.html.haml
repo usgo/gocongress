@@ -51,6 +51,7 @@
     const usernameInputs = document.querySelectorAll("[class^='registration_username']");
 
     const onValid = (input, statusElement, message = 'Username found &check;') => {
+      input.classList.remove('invalid');
       input.classList.add('valid');
       statusElement.innerHTML = message;
     }
@@ -176,7 +177,8 @@
       usernameInput.addEventListener('keyup', event => {
         selectThisTournament(event);
         updateOtherInputs(event);
-        // Make sure not to fire requests to validating servers to frequently
-        debounce(validateUsername, 500)(event);
       });
+
+      // Make sure not to fire requests to validating servers to frequently
+      usernameInput.addEventListener('keyup', debounce(validateUsername, 500));
     });
