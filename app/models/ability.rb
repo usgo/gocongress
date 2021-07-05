@@ -54,7 +54,7 @@ class Ability
     end
 
     # Admins and Staff share a few special abilities
-    if user.admin? or user.role == 'S' or user.director? then
+    if %w[D S U].include?(user.role) then
       can :print_official_docs, User, :year => user.year
       can :check_in, :attendee
       can :read, :report
