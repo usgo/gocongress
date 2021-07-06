@@ -3,11 +3,13 @@ version: "3.9"
 services:
   _postgres_app_database: &postgres_app_database
     image: postgres:9.4.4
+    command: ["postgres", "-c", "log_destination=stderr"]
     environment:
       POSTGRES_USER: gocongress_app
       POSTGRES_PASSWORD: gocongress
   _postgres_test_database: &postgres_test_database
     image: postgres:9.4.4
+    command: ["postgres", "-c", "log_destination=stderr"]
     environment:
       POSTGRES_USER: gocongress_test
       POSTGRES_PASSWORD: gocongress
