@@ -13,7 +13,7 @@ RSpec.describe TournamentsController, :type => :controller do
 
     it "assigns only this year's tournaments" do
       t = create(:tournament, :year => Date.current.year)
-      x = create(:tournament, :year => 1.year.ago.year)
+      create(:tournament, :year => 1.year.ago.year)
       get :index, params: { year: Date.current.year }
       expect(assigns(:tournaments).length).to eq(1)
       expect(assigns(:tournaments)).to eq([t])

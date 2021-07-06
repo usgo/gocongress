@@ -37,7 +37,7 @@ RSpec.describe Rpt::TshirtReportsController, :type => :controller do
       }
 
       # This attendee has no plan -- they shouldn't be included
-      new_attendee = create :attendee, :tshirt_size => 'AL'
+      create :attendee, :tshirt_size => 'AL'
 
       get :show, format: 'html', params: { year: staff.year }
 

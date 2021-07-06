@@ -7,7 +7,7 @@ RSpec.describe DailyPlanCsvExporter do
       csd = CONGRESS_START_DATE[year]
       p1 = create :plan, daily: true, name: 'Plan 1'
       p2 = create :plan, daily: true, disabled: false, name: 'Plan 2'
-      p3 = create :plan, daily: false
+      create :plan, daily: false # p3
       a1 = create :attendee, alternate_name: 'Alternate Name'
       a1ap1 = create :attendee_plan, attendee: a1, plan: p1
       a1ap2 = create :attendee_plan, attendee: a1, plan: p2

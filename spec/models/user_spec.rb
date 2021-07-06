@@ -22,8 +22,7 @@ RSpec.describe User, :type => :model do
 
   describe "attendeeless scope" do
     it "returns only users with no attendees" do
-      a1 = create :attendee
-      u1 = a1.user
+      create :attendee
       u2 = create :user
       expect(u2.attendees).to be_empty
       expect(User.attendeeless).to eq([u2])

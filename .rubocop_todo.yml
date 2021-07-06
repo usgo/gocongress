@@ -72,10 +72,6 @@ Lint/UselessAccessModifier:
     - 'lib/name_inflector.rb'
     - 'script/dba/restore_all_fkc.rb'
 
-# Offense count: 25
-Lint/UselessAssignment:
-  Enabled: false
-
 # Offense count: 38
 # Configuration parameters: IgnoredMethods, CountRepeatedAttributes.
 Metrics/AbcSize:

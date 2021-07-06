@@ -149,7 +149,7 @@ RSpec.shared_examples "an admin controller" do |model_name|
     # `event_id` as part of the `plan_category` hash. Recursively
     # merge the extra params using `deep_merge` gem.
     if respond_to? :extra_params_for_create
-      p = p.deep_merge extra_params_for_create
+      p.deep_merge extra_params_for_create
     end
   end
 

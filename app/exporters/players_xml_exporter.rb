@@ -1,7 +1,7 @@
 # Export Players XML for OpenGotha import
 class PlayersXmlExporter
   def self.open_gotha_rank(rank_name)
-    open_gotha_rank = rank_name.gsub(/ kyu/, 'K').gsub(/ dan/, 'D')
+    rank_name.gsub(/ kyu/, 'K').gsub(/ dan/, 'D')
   end
 
   def self.open_gotha_rating(rank)
@@ -10,9 +10,8 @@ class PlayersXmlExporter
     if rank > 0
       rank -= 1
     end
-
     base_rating = -900
-    open_gotha_rating = base_rating + ((30 + rank) * 100)
+    base_rating + ((30 + rank) * 100)
   end
 
   def self.render_player(player, aga_info)

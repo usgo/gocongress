@@ -107,7 +107,7 @@ RSpec.describe RegistrationsController, :type => :controller do
       end
 
       it "minors can specify the name of their guardian" do
-        uncle_creepypants = create(:attendee, :birth_date => 50.years.ago)
+        create(:attendee, :birth_date => 50.years.ago) # Uncle Creepypants
         attrs = attendee_attributes.merge(:user_id => user.id)
         attrs[:birth_date] = CONGRESS_START_DATE[Time.now.year] - 10.years
         attrs[:guardian_full_name] = "Mommy Moo"
@@ -159,7 +159,7 @@ RSpec.describe RegistrationsController, :type => :controller do
         attendee.plans << plan
         expect(attendee.get_plan_qty(plan.id)).to eq(1)
 
-        plan2 = create :plan,
+        create :plan,
           :disabled => true,
           :name => "Plan Deux", :plan_category => plan.plan_category
 

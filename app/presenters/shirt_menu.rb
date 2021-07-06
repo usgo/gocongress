@@ -14,7 +14,7 @@ class ShirtMenu
 
   def self.options shirt_set, selected_shirt_id
     options_from_collection_for_select(
-      shirt_set, :id, :name, selected = selected_shirt_id
+      shirt_set, :id, :name, selected_shirt_id
     )
   end
 

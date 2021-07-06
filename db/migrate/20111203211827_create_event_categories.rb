@@ -20,7 +20,7 @@ class CreateEventCategories < ActiveRecord::Migration
     # be separate categories.  For now, put all the events in
     # the former category.  We'll move them later.
     ec_events = EventCategory.create!(name: "Events", year: 2012)
-    ec_activities = EventCategory.create!(name: "Activities", year: 2012)
+    EventCategory.create!(name: "Activities", year: 2012)
     Event.update_all({ event_category_id: ec_events.id }, { year: 2012 })
 
     # index for performance
