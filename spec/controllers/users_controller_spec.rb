@@ -172,7 +172,7 @@ RSpec.describe UsersController, :type => :controller do
         attrs = user_attributes.merge(role: 'A')
         expect {
           patch :update, params: { id: user.id, user: attrs, year: user.year }
-        }.to_not change { user.reload.role }
+        }.to_not(change { user.reload.role })
       end
 
       context 'when updating own email address' do
@@ -217,7 +217,7 @@ RSpec.describe UsersController, :type => :controller do
     it 'can #create' do
       expect {
         post :create, params: { user: user_attributes, year: year }
-      }.to_not change { User.yr(year).count }
+      }.to_not(change { User.yr(year).count })
       expect(response).to be_forbidden
     end
 
@@ -289,7 +289,7 @@ RSpec.describe UsersController, :type => :controller do
     it 'can #create' do
       expect {
         post :create, params: { user: user_attributes, year: year }
-      }.to change { User.yr(year).count }.by(+1)
+      }.to(change { User.yr(year).count }.by(+1))
       expect(response).to redirect_to users_path
     end
 
@@ -347,14 +347,14 @@ RSpec.describe UsersController, :type => :controller do
             user: { password: new_pw },
             year: user.year
           }
-        }.to change { user.reload.encrypted_password }
+        }.to(change { user.reload.encrypted_password })
       end
 
       it "cannot update user year" do
         u = { 'year' => user.year + 1 }
         expect {
           patch :update, params: { id: user.id, user: user_attributes.merge(u), year: user.year }
-        }.to_not change { user.reload.year }
+        }.to_not(change { user.reload.year })
       end
     end
   end

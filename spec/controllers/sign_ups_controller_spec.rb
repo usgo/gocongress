@@ -54,7 +54,7 @@ RSpec.describe SignUpsController, :type => :controller do
       it "does not create a user" do
         expect {
           attempt_to_create_invalid_user
-        }.to_not change { User.count }
+        }.to_not(change { User.count })
       end
 
       it "does not sign in a user" do
@@ -80,7 +80,7 @@ RSpec.describe SignUpsController, :type => :controller do
         # TODO: This branch is unreachable and so can be deleted
         expect {
           post :create, params: { user: u, year: year }
-        }.to change { User.count }.by(0)
+        }.to(change { User.count }.by(0))
       else
         expect {
           post :create, params: { user: u, year: year }

@@ -38,7 +38,7 @@ RSpec.shared_examples "an admin controller" do |model_name|
       it "is forbidden" do
         expect {
           post :create, params: params_for_create(model_name)
-        }.to_not change { resource_class.count }
+        }.to_not(change { resource_class.count })
         expect(response.status).to eq(403)
       end
     end
@@ -53,7 +53,7 @@ RSpec.shared_examples "an admin controller" do |model_name|
         expect(resource).to be_present # create outside expect()
         expect {
           delete :destroy, params: { year: resource.year, id: resource.id }
-        }.to_not change { resource_class.count }
+        }.to_not(change { resource_class.count })
         expect(resource_class.all).to include(resource)
         expect(response.status).to eq(403)
       end
@@ -89,7 +89,7 @@ RSpec.shared_examples "an admin controller" do |model_name|
       it "succeeds" do
         expect {
           post :create, params: params_for_create(model_name)
-        }.to change { resource_class.yr(year).count }.by(+1)
+        }.to(change { resource_class.yr(year).count }.by(+1))
 
         # not all controllers redirect to the index, some go to the show
         expect(response).to be_redirect
@@ -98,7 +98,7 @@ RSpec.shared_examples "an admin controller" do |model_name|
         params = params_for_create(model_name)
         params[:year] = year - 1
         params[model_name].delete :year
-        expect { post :create, params: params }.to_not change { resource_class.count }
+        expect { post :create, params: params }.to_not(change { resource_class.count })
         expect(response.status).to eq(403)
       end
     end
@@ -113,7 +113,7 @@ RSpec.shared_examples "an admin controller" do |model_name|
         expect(resource).to be_present # create outside expect()
         expect {
           delete :destroy, params: { year: resource.year, id: resource.id }
-        }.to change { resource_class.yr(year).count }.by(-1)
+        }.to(change { resource_class.yr(year).count }.by(-1))
         expect(resource_class.all).not_to include(resource)
 
         # not all controllers redirect to the index after delete
@@ -132,7 +132,7 @@ RSpec.shared_examples "an admin controller" do |model_name|
         expect {
           patch :update, params: params_for_update(model_name)
           resource.reload
-        }.to change { resource.send updateable_attribute }
+        }.to(change { resource.send updateable_attribute })
 
         # not all controllers redirect to the index, some go to the show
         expect(response).to be_redirect

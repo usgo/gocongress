@@ -53,7 +53,7 @@ RSpec.describe YearsController, :type => :controller do
         it 'is forbidden' do
           expect {
             patch :update, params: { year: year.year, year_record: { city: new_city } }
-          }.to_not change { year.reload.city }
+          }.to_not(change { year.reload.city })
           expect(response).to be_forbidden
         end
       end

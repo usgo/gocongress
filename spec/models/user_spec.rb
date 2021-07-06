@@ -142,7 +142,7 @@ RSpec.describe User, :type => :model do
       num_attendees.times do |t|
         user.attendees << create(:attendee, :user => user)
       end
-      expect { user.destroy }.to change { Attendee.count }.by(-1 * num_attendees)
+      expect { user.destroy }.to(change { Attendee.count }.by(-1 * num_attendees))
       expect(Attendee.where(:user_id => user.id)).to be_empty
     end
   end

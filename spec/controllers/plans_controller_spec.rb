@@ -33,7 +33,7 @@ RSpec.describe PlansController, :type => :controller do
     it 'can create' do
       expect {
         post :create, params: { year: Time.now.year, plan: { price: 1, name: "Plan", description: "Description", age_min: 0, plan_category_id: category.id } }
-      }.to change { Plan.count }.by(+1)
+      }.to(change { Plan.count }.by(+1))
       expect(response).to redirect_to plan_category_path plan.plan_category
     end
 
@@ -42,7 +42,7 @@ RSpec.describe PlansController, :type => :controller do
       plan.attendees << create(:attendee)
       expect {
         delete :destroy, params: { year: plan.year, id: plan.id }
-      }.to_not change { Plan.count }
+      }.to_not(change { Plan.count })
       expect(flash[:alert]).to eq('Cannot delete plan because attendees have already selected it.')
       expect(response).to redirect_to(plan_path(plan))
     end
