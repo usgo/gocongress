@@ -5,15 +5,6 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 4
-# Configuration parameters: AllowComments, AllowEmptyLambdas.
-Lint/EmptyBlock:
-  Exclude:
-    - 'spec/controllers/game_appointments_controller_spec.rb'
-    - 'spec/controllers/rounds_controller_spec.rb'
-    - 'spec/models/bye_appointment_spec.rb'
-    - 'spec/models/game_appointment/import_spec.rb'
-
 # Offense count: 1
 # Configuration parameters: AllowComments.
 Lint/EmptyClass:
