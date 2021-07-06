@@ -8,6 +8,7 @@ class User < ApplicationRecord
 
   ROLES = [
     ['Admin', 'A'],
+    ['Director', 'D'],
     ['Staff', 'S'],
     ['User', 'U']
   ]
@@ -40,7 +41,7 @@ class User < ApplicationRecord
   # Validations
   # -----------
 
-  validates_inclusion_of :role, :in => %w[A S U]
+  validates_inclusion_of :role, :in => %w[A D S U]
 
   validates :email,
     :presence => true,
@@ -113,6 +114,10 @@ class User < ApplicationRecord
 
   def get_invoice_total
     Invoice::Invoice.new(invoice_items).total
+  end
+
+  def director?
+    role == 'D'
   end
 
   def staff?

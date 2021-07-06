@@ -24,7 +24,7 @@ u.year = prompt.ask("Year:", default: DateTime.now.year)
 # Pretend we've confirmed the new user's email
 u.confirmed_at = DateTime.now
 
-roles = { Admin: 'A', Staff: 'S', User: 'U' }
+roles = { Admin: 'A', Director: 'D', Staff: 'S', User: 'U' }
 u.role = prompt.select("User role:", roles)
 
 if u.valid?
