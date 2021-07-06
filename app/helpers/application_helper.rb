@@ -16,13 +16,13 @@ module ApplicationHelper
     }
   end
 
-  def cents_for_currency_field x
-    return '' if x.blank?
-    cents_to_currency(x, delimiter: '', precision: 2, unit: '')
+  def cents_for_currency_field(cents)
+    return '' if cents.blank?
+    cents_to_currency(cents, delimiter: '', precision: 2, unit: '')
   end
 
-  def cents_to_currency x, opts = {}
-    number_to_currency(x.to_f / 100, opts)
+  def cents_to_currency(cents, opts = {})
+    number_to_currency(cents.to_f / 100, opts)
   end
 
   def image_file?(image)

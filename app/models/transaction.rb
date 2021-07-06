@@ -32,6 +32,7 @@ class Transaction < ApplicationRecord
   validates_length_of :trantype, :is => 1
   validates_inclusion_of :trantype, :in => TRANTYPES.flatten
 
+  # Integer American cents. Never use floating point numbers for currency.
   validates_numericality_of :amount, greater_than: 0, only_integer: true
 
   # Certain attributes apply only to gateway transaction types (eg. Sale)
