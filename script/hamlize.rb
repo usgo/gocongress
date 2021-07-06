@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-def die msg
+def die(msg)
   $stderr.puts msg
   exit 1
 end

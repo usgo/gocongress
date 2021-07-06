@@ -47,7 +47,7 @@ RSpec.describe TransactionsController, :type => :controller do
     end
   end
 
-  def patch_update t, email
+  def patch_update(t, email)
     patch :update, params: { year: t.year, user_email: email, id: t.id, transaction: transaction_attributes }
   end
 end

@@ -45,7 +45,7 @@ module Purchasable
   end
 
   module ClassMethods
-    def price_change_err_msg record
+    def price_change_err_msg(record)
       record_model_name = record.class.model_name.human.downcase
       attendee_model_name = Attendee.model_name.human.downcase
       basic_msg = " may not change, because at least one #{attendee_model_name}

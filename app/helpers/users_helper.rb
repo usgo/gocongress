@@ -1,5 +1,5 @@
 module UsersHelper
-  def role_emphasis_class user
+  def role_emphasis_class(user)
     if user.admin?
       'emphasis-strong'
     elsif user.staff?
@@ -9,7 +9,7 @@ module UsersHelper
     end
   end
 
-  def user_account_title user, page
+  def user_account_title(user, page)
     if signed_in? && current_user == user
       "My #{page}"
     else

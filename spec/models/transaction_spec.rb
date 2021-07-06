@@ -43,7 +43,7 @@ RSpec.describe Transaction, :type => :model do
     end
 
     describe 'amount' do
-      def trn_err_msg_keys amnt
+      def trn_err_msg_keys(amnt)
         x = Transaction.new
         x.amount = amnt
         x.valid?

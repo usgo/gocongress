@@ -140,7 +140,7 @@ RSpec.shared_examples "an admin controller" do |model_name|
     end
   end
 
-  def params_for_create model_name
+  def params_for_create(model_name)
     p = { :year => year }
 
     # Some controllers require extra params for create, eg.
@@ -153,7 +153,7 @@ RSpec.shared_examples "an admin controller" do |model_name|
     end
   end
 
-  def params_for_update model_name
+  def params_for_update(model_name)
     p = params_for_create(model_name)
     p[model_name][updateable_attribute] = rand
     p.merge(:id => resource.id)

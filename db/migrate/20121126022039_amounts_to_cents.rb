@@ -18,7 +18,7 @@ class AmountsToCents < ActiveRecord::Migration
     cents_to_dollars :transactions, :amount
   end
 
-  def dollars_to_cents table, column
+  def dollars_to_cents(table, column)
     execute "alter table #{table} add #{column}_in_cents integer"
     execute "update #{table} set #{column}_in_cents = round(#{column} * 100)"
     execute "alter table #{table} alter column #{column}_in_cents set not null"
@@ -26,7 +26,7 @@ class AmountsToCents < ActiveRecord::Migration
     execute "alter table #{table} rename column #{column}_in_cents to #{column}"
   end
 
-  def cents_to_dollars table, column
+  def cents_to_dollars(table, column)
     execute "alter table #{table} add #{column}_in_dollars numeric(10,2);"
     execute "update #{table} set #{column}_in_dollars = #{column} / 100;"
     execute "alter table #{table} alter column #{column}_in_dollars set not null;"

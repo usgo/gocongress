@@ -37,7 +37,7 @@ class PlayersXmlExporter
     players.join("\n\t\t")
   end
 
-  def self.render players, aga_info
+  def self.render(players, aga_info)
     <<~EOF
       <?xml version="1.0" encoding="UTF-8" standalone="no"?>
       <Tournament dataVersion="201">

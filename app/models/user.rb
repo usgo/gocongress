@@ -62,7 +62,7 @@ class User < ApplicationRecord
 
   # Class Methods
   # -------------
-  def self.email_range min, max
+  def self.email_range(min, max)
     where('lower(substr(email, 1, 1)) between ? and ?', min, max)
   end
 

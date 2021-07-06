@@ -17,7 +17,7 @@ class ApplicationController < ActionController::Base
   # default_url_options() is called before callbacks, so we do not
   # depend on @year being defined yet, and we extract the year
   # directly from the params hash.
-  def default_url_options options = {}
+  def default_url_options(options = {})
     { :year => extract_year_from_params }
   end
 
@@ -54,7 +54,7 @@ class ApplicationController < ActionController::Base
 
   # Redirect Devise after sign in (or after updating the password?)
   # Go to the "My Account" page.
-  def after_sign_in_path_for user
+  def after_sign_in_path_for(user)
     raise ArgumentError unless user.is_a?(User)
     user_path(user)
   end
@@ -130,7 +130,7 @@ class ApplicationController < ActionController::Base
     return year
   end
 
-  def logo_file year
+  def logo_file(year)
     if year.to_i == 2015
       '2015-transparent.png'
     elsif year.to_i == 2014
@@ -149,7 +149,7 @@ class ApplicationController < ActionController::Base
     render 'home/access_denied', :status => :forbidden
   end
 
-  def raise_routing_error message = 'Not Found'
+  def raise_routing_error(message = 'Not Found')
     raise ActionController::RoutingError.new message
   end
 

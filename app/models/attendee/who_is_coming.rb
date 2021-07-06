@@ -11,7 +11,7 @@ class Attendee::WhoIsComing < ApplicationController
 
   attr_reader :attendees
 
-  def initialize year, event_type = 'in-person', sort = nil, direction = 'asc'
+  def initialize(year, event_type = 'in-person', sort = nil, direction = 'asc')
     super()
     @year = year
     @event_type = event_type
@@ -78,17 +78,17 @@ class Attendee::WhoIsComing < ApplicationController
 
   private
 
-  def append_direction clause
+  def append_direction(clause)
     clause + (%w[asc desc].include?(@direction) ? " #{@direction}" : '')
   end
 
   # Some sort orders could reveal clues about anonymous people, so
   # we first order by anonymity to protect against that.
-  def anonymize_order clause
+  def anonymize_order(clause)
     (sort_unsafe_for_anon?(@sort) ? 'anonymous, ' : '') + clause
   end
 
-  def attendees_qry order_clause
+  def attendees_qry(order_clause)
     q = File.read(attendees_qry_file_path)
     q += " order by " + order_clause unless order_clause.blank?
     q
@@ -119,7 +119,7 @@ class Attendee::WhoIsComing < ApplicationController
     append_direction(anonymize_order(insensitive_order))
   end
 
-  def sort_unsafe_for_anon? sort
+  def sort_unsafe_for_anon?(sort)
     %w[given_name family_name country].include?(sort)
   end
 end

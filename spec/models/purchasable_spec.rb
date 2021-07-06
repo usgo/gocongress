@@ -32,7 +32,7 @@ RSpec.describe Purchasable, :type => :model do
 
   describe '#valid?' do
     describe 'price' do
-      def err_msg_keys price
+      def err_msg_keys(price)
         p = Plan.new
         p.price = price
         p.valid?

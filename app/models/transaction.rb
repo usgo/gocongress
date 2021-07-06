@@ -77,7 +77,7 @@ class Transaction < ApplicationRecord
   scope :refunds, -> { where(trantype: 'R') }
   scope :sales, -> { where(trantype: 'S') }
 
-  def self.create_from_stripe_webhook data
+  def self.create_from_stripe_webhook(data)
     user = User.find(data.metadata.user_id)
     t = new
     t.trantype = 'S' # Sale

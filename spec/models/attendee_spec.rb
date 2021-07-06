@@ -79,7 +79,7 @@ RSpec.describe Attendee, :type => :model do
       expect { a.activities << v }.to(change { a.invoice_items.count }.by(1))
     end
 
-    def descriptions_of invoice_items
+    def descriptions_of(invoice_items)
       invoice_items.map { |i| i.description }
     end
   end

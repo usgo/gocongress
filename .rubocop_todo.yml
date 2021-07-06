@@ -403,13 +403,6 @@ Style/MethodCallWithoutArgsParentheses:
     - 'app/controllers/users_controller.rb'
     - 'app/services/aga_td_list.rb'
 
-# Offense count: 143
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: require_parentheses, require_no_parentheses, require_no_parentheses_except_multiline
-Style/MethodDefParentheses:
-  Enabled: false
-
 # Offense count: 1
 Style/MixinUsage:
   Exclude:

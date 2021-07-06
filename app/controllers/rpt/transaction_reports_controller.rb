@@ -24,7 +24,7 @@ class Rpt::TransactionReportsController < Rpt::AbstractReportController
 
   private
 
-  def transactions_to_csv transactions
+  def transactions_to_csv(transactions)
     CSV.generate do |csv|
       csv << csv_header_row
       transactions.each do |t|

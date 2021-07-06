@@ -1,5 +1,5 @@
 class Attendee::Age
-  def initialize birth_date, congress_start_date
+  def initialize(birth_date, congress_start_date)
     @birth = birth_date || raise(ArgumentError)
     @congress_start = congress_start_date || raise(ArgumentError)
   end

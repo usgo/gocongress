@@ -180,7 +180,7 @@ RSpec.describe RegistrationsController, :type => :controller do
     end
 
     describe "#update" do
-      def patch_update attendee_attrs = {}, opts = {}
+      def patch_update(attendee_attrs = {}, opts = {})
         patch :update, params: opts.merge(registration: attendee_attrs, id: attendee.id, year: attendee.year)
       end
 
@@ -238,7 +238,7 @@ RSpec.describe RegistrationsController, :type => :controller do
       context "plans" do
         let(:plan) { create :plan }
 
-        def patch_update plan
+        def patch_update(plan)
           patch :update, params: { year: plan.year, id: attendee.id, plans: { plan.id.to_s => { qty: 1 } } }
         end
 
@@ -414,11 +414,11 @@ RSpec.describe RegistrationsController, :type => :controller do
     patch :update, params: params
   end
 
-  def params_for_plan plan, qty
+  def params_for_plan(plan, qty)
     { 'plans' => { plan.id.to_s => { 'qty' => qty } } }
   end
 
-  def update_activities attendee, activities
+  def update_activities(attendee, activities)
     patch :update, params: { id: attendee.id, registration: {}, activity_ids: activities.map(&:id), year: attendee.year }
   end
 end

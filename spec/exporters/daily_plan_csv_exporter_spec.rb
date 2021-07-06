@@ -37,11 +37,11 @@ RSpec.describe DailyPlanCsvExporter do
       expect(ary[1][6]).to eq(format_date_range(a1ap2d1._date..a1ap2d1._date))
     end
 
-    def format_date d
+    def format_date(d)
       d.strftime '%-m/%-d'
     end
 
-    def format_date_range rng
+    def format_date_range(rng)
       "#{format_date(rng.begin)} to #{format_date(rng.end)}"
     end
   end

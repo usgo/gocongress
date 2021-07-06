@@ -30,7 +30,7 @@ class Activity < ApplicationRecord
 
   scope :disabled, -> { where(disabled: true) }
 
-  def to_invoice_item attendee_full_name
+  def to_invoice_item(attendee_full_name)
     InvoiceItem.new(name, attendee_full_name, price, 1)
   end
 end

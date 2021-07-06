@@ -60,7 +60,7 @@ RSpec.describe YearsController, :type => :controller do
     end
   end
 
-  def should_deny_access response
+  def should_deny_access(response)
     expect(response).to be_forbidden
     expect(response).to render_template :access_denied
   end
