@@ -10,6 +10,8 @@ class Activity < ApplicationRecord
   validates_presence_of :leave_time, :name, :return_time
   validates :location, :length => { :maximum => 50 }
   validates :phone, :length => { :maximum => 20 }
+
+  # See additional `numericality` validations of `price` in `Purchasable`.
   validates :price, :numericality => {
     :equal_to => 0,
     :if => :price_varies?,
@@ -17,6 +19,7 @@ class Activity < ApplicationRecord
       set the price to 0, so that this #{model_name.human.downcase}
       will not show up on invoices."
   }
+
   validates :url,
     :length => { :maximum => 200 },
     :format => {
