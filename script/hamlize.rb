@@ -13,7 +13,7 @@ def main
   die_with_usage if ARGV.length != 1
   fn = ARGV[0].strip
   die_with_usage if fn.length == 0
-  die "File not found: #{fn}" unless File.exists?(fn)
+  die "File not found: #{fn}" unless File.exist?(fn)
   die "Unexpected file extension" unless fn.match(/\.html.erb\z/)
   new_fn = fn.sub(/\.html.erb\z/, '.html.haml')
   system("html2haml -e #{fn} #{new_fn}")

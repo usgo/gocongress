@@ -3,7 +3,7 @@ class SlideSet
 
   def initialize(year)
     conf_file = File.join(slides_dir(year), "slideshow.yml")
-    @slides = File.exists?(conf_file) ?
+    @slides = File.exist?(conf_file) ?
       YAML.load_file(conf_file)["slides"] : []
   end
 
