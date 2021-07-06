@@ -26,6 +26,8 @@ services:
       args:
         RUBY_VERSION: '2.7.3'
         BUNDLER_VERSION: '2.20.20'
+    stdin_open: true
+    tty: true
     environment:
       DATABASE_HOST: app_database
       DATABASE_NAME: gocongress_app

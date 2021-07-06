@@ -39,6 +39,34 @@ a pull request is a great way to become part of the team.
    1. Push your changes to your [fork][8] on github
    1. Submit a pull request
 
+## Debugging the Application with `byebug`
+
+First, include `byebug` at a point where you would like the execution to stop. For example,
+
+```ruby
+
+class HomeController < ApplicationController
+  rescue_from ActionView::MissingTemplate, :with => :missing_template
+  rescue_from ActionController::UnknownFormat, :with => :missing_template
+
+  def index
+    byebug
+    @bodyClassList = "homepage"
+    @slides = SlideSet.new(@year.year).slides_as_arrays
+    @contents = Content.yr(@year).homepage.unexpired.newest_first
+    @years = 2011..LATEST_YEAR
+    @upcoming = CONGRESS_START_DATE[@year.year] >= Date.current
+  end
+
+...
+
+```
+
+Once that is done, `byebug` [ByeBug][24] can be used to debug the Go Congress application
+from within the `gocongress_app` container, (The container should be created with
+`docker-compose up app -d`). To do debug with `byebug` from termnal you can run `docker attach [container_id]`.
+**Note: There may be nothing displayed in the ternimal until a `byebug` breakpoint is hit.**
+
 ## Configuration
 
 `ENV` variables are stored in a `.env` file, which is git-ignored.
@@ -105,3 +133,4 @@ Special thanks to Rex Cristal, for taking over maintenance of the site from
 [21]: http://guides.rubygems.org/
 [22]: https://imagemagick.org/
 [23]: https://docs.docker.com/get-docker/
+[24]: https://github.com/deivid-rodriguez/byebug
