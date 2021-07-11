@@ -69,7 +69,7 @@ class Attendee < ApplicationRecord
   }
   validates :roomate_request, :length => { :maximum => 250 }
   validates :special_request, :length => { :maximum => 250 }
-  validates :tshirt_size,     :inclusion => { :in => Shirt::SIZE_CODES, :message => " - Please select a size" }
+  validates :tshirt_size, :inclusion => { :in => Shirt::SIZE_CODES, :message => " - Please select a size", if: ->(atd) { atd.year_record.shirt } }
   validates_numericality_of :aga_id, :only_integer => true, :allow_nil => true, :message => "id is not a number"
 
   username_message = " - One of the tournaments you selected needs your %{attribute}."

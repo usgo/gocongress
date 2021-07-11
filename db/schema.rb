@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_01_195219) do
+ActiveRecord::Schema.define(version: 2021_07_11_202303) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -360,6 +360,7 @@ ActiveRecord::Schema.define(version: 2021_07_01_195219) do
     t.text "refund_policy"
     t.integer "event_type", default: 0
     t.string "mailing_list_link"
+    t.boolean "shirt", default: true
     t.index ["year"], name: "index_years_on_year", unique: true
   end
 

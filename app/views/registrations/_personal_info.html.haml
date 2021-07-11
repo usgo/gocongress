@@ -10,11 +10,12 @@
     = f.text_field :family_name, :placeholder => 'Family Name', :size => 15, :required => true
 
 
-  = render :layout => 'shared/field',
-  :locals => { :field => f, :attribute => :anonymous } do
-    %label
-      = f.check_box :anonymous
-      %div.field-help-text Hide name on public areas of the website. (Information will still be available to Congress staff.)
+  - if params[:type] != "youth"
+    = render :layout => 'shared/field',
+    :locals => { :field => f, :attribute => :anonymous } do
+      %label
+        = f.check_box :anonymous
+        %div.field-help-text Hide name on public areas of the website. (Information will still be available to Congress staff.)
 
   = render :layout => 'shared/field',
   :locals => { :field => f, :attribute => :gender, :required => true} do

@@ -94,6 +94,7 @@ en:
         email: "Email"
         password: "Password"
       year:
+        shirt: "Attendee T-shirt?"
         reply_to_email: "Reply-To Email"
         twitter_url: "Twitter URL"
     models:
