@@ -47,5 +47,5 @@
 
 %h3 Registered Attendee Emails
 .email-list
-  %textarea#attendee_emails{:'data-emails' => @players.map { |p| p.formatted_email }.join(', ')}
+  %textarea.attendee_emails{:'data-emails' => @players.map { |p| p.formatted_email }.join(', ')}
     = @players.map { |p| p.formatted_email }.join(', ')
