@@ -1,4 +1,7 @@
 %h2= @tournament.name
+
+%p hey nate
+
 %table.lightweight
   %tr
     %th= trl_attr 'tournament', 'location'
@@ -18,6 +21,32 @@
 %br
 = markdown(@tournament.description).html_safe
 %br
+
+%hr
+
+%p
+  There are
+  = usgc_pluralize(@tournament.attendees.count, Attendee.model_name.human.downcase)
+  registered to play in #{@tournament.name}.
+
+%table.player-list.semantic
+  %thead
+    %tr
+      %th Player Name
+      - if @tournament.server
+        %th #{@tournament.server_name} Username
+      %th Rank
+  %tbody
+  - @tournament.attendees.order('rank DESC').each do |player|
+    %tr
+      %td
+        - if player.aga_id && !player.anonymous_or_underage?
+          #{link_to "#{player.full_name(true)}", "http://agagd.usgo.org/player/#{player.aga_id}"}
+        - else
+          = player.full_name(true)
+        - if @tournament.server
+          %td= player.anonymous_or_underage? ? '' : player['username_' + @tournament.server]
+        %td= player.rank_name
 
 - if can? :update, @tournament
   %p= button_to 'Edit this Tournament', edit_tournament_path(@tournament), :method => :get
