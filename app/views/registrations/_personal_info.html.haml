@@ -1,4 +1,7 @@
 %fieldset
+  = render :layout => 'shared/field',
+  :locals => { :field => f, :attribute => :aga_id, :required => true } do
+    = f.text_field :aga_id, :required => true
 
   = render :layout => 'shared/field',
   :locals => { :field => f, :attribute => :name, :required => true } do
@@ -11,7 +14,7 @@
   :locals => { :field => f, :attribute => :anonymous } do
     %label
       = f.check_box :anonymous
-      %div.field-help-text Hide name on the #{link_to 'Who is Coming?', :attendees} list.
+      %div.field-help-text Hide name on public areas of the website. (Information will still be available to Congress staff.)
 
   = render :layout => 'shared/field',
   :locals => { :field => f, :attribute => :gender, :required => true} do
