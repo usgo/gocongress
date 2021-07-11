@@ -161,7 +161,11 @@ class Attendee < ApplicationRecord
   end
 
   def anonymize string
-    anonymous? ? 'Anonymous' : string
+    anonymous_or_underage? ? 'Anonymous' : string
+  end
+
+  def anonymous_or_underage?
+    anonymous? || minor?
   end
 
   def attendee_alternate_name
