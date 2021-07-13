@@ -41,6 +41,8 @@
           = f.label :password, 'Choose a Password'
         %div.field-value
           = f.password_field :password, :size => 10, :tabindex => 2
+          .field-help-text 
+            = "Passwords must be at least six characters long."
 
       .field.flex
         %div.field-key
