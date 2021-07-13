@@ -22,7 +22,7 @@
             %p
               = t.server_name
               %br
-              = f.text_field :"username_#{t.server}", { :id => nil, :class => "registration_username_#{t.server}", :placeholder => "username"}
+              = f.text_field :"username_#{t.server}", { :id => nil, :class => "registration_username_#{t.server}", :placeholder => "username", :'data-lpignore' => "true", :autocomplete => "off"}
         
 
         %div.location
