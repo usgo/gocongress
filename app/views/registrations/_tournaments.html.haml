@@ -72,6 +72,12 @@
     }
 
     const validateUsername = async event => {
+      // Deactivate validation for KGS. Currently, it throttles repeated
+      // requests too aggressively for this feature to work consistently.
+      if (event.target.classList.contains('registration_username_kgs')) {
+        return;
+      }
+
       // Don't try to to validate a username if the service has come back
       // unavailable
       if (event.target.classList.contains('unavailable')) {
