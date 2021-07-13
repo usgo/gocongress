@@ -1,7 +1,6 @@
 %fieldset
-  = render :layout => 'shared/field',
-  :locals => { :field => f, :attribute => :aga_id, :required => true } do
-    = f.text_field :aga_id, :required => false
+  = render :partial => 'shared/field',
+  :locals => { :field => f, :attribute => :aga_id, :required => false }
 
   = render :layout => 'shared/field',
   :locals => { :field => f, :attribute => :name, :required => true } do

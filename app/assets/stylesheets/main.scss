@@ -677,9 +677,11 @@ div.field {
   font-weight: bold;
   padding: {
     right: 10px;
+    top: 4px;
   }
   width: 150px;
   flex-shrink: 0;
+  text-align: right;
 
   .field_with_errors {
     color: red;
