@@ -19,8 +19,7 @@
     = render :partial => 'emergency_info', :locals => { :f => f }
   = render :partial => 'plans', :locals => { :f => f }
   = render :partial => 'wishes', :locals => { :f => f }
-  - if @registration.aga_id || @year.online?
-    = render :partial => 'tournaments', :locals => { :f => f }
+  = render :partial => 'tournaments', :locals => { :f => f }
 
   - unless @year.year == 2016
     = render :partial => 'activities', :locals => { :f => f }
