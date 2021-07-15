@@ -24,6 +24,10 @@ class Attendee::WhoIsComing < ApplicationController
     @attendees.count
   end
 
+  def countries_count
+    @attendees.reduce(Set[]) { |countries, attendee| countries.add(attendee.country) }.size
+  end
+
   def pro_count
     @attendees.select { |a| a.get_rank.pro? }.length
   end
@@ -55,10 +59,12 @@ class Attendee::WhoIsComing < ApplicationController
   def summary_sentence
     # Construct a summary sentence with correct grammar and punctuation for a
     # list with a variable number of items.
+    summary_sentence = "There are #{helpers.usgc_pluralize(count, '')} people registered"
+    summary_sentence += " from #{helpers.usgc_pluralize(countries_count, 'country')}"
+    summary_sentence += ", including "
+
     summary_components = [
-      "There are #{helpers.usgc_pluralize(count,
-        '')} people registered, including "\
-      + helpers.usgc_pluralize(kyu_count, 'kyu player'),
+      helpers.usgc_pluralize(kyu_count, 'kyu player'),
       helpers.usgc_pluralize(dan_count, 'dan player'),
       helpers.usgc_pluralize(minor_count, 'minor') + ' (not listed below)'
     ]
@@ -67,7 +73,7 @@ class Attendee::WhoIsComing < ApplicationController
       summary_components.push(helpers.usgc_pluralize(pro_count, 'pro'))
     end
 
-    summary_components.to_sentence + '.'
+    summary_sentence + summary_components.to_sentence + '.'
   end
 
   private
