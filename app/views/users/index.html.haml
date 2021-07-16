@@ -17,7 +17,7 @@
   %strong= usgc_pluralize(@users.length, 'user')
   registered, with
   %strong
-    - attendees = @users.reduce(0) { |sum, user| sum + user.attendees.length}
+    - attendees = @users.reduce(0) { |sum, user| sum + user.attendees.select {|attendee| !attendee.cancelled}.length}
     = usgc_pluralize(attendees, 'attendee') + '.'
   %strong
     - incomplete = @users.reduce(0) { |sum, user| user.attendees.length > 0 ? sum : sum + 1 }
