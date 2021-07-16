@@ -103,7 +103,7 @@ class Registration
   end
 
   def attendee_number
-    @attendee.user.attendees.count + 1
+    @attendee.user.uncanceled_attendees.length
   end
 
   private

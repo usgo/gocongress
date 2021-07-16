@@ -123,6 +123,10 @@ class User < ApplicationRecord
     ROLES.select { |r| r[1] == role }.first[0]
   end
 
+  def uncanceled_attendees
+    attendees.reject { |attendee| attendee.cancelled }
+  end
+
   # Override the built-in devise method update_with_password()
   # so that we don't need current_password
   # Credit: Carlos Antonio da Silva
