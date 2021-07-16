@@ -1,4 +1,4 @@
-%h2 Unverified Users
+%h2 Unconfirmed Users
 %p
   The following users created accounts, but never confirmed their email
   addresses.
@@ -8,16 +8,16 @@
   correct email address associated with their account. We don't want to spam any
   accounts that were entered my mistake.
 
-%ul.unverified-users
+%ul.unconfirmed-users
   - @users.each do |user|
     %li
       = link_to user.email, confirmation_path(user) + "?confirmation_token=#{user.confirmation_token}"
 
 :javascript
-  const unverifiedUsers = document.querySelector('.unverified-users');
-  unverifiedUsers.addEventListener('click', event => {
+  const unconfirmedUsers = document.querySelector('.unconfirmed-users');
+  unconfirmedUsers.addEventListener('click', event => {
     if (event.target.tagName === 'A') {
-      if (!confirm(`Manually confirm unverified user ${event.target.innerHTML}?`)) {
+      if (!confirm(`Manually confirm unconfirmed user ${event.target.innerHTML}?`)) {
         event.preventDefault();
       }
     }

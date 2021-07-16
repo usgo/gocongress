@@ -23,6 +23,9 @@
     - incomplete = @users.reduce(0) { |sum, user| user.attendees.length > 0 ? sum : sum + 1 }
     = usgc_pluralize(incomplete, 'user account').capitalize
   #{incomplete == 1 ? "does" : "do"} not yet have any registered attendees.
+  = usgc_pluralize(@unconfirmed_users.length, 'user').capitalize
+  never confirmed their accounts.
+
 
 - if can? :create, User
   .row-of-buttons

@@ -70,6 +70,10 @@ class User < ApplicationRecord
     where.not(:confirmed_at => nil)
   end
 
+  def self.unconfirmed
+    where(:confirmed_at => nil)
+  end
+
   # Instance Methods
   # ----------------
 
