@@ -17,7 +17,7 @@ class Rpt::TournamentReportsController < Rpt::AbstractReportController
         render :show
       end
       format.xml do
-        xml = PlayersXmlExporter.render(@players, @aga_member_info)
+        xml = PlayersXmlExporter.render(@players, @aga_member_info, params['go_server_username'])
         send_data xml, filename: xml_filename, type: 'text/xml'
       end
     end
