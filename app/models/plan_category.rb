@@ -32,7 +32,7 @@ class PlanCategory < ApplicationRecord
   # Class methods
   # ----------------
 
-  def self.age_appropriate age
+  def self.age_appropriate(age)
     where("exists (select * from plans p
       where p.plan_category_id = plan_categories.id
         and (age_min is null or age_min <= ?)
@@ -74,7 +74,7 @@ class PlanCategory < ApplicationRecord
       .first
   end
 
-  def reorder_plans ordering
+  def reorder_plans(ordering)
     return unless ordering.present?
     ordering.each do |plan_id, ordinal|
       if ordinal.to_i > 0
@@ -88,7 +88,7 @@ class PlanCategory < ApplicationRecord
 
   private
 
-  def validate_ordering ordering
+  def validate_ordering(ordering)
     ordering_errors = []
 
     sorted_ordering = ordering.sort

@@ -1,6 +1,6 @@
 class BadgeCsvExporter
   # Order of columns must match `header_array`
-  def self.attendee_array atnd
+  def self.attendee_array(atnd)
     # Get AGA Info from TD List
     aga_info = AGATDList.data(atnd.aga_id)
 
@@ -24,11 +24,11 @@ class BadgeCsvExporter
   end
 
   # Order must match `attendee_array`
-  def self.header_array year
+  def self.header_array(year)
     ['alternate_name', 'given_name', 'family_name', 'rank', 'email', 'aga_id', 'club', 'state', 'country', 'birth_date', 'banquet'] + plan_names(year)
   end
 
-  def self.render year, attendees
+  def self.render(year, attendees)
     csv_config = {
       # Use Windows line endings, per recommendation from csvlint.io
       # @see https://csvlint.io/about
@@ -46,11 +46,11 @@ class BadgeCsvExporter
 
   private
 
-  def self.blank_to_nil obj
+  def self.blank_to_nil(obj)
     obj.blank? ? nil : obj
   end
 
-  def self.banquet atnd
+  def self.banquet(atnd)
     pqh = atnd.plan_qty_hash
 
     banquet = false
@@ -70,7 +70,7 @@ class BadgeCsvExporter
     banquet ? 'T' : ''
   end
 
-  def self.plan_quantities atnd
+  def self.plan_quantities(atnd)
     pqh = atnd.plan_qty_hash
     plans(atnd.year).map { |p|
       # Turn the plan that indicates first-time attendees into the desired text
@@ -82,7 +82,7 @@ class BadgeCsvExporter
     }
   end
 
-  def self.plans year
+  def self.plans(year)
     Plan.yr(year).alphabetical.select do |plan|
       # List any plan names that should be included in the badge export
       ['Yes 1st'].any? { |s|
@@ -91,7 +91,7 @@ class BadgeCsvExporter
     end
   end
 
-  def self.plan_names year
+  def self.plan_names(year)
     plans(year).map { |p|
       # Turn plan names like "Yes 1st" to "plan_yes-1st"
       "plan_" + safe_for_csv(p.name).parameterize

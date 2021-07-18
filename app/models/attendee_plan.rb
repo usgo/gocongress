@@ -67,7 +67,7 @@ class AttendeePlan < ApplicationRecord
 
   # Optimization: Avoid a query by passing
   # `attendee_full_name` as an argument
-  def to_invoice_item attendee_full_name, attendee_alternate_name
+  def to_invoice_item(attendee_full_name, attendee_alternate_name)
     if plan.daily?
       InvoiceItem.new(plan.name + invoice_plan_dates, attendee_full_name + attendee_alternate_name, plan.price, invoiced_quantity)
     else

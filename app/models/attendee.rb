@@ -92,7 +92,7 @@ class Attendee < ApplicationRecord
 
   # Check to see if an attendee is signed up for a tournament that takes place
   # on a server, so that we can require the relevant username in that case
-  def in_tournament? server_name = nil
+  def in_tournament?(server_name = nil)
     tournaments = Tournament.yr(year).where(:registration_sign_up => true).order('ordinal')
     selected_tournaments = tournaments.select { |t| self.tournament_ids.include? t.id }
     if server_name
@@ -106,7 +106,7 @@ class Attendee < ApplicationRecord
     end
   end
 
-  def self.adults year
+  def self.adults(year)
     where('birth_date < ?', CONGRESS_START_DATE[year.to_i] - 18.years)
   end
 
@@ -114,7 +114,7 @@ class Attendee < ApplicationRecord
     where(cancelled: true)
   end
 
-  def self.with_planlessness planlessness
+  def self.with_planlessness(planlessness)
     case planlessness
     when :all then all
     when :planful then with_at_least_one_plan
@@ -160,7 +160,7 @@ class Attendee < ApplicationRecord
     age.years
   end
 
-  def anonymize string
+  def anonymize(string)
     anonymous_or_underage? ? 'Anonymous' : string
   end
 
@@ -192,7 +192,7 @@ class Attendee < ApplicationRecord
     CONGRESS_START_DATE[self.year]
   end
 
-  def anonymize_attribute atr
+  def anonymize_attribute(atr)
     anonymize self.send atr
   end
 
@@ -204,7 +204,7 @@ class Attendee < ApplicationRecord
     plan_count > 0
   end
 
-  def has_plan? plan
+  def has_plan?(plan)
     plans.include?(plan)
   end
 

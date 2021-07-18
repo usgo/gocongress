@@ -23,7 +23,7 @@ RSpec.describe Registration do
         params = { activity_ids: [dsbl_act.id] }
         expect {
           expect(r.submit(ActionController::Parameters.new(params))).to be_falsey
-        }.to_not change { AttendeeActivity.count }
+        }.to_not(change { AttendeeActivity.count })
       end
 
       it "does not remove disabled activity, and returns an error" do
@@ -31,7 +31,7 @@ RSpec.describe Registration do
         r = Registration.new user, attendee
         expect {
           expect(r.submit(ActionController::Parameters.new({}))).to be_falsey
-        }.to_not change { AttendeeActivity.count }
+        }.to_not(change { AttendeeActivity.count })
       end
 
       it "selects shirt style" do
@@ -96,7 +96,7 @@ RSpec.describe Registration do
         r = Registration.new admin, attendee
         expect {
           expect(r.submit(ActionController::Parameters.new(activity_ids: [act.id]))).to be_truthy
-        }.to change { AttendeeActivity.count }.by(+1)
+        }.to(change { AttendeeActivity.count }.by(+1))
       end
 
       it "removes disabled activities, and returns no errors" do
@@ -104,7 +104,7 @@ RSpec.describe Registration do
         r = Registration.new admin, attendee
         expect {
           expect(r.submit(ActionController::Parameters.new({}))).to be_truthy
-        }.to change { AttendeeActivity.count }.by(-1)
+        }.to(change { AttendeeActivity.count }.by(-1))
       end
 
       context "disabled plans" do

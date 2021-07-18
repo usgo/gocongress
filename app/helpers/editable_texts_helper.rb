@@ -1,5 +1,5 @@
 module EditableTextsHelper
-  def editable_text name
+  def editable_text(name)
     markdown(
       EditableText
         .select(name)

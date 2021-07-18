@@ -1,5 +1,5 @@
 module GocongressNotifier
-  def self.use_exception_notifier_middleware config
+  def self.use_exception_notifier_middleware(config)
     config.middleware.use ExceptionNotification::Rack,
       :email => {
         :email_prefix => "[USGC] ",

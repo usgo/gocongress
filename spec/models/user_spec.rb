@@ -22,8 +22,7 @@ RSpec.describe User, :type => :model do
 
   describe "attendeeless scope" do
     it "returns only users with no attendees" do
-      a1 = create :attendee
-      u1 = a1.user
+      create :attendee
       u2 = create :user
       expect(u2.attendees).to be_empty
       expect(User.attendeeless).to eq([u2])
@@ -142,7 +141,7 @@ RSpec.describe User, :type => :model do
       num_attendees.times do |t|
         user.attendees << create(:attendee, :user => user)
       end
-      expect { user.destroy }.to change { Attendee.count }.by(-1 * num_attendees)
+      expect { user.destroy }.to(change { Attendee.count }.by(-1 * num_attendees))
       expect(Attendee.where(:user_id => user.id)).to be_empty
     end
   end

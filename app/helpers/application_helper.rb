@@ -10,19 +10,19 @@ module ApplicationHelper
 
   # When you want to use `button_to` but your url has a query string
   # https://github.com/rails/rails/issues/2158
-  def button_to_get text, url, id, css_class = nil
+  def button_to_get(text, url, id, css_class = nil)
     render :partial => 'shared/button_to_get', :locals => {
       :btn_txt => text, :btn_url => url, :btn_id => id, :btn_class => css_class
     }
   end
 
-  def cents_for_currency_field x
-    return '' if x.blank?
-    cents_to_currency(x, delimiter: '', precision: 2, unit: '')
+  def cents_for_currency_field(cents)
+    return '' if cents.blank?
+    cents_to_currency(cents, delimiter: '', precision: 2, unit: '')
   end
 
-  def cents_to_currency x, opts = {}
-    number_to_currency(x.to_f / 100, opts)
+  def cents_to_currency(cents, opts = {})
+    number_to_currency(cents.to_f / 100, opts)
   end
 
   def image_file?(image)
@@ -50,7 +50,7 @@ module ApplicationHelper
 
   # An English list is comma delimited, and the final element
   # is prepended with a word like 'and'.
-  def join_english_list list, word = "and"
+  def join_english_list(list, word = "and")
     raise ArgumentError, "Expected enumerable" unless list.respond_to? :each
     return list.first.to_s if list.count == 1
     return list.slice(0, list.count - 1).join(", ") + ", " + word + " " + list.last.to_s
@@ -70,7 +70,7 @@ module ApplicationHelper
     end
   end
 
-  def link_to_tel text
+  def link_to_tel(text)
     return if text.blank?
     sets_of_numbers = text.scan(/[0-9]+/)
     number = "+1-#{sets_of_numbers.join('-')}"
@@ -96,7 +96,7 @@ module ApplicationHelper
     s.blank? ? '' : markdown(s).html_safe
   end
 
-  def markdown_summary model, atr, len
+  def markdown_summary(model, atr, len)
     txt = model.send(atr).to_s
     smry_txt = truncate(txt, length: len, separator: ' ')
     html = smry_txt.html_safe
@@ -110,12 +110,12 @@ module ApplicationHelper
     (collection.count == 1) ? "the " + singular : singular.pluralize
   end
 
-  def number_field_for_cents builder, atr, cents
+  def number_field_for_cents(builder, atr, cents)
     v = cents_for_currency_field(cents)
     builder.number_field atr, min: 0, size: 5, step: 0.01, value: v
   end
 
-  def slugify str, separator = '-'
+  def slugify(str, separator = '-')
     str.downcase.strip.gsub(' ', separator).gsub(/[^\w-]/, '')
   end
 end

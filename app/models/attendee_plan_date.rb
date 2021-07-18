@@ -11,7 +11,7 @@ class AttendeePlanDate < ApplicationRecord
   validates :_date, presence: true
   validate :check_date_range
 
-  def self.maximum year
+  def self.maximum(year)
     y = year.is_a?(Year) ? year : Year.find_by_year(year.to_i)
     if y.to_i >= 2015
       y.peak_departure_date - 1.day
@@ -20,7 +20,7 @@ class AttendeePlanDate < ApplicationRecord
     end
   end
 
-  def self.minimum year
+  def self.minimum(year)
     if year.to_i >= 2015
       CONGRESS_START_DATE.fetch(year.to_i)
     else
@@ -28,7 +28,7 @@ class AttendeePlanDate < ApplicationRecord
     end
   end
 
-  def self.valid_range year
+  def self.valid_range(year)
     (minimum(year)..maximum(year))
   end
 

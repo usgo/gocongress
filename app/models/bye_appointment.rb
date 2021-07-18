@@ -2,7 +2,7 @@ class ByeAppointment < ApplicationRecord
   belongs_to :round
   belongs_to :attendee
 
-  def self.assign_from_hash round, bye
+  def self.assign_from_hash(round, bye)
     player = bye[:attendee]
     bye_appointment = ByeAppointment.new
     bye_appointment.round = round

@@ -1,5 +1,5 @@
 class DailyPlanDetailsExporter < Exporter
-  def initialize year, date_range
+  def initialize(year, date_range)
     @year = year.to_i
     @date_range = date_range
     super()

@@ -75,12 +75,12 @@ class Ability
 
   private
 
-  def self.explain_action act
+  def self.explain_action(act)
     explanations = { destroy: 'delete this', index: 'list', show: 'see this' }
     return explanations[act.to_sym] || act.to_s
   end
 
-  def self.singularize_if plural, bool
+  def self.singularize_if(plural, bool)
     bool ? plural.singularize : plural
   end
 end

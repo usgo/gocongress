@@ -21,8 +21,7 @@ RSpec.describe Rpt::OutstandingBalanceReportsController, :type => :controller do
       paid_too_much.transactions << create(:tr_sale)
 
       # The other paid juuuuuust right
-      a3 = create :attendee
-      paid_exactly = a3.user
+      create :attendee
 
       get :show, params: { year: Time.now.year }
       expect(assigns(:users).map(&:id)).to match_array([paid_too_little.id, paid_too_much.id])

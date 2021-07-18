@@ -11,7 +11,7 @@ class Attendee::Rank
   NUMERIC_RANK_LIST = []
   RANKS.each { |r| NUMERIC_RANK_LIST << r[1] }
 
-  def initialize n
+  def initialize(n)
     @n = n
   end
 
