@@ -14,12 +14,12 @@ class PlayersXmlExporter
     base_rating + ((30 + rank) * 100)
   end
 
-  def self.render_player(player, aga_info)
+  def self.render_player(player, aga_info, username: '')
     xmlTag = {
       agaExpirationDate: aga_info[:expires],
-      agaId: player.aga_id,
-      firstName: player.given_name,
-      name: player.family_name,
+      agaId: username ? '' : player.aga_id,
+      firstName: username ? player[username] : player.given_name,
+      name: username ? 'X' : player.family_name,
       grade: open_gotha_rank(player.rank_name),
       rank: open_gotha_rank(player.rank_name),
       rating: open_gotha_rating(player.rank),
@@ -32,17 +32,17 @@ class PlayersXmlExporter
     str = "<Player " + str + "/>"
   end
 
-  def self.render_players(players, aga_info)
-    players = players.map { |player| render_player(player, aga_info[player.aga_id.to_s] || {}) }
+  def self.render_players(players, aga_info, go_server_username)
+    players = players.map { |player| render_player(player, aga_info[player.aga_id.to_s] || {}, username: go_server_username) }
     players.join("\n\t\t")
   end
 
-  def self.render(players, aga_info)
+  def self.render(players, aga_info, go_server_username)
     <<~EOF
       <?xml version="1.0" encoding="UTF-8" standalone="no"?>
       <Tournament dataVersion="201">
         <Players>
-          #{render_players(players, aga_info)}
+          #{render_players(players, aga_info, go_server_username)}
         </Players>
       </Tournament>
     EOF

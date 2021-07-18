@@ -23,6 +23,7 @@ a pull request is a great way to become part of the team.
 1. Install the Ruby version specified in `.ruby-version`.
    - Use [rbenv][9] or [compile from source][10]
 1. Install [PostgreSQL 9.4.4+][5]
+   1. e.g. `brew install postgresql`
    1. Practice connecting using the command-line client, `psql`
       - ["permission denied"][3]
       - [Client Connection Problems][4]
@@ -35,7 +36,7 @@ a pull request is a great way to become part of the team.
       - eg. `brew install imagemagick`
       - Make sure CLI tools are on your PATH with eg. `which convert`
    1. Install ruby [gems][21] using [bundler][12]
-      1. `gem install bundler --version '1.17'`
+      1. `gem install bundler`
       1. `bundle install`
       1. If a gem fails to install, it may be missing native libraries
          1. [nokogiri][17] needs libxml2 and libxslt
@@ -53,7 +54,7 @@ a pull request is a great way to become part of the team.
    1. Do some developing!
 1. Run the tests
    1. `bin/rails db:setup`
-   1. `bin/rails db:test:prepare`
+   1. `RAILS_ENV=test bin/rails db:seed`
    1. `bin/rake` will run the tests. If they all pass, you're good to go.
 1. Submit your contribution
    1. Write a [spec][7] that describes your contribution

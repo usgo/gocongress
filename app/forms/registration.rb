@@ -102,8 +102,11 @@ class Registration
     form_plans.group_by(&:plan_category)
   end
 
+  # At the top of `registrations/new`, we say "First Attendee",
+  # "Second Attendee", etc. If you are filling out the form for your second
+  # attendee, it should say "Second Attendee".
   def attendee_number
-    @attendee.user.uncanceled_attendees.length
+    @attendee.user.uncanceled_attendees.length + 1
   end
 
   private

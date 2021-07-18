@@ -3,8 +3,11 @@
 - amnh = Attendee.model_name.human
 - xml_path = rpt_tournament_reports_path + '.xml'
 
-= form_tag(xml_path, :method => :get) do
-  %p.pull-right= submit_tag "Export"
+%ul
+  %li
+    = link_to 'Export', '#export'
+  %li
+    = link_to 'Registered Attendee Emails', '#attendee-emails'
 
 %p
   There are
@@ -40,12 +43,15 @@
             - if self_promoter(player, aga_info[:rating])
               Self-promoted
 
-%h3 Export to XML
+%h3#export Export to XML
 %p Import into OpenGotha by selecting <strong>Tournament &rarr; Import &hellip; &rarr; Import Tournament From XML File</strong>.
 = form_tag(xml_path, :method => :get) do
-  %p= submit_tag "Export"
+  %p= submit_tag "Export (Full Names)", data: { disable_with: false }
+= form_tag(xml_path, :method => :get) do
+  = hidden_field_tag :go_server_username, "username_" + @tournament.server
+  %p= submit_tag "Export (Go Server Usernames)", data: { disable_with: false }
 
-%h3 Registered Attendee Emails
+%h3#attendee-emails Registered Attendee Emails
 .email-list
   %textarea.attendee_emails{:'data-emails' => @players.map { |p| p.formatted_email }.join(', ')}
     = @players.map { |p| p.formatted_email }.join(', ')
