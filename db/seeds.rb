@@ -1,5 +1,5 @@
 # Seed the years.
-Year.create!(
+Year.find_or_create_by!(
   {
     city: 'Santa Barbara',
     date_range: 'Jul 30 - Aug 7',
@@ -15,7 +15,7 @@ Year.create!(
   }
 )
 
-Year.create!(
+Year.find_or_create_by!(
   {
     city: 'Black Mountain',
     date_range: 'August 4 - 12',
@@ -31,7 +31,7 @@ Year.create!(
   }
 )
 
-Year.create!(
+Year.find_or_create_by!(
   {
     city: 'Seattle',
     date_range: 'TBD',
@@ -47,7 +47,7 @@ Year.create!(
   }
 )
 
-Year.create!(
+Year.find_or_create_by!(
   {
     city: 'New York',
     date_range: 'August 9-17',
@@ -62,7 +62,7 @@ Year.create!(
   }
 )
 
-Year.create!(
+Year.find_or_create_by!(
   {
     city: 'Saint Paul',
     date_range: 'August 1 - 9',
@@ -77,7 +77,7 @@ Year.create!(
   }
 )
 
-Year.create!(
+Year.find_or_create_by!(
   {
     city: 'Boston',
     date_range: 'July 30 - August 7',
@@ -92,7 +92,7 @@ Year.create!(
   }
 )
 
-Year.create!(
+Year.find_or_create_by!(
   {
     city: 'San Diego',
     date_range: 'August 5 - 12',
@@ -107,7 +107,7 @@ Year.create!(
   }
 )
 
-Year.create!(
+Year.find_or_create_by!(
   {
     city: 'Williamsburg',
     date_range: 'July 21 - 28',
@@ -122,7 +122,7 @@ Year.create!(
   }
 )
 
-Year.create!(
+Year.find_or_create_by!(
   {
     city: 'Madison',
     date_range: 'July 13 - 20',
@@ -137,7 +137,7 @@ Year.create!(
   }
 )
 
-Year.create!(
+Year.find_or_create_by!(
   {
     city: 'Estes Park',
     date_range: 'August 1 - 9',
@@ -152,7 +152,7 @@ Year.create!(
   }
 )
 
-Year.create!(
+Year.find_or_create_by!(
   {
     event_type: 'online',
     date_range: 'July 17 - 24',
