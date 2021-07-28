@@ -91,7 +91,7 @@ RSpec.describe AttendeePlan, :type => :model do
         expect(build_with_dates(p)).to have_error_about :dates
       end
 
-      def build_with_dates plan
+      def build_with_dates(plan)
         build :attendee_plan, plan: plan, dates: [build(:attendee_plan_date)]
       end
     end

@@ -5,6 +5,7 @@ module Purchasable
   extend ActiveSupport::Concern
 
   included do
+    # Integer American cents. Never use floating point numbers for currency.
     validates :price, :numericality => {
       allow_nil: false,
       greater_than_or_equal_to: 0,
@@ -24,15 +25,17 @@ module Purchasable
       "Varies"
     elsif contact_msg_instead_of_price?
       "Contact the Registrar"
-    elsif self.respond_to?(:n_a) && n_a? && price.to_f == 0.0
+    elsif self.respond_to?(:n_a) && n_a? && price == 0
       "N/A"
-    elsif price.to_f == 0.0
+    elsif price == 0
       "Free"
     else
       ApplicationController.helpers.cents_to_currency(price) + price_units
     end
   end
 
+  # TODO: Slightly misleading name `price_units`. The "units" are always the
+  # same, American cents. A better name might be `price_period`.
   def price_units
     (respond_to?(:daily) && daily?) ? ' / day' : ''
   end
@@ -42,7 +45,7 @@ module Purchasable
   end
 
   module ClassMethods
-    def price_change_err_msg record
+    def price_change_err_msg(record)
       record_model_name = record.class.model_name.human.downcase
       attendee_model_name = Attendee.model_name.human.downcase
       basic_msg = " may not change, because at least one #{attendee_model_name}

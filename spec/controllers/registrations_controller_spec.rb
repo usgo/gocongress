@@ -26,7 +26,7 @@ RSpec.describe RegistrationsController, :type => :controller do
         attrs = attributes_for :attendee, :user => u
         expect {
           post :create, params: { registration: attrs, user_id: u.id, year: u.year }
-        }.to_not change { Attendee.count }
+        }.to_not(change { Attendee.count })
         expect(response).to be_forbidden
       end
     end
@@ -58,7 +58,7 @@ RSpec.describe RegistrationsController, :type => :controller do
         a = attendee_attributes.merge(:user_id => user.id)
         expect {
           post :create, params: { registration: a, user_id: user.id, year: user.year }
-        }.to change { user.attendees.count }.by(+1)
+        }.to(change { user.attendees.count }.by(+1))
         expect(response).to redirect_to \
           user_terminus_path(:user_id => user.id, :year => user.year)
       end
@@ -67,7 +67,7 @@ RSpec.describe RegistrationsController, :type => :controller do
         attrs = { :user_id => user.id }
         expect {
           post :create, params: { registration: attrs, user_id: user.id, year: user.year }
-        }.to_not change { Attendee.count }
+        }.to_not(change { Attendee.count })
         expect(response).to render_template :new
         expect(assigns(:registration).errors).not_to be_empty
         expect(assigns(:registration).attendee_number).to eq(2)
@@ -84,7 +84,7 @@ RSpec.describe RegistrationsController, :type => :controller do
         a = attendee_attributes.merge(:user_id => user_two.id)
         expect {
           post :create, params: { registration: a, user_id: user_two.id, year: user_two.year }
-        }.not_to change { Attendee.count }
+        }.not_to(change { Attendee.count })
         expect(response).to be_forbidden
       end
 
@@ -93,7 +93,7 @@ RSpec.describe RegistrationsController, :type => :controller do
         attrs[:gender] = "o"
         expect {
           post :create, params: { registration: attrs, user_id: user.id, year: user.year }
-        }.to change { Attendee.count }
+        }.to(change { Attendee.count })
         expect(assigns(:registration).errors).to_not include(:gender)
       end
 
@@ -102,19 +102,19 @@ RSpec.describe RegistrationsController, :type => :controller do
         attrs[:gender] = "zzzz" # invalid, obviously
         expect {
           post :create, params: { registration: attrs, user_id: user.id, year: user.year }
-        }.to_not change { Attendee.count }
+        }.to_not(change { Attendee.count })
         expect(assigns(:registration).errors).to include(:gender)
       end
 
       it "minors can specify the name of their guardian" do
-        uncle_creepypants = create(:attendee, :birth_date => 50.years.ago)
+        create(:attendee, :birth_date => 50.years.ago) # Uncle Creepypants
         attrs = attendee_attributes.merge(:user_id => user.id)
         attrs[:birth_date] = CONGRESS_START_DATE[Time.now.year] - 10.years
         attrs[:guardian_full_name] = "Mommy Moo"
         attrs[:understand_minor] = true
         expect {
           post :create, params: { registration: attrs, user_id: user.id, year: user.year }
-        }.to change { Attendee.count }.by(+1)
+        }.to(change { Attendee.count }.by(+1))
       end
 
       context 'plans' do
@@ -122,7 +122,7 @@ RSpec.describe RegistrationsController, :type => :controller do
           plan = create :plan
           expect {
             post :create, params: { registration: attendee_attributes, plans: { plan.id.to_s => { 'qty' => 1 } }, user_id: user.id, year: user.year }
-          }.to change { plan.attendees.count }.by(+1)
+          }.to(change { plan.attendees.count }.by(+1))
         end
 
         it "saves selected dates for a daily-rate plan" do
@@ -132,7 +132,7 @@ RSpec.describe RegistrationsController, :type => :controller do
           plan_params = { plan.id.to_s => { 'qty' => 1, 'dates' => dates } }
           expect {
             post :create, params: { registration: attendee_attributes, plans: plan_params, user_id: user.id, year: user.year }
-          }.to change { AttendeePlanDate.count }.by(dates.length)
+          }.to(change { AttendeePlanDate.count }.by(dates.length))
           expect(plan.attendee_plans.count).to eq(1)
           expect(plan.attendee_plans.first.dates.map(&:_date)).to eq( \
             dates.map { |d| Date.parse(d) }
@@ -159,7 +159,7 @@ RSpec.describe RegistrationsController, :type => :controller do
         attendee.plans << plan
         expect(attendee.get_plan_qty(plan.id)).to eq(1)
 
-        plan2 = create :plan,
+        create :plan,
           :disabled => true,
           :name => "Plan Deux", :plan_category => plan.plan_category
 
@@ -180,7 +180,7 @@ RSpec.describe RegistrationsController, :type => :controller do
     end
 
     describe "#update" do
-      def patch_update attendee_attrs = {}, opts = {}
+      def patch_update(attendee_attrs = {}, opts = {})
         patch :update, params: opts.merge(registration: attendee_attrs, id: attendee.id, year: attendee.year)
       end
 
@@ -193,7 +193,7 @@ RSpec.describe RegistrationsController, :type => :controller do
       it "updates a trivial field" do
         expect {
           patch_update given_name: 'banana'
-        }.to change { attendee.reload.given_name }
+        }.to(change { attendee.reload.given_name })
       end
 
       it "redirects to terminus if successful" do
@@ -211,7 +211,7 @@ RSpec.describe RegistrationsController, :type => :controller do
       it "does not update admin fields" do
         expect {
           patch_update comment: 'banana'
-        }.to_not change { attendee.reload.comment }
+        }.to_not(change { attendee.reload.comment })
       end
 
       it "is forbidden to update another user's attendee" do
@@ -228,8 +228,9 @@ RSpec.describe RegistrationsController, :type => :controller do
 
         it "cannot add activities to attendee belonging to someone else" do
           attendee2 = create :attendee
-          expect { update_activities(attendee2, activities) }.to_not \
+          expect { update_activities(attendee2, activities) }.to_not(
             change { attendee2.activities.count }
+          )
           expect(response.status).to eq(403)
         end
       end
@@ -237,7 +238,7 @@ RSpec.describe RegistrationsController, :type => :controller do
       context "plans" do
         let(:plan) { create :plan }
 
-        def patch_update plan
+        def patch_update(plan)
           patch :update, params: { year: plan.year, id: attendee.id, plans: { plan.id.to_s => { qty: 1 } } }
         end
 
@@ -265,7 +266,7 @@ RSpec.describe RegistrationsController, :type => :controller do
           expect(attendee.plans).to be_empty
           expect {
             submit_plans_form attendee, params_for_plan(plan, 1)
-          }.to change { attendee.plans.count }.by(+1)
+          }.to(change { attendee.plans.count }.by(+1))
           expect(attendee.reload.plans).to include(plan)
         end
 
@@ -273,7 +274,7 @@ RSpec.describe RegistrationsController, :type => :controller do
           a = create :attendee
           expect {
             submit_plans_form a, params_for_plan(plan, 1)
-          }.to_not change { a.plans.count }
+          }.to_not(change { a.plans.count })
           expect(response).to be_forbidden
         end
 
@@ -336,7 +337,7 @@ RSpec.describe RegistrationsController, :type => :controller do
         a = attendee_attributes.merge(:user_id => u.id)
         expect {
           post :create, params: { registration: a, year: u.year }
-        }.to change { u.attendees.count }.by(+1)
+        }.to(change { u.attendees.count }.by(+1))
       end
     end
 
@@ -377,7 +378,7 @@ RSpec.describe RegistrationsController, :type => :controller do
         attrs = attendee_attributes.merge({ :family_name => 'banana' })
         expect {
           patch :update, params: { id: a.id, registration: attrs, year: a.year }
-        }.to change { a.reload.family_name }
+        }.to(change { a.reload.family_name })
         expect(a.reload.family_name).to eq('banana')
       end
 
@@ -385,7 +386,7 @@ RSpec.describe RegistrationsController, :type => :controller do
         attrs = attendee_attributes.merge({ :comment => 'banana' })
         expect {
           patch :update, params: { id: a.id, registration: attrs, year: a.year }
-        }.to change { a.reload.family_name }
+        }.to(change { a.reload.family_name })
         expect(a.reload.comment).to eq('banana')
       end
 
@@ -394,7 +395,7 @@ RSpec.describe RegistrationsController, :type => :controller do
         expect(a.plans).to be_empty
         expect {
           submit_plans_form a, params_for_plan(plan, 1)
-        }.to change { a.plans.count }.by(+1)
+        }.to(change { a.plans.count }.by(+1))
       end
 
       it "allows an admin to add activities to any attendee" do
@@ -413,11 +414,11 @@ RSpec.describe RegistrationsController, :type => :controller do
     patch :update, params: params
   end
 
-  def params_for_plan plan, qty
+  def params_for_plan(plan, qty)
     { 'plans' => { plan.id.to_s => { 'qty' => qty } } }
   end
 
-  def update_activities attendee, activities
+  def update_activities(attendee, activities)
     patch :update, params: { id: attendee.id, registration: {}, activity_ids: activities.map(&:id), year: attendee.year }
   end
 end

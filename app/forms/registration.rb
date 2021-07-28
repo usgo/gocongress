@@ -28,7 +28,7 @@ class Registration
   delegate :full_name, :id, :minor?, :user_id, :year, to: :attendee
   delegate :admin?, to: :current_user
 
-  def initialize current_user, attendee
+  def initialize(current_user, attendee)
     @current_user = current_user
     @attendee = attendee
     @errors = ActiveModel::Errors.new(self)
@@ -57,7 +57,7 @@ class Registration
     Plan.quantifiable_plan_in? form_plans
   end
 
-  def submit params
+  def submit(params)
     params[:activity_ids] ||= {}
     params[:plans] ||= {}
     params[:registration] ||= {}
@@ -102,8 +102,11 @@ class Registration
     form_plans.group_by(&:plan_category)
   end
 
+  # At the top of `registrations/new`, we say "First Attendee",
+  # "Second Attendee", etc. If you are filling out the form for your second
+  # attendee, it should say "Second Attendee".
   def attendee_number
-    @attendee.user.attendees.count + 1
+    @attendee.user.uncanceled_attendees.length + 1
   end
 
   private
@@ -126,7 +129,7 @@ class Registration
       .yr(year).order('plan_categories.ordinal, plans.cat_order')
   end
 
-  def convert_radio_btn_params params
+  def convert_radio_btn_params(params)
     normalized_params = {}
     params.each do |key, value|
       if key.include?("single")
@@ -151,11 +154,11 @@ class Registration
     @_plans
   end
 
-  def merge_errors e
+  def merge_errors(e)
     e.each { |atr, err| @errors.add(atr, err) }
   end
 
-  def parse_plan_params plan_params
+  def parse_plan_params(plan_params)
     converted_params = convert_radio_btn_params(plan_params)
     Registration::PlanSelection.parse_params(converted_params, all_plans)
   end
@@ -178,7 +181,7 @@ class Registration
     true
   end
 
-  def selected_dates plan
+  def selected_dates(plan)
     ps = @plan_selections.find { |s| s.plan.id == plan.id }
     ps.nil? ? [] : ps.dates
   end
@@ -195,7 +198,7 @@ class Registration
     PlanCategory.yr(year).mandatory
   end
 
-  def mandatory_plan_cat_error category
+  def mandatory_plan_cat_error(category)
     pmnhd = Plan.model_name.human.downcase
     "Please select at least one #{pmnhd} in #{category.name}"
   end
@@ -214,7 +217,7 @@ class Registration
     end
   end
 
-  def selected_plan_categories plan_selections
+  def selected_plan_categories(plan_selections)
     plan_selections.select { |s| s.qty > 0 }.map(&:plan).map(&:plan_category)
   end
 
@@ -226,12 +229,12 @@ class Registration
     PlanCategory.yr(year).single
   end
 
-  def single_plan_category_error category
+  def single_plan_category_error(category)
     pmnhd = Plan.model_name.human.downcase
     "Please select exactly one #{pmnhd} in #{category.name}."
   end
 
-  def unselected_mandatory_plan_cats plan_selections
+  def unselected_mandatory_plan_cats(plan_selections)
     mandatory_plan_categories - selected_plan_categories(plan_selections)
   end
 
@@ -245,7 +248,7 @@ class Registration
   # `validate_disabled_plans` determines if any disabled plans
   # would be removed, added, or modified?  Admins are exempt from
   # this validation.
-  def validate_disabled_plans before, after
+  def validate_disabled_plans(before, after)
     unless admin?
       changes = FindsChangesToDisabledPlans.new(before, after)
       @errors[:base].concat(changes.removal_errors)
@@ -253,13 +256,13 @@ class Registration
     end
   end
 
-  def validate_mandatory_plan_cats selections
+  def validate_mandatory_plan_cats(selections)
     unselected_mandatory_plan_cats(selections).each do |c|
       @errors[:base] << mandatory_plan_cat_error(c)
     end
   end
 
-  def validate_models models
+  def validate_models(models)
     models.reject(&:valid?).each do |m|
       m.errors.each do |atr, msg|
         @errors[:base] << "#{m.class}: #{atr}: #{msg}"
@@ -267,7 +270,7 @@ class Registration
     end
   end
 
-  def validate_single_plan_categories selections
+  def validate_single_plan_categories(selections)
     single_plan_categories.each do |c|
       if selected_plan_count(c, selections) > 1
         @errors[:base] << single_plan_category_error(c)

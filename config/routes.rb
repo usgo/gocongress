@@ -131,6 +131,7 @@ Gocongress::Application.routes.draw do
         # The "rpt" namespace has one controller for each report.
         # This replaces the deprecated reports_controller.
         namespace :rpt do
+          resource :unconfirmed_user_report, :only => :show
           resource :attendeeless_user_report, :only => :show
           resource :outstanding_balance_report, :only => :show
           resource :minor_agreements_report, :only => :show

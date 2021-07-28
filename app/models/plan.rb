@@ -53,7 +53,7 @@ class Plan < ApplicationRecord
   validates :needs_staff_approval, :inclusion => { :in => [true, false] }
 
   validates_each :price do |record, attr, value|
-    if record.needs_staff_approval? && record.price != 0.0
+    if record.needs_staff_approval? && record.price != 0
       record.errors.add(attr, " must be zero for plans that need
       staff approval (see instructions).")
     end
@@ -77,13 +77,13 @@ class Plan < ApplicationRecord
 
   # `inventoried_plan_in?` returns true if the supplied plan array
   # contains at least one plan with an inventory.
-  def self.inventoried_plan_in? plans
+  def self.inventoried_plan_in?(plans)
     plans.map { |p| p.inventory.present? }.include? true
   end
 
   # `quantifiable_plan_in?` returns true if the supplied plan array
   # contains at least one plan with a max_quantity > 1.
-  def self.quantifiable_plan_in? plans
+  def self.quantifiable_plan_in?(plans)
     plans.map { |p| p.max_quantity > 1 }.include? true
   end
 

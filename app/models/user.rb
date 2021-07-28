@@ -62,12 +62,16 @@ class User < ApplicationRecord
 
   # Class Methods
   # -------------
-  def self.email_range min, max
+  def self.email_range(min, max)
     where('lower(substr(email, 1, 1)) between ? and ?', min, max)
   end
 
   def self.confirmed
     where.not(:confirmed_at => nil)
+  end
+
+  def self.unconfirmed
+    where(:confirmed_at => nil)
   end
 
   # Instance Methods
@@ -121,6 +125,10 @@ class User < ApplicationRecord
 
   def role_name
     ROLES.select { |r| r[1] == role }.first[0]
+  end
+
+  def uncanceled_attendees
+    attendees.reject { |attendee| attendee.cancelled }
   end
 
   # Override the built-in devise method update_with_password()

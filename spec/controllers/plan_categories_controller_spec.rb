@@ -22,7 +22,7 @@ RSpec.describe PlanCategoriesController, :type => :controller do
         sign_in create(:admin)
         expect {
           delete :destroy, params: { id: cat.id, year: cat.year }
-        }.to_not change { PlanCategory.count }
+        }.to_not(change { PlanCategory.count })
         expect(flash[:alert]).to include "Cannot delete the '#{cat.name}' category"
       end
     end

@@ -27,3 +27,8 @@
                 %td= a.full_name
                 %td= a.rank_name
                 %td.numeric= a.age_in_years.to_i
+
+        %h3 Registered Attendee Emails
+        .email-list
+          %textarea.attendee_emails{:'data-emails' => e.attendees.order('family_name').map { |p| p.formatted_email }.join(', ')}
+            = e.attendees.order('family_name').map { |p| p.formatted_email }.join(', ')

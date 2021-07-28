@@ -7,7 +7,7 @@ RSpec.describe DailyPlanCsvExporter do
       csd = CONGRESS_START_DATE[year]
       p1 = create :plan, daily: true, name: 'Plan 1'
       p2 = create :plan, daily: true, disabled: false, name: 'Plan 2'
-      p3 = create :plan, daily: false
+      create :plan, daily: false # p3
       a1 = create :attendee, alternate_name: 'Alternate Name'
       a1ap1 = create :attendee_plan, attendee: a1, plan: p1
       a1ap2 = create :attendee_plan, attendee: a1, plan: p2
@@ -37,11 +37,11 @@ RSpec.describe DailyPlanCsvExporter do
       expect(ary[1][6]).to eq(format_date_range(a1ap2d1._date..a1ap2d1._date))
     end
 
-    def format_date d
+    def format_date(d)
       d.strftime '%-m/%-d'
     end
 
-    def format_date_range rng
+    def format_date_range(rng)
       "#{format_date(rng.begin)} to #{format_date(rng.end)}"
     end
   end

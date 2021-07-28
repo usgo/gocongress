@@ -70,7 +70,7 @@ class RegistrationsController < ApplicationController
     @show_availability = @registration.show_availability
   end
 
-  def redirect_to_terminus flash_notice
+  def redirect_to_terminus(flash_notice)
     flash[:notice] = flash_notice
     redirect_to user_terminus_path(:user_id => @registration.user_id)
   end

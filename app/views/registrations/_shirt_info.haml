@@ -1,15 +1,16 @@
-%fieldset
-  .field.flex
-    %div.field-key
-      = f.label :tshirt_size, trl_attr(:attendee, :tshirt_size) + ' *'
-    %div.field-value
-      = f.select :tshirt_size, Shirt::SIZES, :include_blank => ''
-
-  -if !ShirtMenu.shirts(@year, @registration.shirt_id).empty?
+-if @year.shirt
+  %fieldset
     .field.flex
       %div.field-key
-        = f.label :shirt_id, 'Shirt Style'
+        = f.label :tshirt_size, trl_attr(:attendee, :tshirt_size) + ' *'
       %div.field-value
-        = ShirtMenu.to_html(f, @year, @registration.shirt_id)
-        %div.field-help-text
-          = link_to 'Details', shirts_path, :target => '_blank'
+        = f.select :tshirt_size, Shirt::SIZES, :include_blank => ''
+
+    -if !ShirtMenu.shirts(@year, @registration.shirt_id).empty?
+      .field.flex
+        %div.field-key
+          = f.label :shirt_id, 'Shirt Style'
+        %div.field-value
+          = ShirtMenu.to_html(f, @year, @registration.shirt_id)
+          %div.field-help-text
+            = link_to 'Details', shirts_path, :target => '_blank'

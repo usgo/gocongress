@@ -108,6 +108,13 @@
   %fieldset
     .field.flex
       %div.field-key
+        = f.label :shirt
+      %div.field-value
+        = f.check_box :shirt
+        %div.field-help-text Will this Congress have a T-shirt for attendees?
+
+    .field.flex
+      %div.field-key
         = f.label :ordinal_number
       %div.field-value
         = f.number_field :ordinal_number, :size => 3

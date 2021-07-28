@@ -6,7 +6,7 @@
 # -Jared Beck 2013-06-07
 #
 class Puller
-  def initialize args
+  def initialize(args)
     die(usage) unless args.length == 2
     @app_name = args[0]
     @local_db_name = args[1]
@@ -18,7 +18,7 @@ class Puller
     end
   end
 
-  def die msg
+  def die(msg)
     $stderr.puts msg
     exit($?.to_i || 1)
   end

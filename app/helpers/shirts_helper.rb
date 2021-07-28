@@ -1,5 +1,5 @@
 module ShirtsHelper
-  def link_to_delete shirt
+  def link_to_delete(shirt)
     link_to 'Delete',
       shirt_path(shirt),
       :method => :delete,

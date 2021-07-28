@@ -7,7 +7,7 @@ class Rpt::TournamentReportsController < Rpt::AbstractReportController
     @tournament = Tournament.yr(@year).find(params[:id])
     @page_title = @tournament.name
 
-    @players = @tournament.attendees.where(:cancelled => false)
+    @players = @tournament.attendees.where(:cancelled => false).order('rank DESC')
 
     @aga_member_info = AGATDList.data
 
@@ -17,7 +17,7 @@ class Rpt::TournamentReportsController < Rpt::AbstractReportController
         render :show
       end
       format.xml do
-        xml = PlayersXmlExporter.render(@players, @aga_member_info)
+        xml = PlayersXmlExporter.render(@players, @aga_member_info, params['go_server_username'])
         send_data xml, filename: xml_filename, type: 'text/xml'
       end
     end

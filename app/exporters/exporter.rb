@@ -16,13 +16,13 @@ class Exporter
 
   protected
 
-  def sql filename_no_ext
+  def sql(filename_no_ext)
     File.read sql_path filename_no_ext
   end
 
   private
 
-  def assert_pg_connection conn
+  def assert_pg_connection(conn)
     unless conn.instance_of?(PG::Connection)
       raise "Expected PG::Connection, got #{conn.class.name}"
     end
@@ -34,7 +34,7 @@ class Exporter
     end
   end
 
-  def sql_path filename_no_ext
+  def sql_path(filename_no_ext)
     File.join(File.dirname(__FILE__), filename_no_ext + '.sql')
   end
 end

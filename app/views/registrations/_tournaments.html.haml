@@ -22,7 +22,7 @@
             %p
               = t.server_name
               %br
-              = f.text_field :"username_#{t.server}", { :id => nil, :class => "registration_username_#{t.server}", :placeholder => "username"}
+              = f.text_field :"username_#{t.server}", { :id => nil, :class => "registration_username_#{t.server}", :placeholder => "username", :'data-lpignore' => "true", :autocomplete => "off"}
         
 
         %div.location
@@ -51,6 +51,7 @@
     const usernameInputs = document.querySelectorAll("[class^='registration_username']");
 
     const onValid = (input, statusElement, message = 'Username found &check;') => {
+      input.classList.remove('invalid');
       input.classList.add('valid');
       statusElement.innerHTML = message;
     }
@@ -71,6 +72,12 @@
     }
 
     const validateUsername = async event => {
+      // Deactivate validation for KGS. Currently, it throttles repeated
+      // requests too aggressively for this feature to work consistently.
+      if (event.target.classList.contains('registration_username_kgs')) {
+        return;
+      }
+
       // Don't try to to validate a username if the service has come back
       // unavailable
       if (event.target.classList.contains('unavailable')) {
@@ -176,7 +183,8 @@
       usernameInput.addEventListener('keyup', event => {
         selectThisTournament(event);
         updateOtherInputs(event);
-        // Make sure not to fire requests to validating servers to frequently
-        debounce(validateUsername, 500)(event);
       });
+
+      // Make sure not to fire requests to validating servers to frequently
+      usernameInput.addEventListener('keyup', debounce(validateUsername, 500));
     });

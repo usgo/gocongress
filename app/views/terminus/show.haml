@@ -1,7 +1,7 @@
 %h2 What next?
 %p
   You have
-  = pluralize(@user.attendees.count, 'attendee')
+  = pluralize(@user.uncanceled_attendees.length, 'attendee')
   on your account.
   
   - if @user.balance > 0

@@ -33,7 +33,7 @@ RSpec.describe Rpt::BadgeReportsController, aga_td_list_mock: true, :type => :co
 
       3.times { |i|
         # No plans!
-        new_attendee = create :attendee
+        create :attendee
       }
 
       3.times { |i|

@@ -13,7 +13,7 @@ class UpdateTimesToUtc < ActiveRecord::Migration
 
   private
 
-  def update_times operator
+  def update_times(operator)
     # 2011 times need to have seven hours added (PDT)
     # 2012 times need four hours added (EDT)
     ts_cols.each do |table, cols|

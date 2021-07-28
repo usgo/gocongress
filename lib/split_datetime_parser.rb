@@ -4,7 +4,7 @@ module SplitDatetimeParser
   # hash, combine them, and return an instance of
   # `ActiveSupport::TimeWithZone`.  If an invalid date or time
   # format is found, exceptions are raised.
-  def parse_split_datetime hash, prefix
+  def parse_split_datetime(hash, prefix)
     prefix_for_msg = prefix.to_s.humanize.downcase
 
     d = hash[:"#{prefix}_date"]
