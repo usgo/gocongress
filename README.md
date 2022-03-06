@@ -80,7 +80,7 @@ See doc/smtp.md
 ### Received by gocongress.org staff
 
 Email for accounts in the gocongress.org domain is managed through
-Google Apps. steve.colburn@usgo.org has access to manage these accounts.
+Google Apps. nate.eagle@usgo.org has access to manage these accounts.
 
 ## Thanks
 
