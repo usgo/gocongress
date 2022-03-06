@@ -85,7 +85,8 @@ class Year < ApplicationRecord
     {
       2011 => [:aga, :kaba, :kgs],
       2012 => [:aga, :agf, :confucius, :jpga, :kaba, :pandanet, :slate_and_shell, :tygem],
-      2020 => [:aga, :agf]
+      2020 => [:aga, :agf],
+      2022 => [:aga]
     }
   end
 end
