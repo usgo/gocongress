@@ -1,0 +1,11 @@
+@import "variables";
+@import "../main";
+
+.covid19-update,
+.alert {
+  background: hsl(0, 50%, 30%);
+  color: hsla(0, 0%, 100%, 0.9);
+  overflow: hidden;
+  padding: 1em !important;
+  margin-top: 1em;
+}

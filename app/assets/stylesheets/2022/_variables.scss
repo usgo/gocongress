@@ -1,0 +1,23 @@
+$brand-primary: hsl(151.9, 100%, 28%);
+$main-bg-color: #008f4d;
+$nav-bg-color: hsl(151.9, 100%, 12.5%);
+$nav-bg-highlight-color: hsl(151.9, 100%, 20%);
+$admin-nav-bg-color: hsl(192.1, 84.6%, 44.1%);
+$admin-nav-bg-highlight-color: hsl(192.1, 84.6%, 50%);
+
+$link-color: hsl(200, 100%, 50%);
+$link-color-visited: hsl(200, 20%, 50%);
+
+$box-bg-dark: lighten($brand-primary, 10%);
+$box-bg: $brand-primary;
+$box-bg-light: lighten($brand-primary, 60%);
+$box-bg-lighter: lighten($brand-primary, 65%);
+
+$button-bg: $brand-primary;
+$button-bg-emphasis: hsl(100, 50%, 50%);
+$button-bg-highlight: lighten($brand-primary, 5%);
+
+$logo-width: 200px;
+// Adjustments for not perfectly square logos
+$logo-padding-top: 5px;
+$logo-padding-bottom: 10px;
