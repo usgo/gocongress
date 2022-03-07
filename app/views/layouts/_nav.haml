@@ -29,7 +29,7 @@
       - if @year.year != 2019 || current_user_is_admin?
         %li= link_to "Costs", costs_path
       - @content_categories_for_menu.each do |c|
-        - if c.url
+        - if !c.url.empty?
           %li= link_to c.name, c.url
         - else
           %li= link_to c.name, c
