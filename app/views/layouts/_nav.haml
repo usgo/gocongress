@@ -16,7 +16,7 @@
       - @tournaments_for_nav_menu.each do |t|
         %li= link_to t.name, t
       %li
-        - tournaments_plural_phrase = @tournaments_for_nav_menu.empty? ? "Tournaments" : "All Tournaments"
+        - tournaments_plural_phrase = @tournaments_for_nav_menu.blank? ? "Tournaments" : "All Tournaments"
         = link_to tournaments_plural_phrase, tournaments_path
 
       -# Activities
