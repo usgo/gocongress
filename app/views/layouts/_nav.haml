@@ -16,7 +16,7 @@
       - @tournaments_for_nav_menu.each do |t|
         %li= link_to t.name, t
       %li
-        - tournaments_plural_phrase = @tournaments_for_nav_menu.blank? ? "Tournaments" : "All Tournaments"
+        - tournaments_plural_phrase = @tournaments_for_nav_menu.empty? ? "Tournaments" : "All Tournaments"
         = link_to tournaments_plural_phrase, tournaments_path
 
       -# Activities
@@ -29,10 +29,10 @@
       - if @year.year != 2019 || current_user_is_admin?
         %li= link_to "Costs", costs_path
       - @content_categories_for_menu.each do |c|
-        - if !c.url.empty?
-          %li= link_to c.name, c.url
-        - else
+        - if c.url && c.url.empty?
           %li= link_to c.name, c
+        - else
+          %li= link_to c.name, c.url
       - if @year.year == 2016
         %li= link_to "Schedule", "http://live.gocongress.org/"
       %li= link_to "Contact / Volunteer", contacts_path
