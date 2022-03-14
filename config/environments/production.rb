@@ -58,9 +58,10 @@ Rails.application.configure do
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
   # config.force_ssl = true
 
-  # Use the lowest log level to ensure availability of diagnostic information
-  # when problems arise.
-  config.log_level = :debug
+  # Use the default log level for production (:info) to strike a balance between
+  # auditability of events and log size. This used to be on :debug, but we were
+  # exceeding the limits of Papertrail's free tier on a regular basis.
+  config.log_level = :info
 
   # Disable delivery errors, bad email addresses will be ignored.
   config.action_mailer.raise_delivery_errors = false
