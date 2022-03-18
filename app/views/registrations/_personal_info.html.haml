@@ -36,6 +36,21 @@
     - else
       = f.date_select :birth_date, :start_year => @year.year, :end_year => @year.year - 18, :include_blank => true
 
+  - if @year.vaccination_proof_required
+    = render :layout => 'shared/field',
+    :locals => { :field => f, :attribute => :vaccination_proof, :required => false } do
+      .field
+        - if !@registration.vaccination_proof.blank?
+          = link_to 'Proof of Vaccination', "#{@registration.vaccination_proof}", :target => '_blank'
+          %br
+        = f.file_field :vaccination_proof, :required => false
+        %div.field-help-text
+          I understand that the congress is requiring all attendees age six and
+          older to be vaccinated (unless contraindicated).  Proof of vaccination
+          must be provided in this form no later than May 26th.  See the
+          =link_to 'Covid-19 page', '/2022/content_categories/128'
+          for more information.
+
   - if params[:type] == "youth"
     - if @year.in_person?
       = render :layout => 'shared/field',

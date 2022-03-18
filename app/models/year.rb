@@ -28,6 +28,7 @@ class Year < ApplicationRecord
     # Set default values
     self.event_type ||= :in_person
     self.mailing_list_link ||= :'http://eepurl.com/bC8CBX'
+    self.vaccination_proof_required ||= false
   end
 
   def circular_logo?

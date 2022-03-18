@@ -36,6 +36,7 @@ en:
         phone: "Phone"
         state: "State (if in the U.S.)"
         tshirt_size: "T-Shirt Size"
+        vaccination_proof: "Proof of Vaccination"
         zip: "Zip/Postal Code"
         rank: "Rank"
         email: "Email Address"
@@ -97,6 +98,7 @@ en:
         shirt: "Attendee T-shirt?"
         reply_to_email: "Reply-To Email"
         twitter_url: "Twitter URL"
+        vaccination_proof_required: "Vaccination Proof Required?"
     models:
       activity: "Activity"
       activity_category: "Activity Category"

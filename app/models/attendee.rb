@@ -3,6 +3,8 @@ require "invoice_item"
 class Attendee < ApplicationRecord
   include YearlyModel
 
+  mount_uploader :vaccination_proof, VaccinationProofUploader
+
   # Attributes
   # ----------
 

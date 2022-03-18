@@ -28,6 +28,7 @@
     - else
       = f.date_select :birth_date, :start_year => @year.year, :end_year => @year.year - 18, :include_blank => true
     %span.smalltext (to identify minors)
+  
   - if params[:type] == "youth"
     .field
       = f.label :understand_minor, 'Youth Attendance Agreement<br />(for minors)'.html_safe

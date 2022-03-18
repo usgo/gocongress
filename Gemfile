@@ -27,6 +27,8 @@ gem 'stripe'
 gem 'stripe_event'
 gem 'twilio-ruby'
 gem 'uglifier'
+gem 'carrierwave', '~> 2.0'
+gem 'fog-aws'
 
 group :development do
   gem 'colorize'

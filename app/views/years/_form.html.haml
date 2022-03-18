@@ -145,6 +145,12 @@
       %div.field-value
         = f.text_field :twitter_url
 
+    .field.flex 
+      %div.field-key
+        = f.label :vaccination_proof_required
+      %div.field-value
+        = f.check_box :vaccination_proof_required
+
     .field.flex
       %div.field-key
         = f.label :registration_phase
