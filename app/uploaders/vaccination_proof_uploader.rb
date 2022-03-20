@@ -36,7 +36,7 @@ class VaccinationProofUploader < CarrierWave::Uploader::Base
   # Add an allowlist of extensions which are allowed to be uploaded.
   # For images you might use something like this:
   def extension_allowlist
-    %w[jpg jpeg gif png pdf doc docx]
+    %w[heic jpg jpeg gif png pdf doc docx]
   end
 
   # Override the filename of the uploaded files:
