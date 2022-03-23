@@ -13,6 +13,8 @@ StripeEvent.signing_secret = ENV['STRIPE_SIGNING_SECRET']
 
 # Using `reloader.to_prepare` per
 # https://github.com/integrallis/stripe_event/issues/134
-StripeEvent.configure do |events|
-  events.subscribe 'charge.', Stripe::ChargeEventHandler.new
+Rails.application.reloader.to_prepare do
+  StripeEvent.configure do |events|
+    events.subscribe 'charge.', Stripe::ChargeEventHandler.new
+  end
 end

@@ -18,6 +18,9 @@ module Stripe
 
     def handle_charge_succeeded(event)
       Transaction.create_from_stripe_webhook(event.data.object)
+
+      # Return a 200 status code
+      render :text => '{}', :status => :ok
     end
   end
 end
