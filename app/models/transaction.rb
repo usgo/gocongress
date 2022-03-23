@@ -88,6 +88,7 @@ class Transaction < ApplicationRecord
     t.gwtranid = data.id
     t.receipt_url = data.receipt_url
     t.gwdate = Date.current
+    t.updated_by_user = user
     t.save!
   end
 
