@@ -2,7 +2,7 @@
   = hidden_field_tag 'user_id', current_user.id
 
   %h2 Make a Payment
-  %table.lightweight
+  %table#payment.lightweight
     %tbody
       %tr
         %th Total cost
@@ -15,9 +15,9 @@
       %tr
         %th Balance
         %td.numeric= cents_to_currency @user.balance
-      %tr
+      %tr.payment
         %th Payment Amount
-        %td.align-right
+        %td
           $
           %input.align-right{ :type => "text", :size => "8", :name => "amount", :id => "amount", :value => cents_to_currency(@user.balance, unit: '') }
       %tr

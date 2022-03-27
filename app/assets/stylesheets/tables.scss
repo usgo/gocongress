@@ -146,3 +146,30 @@ table.bleached {
     background-color: white;
   }
 }
+
+// Specific styling for the "Make a Payment" table
+table#payment {
+  th {
+    text-align: right;
+  }
+  
+  tr.payment {
+    th, td {
+      padding-top: 10px;
+    }
+  }
+
+  input#amount {
+    $border-width: 3px;
+    border: $border-width solid $link-color;
+    border-radius: 3px;
+    $spacing: 5px;
+    padding: $spacing;
+    margin: {
+      top: -$spacing;
+      right: -$spacing - $border-width;
+      bottom: -$spacing;
+      left: 0;
+    }
+  }
+}
