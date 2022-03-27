@@ -44,12 +44,29 @@
           = link_to 'Proof of Vaccination', "#{@registration.vaccination_proof}", :target => '_blank'
           %br
         = f.file_field :vaccination_proof, :required => false
+
+        -# Having this hard-coded, especially with a year-specific link, is
+        -# pretty rough. Hopefully this feature will be obselete and never
+        -# relevant again, but if it's not, we'll need to re-factor to make this
+        -# more flexible.
         %div.field-help-text
           I understand that the congress is requiring all attendees age six and
           older to be vaccinated (unless contraindicated).  Proof of vaccination
           must be provided in this form no later than May 26th.  See the
           =link_to 'Covid-19 page', '/2022/content_categories/128'
           for more information.
+
+  - if @year.covid_policy_url.present?
+    = render :layout => 'shared/field',
+    :locals => { :field => f, :attribute => :agree_to_covid_policy, :required => true } do
+      %label
+        = f.check_box :agree_to_covid_policy, :required => true
+        %div.field-help-text 
+          I have read and agree to the
+          = link_to 'Covid-19 Policy', @year.covid_policy_url, :target => '_blank'
+          for this event, and I
+          understand both the health and cancellation risks.
+
 
   - if params[:type] == "youth"
     - if @year.in_person?

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_18_021425) do
+ActiveRecord::Schema.define(version: 2022_03_27_133359) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -116,6 +116,7 @@ ActiveRecord::Schema.define(version: 2022_03_18_021425) do
     t.string "username_igs"
     t.string "username_ogs"
     t.string "vaccination_proof"
+    t.boolean "agree_to_covid_policy", default: false
     t.index ["id", "year"], name: "index_attendees_on_id_and_year", unique: true
     t.index ["user_id"], name: "index_attendees_on_user_id"
   end
@@ -363,6 +364,7 @@ ActiveRecord::Schema.define(version: 2022_03_18_021425) do
     t.string "mailing_list_link"
     t.boolean "shirt", default: true
     t.boolean "vaccination_proof_required", default: false
+    t.string "covid_policy_url"
     t.index ["year"], name: "index_years_on_year", unique: true
   end
 

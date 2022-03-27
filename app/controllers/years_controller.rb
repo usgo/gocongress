@@ -28,6 +28,7 @@ class YearsController < ApplicationController
       :ordinal_number, :refund_policy, :registration_phase, :reply_to_email,
       :shirt, :start_date, :state, :timezone, :twitter_url,
       :vaccination_proof_required, :venue_name, :venue_address, :venue_city,
-      :venue_state, :venue_zip, :venue_url, :venue_phone, :mailing_list_link)
+      :venue_state, :venue_zip, :venue_url, :venue_phone, :mailing_list_link,
+      :covid_policy_url)
   end
 end

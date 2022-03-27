@@ -110,8 +110,9 @@
       %div.field-key
         = f.label :shirt
       %div.field-value
-        = f.check_box :shirt
-        %div.field-help-text Will this Congress have a T-shirt for attendees?
+        %label
+          = f.check_box :shirt
+          %span.field-help-text Will this Congress have a T-shirt for attendees?
 
     .field.flex
       %div.field-key
@@ -145,18 +146,28 @@
       %div.field-value
         = f.text_field :twitter_url
 
-    .field.flex 
-      %div.field-key
-        = f.label :vaccination_proof_required
-      %div.field-value
-        = f.check_box :vaccination_proof_required
-
     .field.flex
       %div.field-key
         = f.label :registration_phase
       %div.field-value
         = f.select :registration_phase, @reg_phase_opts
         %div.field-help-text Plan categories are fixed during the registration period.
+
+  %h3 COVID-19
+  %fieldset
+    .field.flex 
+      %div.field-key
+        = f.label :vaccination_proof_required
+      %div.field-value
+        %label
+          =f.check_box :vaccination_proof_required
+          %span.field-help-text Include a required upload for vaccination proof as part of registration.
+
+    .field.flex
+      %div.field-key
+        = f.label :covid_policy_url
+      %div.field-value
+        = f.text_field :covid_policy_url
 
   %fieldset
     .field

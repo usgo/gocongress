@@ -22,7 +22,7 @@ class Registration
               :guardian_full_name, :phone, :rank, :receive_sms, :roomate_request,
               :special_request, :shirt_id, :state, :tshirt_size, :understand_minor,
               :comment, :minor_agreement_received, :username_kgs, :username_igs,
-              :username_ogs, :vaccination_proof]
+              :username_ogs, :vaccination_proof, :agree_to_covid_policy]
 
   delegate(*ATD_ATRS, to: :attendee)
   delegate :full_name, :id, :minor?, :user_id, :year, to: :attendee
