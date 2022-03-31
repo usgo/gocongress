@@ -49,7 +49,7 @@ RSpec.describe Attendee::WhoIsComing, :type => :model do
       expect(Attendee::WhoIsComing.new(adult.year, 'online').public_list).not_to include(not_old_enough, child)
     end
 
-    it 'returns attendees of users that paid at least $70 and have at least one plan' do
+    it 'returns attendees of users that paid at least $100 and have at least one plan' do
       year = Date.current.year
       csd = CONGRESS_START_DATE[year]
       pc1 = create :plan_category, mandatory: true

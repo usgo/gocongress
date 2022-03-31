@@ -37,8 +37,8 @@ where attendees.year = :year and attendees.cancelled = false
     -- must have at least one plan
     plan_count.n > 0
 
-    -- credits minus debits must be at least $70
-    and coalesce(credits.total, 0) - coalesce(debits.total, 0) >= 7000
+    -- credits minus debits must be at least $100
+    and coalesce(credits.total, 0) - coalesce(debits.total, 0) >= 10000
 
     -- exclude cancelled attendees
     and not exists (

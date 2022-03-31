@@ -14,14 +14,9 @@
       - if @who_is_coming.unregistered_count > 0
         :plain
           Also, #{usgc_pluralize(@who_is_coming.unregistered_count)} other
-          #{usgc_pluralize(@who_is_coming.unregistered_count, 'person')}
+          #{@who_is_coming.unregistered_count == 1 ? 'person' : 'people'}
           #{@who_is_coming.unregistered_count == 1 ? 'has' : 'have'} not
-          finished their registration.
-      
-      - if @year.event_type == "in_person"
-        :plain
-          A payment of at least $70 must be made for an attendee to appear on
-          this list.
+          finished their registration #{@year.event_type == "in_person" ? 'by making a deposit > $100' : ''}.
 
     - unless anyone_signed_in?
       %p
