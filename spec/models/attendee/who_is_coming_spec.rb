@@ -33,19 +33,19 @@ RSpec.describe Attendee::WhoIsComing, :type => :model do
       create :tr_sale, amount: 40000, user: u
 
       # Regular list includes the adult
-      expect(Attendee::WhoIsComing.new(adult.year, 'in-person').attendees).to include(adult, old_enough)
+      expect(Attendee::WhoIsComing.new(adult.year, 'in_person').attendees).to include(adult, old_enough)
       expect(Attendee::WhoIsComing.new(adult.year, 'online').attendees).to include(adult, old_enough)
 
       # Public list includes the adult
-      expect(Attendee::WhoIsComing.new(adult.year, 'in-person').public_list).to include(adult, old_enough)
+      expect(Attendee::WhoIsComing.new(adult.year, 'in_person').public_list).to include(adult, old_enough)
       expect(Attendee::WhoIsComing.new(adult.year, 'online').public_list).to include(adult, old_enough)
 
       # Regular list includes the minors
-      expect(Attendee::WhoIsComing.new(adult.year, 'in-person').attendees).to include(not_old_enough, child)
+      expect(Attendee::WhoIsComing.new(adult.year, 'in_person').attendees).to include(not_old_enough, child)
       expect(Attendee::WhoIsComing.new(adult.year, 'online').attendees).to include(not_old_enough, child)
 
       # Public list EXCLUDES the minors
-      expect(Attendee::WhoIsComing.new(adult.year, 'in-person').public_list).not_to include(not_old_enough, child)
+      expect(Attendee::WhoIsComing.new(adult.year, 'in_person').public_list).not_to include(not_old_enough, child)
       expect(Attendee::WhoIsComing.new(adult.year, 'online').public_list).not_to include(not_old_enough, child)
     end
 

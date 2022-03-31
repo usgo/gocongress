@@ -59,21 +59,22 @@ class Attendee::WhoIsComing < ApplicationController
   def summary_sentence
     # Construct a summary sentence with correct grammar and punctuation for a
     # list with a variable number of items.
-    summary_sentence = "There are #{helpers.usgc_pluralize(count, '')} people registered"
+    summary_sentence = "There #{count == 1 ? 'is' : 'are'} #{helpers.usgc_pluralize(count, '')} "
+    summary_sentence += "#{count == 1 ? 'person' : 'people'} registered"
     summary_sentence += " from #{helpers.usgc_pluralize(countries_count, 'country')}"
     summary_sentence += ", including "
 
     summary_components = [
-      helpers.usgc_pluralize(kyu_count, 'kyu player'),
-      helpers.usgc_pluralize(dan_count, 'dan player'),
-      helpers.usgc_pluralize(minor_count, 'minor') + ' (not listed below)'
+      kyu_count > 0 ? helpers.usgc_pluralize(kyu_count, 'kyu player') : nil,
+      dan_count > 0 ? helpers.usgc_pluralize(dan_count, 'dan player') : nil,
+      minor_count > 0 ? helpers.usgc_pluralize(minor_count, 'minor') + ' (not listed below)' : nil
     ]
 
     if pro_count > 0
       summary_components.push(helpers.usgc_pluralize(pro_count, 'pro'))
     end
 
-    summary_sentence + summary_components.to_sentence + '.'
+    summary_sentence + summary_components.compact.to_sentence + '.'
   end
 
   private

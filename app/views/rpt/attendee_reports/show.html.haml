@@ -5,7 +5,7 @@
 - csv_path = rpt_attendee_report_path + '.csv'
 
 %p
-  There are
+  There #{@user_count == 1 ? 'is' : 'are'}#{' '}
   = link_to pluralize(@user_count, umnh.downcase), users_path
   and
   = pluralize(@attendees.count, amnh.downcase) + ' (' + pluralize(@cancelled_attendee_count, 'cancellation') + ').'

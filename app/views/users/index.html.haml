@@ -13,18 +13,25 @@
   Do not promote too many of either.
 
 %p
-  There are
+  There
+  = @users.length == 1 ? 'is' : 'are'
   %strong= usgc_pluralize(@users.length, 'user')
   registered, with
   %strong
     - attendees = @users.reduce(0) { |sum, user| sum + user.uncanceled_attendees.length}
     = usgc_pluralize(attendees, 'attendee') + '.'
-  %strong
-    - incomplete = @users.reduce(0) { |sum, user| user.attendees.length > 0 ? sum : sum + 1 }
-    = usgc_pluralize(incomplete, 'user account').capitalize
-  #{incomplete == 1 ? "does" : "do"} not yet have any registered attendees.
-  = usgc_pluralize(@unconfirmed_users.length, 'user').capitalize
-  never confirmed their accounts.
+
+  - incomplete = @users.reduce(0) { |sum, user| user.attendees.length > 0 ? sum : sum + 1 }
+
+  - if incomplete > 0
+    %strong
+      = usgc_pluralize(incomplete, 'user account').capitalize
+    #{incomplete == 1 ? 'does' : 'do'} not yet have any registered attendees.
+
+  - if @unconfirmed_users.length > 0
+    = usgc_pluralize(@unconfirmed_users.length, 'user').capitalize
+    never confirmed their
+    #{@unconfirmed.users.length === 1 ? 'account' : 'accounts'}.
 
 
 - if can? :create, User

@@ -2,7 +2,7 @@
 %p
   A <strong>daily plan</strong> allows <strong>attendees</strong> to
   pick a set of dates, and charges a daily rate.
-  There are #{@num_daily_plans} daily plans.
+  There #{@num_daily_plans == 1 ? 'is' : 'are'} #{@num_daily_plans} daily plans.
   This report will show the first selected date for each attendee/plan.
   Registrars can use this report to find attendees who have selected
   unusual or mismatched dates.
