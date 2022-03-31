@@ -31,7 +31,7 @@
   - if @unconfirmed_users.length > 0
     = usgc_pluralize(@unconfirmed_users.length, 'user').capitalize
     never confirmed their
-    #{@unconfirmed.users.length === 1 ? 'account' : 'accounts'}.
+    #{@unconfirmed_users.length === 1 ? 'account' : 'accounts'}.
 
 
 - if can? :create, User
