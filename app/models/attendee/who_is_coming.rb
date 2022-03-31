@@ -11,7 +11,7 @@ class Attendee::WhoIsComing < ApplicationController
 
   attr_reader :attendees
 
-  def initialize(year, event_type = 'in-person', sort = nil, direction = 'asc')
+  def initialize(year, event_type = 'in_person', sort = nil, direction = 'asc')
     super()
     @year = year
     @event_type = event_type
