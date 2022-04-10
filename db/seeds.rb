@@ -168,12 +168,14 @@ Year.find_or_create_by!(
 
 Year.find_or_create_by!(
   {
+    city: 'Estes Park',
     date_range: 'July 30 - August 7',
     day_off_date: Date.new(2022, 8, 3),
     ordinal_number: 38,
     registration_phase: 'closed',
     reply_to_email: 'webmaster@gocongress.org',
     start_date: Date.new(2022, 7, 30),
+    state: 'CO',
     timezone: 'Eastern Time (US & Canada)',
     year: 2022
   }
