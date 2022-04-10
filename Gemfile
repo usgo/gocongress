@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '2.7.3'
+ruby '3.0.3'
 
 gem 'authorizenet'
 gem 'bootsnap', require: false
