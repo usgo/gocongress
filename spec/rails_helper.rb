@@ -22,7 +22,7 @@ RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods
   config.before(:suite) do
     if Year.find_by(year: CONGRESS_YEAR).nil?
-      abort format('Year not found: %d: Try db:test:prepare', CONGRESS_YEAR)
+      abort format('Year not found: %d: Try: RAILS_ENV=test bin/rails db:drop db:setup', CONGRESS_YEAR)
     end
   end
 end
