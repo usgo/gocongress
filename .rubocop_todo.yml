@@ -352,39 +352,6 @@ Style/FormatString:
 Style/FrozenStringLiteralComment:
   Enabled: false
 
-# Offense count: 39
-# Configuration parameters: MinBodyLength.
-Style/GuardClause:
-  Exclude:
-    - 'app/controllers/application_controller.rb'
-    - 'app/controllers/game_appointments_controller.rb'
-    - 'app/controllers/rounds_controller.rb'
-    - 'app/controllers/sign_ups_controller.rb'
-    - 'app/controllers/transactions_controller.rb'
-    - 'app/controllers/users_controller.rb'
-    - 'app/exporters/exporter.rb'
-    - 'app/forms/registration.rb'
-    - 'app/helpers/attendee_helper.rb'
-    - 'app/helpers/number_helper.rb'
-    - 'app/models/ability.rb'
-    - 'app/models/attendee.rb'
-    - 'app/models/attendee_plan.rb'
-    - 'app/models/attendee_plan_date.rb'
-    - 'app/models/editable_text.rb'
-    - 'app/models/game_appointment.rb'
-    - 'app/models/plan.rb'
-    - 'app/models/plan_category.rb'
-    - 'app/models/round/import.rb'
-    - 'app/models/transaction.rb'
-    - 'app/services/aga_td_list.rb'
-    - 'app/services/open_graph_data.rb'
-    - 'db/migrate/20210630025357_add_foreign_key_constraint_to_active_storage_attachments_for_blob_id.active_storage.rb'
-    - 'lib/concerns/dollar_controller.rb'
-    - 'lib/concerns/yearly_controller.rb'
-    - 'lib/minor_agreement_validator.rb'
-    - 'script/dba/pull.rb'
-    - 'spec/support/shared_examples_for_controllers.rb'
-
 # Offense count: 5
 # This cop supports safe auto-correction (--auto-correct).
 # Configuration parameters: AllowSplatArgument.
