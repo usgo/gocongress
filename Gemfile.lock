@@ -336,7 +336,7 @@ GEM
       activesupport (>= 5.2)
       sprockets (>= 3.0.0)
     ssrf_filter (1.0.7)
-    stripe (5.32.1)
+    stripe (5.49.0)
     stripe_event (2.3.1)
       activesupport (>= 3.1)
       stripe (>= 2.8, < 6)
