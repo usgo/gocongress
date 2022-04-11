@@ -75,7 +75,12 @@ class Registration
     @understand_minor = p[:registration][:understand_minor]
     attendee.attributes = attendee_params(p[:registration])
 
-    valid? && save
+    if valid?
+      save
+    else
+      Rails.logger.warn(errors.full_messages)
+      false
+    end
   end
 
   def persisted?
@@ -241,7 +246,7 @@ class Registration
   def validate_activities
     changes = FindsChangesToDisabledActivities.new(@attendee.activity_ids, @activity_selections)
     unless admin? || changes.valid?
-      @errors[:base] << translate('vldn_errs.activity_disabled')
+      @errors.add(:base, translate('vldn_errs.activity_disabled'))
     end
   end
 
@@ -251,21 +256,22 @@ class Registration
   def validate_disabled_plans(before, after)
     unless admin?
       changes = FindsChangesToDisabledPlans.new(before, after)
-      @errors[:base].concat(changes.removal_errors)
-      @errors[:base].concat(changes.addition_errors)
+      (changes.removal_errors + changes.addition_errors).each do |msg|
+        @errors.add(:base, msg)
+      end
     end
   end
 
   def validate_mandatory_plan_cats(selections)
     unselected_mandatory_plan_cats(selections).each do |c|
-      @errors[:base] << mandatory_plan_cat_error(c)
+      @errors.add(:base, mandatory_plan_cat_error(c))
     end
   end
 
   def validate_models(models)
     models.reject(&:valid?).each do |m|
       m.errors.each do |atr, msg|
-        @errors[:base] << "#{m.class}: #{atr}: #{msg}"
+        @errors.add(:base, "#{m.class}: #{atr}: #{msg}")
       end
     end
   end
@@ -273,7 +279,7 @@ class Registration
   def validate_single_plan_categories(selections)
     single_plan_categories.each do |c|
       if selected_plan_count(c, selections) > 1
-        @errors[:base] << single_plan_category_error(c)
+        @errors.add(:base, single_plan_category_error(c))
       end
     end
   end

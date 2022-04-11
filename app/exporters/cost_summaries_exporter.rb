@@ -8,7 +8,14 @@ class CostSummariesExporter < Exporter
   end
 
   def attendee_plan_row(tuple)
-    HEADER.map { |col| tuple.fetch(col) }
+    HEADER.map do |col|
+      val = tuple.fetch(col)
+      if col == 'price'
+        format("%.2f", val)
+      else
+        val
+      end
+    end
   end
 
   def qry

@@ -19,7 +19,7 @@ gem 'nokogiri'
 gem 'pg'
 gem 'phonelib'
 gem 'puma' # Heroku+Puma docs: https://bit.ly/3blHFc7
-gem 'rails', '~> 6.0.4'
+gem 'rails', '~> 6.1'
 gem 'redcarpet'
 gem 'sassc-rails' # see https://github.com/sass/sassc-rails/issues/114
 gem 'sprockets', '< 4' # v4 has multiple issues
