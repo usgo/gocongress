@@ -1,7 +1,6 @@
 source 'https://rubygems.org'
 ruby '3.0.3'
 
-gem 'authorizenet'
 gem 'bootsnap', require: false
 gem 'cancancan'
 gem 'carrierwave', '~> 2.0'
