@@ -117,7 +117,7 @@ GEM
       activesupport (>= 4.0, < 7)
     excon (0.92.0)
     execjs (2.8.1)
-    factory_bot (6.2.0)
+    factory_bot (6.2.1)
       activesupport (>= 5.0.0)
     factory_bot_rails (6.2.0)
       factory_bot (~> 6.2.0)
