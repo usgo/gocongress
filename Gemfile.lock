@@ -230,7 +230,6 @@ GEM
       tty-color (~> 0.5)
     pg (1.3.5)
     phonelib (0.6.50)
-    prettier (1.5.5)
     public_suffix (4.0.6)
     puma (5.6.4)
       nio4r (~> 2.0)
@@ -412,7 +411,6 @@ DEPENDENCIES
   nokogiri
   pg
   phonelib
-  prettier
   puma
   rails (~> 6.0.4)
   rails-controller-testing

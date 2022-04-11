@@ -19,7 +19,6 @@ gem 'net-telnet'
 gem 'nokogiri'
 gem 'pg'
 gem 'phonelib'
-gem 'prettier'
 gem 'puma' # Heroku+Puma docs: https://bit.ly/3blHFc7
 gem 'rails', '~> 6.0.4'
 gem 'redcarpet'
