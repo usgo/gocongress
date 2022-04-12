@@ -46,21 +46,30 @@ module AGA
             # Minimum rating is -30 (30k)
             attendee.rank = [i['rating'].to_i, -30].max.to_s
 
-            if i['country'] == 'USA'
-              attendee.country = 'US'
-            else
-              # Try to get the country code from the site constants
-              found = COUNTRIES.detect { |country| country[0] == i['country'] }
-              if found
-                attendee.country = found[1]
-              end
-            end
+            attendee.country = country_code(i['country'])
           end
         rescue Timeout::Error, OpenURI::HTTPError => e
           # No worries! We just won't pre-fill any values.
           ::Rails.logger.error(e)
         end
         attendee
+      end
+
+      private
+
+      def country_code(name)
+        if name == 'USA'
+          'US'
+        else
+          find_country_code_by_name(name)
+        end
+      end
+
+      def find_country_code_by_name(name)
+        codes = IsoCountryCodes.search_by_name(name) { nil }
+        codes.first&.alpha2
+      rescue IsoCountryCodes::UnknownCodeError
+        nil
       end
     end
   end

@@ -59,18 +59,22 @@ RSpec.describe Attendee::WhoIsComing, :type => :model do
       p4 = create :plan, price: 4500
       p5 = create :plan, price: 0, plan_category: pc1
 
+      # u1a is included: has paid more than the minimum
       u1 = create :user
       u1a1 = create :attendee, user: u1, given_name: 'u1a'
       u1a1.plans << p1
       create :attendee, user: u1, given_name: 'u1b'
-      create :tr_sale, amount: 10000, user: u1
+      create :tr_sale, amount: 20000, user: u1
 
+      # u2a is included: has paid more than the minimum
+      # u2b is not included: no plan
       u2 = create :user
       u2a1 = create :attendee, user: u2, given_name: 'u2a'
       u2a1.plans << p1
       create :attendee, user: u2, given_name: 'u2b'
-      create :tr_sale, amount: 9999, user: u2
+      create :tr_sale, amount: 20000, user: u2
 
+      # u3a amd u3b are included
       u3 = create :user
       u3a1 = create :attendee, user: u3, given_name: 'u3a'
       u3a1ap1 = create :attendee_plan, attendee: u3a1, plan: p2
@@ -82,6 +86,7 @@ RSpec.describe Attendee::WhoIsComing, :type => :model do
       create :attendee, user: u3, given_name: 'u3c'
       create :tr_sale, amount: 97000, user: u3
 
+      # u4a and u4b are included
       u4 = create :user
       u4a1 = create :attendee, user: u4, given_name: 'u4a'
       u4a1ap1 = create :attendee_plan, attendee: u4a1, plan: p2
@@ -93,21 +98,26 @@ RSpec.describe Attendee::WhoIsComing, :type => :model do
       create :attendee, user: u4, given_name: 'u4c'
       create :tr_sale, amount: 96999, user: u4
 
+      # u5a is not included: has no plan
       u5 = create :user
       u5a1 = create :attendee, user: u5, given_name: 'u5a'
       u5a1.plans << p4 << p5
 
+      # u6a is included: u6 has paid exactly the minimum
+      # u6b is not included: no plan
       u6 = create :user
       u6a1 = create :attendee, user: u6, given_name: 'u6a'
       u6a1.plans << p3
       create :attendee, user: u6, given_name: 'u6b'
-      create :tr_sale, amount: 7000, user: u6
+      create :tr_sale, amount: 10000, user: u6
 
+      # u7a is not included: u7 has only paid $99.99, which is one cent less
+      # than the minimum
       u7 = create :user
       u7a1 = create :attendee, user: u7, given_name: 'u7a'
       u7a1.plans << p3
       create :attendee, user: u7, given_name: 'u7b'
-      create :tr_sale, amount: 6999, user: u7
+      create :tr_sale, amount: 9999, user: u7
 
       expect(
         Attendee::WhoIsComing.new(u1.year).attendees.map(&:given_name)

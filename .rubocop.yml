@@ -68,6 +68,10 @@ Style/GlobalStdStream:
   Exclude:
     - config/environments/production.rb
 
+# Guard clauses are great, but this is too subtle to lint.
+Style/GuardClause:
+  Enabled: false
+
 Style/NumericLiterals:
   Exclude:
     - db/schema.rb

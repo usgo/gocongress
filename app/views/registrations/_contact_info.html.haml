@@ -26,4 +26,4 @@
 
   = render :layout => 'shared/field',
   :locals => { :field => f, :attribute => :country, :required => true } do
-    = f.select :country, COUNTRIES, { :include_blank => true }
+    = f.select :country, IsoCountryCodes.for_select, { :include_blank => true }

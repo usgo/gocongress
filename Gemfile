@@ -1,12 +1,13 @@
 source 'https://rubygems.org'
-ruby '2.7.3'
+ruby '3.0.3'
 
-gem 'authorizenet'
 gem 'bootsnap', require: false
 gem 'cancancan'
+gem 'carrierwave', '~> 2.0'
 gem 'devise'
 gem 'exception_notification'
 gem 'ffi'
+gem 'fog-aws'
 gem 'haml'
 gem 'intl-tel-input-rails'
 gem 'iso_country_codes'
@@ -17,9 +18,8 @@ gem 'net-telnet'
 gem 'nokogiri'
 gem 'pg'
 gem 'phonelib'
-gem 'prettier'
 gem 'puma' # Heroku+Puma docs: https://bit.ly/3blHFc7
-gem 'rails', '~> 6.0.4'
+gem 'rails', '~> 6.1'
 gem 'redcarpet'
 gem 'sassc-rails' # see https://github.com/sass/sassc-rails/issues/114
 gem 'sprockets', '< 4' # v4 has multiple issues
@@ -27,8 +27,6 @@ gem 'stripe'
 gem 'stripe_event'
 gem 'twilio-ruby'
 gem 'uglifier'
-gem 'carrierwave', '~> 2.0'
-gem 'fog-aws'
 
 group :development do
   gem 'colorize'

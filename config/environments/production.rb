@@ -1,4 +1,5 @@
 require_relative 'shared/notifier'
+require "active_support/core_ext/integer/time"
 
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
@@ -40,7 +41,7 @@ Rails.application.configure do
   config.assets.compile = true
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
-  config.action_controller.asset_host = ENV['CLOUDFRONT_ENDPOINT']
+  config.asset_host = ENV['CLOUDFRONT_ENDPOINT']
 
   # Specifies the header that your server uses for sending files.
   config.action_dispatch.x_sendfile_header = 'X-Sendfile' unless config.public_file_server.enabled
@@ -58,9 +59,8 @@ Rails.application.configure do
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
   # config.force_ssl = true
 
-  # Use the default log level for production (:info) to strike a balance between
-  # auditability of events and log size. This used to be on :debug, but we were
-  # exceeding the limits of Papertrail's free tier on a regular basis.
+  # Include generic and useful information about system operation, but avoid logging too much
+  # information to avoid inadvertent exposure of personally identifiable information (PII).
   config.log_level = :info
 
   # Disable delivery errors, bad email addresses will be ignored.
@@ -91,6 +91,12 @@ Rails.application.configure do
   config.active_support.deprecation = :notify
 
   config.force_ssl = true
+
+  # Log disallowed deprecations.
+  config.active_support.disallowed_deprecation = :log
+
+  # Tell Active Support which deprecation messages to disallow.
+  config.active_support.disallowed_deprecation_warnings = []
 
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new

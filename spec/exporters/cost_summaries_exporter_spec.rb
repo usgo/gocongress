@@ -18,7 +18,7 @@ RSpec.describe CostSummariesExporter do
       ary = CSV.parse ex.to_csv
       expected_price_1 = sprintf("%.2f", p1.price.to_f / 100)
       expected_price_2 = sprintf("%.2f", p2.price.to_f / 100)
-      expected = [
+      expect(ary[0]).to eq(
         [
           'user_id',
           'user_email',
@@ -29,7 +29,9 @@ RSpec.describe CostSummariesExporter do
           'plan_name',
           'price',
           'quantity'
-        ],
+        ]
+      )
+      expect(ary[1]).to eq(
         [
           a.user.id.to_s,
           a.user.email,
@@ -40,7 +42,9 @@ RSpec.describe CostSummariesExporter do
           p1.name,
           expected_price_1,
           ap1.quantity.to_s
-        ],
+        ]
+      )
+      expect(ary[2]).to eq(
         [
           a.user.id.to_s,
           a.user.email,
@@ -52,8 +56,7 @@ RSpec.describe CostSummariesExporter do
           expected_price_2,
           "2"
         ]
-      ]
-      expect(ary).to eq(expected)
+      )
     end
   end
 end

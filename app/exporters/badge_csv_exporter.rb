@@ -36,7 +36,7 @@ class BadgeCsvExporter
       encoding: Encoding::UTF_8
     }
 
-    CSV.generate(csv_config) do |csv|
+    CSV.generate(**csv_config) do |csv|
       csv << header_array(year)
       attendees.each do |atnd|
         csv << attendee_array(atnd)
