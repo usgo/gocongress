@@ -91,6 +91,7 @@ Jared Beck who both provided mentoring and assistance for the 2015 site.
 Special thanks to Rex Cristal, for taking over maintenance of the site from
 2015 – 2019!
 
+- 2022: Jared Bek, Nate Eagle, Eric Wainwright
 - 2021: Jared Beck, Michael Hiiva, Nate Eagle, Steve Colburn
 - 2020: Rex Cristal, Lisa Scott
 - 2019: Gregory Steltenpohl, Nate Eagle, Steve Colburn, Lisa Scott, Dave Weimer
