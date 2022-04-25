@@ -21,9 +21,9 @@ module AttendeeHelper
     checked = selection.qty == 1
     title = "Select this " + mnh
     if plan.disabled? && !current_user_is_admin?
-      check_box_tag qty_field_name(plan), 1, checked, :disabled => true
+      check_box_tag qty_field_name(plan), 1, checked, :id => qty_field_name(plan), :disabled => true
     else
-      check_box_tag qty_field_name(plan), 1, checked, :title => title
+      check_box_tag qty_field_name(plan), 1, checked, :title => title, :id => qty_field_name(plan)
     end
   end
 
@@ -74,6 +74,10 @@ module AttendeeHelper
 
   def qty_field_name(plan)
     "plans[#{plan.id}][qty]"
+  end
+
+  def qty_field_id(plan)
+    "plan_#{plan.id}_qty"
   end
 
   def radio_btn_name(plan)

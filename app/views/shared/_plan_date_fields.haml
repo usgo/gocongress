@@ -1,4 +1,8 @@
-%table.understated-head.mini-calendar.borderless
+%table.understated-head.mini-calendar.borderless{
+  "data-plan-category": plan.plan_category_id,
+  "data-plan": plan.id,
+  :class => plan.plan_category.single ? 'single' : 'not-single'
+}
   %tbody
     - first_clndr_date = true
     - @plan_calendar.each do |week|
@@ -18,6 +22,41 @@
         = button_tag('Clear', type: 'button', name: 'clear_' + @cbx_name)
 
 :javascript
+  window.addEventListener('DOMContentLoaded', () => {
+    const calendar = document.querySelector('[data-plan-category="#{plan.plan_category.id}"][data-plan="#{plan.id}"].single');
+
+    if (calendar) {
+      // When daily plan checkboxes are selected, clear any other plan radio inputs that have been selected
+      calendar.addEventListener('change', event => {
+        if (event.target.type === 'checkbox') {
+          // Using the array method "some" relies on an array, not a NodeList 
+          const calendarCheckBoxes = Array.from(calendar.querySelectorAll('input[type="checkbox"]'));
+          const anyChecked = calendarCheckBoxes.some(checkbox => checkbox.checked);
+
+          if (anyChecked) {
+            const otherSelectedPlans = document.querySelectorAll('[name="plans[single_plan_cat_id:#{plan.plan_category.id}][plan_id]"]:checked');
+            if (otherSelectedPlans) {
+              otherPlans.forEach(otherPlan => otherPlan.checked = false);
+            }
+          }
+        }
+      });
+
+      // When any of the other plans in this single-plan-only plan category are
+      // selected, clear any of the checkboxes for this daily plan
+      const otherPlans = document.querySelectorAll('[name="plans[single_plan_cat_id:#{plan.plan_category.id}][plan_id]"]');
+
+      otherPlans.forEach(plan => {
+        plan.addEventListener('change', event => {
+          if (event.target.checked) {
+            const calendarCheckBoxes = calendar.querySelectorAll('input[type="checkbox"]');
+            calendarCheckBoxes.forEach(checkbox => checkbox.checked = false);
+          }
+        });
+      });
+    }
+  })
+
   $("[name='setAll_#{@cbx_name}']").click(function() {
     $("[name='#{@cbx_name}']").each(function(i, checkbox) {
       if (!this.checked) {

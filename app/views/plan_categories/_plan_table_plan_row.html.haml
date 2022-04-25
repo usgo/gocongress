@@ -1,15 +1,15 @@
 - if defined? plan
   %tr{:class => if plan.disabled? then "disabled" end}
-    %td.valign-middle.align-right
+    %td.valign-top.align-right
       = plan_selection_inputs(plan)
-    %td
+    %td.valign-top
       %label{for: plan_label_name(plan)}= plan.name
     = render :partial => "plan_categories/plan_table_common_cells", :locals => { :plan => plan }
 - else
   -# If no plan is provided, provide a "no selection" radio button
   %tr
-    %td.valign-middle.align-right
+    %td.valign-top.align-right
       = radio_button_tag "plans[single_plan_cat_id:#{category.id}][plan_id]", '', plan_category_selection(category).blank? ? true : false, :title => "Select None"
-    %td{:colspan => 5}
+    %td.valign-top{:colspan => 5}
       %label{for: "plans_single_plan_cat_id:#{category.id}_plan_id_"}
         No Selection

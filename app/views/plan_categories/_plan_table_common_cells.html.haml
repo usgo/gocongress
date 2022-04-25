@@ -1,10 +1,10 @@
-%td
+%td.valign-top
   %label{for: plan_label_name(plan)}= plan.age_range_in_words
-%td
+%td.valign-top
   %label{for: plan_label_name(plan)}
     = markdown(plan.description).html_safe
 - if @show_availability
-  %td
+  %td.valign-top
     %label{for: plan_label_name(plan)}= plan.describe_inventory_available
-%td.numeric
+%td.numeric.valign-top
   %label{for: plan_label_name(plan)}= plan.price_for_display
