@@ -417,36 +417,41 @@ body {
 
   button {
     background: $nav-bg-color;
-    line-height: 25px;
   }
 
   li {
     display: inline-block;
     list-style: none;
-    // text-align: center;
+
     &#nav-admin-title {
       padding: 5px 10px;
     }
+
     &#nav-registration a {
       color: #ff2;
     }
+
     a {
       display: inline-block;
       padding: 5px $spacing-unit / 3;
       color: $nav-link-color;
-      line-height: 25px;
       text-decoration: none;
       background-color: transparent;
       transition: background-color 0.2s;
+
       &:hover {
         background-color: $nav-bg-highlight-color;
       }
     }
   }
+
+  button, li > a {
+    padding-top: 8px;
+    padding-bottom: 9px;
+  }
 }
 #nav-list-main {
   margin: 0 auto;
-  // max-width: $content_width;
 }
 
 /* Secondary navigation */
@@ -461,7 +466,6 @@ body {
 .content {
   margin: 0 auto;
   padding: $spacing-unit;
-  // width: $content_width;
 
   /* Drawing extra attention to various things */
   .notice {
