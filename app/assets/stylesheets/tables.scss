@@ -67,6 +67,11 @@ table.semantic {
   thead th {
     vertical-align: bottom;
   }
+  td > input[type=checkbox] {
+    margin: {
+      top: 0.2em;;
+    }
+  }
   td,
   th {
     border: 0;
