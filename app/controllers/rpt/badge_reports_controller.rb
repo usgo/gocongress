@@ -7,8 +7,14 @@ class Rpt::BadgeReportsController < Rpt::AbstractReportController
       end
 
       format.csv do
-        csv = BadgeCsvExporter.render(@year, @attendees)
-        send_data csv, filename: csv_filename, type: 'text/csv'
+        headers["X-Accel-Buffering"] = "no"
+        headers["Cache-Control"] = "no-cache"
+        headers["Content-Type"] = "text/csv; charset=utf-8"
+        headers["Content-Disposition"] =
+          %(attachment; filename="#{csv_filename}")
+        headers["Last-Modified"] = Time.zone.now.ctime.to_s
+
+        self.response_body = BadgeCsvExporter.csv_enumerator(@year, @attendees)
       end
     end
   end

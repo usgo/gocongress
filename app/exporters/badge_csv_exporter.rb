@@ -28,18 +28,11 @@ class BadgeCsvExporter
     ['alternate_name', 'given_name', 'family_name', 'rank', 'email', 'aga_id', 'club', 'state', 'country', 'birth_date', 'banquet'] + plan_names(year)
   end
 
-  def self.render(year, attendees)
-    csv_config = {
-      # Use Windows line endings, per recommendation from csvlint.io
-      # @see https://csvlint.io/about
-      row_sep: "\r\n",
-      encoding: Encoding::UTF_8
-    }
-
-    CSV.generate(**csv_config) do |csv|
-      csv << header_array(year)
-      attendees.each do |atnd|
-        csv << attendee_array(atnd)
+  def self.csv_enumerator(year, attendees)
+    @csv_enumerator ||= Enumerator.new do |yielder|
+      yielder << header_array(year).to_csv
+      attendees.find_each do |atnd|
+        yielder << CSV.generate_line(attendee_array(atnd))
       end
     end
   end
@@ -54,7 +47,7 @@ class BadgeCsvExporter
     pqh = atnd.plan_qty_hash
 
     banquet = false
-    Plan.yr(atnd.year).each { |p|
+    Plan.yr(atnd.year).find_each { |p|
       if (p.name.include? 'Banquet' and !p.name.include? 'No Banquet')
         if (pqh[p.id] === 1)
           banquet = true
