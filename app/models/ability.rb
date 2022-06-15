@@ -43,13 +43,18 @@ class Ability
       can :manage, ALL_RESOURCES, :year => user.year
     end
 
+    # Director can manage tournaments
+    if user.director? then
+      can :manage, Tournament
+    end
+
     # Staff can read anything in their own year
-    if user.role == 'S' then
+    if user.role == 'S' or user.director? then
       can :read, ALL_RESOURCES, :year => user.year
     end
 
     # Admins and Staff share a few special abilities
-    if user.admin? or user.role == 'S' then
+    if %w[D S U].include?(user.role) then
       can :print_official_docs, User, :year => user.year
       can :check_in, :attendee
       can :read, :report
@@ -59,7 +64,7 @@ class Ability
     # User and Staff can manage their own resources, except for
     # their User record, which they can only show and update.
     # Users specifically cannot :read, because that implies :index.
-    if %w[S U].include?(user.role) then
+    if %w[D S U].include?(user.role) then
       can [:show, :update], User, :id => user.id
       can :manage, Attendee, :user_id => user.id
       cannot :list, Attendee if user.role == 'U'

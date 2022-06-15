@@ -17,6 +17,7 @@
             = radio_button :user, :role, r[1]
             = r[0]
             = "- can edit anything" if r[1] == 'A'
+            = "- can edit tournament and view anything" if r[1] == 'D'
             = "- can view anything" if r[1] == 'S'
 
   %br

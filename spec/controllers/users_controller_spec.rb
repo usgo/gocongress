@@ -260,6 +260,28 @@ RSpec.describe UsersController, :type => :controller do
     end
   end
 
+  context "as director" do
+    let(:director) { create :director }
+
+    before do
+      sign_in director
+    end
+
+    describe '#edit' do
+      it "can edit tournament" do
+        tournament_one = create :tournament, year: user.year
+        get :edit_tournament, params: { id: tournament_one.id, year: user.year }
+        expect(response).to be_successful
+      end
+      it "from wrong year raises RecordNotFound" do
+        sign_in create :staff, year: wrong_year
+        expect {
+          get :edit_tournament, params: { id: tournament_one.id, year: wrong_year }
+        }.to raise_error(ActiveRecord::RecordNotFound)
+      end
+    end
+  end
+
   context "as an admin" do
     before do
       sign_in create :admin
