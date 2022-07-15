@@ -19,7 +19,7 @@ RSpec.describe Rpt::BadgeReportsController, aga_td_list_mock: true, :type => :co
       sign_in staff
       get :show, format: 'csv', params: { year: staff.year }
       expect(response).to be_successful
-      expect(response.content_type).to eq('text/csv')
+      expect(response.content_type).to eq('text/csv; charset=utf-8')
     end
 
     it "has one line for each active, planful attendee, plus a header" do
