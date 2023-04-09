@@ -8,6 +8,11 @@ class HomeController < ApplicationController
     @contents = Content.yr(@year).homepage.unexpired.newest_first
     @years = 2011..LATEST_YEAR
     @upcoming = CONGRESS_START_DATE[@year.year] >= Date.current
+
+    # Redirect to the new site on the usgo.org homepage, while preserving the ability to access previous years
+    if params[:year].nil?
+      redirect_to "https://usgo.org/content.aspx?page_id=22&club_id=454497&module_id=561849"
+    end
   end
 
   def access_denied
