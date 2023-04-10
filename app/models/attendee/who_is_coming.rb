@@ -7,7 +7,7 @@
 
 class Attendee::WhoIsComing < ApplicationController
   DEFAULT_ORDER = 'rank = 0, rank desc'
-  SORTABLE_COLUMNS = %w[given_name family_name rank created_at country]
+  SORTABLE_COLUMNS = %w[given_name family_name rank state created_at country]
 
   attr_reader :attendees
 
